@@ -5,6 +5,8 @@ include_once 'app/Views/admin/inc/cabecalho.phtml';
 $qtdF = (is_array($fornecedores) ? count($fornecedores) : 0);
 $qtdC = (is_array($categorias) ? count($categorias) : 0);
 $qtdS = (is_array($setores) ? count($setores) : 0);
+$qtd = (is_array($produto) ? count($produto) : 0);
+
 ?>
 <body class="">
     <div class="d-flex" id="wrapper">
@@ -42,34 +44,34 @@ $qtdS = (is_array($setores) ? count($setores) : 0);
                             <div class="row ">    
                                 <div class="col-3 form-floating mb-2">
                                     <select class="form-select" name="PRO_TIPO">
-                                        <option value="0" <?= (isset($_POST['PRO_TIPO']) &&  $_POST['PRO_TIPO']  == 0)? 'selected' : '' ?>>---</option>
-                                        <option value="1" <?= (isset($_POST['PRO_TIPO']) &&  $_POST['PRO_TIPO']  == 1)? 'selected' : '' ?>>PRODUTO</option>
-                                        <option value="2" <?= (isset($_POST['PRO_TIPO']) &&  $_POST['PRO_TIPO']  == 2)? 'selected' : '' ?>>SERVIÇO</option>
+                                        <option value="0" <?= (isset($_POST['PRO_TIPO']) &&  $_POST['PRO_TIPO']  == 0)? 'selected' : (isset($produto['PRO_TIPO']) &&  $produto['PRO_TIPO']  == 0 ? 'selected' : '') ?>>---</option>
+                                        <option value="1" <?= (isset($_POST['PRO_TIPO']) &&  $_POST['PRO_TIPO']  == 1)? 'selected' : (isset($produto['PRO_TIPO']) &&  $produto['PRO_TIPO']  == 1 ? 'selected' : '') ?>>PRODUTO</option>
+                                        <option value="2" <?= (isset($_POST['PRO_TIPO']) &&  $_POST['PRO_TIPO']  == 2)? 'selected' : (isset($produto['PRO_TIPO']) &&  $produto['PRO_TIPO']  == 2 ? 'selected' : '') ?>>SERVIÇO</option>
                                     </select>
                                     <label class="form-label">TIPO</label>
                                 </div>
                                 <div class="col-3 form-floating mb-2">
                                     <select class="form-select" name="PRO_UNIDADE">
-                                        <option value="0" <?= (isset($_POST['PRO_UNIDADE']) &&  $_POST['PRO_UNIDADE']  == 0)? 'selected' : '' ?>>---</option>
-                                        <option value="G" <?= (isset($_POST['PRO_UNIDADE']) &&  $_POST['PRO_UNIDADE']  == 'G')? 'selected' : '' ?>>GRAMA(S)</option>
-                                        <option value="KG" <?= (isset($_POST['PRO_UNIDADE']) &&  $_POST['PRO_UNIDADE']  == 'KG')? 'selected' : '' ?>>KILO(S)</option>
-                                        <option value="CM" <?= (isset($_POST['PRO_UNIDADE']) &&  $_POST['PRO_UNIDADE']  == 'CM')? 'selected' : '' ?>>CENTÍMETRO(S)</option>
-                                        <option value="M" <?= (isset($_POST['PRO_UNIDADE']) &&  $_POST['PRO_UNIDADE']  == 'M')? 'selected' : '' ?>>METRO(S)</option>
-                                        <option value="CM²" <?= (isset($_POST['PRO_UNIDADE']) &&  $_POST['PRO_UNIDADE']  == 'CM²')? 'selected' : '' ?>>CENTÍMETRO(S)²</option>
-                                        <option value="M²" <?= (isset($_POST['PRO_UNIDADE']) &&  $_POST['PRO_UNIDADE']  == 'M²')? 'selected' : '' ?>>METRO(S)²</option>
-                                        <option value="PC" <?= (isset($_POST['PRO_UNIDADE']) &&  $_POST['PRO_UNIDADE']  == 'PC')? 'selected' : '' ?>>PEÇA</option>
-                                        <option value="UN" <?= (isset($_POST['PRO_UNIDADE']) &&  $_POST['PRO_UNIDADE']  == 'UN')? 'selected' : '' ?>>UNIDADE</option>
-                                        <option value="L" <?= (isset($_POST['PRO_UNIDADE']) &&  $_POST['PRO_UNIDADE']  == 'L')? 'selected' : '' ?>>LITRO(S)</option>
-                                        <option value="CX" <?= (isset($_POST['PRO_UNIDADE']) &&  $_POST['PRO_UNIDADE']  == 'CX')? 'selected' : '' ?>>CAIXA(S)</option>
-                                        <option value="FD" <?= (isset($_POST['PRO_UNIDADE']) &&  $_POST['PRO_UNIDADE']  == 'FD')? 'selected' : '' ?>>FARDO(S)</option>
-                                        <option value="DZ" <?= (isset($_POST['PRO_UNIDADE']) &&  $_POST['PRO_UNIDADE']  == 'DZ')? 'selected' : '' ?>>DÚZIA(S)</option>
-                                        <option value="JG" <?= (isset($_POST['PRO_UNIDADE']) &&  $_POST['PRO_UNIDADE']  == 'JG')? 'selected' : '' ?>>JOGO(S)</option>
-                                        <option value="CM³" <?= (isset($_POST['PRO_UNIDADE']) &&  $_POST['PRO_UNIDADE']  == 'CM³')? 'selected' : '' ?>>CENTÍMETRO(S)³</option>
-                                        <option value="M³" <?= (isset($_POST['PRO_UNIDADE']) &&  $_POST['PRO_UNIDADE']  == 'M³')? 'selected' : '' ?>>METRO(S)³</option>
-                                        <option value="CM²" <?= (isset($_POST['PRO_UNIDADE']) &&  $_POST['PRO_UNIDADE']  == 'L³')? 'selected' : '' ?>>LITRO(S)³</option>
-                                        <option value="CJ" <?= (isset($_POST['PRO_UNIDADE']) &&  $_POST['PRO_UNIDADE']  == 'CJ')? 'selected' : '' ?>>CONJUNTO</option>
-                                        <option value="BR" <?= (isset($_POST['PRO_UNIDADE']) &&  $_POST['PRO_UNIDADE']  == 'BR')? 'selected' : '' ?>>BARRA</option>
-                                        <option value="SV" <?= (isset($_POST['PRO_UNIDADE']) &&  $_POST['PRO_UNIDADE']  == 'SV')? 'selected' : '' ?>>SERVIÇO</option>
+                                        <option value="0" <?= (isset($_POST['PRO_UNIDADE']) &&  $_POST['PRO_UNIDADE']  == 0)? 'selected' : (isset($produto['PRO_UNIDADE']) &&  $produto['PRO_UNIDADE']  == 0 ? 'selected' : '') ?>>---</option>
+                                        <option value="1" <?= (isset($_POST['PRO_UNIDADE']) &&  $_POST['PRO_UNIDADE']  == 1)? 'selected' : (isset($produto['PRO_UNIDADE']) &&  $produto['PRO_UNIDADE']  == 1 ? 'selected' : '') ?>>GRAMA(S)</option>
+                                        <option value="2" <?= (isset($_POST['PRO_UNIDADE']) &&  $_POST['PRO_UNIDADE']  == 2)? 'selected' : (isset($produto['PRO_UNIDADE']) &&  $produto['PRO_UNIDADE']  == 2 ? 'selected' : '') ?>>KILO(S)</option>
+                                        <option value="3" <?= (isset($_POST['PRO_UNIDADE']) &&  $_POST['PRO_UNIDADE']  == 3)? 'selected' : (isset($produto['PRO_UNIDADE']) &&  $produto['PRO_UNIDADE']  == 3 ? 'selected' : '') ?>>CENTÍMETRO(S)</option>
+                                        <option value="4" <?= (isset($_POST['PRO_UNIDADE']) &&  $_POST['PRO_UNIDADE']  == 4)? 'selected' : (isset($produto['PRO_UNIDADE']) &&  $produto['PRO_UNIDADE']  == 4 ? 'selected' : '') ?>>METRO(S)</option>
+                                        <option value="5" <?= (isset($_POST['PRO_UNIDADE']) &&  $_POST['PRO_UNIDADE']  == 5)? 'selected' : (isset($produto['PRO_UNIDADE']) &&  $produto['PRO_UNIDADE']  == 5 ? 'selected' : '') ?>>CENTÍMETRO(S)²</option>
+                                        <option value="6" <?= (isset($_POST['PRO_UNIDADE']) &&  $_POST['PRO_UNIDADE']  == 6)? 'selected' : (isset($produto['PRO_UNIDADE']) &&  $produto['PRO_UNIDADE']  == 6 ? 'selected' : '') ?>>METRO(S)²</option>
+                                        <option value="7" <?= (isset($_POST['PRO_UNIDADE']) &&  $_POST['PRO_UNIDADE']  == 7)? 'selected' : (isset($produto['PRO_UNIDADE']) &&  $produto['PRO_UNIDADE']  == 7 ? 'selected' : '') ?>>PEÇA</option>
+                                        <option value="8" <?= (isset($_POST['PRO_UNIDADE']) &&  $_POST['PRO_UNIDADE']  == 8)? 'selected' : (isset($produto['PRO_UNIDADE']) &&  $produto['PRO_UNIDADE']  == 8 ? 'selected' : '') ?>>UNIDADE</option>
+                                        <option value="9" <?= (isset($_POST['PRO_UNIDADE']) &&  $_POST['PRO_UNIDADE']  == 9)? 'selected' : (isset($produto['PRO_UNIDADE']) &&  $produto['PRO_UNIDADE']  == 9 ? 'selected' : '') ?>>LITRO(S)</option>
+                                        <option value="10" <?= (isset($_POST['PRO_UNIDADE']) &&  $_POST['PRO_UNIDADE']  == 10)? 'selected' : (isset($produto['PRO_UNIDADE']) &&  $produto['PRO_UNIDADE']  == 10 ? 'selected' : '') ?>>CAIXA(S)</option>
+                                        <option value="11" <?= (isset($_POST['PRO_UNIDADE']) &&  $_POST['PRO_UNIDADE']  == 11)? 'selected' : (isset($produto['PRO_UNIDADE']) &&  $produto['PRO_UNIDADE']  == 11 ? 'selected' : '') ?>>FARDO(S)</option>
+                                        <option value="12" <?= (isset($_POST['PRO_UNIDADE']) &&  $_POST['PRO_UNIDADE']  == 12)? 'selected' : (isset($produto['PRO_UNIDADE']) &&  $produto['PRO_UNIDADE']  == 12 ? 'selected' : '') ?>>DÚZIA(S)</option>
+                                        <option value="13" <?= (isset($_POST['PRO_UNIDADE']) &&  $_POST['PRO_UNIDADE']  == 13)? 'selected' : (isset($produto['PRO_UNIDADE']) &&  $produto['PRO_UNIDADE']  == 13 ? 'selected' : '') ?>>JOGO(S)</option>
+                                        <option value="14" <?= (isset($_POST['PRO_UNIDADE']) &&  $_POST['PRO_UNIDADE']  == 14)? 'selected' : (isset($produto['PRO_UNIDADE']) &&  $produto['PRO_UNIDADE']  == 14 ? 'selected' : '') ?>>CENTÍMETRO(S)³</option>
+                                        <option value="15" <?= (isset($_POST['PRO_UNIDADE']) &&  $_POST['PRO_UNIDADE']  == 15)? 'selected' : (isset($produto['PRO_UNIDADE']) &&  $produto['PRO_UNIDADE']  == 15 ? 'selected' : '') ?>>METRO(S)³</option>
+                                        <option value="16" <?= (isset($_POST['PRO_UNIDADE']) &&  $_POST['PRO_UNIDADE']  == 16)? 'selected' : (isset($produto['PRO_UNIDADE']) &&  $produto['PRO_UNIDADE']  == 16 ? 'selected' : '') ?>>LITRO(S)³</option>
+                                        <option value="17" <?= (isset($_POST['PRO_UNIDADE']) &&  $_POST['PRO_UNIDADE']  == 17)? 'selected' : (isset($produto['PRO_UNIDADE']) &&  $produto['PRO_UNIDADE']  == 17 ? 'selected' : '') ?>>CONJUNTO</option>
+                                        <option value="18" <?= (isset($_POST['PRO_UNIDADE']) &&  $_POST['PRO_UNIDADE']  == 18)? 'selected' : (isset($produto['PRO_UNIDADE']) &&  $produto['PRO_UNIDADE']  == 18 ? 'selected' : '') ?>>BARRA</option>
+                                        <option value="19" <?= (isset($_POST['PRO_UNIDADE']) &&  $_POST['PRO_UNIDADE']  == 19)? 'selected' : (isset($produto['PRO_UNIDADE']) &&  $produto['PRO_UNIDADE']  == 19 ? 'selected' : '') ?>>SERVIÇO</option>
                                     </select>
                                     <label class="form-label">UNIDADE DE MEDIDA</label>
                                 </div>
@@ -86,7 +88,7 @@ $qtdS = (is_array($setores) ? count($setores) : 0);
                                 </div>
                                 <hr>
                                 <div class="col-8 form-floating mb-3">
-                                    <input type="text" class="form-control maiusculo" id="1" name="PRO_NOME" placeholder="Informe o nome do produto" value="<?= isset($_POST['PRO_NOME']) ? $_POST['PRO_NOME'] : (isset($produto['PRO_NOME'])? : '') ; ?>">
+                                    <input type="text" class="form-control maiusculo" id="1" name="PRO_NOME" placeholder="Informe o nome do produto" value="<?= isset($_POST['PRO_NOME']) ? $_POST['PRO_NOME'] : (isset($produto['PRO_NOME'])? $produto['PRO_NOME'] : '') ; ?>">
                                     <label class="px-3" for="1">NOME DO PRODUTO</label>
                                 </div>    
                                 <div class="col-4 form-floating mb-3">
