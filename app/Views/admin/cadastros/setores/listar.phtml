@@ -1,0 +1,78 @@
+<?php 
+use Libraries\Sessao;
+session_start();
+include_once 'app/Views/admin/inc/cabecalho.phtml'; 
+$qtd = (is_array($setores) ? count($setores) : 0);
+?>
+<body class="">
+    <div class="d-flex" id="wrapper">
+        <?php include_once 'app/Views/admin/inc/menu_lateral.phtml'; ?>
+        <div id="page-content-wrapper">
+        <!-- Top navigation-->
+        <?php include_once 'app/Views/admin/inc/menu_topo.phtml'; ?>
+        <div class="container-fluid bg-light p-0">
+            <header class="py-3">
+                <section class="container px-3">
+                    <div class="row gx-3 align-items-center justify-content-center">
+                        <div class="col-lg-9 col-xl-9 col-xxl-9">
+                            <div class="my-1 px-4 mx-auto">
+                                <a class="text-decoration-none" href="<?= DIRPAGE; ?>setores">
+                                    <h3 class="fs-2 fw-bolder text-uppercase text-dark">
+                                        <i class="bi bi-plus-square"></i> Gerenciar <span class="text-success">Setores</span>
+                                    </h3>
+                                </a>
+                            </div>
+                        </div>
+                        <?php include_once 'app/Views/admin/inc/saudacao.phtml'; ?> 
+                    </div>
+                </section>
+                <section class="container col-12 mx-auto px-5">
+                        <?= $breadcrumb ?>
+                </section>
+            </header>
+            <?php include_once 'app/Views/admin/inc/alertas.phtml'; ?> 
+            <section class="bg-light py-2">
+                <div class="container px-2 py-2 mx-auto row ">
+                </div>
+            </section>
+            <section class="bg-light  text-dark  py-2">
+                <div class="container mx-auto col-12 px-2 py-2 row">
+                    <div class="card bg-success text-center py-2 mb-4" style="width: 100rem;">
+                        <div class="card-body  text-white">
+                            <h5 class="card-title">SETORES</h5>
+                            <p class="card-text">Cadastre os seus setores no sistema</p>
+                            <a href="<?= DIRPAGE ?>setores/cadastro" class="btn btn-dark">NOVO CADASTRO</a>
+                        </div>
+                    </div>
+                    <?php if ($qtd != 0) { ?>
+                        <table class="table table-striped table-bordered">
+                            <thead class="text-center text-uppercase">
+                                <th class="text-dark">#</th>
+                                <th class="text-dark">Descrição</th>
+                                <th class="text-dark">Nível</th>
+                                <th class="text-dark">Status</th>
+                                <th class="text-dark">Ações</th>
+                            </thead>
+                            <tbody>
+                                <?php
+                                    $b = 1;
+                                    for ($i= 0; $i < $qtd; $i++) { ?>
+                                    <tr class="">
+                                        <td class="text-center align-middle"><?= $b; ?></td>
+                                        <td class="text-center align-middle"><?= $setores[$i]['SET_DESCRICAO']; ?></td>
+                                        <td class="text-center align-middle"><?= $setores[$i]['SET_NIVEL']; ?></td>
+                                        <td class="text-center align-middle"><?= ($setores[$i]['SET_STATUS'] == 1)? 'ATIVO' : 'DESATIVADO'; ?></td>
+                                    </tr>
+                                <?php $b++; } ?>
+                            </tbody>
+                        </table>
+                    <?php }else { ?>
+                        <h4 class="text-center text-warning fs-4">EMPRESA SEM NENHUM SETOR CADASTRADO</h4>
+                    <?php } ?>
+                </div>
+            </section>
+            <?php include_once 'app/Views/admin/inc/rodape.phtml';?>
+        </div>
+    </div>
+</body>
+</html>

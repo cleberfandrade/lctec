@@ -1,0 +1,186 @@
+<?php 
+use Libraries\Sessao;
+session_start();
+include_once 'app/Views/admin/inc/cabecalho.phtml'; 
+
+?>
+<body class="">
+    <div class="d-flex" id="wrapper">
+        <?php include_once 'app/Views/admin/inc/menu_lateral.phtml'; ?>
+        <div id="page-content-wrapper">
+        <!-- Top navigation-->
+            <?php include_once 'app/Views/admin/inc/menu_topo.phtml'; ?>
+            <div class="container-fluid bg-light p-0">
+                <header class="py-3">
+                    <section class="container px-3">
+                        <div class="row gx-5 align-items-center justify-content-center">
+                            <div class="col-lg-9 col-xl-9 col-xxl-9">
+                                <div class="my-1 px-4 mx-auto">
+                                    <a class="text-decoration-none" href="<?= DIRPAGE; ?>clientes/cadastro">
+                                        <h5 class="fs-2 fw-bolder text-uppercase text-dark">
+                                            <i class="bi bi-people"></i> Cadastrar <span class="text-success"> Clientes</span>
+                                        </h5>
+                                    </a>
+                                </div>
+                            </div>
+                            <?php include_once 'app/Views/admin/inc/saudacao.phtml'; ?> 
+                        </div>
+                    </section>
+                    <section class="container col-12 mx-auto px-5">
+                        <?= $breadcrumb ?>
+                    </section>
+                </header>
+                <?php include_once 'app/Views/admin/inc/alertas.phtml'; ?>
+                <section class="bg-light py-2">
+                    <div class="container col-10 px-2 py-2 mx-auto row">
+                        <form class="p-4 p-md-6 border text-uppercase rounded-3 bg-3" action="<?= DIRPAGE ?>clientes/cadastrar" method="POST">
+                            <div class="row ">    
+                                <div class="col-3 form-floating mb-2">
+                                    
+                                    <select class="form-select" name="CLI_TIPO">
+                                        <option value="0" <?= (isset($_POST['CLI_TIPO']) &&  $_POST['CLI_TIPO']  == "0")? 'selected' : '' ?>>---</option>
+                                        <option value="PF"<?= (isset($_POST['CLI_TIPO']) &&  $_POST['CLI_TIPO']  == "PF")? 'selected' : '' ?>>PESSOA FÍSICA</option>
+                                        <option value="PJ" <?= (isset($_POST['CLI_TIPO']) &&  $_POST['CLI_TIPO']  == "PJ")? 'selected' : '' ?>>PESSOA JURÍDICA</option>
+                                    </select>
+                                    <label class="form-label">TIPO</label>
+                                </div>
+                                <div class="col-4 form-floating mb-3">
+                                    <input type="text" class="form-control maiusculo" id="1" name="CLI_NOME" placeholder="Informe seu nome" value="<?= isset($_POST['CLI_NOME']) ? $_POST['CLI_NOME'] :''; ?>">
+                                    <label class="px-3" for="1">Seu nome</label>
+                                </div>    
+                                <div class="col-5 form-floating mb-3">
+                                    <input type="text" class="form-control maiusculo" id="2" name="CLI_SOBRENOME" placeholder="Informe seu nome" value="<?= isset($_POST['CLI_SOBRENOME']) ? $_POST['CLI_SOBRENOME'] : ''; ?>">
+                                    <label class="px-3" for="2">Seu sobrenome</label>
+                                </div> 
+                            </div> 
+                            <div class="row">
+                                <hr>
+                                <div class="col-4 text-center mb-3">
+                                    <label for="inputPassword6" class="col-form-label">Seu Sexo</label>
+                                    <div class="mx-auto text-center">   
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="CLI_SEXO" id="flexRadioDefault2" value="1" <?= (isset($_POST['CLI_SEXO']) && $_POST['CLI_SEXO'] == 1) ? "checked" : ''; ?>>
+                                            <label class="form-check-label" for="flexRadioDefault2">
+                                                Masculino
+                                            </label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="CLI_SEXO" value="2" <?= (isset($_POST['CLI_SEXO']) && $_POST['CLI_SEXO'] == 2) ? "checked" : ''; ?> id="flexRadioDefault1">
+                                            <label class="form-check-label" for="flexRadioDefault1">
+                                                Feminino
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div> 
+                                <div class="col-4 mb-2">
+                                    <label class="form-label">TEL./CEL. 1 (WHATSAPP) (opcional)</label>
+                                    <input type="text" id="FOR_TEL_1" name="CLI_TEL_1" onkeyup="handlePhone(event)" class="form-control" value="<?= isset($_POST['CLI_TEL_1']) ? $_POST['CLI_TEL_1'] : '' ?>">
+                                </div>
+                                <div class="col-4 mb-2">
+                                    <label class="form-label">TELEFONE 2 (opcional)</label>
+                                    <input type="text" id="FOR_TEL_2" name="CLI_TEL_2" onkeyup="handlePhone(event)"  class="form-control" value="<?= isset($_POST['CLI_TEL_2']) ? $_POST['CLI_TEL_2'] : '' ?>">
+                                </div>
+                                <hr class="my-4">
+                                <div class="col-2 mb-2">
+                                    <label class="form-label">CEP</label>
+                                    <input type="text" id="END_CEP" name="END_CEP" class="form-control" onkeypress="cepMascara(this);" value="<?= isset($_POST['END_CEP']) ? $_POST['END_CEP'] : '' ?>">
+                                </div>
+                                <div class="col-8 mb-2">
+                                    <label class="form-label">LOGRADOURO</label>
+                                    <input type="text" id="END_LOGRADOURO" name="END_LOGRADOURO" class="form-control maiusculo" value="<?= isset($_POST['END_LOGRADOURO']) ? $_POST['END_LOGRADOURO'] : '' ?>">
+                                </div>
+                                <div class="col-2 mb-2">
+                                    <label class="form-label">NÚMERO</label>
+                                    <input type="text" id="END_NUMERO" name="END_NUMERO" class="form-control" value="<?= isset($_POST['END_NUMERO']) ? $_POST['END_NUMERO'] : '' ?>">
+                                </div>
+                                <div class="col-4 mb-2">
+                                    <label class="form-label">BAIRRO</label>
+                                    <input type="text" id="END_BAIRRO" name="END_BAIRRO" class="form-control maiusculo" value="<?= isset($_POST['END_BAIRRO']) ? $_POST['END_BAIRRO'] : '' ?>">
+                                </div>
+                                <div class="col-5 mb-2">
+                                    <label class="form-label">CIDADE</label>
+                                    <input type="text" id="END_CIDADE" name="END_CIDADE" class="form-control maiusculo" value="<?= isset($_POST['END_CIDADE']) ? $_POST['END_CIDADE'] : '' ?>">
+                                </div>
+                                <div class="col-3 mb-2">
+                                    <label class="form-label">ESTADO</label>
+                                    <select id="UF" class="form-select text-uppercase" name="END_ESTADO">
+                                        <option value="0" <?= (isset($_POST['END_ESTADO']) &&  $_POST['END_ESTADO']  == "0")? 'selected' : '' ?>>---</option>
+                                        <option value="AC" <?= (isset($_POST['END_ESTADO']) &&  $_POST['END_ESTADO']  == "AC")? 'selected' : '' ?>>Acre</option>
+                                        <option value="AL" <?= (isset($_POST['END_ESTADO']) &&  $_POST['END_ESTADO']  == "AL")? 'selected' : '' ?>>Alagoas</option>
+                                        <option value="AP" <?= (isset($_POST['END_ESTADO']) &&  $_POST['END_ESTADO']  == "AP")? 'selected' : '' ?>>Amapá</option>
+                                        <option value="AM" <?= (isset($_POST['END_ESTADO']) &&  $_POST['END_ESTADO']  == "AM")? 'selected' : '' ?>>Amazonas</option>
+                                        <option value="BA" <?= (isset($_POST['END_ESTADO']) &&  $_POST['END_ESTADO']  == "BA")? 'selected' : '' ?>>Bahia</option>
+                                        <option value="CE" <?= (isset($_POST['END_ESTADO']) &&  $_POST['END_ESTADO']  == "CE")? 'selected' : '' ?>>Ceará</option>
+                                        <option value="DF" <?= (isset($_POST['END_ESTADO']) &&  $_POST['END_ESTADO']  == "DF")? 'selected' : '' ?>>Distrito Federal</option>
+                                        <option value="ES" <?= (isset($_POST['END_ESTADO']) &&  $_POST['END_ESTADO']  == "ES")? 'selected' : '' ?>>Espirito Santo</option>
+                                        <option value="GO" <?= (isset($_POST['END_ESTADO']) &&  $_POST['END_ESTADO']  == "GO")? 'selected' : '' ?>>Goiás</option>
+                                        <option value="MA" <?= (isset($_POST['END_ESTADO']) &&  $_POST['END_ESTADO']  == "MA")? 'selected' : '' ?>>Maranhão</option>
+                                        <option value="MS" <?= (isset($_POST['END_ESTADO']) &&  $_POST['END_ESTADO']  == "MS")? 'selected' : '' ?>>Mato Grosso do Sul</option>
+                                        <option value="MT" <?= (isset($_POST['END_ESTADO']) &&  $_POST['END_ESTADO']  == "MT")? 'selected' : '' ?>>Mato Grosso</option>
+                                        <option value="MG" <?= (isset($_POST['END_ESTADO']) &&  $_POST['END_ESTADO']  == "MG")? 'selected' : '' ?>>Minas Gerais</option>
+                                        <option value="PA" <?= (isset($_POST['END_ESTADO']) &&  $_POST['END_ESTADO']  == "PA")? 'selected' : '' ?>>Pará</option>
+                                        <option value="PB" <?= (isset($_POST['END_ESTADO']) &&  $_POST['END_ESTADO']  == "PB")? 'selected' : '' ?>>Paraíba</option>
+                                        <option value="PR" <?= (isset($_POST['END_ESTADO']) &&  $_POST['END_ESTADO']  == "PR")? 'selected' : '' ?>>Paraná</option>
+                                        <option value="PE" <?= (isset($_POST['END_ESTADO']) &&  $_POST['END_ESTADO']  == "PE")? 'selected' : '' ?>>Pernambuco</option>
+                                        <option value="PI" <?= (isset($_POST['END_ESTADO']) &&  $_POST['END_ESTADO']  == "PI")? 'selected' : '' ?>>Piauí</option>
+                                        <option value="RJ" <?= (isset($_POST['END_ESTADO']) &&  $_POST['END_ESTADO']  == "RJ")? 'selected' : '' ?>>Rio de Janeiro</option>
+                                        <option value="RN" <?= (isset($_POST['END_ESTADO']) &&  $_POST['END_ESTADO']  == "RN")? 'selected' : '' ?>>Rio Grande do Norte</option>
+                                        <option value="RS" <?= (isset($_POST['END_ESTADO']) &&  $_POST['END_ESTADO']  == "RS")? 'selected' : '' ?>>Rio Grande do Sul</option>
+                                        <option value="RO" <?= (isset($_POST['END_ESTADO']) &&  $_POST['END_ESTADO']  == "RO")? 'selected' : '' ?>>Rondônia</option>
+                                        <option value="RR" <?= (isset($_POST['END_ESTADO']) &&  $_POST['END_ESTADO']  == "RR")? 'selected' : '' ?>>Roraima</option>
+                                        <option value="SC" <?= (isset($_POST['END_ESTADO']) &&  $_POST['END_ESTADO']  == "SC")? 'selected' : '' ?>>Santa Catarina</option>
+                                        <option value="SE" <?= (isset($_POST['END_ESTADO']) &&  $_POST['END_ESTADO']  == "SE")? 'selected' : '' ?>>Sergipe</option>
+                                        <option value="SP" <?= (isset($_POST['END_ESTADO']) &&  $_POST['END_ESTADO']  == "SP")? 'selected' : '' ?>>São Paulo</option>
+                                        <option value="TO" <?= (isset($_POST['END_ESTADO']) && $_POST['END_ESTADO'] == "TO") ? "selected" : ''; ?>>Tocantins</option>
+                                    </select>
+                                </div>
+                                <hr class="my-4">
+                                <div class="col-4 mb-3">
+                                    <div class="form-floating mb-3">
+                                        <input type="text" name="CLI_REGISTRO" onfocus="javascript: retirarFormatacao(this);" onblur="javascript: formatarCampo(this);" maxlength="14" class="form-control" value="<?= isset($_POST['CLI_REGISTRO']) ? $_POST['CLI_REGISTRO'] : '' ?>">
+                                        <label for="registro">CPF/CNPJ</label>
+                                    </div>
+                                </div>
+                                <div class="col-3 form-floating mb-3">
+                                    <input type="date" name="CLI_DT_NASCIMENTO" id="nascimento" class="form-control" value="<?= isset($_POST['CLI_DT_NASCIMENTO']) ? $_POST['CLI_DT_NASCIMENTO'] : '' ?>">
+                                    <label for="nascimento">DATA DE NASCIMENTO</label>
+                                </div>
+                                <div class="col-5 text-center mb-3">
+                                    <div class="form-floating mb-3">
+                                        <input type="email" class="form-control" id="email" name="CLI_EMAIL" placeholder="Informe seu email nome@examplo.com" value="<?= isset($_POST['CLI_EMAIL']) ? $_POST['CLI_EMAIL'] : ''; ?>">
+                                        <label for="email">Seu Email</label>
+                                    </div>
+                                </div>
+                                <hr class="my-4 text-dark">
+                                <input type="hidden" class="form-control" name="EMP_COD" value="<?= isset($_SESSION['EMP_COD']) ? $_SESSION['EMP_COD'] : 0; ?>">
+                                <input type="hidden" class="form-control" name="USU_COD" value="<?= isset($_SESSION['USU_COD']) ? $_SESSION['USU_COD'] : 0; ?>">
+                                <button class="w-100 btn btn-lg text-uppercase btn-success" name="CADASTRAR_NOVO_CLIENTE" type="submit"><i class="fa fa-save"></i> Cadastrar</button>
+                                <hr class="my-4 text-dark">
+                            </div> 
+                        </form>
+                    </div>
+                </section>
+            <?php include_once 'app/Views/admin/inc/rodape.phtml';?>
+        </div>
+    </div>
+    <script>
+        function formatarCampo(campoTexto) {
+        if (campoTexto.value.length <= 11) {
+            campoTexto.value = mascaraCpf(campoTexto.value);
+        } else {
+            campoTexto.value = mascaraCnpj(campoTexto.value);
+        }
+        }
+        function retirarFormatacao(campoTexto) {
+            campoTexto.value = campoTexto.value.replace(/(\.|\/|\-)/g,"");
+        }
+        function mascaraCpf(valor) {
+            return valor.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/g,"\$1.\$2.\$3\-\$4");
+        }
+        function mascaraCnpj(valor) {
+            return valor.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/g,"\$1.\$2.\$3\/\$4\-\$5");
+        }
+    </script>
+</body>
+</html>
+                            

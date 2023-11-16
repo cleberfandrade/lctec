@@ -1,0 +1,46 @@
+<?php
+session_start();
+$_SESSION['lembrar'] = date('Y-m-d H:i:s');
+use Libraries\Sessao;
+
+include_once 'inc/header.phtml'; ?>
+    <main class="flex-shrink-0">
+        <?php include_once 'inc/nav.phtml'; ?>
+        <!-- Header-->
+        <header class="bg-3 py-3">
+            <section class="container px-5">
+                <div class="row gx-5 align-items-center justify-content-center">
+                    <div class="col-lg-10 col-xl-10 col-xxl-10">
+                        <div class="my-5 text-center text-xl-start">
+                            <h1 class="display-5 text-center fw-bolder text-uppercase text-white mb-2">Nova Senha de <span class="text-success">Acesso</span></h1>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </header>
+        <div class="container col-xl-10 col-xxl-8 px-4 py-5">
+            <div class="row align-items-center g-lg-5 py-5">
+                <div class="col-md-10 mx-auto col-lg-6">
+                    <?= Sessao::alert('ERRO') ?>    
+                    <form class="p-4 p-md-6 border rounded-3 bg-3" action="<?= DIRPAGE ?>login/cadastrar_nova_senha" method="POST">
+                        <div class="form-floating mb-3">
+                            <input type="email" class="form-control desatible" id="floatingInput" name="EML_EMAIL" placeholder="Informe seu email nome@examplo.com" value="<?= isset($_POST['EML_EMAIL']) ? $_POST['EML_EMAIL'] : '' ?>">
+                            <label for="floatingInput">Email</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="password" class="form-control" id="floatingInput" name="EML_SENHA" placeholder="Informe uma senha" value="<?= isset($_POST['EML_SENHA']) ? $_POST['EML_SENHA'] : '' ?>">
+                            <label for="floatingInput">Senha</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="password" class="form-control" id="floatingInput" name="EML_CONF_SENHA" placeholder="repita a senha informada" value="<?= isset($_POST['EML_CONF_SENHA']) ? $_POST['EML_CONF_SENHA'] : '' ?>">
+                            <label for="floatingInput">confirmação de senha</label>
+                        </div>
+                        <input type="hidden" name="ALTERAR_SENHA" value=""/>
+                        <button class="w-100 btn btn-lg text-uppercase btn-success" name="ALTERAR_SENHA_USUARIO" value="<?= $_SESSION['ALTERAR_SENHA_USUARIO'] ?>" type="submit"><i class="fa fa-sign-in"></i> Alterar Senha</button>
+                        <a href="<?= DIRPAGE ?>login" class="gap-2 text-white text-center text-decoration-none">Voltar ao acesso.</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+<?php include_once 'inc/footer.phtml'; ?>

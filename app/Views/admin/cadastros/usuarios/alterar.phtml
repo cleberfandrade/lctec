@@ -1,0 +1,113 @@
+<?php 
+use Libraries\Sessao;
+session_start();
+include_once 'app/Views/admin/inc/cabecalho.phtml'; 
+$qtd = (is_array($usuario) ? count($usuario) : 0);
+?>
+<body class="">
+    <div class="d-flex" id="wrapper">
+        <?php include_once 'app/Views/admin/inc/menu_lateral.phtml'; ?>
+        <div id="page-content-wrapper">
+        <!-- Top navigation-->
+            <?php include_once 'app/Views/admin/inc/menu_topo.phtml'; ?>
+            <div class="container-fluid bg-light p-0">
+                <header class="py-3">
+                    <section class="container px-3">
+                        <div class="row gx-5 align-items-center justify-content-center">
+                            <div class="col-lg-9 col-xl-9 col-xxl-9">
+                                <div class="my-1 px-4 mx-auto">
+                                    <a class="text-decoration-none" href="<?= DIRPAGE; ?>usuarios/alteracao/<?= $_SESSION['EMP_COD'] ?>/<?= $usuario['USU_COD'] ?>">
+                                        <h5 class="fs-2 fw-bolder text-uppercase text-dark">
+                                            <i class="bi bi-person-circle"></i> Alterar <span class="text-success"> Usuário</span>
+                                        </h5>
+                                    </a>
+                                </div>
+                            </div>
+                            <?php include_once 'app/Views/admin/inc/saudacao.phtml'; ?> 
+                        </div>
+                    </section>
+                    <section class="container col-12 mx-auto px-5">
+                        <?= $breadcrumb ?>
+                    </section>
+                </header>
+                <?php include_once 'app/Views/admin/inc/alertas.phtml'; ?>  
+                <section class="bg-light py-2">
+                    <div class="container col-10 px-2 py-2 mx-auto row">
+                        <form class="p-4 p-md-6 border text-uppercase rounded-3 bg-3" action="<?= DIRPAGE ?>usuarios/alterar" method="POST">
+                            <div class="row ">    
+                                <div class="col-2 mb-2 form-floating ">
+                                    <select class="form-select " name="USU_NIVEL">                                        
+                                        <?php for ($i=1; $i <= 10; $i++) { ?>
+                                            <option value="<?= $i?>" <?= (isset($_POST['USU_NIVEL']) &&  $_POST['USU_NIVEL']  == $i)? 'selected' : (($usuario['USU_NIVEL'] == $i)? 'selected'  : '') ?>><?= $i ?></option>
+                                        <?php } ?>
+                                    </select>
+                                    <label class="form-label">NÍVEL DO USUÁRIO</label>
+                                </div>
+                                <div class="col-4 form-floating mb-3">
+                                    <input type="text" class="form-control maiusculo" id="1" name="USU_NOME" placeholder="Informe seu nome" value="<?= isset($_POST['USU_NOME'])? $_POST['USU_NOME'] : (isset($usuario['USU_NOME']) ? $usuario['USU_NOME'] :''); ?>">
+                                    <label class="px-3" for="1">Seu nome</label>
+                                </div>    
+                                <div class="col-6 form-floating mb-3">
+                                    <input type="text" class="form-control maiusculo" id="2" name="USU_SOBRENOME" placeholder="Informe seu Sobrenome" value="<?= isset($_POST['USU_SOBRENOME'])? $_POST['USU_SOBRENOME'] : (isset($usuario['USU_SOBRENOME']) ? $usuario['USU_SOBRENOME'] : ''); ?>">
+                                    <label class="px-3" for="2">Seu sobrenome</label>
+                                </div> 
+                            </div> 
+                            <div class="row">
+                                <hr>
+                                <div class="col-5 text-center mb-3">
+                                    <label for="inputPassword6" class="col-form-label">Seu Sexo</label>
+                                    <div class="mx-auto text-center">   
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="USU_SEXO" id="flexRadioDefault2" value="1" <?= (isset($_POST['USU_SEXO']) && $_POST['USU_SEXO'] == 1) ? "checked" : ((isset($usuario['USU_SEXO']) && $usuario['USU_SEXO'] == 1)? "checked" : ''); ?>>
+                                            <label class="form-check-label" for="flexRadioDefault2">
+                                                Masculino
+                                            </label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="USU_SEXO" value="2" <?= (isset($_POST['USU_SEXO']) && $_POST['USU_SEXO'] == 2) ? "checked" : ((isset($usuario['USU_SEXO']) && $usuario['USU_SEXO'] == 2)? "checked" : ''); ?> id="flexRadioDefault1">
+                                            <label class="form-check-label" for="flexRadioDefault1">
+                                                Feminino
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div> 
+                                <div class="col-7 text-center mb-3">
+                                    <label for="inputPassword6" class="col-form-label">Email de Acesso</label>
+                                    <div class="form-floating mb-3">
+                                        <input type="email" class="form-control" id="email" name="USU_EMAIL" placeholder="Informe seu email nome@examplo.com" value="<?= isset($_POST['USU_EMAIL']) ? $_POST['USU_EMAIL'] : (isset($usuario['USU_EMAIL']) ? $usuario['USU_EMAIL'] : ''); ?>">
+                                        <label for="email">Seu Email</label>
+                                    </div>
+                                </div>
+                                <div class="col-6 text-center mb-3 row">
+                                    <label for="inputPassword6" class="col-form-label">RESETAR SENHA DO USUÁRIO</label>
+                                    <div class="mx-auto text-center">   
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" name="USU_RESET_SENHA" type="radio" value="NAO" id="flexCheckChecked" checked>
+                                            <label class="form-check-label" for="flexCheckChecked">
+                                                NÃO
+                                            </label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" name="USU_RESET_SENHA"  type="radio" value="SIM" id="flexCheckDefault">
+                                            <label class="form-check-label" for="flexCheckDefault">
+                                                SIM
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <span class="col-6 text-center mb-3 fw-bold fs-5">EM CASO DE RESET,<br> A NOVA SENHA SERÁ: <b class="text-danger">123456</b><br> O USUÁRIO DEVERÁ ALTERÁ-LA</span>
+                                <hr class="my-4 text-dark">
+                                <input type="hidden" class="form-control" name="EMP_COD" value="<?= isset($_SESSION['EMP_COD']) ? $_SESSION['EMP_COD'] : 0; ?>">
+                                <input type="hidden" class="form-control" name="USU_COD" value="<?= isset($usuario['USU_COD']) ? $usuario['USU_COD'] : 0; ?>">
+                                <button class="w-100 btn btn-lg text-uppercase btn-success" name="ALTERAR_USUARIO" type="submit"><i class="fa fa-save"></i> Cadastrar</button>
+                                <hr class="my-4 text-dark">
+                            </div> 
+                        </form>
+                    </div>
+                </section>
+            <?php include_once 'app/Views/admin/inc/rodape.phtml';?>
+        </div>
+    </div>
+</body>
+</html>
+                            

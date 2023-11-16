@@ -1,0 +1,47 @@
+<?php 
+use Libraries\Sessao;
+session_start();
+
+include_once 'app/Views/admin/inc/cabecalho.phtml'; 
+$qtd = (is_array($estoque) ? count($estoque) : 0);
+$qtdE = (is_array($empresas) ? count($empresas) : 0);
+
+?>
+<body class="">
+    <div class="d-flex" id="wrapper">
+        <?php include_once 'app/Views/admin/inc/menu_lateral.phtml'; ?>
+        <div id="page-content-wrapper">
+        <!-- Top navigation-->
+        <?php include_once 'app/Views/admin/inc/menu_topo.phtml'; ?>
+        <div class="container-fluid bg-light p-0">
+            <header class="py-3">
+                <section class="container px-3">
+                    <div class="row gx-5 align-items-center justify-content-center">
+                        <div class="col-lg-9 col-xl-9 col-xxl-9">
+                            <div class="my-1 px-4 mx-auto">
+                                <a class="text-decoration-none" href="<?= DIRPAGE; ?>estoques/gerenciar/<?= $estoque['EMP_COD']?>/<?= $estoque['EST_COD']?>">
+                                <h3 class="fs-2 fw-bolder text-uppercase text-dark"><i class="bi bi-box"></i> Gerenciar <span class="text-success">Estoque</span></h3></a>
+                            </div>
+                        </div>
+                        <?php include_once 'app/Views/admin/inc/saudacao.phtml'; ?> 
+                    </div>
+                </section>
+                <section class="container col-12 mx-auto px-5">
+                    <?= $breadcrumb ?>
+                </section>
+            </header>
+            <?php include_once 'app/Views/admin/inc/alertas.phtml'; ?>  
+            <section class="bg-light py-2">
+                    <div class="card bg-success mx-auto text-center col-6 py-2 mb-4">
+                        <div class="card-body text-white">
+                            <h5 class="card-title"><i class="bi bi-box2-fill"></i> PRODUTOS</h5>
+                            <p class="card-text">Cadastre/Altere os produtos deste estoque</p>
+                            <a href="<?= DIRPAGE ?>estoques/produtos/<?= $estoque['EMP_COD']?>/<?= $estoque['EST_COD']?>" class="btn btn-dark"><i class="bi bi-box2-fill"></i> ACESSAR</a>
+                        </div>
+                    </div>
+            </section>
+            <?php include_once 'app/Views/admin/inc/rodape.phtml';?>
+        </div>
+    </div>
+</body>
+</html>    

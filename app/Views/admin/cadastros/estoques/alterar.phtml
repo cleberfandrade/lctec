@@ -1,0 +1,62 @@
+<?php 
+use Libraries\Sessao;
+session_start();
+include_once 'app/Views/admin/inc/cabecalho.phtml'; 
+$qtd = (is_array($estoque) ? count($estoque) : 0);
+$qtdE = (is_array($empresas) ? count($empresas) : 0);
+?>
+<body class="">
+    <div class="d-flex" id="wrapper">
+        <?php include_once 'app/Views/admin/inc/menu_lateral.phtml'; ?>
+        <div id="page-content-wrapper">
+        <!-- Top navigation-->
+        <?php include_once 'app/Views/admin/inc/menu_topo.phtml'; ?>
+        <div class="container-fluid bg-light p-0">
+            <header class="py-3">
+                <section class="container px-3">
+                    <div class="row gx-5 align-items-center justify-content-center">
+                        <div class="col-lg-9 col-xl-9 col-xxl-9">       
+                            <div class="my-1 px-4 mx-auto">
+                                <a class="text-decoration-none" href="<?= DIRPAGE; ?>cadastros/alteracao_estoques/<?=$estoque['EMP_COD'].'/'.$estoque['EST_COD']; ?>">
+                                <h5 class="fs-2 fw-bolder text-uppercase text-dark"><i class="bi bi-plus-square"></i> Alterar <span class="text-success">Estoques</span></h5></a>
+                            </div>
+                        </div>
+                        <?php include_once 'app/Views/admin/inc/saudacao.phtml'; ?> 
+                    </div>
+                </section>
+                <section class="container col-12 mx-auto px-5">
+                        <?= $breadcrumb ?>
+                </section>
+            </header>
+            <?php include_once 'app/Views/admin/inc/alertas.phtml'; ?>  
+            <section class="bg-light py-2">
+                <div class="container col-10 px-2 py-2 mx-auto row">
+                    <form class="p-4 p-md-6 border text-uppercase rounded-3 bg-3" action="<?= DIRPAGE ?>cadastros/alterar_estoques" method="POST">
+                        <div class="row">
+                            <div class="col-4 mb-2">
+                                <label class="form-label">TIPO</label>
+                                <select class="form-select" name="EST_TIPO">
+                                    <option value="0" <?= (isset($_POST['EST_TIPO']) &&  $_POST['EST_TIPO']  == "0")? 'selected' : (($estoque['EST_TIPO'] == "0")? 'selected': '') ?>>---</option>
+                                    <option value="PRINCIPAL" <?=(isset($_POST['EST_TIPO']) &&  $_POST['EST_TIPO']  == "0")? 'selected' : ( (isset($estoque['EST_TIPO']) &&  $estoque['EST_TIPO']  == "PRINCIPAL")? 'selected' : '') ?>>PRINCIPAL</option>
+                                    <option value="OUTROS" <?= (isset($_POST['EST_TIPO']) &&  $_POST['EST_TIPO']  == "0")? 'selected' : ((isset($estoque['EST_TIPO']) &&  $estoque['EST_TIPO']  == "OUTROS")? 'selected' : '') ?>>OUTROS</option>
+                                </select>
+                            </div>
+                            <div class="col-8 mb-2">
+                                <label class="form-label" for="1">INFORME UMA DESCRIÇÃO</label>
+                                <input type="text" class="form-control maiusculo" id="1" name="EST_DESCRICAO" placeholder="EX. LOJA 01" value="<?= isset($_POST['EST_DESCRICAO']) ? $_POST['EST_DESCRICAO'] : (isset($estoque['EST_DESCRICAO']) ? $estoque['EST_DESCRICAO'] : ''); ?>">
+                            </div> 
+                            <hr class="my-4 text-dark">
+                            <input type="hidden" class="form-control" name="EMP_COD" value="<?= isset($estoque['EMP_COD']) ? $estoque['EMP_COD'] : 0; ?>">
+                            <input type="hidden" class="form-control" name="EST_COD" value="<?= isset($estoque['EST_COD']) ? $estoque['EST_COD'] : 0; ?>">
+                            <input type="hidden" class="form-control" name="USU_COD" value="<?= isset($_SESSION['USU_COD']) ? $_SESSION['USU_COD'] : 0; ?>">
+                            <button class="w-100 btn btn-lg text-uppercase btn-warning" title="Alterar cadastro do estoque da empresa" name="ALTERAR_ESTOQUE" type="submit"><i class="fa fa-edit"></i> ALTERAR</button>
+                            <hr class="my-4 text-dark">
+                        </div>    
+                    </form>
+                </div>
+            </section>
+            <?php include_once 'app/Views/admin/inc/rodape.phtml';?>
+        </div>
+    </div>
+</body>
+</html>    

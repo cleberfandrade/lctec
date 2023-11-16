@@ -1,0 +1,147 @@
+<?php
+session_start();
+$_SESSION['acesso'] = date('i:s');
+use Libraries\Sessao;
+
+include_once 'inc/cabecalho.phtml'; ?>
+    <main class="flex-shrink-0 bg-dark ">
+        <?php //include_once 'inc/nav.phtml'; ?>
+        <!-- Header-->
+        <header class="bg-dark">
+            <section class="container px-5">
+                <div class="row gx-5 align-items-center justify-content-center">
+                    <div class="col-lg-10 col-xl-10 col-xxl-10">
+                        <div class="my-2 text-center text-xl-start">
+                        <a class="text-decoration-none" href="<?= DIRPAGE; ?>site/cadastro"><h3 class="display-5 text-center fw-bolder text-uppercase text-success mb-2">Cadastre-se <span class="text-success"></span></h3></a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </header>
+        <div class="container-fluid col-xl-10 col-xxl-10 px-4 py-2">
+            <div class="row align-items-center g-lg-5 py-3">
+                <div class="col-lg-4 text-center text-lg-start">
+                    <h1 class="display-5 text-center fw-bolder text-uppercase text-3 mb-2">LC-<span class="text-success">TECH</span></h1>
+                    <p class="col-lg lead text-center fs-6">DESENVOLVENDO SOLUÇÕES <br/>PARA O SEU NEGÓCIO</p>
+                </div>
+                <div class="col-md-10 mx-auto col-lg-7 mb-5">
+                <?= Sessao::alert('ERRO') ?>
+                <?= Sessao::alert('OK') ?>
+                    <form class="p-4 p-md-6 border rounded-3" action="<?= DIRPAGE ?>login/novo_cadastro" method="POST">
+                        <div class="row">    
+                            <div class="col-5 form-floating mb-3">
+                                <input type="text" class="form-control maiusculo" id="1" name="nome_usuario" placeholder="Informe seu nome" value="<?= isset($_POST['nome_usuario']) ? $_POST['nome_usuario'] : ''; ?>">
+                                <label class="px-3" for="1">Seu nome</label>
+                            </div>    
+                            <div class="col-7 form-floating mb-3">
+                                <input type="text" class="form-control maiusculo" id="2" name="sobrenome_usuario" placeholder="Informe seu nome" value="<?= isset($_POST['sobrenome_usuario']) ? $_POST['sobrenome_usuario'] : ''; ?>">
+                                <label class="px-3" for="2">Seu sobrenome</label>
+                            </div> 
+                        </div> 
+                        <div class="row text-center mb-3">
+                            <div class="form-floating col-8 mb-3">
+                                <input type="text" class="form-control maiusculo" id="logradouro" name="logradouro_usuario" placeholder="Informe seu endereço" value="<?= isset($_POST['logradouro_usuario']) ? $_POST['logradouro_usuario'] : ''; ?>">
+                                <label for="logradouro">Seu Endereço</label>
+                            </div>
+                            <div class="form-floating col-2 mb-2">
+                                <label class="form-label">CEP</label>
+                                <input type="text" id="END_CEP" name="END_CEP" class="form-control" onkeypress="cepMascara(this);" value="<?= isset($_POST['END_CEP']) ? $_POST['END_CEP'] : '' ?>">
+                            </div>
+                            <div class="form-floating col-2 mb-3">
+                                <input type="text" class="form-control" id="floatingInput" name="numero_usuario" placeholder="n°" value="<?= isset($_POST['numero_usuario']) ? $_POST['numero_usuario'] : ''; ?>">
+                                <label for="floatingInput">n°</label>
+                            </div> 
+                            <div class="form-floating col-5 mb-3">
+                                <input type="text" class="form-control maiusculo" id="floatingInput" name="bairro_usuario" placeholder="Informe seu bairro" value="<?= isset($_POST['bairro_usuario']) ? $_POST['bairro_usuario'] : ''; ?>">
+                                <label for="floatingInput">Bairro</label>
+                            </div> 
+                            <div class="form-floating col-4 mb-3">
+                                <input type="text" class="form-control maiusculo" id="floatingInput" name="cidade_usuario" placeholder="Informe sua Cidade" value="<?= isset($_POST['cidade_usuario']) ? $_POST['cidade_usuario'] : ''; ?>">
+                                <label for="floatingInput">Cidade</label>
+                            </div> 
+                            <div class="form-floating col-3 mb-2">
+                                <select id="UF" class="form-select text-uppercase" name="END_ESTADO">
+                                        <option value="0" <?= (isset($_POST['END_ESTADO']) &&  $_POST['END_ESTADO']  == "0")? 'selected' : '' ?>>---</option>
+                                        <option value="AC" <?= (isset($_POST['END_ESTADO']) &&  $_POST['END_ESTADO']  == "AC")? 'selected' : '' ?>>Acre</option>
+                                        <option value="AL" <?= (isset($_POST['END_ESTADO']) &&  $_POST['END_ESTADO']  == "AL")? 'selected' : '' ?>>Alagoas</option>
+                                        <option value="AP" <?= (isset($_POST['END_ESTADO']) &&  $_POST['END_ESTADO']  == "AP")? 'selected' : '' ?>>Amapá</option>
+                                        <option value="AM" <?= (isset($_POST['END_ESTADO']) &&  $_POST['END_ESTADO']  == "AM")? 'selected' : '' ?>>Amazonas</option>
+                                        <option value="BA" <?= (isset($_POST['END_ESTADO']) &&  $_POST['END_ESTADO']  == "BA")? 'selected' : '' ?>>Bahia</option>
+                                        <option value="CE" <?= (isset($_POST['END_ESTADO']) &&  $_POST['END_ESTADO']  == "CE")? 'selected' : '' ?>>Ceará</option>
+                                        <option value="DF" <?= (isset($_POST['END_ESTADO']) &&  $_POST['END_ESTADO']  == "DF")? 'selected' : '' ?>>Distrito Federal</option>
+                                        <option value="ES" <?= (isset($_POST['END_ESTADO']) &&  $_POST['END_ESTADO']  == "ES")? 'selected' : '' ?>>Espirito Santo</option>
+                                        <option value="GO" <?= (isset($_POST['END_ESTADO']) &&  $_POST['END_ESTADO']  == "GO")? 'selected' : '' ?>>Goiás</option>
+                                        <option value="MA" <?= (isset($_POST['END_ESTADO']) &&  $_POST['END_ESTADO']  == "MA")? 'selected' : '' ?>>Maranhão</option>
+                                        <option value="MS" <?= (isset($_POST['END_ESTADO']) &&  $_POST['END_ESTADO']  == "MS")? 'selected' : '' ?>>Mato Grosso do Sul</option>
+                                        <option value="MT" <?= (isset($_POST['END_ESTADO']) &&  $_POST['END_ESTADO']  == "MT")? 'selected' : '' ?>>Mato Grosso</option>
+                                        <option value="MG" <?= (isset($_POST['END_ESTADO']) &&  $_POST['END_ESTADO']  == "MG")? 'selected' : '' ?>>Minas Gerais</option>
+                                        <option value="PA" <?= (isset($_POST['END_ESTADO']) &&  $_POST['END_ESTADO']  == "PA")? 'selected' : '' ?>>Pará</option>
+                                        <option value="PB" <?= (isset($_POST['END_ESTADO']) &&  $_POST['END_ESTADO']  == "PB")? 'selected' : '' ?>>Paraíba</option>
+                                        <option value="PR" <?= (isset($_POST['END_ESTADO']) &&  $_POST['END_ESTADO']  == "PR")? 'selected' : '' ?>>Paraná</option>
+                                        <option value="PE" <?= (isset($_POST['END_ESTADO']) &&  $_POST['END_ESTADO']  == "PE")? 'selected' : '' ?>>Pernambuco</option>
+                                        <option value="PI" <?= (isset($_POST['END_ESTADO']) &&  $_POST['END_ESTADO']  == "PI")? 'selected' : '' ?>>Piauí</option>
+                                        <option value="RJ" <?= (isset($_POST['END_ESTADO']) &&  $_POST['END_ESTADO']  == "RJ")? 'selected' : '' ?>>Rio de Janeiro</option>
+                                        <option value="RN" <?= (isset($_POST['END_ESTADO']) &&  $_POST['END_ESTADO']  == "RN")? 'selected' : '' ?>>Rio Grande do Norte</option>
+                                        <option value="RS" <?= (isset($_POST['END_ESTADO']) &&  $_POST['END_ESTADO']  == "RS")? 'selected' : '' ?>>Rio Grande do Sul</option>
+                                        <option value="RO" <?= (isset($_POST['END_ESTADO']) &&  $_POST['END_ESTADO']  == "RO")? 'selected' : '' ?>>Rondônia</option>
+                                        <option value="RR" <?= (isset($_POST['END_ESTADO']) &&  $_POST['END_ESTADO']  == "RR")? 'selected' : '' ?>>Roraima</option>
+                                        <option value="SC" <?= (isset($_POST['END_ESTADO']) &&  $_POST['END_ESTADO']  == "SC")? 'selected' : '' ?>>Santa Catarina</option>
+                                        <option value="SE" <?= (isset($_POST['END_ESTADO']) &&  $_POST['END_ESTADO']  == "SE")? 'selected' : '' ?>>Sergipe</option>
+                                        <option value="SP" <?= (isset($_POST['END_ESTADO']) &&  $_POST['END_ESTADO']  == "SP")? 'selected' : '' ?>>São Paulo</option>
+                                        <option value="TO" <?= (isset($_POST['END_ESTADO']) && $_POST['END_ESTADO'] == "TO") ? "selected" : ''; ?>>Tocantins</option>
+                                    </select>
+                                <label for="floatingInput">ESTADO</label>
+                            </div>
+                        </div> 
+                        <div class="row">
+                            <hr>
+                            <div class="col-5 text-center mb-3">
+                                <label for="inputPassword6" class="col-form-label">Seu Sexo</label>
+                                <div class="mx-auto text-center">   
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="sexo_usuario" id="flexRadioDefault2" value="1" checked>
+                                        <label class="form-check-label" for="flexRadioDefault2">
+                                            Masculino
+                                        </label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="sexo_usuario" value="2" id="flexRadioDefault1">
+                                        <label class="form-check-label" for="flexRadioDefault1">
+                                            Feminino
+                                        </label>
+                                    </div>
+                                </div>
+                            </div> 
+                            <div class="col-7 text-center mb-3">
+                                <label for="inputPassword6" class="col-form-label">Email</label>
+                                <div class="form-floating mb-3">
+                                    <input type="email" class="form-control" id="email" name="email_usuario" placeholder="Informe seu email nome@examplo.com" value="<?= isset($_POST['email_usuario']) ? $_POST['email_usuario'] : ''; ?>">
+                                    <label for="email">Seu Email</label>
+                                </div>
+                            </div>
+                        </div> 
+                        <div class="row">
+                            <div class="col-6 form-floating mb-3">
+                                <input type="password" class="form-control" name="senha_usuario" id="floatingPassword" placeholder="Digite sua senha">
+                                <label for="floatingPassword">Senha</label>
+                            </div>
+                            <div class="col-6 form-floating mb-3">
+                                <input type="password" class="form-control" name="conf_senha_usuario" id="floatingPassword" placeholder="Confirme sua senha">
+                                <label for="floatingPassword">Confirme a Senha</label>
+                            </div>
+                        </div>
+                        <button class="w-100 btn btn-lg text-uppercase btn-success" name="cadastro" value="<?= $_SESSION['cadastro'] ?>" type="submit"><i class="fa fa-save"></i> Cadastrar</button>
+                        <hr class="my-4 text-white">
+                        <div class="form-floating mb-3 text-center">
+                            <a href="<?= DIRPAGE ?>login" class="text-white text-uppercase  text-decoration-none">Voltar ao acesso</a>
+                        </div>
+                    </form>
+                    
+                </div><hr class="my-4 text-white">
+            </div>
+            
+        </div>
+    </main>
+<?php include_once 'inc/rodape.phtml'; ?>
+</body>
+</html>

@@ -1,0 +1,83 @@
+<?php 
+use Libraries\Sessao;
+session_start();
+include_once 'app/Views/admin/inc/cabecalho.phtml'; 
+$qtdS = (is_array($setores) ? count($setores) : 0);
+
+?>
+<body class="">
+    <div class="d-flex" id="wrapper">
+        <?php include_once 'app/Views/admin/inc/menu_lateral.phtml'; ?>
+        <div id="page-content-wrapper">
+        <!-- Top navigation-->
+            <?php include_once 'app/Views/admin/inc/menu_topo.phtml'; ?>
+            <div class="container-fluid bg-light p-0">
+                <header class="py-3">
+                    <section class="container px-3">
+                        <div class="row gx-5 align-items-center justify-content-center">
+                            <div class="col-lg-9 col-xl-9 col-xxl-9">
+                                <div class="my-1 px-4 mx-auto">
+                                    <a class="text-decoration-none" href="<?= DIRPAGE; ?>categorias/alteracao/<?= $categoria['EMP_COD']?>/<?= $categoria['CAT_COD']?>">
+                                        <h5 class="fs-2 fw-bolder text-uppercase text-dark">
+                                            <i class="fa fa-handshake"></i> Alterar <span class="text-success"> Categorias</span>
+                                        </h5>
+                                    </a>
+                                </div>
+                            </div>
+                            <?php include_once 'app/Views/admin/inc/saudacao.phtml'; ?> 
+                        </div>
+                    </section>
+                    <section class="container col-12 mx-auto px-5">
+                        <?= $breadcrumb ?>
+                    </section>
+                </header>
+                <?php include_once 'app/Views/admin/inc/alertas.phtml'; ?>
+                <section class="bg-light py-2">
+                    <div class="container col-10 px-2 py-2 mx-auto row">
+                        <form class="p-4 p-md-6 border text-uppercase rounded-3 bg-3" action="<?= DIRPAGE ?>categorias/alterar" method="POST">
+                            <div class="row ">    
+                                <div class="col-3 mb-2 text-center">
+                                    <label class="form-label">NÍVEL</label>
+                                    <div class="form-floating mb-3">
+                                        <select class="form-select " name="CAT_NIVEL">                                        
+                                            <?php for ($i=1; $i <= 20; $i++) { ?>
+                                                <option value="<?= $i?>" <?= (isset($_POST['CAT_NIVEL']) &&  $_POST['CAT_NIVEL']  == $i)? 'selected' : ((isset($categoria['CAT_NIVEL']) && $categoria['CAT_NIVEL'] == $i)? 'selected' : '') ?>><?= $i ?></option>
+                                            <?php } ?>
+                                        </select>
+                                        <label class="form-floating ">NÍVEL DA CATEGORIA</label>
+                                    </div>
+                                </div>
+                                <div class="col-3 text-center mb-3">
+                                    <label class="form-label">SETOR</label>
+                                    <div class="form-floating mb-3">
+                                        <select class="form-select text-uppercase mb-3 form-floating" name="SET_COD">
+                                            <option value="0" <?= (isset($_POST['SET_COD']) &&  $_POST['SET_COD']  == "0")? 'selected' : ((isset($categoria['SET_COD']) && $categoria['SET_COD'] == 0)? 'selected' : '') ?>>---</option>
+                                            <?php for ($i= 0; $i < $qtdS; $i++) { ?> 
+                                                <option value="<?= $setores[$i]['SET_COD']; ?>" <?= (isset($_POST['SET_COD']) &&  $_POST['SET_COD']  == $setores[$i]['SET_COD'] )? 'selected' : ((isset($categoria['SET_COD']) && $categoria['SET_COD'] == $setores[$i]['SET_COD'])? 'selected' : '') ?>><?= $setores[$i]['SET_DESCRICAO'] ?></option>
+                                            <?php } ?> 
+                                        </select>
+                                        <label class="form-floating mb-3">SETOR DA CATEGORIA</label>
+                                    </div>
+                                </div>
+                                <div class="col-6 mb-3">
+                                    <label class="form-label" for="1">DESCRIÇÃO</label>
+                                    <div class="form-floating mb-3">
+                                        <input type="text" class="form-control maiusculo" id="1" name="CAT_DESCRICAO" placeholder="" value="<?= isset($_POST['CAT_DESCRICAO']) ? $_POST['CAT_DESCRICAO'] : (isset($categoria['CAT_DESCRICAO'])? $categoria['CAT_DESCRICAO'] : ''); ?>">
+                                        <label class="form-floating px-3" for="1">DESCRIÇÃO DA CATEGORIA</label>
+                                    </div>
+                                </div>
+                                <hr class="my-4 text-dark">
+                                <input type="hidden" class="form-control" name="EMP_COD" value="<?= isset($_SESSION['EMP_COD']) ? $_SESSION['EMP_COD'] : 0; ?>">
+                                <input type="hidden" class="form-control" name="USU_COD" value="<?= isset($_SESSION['USU_COD']) ? $_SESSION['USU_COD'] : 0; ?>">
+                                <input type="hidden" class="form-control" name="CAT_COD" value="<?= isset($categoria['CAT_COD']) ? $categoria['CAT_COD'] : 0; ?>">
+                                <button class="w-100 btn btn-lg text-uppercase btn-warning" name="ALTERAR_CATEGORIA" type="submit"><i class="fa fa-edit"></i> Alterar</button>
+                            </div> 
+                        </form>
+                    </div>
+                </section>
+            </div>
+            <?php include_once 'app/Views/admin/inc/rodape.phtml';?>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,168 @@
+<?php 
+use Libraries\Sessao;
+session_start();
+include_once 'app/Views/admin/inc/cabecalho.phtml'; 
+$qtd = (is_array($colaborador) ? count($colaborador) : 0);
+$qtdCS = (is_array($cargos_salarios) ? count($cargos_salarios) : 0);
+$qtdS = (is_array($setores) ? count($setores) : 0);
+?>
+<body class="">
+    <div class="d-flex" id="wrapper">
+        <?php include_once 'app/Views/admin/inc/menu_lateral.phtml'; ?>
+        <div id="page-content-wrapper">
+        <!-- Top navigation-->
+            <?php include_once 'app/Views/admin/inc/menu_topo.phtml'; ?>
+            <div class="container-fluid bg-light p-0">
+                <header class="py-3">
+                    <section class="container px-3">
+                        <div class="row gx-5 align-items-center justify-content-center">
+                            <div class="col-lg-9 col-xl-9 col-xxl-9">
+                                <div class="my-1 px-4 mx-auto">
+                                    <a class="text-decoration-none" href="<?= DIRPAGE; ?>colaboradores/alteracao/<?= $colaborador['EMP_COD']?>/<?= $colaborador['COL_COD']?>">
+                                        <h5 class="fs-2 fw-bolder text-uppercase text-dark">
+                                            <i class="bi bi-person-bounding-box"></i> Alterar <span class="text-success"> Colaborador(a)</span>
+                                        </h5>
+                                    </a>
+                                </div>
+                            </div>
+                            <?php include_once 'app/Views/admin/inc/saudacao.phtml'; ?>
+                        </div>
+                    </section>
+                    <section class="container col-12 mx-auto px-5">
+                          <?= $breadcrumb ?>
+                    </section>
+                </header>
+                <?php include_once 'app/Views/admin/inc/alertas.phtml'; ?>  
+                <section class="bg-light py-2">
+                    <div class="container col-10 px-2 py-2 mx-auto row">
+                        <form class="p-4 p-md-6 border text-uppercase rounded-3 bg-3" action="<?= DIRPAGE ?>colaboradores/alterar" method="POST">
+                            <div class="row ">    
+                                <div class="col-2 mb-3 form-floating ">
+                                    <select class="form-select" name="COL_NIVEL">                                        
+                                        <?php for ($i=1; $i <= 10; $i++) { ?>
+                                            <option value="<?= $i?>" <?= (isset($_POST['COL_NIVEL']) &&  $_POST['COL_NIVEL']  == $i)? 'selected' : ((isset($colaborador['COL_NIVEL']) && $colaborador['COL_NIVEL'] == $i)? 'selected' : ((isset($colaborador['COL_NIVEL']) && $colaborador['COL_NIVEL'] == $i)? 'selected' : '')) ?>><?= $i ?></option>
+                                        <?php } ?>
+                                    </select>
+                                    <label class="form-floating mb-3">NÍVEL</label>
+                                </div>
+                                <div class="col-2 text-center mb-3">
+                                    <div class="form-floating mb-3">
+                                        <select class="form-select text-uppercase mb-3 form-floating" name="SET_COD">
+                                            <option value="0" <?= (isset($_POST['SET_COD']) &&  $_POST['SET_COD']  == "0")? 'selected' : '' ?>>---</option>
+                                            <?php for ($i= 0; $i < $qtdS; $i++) { ?> 
+                                                <option value="<?= $setores[$i]['SET_COD']; ?>" <?= (isset($_POST['SET_COD']) &&  $_POST['SET_COD']  == $setores[$i]['SET_COD'] )? 'selected' : ((isset($colaborador['SET_COD']) && $colaborador['SET_COD'] == $setores[$i]['SET_COD'])? 'selected' : '') ?>><?= $setores[$i]['SET_DESCRICAO'] ?></option>
+                                            <?php } ?> 
+                                        </select>
+                                        <label class="form-floating mb-3">SETOR</label>
+                                    </div>
+                                </div>
+                                <div class="col-4 form-floating mb-3">
+                                    <input type="text" class="form-control maiusculo" id="1" name="COL_NOME" placeholder="Informe seu nome" value="<?= isset($_POST['COL_NOME']) ? $_POST['COL_NOME'] : (isset($colaborador['COL_NOME'])? $colaborador['COL_NOME'] : ''); ?>">
+                                    <label class="px-3" for="1">Seu nome</label>
+                                </div>    
+                                <div class="col-4 form-floating mb-3">
+                                    <input type="text" class="form-control maiusculo" id="2" name="COL_SOBRENOME" placeholder="Informe seu nome" value="<?= isset($_POST['COL_SOBRENOME']) ? $_POST['COL_SOBRENOME'] : (isset($colaborador['COL_SOBRENOME'])? $colaborador['COL_SOBRENOME'] : ''); ?>">
+                                    <label class="px-3" for="2">Seu sobrenome</label>
+                                </div> 
+                            </div> 
+                            <div class="row">
+                                <hr>
+                                <div class="col-3 text-center mb-3">
+                                    <label for="inputPassword6" class="col-form-label">Seu Sexo</label>
+                                    <div class="mx-auto text-center">   
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="COL_SEXO" id="sexo1" value="1" <?= (isset($_POST['COL_SEXO']) && $_POST['COL_SEXO'] == 1) ? "checked" : ((isset($colaborador['COL_SEXO']) && $colaborador['COL_SEXO'] == 1)? 'checked': ''); ?>>
+                                            <label class="form-check-label" for="sexo1">
+                                                Masculino
+                                            </label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="COL_SEXO" id="sexo2" value="2" <?= (isset($_POST['COL_SEXO']) && $_POST['COL_SEXO'] == 2) ? "checked" : ((isset($colaborador['COL_SEXO']) && $colaborador['COL_SEXO'] == 2)? 'checked': ''); ?>>
+                                            <label class="form-check-label" for="sexo2">
+                                                Feminino
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div> 
+                                <div class="col-3 text-center mb-3">
+                                    <label class="col-form-label">CARGO</label>
+                                    <div class="form-floating mb-3">
+                                        <select class="form-select text-uppercase mb-3 form-floating" name="CGS_COD">
+                                            <option value="0" <?= (isset($_POST['CGS_COD']) &&  $_POST['CGS_COD']  == "0")? 'selected' : ((isset($colaborador['CGS_COD']) && $colaborador['CGS_COD'] == "0")? 'selected': ''); ?>>---</option>
+                                            <?php for ($i= 0; $i < $qtdCS; $i++) { ?> 
+                                                <option value="<?= $cargos_salarios[$i]['CGS_COD']; ?>" <?= (isset($_POST['CGS_COD']) &&  $_POST['CGS_COD']  == $cargos_salarios[$i]['CGS_COD'])? 'selected' : ((isset($colaborador['CGS_COD']) && $colaborador['CGS_COD'] == $cargos_salarios[$i]['CGS_COD'])? 'selected': ''); ?>><?= $cargos_salarios[$i]['CGS_NOME'] ?></option>
+                                            <?php } ?> 
+                                        </select>
+                                        <label class="form-floating mb-3">CARGO</label>
+                                    </div>
+                                </div>
+                                <div class="col-3 text-center mb-3">
+                                    <label for="inputPassword6" class="col-form-label">Código de Venda</label>
+                                    <div class="form-floating mb-3">
+                                        <input type="text" class="form-control" name="COL_CODIGO" placeholder="EX. 001" value="<?= isset($_POST['COL_CODIGO']) ? $_POST['COL_CODIGO'] : (isset($colaborador['COL_CODIGO'])? $colaborador['COL_CODIGO'] : ''); ?>">
+                                        <label for="text">Seu Código</label>
+                                    </div>
+                                </div>
+                                <div class="col-3 text-center mb-3">
+                                    <label for="inputPassword6" class="col-form-label">Comissão de Venda</label>
+                                    <div class="form-floating mb-3">
+                                        <input type="text" class="form-control" id="text" name="COL_COMISSAO" placeholder="EX. 5%" value="<?= isset($_POST['COL_COMISSAO']) ? $_POST['COL_COMISSAO'] : (isset($colaborador['COL_COMISSAO'])? $colaborador['COL_COMISSAO'] : '0'); ?>">
+                                        <label for="text">%</label>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="col-6 text-center mb-3">
+                                    <label for="inputPassword6" class="col-form-label">Email</label>
+                                    <div class="form-floating mb-3">
+                                        <input type="email" class="form-control" id="email" name="COL_EMAIL" placeholder="Informe seu email nome@examplo.com" value="<?= isset($_POST['COL_EMAIL']) ? $_POST['COL_EMAIL'] : (isset($colaborador['COL_EMAIL'])? $colaborador['COL_EMAIL'] : ''); ?>">
+                                        <label for="email">Seu Email</label>
+                                    </div>
+                                </div>
+                                <div class="col-3 text-center mb-3">
+                                    <label for="inputPassword6" class="col-form-label">1º Telefone/Celular</label>
+                                    <div class="form-floating mb-3">
+                                        <input type="text" class="form-control" id="text" name="COL_TEL_1" onkeyup="handlePhone(event)" placeholder="" value="<?= isset($_POST['COL_TEL_1']) ? $_POST['COL_TEL_1'] : (isset($colaborador['COL_TEL_1'])? $colaborador['COL_TEL_1'] : ''); ?>">
+                                        <label for="text">Seu tel.</label>
+                                    </div>
+                                </div>
+                                <div class="col-3 text-center mb-3">
+                                    <label for="inputPassword6" class="col-form-label">2º Telefone/Celular</label>
+                                    <div class="form-floating mb-3">
+                                        <input type="text" class="form-control" id="text" name="COL_TEL_2" onkeyup="handlePhone(event)" placeholder="" value="<?= isset($_POST['COL_TEL_2']) ? $_POST['COL_TEL_2'] : (isset($colaborador['COL_TEL_2'])? $colaborador['COL_TEL_2'] : ''); ?>">
+                                        <label for="text">Seu tel.</label>
+                                    </div>
+                                </div>
+                                <div class="col-6 text-center mb-3 row">
+                                    <label for="inputPassword6" class="col-form-label">RESETAR SENHA DO COLABORADOR(A)</label>
+                                    <div class="mx-auto text-center">   
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" name="COL_RESET_SENHA" type="radio" value="NAO" id="flexCheckChecked" checked>
+                                            <label class="form-check-label" for="flexCheckChecked">
+                                                NÃO
+                                            </label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" name="COL_RESET_SENHA"  type="radio" value="SIM" id="flexCheckDefault">
+                                            <label class="form-check-label" for="flexCheckDefault">
+                                                SIM
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <span class="col-6 text-center mb-3 fw-bold fs-5">EM CASO DE RESET,<br> A NOVA SENHA SERÁ: <b class="text-danger">123456</b><br> O COLABORADOR(A) DEVERÁ ALTERÁ-LA</span>
+                                <hr class="my-4 text-dark">
+                                <input type="hidden" class="form-control" name="COL_COD" value="<?= isset($colaborador['COL_COD']) ? $colaborador['COL_COD'] : 0; ?>">
+                                <input type="hidden" class="form-control" name="EMP_COD" value="<?= isset($_SESSION['EMP_COD']) ? $_SESSION['EMP_COD'] : 0; ?>">
+                                <input type="hidden" class="form-control" name="USU_COD" value="<?= isset($_SESSION['USU_COD']) ? $_SESSION['USU_COD'] : 0; ?>">
+                                <button class="w-100 btn btn-lg text-uppercase btn-warning" name="ALTERAR_COLABORADOR" type="submit"><i class="fa fa-edit"></i> Alterar</button>
+                                <hr class="my-4 text-dark">
+                            </div> 
+                        </form>
+                    </div>
+                </section>
+            <?php include_once 'app/Views/admin/inc/rodape.phtml';?>
+        </div>
+    </div>
+</body>
+</html>
+                            

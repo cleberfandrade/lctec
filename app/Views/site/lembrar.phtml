@@ -1,0 +1,45 @@
+<?php
+session_start();
+$_SESSION['lembrar'] = date('Y-m-d H:i:s');
+use Libraries\Sessao;
+
+include_once 'inc/cabecalho.phtml'; ?>
+    <main class="flex-shrink-0">
+        <?php include_once 'inc/nav.phtml'; ?>
+        <!-- Header-->
+        <header class="bg-3 py-3">
+            <section class="container px-5">
+                <div class="row gx-5 align-items-center justify-content-center">
+                    <div class="col-lg-10 col-xl-10 col-xxl-10">
+                        <div class="my-5 text-center text-xl-start">
+                            <h1 class="display-5 text-center fw-bolder text-uppercase text-white mb-2">Solicitar Nova Senha de <span class="text-success">Acesso</span></h1>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </header>
+        <div class="container col-xl-10 col-xxl-8 px-4 py-5">
+            <div class="row align-items-center g-lg-5 py-5">
+                <div class="col-lg-6 text-center text-lg-start">
+                <h1 class="display-5 text-center fw-bolder text-uppercase text-3 mb-2">LC-<span class="text-success">TECH</span></h1>
+                    <p class="col-lg lead text-center fs-2">Entre em contato com o administrador, caso não se lembre do e-mail cadastrado
+                        <br><?php //$INF_EMAIL_2 ?>
+                    </p>
+                </div>
+                <div class="col-md-12 mx-auto col-lg-6">
+                    <?= Sessao::alert('ERRO') ?>    
+                    <?= Sessao::alert('OK') ?>    
+                    <form class="p-4 p-md-6 border rounded-3 bg-3 text-center" action="<?= DIRPAGE ?>login/recover" method="POST">
+                        <div class="form-floating mb-3">
+                            <input type="email" class="form-control" id="floatingInput" name="EML_EMAIL" placeholder="Informe seu email nome@examplo.com" value="<?= isset($_POST['EML_EMAIL']) ? $_POST['EML_EMAIL'] : '' ?>">
+                            <label for="floatingInput">Email</label>
+                        </div>
+                        <input type="hidden" name="ENVIAR_EMAIL" value=""/>
+                        <button class="w-100 btn btn-lg mb-3 text-uppercase btn-success" name="lembrar" value="<?= $_SESSION['lembrar'] ?>" type="submit"><i class="fa fa-sign-in"></i> Solicitar</button>
+                        <a href="<?= DIRPAGE ?>login" class="gap-2 text-uppercase m-3 text-white text-center text-decoration-none">Voltar ao Acesso</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+<?php include_once 'inc/rodape.phtml'; ?>

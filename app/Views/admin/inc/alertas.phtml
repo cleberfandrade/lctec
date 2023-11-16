@@ -1,0 +1,10 @@
+<?php
+use Libraries\Sessao;
+session_start();
+?>
+<section class="container py-1">
+    <hr>
+    <div id="resposta" class="fs-4 text-center"></div>
+    <?= Sessao::alert('OK'); ?>
+    <?= Sessao::alert('ERRO'); ?>
+</section>

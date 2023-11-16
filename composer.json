@@ -1,0 +1,27 @@
+{
+    "description": "PROJETO LCTECH",
+    "authors": [
+        {
+            "name": "LUIZ",
+            "email": "luiz@email.com"
+        },
+        {
+            "name": "CLEBER FERREIRA ANDRADE",
+            "email": "cleberf.andrade@hotmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "App\\":"app",
+            "App\\Controllers\\": "app/Controllers",
+            "App\\Models\\": "app/Models",
+            "App\\Views\\": "app/Views",
+            "Core\\":"core",
+            "Libraries\\": "libraries"
+        }
+    },
+    "require": {
+        "symfony/var-dumper": "^5.4",
+        "phpmailer/phpmailer": "^6.8"
+    }
+}

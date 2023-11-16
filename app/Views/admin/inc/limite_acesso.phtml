@@ -1,0 +1,78 @@
+<!-- Modal -->
+<div class="modal" id="bloqueado" tabindex="-1" role="dialog" data-bs-backdrop="true" aria-labelledby="bloqueado" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">ACESSO BLOQUEADO</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body text-center mx-auto">
+        <button type="button" id="acessar_novamente" class="btn btn-success">ACESSAR NOVAMENTE</button>
+      </div>
+      <div class="modal-footer">
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+.disabled {
+  text-decoration: none;
+  color: gray;
+  cursor: default;
+}
+.modal-backdrop {
+  z-index: -1;
+}
+</style>
+<script>
+  const getHs = () => {
+    const cl = document.getElementsByClassName('.limite')[0]
+    const date = new Date()
+    const hours = date.getHours()
+    const minutes = date.getMinutes()
+    const seconds = date.getSeconds()
+    const hour = hours < 10 ? `0${hours}` : hours
+    const minute = minutes < 10 ? `0${minutes}` : minutes
+    const second = seconds < 10 ? `0${seconds}` : seconds
+    cl.innerHTML = `${hour}:${minute}:${second}`
+  }
+  
+let contador = 1800;
+
+function somaContador(valor)
+{
+    //let bloqueado = document.getElementById('bloqueado')
+    
+    if(contador != 0){
+        contador = contador - valor;
+        const units = new Date(contador * 1000).toLocaleDateString(navigator.language, {minute:'2-digit', second: '2-digit'}).substring(12, 20)
+        $("#limite").html(units);
+    }else{
+        console.log(contador);
+        if(contador == 0){
+            $('a').prop("href","#");
+            $('a').appendTo("class","disabled");
+            //$('body').prop("class","bg-dark");
+            $("#limite").html('ACESSO BLOQUEADO');
+            setTimeout(function () {
+                $("#bloqueado").show();
+            }, 3000);
+        }
+    }
+}
+
+setInterval(somaContador, 1000, 1);
+
+$("#acessar_novamente").click(function(){
+    //setTimeout(function () {
+    //$('#bloqueado').hide();
+    //}, 100);
+    $.post('<?= DIRPAGE; ?>login/sair', {cache: false}, function(retorno) {
+        //setTimeout( () => { 
+            window.location.href="<?= DIRPAGE ?>site";
+        //}, 1);
+    });
+});
+</script>

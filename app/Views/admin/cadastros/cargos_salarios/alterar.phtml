@@ -1,0 +1,108 @@
+<?php 
+use Libraries\Sessao;
+session_start();
+include_once 'app/Views/admin/inc/cabecalho.phtml'; 
+$qtd = (is_array($cargo_salario) ? count($cargo_salario) : 0);
+?>
+<body class="">
+    <div class="d-flex" id="wrapper">
+        <?php include_once 'app/Views/admin/inc/menu_lateral.phtml'; ?>
+        <div id="page-content-wrapper">
+        <!-- Top navigation-->
+            <?php include_once 'app/Views/admin/inc/menu_topo.phtml'; ?>
+            <div class="container-fluid bg-light p-0">
+                <header class="py-3">
+                    <section class="container px-3">
+                        <div class="row gx-5 align-items-center justify-content-center">
+                            <div class="col-lg-9 col-xl-9 col-xxl-9">
+                                <div class="my-1 px-4 mx-auto">
+                                    <a class="text-decoration-none" href="<?= DIRPAGE; ?>cargos_salarios/alteracao/<?= $cargo_salario['EMP_COD']; ?>/<?=  $cargo_salario['CGS_COD']; ?>">
+                                        <h5 class="fs-2 fw-bolder text-uppercase text-dark">
+                                            <i class="fa fa-handshake"></i> Alterar <span class="text-success"> Cargos/Salários</span>
+                                        </h5>
+                                    </a>
+                                </div>
+                            </div>
+                            <?php include_once 'app/Views/admin/inc/saudacao.phtml'; ?> 
+                        </div>
+                    </section>
+                    <section class="container col-12 mx-auto px-5">
+                        <?= $breadcrumb ?>
+                    </section>
+                </header>
+                <?php include_once 'app/Views/admin/inc/alertas.phtml'; ?>
+                <section class="bg-light py-2">
+                    <div class="container col-10 px-2 py-2 mx-auto row">
+                        <form class="p-4 p-md-6 border text-uppercase rounded-3 bg-3" action="<?= DIRPAGE ?>cargos_salarios/alterar" method="POST">
+                            <div class="row ">    
+                                <div class="col-4 mb-2 form-floating ">
+                                    <select class="form-select " name="CGS_NIVEL">                                        
+                                        <?php for ($i=1; $i <= 20; $i++) { ?>
+                                            <option value="<?= $i?>" <?= (isset($_POST['CGS_NIVEL']) &&  $_POST['CGS_NIVEL']  == $i)? 'selected' : ((isset($cargo_salario['CGS_NIVEL']) && $cargo_salario['CGS_NIVEL'] == $i)? 'selected' : '') ; ?>><?= $i ?></option>
+                                        <?php } ?>
+                                    </select>
+                                    <label class="form-label">NÍVEL DO CARGO</label>
+                                </div>
+                                <div class="col-4 form-floating mb-2">
+                                    <select class="form-select" name="CGS_TIPO">
+                                    <option value="0" <?= (isset($_POST['CGS_TIPO']) &&  $_POST['CGS_TIPO']  == "0")? 'selected' :  ((isset($cargo_salario['CGS_TIPO']) && $cargo_salario['CGS_TIPO'] == '0')? 'selected'  : ''); ?>>---</option>
+                                        <option value="PF"<?= (isset($_POST['CGS_TIPO']) &&  $_POST['CGS_TIPO']  == "PF")? 'selected' :  ((isset($cargo_salario['CGS_TIPO']) && $cargo_salario['CGS_TIPO'] == 'PF')? 'selected'  : ''); ?>>PESSOA FÍSICA</option>
+                                        <option value="PJ" <?= (isset($_POST['CGS_TIPO']) &&  $_POST['CGS_TIPO']  == "PJ")? 'selected' :  ((isset($cargo_salario['CGS_TIPO']) && $cargo_salario['CGS_TIPO'] == 'PJ')? 'selected'  : ''); ?>>PESSOA JURÍDICA</option>
+                                    </select>
+                                    <label class="form-label">TIPO DO CARGO</label>
+                                </div>
+                                <div class="col-4 form-floating mb-3">
+                                    <input type="text" class="form-control" id="text" name="CGS_COMISSAO" placeholder="EX. 5%" value="<?= isset($_POST['CGS_COMISSAO']) ? $_POST['CGS_COMISSAO'] :  (isset($cargo_salario['CGS_COMISSAO'])? $cargo_salario['CGS_COMISSAO'] : '0'); ?>">
+                                    <label>% COMISSÃO</label>
+                                </div>
+                                <hr class="my-3 text-dark">
+                            </div> 
+                            <div class="row">
+                                <div class="col-8 form-floating mb-3">
+                                    <input type="text" class="form-control maiusculo" list="CGS_NOME" id="1" name="CGS_NOME" placeholder="" value="<?= isset($_POST['CGS_NOME']) ? $_POST['CGS_NOME'] :  (isset($cargo_salario['CGS_NOME'])? $cargo_salario['CGS_NOME'] : ''); ?>">
+                                    <label class="px-3" for="1">NOME DO CARGO</label>
+                                    <datalist id="CGS_NOME">
+                                        <option value="CEO">
+                                        <option value="PRESIDENTE">
+                                        <option value="SUPERVISOR(A)">
+                                        <option value="DIRETOR(A)">
+                                        <option value="COORDENADOR(A)">
+                                        <option value="GERENTE">
+                                        <option value="ASSISTENTE">
+                                        <option value="AUXILIAR">
+                                        <option value="ESTÁGIARIO(A)">
+                                        <option value="ENCARREGADO(A)">
+                                        <option value="LIDER">
+                                    </datalist>
+                                </div>  
+                                <div class="col-4 form-floating mb-3">
+                                    <input type="text" class="form-control real" id="moeda" name="CGS_SALARIO" data-thousands="." data-decimal=","  placeholder="EX. 1.500,00" value="<?= isset($_POST['CGS_SALARIO']) ? number_format($_POST['CGS_SALARIO'],2,',','.'):  (isset($cargo_salario['CGS_SALARIO'])? number_format($cargo_salario['CGS_SALARIO'],2,',','.'): '0,00'); ?>">
+                                    <label>SALÁRIO</label>
+                                </div>
+                                <hr class="my-4 text-dark">
+                                <input type="hidden" class="form-control" name="EMP_COD" value="<?= isset($_SESSION['EMP_COD']) ? $_SESSION['EMP_COD'] : 0; ?>">
+                                <input type="hidden" class="form-control" name="USU_COD" value="<?= isset($_SESSION['USU_COD']) ? $_SESSION['USU_COD'] : 0; ?>">
+                                <input type="hidden" class="form-control" name="CGS_COD" value="<?= isset($cargo_salario['CGS_COD']) ? $cargo_salario['CGS_COD'] : 0; ?>">
+                                <button class="w-100 btn btn-lg text-uppercase btn-warning" name="ALTERAR_CARGO_SALARIO" type="submit"><i class="fa fa-edit"></i> Alterar</button>
+                            </div> 
+                        </form>
+                    </div>
+                </section>
+            <?php include_once 'app/Views/admin/inc/rodape.phtml';?>
+        </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="<?= DIRJS ?>jquery.maskMoney.js"></script>
+    <script>
+    $(document).ready(function(){
+        $('.real').maskMoney({
+           prefix:'',
+           allowNegative: true,
+           thousands:'.', decimal:',',
+           affixesStay: true
+        });
+    });
+    </script>
+</body>
+</html>
+                            

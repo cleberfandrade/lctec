@@ -1,0 +1,88 @@
+<?php 
+use Libraries\Sessao;
+session_start();
+include_once 'app/Views/admin/inc/cabecalho.phtml'; 
+$qtd = (is_array($produtos) ? count($produtos) : 0);
+?>
+<body class="">
+    <div class="d-flex" id="wrapper">
+        <?php include_once 'app/Views/admin/inc/menu_lateral.phtml'; ?>
+        <div id="page-content-wrapper">
+        <!-- Top navigation-->
+        <?php include_once 'app/Views/admin/inc/menu_topo.phtml'; ?>
+        <div class="container-fluid bg-light p-0">
+            <header class="py-3">
+                <section class="container px-3">
+                    <div class="row gx-3 align-items-center justify-content-center">
+                        <div class="col-lg-9 col-xl-9 col-xxl-9">
+                            <div class="my-1 px-4 mx-auto">
+                                <a class="text-decoration-none" href="<?= DIRPAGE; ?>estoques/produtos/<?= $estoque['EMP_COD']?>/<?= $estoque['EST_COD']?>">
+                                    <h3 class="fs-2 fw-bolder text-uppercase text-dark"><i class="bi bi-box2-fill"></i> Listagem de <span class="text-success">Produtos</span></h3>
+                                </a>
+                            </div>
+                        </div>
+                        <?php include_once 'app/Views/admin/inc/saudacao.phtml'; ?>   
+                    </div>
+                </section>
+                <section class="mx-auto px-3">
+                    <?= $breadcrumb ?>
+                </section>
+            </header>
+            <?php include_once 'app/Views/admin/inc/alertas.phtml'; ?>  
+            <section class="bg-light text-dark">
+                <div class="container mx-auto col-12 px-2 py-2 row ">
+                    <div class="card bg-success mx-auto text-center col-12 py-1 mb-2">
+                        <div class="card-body text-white">
+                            <h5 class="card-title">PRODUTOS</h5>
+                            <p class="card-text">Cadastre seus produtos</p>
+                            <a href="<?= DIRPAGE ?>estoques/cadastro_produtos/<?= $estoque['EMP_COD']?>/<?= $estoque['EST_COD']?>" class="btn btn-dark">ACESSAR</a>
+                        </div>
+                    </div>
+                <?php if($qtd != 0) { ?>
+                    <table class="table table-striped table-bordered">
+                        <thead class="text-center text-uppercase">
+                            <th class="text-dark">#</th>
+                            <th class="text-dark">ESTOQUE</th>
+                            <th class="text-dark">TIPO</th>
+                            <th class="text-dark">CÓDIGO</th>
+                            <th class="text-dark">REFERÊNCIA</th>
+                            <th class="text-dark">NOME</th>
+                            <th class="text-dark">QTD</th>
+                            <th class="text-dark">PREÇO UNITÁRIO</th>
+                            <th class="text-dark">PREÇO VENDA</th>
+                           
+                            <th class="text-dark">Status</th>
+                            <th class="text-dark">Ações</th>
+                        </thead>
+                        <tbody>
+                        <?php
+                            $b = 1;
+                            for ($i= 0; $i < $qtd; $i++) { ?>
+                            <tr class="">
+                                <td class="text-center align-middle"><?= $b; ?></td>
+                                <td class="text-center align-middle"><?= $produtos[$i]['EST_DESCRICAO']; ?></td>
+                                <td class="text-center align-middle"><?= ($produtos[$i]['PRO_TIPO'] == 1)? 'PRODUTO': (($produtos[$i]['PRO_TIPO'] == 2) ? 'SERVIÇO' : 'N.I.'); ?></td>
+                                <td class="text-center align-middle"><?= $produtos[$i]['PRO_CODIGO']; ?></td>
+                                <td class="text-center align-middle"><?= $produtos[$i]['PRO_REFERENCIA']; ?></td>
+                                <td class="text-center align-middle"><?= $produtos[$i]['PRO_NOME']; ?></td>
+                                <td class="text-center align-middle"><?= $produtos[$i]['PRO_QUANTIDADE']; ?></td>
+                                <td class="text-center align-middle"><?= number_format($produtos[$i]['PRO_PRECO_UNITARIO'],2,',','.'); ?></td>
+                                <td class="text-center align-middle"><?= number_format($produtos[$i]['PRO_PRECO_VENDA'],2,',','.'); ?></td>
+                                <td class="text-center align-middle"><?= ($produtos[$i]['EST_STATUS'] == 1)? 'ATIVO' : 'DESATIVADO'; ?></td>
+                                <td class="text-center align-middle">
+                                    <a type="button" class="btn btn-warning btn-sm d-print-none" href="<?= DIRPAGE.'cadastros/alterar_produtos/'.$produtos[$i]['EMP_COD'].'/'.$produtos[$i]['EST_COD'].'/'.$produtos[$i]['PRO_COD']; ?>" title="Alterar produto"><i class="fa fa-edit"></i></a>
+                                </td>
+                            </tr>
+                        <?php $b++; } ?>
+                        </tbody>
+                    </table>
+                <?php }else { ?>
+                        <h4 class="text-center text-warning fs-4">EMPRESA SEM  NENHUM PRODUTO CADASTRADO</h4>
+                    <?php } ?>
+                </div>
+            </section>
+            <?php include_once 'app/Views/admin/inc/rodape.phtml';?>
+        </div>
+    </div>
+</body>
+</html>

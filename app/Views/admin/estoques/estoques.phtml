@@ -1,0 +1,77 @@
+<?php
+
+use App\Models\Produtos;
+use Libraries\Sessao;
+
+$Produtos = new Produtos;
+session_start();
+include_once 'app/Views/admin/inc/cabecalho.phtml'; 
+$qtd = (is_array($estoques) ? count($estoques) : 0);
+$qtdE = (is_array($empresas) ? count($empresas) : 0);
+?>
+<body class="">
+    <div class="d-flex" id="wrapper">
+        <?php include_once 'app/Views/admin/inc/menu_lateral.phtml'; ?>
+        <div id="page-content-wrapper">
+        <!-- Top navigation-->
+        <?php include_once 'app/Views/admin/inc/menu_topo.phtml'; ?>
+        <div class="container-fluid bg-light p-0">
+            <header class="py-3">
+                <section class="container px-3">
+                    <div class="row gx-5 align-items-center justify-content-center">
+                        <div class="col-lg-9 col-xl-9 col-xxl-9">
+                            <div class="my-1 px-4 mx-auto">
+                                <a class="text-decoration-none" href="<?= DIRPAGE; ?>estoques">
+                                <h5 class="fs-2 fw-bolder text-uppercase text-dark"><i class="bi bi-box"></i> Listagem de <span class="text-success">Estoques</span></h5></a>
+                            </div>
+                        </div>
+                        <?php include_once 'app/Views/admin/inc/saudacao.phtml'; ?>
+                    </div>
+                </section>
+                <section class="container col-12 mx-auto px-5">
+                    <?= $breadcrumb ?>
+                </section>
+            </header>
+            <?php include_once 'app/Views/admin/inc/alertas.phtml'; ?>
+            <section class="bg-light py-2">
+                <div class="container col-10 px-2 py-2 mx-auto row">
+                <?php
+                    if($qtd != 0) {
+                    for ($i=0; $i < $qtd; $i++) {  ?>
+                    <div class="card text-white mx-auto text-bg-success m-1 py-3" style="max-width: 35rem;">
+                        <a href="<?= DIRPAGE.'estoques/gerenciar/'.$estoques[$i]['EMP_COD'].'/'.$estoques[$i]['EST_COD']; ?>" title="Acessar Estoque" class="col-auto link-light text-decoration-none">
+                            <div class="card-header"><i class="bi bi-box"></i> <?= $estoques[$i]['EST_TIPO']; ?></div>
+                            <div class="card-body">
+                                <div class="row col-12">
+                                    <div class="col-9">
+                                        <h5 class="card-title">Descrição: <?= $estoques[$i]['EST_DESCRICAO']; ?></h5>
+                                        <p class="card-text">Empresa/Negócio: <?= $estoques[$i]['EMP_NOME_FANTASIA']; ?></p>
+                                    </div>
+                                    <div class="col-3">
+                                        <h2 class="card-title">
+                                            <?php 
+                                                $Produtos->setCodEmpresa($estoques[$i]['EMP_COD']);
+                                                $Produtos->setCodEstoque($estoques[$i]['EST_COD']);
+                                                $Produtos->setTipo(1);
+                                                $prod = $Produtos->listarTodosTipo(0);
+                                                $qtdP = (is_array($prod) ? count($prod) : 0);
+                                                echo $qtdP;
+                                            ?>
+                                        </h2>
+                                        <p class="card-text">Produto(s)</p>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </a>
+                    </div>
+                    <?php } }else { ?>
+                        <h4 class="text-center text-warning fs-4">EMPRESA SEM  NENHUM ESTOQUE CRIADO</h4>
+                    <?php } ?>
+                </div>
+            </section>
+            <?php include_once 'app/Views/admin/inc/rodape.phtml';?>
+        </div>
+    </div>
+</body>
+</html>    

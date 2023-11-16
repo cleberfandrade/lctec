@@ -1,0 +1,89 @@
+<?php 
+use Libraries\Sessao;
+session_start();
+include_once 'inc/cabecalho.phtml'; 
+?>
+<body class="bg-dark">
+    <div class="d-block" id="wrapper">
+        <div class="container-fluid p-0">
+            <section class="container py-2 text-center">
+                <?= Sessao::alert('OK'); ?>
+                <?= Sessao::alert('ERRO'); ?>
+            </section>
+            
+            <section class="container row mx-auto col-12 py-2 mb-5">
+            <div class="row align-items-center g-lg-5">
+                <div class="col-12 col-sm-12 text-center text-lg-start text-white-50">
+                <h1 class="display-5 text-center fw-bolder text-uppercase text-3 mb-2">LC-<span class="text-success">TEC</span></h1>
+                    <p class="col-lg lead text-center fs-6">DESENVOLVENDO SOLUÇÕES <br/>PARA O SEU NEGÓCIO</p>
+                </div>
+            </div>
+                <?php if (isset($_SESSION['EMP_COD']) && $_SESSION['EMP_COD'] == 0) { ?>
+                    <div class="row mx-auto m-4 ">
+                        <div class="container col-8 ">
+                            <div class="p-2 text-center text-white  bg-success rounded-3">
+                                <h1 class="text-emphasis opacity-75">CADASTRE A SUA EMPRESA</h1>
+                                <p class="lead fw-bold opacity-75">
+                                Para utilizar o sitema LC<span class="text-dark">-TEC</span> é necessário que você cadastre o sua <b class="text-dark">empresa/negócio</b><p> crie e utilize ao máximo dos recursos disponíveis</p></p>
+                
+                                <a href="<?= DIRPAGE ?>cadastros/cadastro_empresas" class="col-auto btn btn-success text-uppercase">Clique aqui</a>
+                            </div>
+                        </div>
+                        <div class="col-4 text-center text-lg-start opacity-50">
+                            <h1 class="display-5 text-center fw-bolder text-uppercase text-3 mb-2">LC-<span class="text-success">TECH</span></h1>
+                            <p class="col-lg lead text-center">DESENVOLVENDO SOLUÇÕES <br/>PARA O SEU NEGÓCIO</p>
+                        </div>
+                    </div>
+                <?php }else { ?>
+                    <div class="row mx-auto">
+                    <?php if (isset($_SESSION['USU_NIVEL']) && $_SESSION['USU_NIVEL'] >= 8) { ?>
+                        <div class="col mx-auto mt-5">
+                            <a href="<?= DIRPAGE ?>admin/painel" class="btn btn-success">
+                                <div class="card bg-success text-white  text-uppercase  mx-auto text-center py-1 " style="width: 25rem;">
+                                <h5 class="card-title">PAINEL ADMINISTRATIVO</h5>
+                                <p class="card-text">Gerenciar Minha Empresa/Negócio</p>
+                               
+                             </div>
+                            </a>
+                        </div>
+                        <?php } ?>
+                        <div class="col mx-auto">
+                            <!--<a href="<?php // DIRPAGE ?>financeiro/pdv" class="btn btn-secondary">
+                                <div class="card bg-secondary text-white mx-auto text-uppercase text-center py-1 " style="width: 25rem;">
+                                    <h5 class="card-title">PDV</h5>
+                                    <p class="card-text">Ponto de Venda</p>
+                                    <p>ACESSAR</p>
+                                </div>
+                            </a>-->
+                            <h5 class="text-white text-center">PDV  <p class="text-white">Ponto de Venda</p></h5>
+                            <div class="col-9 mx-auto">
+                                <form class="p-2 p-md-4" action="<?= DIRPAGE ?>financeiro/auth" method="POST">
+                                    <div class="form-floating mb-1">
+                                        <input type="email" class="form-control" id="email" name="VDD_EMAIL" placeholder="Informe seu email" value="<?= isset($_POST['VDD_EMAIL']) ? $_POST['VDD_EMAIL'] : '' ?>">
+                                        <label for="email">Seu Email</label>
+                                    </div>
+                                    <div class="form-floating mb-3">
+                                        <input type="password" class="form-control" name="VDD_SENHA" id="floatingPassword" placeholder="Digite sua senha">
+                                        <label for="floatingPassword">Sua Senha</label>
+                                    </div>
+                                    <button class="w-100 btn btn-lg text-uppercase btn-success" name="acesso" value="<?= $_SESSION['acesso_pdv'] ?>" type="submit"><i class="fa fa-sign-in"></i> Entrar</button>
+                                    <hr class="my-3 text-white">
+                                    <div class="form-floating m-2 mb-0 text-uppercase text-center">
+                                        <p><a href="<?= DIRPAGE ?>pdv/lembrar" class="btn btn-outline-success text-white text-center text-decoration-none">Esqueci minha senha</a></p>
+                                        <p><a href="<?= DIRPAGE ?>pdv/cadastro" class="btn btn-outline-dark text-white text-center text-decoration-none">Cadastre-se</a></p>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                <?php } ?>
+            </section>
+            <div class="container-fluid mx-0 px-0 position-fixed sticky-bottom">
+                <?php include_once 'app/Views/admin/inc/rodape.phtml';?>
+            </div>
+        </div>
+        
+    </div>
+    
+</body>
+</html>
