@@ -43,7 +43,7 @@ class produtos extends View
 
         $this->link[0] = ['link'=> 'admin','nome' => 'PAINEL ADMINISTRATIVO'];
         $this->link[1] = ['link'=> 'estoques','nome' => 'ESTOQUES'];
-        $this->link[2] = ['link'=> 'estoques/gerenciar/'.$dados[2].'/'.$dados[3],'nome' => 'GERENCIAR ESTOQUE'];
+        
     }
     public function index()
     {
@@ -60,7 +60,9 @@ class produtos extends View
         $dados = explode("/",$dados['url']);
         
         if (isset($dados[2]) && $dados[2] != '' && isset($dados[3]) && $dados[3] != '') {
-                       
+            
+            $this->link[2] = ['link'=> 'estoques/gerenciar/'.$dados[2].'/'.$dados[3],'nome' => 'GERENCIAR ESTOQUE'];
+
             if (isset($_SESSION['EMP_COD']) && $_SESSION['EMP_COD'] == $dados[2]){
                 
                 //Verificando a existencia do estoque informado
@@ -89,7 +91,7 @@ class produtos extends View
         $this->dados['title'] .= 'CADASTRAR PRODUTOS';
         $Usuarios = new Usuarios;
         $Empresa = new Empresas;
-        $Estoques = new ModelsEstoques;
+        $Estoques = new Estoques;
         $UsuariosEmpresa = new UsuariosEmpresa;
         $Fornecedores = new Fornecedores;
         $Produtos = new Produtos;
@@ -147,7 +149,7 @@ class produtos extends View
         $this->dados['title'] .= 'CADASTRAR PRODUTOS';
         $Usuarios = new Usuarios;
         $Empresa = new Empresas;
-        $Estoques = new ModelsEstoques;
+        $Estoques = new Estoques;
         $UsuariosEmpresa = new UsuariosEmpresa;
         $Fornecedores = new Fornecedores;
         $Produtos = new Produtos;
@@ -177,9 +179,9 @@ class produtos extends View
                 $Fornecedores->setCodEmpresa($dados['EMP_COD']);
                 $this->$dados['fornecedores'] = $Fornecedores->listarTodos(0);
                 //Checar duplicidade de cadastro
-                $Produtos->setCodEmpresa($dados['EMP_COD']);
-                $Produtos->setCodEstoque($dados['EST_COD']);
-                if (!$Produtos->checarNomeProduto()) {
+                $this->Produtos->setCodEmpresa($dados['EMP_COD']);
+                $this->Produtos->setCodEstoque($dados['EST_COD']);
+                if (!$this->Produtos->checarNomeProduto()) {
 
                     $dados += array(
                         'PRO_DT_CADASTRO'=> date('Y-m-d H:i:s'),

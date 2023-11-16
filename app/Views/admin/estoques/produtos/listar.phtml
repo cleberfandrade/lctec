@@ -70,7 +70,7 @@ $qtd = (is_array($produtos) ? count($produtos) : 0);
                                 <td class="text-center align-middle"><?= number_format($produtos[$i]['PRO_PRECO_VENDA'],2,',','.'); ?></td>
                                 <td class="text-center align-middle"><?= ($produtos[$i]['EST_STATUS'] == 1)? 'ATIVO' : 'DESATIVADO'; ?></td>
                                 <td class="text-center align-middle">
-                                    <a type="button" class="btn btn-warning btn-sm d-print-none" href="<?= DIRPAGE.'cadastros/alterar_produtos/'.$produtos[$i]['EMP_COD'].'/'.$produtos[$i]['EST_COD'].'/'.$produtos[$i]['PRO_COD']; ?>" title="Alterar produto"><i class="fa fa-edit"></i></a>
+                                    <a type="button" class="btn btn-warning btn-sm d-print-none" href="<?= DIRPAGE.'produtos/alteracao/'.$produtos[$i]['EMP_COD'].'/'.$produtos[$i]['EST_COD'].'/'.$produtos[$i]['PRO_COD']; ?>" title="Alterar produto"><i class="fa fa-edit"></i></a>
                                 </td>
                             </tr>
                         <?php $b++; } ?>
