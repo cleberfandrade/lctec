@@ -3,6 +3,8 @@ use Libraries\Sessao;
 session_start();
 include_once 'app/Views/admin/inc/cabecalho.phtml'; 
 $qtdF = (is_array($fornecedores) ? count($fornecedores) : 0);
+$qtdC = (is_array($categorias) ? count($categorias) : 0);
+$qtdS = (is_array($setores) ? count($setores) : 0);
 ?>
 <body class="">
     <div class="d-flex" id="wrapper">
@@ -150,8 +152,23 @@ $qtdF = (is_array($fornecedores) ? count($fornecedores) : 0);
                                     </div>
                                 </div>
                                 <div class="col-8 mb-2">
-                                    <label for="address2" class="form-label">DESCRIÇÃO (opcional)</label>
-                                    <textarea type="text" class="form-control h-100 maiusculo" name="PRO_DESCRICAO"><?= isset($_POST['PRO_DESCRICAO'])? $_POST['PRO_DESCRICAO']  : '' ?></textarea>
+                                    <div class="col-12">
+                                        <div class="text-center mb-3">
+                                            <div class="form-floating mb-3">
+                                                <select class="form-select text-uppercase mb-3 form-floating" name="SET_COD">
+                                                    <option value="0" <?= (isset($_POST['CAT_COD']) &&  $_POST['CAT_COD']  == "0")? 'selected' : '' ?>>---</option>
+                                                    <?php for ($i= 0; $i < $qtdC; $i++) { ?> 
+                                                        <option value="<?= $categorias[$i]['CAT_COD']; ?>" <?= (isset($_POST['CAT_COD']) &&  $_POST['SET_COD']  == $categorias[$i]['CAT_COD'] )? 'selected' : '' ?>><?= $categorias[$i]['CAT_DESCRICAO'] ?></option>
+                                                    <?php } ?> 
+                                                </select>
+                                                <label class="form-floating mb-3">CATEGORIA</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 mb-3 " style="height:300px">
+                                        <label for="address2" class="form-label">DESCRIÇÃO (opcional)</label>
+                                        <textarea type="text" class="form-control  maiusculo" name="PRO_DESCRICAO"><?= isset($_POST['PRO_DESCRICAO'])? $_POST['PRO_DESCRICAO']  : '' ?></textarea>
+                                    </div>
                                 </div>
                                 <hr class="my-4 text-dark">
                                 <input type="hidden" class="form-control" name="EST_COD" value="<?= isset($estoque['EST_COD']) ? $estoque['EST_COD'] : 0; ?>">

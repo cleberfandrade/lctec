@@ -1,0 +1,48 @@
+<?php 
+use Libraries\Sessao;
+session_start();
+include_once 'app/Views/admin/inc/cabecalho.phtml'; 
+$qtd = (is_array($contas) ? count($contas) : 0);
+?>
+<body class="">
+    <div class="d-flex" id="wrapper">
+        <?php include_once 'app/Views/admin/inc/menu_lateral.phtml'; ?>
+        <div id="page-content-wrapper">
+        <!-- Top navigation-->
+        <?php include_once 'app/Views/admin/inc/menu_topo.phtml'; ?>
+        <div class="container-fluid bg-light p-0">
+            <header class="py-3">
+                <section class="container px-3">
+                    <div class="row gx-3 align-items-center justify-content-center">
+                        <div class="col-lg-9 col-xl-9 col-xxl-9">
+                            <div class="my-1 px-4 mx-auto">
+                                <a class="text-decoration-none" href="<?= DIRPAGE; ?>financeiro">
+                                <h5 class="fs-2 fw-bolder text-uppercase text-dark mb-2">
+                                    <i class="bi bi-coin"></i> Conta <span class="text-success"> </span></h5></a>
+                            </div>
+                        </div>
+                        <?php include_once 'app/Views/admin/inc/saudacao.phtml'; ?>
+                    </div>
+                </section>
+                <section class="container col-12 mx-auto px-5">
+                    <?= $breadcrumb ?>
+                </section>
+            </header>
+            <?php include_once 'app/Views/admin/inc/alertas.phtml'; ?>
+            <section class="bg-light py-2">
+                <div class="container col-10 px-2 py-2 mx-auto row">
+                    <div class="container my-5">
+                        <div class="p-5 text-center bg-body-tertiary rounded-3">
+                            <h1 class="text-body-emphasis">Basic jumbotron</h1>
+                            <p class="lead">
+                            This is a simple Bootstrap jumbotron that sits within a <code>.container</code>, recreated with built-in utility classes.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <?php include_once 'app/Views/admin/inc/rodape.phtml';?>
+        </div>
+    </div>
+</body>
+</html>    

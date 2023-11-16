@@ -14,12 +14,20 @@ use Libraries\Url;
 class financeiro extends View
 {
     private $dados = [];
-    private $link,$Financas;
+    private $link,$Financas,$Check,$Usuarios,$UsuariosEmpresa;
     public function __construct()
     {
         Sessao::naoLogado();
         $this->dados['title'] = 'MÓDULO | FINANCEIRO >>'; 
         $this->Financas = new Financas;  
+        $this->Check = new Check;
+        $this->Usuarios = new Usuarios;
+        $this->UsuariosEmpresa = new UsuariosEmpresa;
+
+        $this->dados['empresa'] = $this->UsuariosEmpresa->setCodEmpresa($_SESSION['EMP_COD'])->setCodUsuario($_SESSION['USU_COD'])->listar(0);
+        $this->dados['usuario'] = $this->Usuarios->setCodUsuario($_SESSION['USU_COD'])->listar(0);
+        $this->dados['contas'] = $this->Financas->setCodEmpresa($_SESSION['EMP_COD'])->listarTodas();
+
         $this->link[0] = ['link'=> 'admin','nome' => 'PAINEL'];
         $this->link[1] = ['link'=> 'financeiro','nome' => 'MÓDULO DE FINANÇAS'];
     }
@@ -30,8 +38,7 @@ class financeiro extends View
         $UsuariosEmpresa = new UsuariosEmpresa;
         $Financas = new Financas;
         $Check = new Check;
-        $Usuarios->setCodUsuario($_SESSION['USU_COD']);
-        $this->dados['usuario'] = $Usuarios->listar(0);
+       
         
         $UsuariosEmpresa->setCodUsuario($_SESSION['USU_COD']);
         $this->dados['usuarios_empresa'] = $UsuariosEmpresa->checarUsuario();
@@ -44,8 +51,8 @@ class financeiro extends View
             $Financas->setCodEmpresa($_SESSION['EMP_COD']);
             $this->dados['contas'] = $Financas->listarTodas();
         }
-        $Check->setLink($this->link);
-        $this->dados['breadcrumb'] = $Check->breadcrumb();
+        $this->Check->setLink($this->link);
+        $this->dados['breadcrumb'] = $this->Check->breadcrumb();
         $this->render('admin/financeiro/financeiro', $this->dados);
     }
     public function contas()
@@ -71,24 +78,42 @@ class financeiro extends View
             $this->dados['contas'] = $Financas->listarTodas();
         }
         $this->link[2] = ['link'=> 'financeiro/contas','nome' => 'LISTAGEM DE CONTAS'];
-        $Check->setLink($this->link);
-        $this->dados['breadcrumb'] = $Check->breadcrumb();
+        
+        $this->dados['breadcrumb'] = $Check->setLink($this->link)->breadcrumb();
         $this->render('admin/financeiro/contas/listar', $this->dados);
     }
     public function detalhar_contas()
     {
         $this->dados['title'] .= 'DETALHAR CONTA'; 
-        $UsuariosEmpresa = new UsuariosEmpresa;
-        $Financas = new Financas;
-        $Check = new Check;
-        $Empresa = new Empresas;
-        $Usuarios = new Usuarios;
         $dados = filter_input_array(INPUT_GET, FILTER_DEFAULT);
         $dados = explode("/",$dados);
+        $ok = false;
         
-        $this->dados['CTA_COD'] = $dados[3];
+        if (isset($dados[1]) && $dados[1] == 'alteracao' && isset($dados[2]) && isset($dados[3])) {
+            $this->link[3] = ['link'=> 'financeiro/detalhar_contas/'.$_SESSION['EMP_COD'].'/'.$dados[3],'nome' => 'ALTERAR CLIENTES'];
+            $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
+            if($this->dados['empresa']['USU_COD'] == $_SESSION['USU_COD'] && $this->dados['empresa']['EMP_COD'] == $dados[2]){
+             
+                $this->dados['conta'] = $this->Financas->setCodEmpresa($dados[2])->setCodigo($dados[3])->listar(0);
+                if ($this->dados['conta'] != 0) {
+                    //$this->dados['CTA_COD'] = $dados[3];
+                    $ok = true;
+                }
+            }else{
+                Sessao::alert('ERRO',' ERRO: EMP22 - Acesso inválido(s)!','alert alert-danger');
+            }
+        }else{
+            Sessao::alert('ERRO',' ERRO: EMP11 - Acesso inválido(s)!','alert alert-danger');
+        }      
+        
 
-        $this->render('admin/financeiro/contas/detalhar', $this->dados);
+        if ($ok) {
+            $this->render('admin/financeiro/contas/detalhar', $this->dados);
+        } else {
+            
+        }
+        
+        
     }
     public function alteracao()
     {
