@@ -1,6 +1,7 @@
 <?php
 namespace App\Controllers;
 
+use App\Models\Categorias;
 use App\Models\Clientes;
 use Core\View;
 use App\Models\Empresas;
@@ -20,7 +21,7 @@ use App\Models\Produtos as ModelsProdutos;
 class produtos extends View
 {
     private $dados = [];
-    private $link,$Enderecos,$Clientes,$Usuarios,$Empresa,$UsuariosEmpresa,$Check,$ModulosEmpresa,$Financas,$Estoques,$Produtos;
+    private $link,$Enderecos,$Clientes,$Usuarios,$Empresa,$UsuariosEmpresa,$Check,$ModulosEmpresa,$Financas,$Estoques,$Produtos,$Categorias;
     
     public function __construct()
     {
@@ -36,11 +37,13 @@ class produtos extends View
         $this->Estoques = new Estoques;
         $this->Financas = new Financas;
         $this->Produtos = new ModelsProdutos;
-
+        $this->Categorias = new Categorias;
+        $this->dados['categorias'] = $this->Categorias->setCodEmpresa($_SESSION['EMP_COD'])->listarTodos(0);
         $this->dados['empresa'] = $this->UsuariosEmpresa->setCodEmpresa($_SESSION['EMP_COD'])->setCodUsuario($_SESSION['USU_COD'])->listar(0);
         $this->dados['empresas'] = $this->UsuariosEmpresa->listarTodasEmpresasUsuario(0);
         $this->dados['usuario'] = $this->Usuarios->setCodUsuario($_SESSION['USU_COD'])->listar(0);
 
+        $this->dados['usuarios_empresa'] = $this->UsuariosEmpresa->setCodUsuario($_SESSION['USU_COD'])->checarUsuario();
         $this->link[0] = ['link'=> 'admin','nome' => 'PAINEL ADMINISTRATIVO'];
         $this->link[1] = ['link'=> 'estoques','nome' => 'ESTOQUES'];
         
@@ -48,14 +51,7 @@ class produtos extends View
     public function index()
     {
         $this->dados['title'] .= 'GERENCIAR PRODUTOS';
-        $this->dados['usuario'] = $this->Usuarios->setCodUsuario($_SESSION['USU_COD'])->listar(0);
-        $this->dados['usuarios_empresa'] = $this->UsuariosEmpresa->setCodUsuario($_SESSION['USU_COD'])->checarUsuario();
-        if (isset($this->dados['usuarios_empresa']['UMP_COD'])) {
-            $_SESSION['EMP_COD'] = $this->dados['usuarios_empresa']['EMP_COD'];
-            $this->dados['empresa'] = $this->Empresa->setCodigo($_SESSION['EMP_COD'])->listar(0);
-            $this->dados['usuarios'] = $this->UsuariosEmpresa->setCodEmpresa($_SESSION['EMP_COD'])->listarTodos(0);
-        }
-
+        
         $dados = filter_input_array(INPUT_GET, FILTER_DEFAULT);
         $dados = explode("/",$dados['url']);
         
@@ -219,5 +215,36 @@ class produtos extends View
         $Check->setLink($this->link);
         $this->dados['breadcrumb'] = $Check->breadcrumb();
         $this->render('admin/estoques/produtos/cadastrar', $this->dados);
+    }
+    public function alteracao():void
+    {
+        $this->dados['title'] .= ' ALTERAR PRODUTOS';
+        
+        $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
+        $dados = filter_input_array(INPUT_GET, FILTER_SANITIZE_URL);
+        $dados = explode("/",$dados['url']);
+        $ok = false;
+        if (isset($dados[1]) && $dados[1] == 'alteracao' && isset($dados[2]) && isset($dados[3]) && isset($dados[4])) {
+            $this->link[3] = ['link'=> 'estoques/produtos/alteracao/'.$_SESSION['EMP_COD'].'/'.$dados[3].'/'.$dados[4],'nome' => 'ALTERAR PRODUTOS'];
+            $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
+            //verificar se o usuario que vai efetuar a acao é da empresa e se está correto(pertence) a empresa para os dados a serem alterados
+            if($this->dados['empresa']['USU_COD'] == $_SESSION['USU_COD'] && $this->dados['empresa']['EMP_COD'] == $dados[2]){
+             
+                $this->dados['produto'] = $this->Produtos->setCodEmpresa($dados[2])->setCodEstoque($dados[3])->setCodigo($dados[4])->listar(0);
+                if ($this->dados['produto'] != 0) {
+                    $ok = true;
+                }
+            }else{
+                Sessao::alert('ERRO',' ERRO: PRO22 - Acesso inválido(s)!','alert alert-danger');
+            }
+        }else{
+            Sessao::alert('ERRO',' ERRO: PRO11 - Acesso inválido(s)!','alert alert-danger');
+        }      
+        if($ok){
+                $this->render('admin/estoques/produtos/alterar', $this->dados);
+        }else{
+            $this->dados['produtos'] = $this->Produtos->setCodEmpresa($_SESSION['EMP_COD'])->listarTodos(0);
+            $this->render('admin/estoques/produtos/listar', $this->dados);
+        }
     }
 }

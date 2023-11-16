@@ -1,0 +1,225 @@
+<?php 
+use Libraries\Sessao;
+session_start();
+include_once 'app/Views/admin/inc/cabecalho.phtml'; 
+$qtdF = (is_array($fornecedores) ? count($fornecedores) : 0);
+$qtdC = (is_array($categorias) ? count($categorias) : 0);
+$qtdS = (is_array($setores) ? count($setores) : 0);
+?>
+<body class="">
+    <div class="d-flex" id="wrapper">
+        <?php include_once 'app/Views/admin/inc/menu_lateral.phtml'; ?>
+        <div id="page-content-wrapper">
+        <!-- Top navigation-->
+            <?php include_once 'app/Views/admin/inc/menu_topo.phtml'; ?>
+            <div class="container-fluid bg-light p-0">
+                <header class="py-3">
+                    <section class="container px-3">
+                        <div class="row gx-3 align-items-center justify-content-center">
+                            <div class="col-lg-9 col-xl-9 col-xxl-9">
+                                <div class="my-1 px-4 mx-auto">
+                                    <a class="text-decoration-none" href="<?= DIRPAGE; ?>produtos/alteracao/<?= $produto['EMP_COD']?>/<?= $produto['EST_COD']?>/<?= $produto['PRO_COD']?>">
+                                        <h5 class="fs-2 fw-bolder text-uppercase text-dark"><i class="bi bi-box2-fill"></i> Alterar <span class="text-success"> Produto</span>
+                                        </h5>
+                                    </a>
+                                </div>
+                            </div>
+                            <?php include_once 'app/Views/admin/inc/saudacao.phtml'; ?> 
+                        </div>
+                    </section>
+                    <section class="container col-12 mx-auto px-5">
+                        <?= $breadcrumb ?>
+                    </section>
+                </header>
+                <section class="container py-2">
+                    <hr>
+                    <?= Sessao::alert('OK'); ?>
+                    <?= Sessao::alert('ERRO'); ?>
+                </section>
+                <section class="bg-light py-2">
+                    <div class="container col-10 px-2 py-2 mx-auto row">
+                        <form class="p-4 p-md-6 border text-uppercase rounded-3 bg-3" action="<?= DIRPAGE ?>produtos/alterar" method="POST">
+                            <div class="row ">    
+                                <div class="col-3 form-floating mb-2">
+                                    <select class="form-select" name="PRO_TIPO">
+                                        <option value="0" <?= (isset($_POST['PRO_TIPO']) &&  $_POST['PRO_TIPO']  == 0)? 'selected' : '' ?>>---</option>
+                                        <option value="1" <?= (isset($_POST['PRO_TIPO']) &&  $_POST['PRO_TIPO']  == 1)? 'selected' : '' ?>>PRODUTO</option>
+                                        <option value="2" <?= (isset($_POST['PRO_TIPO']) &&  $_POST['PRO_TIPO']  == 2)? 'selected' : '' ?>>SERVIÇO</option>
+                                    </select>
+                                    <label class="form-label">TIPO</label>
+                                </div>
+                                <div class="col-3 form-floating mb-2">
+                                    <select class="form-select" name="PRO_UNIDADE">
+                                        <option value="0" <?= (isset($_POST['PRO_UNIDADE']) &&  $_POST['PRO_UNIDADE']  == 0)? 'selected' : '' ?>>---</option>
+                                        <option value="G" <?= (isset($_POST['PRO_UNIDADE']) &&  $_POST['PRO_UNIDADE']  == 'G')? 'selected' : '' ?>>GRAMA(S)</option>
+                                        <option value="KG" <?= (isset($_POST['PRO_UNIDADE']) &&  $_POST['PRO_UNIDADE']  == 'KG')? 'selected' : '' ?>>KILO(S)</option>
+                                        <option value="CM" <?= (isset($_POST['PRO_UNIDADE']) &&  $_POST['PRO_UNIDADE']  == 'CM')? 'selected' : '' ?>>CENTÍMETRO(S)</option>
+                                        <option value="M" <?= (isset($_POST['PRO_UNIDADE']) &&  $_POST['PRO_UNIDADE']  == 'M')? 'selected' : '' ?>>METRO(S)</option>
+                                        <option value="CM²" <?= (isset($_POST['PRO_UNIDADE']) &&  $_POST['PRO_UNIDADE']  == 'CM²')? 'selected' : '' ?>>CENTÍMETRO(S)²</option>
+                                        <option value="M²" <?= (isset($_POST['PRO_UNIDADE']) &&  $_POST['PRO_UNIDADE']  == 'M²')? 'selected' : '' ?>>METRO(S)²</option>
+                                        <option value="PC" <?= (isset($_POST['PRO_UNIDADE']) &&  $_POST['PRO_UNIDADE']  == 'PC')? 'selected' : '' ?>>PEÇA</option>
+                                        <option value="UN" <?= (isset($_POST['PRO_UNIDADE']) &&  $_POST['PRO_UNIDADE']  == 'UN')? 'selected' : '' ?>>UNIDADE</option>
+                                        <option value="L" <?= (isset($_POST['PRO_UNIDADE']) &&  $_POST['PRO_UNIDADE']  == 'L')? 'selected' : '' ?>>LITRO(S)</option>
+                                        <option value="CX" <?= (isset($_POST['PRO_UNIDADE']) &&  $_POST['PRO_UNIDADE']  == 'CX')? 'selected' : '' ?>>CAIXA(S)</option>
+                                        <option value="FD" <?= (isset($_POST['PRO_UNIDADE']) &&  $_POST['PRO_UNIDADE']  == 'FD')? 'selected' : '' ?>>FARDO(S)</option>
+                                        <option value="DZ" <?= (isset($_POST['PRO_UNIDADE']) &&  $_POST['PRO_UNIDADE']  == 'DZ')? 'selected' : '' ?>>DÚZIA(S)</option>
+                                        <option value="JG" <?= (isset($_POST['PRO_UNIDADE']) &&  $_POST['PRO_UNIDADE']  == 'JG')? 'selected' : '' ?>>JOGO(S)</option>
+                                        <option value="CM³" <?= (isset($_POST['PRO_UNIDADE']) &&  $_POST['PRO_UNIDADE']  == 'CM³')? 'selected' : '' ?>>CENTÍMETRO(S)³</option>
+                                        <option value="M³" <?= (isset($_POST['PRO_UNIDADE']) &&  $_POST['PRO_UNIDADE']  == 'M³')? 'selected' : '' ?>>METRO(S)³</option>
+                                        <option value="CM²" <?= (isset($_POST['PRO_UNIDADE']) &&  $_POST['PRO_UNIDADE']  == 'L³')? 'selected' : '' ?>>LITRO(S)³</option>
+                                        <option value="CJ" <?= (isset($_POST['PRO_UNIDADE']) &&  $_POST['PRO_UNIDADE']  == 'CJ')? 'selected' : '' ?>>CONJUNTO</option>
+                                        <option value="BR" <?= (isset($_POST['PRO_UNIDADE']) &&  $_POST['PRO_UNIDADE']  == 'BR')? 'selected' : '' ?>>BARRA</option>
+                                        <option value="SV" <?= (isset($_POST['PRO_UNIDADE']) &&  $_POST['PRO_UNIDADE']  == 'SV')? 'selected' : '' ?>>SERVIÇO</option>
+                                    </select>
+                                    <label class="form-label">UNIDADE DE MEDIDA</label>
+                                </div>
+                                <div class="col-6 form-floating mb-3">
+                                    <select class="form-select " name="FOR_COD">     
+                                        <option value="0" <?= (isset($_POST['FOR_COD']) &&  $_POST['FOR_COD']  == 0)? 'selected' : ((isset($produto['FOR_COD']) && $produto['FOR_COD'] == 0)? 'selected' : '') ?>>---</option>                     
+                                        <?php 
+                                      
+                                        for ($i=0; $i < $qtdF; $i++) { ?>
+                                            <option value="<?= $fornecedores[$i]['FOR_COD'] ?>" <?= (isset($_POST['FOR_COD']) &&  $_POST['FOR_COD']  == $fornecedores[$i]['FOR_COD'])? 'selected' :  ((isset($produto['FOR_COD']) && $produto['FOR_COD'] == $fornecedores[$i]['FOR_COD'])? 'selected' : '') ?>><?= $fornecedores[$i]['FOR_NOME_FANTASIA'] ?></option>
+                                        <?php } ?>
+                                    </select>
+                                    <label class="form-label">FORNECEDORES</label>
+                                </div>
+                                <hr>
+                                <div class="col-8 form-floating mb-3">
+                                    <input type="text" class="form-control maiusculo" id="1" name="PRO_NOME" placeholder="Informe o nome do produto" value="<?= isset($_POST['PRO_NOME']) ? $_POST['PRO_NOME'] : (isset($produto['PRO_NOME'])? : '') ; ?>">
+                                    <label class="px-3" for="1">NOME DO PRODUTO</label>
+                                </div>    
+                                <div class="col-4 form-floating mb-3">
+                                    <input type="text" class="form-control maiusculo" id="1" name="PRO_GRUPO" placeholder="" value="<?= isset($_POST['PRO_GRUPO']) ? $_POST['PRO_GRUPO'] : (isset($produto['PRO_GRUPO'])? : '') ; ?>">
+                                    <label class="px-3" for="1">GRUPO (opcional)</label>
+                                </div>   
+                                <div class="col-4 form-floating mb-3">
+                                    <input type="text" class="form-control maiusculo" id="2" name="PRO_CODIGO" placeholder="" value="<?= isset($_POST['PRO_CODIGO']) ? $_POST['PRO_CODIGO'] : (isset($produto['PRO_CODIGO'])? : '') ; ?>">
+                                    <label class="px-3" for="2">CÓDIGO (opcional)</label>
+                                </div> 
+                                <div class="col-4 form-floating mb-3">
+                                    <input type="text" class="form-control maiusculo" id="2" name="PRO_REFERENCIA" placeholder="" value="<?= isset($_POST['PRO_REFERENCIA']) ? $_POST['PRO_REFERENCIA'] : (isset($produto['PRO_REFERENCIA'])? : '') ; ?>">
+                                    <label class="px-3" for="2">REFERÊNCIA (opcional)</label>
+                                </div> 
+                                <div class="col-4 form-floating mb-3">
+                                    <input type="text" class="form-control maiusculo" id="2" name="PRO_IMPOSTO" placeholder="" value="<?= isset($_POST['PRO_IMPOSTO']) ? $_POST['PRO_IMPOSTO'] : (isset($produto['PRO_IMPOSTO'])? : '') ; ?>">
+                                    <label class="px-3" for="2">IMPOSTO (opcional)</label>
+                                </div> 
+                                <hr>
+                                <div class="col-4 form-floating mb-3">
+                                    <input type="text" class="form-control maiusculo" id="2" name="PRO_QUANTIDADE" placeholder="0" value="<?= isset($_POST['PRO_QUANTIDADE']) ? $_POST['PRO_QUANTIDADE'] : (isset($produto['PRO_QUANTIDADE'])? : '') ; ?>">
+                                    <label class="px-3" for="2">QUANTIDADE</label>
+                                </div> 
+                                <div class="col-4 form-floating mb-3">
+                                    <input type="text" class="form-control maiusculo" id="MARGEM" name="PRO_QTD_MIN" placeholder="10" value="<?= isset($_POST['PRO_QTD_MIN']) ? $_POST['PRO_QTD_MIN'] : (isset($produto['PRO_QTD_MIN'])? : '') ; ?>">
+                                    <label class="px-3" for="2">QUANTIDADE MÍNIMA (opcional)</label>
+                                </div> 
+                                <div class="col-4 form-floating mb-3">
+                                    <input type="text" class="form-control maiusculo" id="2" name="PRO_QTD_MAX" placeholder="100" value="<?= isset($_POST['PRO_QTD_MAX']) ? $_POST['PRO_QTD_MAX'] : (isset($produto['PRO_QTD_MAX'])? : '') ; ?>">
+                                    <label class="px-3" for="2">QUANTIDADE MAXÍMA (opcional)</label>
+                                </div> 
+                                <hr>
+                            </div> 
+                            <div class="row">
+                                <div class="col-4">
+                                    <div class="col-10 mb-3">
+                                        <label class="px-3" for="2">PREÇO CUSTO</label>  
+                                        <div class="input-group">    
+                                            <span class="input-group-text">R$</span>  
+                                            <input type="text" class="form-control form-control-lg  real" id="" name="PRO_PRECO_UNITARIO" placeholder="" value="<?= isset($_POST['PRO_PRECO_UNITARIO']) ? $_POST['PRO_PRECO_UNITARIO'] : (isset($produto['PRO_PRECO_UNITARIO'])? : '') ; ?>">
+                                        </div>
+                                    </div> 
+                                    <div class="col-10 mb-3">
+                                        <label class="px-3" for="2">MARG. DE LUCRO % (opc)</label>
+                                        <div class="input-group">    
+                                            <input type="text" class="form-control form-control-lg" id="PRO_MARGEM" name="PRO_MARGEM" placeholder="" value="<?= isset($_POST['PRO_MARGEM']) ? $_POST['PRO_MARGEM'] : (isset($produto['PRO_MARGEM'])? : '') ; ?>">
+                                            <span class="input-group-text">%</span>
+                                        </div>
+                                    </div> 
+                                    <div class="col-10 mb-3">
+                                        <label class="px-3" for="2">DESC. MAX % (opc)</label>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control form-control-lg" name="PRO_DESCONTO" placeholder="" value="<?= isset($_POST['PRO_DESCONTO']) ? $_POST['PRO_DESCONTO'] : (isset($produto['PRO_DESCONTO'])? : '') ; ?>">
+                                            <span class="input-group-text">%</span>
+                                        </div>
+                                    </div> 
+                                    <div class="col-10 mb-3">
+                                        <label class="px-5" for="2">PREÇO VENDA</label>
+                                        <div class="input-group">
+                                            <span class="input-group-text">R$</span>
+                                            <input type="text" class="form-control form-control-lg real2" id="PRO_PRECO_VENDA" name="PRO_PRECO_VENDA" placeholder="" value="<?= isset($_POST['PRO_PRECO_VENDA']) ? $_POST['PRO_PRECO_VENDA'] : (isset($produto['PRO_PRECO_VENDA'])? : '') ; ?>">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-8 mb-2">
+                                    <div class="col-12">
+                                        <div class="text-center mb-3">
+                                            <div class="form-floating mb-3">
+                                                <select class="form-select text-uppercase mb-3 form-floating" name="SET_COD">
+                                                    <option value="0" <?= (isset($_POST['CAT_COD']) &&  $_POST['CAT_COD']  == "0")? 'selected' : '' ?>>---</option>
+                                                    <?php for ($i= 0; $i < $qtdC; $i++) { ?> 
+                                                        <option value="<?= $categorias[$i]['CAT_COD']; ?>" <?= (isset($_POST['CAT_COD']) &&  $_POST['CAT_COD']  == $categorias[$i]['CAT_COD'] )? 'selected' : (isset($produto['CAT_COD']) && $produto['CAT_COD'] == $categorias[$i]['CAT_COD'] ? 'selected': '')  ?>><?= $categorias[$i]['CAT_DESCRICAO'] ?></option>
+                                                    <?php } ?> 
+                                                </select>
+                                                <label class="form-floating mb-3">CATEGORIA</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 mb-3 " style="height:300px">
+                                        <label for="address2" class="form-label">DESCRIÇÃO (opcional)</label>
+                                        <textarea type="text" class="form-control  maiusculo" name="PRO_DESCRICAO"><?= isset($_POST['PRO_DESCRICAO'])? $_POST['PRO_DESCRICAO']  : '' ?></textarea>
+                                    </div>
+                                </div>
+                                <hr class="my-4 text-dark">
+                                <input type="hidden" class="form-control" name="EST_COD" value="<?= isset($estoque['EST_COD']) ? $estoque['EST_COD'] : 0; ?>">
+                                <input type="hidden" class="form-control" name="EMP_COD" value="<?= isset($estoque['EMP_COD']) ? $estoque['EMP_COD'] : 0; ?>">
+                                <input type="hidden" class="form-control" name="USU_COD" value="<?= isset($_SESSION['USU_COD']) ? $_SESSION['USU_COD'] : 0; ?>">
+                                <button class="w-100 btn btn-lg text-uppercase btn-success" name="CADASTRAR_NOVO_PRODUTO" type="submit"><i class="fa fa-save"></i> Cadastrar</button>
+                                <hr class="my-4 text-dark">
+                            </div> 
+                        </form>
+                    </div>
+                </section>
+            <?php include_once 'app/Views/admin/inc/rodape.phtml';?>
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+            <script src="<?= DIRJS ?>jquery.maskMoney.js"></script>
+            <script>
+            $(document).ready(function(){
+
+                $('.real').maskMoney({
+                    prefix:'',
+                    allowNegative: true,
+                    thousands:'.', decimal:',',
+                    affixesStay: true
+                });
+
+              
+
+                $("#PRO_MARGEM").on("change", function(){
+                    var PRO_MARGEM =  $(this).val();
+                    PRO_MARGEM = parseFloat(PRO_MARGEM/100);
+                    var PRO_PRECO_UNITARIO = $(".real").val();
+                    PRO_PRECO_UNITARIO = parseFloat(PRO_PRECO_UNITARIO);
+                    var novo = parseFloat(PRO_PRECO_UNITARIO+(PRO_PRECO_UNITARIO*PRO_MARGEM)).toFixed(2);
+                    $("#PRO_PRECO_VENDA").val(novo);
+                    $('#PRO_PRECO_VENDA').maskMoney({
+                        prefix:'',
+                        allowNegative: true,
+                        thousands:'.', decimal:',',
+                        affixesStay: true
+                    });
+                });
+
+                $('#PRO_PRECO_VENDA').maskMoney({
+                    prefix:'',
+                    allowNegative: true,
+                    thousands:'.', decimal:',',
+                    affixesStay: true
+                });
+            })
+            </script>
+        </div>
+    </div>
+</body>
+</html>
+                            

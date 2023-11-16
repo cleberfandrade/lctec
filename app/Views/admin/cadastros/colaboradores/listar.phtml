@@ -71,7 +71,7 @@ $qtdS = (is_array($setores) ? count($setores) : 0);
                                         <td class="text-center align-middle"><?= $colaboradores[$i]['COL_COMISSAO']; ?></td>
                                         <td class="text-center align-middle">
                                         <?php 
-                                            if($colaboradores[$i]['SE_COD'] != 0) {
+                                            if($colaboradores[$i]['SET_COD'] != 0 or $colaboradores[$i]['SET_COD'] != '') {
                                                 for ($c = 0; $c < $qtdCS; $c++) { 
                                                     if ($setores[$c]['SET_COD'] == $colaboradores[$i]['SET_COD']) { ?>
                                                     <?= $setores[$c]['SET_DESCRICAO']; ?>   

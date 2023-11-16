@@ -158,7 +158,7 @@ $qtdS = (is_array($setores) ? count($setores) : 0);
                                                 <select class="form-select text-uppercase mb-3 form-floating" name="SET_COD">
                                                     <option value="0" <?= (isset($_POST['CAT_COD']) &&  $_POST['CAT_COD']  == "0")? 'selected' : '' ?>>---</option>
                                                     <?php for ($i= 0; $i < $qtdC; $i++) { ?> 
-                                                        <option value="<?= $categorias[$i]['CAT_COD']; ?>" <?= (isset($_POST['CAT_COD']) &&  $_POST['SET_COD']  == $categorias[$i]['CAT_COD'] )? 'selected' : '' ?>><?= $categorias[$i]['CAT_DESCRICAO'] ?></option>
+                                                        <option value="<?= $categorias[$i]['CAT_COD']; ?>" <?= (isset($_POST['CAT_COD']) &&  $_POST['CAT_COD']  == $categorias[$i]['CAT_COD'] )? 'selected' : '' ?>><?= $categorias[$i]['CAT_DESCRICAO'] ?></option>
                                                     <?php } ?> 
                                                 </select>
                                                 <label class="form-floating mb-3">CATEGORIA</label>
