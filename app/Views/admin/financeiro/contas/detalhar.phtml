@@ -2,7 +2,7 @@
 use Libraries\Sessao;
 session_start();
 include_once 'app/Views/admin/inc/cabecalho.phtml'; 
-$qtd = (is_array($contas) ? count($contas) : 0);
+$qtd = (is_array($conta) ? count($conta) : 0);
 ?>
 <body class="">
     <div class="d-flex" id="wrapper">
@@ -18,7 +18,7 @@ $qtd = (is_array($contas) ? count($contas) : 0);
                             <div class="my-1 px-4 mx-auto">
                                 <a class="text-decoration-none" href="<?= DIRPAGE; ?>financeiro">
                                 <h5 class="fs-2 fw-bolder text-uppercase text-dark mb-2">
-                                    <i class="bi bi-coin"></i> Conta <span class="text-success"> </span></h5></a>
+                                    <i class="bi bi-coin"></i> Conta <span class="text-success"> <?= $conta['CTA_TIPO'] ?></span></h5></a>
                             </div>
                         </div>
                         <?php include_once 'app/Views/admin/inc/saudacao.phtml'; ?>
@@ -30,15 +30,60 @@ $qtd = (is_array($contas) ? count($contas) : 0);
             </header>
             <?php include_once 'app/Views/admin/inc/alertas.phtml'; ?>
             <section class="bg-light py-2">
-                <div class="container col-10 px-2 py-2 mx-auto row">
-                    <div class="container my-5">
-                        <div class="p-5 text-center bg-body-tertiary rounded-3">
-                            <h1 class="text-body-emphasis">Basic jumbotron</h1>
-                            <p class="lead">
-                            This is a simple Bootstrap jumbotron that sits within a <code>.container</code>, recreated with built-in utility classes.
-                            </p>
+                <div class="container col-12 px-2 py-2 mx-auto row">
+                    <?php if ($qtd) { ?>
+                    <div class="p-2 text-center bg-body-tertiary rounded-3">
+                        <h1 class="text-body-emphasis"><?= $conta['CTA_DESCRICAO'] ?></h1>
+                        <p class="lead text-center ">
+                        </p>
+                    </div>
+                    <div class="col-11 row mx-auto">
+                        <div class="card col bg-success m-1">
+                            <div class="card-body text-white">
+                                <h5 class="card-title">ENTRADAS <i class="bi bi-arrow-down-square"></i></h5>
+                                <p class="card-text "><h2> <i class="bi bi-plus-square"></i> R$ <?= number_format($conta['CTA_SALDO'],2,',','.') ?></h2></p>
+                            </div>
+                        </div>
+                        <div class="card col bg-danger m-1">
+                            <div class="card-body text-white">
+                                <h5 class="card-title">SAÍDAS <i class="bi bi-arrow-up-square"></i></h5>
+                                <p class="card-text"><h2> <i class="bi bi-dash-square"></i> R$ <?= number_format($conta['CTA_SALDO'],2,',','.') ?></h2></p>
+                            </div>
+                        </div>
+                        <div class="card col m-1">
+                            <div class="card-body">
+                                <h5 class="card-title">SALDO <i class="bi bi-currency-dollar"></i></h5>
+                                <p class="card-text"><h2> <i class="bi bi-plus-square"></i> R$ <?= number_format($conta['CTA_SALDO'],2,',','.') ?></h2></p>
+                            </div>
                         </div>
                     </div>
+                    <div class="col-12 row mt-4 text-center">
+                        <p class="text-center fs-3">MOVIMENTAÇÃO <hr class="my-1 text-dark"></p>
+                        <div class="col-4 text-bg-success text-center">
+                            <div class="card-body">
+                                <h5 class="card-title">DEPOSITAR</h5>
+                                <p class="card-text">Deposite valores na conta Empresa/negócio</p>
+                                <a href="<?= DIRPAGE ?>depositar" class="btn btn-dark">ACESSAR</a>
+                            </div>
+                        </div>
+                        <div class="col-4 text-bg-danger text-center">
+                            <div class="card-body">
+                                <h5 class="card-title">RETIRAR</h5>
+                                <p class="card-text">Retire valores da conta Empresa/negócio</p>
+                                <a href="<?= DIRPAGE ?>cargos_salarios" class="btn btn-dark">ACESSAR</a>
+                            </div>
+                        </div>
+                        <div class="col-4 text-bg-dark text-center">
+                            <div class="card-body">
+                                <h5 class="card-title">TRANSFERIR</h5>
+                                <p class="card-text">Envie valores para outra conta cadastrada no sistema</p>
+                                <a href="<?= DIRPAGE ?>cargos_salarios" class="btn btn-dark">ACESSAR</a>
+                            </div>
+                        </div>
+                    </div>
+                    <?php } else { ?>
+                        NENHUMA CONTA LOCALIZADA
+                    <?php } ?>
                 </div>
             </section>
             <?php include_once 'app/Views/admin/inc/rodape.phtml';?>

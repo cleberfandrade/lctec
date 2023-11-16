@@ -30,21 +30,35 @@ $qtd = (is_array($contas) ? count($contas) : 0);
             </header>
             <?php include_once 'app/Views/admin/inc/alertas.phtml'; ?>  
             <section class="bg-light  text-dark row  py-2">
-                <div class="container mx-auto col-12 mx-auto row">
+                <div class="container mx-auto col-12 row">
                     <?php if ($qtd == 0) { ?>
                         <div class="card bg-success text-center py-4 mb-4" style="width: 30rem;">
                             <div class="card-body text-white">
-                                <h5 class="card-title">FINANCEIRO</h5>
+                                <h5 class="card-title">CONTAS DA EMPRESA/NEGÓCIO</h5>
                                 <p class="card-text">Crie/Altere os dados da sua conta principal</p>
                                 <a href="<?= DIRPAGE ?>financeiro/cadastro_conta" class="btn btn-dark">ACESSAR</a>
                             </div>
                         </div>
                     <?php }else { ?>
-                        <div class="card bg-success text-white  mx-auto text-center py-4 mb-4" style="width: 20rem;">
-                            <h5 class="card-title">FINANCEIRO</h5>
-                            <p class="card-text">Crie/Altere os dados da sua conta principal</p>
-                            <a href="<?= DIRPAGE ?>financeiro/contas" class="btn btn-success">ACESSAR</a>
+                        <div class="row col-12 text-center mb-2 mx-auto">
+                            <div class="card col-4 bg-success text-white mx-auto text-center py-4">
+                                <a href="<?= DIRPAGE ?>financeiro/contas" class="row text-white link text-decoration-none">    
+                                    <div class="col-2">
+                                        <p class="fs-1 display-1 mt-4 text-white"><i class="bi bi-bank "></i></p>
+                                    </div>    
+                                    <div class="col-10 text-white">
+                                        <h5 class="card-title mt-2">CONTAS DA EMPRESA/NEGÓCIO</h5>
+                                        <p class="card-text">Crie/Altere os dados da sua conta principal</p>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-4 row text-center ">
+                                <a class="btn btn-primary mb-1 fs-3 align-middle" href="<?= DIRPAGE ?>financeiro/pagamentos/receber"><i class="bi bi-arrow-bar-up"></i> CONTAS A RECEBER</a>
+                                <a class="btn btn-danger fs-3 text-center align-middle" href="<?= DIRPAGE ?>financeiro/pagamentos/pagar" role="button"><i class="bi bi-arrow-bar-down"></i> CONTAS A PAGAR</a>
+                            </div>
+                            <div class="col-4 row"></div>
                         </div>
+                        <hr>
                         <div class="card bg-secondary text-white mx-auto  text-center py-4 mb-4" style="width: 20rem;">
                             <h5 class="card-title">PDV</h5>
                             <p class="card-text">Ponto de Venda</p>
@@ -52,9 +66,10 @@ $qtd = (is_array($contas) ? count($contas) : 0);
                         </div>
                         <div class="card bg-info text-white mx-auto text-center py-4 mb-4" style="width: 20rem;">
                             <h5 class="card-title">FLUXO DE CAIXA</h5>
-                            <p class="card-text">Acompanhe seu fluxo de caixa</p>
+                            <p class="card-text">Acompanhe seu fluxo de caixa</p> 
                             <a href="<?= DIRPAGE ?>financeiro/fluxo_caixa" class="btn btn-info">ACESSAR</a>
                         </div>
+                        <div class="col-4 row"></div>
                     <?php } ?>
                 </div>
             </section>

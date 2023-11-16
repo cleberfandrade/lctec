@@ -1,8 +1,10 @@
 <?php
 namespace App\Controllers;
 
-use App\Models\Colaboradores;
+use App\Models\CargosSalarios;
+use App\Models\Colaboradores as ModelsColaboradores;
 use App\Models\Empresas;
+use App\Models\Setores;
 use App\Models\Usuarios;
 use App\Models\UsuariosEmpresa;
 use Core\View;
@@ -12,7 +14,7 @@ use Libraries\Sessao;
 class colaboradores extends View
 {
     private $dados = [];
-    public $link,$Enderecos,$Usuarios,$Empresa,$UsuariosEmpresa,$Check,$Colaboradores;
+    public $link,$Enderecos,$Usuarios,$Empresa,$UsuariosEmpresa,$Check,$Colaboradores,$CargosSalarios,$Setores;
     public function __construct()
     {
         Sessao::naoLogado();
@@ -20,16 +22,20 @@ class colaboradores extends View
         $this->Usuarios = new Usuarios;
         $this->Empresa = new Empresas;
         $this->UsuariosEmpresa = new UsuariosEmpresa;
+        $this->CargosSalarios= new CargosSalarios;
+        $this->Setores= new Setores;
         $this->dados['empresa'] = $this->UsuariosEmpresa->setCodEmpresa($_SESSION['EMP_COD'])->setCodUsuario($_SESSION['USU_COD'])->listar(0);
         $this->dados['usuario'] = $this->Usuarios->setCodUsuario($_SESSION['USU_COD'])->listar(0);
-        $this->Colaboradores= new Colaboradores;
-        $this->dados['cargos_salarios'] = $this->Colaboradores->setCodEmpresa($_SESSION['EMP_COD'])->listarTodos(0);
+        $this->Colaboradores= new ModelsColaboradores;
+        $this->dados['colaboradores'] = $this->Colaboradores->setCodEmpresa($_SESSION['EMP_COD'])->listarTodos(0);
+        $this->dados['cargos_salarios'] = $this->CargosSalarios->setCodEmpresa($_SESSION['EMP_COD'])->listarTodos(0);
+        $this->dados['setores'] = $this->Setores->setCodEmpresa($_SESSION['EMP_COD'])->listarTodos(0);
         $this->Check = new Check;
         $this->link[0] = ['link'=> 'admin','nome' => 'PAINEL ADMINISTRATIVO'];
         $this->link[1] = ['link'=> 'cadastros','nome' => 'MÓDULO DE CADASTROS'];
         $this->link[2] = ['link'=> 'colaboradores','nome' => 'GERENCIAR COLABORADORES'];
     }
-    public function index()
+    public function index():void
     {
         $this->dados['title'] .= ' COLABORADORES';
         $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
@@ -42,7 +48,7 @@ class colaboradores extends View
         $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
         $this->render('admin/cadastros/colaboradores/cadastrar', $this->dados);
     }
-    public function cadastrar():void
+    public function cadastrar()
     {
         $this->dados['title'] .= ' CADASTRAR COLABORADORES';
         $this->link[3] = ['link'=> 'colaboradores/cadastrar','nome' => 'CADASTRO DE COLABORADORES'];
@@ -84,16 +90,20 @@ class colaboradores extends View
         $this->dados['title'] .= ' ALTERAR COLABORADORES';
        
         $dados = filter_input_array(INPUT_GET, FILTER_SANITIZE_URL);
+
         $dados = explode("/",$dados['url']);
         $ok = false;
+        
         if (isset($dados[1]) && $dados[1] == 'alteracao' && isset($dados[2]) && isset($dados[3])) {
-            $this->link[3] = ['link'=> 'colaboradores/alteracao','nome' => 'ALTERAR DE COLABORADORES'];
+            
+            
+            $this->link[3] = ['link'=> 'colaboradores/alteracao'.$_SESSION['EMP_COD'].'/'.$dados[3],'nome' => 'ALTERAR DE COLABORADORES'];
             $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
             //verificar se o usuario que vai efetuar a acao é da empresa e se está correto(pertence) a empresa para os dados a serem alterados
             if($this->dados['empresa']['USU_COD'] == $_SESSION['USU_COD'] && $this->dados['empresa']['EMP_COD'] == $dados[2]){
-             
-                $this->dados['colaboradores'] = $this->Colaboradores->setCodEmpresa($dados[2])->setCodigo($dados[3])->listar(0);
-                if ($this->dados['cargo_salario'] != 0) {
+
+                $this->dados['colaborador'] = $this->Colaboradores->setCodEmpresa($dados[2])->setCodigo($dados[3])->listar(0);
+                if ($this->dados['colaborador'] != 0) {
                     $ok = true;
                 }
             }else{
@@ -111,9 +121,7 @@ class colaboradores extends View
     }
     public function alterar()
     {
-        $this->dados['title'] .= ' CADASTRAR COLABORADORES';
-        $this->link[3] = ['link'=> 'colaboradores/alterar','nome' => 'CADASTRO DE COLABORADORES'];
-        $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
+        $this->dados['title'] .= ' ALTERAR COLABORADORES';
         $ok = false;
         $dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);       
         if (isset($_POST) && isset($dados['ALTERAR_COLABORADOR'])) {
@@ -121,17 +129,36 @@ class colaboradores extends View
             if($this->dados['empresa']['USU_COD'] == $dados['USU_COD'] && $this->dados['empresa']['EMP_COD'] == $dados['EMP_COD']){
                 //Verifica se os campos foram todos preenchidos
                 unset($dados['ALTERAR_COLABORADOR']);
-                $this->Colaboradores->setCodEmpresa($dados['EMP_COD'])->setCodigo($dados['COL_COD']);
-                unset($dados['COL_COD']);
-                unset($dados['EMP_COD']);
-                $dados += array(
-                    'COL_DT_ATUALIZACAO'=> date('Y-m-d H:i:s')
-                );
-                if($this->Colaboradores->alterar($dados,0)){
-                    $ok = true;
-                    Sessao::alert('OK','Cadastro alterado com sucesso!','fs-4 alert alert-success');
-                }else{
-                    Sessao::alert('ERRO',' ERRO: COL33 - Erro ao alterar coloaborador(a), entre em contato com o suporte!','fs-4 alert alert-danger');
+
+                //Verifica se tem algum valor proibido
+                foreach ($dados as $key => $value) {
+                    $dados[$key] = $this->Check->checarString($value);
+                }
+                $this->dados['colaborador'] = $this->Colaboradores->setCodEmpresa($dados['EMP_COD'])->setCodigo($dados['COL_COD']);
+
+                if ($this->dados['colaborador'] != 0) {
+
+                    $this->link[3] = ['link'=> 'fornecedores/alteracao/'.$_SESSION['EMP_COD'].'/'.$dados['FOR_COD'],'nome' => 'ALTERAR FORNECEDORES'];
+        
+                    unset($dados['COL_COD']);
+                    unset($dados['EMP_COD']);
+                    $dados += array(
+                        'COL_DT_ATUALIZACAO'=> date('Y-m-d H:i:s')
+                    );
+                    if($dados['COL_RESET_SENHA']== "SIM") {
+                        $dados['COL_SENHA'] = $this->Check->codificarSenha('123456');
+                    }
+
+                    unset($dados['COL_RESET_SENHA']);
+                    
+                    if($this->Colaboradores->alterar($dados,0)){
+                        $ok = true;
+                        Sessao::alert('OK','Cadastro alterado com sucesso!','fs-4 alert alert-success');
+                    }else{
+                        Sessao::alert('ERRO',' ERRO: COL24 - Erro ao alterar colaborador(a), entre em contato com o suporte!','fs-4 alert alert-danger');
+                    }
+                }else {
+                    Sessao::alert('ERRO',' COL23- Colaborador não foi encontrado!, verifque os dados informados, ou entre em contato com o Suporte','fs-4 alert alert-danger');
                 }
             }else{
                 Sessao::alert('ERRO',' ERRO: COL22 - Dados inválido(s)!','alert alert-danger');
@@ -139,11 +166,12 @@ class colaboradores extends View
         }else{
             Sessao::alert('ERRO',' ERRO: COL21 - Acesso inválido(s)!','alert alert-danger');
         }
+        $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
         if ($ok) {
             $this->dados['colaboradores'] = $this->Colaboradores->setCodEmpresa($_SESSION['EMP_COD'])->listarTodos(0);
             $this->render('admin/cadastros/colaboradores/listar', $this->dados);
         }else {
-            $this->dados['colaboradores'] = $this->Colaboradores->setCodEmpresa($dados['EMP_COD'])->setCodigo($dados['COL_COD'])->listar(0);
+            $this->dados['colaborador'] = $this->Colaboradores->setCodEmpresa($dados['EMP_COD'])->setCodigo($dados['COL_COD'])->listar(0);
             $this->render('admin/cadastros/colaboradores/alterar', $this->dados);
         }
     }
