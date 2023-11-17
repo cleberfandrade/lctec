@@ -82,13 +82,38 @@ class financeiro extends View
     public function alteracao()
     {
         $this->dados['title'] .= 'ALTERAR CONTA'; 
+        $this->link[2] = ['link'=> 'financeiro/contas','nome' => 'GERENCIAR CONTAS'];
+        $dados = filter_input_array(INPUT_GET, FILTER_SANITIZE_URL);
+        $dados = explode("/",$dados['url']);
+        $ok = false;
+        if (isset($dados[1]) && $dados[1] == 'alteracao' && isset($dados[2]) && isset($dados[3])) {
+            
+            if($this->dados['empresa']['USU_COD'] == $_SESSION['USU_COD'] && $this->dados['empresa']['EMP_COD'] == $dados[2]){
+             
+                $this->dados['conta'] = $this->Financas->setCodEmpresa($dados[2])->setCodigo($dados[3])->listar(0);
+                if ($this->dados['conta'] != 0) {
+                    $this->link[3] = ['link'=> 'financeiro/alteracao/'.$_SESSION['EMP_COD'].'/'.$dados[3],'nome' => 'ALTERAR CONTA'];
+                    $ok = true;
+                }
+            }else{
+                Sessao::alert('ERRO',' ERRO: CTA22 - Acesso inválido(s)!','alert alert-danger');
+            }
+        }else{
+            Sessao::alert('ERRO',' ERRO: CTA11 - Acesso inválido(s)!','alert alert-danger');
+        }  
+        if($ok){
+            $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
+            $this->render('admin/financeiro/contas/alterar', $this->dados);
+        }else {
+            $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
+            $this->render('admin/financeiro/contas/listar', $this->dados);
+        }
 
-        $this->render('admin/financeiro/contas/alterar', $this->dados);
+
     }
     public function alterar()
     {
         $this->dados['title'] .= 'ALTERAR CONTA'; 
-
         $this->render('admin/financeiro/contas/alterar', $this->dados);
     }
     public function cadastro()
@@ -106,7 +131,19 @@ class financeiro extends View
         $this->dados['title'] .= 'GERENCIAR CAIXA EMPRESA/NEGÓCIO';   
         $this->render('admin/financeiro/caixa/gerenciar', $this->dados);
     }
+    public function contas_pagar()
+    {
+        $this->dados['title'] .= 'GERENCIAR CAIXA EMPRESA/NEGÓCIO'; 
 
+
+        $this->render('admin/financeiro/caixa/status', $this->dados);
+    }public function contas_receber()
+    {
+        $this->dados['title'] .= 'GERENCIAR CAIXA EMPRESA/NEGÓCIO'; 
+
+
+        $this->render('admin/financeiro/caixa/status', $this->dados);
+    }
     public function alterar_caixa()
     {
         $this->dados['title'] .= 'GERENCIAR CAIXA EMPRESA/NEGÓCIO'; 
@@ -116,7 +153,7 @@ class financeiro extends View
     }
     public function movimentacao()
     {
-        
+        $this->dados['title'] .= 'MOVIMENTAÇÃO';
     }
    
     public function pdv()
