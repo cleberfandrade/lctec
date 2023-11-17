@@ -56,7 +56,7 @@ $qtdS = (is_array($setores) ? count($setores) : 0);
                                     <th class="text-dark">Setor</th>
                                     <th class="text-dark">Cargo</th>
                                     <th class="text-dark">Status</th>
-                                    <th class="text-dark">Ações</th>
+                                    <?php if($_SESSION['USU_NIVEL'] >= 8){ ?><th class="text-dark">Ações</th><?php } ?>
                                 </thead>
                                 <tbody>
                                 <?php
@@ -92,12 +92,14 @@ $qtdS = (is_array($setores) ? count($setores) : 0);
                                             <?php } ?> 
                                         </td>
                                         <td class="text-center align-middle"><?= ($colaboradores[$i]['COL_STATUS'] == 1)? 'ATIVO' : 'DESATIVADO'; ?></td>
+                                        <?php if($_SESSION['USU_NIVEL'] >= 8){ ?>
                                         <td class="text-center align-middle">
 
                                             <a type="button" class="btn btn-warning btn-sm d-print-none" href="<?= DIRPAGE.'colaboradores/alteracao/'.$colaboradores[$i]['EMP_COD'].'/'.$colaboradores[$i]['COL_COD']; ?>" title="Alterar colaborador"><i class="fa fa-edit"></i></a>
                                             
                                             <button type="button" class="btn btn-danger btn-sm d-print-none" data-bs-toggle='modal'  data-bs-target="#excluir" title="Excluir vendedor" data-codigo="<?= $colaboradores[$i]['COL_COD']; ?>" data-nome="<?= $colaboradores[$i]['COL_NOME']; ?>" title="Deseja excluir?" ><i class="fa fa-ban"></i></button>
                                         </td>
+                                        <?php } ?>
                                     </tr>
                                 <?php $b++; } ?>
                                 </tbody>

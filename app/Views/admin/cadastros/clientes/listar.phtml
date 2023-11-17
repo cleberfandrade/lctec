@@ -48,7 +48,7 @@ $qtd = (is_array($clientes) ? count($clientes) : 0);
                             <th class="text-dark">DT. NASC.</th>
                             <th class="text-dark">Tipo</th>
                             <th class="text-dark">Status</th>
-                            <th class="text-dark">Ações</th>
+                            <?php if($_SESSION['USU_NIVEL'] >= 8){ ?><th class="text-dark">Ações</th><?php } ?>
                         </thead>
                         <tbody>
                         <?php
@@ -80,10 +80,12 @@ $qtd = (is_array($clientes) ? count($clientes) : 0);
                                     <td class="text-center align-middle"><?= $dt_nascimento->format('d/m/Y'); ?></td>
                                     <td class="text-center align-middle"><?= ($clientes[$i]['CLI_TIPO'] != '0')? (($clientes[$i]['CLI_TIPO'] == "PF")? 'PESSOA FÍSICA' : 'PESSOA JURÍDICA') : 'NÃO INFORMADO'; ?></td>
                                     <td class="text-center align-middle"><?= ($clientes[$i]['CLI_STATUS'] == 1)? 'ATIVO' : 'DESATIVADO'; ?></td>
+                                    <?php if($_SESSION['USU_NIVEL'] >= 8){ ?>
                                     <td class="text-center align-middle">
                                         <a type="button" class="btn btn-warning btn-sm d-print-none" href="<?= DIRPAGE.'clientes/alteracao/'.$clientes[$i]['EMP_COD'].'/'.$clientes[$i]['CLI_COD']; ?>" title="Alterar cliente"><i class="fa fa-edit"></i></a>
                                         <button type="button" class="btn btn-dark btn-sm d-print-none" data-bs-toggle='modal'  data-bs-target="#status" title="Status cliente" data-codigo="<?= $clientes[$i]['CLI_COD']; ?>" data-nome="<?= $clientes[$i]['CLI_NOME']; ?>" data-status="<?= $clientes[$i]['CLI_STATUS']; ?>" title="Deseja alterar status?" ><i class="fa fa-ban"></i></button>
                                     </td>
+                                    <?php } ?>
                                 </tr>
                                 <?php } ?>
                           
