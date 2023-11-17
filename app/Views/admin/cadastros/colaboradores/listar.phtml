@@ -94,10 +94,12 @@ $qtdS = (is_array($setores) ? count($setores) : 0);
                                         <td class="text-center align-middle"><?= ($colaboradores[$i]['COL_STATUS'] == 1)? 'ATIVO' : 'DESATIVADO'; ?></td>
                                         <?php if($_SESSION['USU_NIVEL'] >= 8){ ?>
                                         <td class="text-center align-middle">
-
-                                            <a type="button" class="btn btn-warning btn-sm d-print-none" href="<?= DIRPAGE.'colaboradores/alteracao/'.$colaboradores[$i]['EMP_COD'].'/'.$colaboradores[$i]['COL_COD']; ?>" title="Alterar colaborador"><i class="fa fa-edit"></i></a>
-                                            
-                                            <button type="button" class="btn btn-danger btn-sm d-print-none" data-bs-toggle='modal'  data-bs-target="#excluir" title="Excluir vendedor" data-codigo="<?= $colaboradores[$i]['COL_COD']; ?>" data-nome="<?= $colaboradores[$i]['COL_NOME']; ?>" title="Deseja excluir?" ><i class="fa fa-ban"></i></button>
+                                            <?php if($categorias[$i]['CAT_STATUS'] == 0){ ?>
+                                                <button type="button" class="btn btn-primary btn-sm d-print-none" data-bs-toggle='modal'  data-bs-target="#status" title="Status Colaborador(a)" data-codigo="<?= $colaboradores[$i]['COL_COD']; ?>" data-nome="<?= $colaboradores[$i]['COL_NOME']; ?>" title="Deseja ativar?" ><i class="fa fa-ban"></i></button>
+                                            <?php }else { ?>
+                                            <a type="button" class="btn btn-warning btn-sm d-print-none" href="<?= DIRPAGE.'colaboradores/alteracao/'.$colaboradores[$i]['EMP_COD'].'/'.$colaboradores[$i]['COL_COD']; ?>" title="Alterar Colaborador(a)"><i class="fa fa-edit"></i></a>
+                                            <button type="button" class="btn btn-danger btn-sm d-print-none" data-bs-toggle='modal'  data-bs-target="#status"  title="Status Colaborador(a)" data-codigo="<?= $colaboradores[$i]['COL_COD']; ?>" data-nome="<?= $colaboradores[$i]['COL_NOME']; ?>" title="Deseja desativar?" ><i class="fa fa-ban"></i></button>
+                                            <?php } ?>
                                         </td>
                                         <?php } ?>
                                     </tr>
@@ -118,28 +120,28 @@ $qtdS = (is_array($setores) ? count($setores) : 0);
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
-    <div class="modal" id="excluir" tabindex="-1" role="dialog" data-bs-backdrop="true" aria-labelledby="excluir" aria-hidden="true">
+    <div class="modal" id="status" tabindex="-1" role="dialog" data-bs-backdrop="true" aria-labelledby="status" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header text-center text-uppercase">
-                    Deseja excluir o Vendedor(a)?
+                    
                 </div>
                 <div class="modal-body text-center">
-                    <p class="text-center text-uppercase mx-auto">Confirma exclusão deste registro?</p>
+                    <p class="text-center text-uppercase mx-auto">Confirma mudança de status deste registro?</p>
                     <span id="COL_NOME" class="mt-3 text-center h5"></span>
                 </div>
                 <div class="modal-footer">
                     <input type="hidden" id="COL_COD" name="COL_COD" value="" />
                     <input type="hidden" id="EMP_COD" name="EMP_COD" value="<?= $empresa['EMP_COD'] ?>" />
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">CANCELAR</button>
-                    <button id="deletar" type="button" class="btn btn-danger" value=""><i class="fa fa-trash"></i> DELETAR</button>
+                    <button id="sts" type="button" class="btn btn-danger" value=""><i class="fa fa-trash"></i> DELETAR</button>
                 </div>
             </div>
         </div>
     </div>
     <script type="text/javascript">
         $(document).ready(function() {
-            $('#excluir').on('show.bs.modal', function(event) {
+            $('#status').on('show.bs.modal', function(event) {
                 var button = null;
                 var button = $(event.relatedTarget); // Button that triggered the modal
                 var codigo = null;
@@ -147,15 +149,15 @@ $qtdS = (is_array($setores) ? count($setores) : 0);
                 var nome = button.data('nome');
                 var modal = $(this);
                 modal.find('#COL_COD').val(codigo);
-                modal.find('#deletar').val(codigo);
+                modal.find('#sts').val(codigo);
                 modal.find('#COL_NOME').html(nome);
             });
         });
-        $("#deletar").click(function(){
-            var data = $('#deletar').val();
+        $("#sts").click(function(){
+            var data = $('#sts').val();
             var EMP_COD = $('#EMP_COD').val();
             setTimeout(function () {
-                    $('#excluir').modal('hide');
+                    $('#status').modal('hide');
             }, 100);
             $.post('<?= DIRPAGE; ?>calaboradores/status', {COL_COD: data,EXCLUIR_VENDEDOR: true,EMP_COD: EMP_COD,cache: false}, function(retorno) {
                 var resposta = JSON.parse(retorno);
