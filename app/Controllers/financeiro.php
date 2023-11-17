@@ -28,18 +28,18 @@ class financeiro extends View
         $this->dados['usuario'] = $this->Usuarios->setCodUsuario($_SESSION['USU_COD'])->listar(0);
         $this->dados['contas'] = $this->Financas->setCodEmpresa($_SESSION['EMP_COD'])->listarTodas();
 
-        $this->link[0] = ['link'=> 'admin','nome' => 'PAINEL'];
-        $this->link[1] = ['link'=> 'financeiro','nome' => 'MÓDULO DE FINANÇAS'];
+        $this->link[0] = ['link'=> 'admin','nome' => 'PAINEL ADMINISTRATIVO'];
+        $this->link[1] = ['link'=> 'financeiro','nome' => 'MÓDULO DE FINANÇAS >>'];
     }
     public function index()
     {
-        $this->dados['title'] .= 'GERENCIAR CONTAS';   
+        $this->dados['title'] .= ' GERENCIAR CONTAS';   
         $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
         $this->render('admin/financeiro/financeiro', $this->dados);
     }
     public function contas()
     {
-        $this->dados['title'] .= 'GERENCIAR CONTAS';   
+        $this->dados['title'] .= ' GERENCIAR CONTAS';   
         $this->link[2] = ['link'=> 'financeiro/contas','nome' => 'GERENCIAR CONTAS'];
         $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
         $this->render('admin/financeiro/contas/listar', $this->dados);
@@ -81,7 +81,7 @@ class financeiro extends View
     }
     public function alteracao()
     {
-        $this->dados['title'] .= 'ALTERAR CONTA'; 
+        $this->dados['title'] .= ' ALTERAR CONTA'; 
         $this->link[2] = ['link'=> 'financeiro/contas','nome' => 'GERENCIAR CONTAS'];
         $dados = filter_input_array(INPUT_GET, FILTER_SANITIZE_URL);
         $dados = explode("/",$dados['url']);
@@ -108,27 +108,26 @@ class financeiro extends View
             $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
             $this->render('admin/financeiro/contas/listar', $this->dados);
         }
-
-
     }
     public function alterar()
     {
-        $this->dados['title'] .= 'ALTERAR CONTA'; 
+        $this->dados['title'] .= ' ALTERAR CONTA'; 
+        $this->link[2] = ['link'=> 'financeiro/contas','nome' => 'GERENCIAR CONTAS'];
         $this->render('admin/financeiro/contas/alterar', $this->dados);
     }
     public function cadastro()
     {
-        $this->dados['title'] .= 'GERENCIAR CONTA DA EMPRESA/NEGÓCIO';   
+        $this->dados['title'] .= ' GERENCIAR CONTA DA EMPRESA/NEGÓCIO';   
         $this->render('admin/financeiro/contas/cadastrar', $this->dados);
     }
     public function cadastrar()
     {
-        $this->dados['title'] .= 'GERENCIAR CONTA DA EMPRESA/NEGÓCIO';   
+        $this->dados['title'] .= ' GERENCIAR CONTA DA EMPRESA/NEGÓCIO';   
         $this->render('admin/financeiro/contas/cadastrar', $this->dados);
     }
     public function frente_caixa()
     {
-        $this->dados['title'] .= 'GERENCIAR CAIXA EMPRESA/NEGÓCIO';   
+        $this->dados['title'] .= ' GERENCIAR CAIXA EMPRESA/NEGÓCIO';   
         $this->render('admin/financeiro/caixa/gerenciar', $this->dados);
     }
     public function contas_pagar()
@@ -136,13 +135,13 @@ class financeiro extends View
         $this->dados['title'] .= 'GERENCIAR CAIXA EMPRESA/NEGÓCIO'; 
 
 
-        $this->render('admin/financeiro/caixa/status', $this->dados);
+        $this->render('admin/financeiro/pagamentos/pagar', $this->dados);
     }public function contas_receber()
     {
         $this->dados['title'] .= 'GERENCIAR CAIXA EMPRESA/NEGÓCIO'; 
 
 
-        $this->render('admin/financeiro/caixa/status', $this->dados);
+        $this->render('admin/financeiro/pagamentos/receber', $this->dados);
     }
     public function alterar_caixa()
     {
