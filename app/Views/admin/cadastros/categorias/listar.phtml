@@ -49,7 +49,7 @@ $qtdS = (is_array($setores) ? count($setores) : 0);
                                 <th class="text-dark">Setor</th>
                                 <th class="text-dark">Nível</th>
                                 <th class="text-dark">Status</th>
-                                <th class="text-dark">Ações</th>
+                                <?php if($_SESSION['USU_NIVEL'] >= 8){ ?><th class="text-dark">Ações</th><?php } ?> 
                             </thead>
                             <tbody>
                                 <?php
@@ -71,15 +71,16 @@ $qtdS = (is_array($setores) ? count($setores) : 0);
                                         </td>
                                         <td class="text-center align-middle"><?= $categorias[$i]['CAT_NIVEL']; ?></td>
                                         <td class="text-center align-middle"><?= ($categorias[$i]['CAT_STATUS'] == 1)? 'ATIVO' : 'DESATIVADO'; ?></td>
-                                        <td class="text-center align-middle">
-                                            <?php if($categorias[$i]['CAT_STATUS'] == 0 && $_SESSION['USU_NIVEL'] >= 8){ ?>
-                                            <button type="button" class="btn btn-primary btn-sm d-print-none" data-bs-toggle='modal'  data-bs-target="#status" title="Ativar cargo" data-codigo="<?= $cargos_salarios[$i]['CGS_COD']; ?>" data-nome="<?= $cargos_salarios[$i]['CGS_NOME']; ?>"  data-status="<?= $cargos_salarios[$i]['CGS_STATUS']; ?>" title="Deseja ativar?" ><i class="fa fa-circle-check"></i></button>
-                                            <?php }else { ?>
-                                            <a type="button" class="btn btn-warning btn-sm d-print-none" href="<?= DIRPAGE.'categorias/alteracao/'.$categorias[$i]['EMP_COD'].'/'.$categorias[$i]['CAT_COD']; ?>" title="Deseja Alterar?"><i class="fa fa-edit"></i></a>
-                                            <button type="button" class="btn btn-dark btn-sm d-print-none" data-bs-toggle='modal'  data-bs-target="#status" title="Desativar categoria" data-codigo="<?= $categorias[$i]['CAT_COD']; ?>" data-nome="<?= $categorias[$i]['CAT_DESCRICAO']; ?>" data-status="<?= $categorias[$i]['CAT_STATUS']; ?>"  title="Deseja desativar?" ><i class="fa fa-ban"></i></button>
-                                            <?php } ?> 
-                                        </td>
-                                        
+                                        <?php if($_SESSION['USU_NIVEL'] >= 8){ ?>
+                                            <td class="text-center align-middle">
+                                                <?php if($categorias[$i]['CAT_STATUS'] == 0){ ?>
+                                                <button type="button" class="btn btn-success btn-sm d-print-none" data-bs-toggle='modal'  data-bs-target="#status" title="Ativar categoria" data-codigo="<?= $categorias[$i]['CAT_COD']; ?>" data-nome="<?= $categorias[$i]['CAT_DESCRICAO']; ?>"  data-status="<?= $e[$i]['CAT_STATUS']; ?>" title="Deseja ativar?" ><i class="fa fa-circle-check"></i></button>
+                                                <?php }else { ?>
+                                                <a type="button" class="btn btn-warning btn-sm d-print-none" href="<?= DIRPAGE.'categorias/alteracao/'.$categorias[$i]['EMP_COD'].'/'.$categorias[$i]['CAT_COD']; ?>" title="Deseja Alterar?"><i class="fa fa-edit"></i></a>
+                                                <button type="button" class="btn btn-dark btn-sm d-print-none" data-bs-toggle='modal'  data-bs-target="#status" title="Desativar categoria" data-codigo="<?= $categorias[$i]['CAT_COD']; ?>" data-nome="<?= $categorias[$i]['CAT_DESCRICAO']; ?>" data-status="<?= $categorias[$i]['CAT_STATUS']; ?>"  title="Deseja desativar?" ><i class="fa fa-ban"></i></button>
+                                                <?php } ?> 
+                                            </td>
+                                        <?php } ?> 
                                     </tr>
                                 <?php $b++; } ?>
                             </tbody>

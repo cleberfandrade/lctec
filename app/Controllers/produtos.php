@@ -38,12 +38,13 @@ class produtos extends View
         $this->Financas = new Financas;
         $this->Produtos = new ModelsProdutos;
         $this->Categorias = new Categorias;
-        $this->dados['categorias'] = $this->Categorias->setCodEmpresa($_SESSION['EMP_COD'])->listarTodos(0);
-        $this->dados['empresa'] = $this->UsuariosEmpresa->setCodEmpresa($_SESSION['EMP_COD'])->setCodUsuario($_SESSION['USU_COD'])->listar(0);
         $this->dados['empresas'] = $this->UsuariosEmpresa->listarTodasEmpresasUsuario(0);
-        $this->dados['usuario'] = $this->Usuarios->setCodUsuario($_SESSION['USU_COD'])->listar(0);
-
         $this->dados['usuarios_empresa'] = $this->UsuariosEmpresa->setCodUsuario($_SESSION['USU_COD'])->checarUsuario();
+        $this->dados['empresa'] = $this->UsuariosEmpresa->setCodEmpresa($_SESSION['EMP_COD'])->setCodUsuario($_SESSION['USU_COD'])->listar(0);
+        $this->dados['usuario'] = $this->Usuarios->setCodUsuario($_SESSION['USU_COD'])->listar(0);
+        $this->dados['categorias'] = $this->Categorias->setCodEmpresa($_SESSION['EMP_COD'])->listarTodos(0);
+        $this->dados['produtos'] = $this->Produtos->setCodEmpresa($_SESSION['EMP_COD'])->listarTodos(0);
+        
         $this->link[0] = ['link'=> 'admin','nome' => 'PAINEL ADMINISTRATIVO'];
         $this->link[1] = ['link'=> 'estoques','nome' => 'ESTOQUES'];
        
@@ -51,7 +52,7 @@ class produtos extends View
     public function index()
     {
         $this->dados['title'] .= 'GERENCIAR PRODUTOS';
-        
+        $ok = false;
         $dados = filter_input_array(INPUT_GET, FILTER_DEFAULT);
         $dados = explode("/",$dados['url']);
         
@@ -64,23 +65,29 @@ class produtos extends View
                 //Verificando a existencia do estoque informado
                 $this->dados['estoque'] = $this->Estoques->setCodEmpresa($dados[2])->setCodigo($dados[3])->listar(0);
                 //Buscando produtos deste estoque
-                $this->dados['produtos'] = $this->Produtos->setCodEmpresa($this->dados['estoque']['EMP_COD'])->setCodEstoque($this->dados['estoque']['EST_COD'])->listarTodos(0);
-                $this->link[3] = ['link'=> 'estoques/produtos/'.$dados[2].'/'.$dados[3],'nome' => 'GERENCIAR PRODUTOS'];
-                $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
-                $this->render('admin/estoques/produtos/listar', $this->dados);
-
+                if ($this->dados['estoque'] != 0) {
+                    $this->dados['produtos'] = $this->Produtos->setCodEmpresa($this->dados['estoque']['EMP_COD'])->setCodEstoque($this->dados['estoque']['EST_COD'])->listarTodos(0);
+                    if ($this->dados['produtos'] != 0) {
+                        $this->link[3] = ['link'=> 'estoques/produtos/'.$dados[2].'/'.$dados[3],'nome' => 'GERENCIAR PRODUTOS'];
+                        $ok = true;
+                    }
+                }
+                
             }else {
                 Sessao::alert('ERRO',' 2- Acesso inválido!','fs-4 alert alert-danger');
-                $this->dados['estoques'] = $this->Estoques->setCodEmpresa($_SESSION['EMP_COD'])->listarTodos(0);
-                $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
-                $this->render('admin/estoques/estoques', $this->dados);
             }
         }else {
             Sessao::alert('ERRO',' 1- Acesso inválido(s)!','fs-4 alert alert-danger');
+        }
+        if ($ok) {
+            $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
+            $this->render('admin/estoques/produtos/listar', $this->dados);
+        } else {
             $this->dados['estoques'] = $this->Estoques->setCodEmpresa($_SESSION['EMP_COD'])->listarTodos(0);
             $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
             $this->render('admin/estoques/estoques', $this->dados);
         }
+        
     }
     public function cadastro()
     {

@@ -48,41 +48,31 @@ $qtd = (is_array($cargos_salarios) ? count($cargos_salarios) : 0);
                             <th class="text-dark">SALÁRIO</th>
                             <th class="text-dark">COMISSÃO</th>
                             <th class="text-dark">STATUS</th>
-                            <th class="text-dark">AÇÕES</th>
+                            <?php if($_SESSION['USU_NIVEL'] >= 8){ ?><th class="text-dark">AÇÕES</th><?php } ?> 
                         </thead>
                         <tbody>
                         <?php
                             $b = 1;
-                            for ($i= 0; $i < $qtd; $i++) { 
-                                //$data = new DateTime($clientes[$i]['GRS_DT_CADASTRO']);
-                                if ($cargos_salarios[$i]['CGS_STATUS'] == 0 && $_SESSION['USU_NIVEL'] >= 8) { ?>
-                                <tr class="bg-secondary">
-                                    <td class="text-center align-middle"><?= $b; ?></td>
-                                    <td class="text-center align-middle"><?= ($cargos_salarios[$i]['CGS_TIPO'] != '0')? (($cargos_salarios[$i]['CGS_TIPO'] == "PF")? 'PESSOA FÍSICA' : 'PESSOA JURÍDICA') : 'NÃO INFORMADO'; ?></td>
-                                    <td class="text-center align-middle"><?= $cargos_salarios[$i]['CGS_NIVEL']; ?></td>
-                                    <td class="text-center align-middle"><?= $cargos_salarios[$i]['CGS_NOME']; ?></td>
-                                    <td class="text-center align-middle"><?= number_format($cargos_salarios[$i]['CGS_SALARIO'],2,',','.'); ?></td>
-                                    <td class="text-center align-middle"><?= $cargos_salarios[$i]['CGS_COMISSAO']; ?>%</td>
-                                    <td class="text-center align-middle"><?= ($cargos_salarios[$i]['CGS_STATUS'] == 1)? 'ATIVO' : 'DESATIVADO'; ?></td>
+                            for ($i= 0; $i < $qtd; $i++) { ?>
+                            <tr class="<?= ($categorias[$i]['CAT_STATUS'] == 0 && $_SESSION['USU_NIVEL'] >= 8)? 'bg-secondary' : ''; ?>">
+                                <td class="text-center align-middle"><?= $b; ?></td>
+                                <td class="text-center align-middle"><?= ($cargos_salarios[$i]['CGS_TIPO'] != '0')? (($cargos_salarios[$i]['CGS_TIPO'] == "PF")? 'PESSOA FÍSICA' : 'PESSOA JURÍDICA') : 'NÃO INFORMADO'; ?></td>
+                                <td class="text-center align-middle"><?= $cargos_salarios[$i]['CGS_NIVEL']; ?></td>
+                                <td class="text-center align-middle"><?= $cargos_salarios[$i]['CGS_NOME']; ?></td>
+                                <td class="text-center align-middle"><?= number_format($cargos_salarios[$i]['CGS_SALARIO'],2,',','.'); ?></td>
+                                <td class="text-center align-middle"><?= $cargos_salarios[$i]['CGS_COMISSAO']; ?>%</td>
+                                <td class="text-center align-middle"><?= ($cargos_salarios[$i]['CGS_STATUS'] == 1)? 'ATIVO' : 'DESATIVADO'; ?></td>
+                                <?php if($_SESSION['USU_NIVEL'] >= 8){ ?>
                                     <td class="text-center align-middle">
-                                        <button type="button" class="btn btn-primary btn-sm d-print-none" data-bs-toggle='modal'  data-bs-target="#status" title="Ativar cargo" data-codigo="<?= $cargos_salarios[$i]['CGS_COD']; ?>" data-nome="<?= $cargos_salarios[$i]['CGS_NOME']; ?>"  data-status="<?= $cargos_salarios[$i]['CGS_STATUS']; ?>" title="Deseja ativar?" ><i class="fa fa-circle-check"></i></button>
-                                    </td>
-                                </tr>
-                                <?php }else { ?>
-                                <tr class="">
-                                    <td class="text-center align-middle"><?= $b; ?></td>
-                                    <td class="text-center align-middle"><?= ($cargos_salarios[$i]['CGS_TIPO'] != '0')? (($cargos_salarios[$i]['CGS_TIPO'] == "PF")? 'PESSOA FÍSICA' : 'PESSOA JURÍDICA') : 'NÃO INFORMADO'; ?></td>
-                                    <td class="text-center align-middle"><?= $cargos_salarios[$i]['CGS_NIVEL']; ?></td>
-                                    <td class="text-center align-middle"><?= $cargos_salarios[$i]['CGS_NOME']; ?></td>
-                                    <td class="text-center align-middle"><?= number_format($cargos_salarios[$i]['CGS_SALARIO'],2,',','.'); ?></td>
-                                    <td class="text-center align-middle"><?= $cargos_salarios[$i]['CGS_COMISSAO']; ?>%</td>
-                                    <td class="text-center align-middle"><?= ($cargos_salarios[$i]['CGS_STATUS'] == 1)? 'ATIVO' : 'DESATIVADO'; ?></td>
-                                    <td class="text-center align-middle">
+                                        <?php if($cargos_salarios[$i]['CGS_STATUS'] == 0){ ?>
+                                        <button type="button" class="btn btn-success btn-sm d-print-none" data-bs-toggle='modal'  data-bs-target="#status" title="Ativar cargo" data-codigo="<?= $cargos_salarios[$i]['CGS_COD']; ?>" data-nome="<?= $cargos_salarios[$i]['CGS_NOME']; ?>"  data-status="<?= $cargos_salarios[$i]['CGS_STATUS']; ?>" title="Deseja ativar?" ><i class="fa fa-circle-check"></i></button>
+                                        <?php }else { ?>
                                         <a type="button" class="btn btn-warning btn-sm d-print-none" href="<?= DIRPAGE.'cargos_salarios/alteracao/'.$cargos_salarios[$i]['EMP_COD'].'/'.$cargos_salarios[$i]['CGS_COD']; ?>" title="Deseja Alterar?"><i class="fa fa-edit"></i></a>
                                         <button type="button" class="btn btn-dark btn-sm d-print-none" data-bs-toggle='modal'  data-bs-target="#status" title="Desativar cargo" data-codigo="<?= $cargos_salarios[$i]['CGS_COD']; ?>" data-nome="<?= $cargos_salarios[$i]['CGS_NOME']; ?>" data-status="<?= $cargos_salarios[$i]['CGS_STATUS']; ?>"  title="Deseja desativar?" ><i class="fa fa-ban"></i></button>
+                                        <?php } ?> 
                                     </td>
-                                </tr>
-                            <?php } ?>
+                                <?php } ?> 
+                            </tr>
                         <?php $b++; } ?>
                         </tbody>
                     </table>
