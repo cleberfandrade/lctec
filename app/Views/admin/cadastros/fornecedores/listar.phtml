@@ -53,13 +53,13 @@ $qtd = (is_array($fornecedores) ? count($fornecedores) : 0);
                                     <th class="text-dark">Tel 1</th>
                                     <th class="text-dark">Resp.</th>
                                     <th class="text-dark">Status</th>
-                                    <th class="text-dark">Ações</th>
+                                    <?php if($_SESSION['USU_NIVEL'] >= 8){ ?><th class="text-dark">Ações</th><?php } ?>
                                 </thead>
                                 <tbody>
                                 <?php
                                     $b = 1;
                                     for ($i= 0; $i < $qtd; $i++) { ?>
-                                    <tr class="">
+                                    <tr class="<?= ($colaboradores[$i]['COL_STATUS'] == 0 && $_SESSION['USU_NIVEL'] >= 8)? 'bg-secondary' : '';?>">
                                         <td class="text-center align-middle"><?= $b; ?></td>
                                         <td class="text-center align-middle"><?= ($fornecedores[$i]['FOR_TIPO'] != '0')? (($fornecedores[$i]['FOR_TIPO'] == "PF")? 'PESSOA FÍSICA' : 'PESSOA JURÍDICA') : 'NÃO INFORMADO'; ?></td>
                                         <td class="text-center align-middle"><?= $fornecedores[$i]['FOR_NOME_FANTASIA'].' '.$fornecedores[$i]['USU_SOBRENOME']; ?></td>
@@ -67,10 +67,16 @@ $qtd = (is_array($fornecedores) ? count($fornecedores) : 0);
                                         <td class="text-center align-middle"><?= $fornecedores[$i]['FOR_TEL_1']; ?></td>
                                         <td class="text-center align-middle"><?= $fornecedores[$i]['FOR_RESPONSAVEL']; ?></td>
                                         <td class="text-center align-middle"><?= ($fornecedores[$i]['FOR_STATUS'] == 1)? 'ATIVO' : 'DESATIVADO'; ?></td>
+                                        <?php if($_SESSION['USU_NIVEL'] >= 8){ ?>
                                         <td class="text-center align-middle">
+                                            <?php if($colaboradores[$i]['COL_STATUS'] == 0){ ?>
+                                                <button type="button" class="btn btn-primary btn-sm d-print-none" data-bs-toggle='modal'  data-bs-target="#status" data-codigo="<?= $fornecedores[$i]['FOR_COD']; ?>" data-nome="<?= $fornecedores[$i]['FOR_NOME_FANTASIA']; ?>"  data-status="<?= $fornecedores[$i]['FOR_STATUS']; ?>" title="Deseja ativar?" ><i class="fa fa-ban"></i></button>
+                                            <?php }else { ?>
                                             <a type="button" class="btn btn-warning btn-sm d-print-none" href="<?= DIRPAGE.'fornecedores/alteracao/'.$fornecedores[$i]['EMP_COD'].'/'.$fornecedores[$i]['USU_COD']; ?>" title="Alterar fornecedores"><i class="fa fa-edit"></i></a>
-                                            <button type="button" class="btn btn-dark btn-sm d-print-none" data-bs-toggle='modal'  data-bs-target="#excluir" title="Desativar fornecedor" data-codigo="<?= $fornecedores[$i]['FOR_COD']; ?>" data-nome="<?= $fornecedores[$i]['FOR_NOME_FANTASIA']; ?>" title="Deseja desativar?" ><i class="fa fa-ban"></i></button>
+                                            <button type="button" class="btn btn-dark btn-sm d-print-none" data-bs-toggle='modal'  data-bs-target="#status" data-codigo="<?= $fornecedores[$i]['FOR_COD']; ?>" data-nome="<?= $fornecedores[$i]['FOR_NOME_FANTASIA']; ?>"  data-status="<?= $fornecedores[$i]['FOR_STATUS']; ?>" title="Deseja desativar?" ><i class="fa fa-ban"></i></button>
+                                            <?php } ?>
                                         </td>
+                                        <?php } ?>
                                     </tr>
                                 <?php $b++; } ?>
                                 </tbody>
@@ -86,11 +92,11 @@ $qtd = (is_array($fornecedores) ? count($fornecedores) : 0);
            
         </div>
     </div>
-    <div class="modal" id="excluir" tabindex="-1" role="dialog" data-bs-backdrop="true" aria-labelledby="excluir" aria-hidden="true">
+    <div class="modal" id="status" tabindex="-1" role="dialog" data-bs-backdrop="true" aria-labelledby="status" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
-                <div class="modal-header text-center text-uppercase">
-                    Deseja desativar o Fornecedor(a)?
+                <div id="title" class="modal-header text-center text-uppercase">
+                    
                 </div>
                 <div class="modal-body text-center">
                     <p class="text-center text-uppercase mx-auto">Confirma desativação deste registro?</p>
@@ -98,34 +104,45 @@ $qtd = (is_array($fornecedores) ? count($fornecedores) : 0);
                 </div>
                 <div class="modal-footer">
                     <input type="hidden" id="FOR_COD" name="FOR_COD" value="" />
+                    <input type="hidden" id="FOR_STATUS" name="FOR_STATUS" value="" />
                     <input type="hidden" id="EMP_COD" name="EMP_COD" value="<?= $empresa['EMP_COD'] ?>" />
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">CANCELAR</button>
-                    <button id="deletar" type="button" class="btn btn-dark" value=""><i class="fa fa-ban"></i> CONFIRMAR</button>
+                    <button id="sts" type="button" class="btn btn-dark" value=""><i class="fa fa-ban"></i> CONFIRMAR</button>
                 </div>
             </div>
         </div>
     </div>
     <script type="text/javascript">
         $(document).ready(function() {
-            $('#excluir').on('show.bs.modal', function(event) {
+            $('#status').on('show.bs.modal', function(event) {
                 var button = null;
                 var button = $(event.relatedTarget); // Button that triggered the modal
                 var codigo = null;
                 var codigo = button.data('codigo'); // Extract info from data-* attributes
                 var nome = button.data('nome');
+                var status = button.data('status');
                 var modal = $(this);
                 modal.find('#FOR_COD').val(codigo);
+                modal.find('#FOR_STATUS').val(status);
                 modal.find('#deletar').val(codigo);
                 modal.find('#FOR_NOME_FANTASIA').html(nome);
+                if (status === 1) {
+                    modal.find('#sts').html('<i class="fa fa-ban"></i> CONFIRMAR');
+                    modal.find('#title').html('Deseja desativar o Fornecedor(a)?');
+                }else{
+                    modal.find('#sts').html('<i class="fa fa-circle-check"></i> CONFIRMAR');
+                    modal.find('#title').html('Deseja ativar o Fornecedor(a)?');
+                }
             });
         });
-        $("#deletar").click(function(){
-            var data = $('#deletar').val();
+        $("#sts").click(function(){
+            var FOR_COD = $('#sts').val();
             var EMP_COD = $('#EMP_COD').val();
+            var FOR_STATUS = $('#FOR_STATUS').val();
             setTimeout(function () {
-                    $('#excluir').modal('hide');
+                    $('#status').modal('hide');
             }, 100);
-            $.post('<?= DIRPAGE; ?>cadastros/desativar_fornecedores', {FOR_COD: data,EXCLUIR_FORNECEDOR: true,EMP_COD: EMP_COD,cache: false}, function(retorno) {
+            $.post('<?= DIRPAGE; ?>fornecedores/status', {FOR_COD: FOR_COD,STATUS_FORNECEDOR: true,EMP_COD: EMP_COD,FOR_STATUS:FOR_STATUS,cache: false}, function(retorno) {
                 var resposta = JSON.parse(retorno);
                 if (resposta['COD'] !== 'ERRO') {
                     $('#resposta').addClass('alert alert-success');
@@ -133,7 +150,7 @@ $qtd = (is_array($fornecedores) ? count($fornecedores) : 0);
                     $('#resposta').addClass('alert alert-warning');
                 }
                 $('#resposta').html(resposta['MENSAGEM']);
-                setTimeout( () => { window.location.href="<?= DIRPAGE ?>cadastros/fornecedores"}, 5000);
+                setTimeout( () => { window.location.href="<?= DIRPAGE ?>fornecedores"}, 100);
             });
 
         });

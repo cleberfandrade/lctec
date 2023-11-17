@@ -38,35 +38,21 @@ class estoques extends View
         $this->Financas = new Financas;
         $this->Setores = new Setores;
         $this->Categorias = new Categorias;
+        
+        $this->dados['empresa'] = $this->UsuariosEmpresa->setCodEmpresa($_SESSION['EMP_COD'])->setCodUsuario($_SESSION['USU_COD'])->listar(0);
+        $this->dados['usuario'] = $this->Usuarios->setCodUsuario($_SESSION['USU_COD'])->listar(0);
+        
         $this->dados['categorias'] = $this->Categorias->setCodEmpresa($_SESSION['EMP_COD'])->listarTodos(0);
         $this->dados['setores'] = $this->Setores->setCodEmpresa($_SESSION['EMP_COD'])->listarTodos(0);
+        $this->dados['estoques'] = $this->Estoques->setCodEmpresa($_SESSION['EMP_COD'])->listarTodos(0);  
+
         $this->link[0] = ['link'=> 'admin','nome' => 'PAINEL ADMINISTRATIVO'];
         $this->link[1] = ['link'=> 'estoques','nome' => 'ESTOQUES'];
     }
     public function index()
     {
         $this->dados['title'] .= 'ACESSAR';
-        $Usuarios = new Usuarios;
-        $Empresa = new Empresas;
-        $Estoques = new ModelsEstoques;
-        $UsuariosEmpresa = new UsuariosEmpresa;
-        $Check = new Check;
-
-        $Usuarios->setCodUsuario($_SESSION['USU_COD']);
-        $this->dados['usuario'] = $Usuarios->listar(0);
-        $UsuariosEmpresa->setCodUsuario($_SESSION['USU_COD']);
-        $this->dados['usuarios_empresa'] = $UsuariosEmpresa->checarUsuario();
-        if (isset($this->dados['usuarios_empresa']['UMP_COD'])) {
-            $_SESSION['EMP_COD'] = $this->dados['usuarios_empresa']['EMP_COD'];
-            $Empresa->setCodigo($_SESSION['EMP_COD']);
-            $this->dados['empresa'] = $Empresa->listar(0);
-            $UsuariosEmpresa->setCodEmpresa($_SESSION['EMP_COD']);
-            $this->dados['usuarios'] = $UsuariosEmpresa->listarTodos(0);
-        }
-        $Estoques->setCodEmpresa($_SESSION['EMP_COD']);
-        $this->dados['estoques'] = $Estoques->listarTodos(0);           
-        $Check->setLink($this->link);
-        $this->dados['breadcrumb'] = $Check->breadcrumb();
+        $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
         $this->render('admin/estoques/estoques', $this->dados);
     }
     public function gerenciar()
@@ -87,13 +73,13 @@ class estoques extends View
         $dados = filter_input_array(INPUT_GET, FILTER_DEFAULT);
         $dados = explode("/",$dados['url']);
 
-        $UsuariosEmpresa->setCodUsuario($_SESSION['USU_COD']);
+        $this->UsuariosEmpresa->setCodUsuario($_SESSION['USU_COD']);
         $this->dados['usuarios_empresa'] = $UsuariosEmpresa->checarUsuario();
         if (isset($this->dados['usuarios_empresa']['UMP_COD'])) {
             $_SESSION['EMP_COD'] = $this->dados['usuarios_empresa']['EMP_COD'];
             $Empresa->setCodigo($_SESSION['EMP_COD']);
             $this->dados['empresa'] = $Empresa->listar(0);
-            $UsuariosEmpresa->setCodEmpresa($_SESSION['EMP_COD']);
+            $this->UsuariosEmpresa->setCodEmpresa($_SESSION['EMP_COD']);
             $this->dados['usuarios'] = $UsuariosEmpresa->listarTodos(0);
         }
 
@@ -102,15 +88,15 @@ class estoques extends View
             if (isset($dados[2]) && $dados[2] != '' && isset($dados[3]) && $dados[3] != '') {
 
                 if (isset($_SESSION['EMP_COD']) && $_SESSION['EMP_COD'] == $dados[2]){
-                    $Estoques->setCodEmpresa($dados[2]);
-                    $Estoques->setCodigo($dados[3]);
+                    $this->Estoques->setCodEmpresa($dados[2]);
+                    $this->Estoques->setCodigo($dados[3]);
                     $this->dados['estoque'] = $Estoques->listar(0);
 
-                    $Produtos->setCodEstoque($dados[3]);
-                    $Produtos->setCodEmpresa($dados[2]);
+                    $this->Produtos->setCodEstoque($dados[3]);
+                    $this->Produtos->setCodEmpresa($dados[2]);
                     $this->dados['produtos'] = $Estoques->listarProdutosEstoque(0);
                     $this->link[2] = ['link'=> 'estoques/gerenciar/'.$dados[2].'/'.$dados[3],'nome' => 'GERENCIAR ESTOQUE'];
-                    $Check->setLink($this->link);
+                    $this->Check->setLink($this->link);
                     $this->dados['breadcrumb'] = $Check->breadcrumb();
 
                     $this->render('admin/estoques/gerenciar', $this->dados);
@@ -118,35 +104,75 @@ class estoques extends View
                 }else {
                     
                     Sessao::alert('ERRO',' 2- Acesso inválido!','fs-4 alert alert-danger');
-                    $Estoques->setCodEmpresa($_SESSION['EMP_COD']);
+                    $this->Estoques->setCodEmpresa($_SESSION['EMP_COD']);
                     $this->dados['estoques'] = $Estoques->listarTodos(0);
 
-                    $Produtos->setCodEstoque($dados[3]);
-                    $Produtos->setCodEmpresa($_SESSION['EMP_COD']);
+                    $this->Produtos->setCodEstoque($dados[3]);
+                    $this->Produtos->setCodEmpresa($_SESSION['EMP_COD']);
                     $this->dados['produtos'] = $Estoques->listarProdutosEstoque(0);
-                    $Check->setLink($this->link);
-                    $this->dados['breadcrumb'] = $Check->breadcrumb();
+                    $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
                     $this->render('admin/estoques/estoques', $this->dados);
                 }
             }else {
                 Sessao::alert('ERRO',' 1- Dados inválido(s)!','fs-4 alert alert-danger');
 
-                $Estoques->setCodEmpresa($_SESSION['EMP_COD']);
+                $this->Estoques->setCodEmpresa($_SESSION['EMP_COD']);
                 $this->dados['estoques'] = $Estoques->listarTodos(0);
                 $this->dados['produtos'] = 0;
-                $Check->setLink($this->link);
-                $this->dados['breadcrumb'] = $Check->breadcrumb();
+                $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
                 $this->render('admin/estoques/estoques', $this->dados);
             }
         }else {
             Sessao::alert('ERRO',' 1- Dados inválido(s)!','fs-4 alert alert-danger');
-            $Estoques->setCodEmpresa($_SESSION['EMP_COD']);
+            $this->Estoques->setCodEmpresa($_SESSION['EMP_COD']);
             $this->dados['estoques'] = $Estoques->listarTodos(0);
             $this->dados['produtos'] = 0;
-            $Check->setLink($this->link);
+            $this->Check->setLink($this->link);
             $this->dados['breadcrumb'] = $Check->breadcrumb();
             $this->render('admin/estoques/estoques', $this->dados);
         }
+    }
+    public function status():void
+    {
+       //Recupera os dados enviados
+       $dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);
+       if (isset($_POST) && isset($dados['STATUS_CARGO'])) {
+
+          if($this->dados['empresa']['USU_COD'] == $_SESSION['USU_COD'] && $this->dados['empresa']['EMP_COD'] == $dados['EMP_COD']){
+              //Verifica se os campos foram todos preenchidos
+              unset($dados['STATUS_FORNECEDOR']);
+              $this->Fornecedores->setCodEmpresa($dados['EMP_COD'])->setCodigo($dados['FOR_COD']);
+              ($dados['EST_STATUS'] == 1)? $dados['EST_STATUS'] = 0 : $dados['EST_STATUS'] = 1;
+              
+              $db = array(
+                  'FOR_DT_ATUALIZACAO'=> date('Y-m-d H:i:s'),
+                  'EST_STATUS' => $dados['FOR_STATUS']
+              );
+
+              if($this->Fornecedores->alterar($db,0)){
+                  $respota = array(
+                      'COD'=>'OK',
+                      'MENSAGEM' => 'Status alterado com sucesso!'
+                  );
+              }else{
+                  $respota = array(
+                      'COD'=>'ERRO',
+                      'MENSAGEM'=> 'ERRO 2- Erro ao mudar status do fornecedor, entre em contato com o suporte!'
+                  );
+              }
+          }else {
+              $respota = array(
+                  'COD'=>'ERRO',
+                  'MENSAGEM'=> 'ERRO 2- Dados inválido(s)!'
+              );
+          }
+      }else {
+          $respota = array(
+              'COD'=>'ERRO',
+              'MENSAGEM'=> 'ERRO 1- Acesso inválido!'
+          );
+      }
+      echo json_encode($respota);
     }
     //PRODUTOS
     public function produtos()

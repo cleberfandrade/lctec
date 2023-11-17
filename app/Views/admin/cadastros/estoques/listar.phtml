@@ -48,22 +48,29 @@ $qtd = (is_array($estoques) ? count($estoques) : 0);
                             <th class="text-dark">Criação</th>
                             <th class="text-dark">Tipo</th>
                             <th class="text-dark">Status</th>
-                            <th class="text-dark">Ações</th>
+                            <?php if($_SESSION['USU_NIVEL'] >= 8){ ?><th class="text-dark">Ações</th><?php } ?>
                         </thead>
                         <tbody>
                         <?php
                             $b = 1;
                             for ($i= 0; $i < $qtd; $i++) { $data = new DateTime($estoques[$i]['EST_DT_CADASTRO']);?>
-                            <tr class="">
+                            <tr class="<?= ($colaboradores[$i]['COL_STATUS'] == 0 && $_SESSION['USU_NIVEL'] >= 8)? 'bg-secondary' : '';?>">
                                 <td class="text-center align-middle"><?= $b; ?></td>
                                 <td class="text-center align-middle"><?= $estoques[$i]['EST_DESCRICAO']; ?></td>
                                 <td class="text-center align-middle"><?= $estoques[$i]['EMP_NOME_FANTASIA']; ?></td>
                                 <td class="text-center align-middle"><?= $data->format('d/m/Y'); ?></td>
                                 <td class="text-center align-middle"><?= $estoques[$i]['EST_TIPO']; ?></td>
                                 <td class="text-center align-middle"><?= ($estoques[$i]['EST_STATUS'] == 1)? 'ATIVO' : 'DESATIVADO'; ?></td>
+                                <?php if($_SESSION['USU_NIVEL'] >= 8){ ?>
                                 <td class="text-center align-middle">
+                                    <?php if($estoques[$i]['EST_STATUS'] == 0){ ?>
+                                        <button type="button" class="btn btn-primary btn-sm d-print-none" data-bs-toggle='modal'  data-bs-target="#status" data-codigo="<?= $estoques[$i]['EST_COD']; ?>" data-nome="<?= $estoques[$i]['EST_DESCRICAO']; ?>" data-status="<?= $estoques[$i]['EST_STATUS']; ?>"  title="Deseja ativar?" ><i class="fa fa-ban"></i></button>
+                                    <?php }else { ?>
                                     <a type="button" class="btn btn-warning btn-sm d-print-none" href="<?= DIRPAGE.'cadastros/alteracao_estoques/'.$estoques[$i]['EMP_COD'].'/'.$estoques[$i]['EST_COD']; ?>" title="Alterar estoque da empresa"><i class="fa fa-edit"></i></a>
+                                    <button type="button" class="btn btn-danger btn-sm d-print-none" data-bs-toggle='modal'  data-bs-target="#status" data-codigo="<?= $estoques[$i]['EST_COD']; ?>" data-nome="<?= $estoques[$i]['EST_DESCRICAO']; ?>"  data-status="<?= $estoques[$i]['EST_STATUS']; ?>"  title="Deseja desativar?" ><i class="fa fa-ban"></i></button>
+                                    <?php } ?>
                                 </td>
+                                <?php } ?>
                             </tr>
                         <?php $b++; } ?> 
                         </tbody>
@@ -76,5 +83,72 @@ $qtd = (is_array($estoques) ? count($estoques) : 0);
             <?php include_once 'app/Views/admin/inc/rodape.phtml';?>
         </div>
     </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
+    <div class="modal" id="status" tabindex="-1" role="dialog" data-bs-backdrop="true" aria-labelledby="status" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div id="title" class="modal-header text-center text-uppercase">
+                    
+                </div>
+                <div class="modal-body text-center">
+                    <p class="text-center text-uppercase mx-auto">Confirma mudança de status deste registro?</p>
+                    <span id="EST_DESCRICAO" class="mt-3 text-center h5"></span>
+                </div>
+                <div class="modal-footer">
+                    <input type="hidden" id="EST_COD" name="EST_COD" value="" />
+                    <input type="hidden" id="EST_STATUS" name="EST_STATUS" value="" />
+                    <input type="hidden" id="EMP_COD" name="EMP_COD" value="<?= $empresa['EMP_COD'] ?>" />
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">CANCELAR</button>
+                    <button id="sts" type="button" class="btn btn-danger" value=""><i class="fa fa-trash"></i> DELETAR</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#status').on('show.bs.modal', function(event) {
+                var button = null;
+                var button = $(event.relatedTarget); // Button that triggered the modal
+                var codigo = null;
+                var codigo = button.data('codigo'); // Extract info from data-* attributes
+                var nome = button.data('nome');
+                var status = button.data('status');
+                var modal = $(this);
+                modal.find('#EST_COD').val(codigo);
+                modal.find('#EST_STATUS').val(status);
+                modal.find('#EST_DESCRICAO').html(nome);
+                modal.find('#sts').val(codigo);
+                
+                if (status === 1) {
+                    modal.find('#sts').html('<i class="fa fa-ban"></i> CONFIRMAR');
+                    modal.find('#title').html('Deseja desativar o Estoque?');
+                }else{
+                    modal.find('#sts').html('<i class="fa fa-circle-check"></i> CONFIRMAR');
+                    modal.find('#title').html('Deseja ativar o Estoque?');
+                }
+            });
+        });
+        $("#sts").click(function(){
+            var EST_COD = $('#sts').val();
+            var EMP_COD = $('#EMP_COD').val();
+            var EST_STATUS = $('#EST_STATUS').val();
+            setTimeout(function () {
+                    $('#status').modal('hide');
+            }, 100);
+            $.post('<?= DIRPAGE; ?>estoques/status', {EST_COD: EST_COD,STATUS_ESTOQUE: true,EMP_COD: EMP_COD,EST_STATUS:EST_STATUS,cache: false}, function(retorno) {
+                var resposta = JSON.parse(retorno);
+                if (resposta['COD'] !== 'ERRO') {
+                    $('#resposta').addClass('alert alert-success');
+                }else{
+                    $('#resposta').addClass('alert alert-warning');
+                }
+                $('#resposta').html(resposta['MENSAGEM']);
+                setTimeout( () => { window.location.href="<?= DIRPAGE ?>estoques"}, 100);
+            });
+
+        });
+    </script>
 </body>
 </html>
