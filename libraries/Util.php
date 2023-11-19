@@ -64,4 +64,26 @@ class Util
         }
         return "$diasemana";
     }
+    public function get($x)
+    {
+        return stripslashes(htmlentities($_GET[$x]));
+    }
+    public static function retMes($time)
+    {
+        return date('Y-m-d',strtotime("-1 month",$time));
+    }
+     static function avcMes($time)
+    {
+        return date('Y-m-d',strtotime("+1 month",$time));
+    }
+    public static function getMesAtual()
+    {
+        $mesAtual = strtotime(date("Y-m-1"));
+        if (isset($_GET["mes"])) {
+            extract(date_parse_from_format("Y-m-d", $_GET["mes"]));
+
+            $mesAtual = strtotime("{$year}-{$month}-1");
+        }
+        return $mesAtual;
+    }   
 }

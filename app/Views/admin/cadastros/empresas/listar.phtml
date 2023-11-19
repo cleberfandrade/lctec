@@ -47,7 +47,7 @@ $qtd = (is_array($empresas) ? count($empresas) : 0);
                             <th class="text-dark">Fundação</th>
                             
                             <th class="text-dark">Status</th>
-                            <th class="text-dark">Ações</th>
+                            <?php if($_SESSION['USU_NIVEL'] >= 8){ ?><th class="text-dark">Ações</th><?php } ?>
                         </thead>
                         <tbody>
                         <?php
@@ -62,9 +62,11 @@ $qtd = (is_array($empresas) ? count($empresas) : 0);
                                 <td class="text-center align-middle"><?= $empresas[$i]['EMP_REGULAMENTACAO']; ?></td>
                                 <td class="text-center align-middle"><?= $data->format('d/m/Y'); ?></td>
                                 <td class="text-center align-middle"><?= ($empresas[$i]['EMP_STATUS'] == 1)? 'ATIVO' : 'DESATIVADO'; ?></td>
+                                <?php if($_SESSION['USU_NIVEL'] >= 8){ ?>
                                 <td class="text-center align-middle">
                                     <a type="button" class="btn btn-warning btn-sm d-print-none" href="<?= DIRPAGE.'empresas/alteracao/'.$empresas[$i]['EMP_COD'].'/'.$_SESSION['USU_COD']; ?>" title="Alterar empresa"><i class="fa fa-edit"></i></a>
                                 </td>
+                                <?php } ?>
                             </tr>
                         <?php $b++; } ?>
                         </tbody>

@@ -54,7 +54,7 @@ $qtd = (is_array($cargos_salarios) ? count($cargos_salarios) : 0);
                         <?php
                             $b = 1;
                             for ($i= 0; $i < $qtd; $i++) { ?>
-                            <tr class="<?= ($categorias[$i]['CAT_STATUS'] == 0 && $_SESSION['USU_NIVEL'] >= 8)? 'bg-secondary' : ''; ?>">
+                            <tr class="<?= ($cargos_salarios[$i]['CGS_STATUS'] == 0 && $_SESSION['USU_NIVEL'] >= 8)? 'bg-secondary' : ''; ?>">
                                 <td class="text-center align-middle"><?= $b; ?></td>
                                 <td class="text-center align-middle"><?= ($cargos_salarios[$i]['CGS_TIPO'] != '0')? (($cargos_salarios[$i]['CGS_TIPO'] == "PF")? 'PESSOA FÍSICA' : 'PESSOA JURÍDICA') : 'NÃO INFORMADO'; ?></td>
                                 <td class="text-center align-middle"><?= $cargos_salarios[$i]['CGS_NIVEL']; ?></td>
@@ -68,7 +68,7 @@ $qtd = (is_array($cargos_salarios) ? count($cargos_salarios) : 0);
                                         <button type="button" class="btn btn-success btn-sm d-print-none" data-bs-toggle='modal'  data-bs-target="#status" title="Ativar cargo" data-codigo="<?= $cargos_salarios[$i]['CGS_COD']; ?>" data-nome="<?= $cargos_salarios[$i]['CGS_NOME']; ?>"  data-status="<?= $cargos_salarios[$i]['CGS_STATUS']; ?>" title="Deseja ativar?" ><i class="fa fa-circle-check"></i></button>
                                         <?php }else { ?>
                                         <a type="button" class="btn btn-warning btn-sm d-print-none" href="<?= DIRPAGE.'cargos_salarios/alteracao/'.$cargos_salarios[$i]['EMP_COD'].'/'.$cargos_salarios[$i]['CGS_COD']; ?>" title="Deseja Alterar?"><i class="fa fa-edit"></i></a>
-                                        <button type="button" class="btn btn-dark btn-sm d-print-none" data-bs-toggle='modal'  data-bs-target="#status" title="Desativar cargo" data-codigo="<?= $cargos_salarios[$i]['CGS_COD']; ?>" data-nome="<?= $cargos_salarios[$i]['CGS_NOME']; ?>" data-status="<?= $cargos_salarios[$i]['CGS_STATUS']; ?>"  title="Deseja desativar?" ><i class="fa fa-ban"></i></button>
+                                        <button type="button" class="btn btn-danger btn-sm d-print-none" data-bs-toggle='modal'  data-bs-target="#status" title="Desativar cargo" data-codigo="<?= $cargos_salarios[$i]['CGS_COD']; ?>" data-nome="<?= $cargos_salarios[$i]['CGS_NOME']; ?>" data-status="<?= $cargos_salarios[$i]['CGS_STATUS']; ?>"  title="Deseja desativar?" ><i class="fa fa-ban"></i></button>
                                         <?php } ?> 
                                     </td>
                                 <?php } ?> 

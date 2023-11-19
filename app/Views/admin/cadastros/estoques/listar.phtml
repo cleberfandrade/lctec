@@ -54,7 +54,7 @@ $qtd = (is_array($estoques) ? count($estoques) : 0);
                         <?php
                             $b = 1;
                             for ($i= 0; $i < $qtd; $i++) { $data = new DateTime($estoques[$i]['EST_DT_CADASTRO']);?>
-                            <tr class="<?= ($colaboradores[$i]['COL_STATUS'] == 0 && $_SESSION['USU_NIVEL'] >= 8)? 'bg-secondary' : '';?>">
+                            <tr class="<?= ($estoques[$i]['EST_STATUS'] == 0 && $_SESSION['USU_NIVEL'] >= 8)? 'bg-secondary' : '';?>">
                                 <td class="text-center align-middle"><?= $b; ?></td>
                                 <td class="text-center align-middle"><?= $estoques[$i]['EST_DESCRICAO']; ?></td>
                                 <td class="text-center align-middle"><?= $estoques[$i]['EMP_NOME_FANTASIA']; ?></td>
@@ -64,7 +64,7 @@ $qtd = (is_array($estoques) ? count($estoques) : 0);
                                 <?php if($_SESSION['USU_NIVEL'] >= 8){ ?>
                                 <td class="text-center align-middle">
                                     <?php if($estoques[$i]['EST_STATUS'] == 0){ ?>
-                                        <button type="button" class="btn btn-primary btn-sm d-print-none" data-bs-toggle='modal'  data-bs-target="#status" data-codigo="<?= $estoques[$i]['EST_COD']; ?>" data-nome="<?= $estoques[$i]['EST_DESCRICAO']; ?>" data-status="<?= $estoques[$i]['EST_STATUS']; ?>"  title="Deseja ativar?" ><i class="fa fa-ban"></i></button>
+                                        <button type="button" class="btn btn-success btn-sm d-print-none" data-bs-toggle='modal'  data-bs-target="#status" data-codigo="<?= $estoques[$i]['EST_COD']; ?>" data-nome="<?= $estoques[$i]['EST_DESCRICAO']; ?>" data-status="<?= $estoques[$i]['EST_STATUS']; ?>"  title="Deseja ativar?" ><i class="fa fa-ban"></i></button>
                                     <?php }else { ?>
                                     <a type="button" class="btn btn-warning btn-sm d-print-none" href="<?= DIRPAGE.'cadastros/alteracao_estoques/'.$estoques[$i]['EMP_COD'].'/'.$estoques[$i]['EST_COD']; ?>" title="Alterar estoque da empresa"><i class="fa fa-edit"></i></a>
                                     <button type="button" class="btn btn-danger btn-sm d-print-none" data-bs-toggle='modal'  data-bs-target="#status" data-codigo="<?= $estoques[$i]['EST_COD']; ?>" data-nome="<?= $estoques[$i]['EST_DESCRICAO']; ?>"  data-status="<?= $estoques[$i]['EST_STATUS']; ?>"  title="Deseja desativar?" ><i class="fa fa-ban"></i></button>
@@ -101,7 +101,7 @@ $qtd = (is_array($estoques) ? count($estoques) : 0);
                     <input type="hidden" id="EST_STATUS" name="EST_STATUS" value="" />
                     <input type="hidden" id="EMP_COD" name="EMP_COD" value="<?= $empresa['EMP_COD'] ?>" />
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">CANCELAR</button>
-                    <button id="sts" type="button" class="btn btn-danger" value=""><i class="fa fa-trash"></i> DELETAR</button>
+                    <button id="sts" type="button" class="btn btn-dark" value=""><i class="fa fa-ban"></i> CONFIRMAR</button>
                 </div>
             </div>
         </div>

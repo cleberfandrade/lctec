@@ -72,7 +72,7 @@ $qtd = (is_array($clientes) ? count($clientes) : 0);
                                     </td>
                                 </tr>
                                 <?php }else { ?>
-                                <tr class="<?= ($categorias[$i]['CAT_STATUS'] == 0 && $_SESSION['USU_NIVEL'] >= 8)? 'bg-secondary' : ''; ?>">
+                                <tr class="<?= ($clientes[$i]['CLI_STATUS'] == 0 && $_SESSION['USU_NIVEL'] >= 8)? 'bg-secondary' : ''; ?>">
                                     <td class="text-center align-middle"><?= $b; ?></td>
                                     <td class="text-center align-middle"><?= $clientes[$i]['CLI_NOME']; ?></td>
                                     <td class="text-center align-middle"><?= $data->format('d/m/Y h:i:s'); ?></td>
@@ -82,11 +82,11 @@ $qtd = (is_array($clientes) ? count($clientes) : 0);
                                     <td class="text-center align-middle"><?= ($clientes[$i]['CLI_STATUS'] == 1)? 'ATIVO' : 'DESATIVADO'; ?></td>
                                     <?php if($_SESSION['USU_NIVEL'] >= 8){ ?>
                                     <td class="text-center align-middle">
-                                        <?php if($categorias[$i]['CAT_STATUS'] == 0){ ?>
-                                        <button type="button" class="btn btn-primary btn-sm d-print-none" data-bs-toggle='modal'  data-bs-target="#status" data-codigo="<?= $clientes[$i]['CLI_COD']; ?>" data-nome="<?= $clientes[$i]['CLI_NOME']; ?>" data-status="<?= $clientes[$i]['CLI_STATUS']; ?>" title="Deseja ativar?" ><i class="fa fa-ban"></i></button>
+                                        <?php if($clientes[$i]['CLI_STATUS'] == 0){ ?>
+                                        <button type="button" class="btn btn-success btn-sm d-print-none" data-bs-toggle='modal'  data-bs-target="#status" data-codigo="<?= $clientes[$i]['CLI_COD']; ?>" data-nome="<?= $clientes[$i]['CLI_NOME']; ?>" data-status="<?= $clientes[$i]['CLI_STATUS']; ?>" title="Deseja ativar?" ><i class="fa fa-ban"></i></button>
                                         <?php }else { ?>
                                         <a type="button" class="btn btn-warning btn-sm d-print-none" href="<?= DIRPAGE.'clientes/alteracao/'.$clientes[$i]['EMP_COD'].'/'.$clientes[$i]['CLI_COD']; ?>" title="Alterar cliente"><i class="fa fa-edit"></i></a>
-                                        <button type="button" class="btn btn-dark btn-sm d-print-none" data-bs-toggle='modal'  data-bs-target="#status" data-codigo="<?= $clientes[$i]['CLI_COD']; ?>" data-nome="<?= $clientes[$i]['CLI_NOME']; ?>" data-status="<?= $clientes[$i]['CLI_STATUS']; ?>" title="Deseja desativar?" ><i class="fa fa-ban"></i></button>
+                                        <button type="button" class="btn btn-danger btn-sm d-print-none" data-bs-toggle='modal'  data-bs-target="#status" data-codigo="<?= $clientes[$i]['CLI_COD']; ?>" data-nome="<?= $clientes[$i]['CLI_NOME']; ?>" data-status="<?= $clientes[$i]['CLI_STATUS']; ?>" title="Deseja desativar?" ><i class="fa fa-ban"></i></button>
                                         <?php } ?>
                                     </td>
                                     <?php } ?>

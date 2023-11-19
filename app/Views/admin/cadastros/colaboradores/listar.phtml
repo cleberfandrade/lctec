@@ -95,7 +95,7 @@ $qtdS = (is_array($setores) ? count($setores) : 0);
                                         <?php if($_SESSION['USU_NIVEL'] >= 8){ ?>
                                         <td class="text-center align-middle">
                                             <?php if($colaboradores[$i]['COL_STATUS'] == 0){ ?>
-                                                <button type="button" class="btn btn-primary btn-sm d-print-none" data-bs-toggle='modal'  data-bs-target="#status" data-codigo="<?= $colaboradores[$i]['COL_COD']; ?>" data-nome="<?= $colaboradores[$i]['COL_NOME']; ?>" data-status="<?= $colaboradores[$i]['COL_STATUS']; ?>" title="Deseja ativar?" ><i class="fa fa-ban"></i></button>
+                                                <button type="button" class="btn btn-success btn-sm d-print-none" data-bs-toggle='modal'  data-bs-target="#status" data-codigo="<?= $colaboradores[$i]['COL_COD']; ?>" data-nome="<?= $colaboradores[$i]['COL_NOME']; ?>" data-status="<?= $colaboradores[$i]['COL_STATUS']; ?>" title="Deseja ativar?" ><i class="fa fa-ban"></i></button>
                                             <?php }else { ?>
                                             <a type="button" class="btn btn-warning btn-sm d-print-none" href="<?= DIRPAGE.'colaboradores/alteracao/'.$colaboradores[$i]['EMP_COD'].'/'.$colaboradores[$i]['COL_COD']; ?>" title="Alterar Colaborador(a)"><i class="fa fa-edit"></i></a>
                                             <button type="button" class="btn btn-danger btn-sm d-print-none" data-bs-toggle='modal'  data-bs-target="#status" data-codigo="<?= $colaboradores[$i]['COL_COD']; ?>" data-nome="<?= $colaboradores[$i]['COL_NOME']; ?>" data-status="<?= $colaboradores[$i]['COL_STATUS']; ?>" title="Deseja desativar?" ><i class="fa fa-ban"></i></button>
@@ -135,7 +135,7 @@ $qtdS = (is_array($setores) ? count($setores) : 0);
                     <input type="hidden" id="COL_STATUS" name="COL_STATUS" value="" />
                     <input type="hidden" id="EMP_COD" name="EMP_COD" value="<?= $empresa['EMP_COD'] ?>" />
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">CANCELAR</button>
-                    <button id="sts" type="button" class="btn btn-danger" value=""><i class="fa fa-trash"></i> DELETAR</button>
+                    <button id="sts" type="button" class="btn btn-dark" value=""><i class="fa fa-ban"></i> CONFIRMAR</button>
                 </div>
             </div>
         </div>

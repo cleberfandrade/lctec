@@ -1,5 +1,8 @@
 <?php 
 use Libraries\Sessao;
+use Libraries\Url;
+use Libraries\Util;
+
 session_start();
 include_once 'inc/cabecalho.phtml'; 
 $qtdE = (is_array($estoques) ? count($estoques) : 0);
@@ -50,38 +53,47 @@ $qtdME = (is_array($modulos_empresa) ? count($modulos_empresa) : 0);
                     <?php }else { ?>
                         <div class="row col-9 mx-auto m-4">
                             <div class="row col-12">
-                                <div class="span12">
-                                    <table class="table-condensed table-bordered table-striped">
+                                <style>
+                                    table td.other-month{
+                                        opacity: .5;
+                                    }
+                                </style>
+                                <div class="col-6">
+                                    <table class="table table-bordered table-striped text-center">
                                         <thead>
                                             <tr>
                                             <th colspan="7">
-                                                <span class="btn-group">
-                                                    <a class="btn"><i class="icon-chevron-left"></i></a>
-                                                    <a class="btn active">February 2012</a>
-                                                    <a class="btn"><i class="icon-chevron-right"></i></a>
+                                                <!-- https://www.youtube.com/watch?v=O1nT0jvj11A -->
+                                                <span class="btn-group"> 
+                                                    <?php $mes = Util::getMesAtual(); ?>
+                                                    <a href="<?= DIRPAGE.'admin/mes/'.Util::retMes($mes); ?>" class="btn"><i class="i-chevron-left"></i> </a>
+                                                    <a class="btn active">Mês</a>
+                                                    <a href="<?= DIRPAGE.'admin/mes/'.Util::avcMes($mes); ?>" class="btn"><i class="i-chevron-right"></i></a>
                                                 </span>
                                             </th>
                                             </tr>
                                             <tr>
-                                                <th>Dom</th>
-                                                <th>Seg</th>
-                                                <th>Ter</th>
-                                                <th>Qua</th>
-                                                <th>Qui</th>
-                                                <th>Sex</th>
-                                                <th>Sab</th>
+                                                <th>DOM</th>
+                                                <th>SEG</th>
+                                                <th>TER</th>
+                                                <th>QUA</th>
+                                                <th>QUI</th>
+                                                <th>SEX</th>
+                                                <th>SAB</th>
                                             </tr>
                                         </thead>
                                         <tbody>
+                                            <?php ?>
                                             <tr>
-                                                <td class="muted">29</td>
-                                                <td class="muted">30</td>
-                                                <td class="muted">31</td>
-                                                <td>1</td>
-                                                <td>2</td>
-                                                <td>3</td>
-                                                <td>4</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                             </tr>
+                                            <?php ?>
                                             <tr>
                                                 <td>5</td>
                                                 <td>6</td>
@@ -122,7 +134,7 @@ $qtdME = (is_array($modulos_empresa) ? count($modulos_empresa) : 0);
                                     </table>
                                 </div>
                             </div>
-                            <div class="row col-12">
+                            <div class="row col-12 mt-3">
                                 <?php if ($qtdME != 0) { 
                                     for ($i=0; $i < $qtdME; $i++) { ?>
                                     <?php if ($modulos_empresa[$i]['MOD_NOME'] == 'ESTOQUE') {
@@ -176,10 +188,7 @@ $qtdME = (is_array($modulos_empresa) ? count($modulos_empresa) : 0);
                                     </div>
                                     -->
                                 </div>
-                               
-                            </div>
-                        </div>
-                        <div class="col-3 mx-auto m-4 mx-auto ml-3 border-start">
+                            </div> <div class="col-3 mx-auto m-4 mx-auto ml-3 border-start">
                             <div class="">
                                 <div class="card mx-auto bg-light" style="max-width: 15rem;">
                                     <div class="card-header"><i class="bi bi-question-square"></i> SUPORTE</div>
@@ -193,6 +202,8 @@ $qtdME = (is_array($modulos_empresa) ? count($modulos_empresa) : 0);
                                 </div>
                             </div>
                         </div>
+                        </div>
+                       
                     <?php } ?>
                 </section>
                 <?php include_once 'inc/rodape.phtml';?>
