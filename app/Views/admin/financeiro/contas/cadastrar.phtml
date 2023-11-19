@@ -59,20 +59,6 @@ include_once 'app/Views/admin/inc/cabecalho.phtml';
                                     </div>
                                 </div>
                                  
-                                <?= 
-                                /*
-                                `CTA_COD` INT(11) NOT NULL AUTO_INCREMENT , 
-                                    `CTA_DT_CADASTRO` DATETIME NOT NULL , 
-                                    `CTA_DT_ATUALIZACAO` DATETIME NULL , 
-
-                                    `CTA_NOME` VARCHAR NOT NULL , 
-                                    `EMP_COD` INT(11) NULL ,
-
-                                    `CTA_STATUS` INT(1) NOT NULL , 
-                                   
-                                    */
-                               ?>
-
                                 <hr class="my-4 text-dark">
                                 <input type="hidden" class="form-control" name="EMP_COD" value="<?= isset($_SESSION['EMP_COD']) ? $_SESSION['EMP_COD'] : 0; ?>">
                                 <input type="hidden" class="form-control" name="USU_COD" value="<?= isset($_SESSION['USU_COD']) ? $_SESSION['USU_COD'] : 0; ?>">

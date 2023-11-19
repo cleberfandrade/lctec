@@ -180,18 +180,18 @@ class contas extends View
             if( $this->dados['empresa']['USU_COD'] == $dados['USU_COD'] && $this->dados['empresa']['EMP_COD'] == $dados['EMP_COD']){
                 //Verifica se os campos foram todos preenchidos
                 unset($dados['CADASTRAR_NOVA_CONTA']);
-                    $dados += array(
-                        'CTA_DT_CADASTRO'=> date('Y-m-d H:i:s'),
-                        'CTA_DT_ATUALIZACAO'=> date('0000-00-00 00:00:00'),             
-                        'CTA_STATUS'=> 1
-                    );
+                $dados += array(
+                    'CTA_DT_CADASTRO'=> date('Y-m-d H:i:s'),
+                    'CTA_DT_ATUALIZACAO'=> date('0000-00-00 00:00:00'),             
+                    'CTA_STATUS'=> 1
+                );
 
-                    if($this->Contas->cadastrar($dados,0)){
-                        $ok = true;
-                        Sessao::alert('OK','Cadastro efetuado com sucesso!','fs-4 alert alert-success');
-                    }else{
-                        Sessao::alert('ERRO',' CTA3 - Erro ao cadastrar nova conta, entre em contato com o suporte!','fs-4 alert alert-danger');
-                    }
+                if($this->Contas->cadastrar($dados,0)){
+                    $ok = true;
+                    Sessao::alert('OK','Cadastro efetuado com sucesso!','fs-4 alert alert-success');
+                }else{
+                    Sessao::alert('ERRO',' CTA3 - Erro ao cadastrar nova conta, entre em contato com o suporte!','fs-4 alert alert-danger');
+                }
             }else{
                 Sessao::alert('ERRO',' CTA2 - Dados inválido(s)!','alert alert-danger');
             }
