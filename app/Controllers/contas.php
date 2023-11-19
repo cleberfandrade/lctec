@@ -14,7 +14,7 @@ use Libraries\Url;
 class contas extends View
 {
     private $dados = [];
-    private $link,$Financas,$Check,$Usuarios,$UsuariosEmpresa;
+    private $link,$Financas,$Check,$Usuarios,$UsuariosEmpresa,$Contas;
     public function __construct()
     {
         Sessao::naoLogado();
@@ -44,7 +44,7 @@ class contas extends View
         $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
         $this->render('admin/financeiro/contas/listar', $this->dados);
     }
-    public function detalhar_contas()
+    public function detalhar()
     {
         $this->dados['title'] .= 'DETALHAR CONTA'; 
         $this->link[2] = ['link'=> 'financeiro/contas','nome' => 'GERENCIAR CONTAS'];
@@ -113,16 +113,138 @@ class contas extends View
     {
         $this->dados['title'] .= ' ALTERAR CONTA'; 
         $this->link[2] = ['link'=> 'financeiro/contas','nome' => 'GERENCIAR CONTAS'];
-        $this->render('admin/financeiro/contas/alterar', $this->dados);
+        $ok = false;
+        $dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);
+        if (isset($_POST) && isset($dados['ALTERAR_CONTA'])) {
+           
+            if($this->dados['empresa']['USU_COD'] == $dados['USU_COD'] && $this->dados['empresa']['EMP_COD'] == $dados['EMP_COD']){
+                //Verifica se os campos foram todos preenchidos
+                unset($dados['ALTERAR_CONTA']);
+
+                //Verifica se tem algum valor proibido
+                foreach ($dados as $key => $value) {
+                    $dados[$key] = $this->Check->checarString($value);
+                }
+                $this->dados['conta'] = $this->Contas->setCodEmpresa($dados['EMP_COD'])->setCodigo($dados['CTA_COD']);
+
+                if ($this->dados['conta'] != 0) {
+
+                    $this->link[3] = ['link'=> 'contas/alteracao/'.$_SESSION['EMP_COD'].'/'.$dados['CTA_COD'],'nome' => 'ALTERAR CONTAS'];
+        
+                    unset($dados['CTA_COD']);
+                    unset($dados['EMP_COD']);
+                    $dados += array(
+                        'CTA_DT_ATUALIZACAO'=> date('Y-m-d H:i:s')
+                    );
+                                        
+                    if($this->Contas->alterar($dados,0)){
+                        $ok = true;
+                        Sessao::alert('OK','Cadastro alterado com sucesso!','fs-4 alert alert-success');
+                    }else{
+                        Sessao::alert('ERRO',' ERRO: CTA24 - Erro ao alterar conta, entre em contato com o suporte!','fs-4 alert alert-danger');
+                    }
+                }else {
+                    Sessao::alert('ERRO',' CTA23- Conta não foi encontrada!, verifque os dados informados, ou entre em contato com o Suporte','fs-4 alert alert-danger');
+                }
+            }else{
+                Sessao::alert('ERRO',' ERRO: CTA22 - Dados inválido(s)!','alert alert-danger');
+            }
+        }else{
+            Sessao::alert('ERRO',' ERRO: CTA21 - Acesso inválido(s)!','alert alert-danger');
+        }
+        $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
+        if ($ok) {
+            $this->dados['contas'] = $this->Contas->setCodEmpresa($_SESSION['EMP_COD'])->listarTodos(0);
+            $this->render('admin/financeiro/contas/listar', $this->dados);
+        }else {
+            $this->dados['conta'] = $this->Contas->setCodEmpresa($dados['EMP_COD'])->setCodigo($dados['CTA_COD'])->listar(0);
+            $this->render('admin/financeiro/contas/alterar', $this->dados);
+        }
     }
     public function cadastro()
     {
-        $this->dados['title'] .= ' GERENCIAR CONTA DA EMPRESA/NEGÓCIO';   
+        $this->dados['title'] .= ' CADASTRAR CONTA DA EMPRESA/NEGÓCIO';   
+        $this->link[3] = ['link'=> 'contas/cadastro','nome' => 'CADASTRO DE CONTAS'];
+        $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
         $this->render('admin/financeiro/contas/cadastrar', $this->dados);
     }
     public function cadastrar()
     {
-        $this->dados['title'] .= ' GERENCIAR CONTA DA EMPRESA/NEGÓCIO';   
-        $this->render('admin/financeiro/contas/cadastrar', $this->dados);
+        $this->dados['title'] .= ' CADASTRAR CONTA DA EMPRESA/NEGÓCIO';   
+        $this->link[3] = ['link'=> 'contas/cadastro','nome' => 'CADASTRO DE CONTAS'];
+        $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
+        $ok = false;
+        $dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);
+
+        if (isset($_POST) && isset($dados['CADASTRAR_NOVA_CONTA'])) {
+            if( $this->dados['empresa']['USU_COD'] == $dados['USU_COD'] && $this->dados['empresa']['EMP_COD'] == $dados['EMP_COD']){
+                //Verifica se os campos foram todos preenchidos
+                unset($dados['CADASTRAR_NOVA_CONTA']);
+                    $dados += array(
+                        'CTA_DT_CADASTRO'=> date('Y-m-d H:i:s'),
+                        'CTA_DT_ATUALIZACAO'=> date('0000-00-00 00:00:00'),             
+                        'CTA_STATUS'=> 1
+                    );
+
+                    if($this->Contas->cadastrar($dados,0)){
+                        $ok = true;
+                        Sessao::alert('OK','Cadastro efetuado com sucesso!','fs-4 alert alert-success');
+                    }else{
+                        Sessao::alert('ERRO',' CTA3 - Erro ao cadastrar nova conta, entre em contato com o suporte!','fs-4 alert alert-danger');
+                    }
+            }else{
+                Sessao::alert('ERRO',' CTA2 - Dados inválido(s)!','alert alert-danger');
+            }
+        }else{
+            Sessao::alert('ERRO',' CTA1 - Acesso inválido(s)!','alert alert-danger');
+        }
+        if ($ok) {
+            $this->dados['contas'] = $this->Contas->setCodEmpresa($_SESSION['EMP_COD'])->listarTodas(0);
+            $this->render('admin/financeiro/contas/listar', $this->dados);
+        }else {
+            $this->render('admin/financeiro/contas/cadastrar', $this->dados);
+        }
+    }
+    public function status()
+    {
+         //Recupera os dados enviados
+         $dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);
+         if (isset($_POST) && isset($dados['STATUS_CONTA'])) {
+ 
+            if($this->dados['empresa']['USU_COD'] == $_SESSION['USU_COD'] && $this->dados['empresa']['EMP_COD'] == $dados['EMP_COD']){
+                //Verifica se os campos foram todos preenchidos
+                unset($dados['STATUS_CONTA']);
+                $this->Contas->setCodEmpresa($dados['EMP_COD'])->setCodigo($dados['CTA_COD']);
+                ($dados['CTA_STATUS'] == 1)? $dados['CTA_STATUS'] = 0 : $dados['CTA_STATUS'] = 1;
+                
+                $db = array(
+                    'COL_DT_ATUALIZACAO'=> date('Y-m-d H:i:s'),
+                    'CTA_STATUS' => $dados['CTA_STATUS']
+                );
+
+                if($this->Contas->alterar($db,0)){
+                    $respota = array(
+                        'COD'=>'OK',
+                        'MENSAGEM' => 'Status alterado com sucesso!'
+                    );
+                }else{
+                    $respota = array(
+                        'COD'=>'ERRO',
+                        'MENSAGEM'=> 'ERRO 2- Erro ao mudar status da conta da empresa/negócio, entre em contato com o suporte!'
+                    );
+                }
+            }else {
+                $respota = array(
+                    'COD'=>'ERRO',
+                    'MENSAGEM'=> 'ERRO 2- Dados inválido(s)!'
+                );
+            }
+        }else {
+            $respota = array(
+                'COD'=>'ERRO',
+                'MENSAGEM'=> 'ERRO 1- Acesso inválido!'
+            );
+        }
+        echo json_encode($respota);
     }
 }

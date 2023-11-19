@@ -44,14 +44,14 @@ class colaboradores extends View
     public function cadastro():void
     {
         $this->dados['title'] .= ' CADASTRAR COLABORADORES';
-        $this->link[3] = ['link'=> 'colaboradores/cadastrar','nome' => 'CADASTRO DE COLABORADORES'];
+        $this->link[3] = ['link'=> 'colaboradores/cadastro','nome' => 'CADASTRO DE COLABORADORES'];
         $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
         $this->render('admin/cadastros/colaboradores/cadastrar', $this->dados);
     }
     public function cadastrar()
     {
         $this->dados['title'] .= ' CADASTRAR COLABORADORES';
-        $this->link[3] = ['link'=> 'colaboradores/cadastrar','nome' => 'CADASTRO DE COLABORADORES'];
+        $this->link[3] = ['link'=> 'colaboradores/cadastro','nome' => 'CADASTRO DE COLABORADORES'];
         $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
         $ok = false;
         $dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);
@@ -138,7 +138,7 @@ class colaboradores extends View
 
                 if ($this->dados['colaborador'] != 0) {
 
-                    $this->link[3] = ['link'=> 'fornecedores/alteracao/'.$_SESSION['EMP_COD'].'/'.$dados['FOR_COD'],'nome' => 'ALTERAR FORNECEDORES'];
+                    $this->link[3] = ['link'=> 'colaboradores/alteracao/'.$_SESSION['EMP_COD'].'/'.$dados['COL_COD'],'nome' => 'ALTERAR COLABORADORES'];
         
                     unset($dados['COL_COD']);
                     unset($dados['EMP_COD']);
@@ -200,7 +200,7 @@ class colaboradores extends View
                 }else{
                     $respota = array(
                         'COD'=>'ERRO',
-                        'MENSAGEM'=> 'ERRO 2- Erro ao mudar status do cargo, entre em contato com o suporte!'
+                        'MENSAGEM'=> 'ERRO 2- Erro ao mudar status do colaborador(a), entre em contato com o suporte!'
                     );
                 }
             }else {
