@@ -20,9 +20,9 @@
                 <!-- https://www.youtube.com/watch?v=O1nT0jvj11A -->
                 <span class="btn-group"> 
                     <?php $mes = Util::getMesAtual(); ?>
-                    <a href="<?= DIRPAGE.'admin/mes/'.Util::retMes($mes); ?>" class="btn"><i class="i-chevron-left"></i> </a>
-                    <a class="btn active">Mês</a>
-                    <a href="<?= DIRPAGE.'admin/mes/'.Util::avcMes($mes); ?>" class="btn"><i class="i-chevron-right"></i></a>
+                    <a href="<?= DIRPAGE.'admin/mes/'.Util::retMes($mes); ?>" class="btn"><i class="bi bi-chevron-double-left"></i> </a>
+                    <a class="btn active"><?= date('F',$startDate)?></a>
+                    <a href="<?= DIRPAGE.'admin/mes/'.Util::avcMes($mes); ?>" class="btn"><i class="bi bi-chevron-double-right"></i></a>
                 </span>
             </th>
             </tr>
