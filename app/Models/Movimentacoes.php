@@ -3,11 +3,11 @@ namespace App\Models;
 
 use Core\Model;
 
-class FormasPagamentos extends Model
+class Movimentacoes extends Model
 { 
-    private $tabela = 'tb_formas_pagamentos';
+    private $tabela = 'tb_movimentacoes';
     private $Model = '';
-    private $codigo,$codUsuario,$codConta,$codEmpresa,$registro;
+    private $codigo,$codUsuario,$codConta,$codEmpresa;
 
     public function __construct()
     {
@@ -29,14 +29,9 @@ class FormasPagamentos extends Model
         $this->codEmpresa = $codEmpresa;
         return $this;
     }
-    public function setRegistro($registro)
-    {
-        $this->registro = $registro;
-        return $this;
-    }
     public function listar($ver = 0)
     {
-        $parametros = "FP INNER JOIN tb_empresas E ON E.EMP_COD=FP.EMP_COD WHERE FP.FPG_COD={$this->codigo} AND FP.EMP_COD={$this->codEmpresa} ";
+        $parametros = "M INNER JOIN tb_empresas E ON E.EMP_COD=M.EMP_COD WHERE M.MOV_COD={$this->codigo} AND M.EMP_COD={$this->codEmpresa} ";
         $campos = "*";
         $resultado = $this->Model->exibir($parametros, $campos, $ver = 0, $id = false);
         if ($resultado) {
@@ -45,20 +40,9 @@ class FormasPagamentos extends Model
             return false;
         }
     }
-    public function listarTodas($ver = 0)
+    public function listarTodos($ver = 0)
     {
-        $parametros = "FP INNER JOIN tb_empresas E ON E.EMP_COD=FP.EMP_COD WHERE FP.EMP_COD={$this->codEmpresa}";
-        $campos = "*";
-        $resultado = $this->Model->exibir($parametros, $campos, $ver = 0, $id = false);
-        if ($resultado) {
-            return $resultado;
-        } else {
-            return false;
-        }
-    }
-    public function listarTodasSistema($ver = 0)
-    {
-        $parametros = " WHERE EMP_COD=0 AND FPG_STATUS=1";
+        $parametros = "M INNER JOIN tb_empresas E ON E.EMP_COD=M.EMP_COD WHERE M.EMP_COD={$this->codEmpresa}";
         $campos = "*";
         $resultado = $this->Model->exibir($parametros, $campos, $ver = 0, $id = false);
         if ($resultado) {
@@ -78,7 +62,7 @@ class FormasPagamentos extends Model
     }
     public function alterar(array $dados, $ver = 0)
     {
-        $parametros = "WHERE EMP_COD={$this->codEmpresa} AND FPG_COD=";
+        $parametros = "WHERE EMP_COD={$this->codEmpresa} AND MOV_COD=";
         $this->Model->setParametros($parametros);
         $this->Model->setCodigo($this->codigo);
         $ok = false;
@@ -91,7 +75,7 @@ class FormasPagamentos extends Model
     }
     public function checarRegistro()
     {
-        $parametros = "WHERE EMP_COD={$this->codEmpresa} AND FPG_DESCRICAO='{$this->registro}'";
+        $parametros = "WHERE EMP_COD={$this->codEmpresa} AND MOV_COD='{$this->codigo}'";
         $campos = "*";
         $resultado = $this->Model->exibir($parametros, $campos, $ver = 0, $id = false);
         if ($resultado) {
