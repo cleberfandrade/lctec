@@ -13,7 +13,7 @@
 </style>
 <div class="row col-12">
     <div class="col-6">
-    <?php echo '<table class="table table-bordered table-striped text-center">
+   <table class="table table-bordered table-striped text-center">
         <thead>
             <tr>
             <th colspan="7">
@@ -35,27 +35,28 @@
                 <th>SEX</th>
                 <th>SAB</th>
             </tr>
-        </thead>';
-         $startDate = strtotime("last sunday",$mes); 
+        </thead>
+        <?php
+        $startDate = strtotime("last sunday",$mes); 
         echo'<tbody>';
         for ($row =0; $row  < 6; $row ++) { 
             echo'<tr>';
             for ($cl=0; $cl < 7; $cl++) { 
-                # code...
+                
+                if (date('Y-m',$startDate) !== date('Y-m',$mes)) {
+                    echo'<td class="other-month">';
+                } else {
+                    echo'<td>';
+                }
+                echo date('j',$startDate);
+                echo'</td>';
+                //somando o calendario
+                $startDate = strtotime("+1 day",$startDate);
             }
             echo'</tr>';
         }
-            
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-           echo'</tbody></table>';
-           ?>
+        echo'</tbody></table>';
+?>
            <!--
             <tr>
                 <td>5</td>
