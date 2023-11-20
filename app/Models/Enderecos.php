@@ -7,7 +7,7 @@ class Enderecos extends Model
 {
     private $tabela = 'tb_enderecos';
     private $Model = '';
-    private $codigo,$codEmpresa,$codUsuario,$codFornecedor,$codCliente;
+    private $codigo,$codEmpresa,$codUsuario,$codFornecedor,$codCliente,$codColaborador;
     public function __construct()
     {
         $this->Model = new Model();
@@ -38,6 +38,12 @@ class Enderecos extends Model
         $this->codEmpresa = $cod;
         return $this;
     }
+
+    public function setCodColaborador($cod)
+    {
+        $this->codColaborador = $cod;
+        return $this;
+    }
     public function cadastrar(array $dados, $ver = 0)
     {
         $ok = $this->Model->cadastrar($dados, $ver);
@@ -60,7 +66,7 @@ class Enderecos extends Model
     }
     public function checarEnderecoUsuario()
     {
-        $parametros = " WHERE USU_COD='{$this->codUsuario}'";
+        $parametros = " WHERE EMP_COD={$this->codEmpresa} AND USU_COD='{$this->codUsuario}'";
         $campos = "*";
         $resultado = $this->Model->exibir($parametros, $campos, $ver = 0, $id = false);
         if ($resultado) {
@@ -73,7 +79,7 @@ class Enderecos extends Model
     }
     public function checarEnderecoCliente()
     {
-        $parametros = " WHERE CLI_COD='{$this->codCliente}'";
+        $parametros = " WHERE EMP_COD={$this->codEmpresa} AND CLI_COD='{$this->codCliente}'";
         $campos = "*";
         $resultado = $this->Model->exibir($parametros, $campos, $ver = 0, $id = false);
         if ($resultado) {
@@ -86,7 +92,7 @@ class Enderecos extends Model
     }
     public function checarEnderecoFornecedor()
     {
-        $parametros = " WHERE FOR_COD='{$this->codFornecedor}'";
+        $parametros = " WHERE EMP_COD={$this->codEmpresa} AND FOR_COD='{$this->codFornecedor}'";
         $campos = "*";
         $resultado = $this->Model->exibir($parametros, $campos, $ver = 0, $id = false);
         if ($resultado) {
@@ -110,9 +116,22 @@ class Enderecos extends Model
             return false;
         }
     }
+    public function checarEnderecoColaborador()
+    {
+        $parametros = " WHERE EMP_COD={$this->codEmpresa} AND COL_COD='{$this->codColaborador}'";
+        $campos = "*";
+        $resultado = $this->Model->exibir($parametros, $campos, $ver = 0, $id = false);
+        if ($resultado) {
+            //Já existe
+            return $resultado;
+        } else {
+            //Nao existe
+            return false;
+        }
+    }
     public function alterar(array $dados, $ver = 0)
     {
-        $parametros = " WHERE USU_COD='{$this->codUsuario}' AND END_COD=";
+        $parametros = " WHERE EMP_COD={$this->codEmpresa} AND USU_COD='{$this->codUsuario}' AND END_COD=";
         $this->Model->setParametros($parametros);
         $this->Model->setCodigo($this->codigo);
         $ok = false;
@@ -125,7 +144,7 @@ class Enderecos extends Model
     }
     public function alterarCliente(array $dados, $ver = 0)
     {
-        $parametros = " WHERE CLI_COD='{$this->codCliente}' AND END_COD=";
+        $parametros = " WHERE EMP_COD={$this->codEmpresa} AND CLI_COD='{$this->codCliente}' AND END_COD=";
         $this->Model->setParametros($parametros);
         $this->Model->setCodigo($this->codigo);
         $ok = false;
@@ -138,7 +157,7 @@ class Enderecos extends Model
     }
     public function alterarFornecedor(array $dados, $ver = 0)
     {
-        $parametros = " WHERE FOR_COD={$this->codFornecedor} AND END_COD=";
+        $parametros = " WHERE EMP_COD={$this->codEmpresa} AND FOR_COD={$this->codFornecedor} AND END_COD=";
         $this->Model->setParametros($parametros);
         $this->Model->setCodigo($this->codigo);
         $ok = false;
@@ -152,6 +171,19 @@ class Enderecos extends Model
     public function alterarEmpresa(array $dados, $ver = 0)
     {
         $parametros = " WHERE EMP_COD={$this->codEmpresa} AND END_COD=";
+        $this->Model->setParametros($parametros);
+        $this->Model->setCodigo($this->codigo);
+        $ok = false;
+        $ok = $this->Model->alterar($dados, $ver);
+        if ($ok) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    public function alterarColaborador(array $dados, $ver = 0)
+    {
+        $parametros = " WHERE EMP_COD={$this->codEmpresa} AND COL_COD={$this->codColaborador} AND END_COD=";
         $this->Model->setParametros($parametros);
         $this->Model->setCodigo($this->codigo);
         $ok = false;

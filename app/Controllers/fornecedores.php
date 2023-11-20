@@ -90,7 +90,7 @@ class fornecedores extends View
                     $id = $this->Fornecedores->cadastrar($dados,0);
                     if($id){ 
                         $ok = true;
-                        $endr = $this->Enderecos->setCodFornecedor($id)->checarEnderecoFornecedor();
+                        $endr = $this->Enderecos->setCodEmpresa($dados['EMP_COD'])->setCodFornecedor($id)->checarEnderecoFornecedor();
                         if(!$endr){
                             $db_endereco['FOR_COD'] = $id;
                             if ($this->Enderecos->cadastrar($dados,0)) {

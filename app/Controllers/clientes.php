@@ -107,7 +107,7 @@ class clientes extends View
                 }else {
                     $ok = true;
                     //VERIFICAR NOVO ENDERECO
-                    $endr = $this->Enderecos->setCodCliente($cli['CLI_COD'])->checarEnderecoCliente();
+                    $endr = $this->Enderecos->setCodEmpresa($dados['EMP_COD'])->setCodCliente($cli['CLI_COD'])->checarEnderecoCliente();
                     if(!$endr){
                         //CADASTRAR ENDERECO DO CLIENTE
                         $db_endereco['CLI_COD'] = $cli['CLI_COD'];
@@ -136,8 +136,7 @@ class clientes extends View
                             'END_CEP'    =>  $dados['END_CEP'],
                             'END_STATUS' => 1
                         );
-                        $this->Enderecos->setCodigo($endr[0]['END_COD']);
-                        $this->Enderecos->alterar($db_endereco,0);
+                        $this->Enderecos->setCodEmpresa($dados['EMP_COD'])->setCodCliente($endr[0]['CLI_COD'])->setCodigo($endr[0]['END_COD'])->alterarCliente($db_endereco,0);
                     }
                     Sessao::alert('ERRO',' CLI3- Cadastro já realizado!','fs-4 alert alert-warning');
                 }
@@ -219,7 +218,7 @@ class clientes extends View
                     'END_STATUS' => 1
                 );
                 $this->Clientes->setCodEmpresa($dados['EMP_COD'])->setCodigo($dados['CLI_COD']);
-                $this->Enderecos->setCodCliente($dados['CLI_COD'])->setCodigo($dados['END_COD']);
+                $this->Enderecos->setCodEmpresa($dados['EMP_COD'])->setCodCliente($dados['CLI_COD'])->setCodigo($dados['END_COD']);
 
                 $codEnd = $dados['END_COD'];
                 $codCli = $dados['CLI_COD'];

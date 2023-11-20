@@ -66,17 +66,48 @@ class colaboradores extends View
                         'COL_STATUS'=> 1
                     );
 
-                    if($this->Colaboradores->cadastrar($dados,0)){
+                    $db_endereco = array(
+                        'EMP_COD' => 0,
+                        'END_DT_CADASTRO' => date('Y-m-d H:i:s'),
+                        'END_DT_ATUALIZACAO' => date('0000-00-00 00:00:00'),
+                        'END_LOGRADOURO' =>  $dados['END_LOGRADOURO'],
+                        'END_NUMERO' =>  $dados['END_NUMERO'],
+                        'END_BAIRRO' =>  $dados['END_BAIRRO'],
+                        'END_CIDADE' =>  $dados['END_CIDADE'],
+                        'END_CEP' =>  $dados['END_CEP'],
+                        'END_STATUS' => 1
+                    );
+
+                    unset($dados["END_LOGRADOURO"]);
+                    unset($dados["END_NUMERO"]);
+                    unset($dados["END_BAIRRO"]);
+                    unset($dados["END_CEP"]);
+                    unset($dados["END_CIDADE"]);
+                    unset($dados["END_ESTADO"]);
+                    
+                    $id = $this->Colaboradores->cadastrar($dados,0);
+                    if($id){
                         $ok = true;
-                        Sessao::alert('OK','Cadastro efetuado com sucesso!','fs-4 alert alert-success');
+                        $endr = $this->Enderecos->setCodEmpresa($dados['EMP_COD'])->setCodColaborador($id)->checarEnderecoColaborador();
+                        if(!$endr){
+                            $db_endereco['COL_COD'] = $id;
+                            if ($this->Enderecos->cadastrar($db_endereco,0)) {
+                                Sessao::alert('OK','Cadastro efetuado com sucesso!','fs-4 alert alert-success');
+                            }else {
+                                Sessao::alert('OK','Cadastro efetuado com sucesso, atualize o endereço após acesso','fs-4 alert alert-warning');
+                            }
+                        }else {
+                            
+                        }
+                        //Sessao::alert('OK','Cadastro efetuado com sucesso!','fs-4 alert alert-success');
                     }else{
-                        Sessao::alert('ERRO',' CGS3 - Erro ao cadastrar novo colaborador(a), entre em contato com o suporte!','fs-4 alert alert-danger');
+                        Sessao::alert('ERRO',' COL3 - Erro ao cadastrar novo colaborador(a), entre em contato com o suporte!','fs-4 alert alert-danger');
                     }
             }else{
-                Sessao::alert('ERRO',' CGS2 - Dados inválido(s)!','alert alert-danger');
+                Sessao::alert('ERRO',' COL2 - Dados inválido(s)!','alert alert-danger');
             }
         }else{
-            Sessao::alert('ERRO',' CGS1 - Acesso inválido(s)!','alert alert-danger');
+            Sessao::alert('ERRO',' COL1 - Acesso inválido(s)!','alert alert-danger');
         }
         if ($ok) {
             $this->dados['colaboradores'] = $this->Colaboradores->setCodEmpresa($_SESSION['EMP_COD'])->listarTodos(0);

@@ -29,7 +29,7 @@ class pagamentos extends View
 
     public function index()
     {
-        $this->dados['title'] .= ' GERENCIAR CONTAS';   
+        $this->dados['title'] .= ' GERENCIAR PAGAMENTOS';   
         $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
         $this->render('admin/financeiro/pagamentos/listar', $this->dados);
     }
