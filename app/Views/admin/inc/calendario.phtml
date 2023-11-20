@@ -1,5 +1,14 @@
-<?php use Libraries\Util; ?>
-<!--<div class="text-center">
+<?php 
+setlocale(LC_ALL, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
+date_default_timezone_set('America/Sao_Paulo');
+
+use Libraries\Util;
+
+$Util = new Util;
+
+?>
+<!--<div class="text-cente
+r">
 <script src="<?php // DIRJS ?>calendario_admin.js"></script>
        <script type="text/javascript">
             var mois = <?php // date('m') ?>;
@@ -19,10 +28,12 @@
             <th colspan="7">
                 <!-- https://www.youtube.com/watch?v=O1nT0jvj11A -->
                 <span class="btn-group"> 
-                    <?php $mes = Util::getMesAtual(); ?>
-                    <a href="<?= DIRPAGE.'admin/mes/'.Util::retMes($mes); ?>" class="btn"><i class="bi bi-chevron-double-left"></i> </a>
-                    <a class="btn active"><?= date('F',$startDate)?></a>
-                    <a href="<?= DIRPAGE.'admin/mes/'.Util::avcMes($mes); ?>" class="btn"><i class="bi bi-chevron-double-right"></i></a>
+                    <?php 
+                    !isset($m)? $m = $Util->getMesAtual():''; 
+                    ?>
+                    <a href="<?= DIRPAGE.'admin/mes/'.Util::retMes($m); ?>" class="btn"><i class="bi bi-chevron-double-left"></i> </a>
+                    <a class="btn btn-lyght"><?= Util::mesLowercase(date('n',$m))?></a>
+                    <a href="<?= DIRPAGE.'admin/mes/'.Util::avcMes($m); ?>" class="btn"><i class="bi bi-chevron-double-right"></i></a>
                 </span>
             </th>
             </tr>
@@ -37,16 +48,20 @@
             </tr>
         </thead>
         <?php
-        $startDate = strtotime("last sunday",$mes); 
+       $startDate = strtotime("last sunday",$m);  
         echo'<tbody>';
         for ($row =0; $row  < 6; $row ++) { 
             echo'<tr>';
             for ($cl=0; $cl < 7; $cl++) { 
                 
-                if (date('Y-m',$startDate) !== date('Y-m',$mes)) {
+                if (date('Y-m',$startDate) !== date('Y-m',$m)) {
                     echo'<td class="other-month">';
                 } else {
-                    echo'<td>';
+                    if (date('d') == date('j',$startDate)) {
+                        echo '<td class="bg-success text-white">';
+                    } else {
+                        echo'<td>';    
+                    }
                 }
                 echo date('j',$startDate);
                 echo'</td>';

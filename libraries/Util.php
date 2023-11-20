@@ -3,6 +3,13 @@ namespace Libraries;
 
 class Util
 {
+    private $data;
+
+    public function setData($d){
+        $this->data = $d;
+        return $this;
+    }
+
     public static function mesUppercase()
     {
         $vt = array();
@@ -20,21 +27,22 @@ class Util
         $vt[12] = "DEZEMBRO";
         return $vt;
     }
-    public static function mesLowercase()
+    public static function mesLowercase($x)
     {
-        $vt = array();
-        $vt[1] = "Janeiro";
-        $vt[2] = "Fevereico";
-        $vt[3] = "Março";
-        $vt[4] = "Abril";
-        $vt[5] = "Maio";
-        $vt[6] = "Junho";
-        $vt[7] = "Julho";
-        $vt[8] = "Agosto";
-        $vt[9] = "Setembro";
-        $vt[10] = "Outubro";
-        $vt[11] = "Novembro";
-        $vt[12] = "Dezembro";
+        switch ($x) {
+            case 1:$vt = "Janeiro";break;
+            case 2:$vt = "Fevereiro";break;
+            case 3:$vt = "Março";break;
+            case 4:$vt = "Abril";break;
+            case 5:$vt = "Maio";break;
+            case 6:$vt = "Junho";break;
+            case 7:$vt = "Julho";break;
+            case 8:$vt = "Agosto";break;
+            case 9:$vt = "Setembro";break;
+            case 10:$vt = "Outubro";break;
+            case 11:$vt = "Novembro";break;
+            case 12:$vt = "Dezembro";break;
+        }
         return $vt;
     }
     public static function diaSemana($numero)
@@ -64,9 +72,9 @@ class Util
         }
         return "$diasemana";
     }
-    public function get($x)
+    public function get()
     {
-        return stripslashes(htmlentities($_GET[$x]));
+        return stripslashes(htmlentities($this->data));
     }
     public static function retMes($time)
     {
@@ -76,13 +84,13 @@ class Util
     {
         return date('Y-m-d',strtotime("+1 month",$time));
     }
-    public static function getMesAtual()
+    public function getMesAtual()
     {
-        $mesAtual = strtotime(date("Y-m-1"));
-        if (isset($_GET["mes"])) {
-            extract(date_parse_from_format("Y-m-d", $_GET["mes"]));
-
+        if (isset($this->data) && $this->data != '') {
+            extract(date_parse_from_format("Y-m-d", $this->data));
             $mesAtual = strtotime("{$year}-{$month}-1");
+        }else {
+            $mesAtual = strtotime(date("Y-m-1"));
         }
         return $mesAtual;
     }   
