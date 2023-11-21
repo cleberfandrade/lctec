@@ -13,19 +13,18 @@ use Libraries\Util;
 class admin extends View
 {
     private $dados = [];
-    private $Util;
+    private $Util,$Empresa,$Usuarios,$Estoques,$UsuariosEmpresa,$ModulosEmpresa;
     public function __construct()
     {
         Sessao::naoLogado();
         $this->dados['title'] = 'PAINEL | LC-TECH';
-        $Usuarios = new Usuarios;
+        $this->Usuarios = new Usuarios;
         $Empresa = new Empresas;
         $Estoques = new Estoques;
         $UsuariosEmpresa = new UsuariosEmpresa;
         $ModulosEmpresa = new ModulosEmpresa;
         $this->Util = new Util;
-        $Usuarios->setCodUsuario($_SESSION['USU_COD']);
-        $this->dados['usuario'] = $Usuarios->listar(0);
+        $this->dados['usuario'] = $this->Usuarios->setCodUsuario($_SESSION['USU_COD'])->listar(0);
         
         $UsuariosEmpresa->setCodUsuario($_SESSION['USU_COD']);
         $this->dados['usuarios_empresa'] = $UsuariosEmpresa->checarUsuario();
