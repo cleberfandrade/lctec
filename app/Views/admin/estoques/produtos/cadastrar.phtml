@@ -77,7 +77,6 @@ $qtdS = (is_array($setores) ? count($setores) : 0);
                                     <select class="form-select " name="FOR_COD">     
                                         <option value="0" <?= (isset($_POST['FOR_COD']) &&  $_POST['FOR_COD']  == 0)? 'selected' : '' ?>>---</option>                     
                                         <?php 
-                                      
                                         for ($i=0; $i < $qtdF; $i++) { ?>
                                             <option value="<?= $fornecedores[$i]['FOR_COD'] ?>" <?= (isset($_POST['FOR_COD']) &&  $_POST['FOR_COD']  == $fornecedores[$i]['FOR_COD'])? 'selected' : '' ?>><?= $fornecedores[$i]['FOR_NOME_FANTASIA'] ?></option>
                                         <?php } ?>
