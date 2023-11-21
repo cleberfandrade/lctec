@@ -15,7 +15,7 @@ include_once 'app/Views/admin/inc/cabecalho.phtml';
                         <div class="row gx-3 align-items-center justify-content-center">
                             <div class="col-lg-9 col-xl-9 col-xxl-9">
                                 <div class="my-1 px-4 mx-auto">
-                                    <a class="text-decoration-none" href="<?= DIRPAGE; ?>financeiro">
+                                    <a class="text-decoration-none" href="<?= DIRPAGE; ?>contas/alteracao/<?= $conta['EMP_COD'] ?>/<?= $conta['CTA_COD'] ?>">
                                     <h5 class="fs-2 fw-bolder text-uppercase text-dark mb-2">
                                         <i class="bi bi-coin"></i> Conta <span class="text-success"> <?= $conta['CTA_TIPO'] ?></span></h5></a>
                                 </div>
@@ -30,31 +30,31 @@ include_once 'app/Views/admin/inc/cabecalho.phtml';
                 <?php include_once 'app/Views/admin/inc/alertas.phtml'; ?>
                 <section class="bg-light py-2">
                     <div class="container col-10 px-2 py-2 mx-auto row">
-                        <form class="p-4 p-md-6 border text-uppercase rounded-3 bg-3" action="<?= DIRPAGE ?>contas/cadastrar" method="POST">
+                        <form class="p-4 p-md-6 border text-uppercase rounded-3 bg-3" action="<?= DIRPAGE ?>contas/alterar" method="POST">
                             <div class="row ">    
                                 <div class="col-4 mb-2">
-                                    <label class="form-label">TIPO</label>
+                                    <label class="form-label">TIPO DE CONTA</label>
                                     <select class="form-select" name="CTA_TIPO">
-                                        <option value="0" <?= (isset($_POST['CTA_TIPO']) &&  $_POST['CTA_TIPO']  == "0")? 'selected' : '' ?>>---</option>
-                                        <option value="PF"<?= (isset($_POST['CTA_TIPO']) &&  $_POST['CTA_TIPO']  == "PF")? 'selected' : '' ?>>PESSOA FÍSICA</option>
-                                        <option value="PJ" <?= (isset($_POST['CTA_TIPO']) &&  $_POST['CTA_TIPO']  == "PJ")? 'selected' : '' ?>>PESSOA JURÍDICA</option>
+                                        <option value="0" <?= (isset($_POST['CTA_TIPO']) &&  $_POST['CTA_TIPO']  == "0")? 'selected' :  (isset($conta['CTA_TIPO']) &&  $conta['CTA_TIPO']  == 0 ? 'selected' : '') ?>>---</option>
+                                        <option value="PF"<?= (isset($_POST['CTA_TIPO']) &&  $_POST['CTA_TIPO']  == "PF")? 'selected' :  (isset($conta['CTA_TIPO']) &&  $conta['CTA_TIPO']  == 'PF' ? 'selected' : '') ?>>PESSOA FÍSICA</option>
+                                        <option value="PJ" <?= (isset($_POST['CTA_TIPO']) &&  $_POST['CTA_TIPO']  == "PJ")? 'selected' :  (isset($conta['CTA_TIPO']) &&  $conta['CTA_TIPO']  == 'PJ' ? 'selected' : '') ?>>PESSOA JURÍDICA</option>
                                     </select>
                                 </div>
                                 <div class="col-4 mb-2">
                                     <label class="form-label">CONTA BANCO (opcional)</label>
-                                    <input type="text" name="CTA_BANCO" class="form-control maiusculo" value="<?= isset($_POST['CTA_BANCO']) ? $_POST['CTA_BANCO'] : '' ?>">
+                                    <input type="text" name="CTA_BANCO" class="form-control maiusculo" value="<?= isset($_POST['CTA_BANCO']) ? $_POST['CTA_BANCO'] : (isset($conta['CTA_BANCO']) ? $conta['CTA_BANCO'] : '') ?>">
                                 </div>
                                 <div class="col-4 mb-3">
                                     <label class="px-3" for="2">SALDO INICIAL(ATUAL)</label>  
                                     <div class="input-group">    
                                         <span class="input-group-text">R$</span>  
-                                        <input type="text" class="form-control form-control-lg real" id="" name="CTA_SALDO" placeholder="" value="<?= isset($_POST['CTA_SALDO']) ? $_POST['CTA_SALDO'] : ''; ?>">
+                                        <input type="text" class="form-control form-control-lg real" id="" name="CTA_SALDO" placeholder="" value="<?= isset($_POST['CTA_SALDO']) ? $_POST['CTA_SALDO'] : (isset($conta['CTA_TIPO'])? number_format($conta[$i]['CTA_SALDO'],2,',','.'); : ''); ?>">
                                     </div>
                                 </div>
                                 <div class="col-10 mb-3">
                                     <label class="form-label" for="1">DESCRIÇÃO</label>
                                     <div class="form-floating mb-3">
-                                        <input type="text" class="form-control maiusculo" id="1" name="CTA_DESCRICAO" placeholder="" value="<?= isset($_POST['CTA_DESCRICAO']) ? $_POST['CTA_DESCRICAO'] :''; ?>">
+                                        <input type="text" class="form-control maiusculo" id="1" name="CTA_DESCRICAO" placeholder="" value="<?= isset($_POST['CTA_DESCRICAO']) ? $_POST['CTA_DESCRICAO'] :(isset($conta['CTA_TIPO'])? $conta['CTA_DESCRICAO'] : ''); ?>">
                                         <label class="form-floating px-3" for="1">DESCRIÇÃO DA CONTA</label>
                                     </div>
                                 </div>
@@ -62,6 +62,7 @@ include_once 'app/Views/admin/inc/cabecalho.phtml';
                                 <hr class="my-4 text-dark">
                                 <input type="hidden" class="form-control" name="EMP_COD" value="<?= isset($_SESSION['EMP_COD']) ? $_SESSION['EMP_COD'] : 0; ?>">
                                 <input type="hidden" class="form-control" name="USU_COD" value="<?= isset($_SESSION['USU_COD']) ? $_SESSION['USU_COD'] : 0; ?>">
+                                <input type="hidden" class="form-control" name="CTA_COD" value="<?= isset($_SESSION['CTA_COD']) ? $_SESSION['CTA_COD'] : 0; ?>">
                                 <button class="w-100 btn btn-lg text-uppercase btn-success" name="CADASTRAR_NOVA_CONTA" type="submit"><i class="fa fa-save"></i> Cadastrar</button>
                             </div> 
                         </form>
