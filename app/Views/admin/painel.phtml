@@ -19,13 +19,19 @@ $qtdME = (is_array($modulos_empresa) ? count($modulos_empresa) : 0);
                 <header class="py-3">
                     <section class="container px-3">
                         <div class="row gx-5">
-                            <div class="col-lg-9 col-xl-9 col-xxl-9">
-                                <div class="my-1 px-4 mx-auto">
+                            <div class="row col-lg-9 col-xl-9 col-xxl-9">
+                                <div class="col-8 my-1 px-4 mx-auto">
                                     <a class="text-decoration-none" href="<?= DIRPAGE; ?>admin/painel">
                                         <h5 class="fs-2 fw-bolder text-uppercase text-dark mb-1">
                                             <i class="bi bi-house"></i> Painel <span class="text-success">Administrativo</span>
                                         </h5>
                                     </a>
+                                </div>
+                                <div class="col-4 mx-auto">
+                                    <div class="col-12 text-center text-lg-start opacity-50">
+                                        <h1 class="display-5 text-center fw-bolder text-uppercase text-3 mb-1">LC-<span class="text-success">TECH</span></h1>
+                                        <p class="col-lg lead text-center fs-6">DESENVOLVENDO SOLUÇÕES <br/>PARA O SEU NEGÓCIO</p>
+                                    </div>
                                 </div>
                             </div>
                             <?php include_once 'app/Views/admin/inc/saudacao.phtml'; ?>   
@@ -52,15 +58,13 @@ $qtdME = (is_array($modulos_empresa) ? count($modulos_empresa) : 0);
                         </div>
                     <?php }else { ?>
                         <div class="row col-9 mx-auto m-1">
-                            <div class="col-12 text-center text-lg-start opacity-50">
-                                <h1 class="display-5 text-center fw-bolder text-uppercase text-3 mb-2">LC-<span class="text-success">TECH</span></h1>
-                                <p class="col-lg lead text-center fs-6">DESENVOLVENDO SOLUÇÕES <br/>PARA O SEU NEGÓCIO</p>
-                            </div>
+                            
                             <div class="col-6 mx-auto">
                                 <?php include_once 'app/Views/admin/inc/calendario.phtml'; ?> 
                             </div>
-                            <div class="col-6 mx-auto">    
+                            <div class="col-6 text-uppercase display-6 text-center mx-auto">    
                                 <?= Util::mesLowercase(date('n',$m))?>
+                                <hr>
                             </div>
                             <div class="row col-12 mt-2">
                                 <?php if ($qtdME != 0) { 
