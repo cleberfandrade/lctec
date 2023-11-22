@@ -26,7 +26,7 @@ class contas extends View
 
         $this->dados['empresa'] = $this->UsuariosEmpresa->setCodEmpresa($_SESSION['EMP_COD'])->setCodUsuario($_SESSION['USU_COD'])->listar(0);
         $this->dados['usuario'] = $this->Usuarios->setCodUsuario($_SESSION['USU_COD'])->listar(0);
-        //$this->dados['contas'] = $this->Financas->setCodEmpresa($_SESSION['EMP_COD'])->listarTodas();
+        $this->dados['contas'] = $this->Financas->setCodEmpresa($_SESSION['EMP_COD'])->listarTodas();
 
         $this->link[0] = ['link'=> 'admin','nome' => 'PAINEL ADMINISTRATIVO'];
         $this->link[1] = ['link'=> 'financeiro','nome' => 'MÓDULO DE FINANÇAS >>'];
@@ -35,7 +35,7 @@ class contas extends View
     {
         $this->dados['title'] .= ' GERENCIAR CONTAS';   
         $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
-        $this->render('admin/financeiro/financeiro', $this->dados);
+        $this->render('admin/financeiro/contas/listar', $this->dados);
     }
     public function contas()
     {
