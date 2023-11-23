@@ -2,6 +2,7 @@
 use Libraries\Sessao;
 session_start();
 include_once 'app/Views/admin/inc/cabecalho.phtml'; 
+$qtd = (is_array($contas_pagar_receber) ? count($contas_pagar_receber) : 0);
 $qtdP = (is_array($contas_pagar) ? count($contas_pagar) : 0);
 $qtdR = (is_array($contas_receber) ? count($contas_receber) : 0);
 ?>
