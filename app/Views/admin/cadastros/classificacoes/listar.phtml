@@ -71,7 +71,7 @@ $qtd = (is_array($classificacoes) ? count($classificacoes) : 0);
                             </tbody>
                         </table>
                     <?php }else { ?>
-                        <h4 class="text-center text-warning fs-4">EMPRESA SEM NENHUMA CATEGORIA CADASTRADA</h4>
+                        <h4 class="text-center text-warning fs-4">EMPRESA SEM NENHUMA CLASSIFICAÇÃO CADASTRADA</h4>
                     <?php } ?>
                 </div>
             </section>
@@ -89,8 +89,8 @@ $qtd = (is_array($classificacoes) ? count($classificacoes) : 0);
                     <span id="NOME" class="mt-3 text-center h5"></span>
                 </div>
                 <div class="modal-footer">
-                    <input type="hidden" id="CAT_STATUS" name="CAT_STATUS" value="" />
-                    <input type="hidden" id="CODIGO" name="CAT_COD" value="" />
+                    <input type="hidden" id="CLA_STATUS" name="CLA_STATUS" value="" />
+                    <input type="hidden" id="CODIGO" name="CLA_COD" value="" />
                     <input type="hidden" id="EMP_COD" name="EMP_COD" value="<?= $empresa['EMP_COD'] ?>" />
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">CANCELAR</button>
                     <button id="sts" type="button" class="btn btn-dark" value=""></button>
@@ -109,7 +109,7 @@ $qtd = (is_array($classificacoes) ? count($classificacoes) : 0);
                 var status = button.data('status');
                 var modal = $(this);
                 modal.find('#CODIGO').val(codigo);
-                modal.find('#CAT_STATUS').val(status);
+                modal.find('#CLA_STATUS').val(status);
                 modal.find('#sts').val(codigo);
                 modal.find('#NOME').html(descricao);
                 if (status === 1) {
@@ -122,13 +122,13 @@ $qtd = (is_array($classificacoes) ? count($classificacoes) : 0);
             });
         });
         $("#sts").click(function(){
-            var CAT_COD = $('#sts').val();
+            var CLA_COD = $('#sts').val();
             var EMP_COD = $('#EMP_COD').val();
-            var CAT_STATUS = $('#CAT_STATUS').val();
+            var CLA_STATUS = $('#CLA_STATUS').val();
             setTimeout(function () {
                     $('#status').modal('hide');
             }, 100);
-            $.post('<?= DIRPAGE; ?>categorias/status', {CAT_COD: CAT_COD,STATUS_CATEGORIA: true,EMP_COD: EMP_COD,CAT_STATUS: CAT_STATUS,cache: false}, function(retorno) {
+            $.post('<?= DIRPAGE; ?>classificacoes/status', {CLA_COD: CLA_COD,STATUS_CLASSIFICACAO: true,EMP_COD: EMP_COD,CLA_STATUS: CLA_STATUS,cache: false}, function(retorno) {
                 var resposta = JSON.parse(retorno);
                 if (resposta['COD'] !== 'ERRO') {
                     $('#resposta').addClass('alert alert-success');
@@ -136,7 +136,7 @@ $qtd = (is_array($classificacoes) ? count($classificacoes) : 0);
                     $('#resposta').addClass('alert alert-warning');
                 }
                 $('#resposta').html(resposta['MENSAGEM']);
-                setTimeout( () => { window.location.href="<?= DIRPAGE ?>categorias"}, 100);
+                setTimeout( () => { window.location.href="<?= DIRPAGE ?>classificacoes"}, 100);
             });
 
         });
