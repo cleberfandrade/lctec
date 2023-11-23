@@ -1,0 +1,145 @@
+<?php 
+use Libraries\Sessao;
+session_start();
+include_once 'app/Views/admin/inc/cabecalho.phtml'; 
+$qtd = (is_array($classificacoes) ? count($classificacoes) : 0);
+?>
+<body class="">
+    <div class="d-flex" id="wrapper">
+        <?php include_once 'app/Views/admin/inc/menu_lateral.phtml'; ?>
+        <div id="page-content-wrapper">
+        <!-- Top navigation-->
+        <?php include_once 'app/Views/admin/inc/menu_topo.phtml'; ?>
+        <div class="container-fluid bg-light p-0">
+            <header class="py-3">
+                <section class="container px-3">
+                    <div class="row gx-3 align-items-center justify-content-center">
+                        <div class="col-lg-9 col-xl-9 col-xxl-9">
+                            <div class="my-1 px-4 mx-auto">
+                                <a class="text-decoration-none" href="<?= DIRPAGE; ?>categorias">
+                                    <h3 class="fs-2 fw-bolder text-uppercase text-dark">
+                                        <i class="bi bi-plus-square"></i> Gerenciar <span class="text-success">Classificações</span>
+                                    </h3>
+                                </a>
+                            </div>
+                        </div>
+                        <?php include_once 'app/Views/admin/inc/saudacao.phtml'; ?> 
+                    </div>
+                </section>
+                <section class="container col-12 mx-auto px-5">
+                        <?= $breadcrumb ?>
+                </section>
+            </header>
+            <?php include_once 'app/Views/admin/inc/alertas.phtml'; ?> 
+            <section class="bg-light  text-dark  py-2">
+                <div class="container mx-auto col-12 px-2 py-2 row">
+                    <div class="card bg-success text-center py-2 mb-4" style="width: 100rem;">
+                        <div class="card-body  text-white">
+                            <h5 class="card-title">CLASSIFICAÇÕES</h5>
+                            <p class="card-text">Cadastre as suas classificações no sistema</p>
+                            <a href="<?= DIRPAGE ?>classificacoes/cadastro" class="btn btn-dark">NOVO CADASTRO</a>
+                        </div>
+                    </div>
+                    <?php if ($qtd != 0) { ?>
+                        <table class="table table-striped table-bordered">
+                            <thead class="text-center text-uppercase">
+                                <th class="text-dark">#</th>
+                                <th class="text-dark">Descrição</th>
+                                <th class="text-dark">Status</th>
+                                <?php if($_SESSION['USU_NIVEL'] >= 8){ ?><th class="text-dark">Ações</th><?php } ?> 
+                            </thead>
+                            <tbody>
+                                <?php
+                                    $b = 1;
+                                    for ($i= 0; $i < $qtd; $i++) { ?>
+                                    <tr class="<?= ($classificacoes[$i]['CAT_STATUS'] == 0 && $_SESSION['USU_NIVEL'] >= 8)? 'bg-secondary' : ''; ?>">
+                                        <td class="text-center align-middle"><?= $b; ?></td>
+                                        <td class="text-center align-middle"><?= $classificacoes[$i]['CLA_DESCRICAO']; ?></td>
+                                        <td class="text-center align-middle"><?= ($classificacoes[$i]['CLA_STATUS'] == 1)? 'ATIVO' : 'DESATIVADO'; ?></td>
+                                        <?php if($_SESSION['USU_NIVEL'] >= 8){ ?>
+                                            <td class="text-center align-middle">
+                                                <?php if($classificacoes[$i]['CLA_STATUS'] == 0){ ?>
+                                                <button type="button" class="btn btn-success btn-sm d-print-none" data-bs-toggle='modal'  data-bs-target="#status" title="Ativar categoria" data-codigo="<?= $classificacoes[$i]['CAT_COD']; ?>" data-nome="<?= $classificacoes[$i]['CAT_DESCRICAO']; ?>"  data-status="<?= $classificacoes[$i]['CAT_STATUS']; ?>" title="Deseja ativar?" ><i class="fa fa-circle-check"></i></button>
+                                                <?php }else { ?>
+                                                <a type="button" class="btn btn-warning btn-sm d-print-none" href="<?= DIRPAGE.'classificacoes/alteracao/'.$classificacoes[$i]['EMP_COD'].'/'.$classificacoes[$i]['CAT_COD']; ?>" title="Deseja Alterar?"><i class="fa fa-edit"></i></a>
+                                                <button type="button" class="btn btn-danger btn-sm d-print-none" data-bs-toggle='modal'  data-bs-target="#status" data-codigo="<?= $classificacoes[$i]['CLA_COD']; ?>" data-nome="<?= $classificacoes[$i]['CAT_DESCRICAO']; ?>" data-status="<?= $classificacoes[$i]['CAT_STATUS']; ?>"  title="Deseja desativar?" ><i class="fa fa-ban"></i></button>
+                                                <?php } ?> 
+                                            </td>
+                                        <?php } ?> 
+                                    </tr>
+                                <?php $b++; } ?>
+                            </tbody>
+                        </table>
+                    <?php }else { ?>
+                        <h4 class="text-center text-warning fs-4">EMPRESA SEM NENHUMA CATEGORIA CADASTRADA</h4>
+                    <?php } ?>
+                </div>
+            </section>
+            <?php include_once 'App/Views/admin/inc/rodape.phtml';?>
+        </div>
+    </div>
+    <div class="modal" id="status" tabindex="-1" role="dialog" data-bs-backdrop="true" aria-labelledby="status" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div id="title" class="modal-header text-center text-uppercase">
+                    
+                </div>
+                <div class="modal-body text-center">
+                    <p class="text-center text-uppercase mx-auto">Confirma mudança de status deste registro?</p>
+                    <span id="NOME" class="mt-3 text-center h5"></span>
+                </div>
+                <div class="modal-footer">
+                    <input type="hidden" id="CAT_STATUS" name="CAT_STATUS" value="" />
+                    <input type="hidden" id="CODIGO" name="CAT_COD" value="" />
+                    <input type="hidden" id="EMP_COD" name="EMP_COD" value="<?= $empresa['EMP_COD'] ?>" />
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">CANCELAR</button>
+                    <button id="sts" type="button" class="btn btn-dark" value=""></button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#status').on('show.bs.modal', function(event) {
+                var button = null;
+                var button = $(event.relatedTarget); // Button that triggered the modal
+                var codigo = null;
+                var codigo = button.data('codigo'); // Extract info from data-* attributes
+                var descricao = button.data('descricao');
+                var status = button.data('status');
+                var modal = $(this);
+                modal.find('#CODIGO').val(codigo);
+                modal.find('#CAT_STATUS').val(status);
+                modal.find('#sts').val(codigo);
+                modal.find('#NOME').html(descricao);
+                if (status === 1) {
+                    modal.find('#sts').html('<i class="fa fa-ban"></i> CONFIRMAR');
+                    modal.find('#title').html('Deseja desativar o Categoria?');
+                }else{
+                    modal.find('#sts').html('<i class="fa fa-circle-check"></i> CONFIRMAR');
+                    modal.find('#title').html('Deseja ativar o Categoria?');
+                }
+            });
+        });
+        $("#sts").click(function(){
+            var CAT_COD = $('#sts').val();
+            var EMP_COD = $('#EMP_COD').val();
+            var CAT_STATUS = $('#CAT_STATUS').val();
+            setTimeout(function () {
+                    $('#status').modal('hide');
+            }, 100);
+            $.post('<?= DIRPAGE; ?>categorias/status', {CAT_COD: CAT_COD,STATUS_CATEGORIA: true,EMP_COD: EMP_COD,CAT_STATUS: CAT_STATUS,cache: false}, function(retorno) {
+                var resposta = JSON.parse(retorno);
+                if (resposta['COD'] !== 'ERRO') {
+                    $('#resposta').addClass('alert alert-success');
+                }else{
+                    $('#resposta').addClass('alert alert-warning');
+                }
+                $('#resposta').html(resposta['MENSAGEM']);
+                setTimeout( () => { window.location.href="<?= DIRPAGE ?>categorias"}, 100);
+            });
+
+        });
+    </script>
+</body>
+</html>
