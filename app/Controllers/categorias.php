@@ -77,7 +77,7 @@ class categorias extends View
                         $ok = true;
                         Sessao::alert('OK','Cadastro efetuado com sucesso!','fs-4 alert alert-success');
                     }else{
-                        Sessao::alert('ERRO',' CAT4- Erro ao cadastrar novo setor, entre em contato com o suporte!','fs-4 alert alert-danger');
+                        Sessao::alert('ERRO',' CAT4- Erro ao cadastrar nova categoria, entre em contato com o suporte!','fs-4 alert alert-danger');
                     }
                 }else {
                     Sessao::alert('ERRO',' CAT3- Cadastro já realizado!','fs-4 alert alert-warning');
@@ -112,7 +112,6 @@ class categorias extends View
                 $this->dados['categoria'] = $this->Categorias->setCodEmpresa($dados[2])->setCodigo($dados[3])->listar(0);
                 if ($this->dados['categoria'] != 0) {
                     $ok = true;
-
                 }
             }else{
                 Sessao::alert('ERRO',' ERRO: CAT22 - Acesso inválido(s)!','alert alert-danger');
@@ -120,12 +119,12 @@ class categorias extends View
         }else{
             Sessao::alert('ERRO',' ERRO: CAT11 - Acesso inválido(s)!','alert alert-danger');
         }      
-       if($ok){
+        if($ok){
             $this->render('admin/cadastros/categorias/alterar', $this->dados);
-       }else{
+        }else{
             $this->dados['categorias'] = $this->Categorias->setCodEmpresa($_SESSION['EMP_COD'])->listarTodos(0);
             $this->render('admin/cadastros/categorias/listar', $this->dados);
-       }
+        }
     }
     public function alterar()
     {
@@ -153,7 +152,8 @@ class categorias extends View
                     'CAT_STATUS'=> 1
                 );
                 if($this->Categorias->alterar($dados,0)){
-                        Sessao::alert('OK','Cadastro alterado com sucesso!','fs-4 alert alert-success');
+                    $ok = true;
+                    Sessao::alert('OK','Cadastro alterado com sucesso!','fs-4 alert alert-success');
                 }else{
                     Sessao::alert('ERRO',' ERRO: CAT33- Erro ao alterar o categoria, entre em contato com o suporte!','fs-4 alert alert-danger');
                 }
@@ -182,12 +182,7 @@ class categorias extends View
                 
                 unset($dados['STATUS_CATEGORIA']);
                 $this->Setores->setCodEmpresa($dados['EMP_COD'])->setCodigo($dados['CAT_COD']);
-
-                if ($dados['CAT_STATUS']) {
-                    $dados['CAT_STATUS'] = 0;
-                } else {
-                    $dados['CAT_STATUS'] = 1;
-                }
+                ($dados['CAT_STATUS'] == 1)? $dados['CAT_STATUS'] = 0: $dados['CAT_STATUS'] = 1;
                 
                 $db = array(
                     'USU_COD' => $_SESSION['USU_COD'],

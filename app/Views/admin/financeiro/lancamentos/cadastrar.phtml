@@ -19,7 +19,7 @@ $qtdR = (is_array($contas_receber) ? count($contas_receber) : 0);
                             <div class="my-1 px-4 mx-auto">
                                 <a class="text-decoration-none" href="<?= DIRPAGE; ?>financeiro">
                                 <h5 class="fs-2 fw-bolder text-uppercase text-dark mb-2">
-                                    <i class="bi bi-coin"></i> Gerenciar  <span class="text-success">Contas a Pagar</span></h5></a>
+                                    <i class="bi bi-coin"></i> Cadastrar  <span class="text-success">Lançamentos a Pagar e/ou Receber</span></h5></a>
                             </div>
                         </div>
                         <?php include_once 'app/Views/admin/inc/saudacao.phtml'; ?>
@@ -32,7 +32,7 @@ $qtdR = (is_array($contas_receber) ? count($contas_receber) : 0);
             <?php include_once 'app/Views/admin/inc/alertas.phtml'; ?>  
             <section class="bg-light  text-dark row  py-2">
                 <div class="container mx-auto col-12 row">
-                    <form class="p-4 p-md-6 border text-uppercase rounded-3 bg-3" action="<?= DIRPAGE ?>contas/cadastrar" method="POST">
+                    <form class="p-4 p-md-6 border text-uppercase rounded-3 bg-3" action="<?= DIRPAGE ?>lancamentos/cadastrar" method="POST">
                         <div class="row ">    
                             <div class="col-4 mb-2">
                                 <div class="form-floating mb-3">
@@ -46,15 +46,23 @@ $qtdR = (is_array($contas_receber) ? count($contas_receber) : 0);
                                 </div>
                             </div> 
                             <div class="col-4 mb-2">
+                                <label class="form-label">TIPO</label>
+                                <select class="form-select" name="LAN_TIPO">
+                                    <option value="0" <?= (isset($_POST['LAN_TIPO']) &&  $_POST['LAN_TIPO']  == 0)? 'selected' : '' ?>>---</option>
+                                    <option value="1"<?= (isset($_POST['LAN_TIPO']) &&  $_POST['LAN_TIPO']  == 1)? 'selected' : '' ?>>RECEITA</option>
+                                    <option value="2" <?= (isset($_POST['LAN_TIPO']) &&  $_POST['LAN_TIPO']  == 2)? 'selected' : '' ?>>DESPESA</option>
+                                </select>
+                            </div>
+                            <div class="col-4 mb-2">
                                 <label class="form-label">PARCELA</label>
-                                <select class="form-select" name="CON_PARCELA">
-                                    <option value="0" <?= (isset($_POST['CON_PARCELA']) &&  $_POST['CON_PARCELA']  == "0")? 'selected' : '' ?>>ÚNICA</option>
-                                    <?php for ($i=1; $i <= 360; $i++) { ?>
-                                        <option value="<?= $i?>" <?= (isset($_POST['CON_PARCELA']) &&  $_POST['CON_PARCELA']  == $i)? 'selected' : '' ?>><?= $i ?>x</option>
+                                <select class="form-select" name="LAN_PARCELA">
+                                    <option value="1" <?= (isset($_POST['LAN_PARCELA']) &&  $_POST['LAN_PARCELA']  == 1)? 'selected' : '' ?>>ÚNICA</option>
+                                    <?php for ($i=2; $i <= 360; $i++) { ?>
+                                        <option value="<?= $i?>" <?= (isset($_POST['LAN_PARCELA']) &&  $_POST['LAN_PARCELA']  == $i)? 'selected' : '' ?>><?= $i ?>x</option>
                                     <?php } ?>
                                 </select>
                             </div> 
-                            <div class="form-floating mb-3">
+                            <div class="col-4 form-floating mb-3">
                                 <select class="form-select text-uppercase mb-3 form-floating" name="CLA_COD">
                                     <option value="0" <?= (isset($_POST['CLA_COD']) &&  $_POST['CLA_COD']  == "0")? 'selected' : '' ?>>---</option>
                                     <?php for ($i= 0; $i < $qtdCL; $i++) { ?> 
@@ -63,7 +71,7 @@ $qtdR = (is_array($contas_receber) ? count($contas_receber) : 0);
                                 </select>
                                 <label class="form-floating mb-3">CLASSIFICAÇÃO</label>
                             </div>
-                            <div class="col-6 form-floating mb-3">
+                            <div class="col-4 form-floating mb-3">
                                 <select class="form-select " name="FOR_COD">     
                                     <option value="0" <?= (isset($_POST['FOR_COD']) &&  $_POST['FOR_COD']  == 0)? 'selected' : '' ?>>---</option>                     
                                     <?php 
@@ -73,27 +81,27 @@ $qtdR = (is_array($contas_receber) ? count($contas_receber) : 0);
                                 </select>
                                 <label class="form-label">P/ FORNECEDOR?</label>
                             </div>
-                            <div class="col-8 mb-3 " style="height:300px">
-                                <label for="address2" class="form-label">DESCRIÇÃO</label>
-                                <textarea type="text" class="form-control  maiusculo" name="CON_DESCRICAO"><?= isset($_POST['CON_DESCRICAO'])? $_POST['CON_DESCRICAO']  : '' ?></textarea>
-                            </div>
-                            <div class="col-10 mb-3">
+                            <div class="col-4 mb-3">
                                 <label class="px-3" for="2">DATA DE VENCIMENTO</label>
-                                <input type="date" class="form-control form-control-lg" name="CON_DT_VENCIMENTO" placeholder="" value="<?= isset($_POST['CON_DT_VENCIMENTO']) ? $_POST['CON_DT_VENCIMENTO'] : ''; ?>">
+                                <input type="date" class="form-control form-control-lg" name="LAN_DT_VENCIMENTO" placeholder="" value="<?= isset($_POST['LAN_DT_VENCIMENTO']) ? $_POST['LAN_DT_VENCIMENTO'] : ''; ?>">
                             </div> 
                             <div class="col-4 mb-3">
                                 <label class="px-5" for="2">VALOR A PAGAR</label>
                                 <div class="input-group">
                                     <span class="input-group-text">R$</span>
-                                    <input type="text" class="form-control form-control-lg real2" id="CON_VALOR" name="CON_VALOR" placeholder="" value="<?= isset($_POST['CON_VALOR']) ? $_POST['CON_VALOR'] : ''; ?>">
+                                    <input type="text" class="form-control form-control-lg real2" id="LAN_VALOR" name="LAN_VALOR" placeholder="" value="<?= isset($_POST['LAN_VALOR']) ? $_POST['LAN_VALOR'] : ''; ?>">
                                 </div>
+                            </div>
+                            <div class="col-8 mb-3">
+                                <label for="address2" class="form-label">DESCRIÇÃO</label>
+                                <input type="text" class="form-control  maiusculo" name="LAN_DESCRICAO" value="<?= isset($_POST['LAN_DESCRICAO'])? $_POST['LAN_DESCRICAO']  : '' ?>"/>
                             </div>
                         </div> 
                         <hr class="my-4 text-dark">
                         <span class="text-center fs-3 mb-3">CASO SEJA UM PAGAMENTO PARCELADO, O SISTEMA CRIARÁ <b>AUTOMATICAMENTE</b><br> OS LANÇAMENTOS FUTUROS DE ACORDO COM O NÚMERO DE PARCELAS DEFINIDO</span>
                         <input type="hidden" class="form-control" name="EMP_COD" value="<?= isset($estoque['EMP_COD']) ? $estoque['EMP_COD'] : 0; ?>">
                         <input type="hidden" class="form-control" name="USU_COD" value="<?= isset($_SESSION['USU_COD']) ? $_SESSION['USU_COD'] : 0; ?>">
-                        <button class="w-100 btn btn-lg text-uppercase btn-success" name="CADASTRAR_NOVA_CONTA_PAGAR" type="submit"><i class="fa fa-save"></i> Cadastrar</button>
+                        <button class="w-100 btn btn-lg text-uppercase btn-success" name="CADASTRAR_NOVO_LANCAMENTO" type="submit"><i class="fa fa-save"></i> Cadastrar</button>
                     </form>
                 </div>
             </section>

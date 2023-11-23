@@ -3,9 +3,9 @@ namespace App\Models;
 
 use Core\Model;
 
-class Pagamentos extends Model
+class Lancamentos extends Model
 { 
-    private $tabela = 'tb_pagamentos';
+    private $tabela = 'tb_lancamentos';
     private $Model = '';
     private $codigo, $descricao, $tipo, $codEmpresa, $codVenda, $codFornecedor, $dataVencimento;
 
@@ -46,7 +46,7 @@ class Pagamentos extends Model
     }
     public function listar($ver = 0)
     {
-        $parametros = "P INNER JOIN tb_empresas E ON E.EMP_COD=P.EMP_COD WHERE P.EMP_COD={$this->codEmpresa} AND P.CON_COD={$this->codigo}";
+        $parametros = "L INNER JOIN tb_empresas E ON E.EMP_COD=L.EMP_COD WHERE L.EMP_COD={$this->codEmpresa} AND L.LAN_COD={$this->codigo}";
         $campos = "*";
         $resultado = $this->Model->exibir($parametros, $campos, $ver = 0, $id = false);
         if ($resultado) {
@@ -57,7 +57,7 @@ class Pagamentos extends Model
     }
     public function listarTodos($ver = 0)
     {
-        $parametros = "P INNER JOIN tb_empresas E ON E.EMP_COD=P.EMP_COD WHERE PR.EMP_COD={$this->codEmpresa} ORDER BY P.PAG_COD";
+        $parametros = "L INNER JOIN tb_empresas E ON E.EMP_COD=L.EMP_COD WHERE PR.EMP_COD={$this->codEmpresa} ORDER BY L.PAG_COD";
         $campos = "*";
         $resultado = $this->Model->exibir($parametros, $campos, $ver = 0, $id = false);
         if ($resultado) {
@@ -68,7 +68,7 @@ class Pagamentos extends Model
     }
     public function listarTodosTipo($ver = 0)
     {
-        $parametros = "PR INNER JOIN tb_empresas E ON E.EMP_COD=PR.EMP_COD WHERE PR.EMP_COD={$this->codEmpresa} AND PR.CON_TIPO='{$this->tipo}' ORDER BY RP.CON_DT_VENCIMENTO DESC";
+        $parametros = "L INNER JOIN tb_empresas E ON E.EMP_COD=L.EMP_COD WHERE L.EMP_COD={$this->codEmpresa} AND P.LAN_TIPO='{$this->tipo}' ORDER BY L.LAN_DT_VENCIMENTO DESC";
         $campos = "*";
         $resultado = $this->Model->exibir($parametros, $campos, $ver = 0, $id = false);
         if ($resultado) {
@@ -88,7 +88,7 @@ class Pagamentos extends Model
     }
     public function alterar(array $dados, $ver = 0)
     {
-        $parametros = "WHERE EMP_COD={$this->codEmpresa} AND CON_COD=";
+        $parametros = "WHERE EMP_COD={$this->codEmpresa} AND LAN_COD=";
         $this->Model->setParametros($parametros);
         $this->Model->setCodigo($this->codigo);
         $ok = false;
@@ -101,7 +101,7 @@ class Pagamentos extends Model
     }
     public function excluir($ver = 0)
     {
-        $parametros = "WHERE EMP_COD='{$this->codEmpresa}' AND CON_COD=";
+        $parametros = "WHERE EMP_COD='{$this->codEmpresa}' AND LAN_COD=";
         $this->Model->setParametros($parametros);
         $this->Model->setCodigo($this->codigo);
         $ok = false;
@@ -112,9 +112,9 @@ class Pagamentos extends Model
             return false;
         }
     }
-    public function checarDescricaoContaRecPag()
+    public function checarDescricao()
     {
-        $parametros = "WHERE EMP_COD={$this->codEmpresa} AND CON_DESCRICAO='{$this->descricao}' AND CON_DT_VENCIMENTO='{$this->dataVencimento}'";
+        $parametros = "WHERE EMP_COD={$this->codEmpresa} AND LAN_DESCRICAO='{$this->descricao}' AND LAN_DT_VENCIMENTO='{$this->dataVencimento}'";
         $campos = "*";
         $resultado = $this->Model->exibir($parametros, $campos, $ver = 0, $id = false);
         if ($resultado) {
