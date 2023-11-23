@@ -3,9 +3,9 @@ namespace App\Models;
 
 use Core\Model;
 
-class ContasPagarReceber extends Model
+class Pagamentos extends Model
 { 
-    private $tabela = 'tb_contas_receber_pagar';
+    private $tabela = 'tb_pagamentos';
     private $Model = '';
     private $codigo, $descricao, $tipo, $codEmpresa, $codVenda, $codFornecedor, $dataVencimento;
 
@@ -46,7 +46,7 @@ class ContasPagarReceber extends Model
     }
     public function listar($ver = 0)
     {
-        $parametros = "PR INNER JOIN tb_empresas E ON E.EMP_COD=PR.EMP_COD WHERE PR.EMP_COD={$this->codEmpresa} AND PR.CON_COD={$this->codigo}";
+        $parametros = "P INNER JOIN tb_empresas E ON E.EMP_COD=P.EMP_COD WHERE P.EMP_COD={$this->codEmpresa} AND P.CON_COD={$this->codigo}";
         $campos = "*";
         $resultado = $this->Model->exibir($parametros, $campos, $ver = 0, $id = false);
         if ($resultado) {
@@ -57,7 +57,7 @@ class ContasPagarReceber extends Model
     }
     public function listarTodos($ver = 0)
     {
-        $parametros = "PR INNER JOIN tb_empresas E ON E.EMP_COD=PR.EMP_COD WHERE PR.EMP_COD={$this->codEmpresa} ORDER BY PR.CON_COD";
+        $parametros = "P INNER JOIN tb_empresas E ON E.EMP_COD=P.EMP_COD WHERE PR.EMP_COD={$this->codEmpresa} ORDER BY P.PAG_COD";
         $campos = "*";
         $resultado = $this->Model->exibir($parametros, $campos, $ver = 0, $id = false);
         if ($resultado) {
