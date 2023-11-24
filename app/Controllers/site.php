@@ -45,6 +45,23 @@ class site extends View
         session_destroy($_SESSION);
         Url::redirecionar('site/index');
     }
+    public function bloqueado()
+    {
+
+        //session_start();
+        if (isset($_SESSION)) {
+            session_start();
+        }
+        ob_start();
+        
+        unset($_SESSION['USU_COD']);
+        //session_destroy($_SESSION);
+        //dump('ok');
+        //exit;
+        $this->dados['title'] = 'LC-TECH | Acesse-se';
+        $this->render('site/bloqueado', $this->dados);
+        //Url::redirecionar('site/bloqueado');
+    }
     public function acesso()
     {
         $this->dados['title'] = 'ACESSO | LC-TEC';

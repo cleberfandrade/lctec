@@ -39,7 +39,7 @@
     cl.innerHTML = `${hour}:${minute}:${second}`
   }
   
-let contador = 1800;
+let contador = 18;
 
 function somaContador(valor)
 {
@@ -50,14 +50,22 @@ function somaContador(valor)
         const units = new Date(contador * 1000).toLocaleDateString(navigator.language, {minute:'2-digit', second: '2-digit'}).substring(12, 20)
         $("#limite").html(units);
     }else{
-        console.log(contador);
+        //console.log(contador);
         if(contador == 0){
+            window.addEventListener('keydown', function (e) {
+                var code = e.which || e.keyCode;
+                if (code == 116 || code == 82) e.preventDefault();
+                else return true;
+                // fazer algo aqui para quando a tecla F5 for premida
+            });
+
             $('a').prop("href","#");
             $('a').appendTo("class","disabled");
             //$('body').prop("class","bg-dark");
             $("#limite").html('ACESSO BLOQUEADO');
             setTimeout(function () {
                 $("#bloqueado").show();
+                window.location.href="<?= DIRPAGE ?>site/bloqueado";
             }, 3000);
         }
     }
