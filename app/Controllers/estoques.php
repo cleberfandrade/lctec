@@ -22,7 +22,7 @@ use Libraries\Sessao;
 class estoques extends View
 {
     private $dados = [];
-    private $link,$Enderecos,$Clientes,$Usuarios,$Empresa,$UsuariosEmpresa,$Check,$CargosSalarios,$ModulosEmpresa,$Financas,$Estoques,$Setores,$Categorias;
+    private $link,$Enderecos,$Clientes,$Usuarios,$Produtos,$Empresa,$UsuariosEmpresa,$Check,$CargosSalarios,$ModulosEmpresa,$Financas,$Estoques,$Setores,$Categorias;
     public function __construct()
     {
         Sessao::naoLogado();
@@ -38,6 +38,7 @@ class estoques extends View
         $this->Financas = new Financas;
         $this->Setores = new Setores;
         $this->Categorias = new Categorias;
+        $this->Produtos = new Produtos;
         
         $this->dados['empresa'] = $this->UsuariosEmpresa->setCodEmpresa($_SESSION['EMP_COD'])->setCodUsuario($_SESSION['USU_COD'])->listar(0);
         $this->dados['usuario'] = $this->Usuarios->setCodUsuario($_SESSION['USU_COD'])->listar(0);
@@ -136,20 +137,20 @@ class estoques extends View
     {
        //Recupera os dados enviados
        $dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);
-       if (isset($_POST) && isset($dados['STATUS_CARGO'])) {
+       if (isset($_POST) && isset($dados['STATUS_ESTOQUE'])) {
 
           if($this->dados['empresa']['USU_COD'] == $_SESSION['USU_COD'] && $this->dados['empresa']['EMP_COD'] == $dados['EMP_COD']){
               //Verifica se os campos foram todos preenchidos
-              unset($dados['STATUS_FORNECEDOR']);
-              $this->Fornecedores->setCodEmpresa($dados['EMP_COD'])->setCodigo($dados['FOR_COD']);
+              unset($dados['STATUS_ESTOQUE']);
+              $this->Estoques->setCodEmpresa($dados['EMP_COD'])->setCodigo($dados['EST_COD']);
               ($dados['EST_STATUS'] == 1)? $dados['EST_STATUS'] = 0 : $dados['EST_STATUS'] = 1;
               
               $db = array(
-                  'FOR_DT_ATUALIZACAO'=> date('Y-m-d H:i:s'),
-                  'EST_STATUS' => $dados['FOR_STATUS']
+                  'EST_DT_ATUALIZACAO'=> date('Y-m-d H:i:s'),
+                  'EST_STATUS' => $dados['EST_STATUS']
               );
 
-              if($this->Fornecedores->alterar($db,0)){
+              if($this->Estoques->alterar($db,0)){
                   $respota = array(
                       'COD'=>'OK',
                       'MENSAGEM' => 'Status alterado com sucesso!'
@@ -157,7 +158,7 @@ class estoques extends View
               }else{
                   $respota = array(
                       'COD'=>'ERRO',
-                      'MENSAGEM'=> 'ERRO 2- Erro ao mudar status do fornecedor, entre em contato com o suporte!'
+                      'MENSAGEM'=> 'ERRO 2- Erro ao mudar status do estoque, entre em contato com o suporte!'
                   );
               }
           }else {
