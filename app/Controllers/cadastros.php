@@ -65,8 +65,7 @@ class cadastros extends View
         $Check = new Check;
         $Usuarios->setCodUsuario($_SESSION['USU_COD']);
         $this->dados['usuario'] = $Usuarios->listar(0);
-        $Check->setLink($this->link);
-        $this->dados['breadcrumb'] = $Check->breadcrumb();
+        $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
         $this->render('admin/cadastros/cadastros', $this->dados);
     }
    
@@ -91,8 +90,7 @@ class cadastros extends View
             $this->dados['usuarios'] = $UsuariosEmpresa->listarTodos(0);
         }
         $this->link[2] = ['link'=> 'cadastros/usuarios','nome' => 'LISTAGEM DE USUÁRIOS'];
-        $Check->setLink($this->link);
-        $this->dados['breadcrumb'] = $Check->breadcrumb();
+        $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
         $this->render('admin/cadastros/usuarios/listar', $this->dados);
     }
     public function cadastro_usuarios()
@@ -102,8 +100,7 @@ class cadastros extends View
         $Usuarios = new Usuarios;
         $this->link[2] = ['link'=> 'cadastros/usuarios','nome' => 'LISTAGEM DE USUÁRIOS'];
         $this->link[3] = ['link'=> 'cadastros/cadastro_usuarios','nome' => 'CADASTRAR USUÁRIOS'];
-        $Check->setLink($this->link);
-        $this->dados['breadcrumb'] = $Check->breadcrumb();
+        $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
         $this->render('admin/cadastros/usuarios/cadastrar', $this->dados);
     }
     public function cadastrar_usuarios()
