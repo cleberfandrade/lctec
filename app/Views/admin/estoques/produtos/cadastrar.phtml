@@ -18,7 +18,7 @@ $qtdS = (is_array($setores) ? count($setores) : 0);
                         <div class="row gx-3 align-items-center justify-content-center">
                             <div class="col-lg-9 col-xl-9 col-xxl-9">
                                 <div class="my-1 px-4 mx-auto">
-                                    <a class="text-decoration-none" href="<?= DIRPAGE; ?>estoques/cadastro_produtos/<?= $estoque['EMP_COD']?>/<?= $estoque['EST_COD']?>">
+                                    <a class="text-decoration-none" href="<?= DIRPAGE; ?>produtos/cadastro/<?= $estoque['EMP_COD']?>/<?= $estoque['EST_COD']?>">
                                         <h5 class="fs-2 fw-bolder text-uppercase text-dark"><i class="bi bi-box2-fill"></i> Cadastrar <span class="text-success"> Produto</span>
                                         </h5>
                                     </a>
@@ -38,7 +38,7 @@ $qtdS = (is_array($setores) ? count($setores) : 0);
                 </section>
                 <section class="bg-light py-2">
                     <div class="container col-10 px-2 py-2 mx-auto row">
-                        <form class="p-4 p-md-6 border text-uppercase rounded-3 bg-3" action="<?= DIRPAGE ?>estoques/cadastrar_produtos" method="POST">
+                        <form class="p-4 p-md-6 border text-uppercase rounded-3 bg-3" action="<?= DIRPAGE ?>produtos/cadastrar" method="POST">
                             <div class="row ">    
                                 <div class="col-3 form-floating mb-2">
                                     <select class="form-select" name="PRO_TIPO">
@@ -152,15 +152,30 @@ $qtdS = (is_array($setores) ? count($setores) : 0);
                                 </div>
                                 <div class="col-8 mb-2">
                                     <div class="col-12">
-                                        <div class="text-center mb-3">
+                                        <div class=" mb-3">
+                                            <label class="px-5" for="2">CATEGORIA</label>
                                             <div class="form-floating mb-3">
-                                                <select class="form-select text-uppercase mb-3 form-floating" name="SET_COD">
+                                                <select class="form-select text-uppercase mb-3 form-floating" name="CAT_COD">
                                                     <option value="0" <?= (isset($_POST['CAT_COD']) &&  $_POST['CAT_COD']  == "0")? 'selected' : '' ?>>---</option>
                                                     <?php for ($i= 0; $i < $qtdC; $i++) { ?> 
                                                         <option value="<?= $categorias[$i]['CAT_COD']; ?>" <?= (isset($_POST['CAT_COD']) &&  $_POST['CAT_COD']  == $categorias[$i]['CAT_COD'] )? 'selected' : '' ?>><?= $categorias[$i]['CAT_DESCRICAO'] ?></option>
                                                     <?php } ?> 
                                                 </select>
                                                 <label class="form-floating mb-3">CATEGORIA</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class=" mb-3">
+                                            <label class="px-5" for="2">SETOR</label>
+                                            <div class="form-floating mb-3">
+                                                <select class="form-select text-uppercase mb-3 form-floating" name="SET_COD">
+                                                    <option value="0" <?= (isset($_POST['SET_COD']) &&  $_POST['SET_COD']  == "0")? 'selected' : '' ?>>---</option>
+                                                    <?php for ($i= 0; $i < $qtdS; $i++) { ?> 
+                                                        <option value="<?= $setores[$i]['SET_COD']; ?>" <?= (isset($_POST['SET_COD']) &&  $_POST['SET_COD']  == $setores[$i]['SET_COD'] )? 'selected' : '' ?>><?= $setores[$i]['SET_DESCRICAO'] ?></option>
+                                                    <?php } ?> 
+                                                </select>
+                                                <label class="form-floating mb-3">SETOR (opcional)</label>
                                             </div>
                                         </div>
                                     </div>

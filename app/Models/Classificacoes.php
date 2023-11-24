@@ -3,11 +3,11 @@ namespace App\Models;
 
 use Core\Model;
 
-class Estoques extends Model
+class Classificacoes extends Model
 { 
-    private $tabela = 'tb_estoques';
+    private $tabela = 'tb_classificacoes';
     private $Model = '';
-    private $codigo,$codEmpresa,$codUsuario,$codProduto,$codServico;
+    private $codigo,$codEmpresa,$descricao;
 
     public function __construct()
     {
@@ -19,48 +19,32 @@ class Estoques extends Model
         $this->codigo = $codigo;
         return $this;
     }
-    public function setCodUsuario($codUsuario)
-    {
-        $this->codUsuario = $codUsuario;
-        return $this;
-    }
     public function setCodEmpresa($codEmpresa)
     {
         $this->codEmpresa = $codEmpresa;
-        return $this;
+        return $this;   
     }
-    public function setCodProduto($codProduto)
+    public function setDescricao($descricao)
     {
-        $this->codProduto = $codProduto;
+        $this->descricao = $descricao;
         return $this;
     }
     public function listar($ver = 0)
     {
-        $parametros = "ET INNER JOIN tb_empresas E ON E.EMP_COD=ET.EMP_COD WHERE ET.EMP_COD={$this->codEmpresa} AND ET.EST_COD={$this->codigo}";
+        $parametros = "C INNER JOIN tb_empresas E ON C.EMP_COD=E.EMP_COD WHERE C.EMP_COD={$this->codEmpresa} AND C.CLA_COD={$this->codigo}";
         $campos = "*";
-        $resultado = $this->Model->exibir($parametros, $campos, $ver = 0, $id = false);
+        $resultado = $this->Model->exibir($parametros, $campos, $ver, $id = false);
         if ($resultado) {
             return $resultado[0];
         } else {
             return false;
         }
     }
-    public function listarProdutosEstoque($ver = 0)
-    {
-        $parametros = "ET INNER JOIN tb_produtos P ON P.EST_COD=ET.EST_COD WHERE ET.EMP_COD={$this->codEmpresa} AND ET.EST_COD={$this->codigo}";
-        $campos = "*";
-        $resultado = $this->Model->exibir($parametros, $campos, $ver = 0, $id = false);
-        if ($resultado) {
-            return $resultado;
-        } else {
-            return false;
-        }
-    }
     public function listarTodos($ver = 0)
     {
-        $parametros = "ET INNER JOIN tb_empresas E ON E.EMP_COD=ET.EMP_COD WHERE ET.EMP_COD={$this->codEmpresa} ORDER BY ET.EST_COD ASC";
+        $parametros = "WHERE EMP_COD={$this->codEmpresa} ORDER BY CLA_DESCRICAO";
         $campos = "*";
-        $resultado = $this->Model->exibir($parametros, $campos, $ver, $id = false);
+        $resultado = $this->Model->exibir($parametros, $campos, $ver = 0, $id = false);
         if ($resultado) {
             return $resultado;
         } else {
@@ -78,7 +62,7 @@ class Estoques extends Model
     }
     public function alterar(array $dados, $ver = 0)
     {
-        $parametros = " WHERE EMP_COD={$this->codEmpresa} AND EST_COD=";
+        $parametros = " WHERE EMP_COD={$this->codEmpresa} AND CLA_COD=";
         $this->Model->setParametros($parametros);
         $this->Model->setCodigo($this->codigo);
         $ok = false;
@@ -91,7 +75,7 @@ class Estoques extends Model
     }
     public function excluir(array $dados, $ver = 0)
     {
-        $parametros = " WHERE EMP_COD={$this->codEmpresa} AND EST_COD=";
+        $parametros = " WHERE EMP_COD={$this->codEmpresa} AND CLA_COD=";
         $this->Model->setParametros($parametros);
         $this->Model->setCodigo($this->codigo);
         $ok = false;
@@ -102,4 +86,19 @@ class Estoques extends Model
             return false;
         }
     }
+    public function checarDescricao()
+    {
+        $parametros = "WHERE EMP_COD={$this->codEmpresa} AND CLA_DESCRICAO ='{$this->descricao}' AND CLA_STATUS=1";
+        $campos = "*";
+        $resultado = $this->Model->exibir($parametros, $campos, $ver = 0, $id = false);
+        if ($resultado) {
+            //Já existe
+            return $resultado[0];
+        } else {
+            //Nao existe
+            return false;
+        }
+    }
 }
+
+

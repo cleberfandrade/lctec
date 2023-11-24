@@ -180,7 +180,7 @@ class classificacoes extends View
             if($this->dados['empresa']['USU_COD'] == $_SESSION['USU_COD'] && $this->dados['empresa']['EMP_COD'] == $dados['EMP_COD']){
                 
                 unset($dados['STATUS_CLASSIFICACAO']);
-                $this->Setores->setCodEmpresa($dados['EMP_COD'])->setCodigo($dados['CLA_COD']);
+                $this->Classificacoes->setCodEmpresa($dados['EMP_COD'])->setCodigo($dados['CLA_COD']);
                 ($dados['CLA_STATUS'] == 1)? $dados['CLA_STATUS'] = 0: $dados['CLA_STATUS'] = 1;
                                 
                 $db = array(
@@ -188,7 +188,7 @@ class classificacoes extends View
                     'CLA_DT_ATUALIZACAO'=> date('Y-m-d H:i:s'),
                     'CLA_STATUS' => $dados['CLI_STATUS']
                 );
-                if($this->Setores->alterar($db,0)){
+                if($this->Classificacoes->alterar($db,0)){
                     $respota = array(
                         'COD'=>'OK',
                         'MENSAGEM' => 'Status alterado com sucesso!'
