@@ -3,6 +3,8 @@ use Libraries\Sessao;
 session_start();
 include_once 'app/Views/admin/inc/cabecalho.phtml'; 
 $qtd = (is_array($clientes) ? count($clientes) : 0);
+$qtdS = (is_array($setores) ? count($setores) : 0);
+$qtdCL = (is_array($classificacoes) ? count($classificacoes) : 0);
 ?>
 <body class="">
     <div class="d-flex" id="wrapper">
@@ -46,6 +48,8 @@ $qtd = (is_array($clientes) ? count($clientes) : 0);
                             <th class="text-dark">Cadastro</th>
                             <th class="text-dark">Tel./Cel. 1</th>
                             <th class="text-dark">DT. NASC.</th>
+                            <th class="text-dark">Setor</th>
+                            <th class="text-dark">Classificação</th>
                             <th class="text-dark">Tipo</th>
                             <th class="text-dark">Status</th>
                             <?php if($_SESSION['USU_NIVEL'] >= 8){ ?><th class="text-dark">Ações</th><?php } ?>
@@ -53,31 +57,38 @@ $qtd = (is_array($clientes) ? count($clientes) : 0);
                         <tbody>
                         <?php
                             $b = 1;
-                            for ($i= 0; $i < $qtd; $i++) { ?>
-                            
-                                <?php 
+                            for ($i= 0; $i < $qtd; $i++) { 
                                 $data = new DateTime($clientes[$i]['CLI_DT_CADASTRO']);
                                 $dt_nascimento = new DateTime($clientes[$i]['CLI_DT_NASCIMENTO']);
-                                if ($clientes[$i]['CLI_STATUS'] == 0 && $_SESSION['USU_NIVEL'] >= 8) { ?>
-                                 <tr class="bg-secondary">
-                                    <td class="text-center align-middle"><?= $b; ?></td>
-                                    <td class="text-center align-middle"><?= $clientes[$i]['CLI_NOME']; ?></td>
-                                    <td class="text-center align-middle"><?= $data->format('d/m/Y h:i:s'); ?></td>
-                                    <td class="text-center align-middle"><?= $clientes[$i]['CLI_TEL_1']; ?></td>
-                                    <td class="text-center align-middle"><?= $dt_nascimento->format('d/m/Y'); ?></td>
-                                    <td class="text-center align-middle"><?= ($clientes[$i]['CLI_TIPO'] != '0')? (($clientes[$i]['CLI_TIPO'] == "PF")? 'PESSOA FÍSICA' : 'PESSOA JURÍDICA') : 'NÃO INFORMADO'; ?></td>
-                                    <td class="text-center align-middle"><?= ($clientes[$i]['CLI_STATUS'] == 1)? 'ATIVO' : 'DESATIVADO'; ?></td>
-                                    <td class="text-center align-middle">
-                                        <button type="button" class="btn btn-primary btn-sm d-print-none" data-bs-toggle='modal'  data-bs-target="#status" title="Ativar cliente" data-codigo="<?= $clientes[$i]['CLI_COD']; ?>" data-nome="<?= $clientes[$i]['CLI_NOME']; ?>" data-status="<?= $clientes[$i]['CLI_STATUS']; ?>" title="Deseja ativar?" ><i class="fa-regular fa-circle-check"></i></button>
-                                    </td>
-                                </tr>
-                                <?php }else { ?>
+                                ?>
                                 <tr class="<?= ($clientes[$i]['CLI_STATUS'] == 0 && $_SESSION['USU_NIVEL'] >= 8)? 'bg-secondary' : ''; ?>">
                                     <td class="text-center align-middle"><?= $b; ?></td>
                                     <td class="text-center align-middle"><?= $clientes[$i]['CLI_NOME']; ?></td>
                                     <td class="text-center align-middle"><?= $data->format('d/m/Y h:i:s'); ?></td>
                                     <td class="text-center align-middle"><?= $clientes[$i]['CLI_TEL_1']; ?></td>
                                     <td class="text-center align-middle"><?= $dt_nascimento->format('d/m/Y'); ?></td>
+                                    <td class="text-center align-middle">
+                                    <?php 
+                                        if($clientes[$i]['SET_COD'] != 0 or $clientes[$i]['SET_COD'] != '') {
+                                            for ($c = 0; $c < $qtdCS; $c++) { 
+                                                if ($setores[$c]['SET_COD'] == $clientes[$i]['SET_COD']) { ?>
+                                                <?= $setores[$c]['SET_DESCRICAO']; ?>   
+                                            <?php } } ?> 
+                                        <?php }else { ?>
+                                            À DEFINIR (op)
+                                        <?php } ?> 
+                                    </td>
+                                    <td class="text-center align-middle">
+                                        <?php 
+                                        if($clientes[$i]['CLA_COD'] != 0 or $clientes[$i]['CLA_COD'] != '') {
+                                            for ($c = 0; $c < $qtdCL; $c++) { 
+                                                if ($classificacoes[$c]['CLA_COD'] == $clientes[$i]['CLA_COD']) { ?>
+                                                <?= $classificacoes[$c]['CLA_DESCRICAO']; ?>   
+                                            <?php } } ?> 
+                                        <?php }else { ?>
+                                            À DEFINIR (op)
+                                        <?php } ?> 
+                                    </td>
                                     <td class="text-center align-middle"><?= ($clientes[$i]['CLI_TIPO'] != '0')? (($clientes[$i]['CLI_TIPO'] == "PF")? 'PESSOA FÍSICA' : 'PESSOA JURÍDICA') : 'NÃO INFORMADO'; ?></td>
                                     <td class="text-center align-middle"><?= ($clientes[$i]['CLI_STATUS'] == 1)? 'ATIVO' : 'DESATIVADO'; ?></td>
                                     <?php if($_SESSION['USU_NIVEL'] >= 8){ ?>
@@ -91,8 +102,6 @@ $qtd = (is_array($clientes) ? count($clientes) : 0);
                                     </td>
                                     <?php } ?>
                                 </tr>
-                                <?php } ?>
-                          
                         <?php $b++; } ?>
                         </tbody>
                     </table>

@@ -2,7 +2,8 @@
 use Libraries\Sessao;
 session_start();
 include_once 'app/Views/admin/inc/cabecalho.phtml'; 
-
+$qtdCL = (is_array($classificacoes) ? count($classificacoes) : 0);
+$qtdS = (is_array($setores) ? count($setores) : 0);
 ?>
 <body class="">
     <div class="d-flex" id="wrapper">
@@ -35,8 +36,7 @@ include_once 'app/Views/admin/inc/cabecalho.phtml';
                     <div class="container col-10 px-2 py-2 mx-auto row">
                         <form class="p-4 p-md-6 border text-uppercase rounded-3 bg-3" action="<?= DIRPAGE ?>clientes/cadastrar" method="POST">
                             <div class="row ">    
-                                <div class="col-3 form-floating mb-2">
-                                    
+                                <div class="col-4 form-floating mb-2">
                                     <select class="form-select" name="CLI_TIPO">
                                         <option value="0" <?= (isset($_POST['CLI_TIPO']) &&  $_POST['CLI_TIPO']  == "0")? 'selected' : '' ?>>---</option>
                                         <option value="PF"<?= (isset($_POST['CLI_TIPO']) &&  $_POST['CLI_TIPO']  == "PF")? 'selected' : '' ?>>PESSOA FÍSICA</option>
@@ -44,11 +44,35 @@ include_once 'app/Views/admin/inc/cabecalho.phtml';
                                     </select>
                                     <label class="form-label">TIPO</label>
                                 </div>
-                                <div class="col-4 form-floating mb-3">
+                                <div class="col-4 text-center mb-3">
+                                    <label class="form-label">SETOR</label>
+                                    <div class="form-floating mb-3">
+                                        <select class="form-select text-uppercase mb-3 form-floating" name="SET_COD">
+                                            <option value="0" <?= (isset($_POST['SET_COD']) &&  $_POST['SET_COD']  == "0")? 'selected' : '' ?>>---</option>
+                                            <?php for ($i= 0; $i < $qtdS; $i++) { ?> 
+                                                <option value="<?= $setores[$i]['SET_COD']; ?>" <?= (isset($_POST['SET_COD']) &&  $_POST['SET_COD']  == $setores[$i]['SET_COD'] )? 'selected' : '' ?>><?= $setores[$i]['SET_DESCRICAO'] ?></option>
+                                            <?php } ?> 
+                                        </select>
+                                        <label class="form-floating mb-3">SETOR DO CLIENTE</label>
+                                    </div>
+                                </div>
+                                <div class="col-4 text-center mb-3">
+                                    <label class="form-label">CLASSIFICAÇÃO</label>
+                                    <div class="form-floating mb-3">
+                                        <select class="form-select text-uppercase mb-3 form-floating" name="CLA_COD">
+                                            <option value="0" <?= (isset($_POST['CLA_COD']) &&  $_POST['CLA_COD']  == "0")? 'selected' : '' ?>>---</option>
+                                            <?php for ($i= 0; $i < $qtdCL; $i++) { ?> 
+                                                <option value="<?= $classificacoes[$i]['CLA_COD']; ?>" <?= (isset($_POST['CLA_COD']) &&  $_POST['CLA_COD']  == $classificacoes[$i]['CLA_COD'] )? 'selected' : '' ?>><?= $classificacoes[$i]['CLA_DESCRICAO'] ?></option>
+                                            <?php } ?> 
+                                        </select>
+                                        <label class="form-floating mb-3">CLASSIFICAÇÃO DO CLIENTE</label>
+                                    </div>
+                                </div>
+                                <div class="col-6 form-floating mb-3">
                                     <input type="text" class="form-control maiusculo" id="1" name="CLI_NOME" placeholder="Informe seu nome" value="<?= isset($_POST['CLI_NOME']) ? $_POST['CLI_NOME'] :''; ?>">
                                     <label class="px-3" for="1">Seu nome</label>
                                 </div>    
-                                <div class="col-5 form-floating mb-3">
+                                <div class="col-6 form-floating mb-3">
                                     <input type="text" class="form-control maiusculo" id="2" name="CLI_SOBRENOME" placeholder="Informe seu nome" value="<?= isset($_POST['CLI_SOBRENOME']) ? $_POST['CLI_SOBRENOME'] : ''; ?>">
                                     <label class="px-3" for="2">Seu sobrenome</label>
                                 </div> 

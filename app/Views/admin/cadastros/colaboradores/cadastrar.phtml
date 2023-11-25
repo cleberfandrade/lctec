@@ -4,6 +4,7 @@ session_start();
 include_once 'app/Views/admin/inc/cabecalho.phtml'; 
 $qtd = (is_array($cargos_salarios) ? count($cargos_salarios) : 0);
 $qtdS = (is_array($setores) ? count($setores) : 0);
+$qtdCL = (is_array($classificacoes) ? count($classificacoes) : 0);
 ?>
 <body class="">
     <div class="d-flex" id="wrapper">
@@ -36,7 +37,7 @@ $qtdS = (is_array($setores) ? count($setores) : 0);
                     <div class="container col-10 px-2 py-2 mx-auto row">
                         <form class="p-4 p-md-6 border text-uppercase rounded-3 bg-3" action="<?= DIRPAGE ?>colaboradores/cadastrar" method="POST">
                             <div class="row ">    
-                                <div class="col-2 mb-3 form-floating ">
+                                <div class="col-4 mb-3 form-floating ">
                                     <select class="form-select" name="COL_NIVEL">                                        
                                         <?php for ($i=1; $i <= 10; $i++) { ?>
                                             <option value="<?= $i?>" <?= (isset($_POST['COL_NIVEL']) &&  $_POST['COL_NIVEL']  == $i)? 'selected' : '' ?>><?= $i ?></option>
@@ -44,7 +45,7 @@ $qtdS = (is_array($setores) ? count($setores) : 0);
                                     </select>
                                     <label class="form-floating mb-3">NÍVEL DO COL.</label>
                                 </div>
-                                <div class="col-2 text-center mb-3">
+                                <div class="col-4 text-center mb-3">
                                     <div class="form-floating mb-3">
                                         <select class="form-select text-uppercase mb-3 form-floating" name="SET_COD">
                                             <option value="0" <?= (isset($_POST['SET_COD']) &&  $_POST['SET_COD']  == "0")? 'selected' : '' ?>>---</option>
@@ -52,15 +53,27 @@ $qtdS = (is_array($setores) ? count($setores) : 0);
                                                 <option value="<?= $setores[$i]['SET_COD']; ?>" <?= (isset($_POST['SET_COD']) &&  $_POST['SET_COD']  == $setores[$i]['SET_COD'] )? 'selected' : '' ?>><?= $setores[$i]['SET_DESCRICAO'] ?></option>
                                             <?php } ?> 
                                         </select>
-                                        <label class="form-floating mb-3">SETOR</label>
+                                        <label class="form-floating mb-3">SETOR DO(A) COLABORADOR(A)</label>
                                     </div>
                                 </div>
-                                <div class="col-4 form-floating mb-3">
-                                    <input type="text" class="form-control maiusculo" id="1" name="COL_NOME" placeholder="Informe seu nome" value="<?= isset($_POST['COL_NOME']) ? $_POST['COL_NOME'] :''; ?>">
+                                <div class="col-4 text-center mb-3">
+                                    <label class="form-label">CLASSIFICAÇÃO</label>
+                                    <div class="form-floating mb-3">
+                                        <select class="form-select text-uppercase mb-3 form-floating" name="CLA_COD">
+                                            <option value="0" <?= (isset($_POST['CLA_COD']) &&  $_POST['CLA_COD']  == "0")? 'selected' : '' ?>>---</option>
+                                            <?php for ($i= 0; $i < $qtdCL; $i++) { ?> 
+                                                <option value="<?= $classificacoes[$i]['CLA_COD']; ?>" <?= (isset($_POST['CLA_COD']) &&  $_POST['CLA_COD']  == $classificacoes[$i]['CLA_COD'] )? 'selected' : '' ?>><?= $classificacoes[$i]['CLA_DESCRICAO'] ?></option>
+                                            <?php } ?> 
+                                        </select>
+                                        <label class="form-floating mb-3">CLASSIFICAÇÃO DO(A) COLABORADOR(A)</label>
+                                    </div>
+                                </div>
+                                <div class="col-5 form-floating mb-3">
+                                    <input type="text" class="form-control maiusculo" id="1" name="COL_NOME" placeholder="" value="<?= isset($_POST['COL_NOME']) ? $_POST['COL_NOME'] :''; ?>">
                                     <label class="px-3" for="1">Seu nome</label>
                                 </div>    
-                                <div class="col-4 form-floating mb-3">
-                                    <input type="text" class="form-control maiusculo" id="2" name="COL_SOBRENOME" placeholder="Informe seu nome" value="<?= isset($_POST['COL_SOBRENOME']) ? $_POST['COL_SOBRENOME'] : ''; ?>">
+                                <div class="col-7 form-floating mb-3">
+                                    <input type="text" class="form-control maiusculo" id="2" name="COL_SOBRENOME" placeholder="" value="<?= isset($_POST['COL_SOBRENOME']) ? $_POST['COL_SOBRENOME'] : ''; ?>">
                                     <label class="px-3" for="2">Seu sobrenome</label>
                                 </div> 
                             </div> 

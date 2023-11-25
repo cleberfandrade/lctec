@@ -82,7 +82,7 @@ $qtdCL = (is_array($classificacoes) ? count($classificacoes) : 0);
                                 </td>
                                 <td class="text-center align-middle">
                                 <?php 
-                                    if($produtos[$i]['SET_COD'] != 0) {
+                                    if($produtos[$i]['SET_COD'] != 0 or $produtos[$i]['SET_COD'] != '') {
                                         for ($c = 0; $c < $qtdS; $c++) { 
                                             if ($setores[$c]['SET_COD'] == $produtos[$i]['SET_COD']) { ?>
                                             <?= $setores[$c]['SET_DESCRICAO']; ?>   
@@ -93,7 +93,7 @@ $qtdCL = (is_array($classificacoes) ? count($classificacoes) : 0);
                                 </td>
                                 <td class="text-center align-middle">
                                 <?php 
-                                    if($produtos[$i]['CLA_COD'] != 0) {
+                                    if($produtos[$i]['CLA_COD'] != 0 or $produtos[$i]['CLA_COD'] != '') {
                                         for ($c = 0; $c < $qtdCL; $c++) { 
                                             if ($classificacoes[$c]['CLA_COD'] == $produtos[$i]['CLA_COD']) { ?>
                                             <?= $classificacoes[$c]['CLA_DESCRICAO']; ?>   

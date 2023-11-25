@@ -2,7 +2,7 @@
 namespace App\Controllers;
 
 use App\Models\Categorias as ModelsCategorias;
-use App\Models\classificacoes;
+use App\Models\Classificacoes;
 use App\Models\Empresas;
 use App\Models\Setores;
 use App\Models\Usuarios;

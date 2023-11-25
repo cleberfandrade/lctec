@@ -176,7 +176,7 @@ $qtd = (is_array($produto) ? count($produto) : 0);
                                                 <select class="form-select text-uppercase mb-3 form-floating" name="SET_COD">
                                                     <option value="0" <?= (isset($_POST['SET_COD']) &&  $_POST['SET_COD']  == "0")? 'selected' : '' ?>>---</option>
                                                     <?php for ($i= 0; $i < $qtdS; $i++) { ?> 
-                                                        <option value="<?= $setores[$i]['SET_COD']; ?>" <?= (isset($_POST['SET_COD']) &&  $_POST['SET_COD']  == $setores[$i]['SET_COD'] )? 'selected' : '' ?>><?= $setores[$i]['SET_DESCRICAO'] ?></option>
+                                                        <option value="<?= $setores[$i]['SET_COD']; ?>" <?= (isset($_POST['SET_COD']) &&  $_POST['SET_COD']  == $setores[$i]['SET_COD'] )? 'selected' :  (isset($produto['SET_COD']) && $produto['SET_COD'] == $setores[$i]['SET_COD'] ? 'selected': '') ?>><?= $setores[$i]['SET_DESCRICAO'] ?></option>
                                                     <?php } ?> 
                                                 </select>
                                                 <label class="form-floating mb-3">SETOR (opcional)</label>
