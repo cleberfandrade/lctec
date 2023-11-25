@@ -34,7 +34,23 @@ include_once 'app/Views/admin/inc/cabecalho.phtml';
                     <div class="container col-10 px-2 py-2 mx-auto row">
                         <form class="p-4 p-md-6 border text-uppercase rounded-3 bg-3" action="<?= DIRPAGE ?>classificacoes/cadastrar" method="POST">
                             <div class="row ">    
-                                <div class="col-6 mb-3">
+                                <div class="col-4 mb-2 text-center">
+                                    <label class="form-label">TIPO</label>
+                                    <div class="form-floating mb-3">
+                                        <select class="form-select" name="CLA_TIPO">                                        
+                                            <option value="0" <?= (isset($_POST['CLA_TIPO']) &&  $_POST['CLA_TIPO']  == 0)? 'selected' : ''; ?>>----</option>   
+                                            <option value="1" <?= (isset($_POST['CLA_TIPO']) &&  $_POST['CLA_TIPO']  == 1)? 'selected' : ''; ?>>CATEGORIAS</option> 
+                                            <option value="2" <?= (isset($_POST['CLA_TIPO']) &&  $_POST['CLA_TIPO']  == 2)? 'selected' : ''; ?>>CLIENTES</option>
+                                            <option value="3" <?= (isset($_POST['CLA_TIPO']) &&  $_POST['CLA_TIPO']  == 3)? 'selected' : ''; ?>>ESTOQUES</option> 
+                                            <option value="4" <?= (isset($_POST['CLA_TIPO']) &&  $_POST['CLA_TIPO']  == 4)? 'selected' : ''; ?>>PRODUTOS</option> 
+                                            <option value="5" <?= (isset($_POST['CLA_TIPO']) &&  $_POST['CLA_TIPO']  == 5)? 'selected' : ''; ?>>SERVIÇOS</option> 
+                                            <option value="6" <?= (isset($_POST['CLA_TIPO']) &&  $_POST['CLA_TIPO']  == 6)? 'selected' : ''; ?>>COLABORADORES</option> 
+                                            <option value="7" <?= (isset($_POST['CLA_TIPO']) &&  $_POST['CLA_TIPO']  == 7)? 'selected' : ''; ?>>OUTROS</option> 
+                                        </select>
+                                        <label class="form-floating ">TIPO DA CLASSIFICAÇÃO</label>
+                                    </div>
+                                </div>
+                                <div class="col-8 mb-3">
                                     <label class="form-label" for="1">DESCRIÇÃO</label>
                                     <div class="form-floating mb-3">
                                         <input type="text" class="form-control maiusculo" id="1" name="CLA_DESCRICAO" placeholder="" value="<?= isset($_POST['CLA_DESCRICAO']) ? $_POST['CLA_DESCRICAO'] :''; ?>">

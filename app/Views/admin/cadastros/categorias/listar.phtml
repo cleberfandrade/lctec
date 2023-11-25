@@ -4,6 +4,7 @@ session_start();
 include_once 'app/Views/admin/inc/cabecalho.phtml'; 
 $qtd = (is_array($categorias) ? count($categorias) : 0);
 $qtdS = (is_array($setores) ? count($setores) : 0);
+$qtdCL = (is_array($classificacoes) ? count($classificacoes) : 0);
 ?>
 <body class="">
     <div class="d-flex" id="wrapper">
@@ -47,6 +48,7 @@ $qtdS = (is_array($setores) ? count($setores) : 0);
                                 <th class="text-dark">#</th>
                                 <th class="text-dark">Descrição</th>
                                 <th class="text-dark">Setor</th>
+                                <th class="text-dark">CLassificação</th>
                                 <th class="text-dark">Nível</th>
                                 <th class="text-dark">Status</th>
                                 <?php if($_SESSION['USU_NIVEL'] >= 8){ ?><th class="text-dark">Ações</th><?php } ?> 
@@ -64,6 +66,17 @@ $qtdS = (is_array($setores) ? count($setores) : 0);
                                                 for ($c = 0; $c < $qtdS; $c++) { 
                                                     if ($setores[$c]['SET_COD'] == $categorias[$i]['SET_COD']) { ?>
                                                     <?= $setores[$c]['SET_DESCRICAO']; ?>   
+                                                <?php } } ?> 
+                                            <?php }else { ?>
+                                                À DEFINIR
+                                            <?php } ?> 
+                                        </td>
+                                        <td class="text-center align-middle">
+                                        <?php 
+                                            if($categorias[$i]['CLA_COD'] != 0) {
+                                                for ($c = 0; $c < $qtdCL; $c++) { 
+                                                    if ($classificacoes[$c]['CLA_COD'] == $categorias[$i]['CLA_COD']) { ?>
+                                                    <?= $classificacoes[$c]['CLA_DESCRICAO']; ?>   
                                                 <?php } } ?> 
                                             <?php }else { ?>
                                                 À DEFINIR

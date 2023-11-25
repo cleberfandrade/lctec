@@ -4,6 +4,8 @@ session_start();
 include_once 'app/Views/admin/inc/cabecalho.phtml'; 
 $qtd = (is_array($produtos) ? count($produtos) : 0);
 $qtdC = (is_array($categorias) ? count($categorias) : 0);
+$qtdS = (is_array($setores) ? count($setores) : 0);
+$qtdCL = (is_array($classificacoes) ? count($classificacoes) : 0);
 ?>
 <body class="">
     <div class="d-flex" id="wrapper">
@@ -48,6 +50,8 @@ $qtdC = (is_array($categorias) ? count($categorias) : 0);
                             <th class="text-dark">CÓDIGO</th>
                             <th class="text-dark">REFERÊNCIA</th>
                             <th class="text-dark">CATEGORIA</th>
+                            <th class="text-dark">SETOR</th>
+                            <th class="text-dark">CLASSIFICAÇÃO</th>
                             <th class="text-dark">NOME</th>
                             <th class="text-dark">QTD</th>
                             <th class="text-dark">PREÇO UNITÁRIO</th>
@@ -71,6 +75,28 @@ $qtdC = (is_array($categorias) ? count($categorias) : 0);
                                         for ($c = 0; $c < $qtdC; $c++) { 
                                             if ($categorias[$c]['CAT_COD'] == $produtos[$i]['CAT_COD']) { ?>
                                             <?= $categorias[$c]['CAT_DESCRICAO']; ?>   
+                                        <?php } } ?> 
+                                    <?php }else { ?>
+                                        À DEFINIR
+                                    <?php } ?> 
+                                </td>
+                                <td class="text-center align-middle">
+                                <?php 
+                                    if($produtos[$i]['SET_COD'] != 0) {
+                                        for ($c = 0; $c < $qtdS; $c++) { 
+                                            if ($setores[$c]['SET_COD'] == $produtos[$i]['SET_COD']) { ?>
+                                            <?= $setores[$c]['SET_DESCRICAO']; ?>   
+                                        <?php } } ?> 
+                                    <?php }else { ?>
+                                        À DEFINIR
+                                    <?php } ?> 
+                                </td>
+                                <td class="text-center align-middle">
+                                <?php 
+                                    if($produtos[$i]['CLA_COD'] != 0) {
+                                        for ($c = 0; $c < $qtdCL; $c++) { 
+                                            if ($classificacoes[$c]['CLA_COD'] == $produtos[$i]['CLA_COD']) { ?>
+                                            <?= $classificacoes[$c]['CLA_DESCRICAO']; ?>   
                                         <?php } } ?> 
                                     <?php }else { ?>
                                         À DEFINIR

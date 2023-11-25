@@ -4,6 +4,8 @@ session_start();
 include_once 'app/Views/admin/inc/cabecalho.phtml'; 
 $qtd = (is_array($estoque) ? count($estoque) : 0);
 $qtdE = (is_array($empresas) ? count($empresas) : 0);
+$qtdS = (is_array($setores) ? count($setores) : 0);
+$qtdCL = (is_array($classificacoes) ? count($classificacoes) : 0);
 ?>
 <body class="">
     <div class="d-flex" id="wrapper">
@@ -40,6 +42,30 @@ $qtdE = (is_array($empresas) ? count($empresas) : 0);
                                     <option value="PRINCIPAL" <?=(isset($_POST['EST_TIPO']) &&  $_POST['EST_TIPO']  == "0")? 'selected' : ( (isset($estoque['EST_TIPO']) &&  $estoque['EST_TIPO']  == "PRINCIPAL")? 'selected' : '') ?>>PRINCIPAL</option>
                                     <option value="OUTROS" <?= (isset($_POST['EST_TIPO']) &&  $_POST['EST_TIPO']  == "0")? 'selected' : ((isset($estoque['EST_TIPO']) &&  $estoque['EST_TIPO']  == "OUTROS")? 'selected' : '') ?>>OUTROS</option>
                                 </select>
+                            </div>
+                            <div class="col-4 text-center mb-3">
+                                <label class="form-label">SETOR</label>
+                                <div class="form-floating mb-3">
+                                    <select class="form-select text-uppercase mb-3 form-floating" name="SET_COD">
+                                        <option value="0" <?= (isset($_POST['SET_COD']) &&  $_POST['SET_COD']  == "0")? 'selected' : '' ?>>---</option>
+                                        <?php for ($i= 0; $i < $qtdS; $i++) { ?> 
+                                            <option value="<?= $setores[$i]['SET_COD']; ?>" <?= (isset($_POST['SET_COD']) &&  $_POST['SET_COD']  == $setores[$i]['SET_COD'] )? 'selected' : ((isset($estoque['SET_COD']) &&  $estoque['SET_COD']  == $setores[$i]['SET_COD'])? 'selected' : '') ?>><?= $setores[$i]['SET_DESCRICAO'] ?></option>
+                                        <?php } ?> 
+                                    </select>
+                                    <label class="form-floating mb-3">SETOR DO ESTOQUE</label>
+                                </div>
+                            </div>
+                            <div class="col-4 text-center mb-3">
+                                <label class="form-label">CLASSIFICAÇÃO</label>
+                                <div class="form-floating mb-3">
+                                    <select class="form-select text-uppercase mb-3 form-floating" name="CLA_COD">
+                                        <option value="0" <?= (isset($_POST['CLA_COD']) &&  $_POST['CLA_COD']  == "0")? 'selected' : '' ?>>---</option>
+                                        <?php for ($i= 0; $i < $qtdCL; $i++) { ?> 
+                                            <option value="<?= $classificacoes[$i]['CLA_COD']; ?>" <?= (isset($_POST['CLA_COD']) &&  $_POST['CLA_COD']  == $classificacoes[$i]['CLA_COD'] )? 'selected' : ((isset($estoque['CLA_COD']) &&  $estoque['CLA_COD']  == $classificacoes[$i]['CLA_COD'])? 'selected' : '') ?>><?= $classificacoes[$i]['CLA_DESCRICAO'] ?></option>
+                                        <?php } ?> 
+                                    </select>
+                                    <label class="form-floating mb-3">CLASSIFICAÇÃO DO ESTOQUE</label>
+                                </div>
                             </div>
                             <div class="col-8 mb-2">
                                 <label class="form-label" for="1">INFORME UMA DESCRIÇÃO</label>

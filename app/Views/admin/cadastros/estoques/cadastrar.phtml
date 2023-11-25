@@ -4,7 +4,8 @@ session_start();
 include_once 'app/Views/admin/inc/cabecalho.phtml'; 
 $qtd = (is_array($estoques) ? count($estoques) : 0);
 $qtdE = (is_array($empresas) ? count($empresas) : 0);
-
+$qtdS = (is_array($setores) ? count($setores) : 0);
+$qtdCL = (is_array($classificacoes) ? count($classificacoes) : 0);
 ?>
 <body class="">
     <div class="d-flex" id="wrapper">
@@ -34,7 +35,7 @@ $qtdE = (is_array($empresas) ? count($empresas) : 0);
                 <div class="container col-10 px-2 py-2 mx-auto row">
                     <form class="p-4 p-md-6 border text-uppercase rounded-3 bg-3" action="<?= DIRPAGE ?>cadastros/cadastrar_estoques" method="POST">
                         <div class="row">
-                            <div class="col-2 mb-2">
+                            <div class="col-4 mb-2">
                                 <label class="form-label">TIPO</label>
                                 <select class="form-select" name="EST_TIPO">
                                     <option value="0" <?= (isset($_POST['EST_TIPO']) &&  $_POST['EST_TIPO']  == "0")? 'selected' : '' ?>>---</option>
@@ -51,7 +52,31 @@ $qtdE = (is_array($empresas) ? count($empresas) : 0);
                                     <?php } ?>
                                 </select>
                             </div>
-                            <div class="col-6 mb-2">
+                            <div class="col-4 text-center mb-3">
+                                <label class="form-label">SETOR</label>
+                                <div class="form-floating mb-3">
+                                    <select class="form-select text-uppercase mb-3 form-floating" name="SET_COD">
+                                        <option value="0" <?= (isset($_POST['SET_COD']) &&  $_POST['SET_COD']  == "0")? 'selected' : '' ?>>---</option>
+                                        <?php for ($i= 0; $i < $qtdS; $i++) { ?> 
+                                            <option value="<?= $setores[$i]['SET_COD']; ?>" <?= (isset($_POST['SET_COD']) &&  $_POST['SET_COD']  == $setores[$i]['SET_COD'] )? 'selected' : '' ?>><?= $setores[$i]['SET_DESCRICAO'] ?></option>
+                                        <?php } ?> 
+                                    </select>
+                                    <label class="form-floating mb-3">SETOR DO ESTOQUE</label>
+                                </div>
+                            </div>
+                            <div class="col-4 text-center mb-3">
+                                <label class="form-label">CLASSIFICAÇÃO</label>
+                                <div class="form-floating mb-3">
+                                    <select class="form-select text-uppercase mb-3 form-floating" name="CLA_COD">
+                                        <option value="0" <?= (isset($_POST['CLA_COD']) &&  $_POST['CLA_COD']  == "0")? 'selected' : '' ?>>---</option>
+                                        <?php for ($i= 0; $i < $qtdCL; $i++) { ?> 
+                                            <option value="<?= $classificacoes[$i]['CLA_COD']; ?>" <?= (isset($_POST['CLA_COD']) &&  $_POST['CLA_COD']  == $classificacoes[$i]['CLA_COD'] )? 'selected' : '' ?>><?= $classificacoes[$i]['CLA_DESCRICAO'] ?></option>
+                                        <?php } ?> 
+                                    </select>
+                                    <label class="form-floating mb-3">CLASSIFICAÇÃO DO ESTOQUE</label>
+                                </div>
+                            </div>
+                            <div class="col-8 mb-2">
                                 <label class="form-label" for="1">INFORME UMA DESCRIÇÃO</label>
                                 <input type="text" class="form-control maiusculo" id="1" name="EST_DESCRICAO" placeholder="EX. LOJA 01" value="<?= isset($_POST['EST_DESCRICAO']) ? $_POST['EST_DESCRICAO'] :''; ?>">
                             </div> 

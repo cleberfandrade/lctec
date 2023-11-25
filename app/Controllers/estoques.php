@@ -2,6 +2,7 @@
 namespace App\Controllers;
 
 use App\Models\Categorias;
+use App\Models\classificacoes;
 use App\Models\Clientes;
 use App\Models\Empresas;
 use App\Models\Enderecos;
@@ -22,7 +23,7 @@ use Libraries\Sessao;
 class estoques extends View
 {
     private $dados = [];
-    private $link,$Enderecos,$Clientes,$Usuarios,$Produtos,$Empresa,$UsuariosEmpresa,$Check,$CargosSalarios,$ModulosEmpresa,$Financas,$Estoques,$Setores,$Categorias;
+    private $link,$Enderecos,$Clientes,$Usuarios,$Produtos,$Empresa,$UsuariosEmpresa,$Check,$CargosSalarios,$ModulosEmpresa,$Financas,$Estoques,$Setores,$Categorias, $Classificacoes;
     public function __construct()
     {
         Sessao::naoLogado();
@@ -39,22 +40,77 @@ class estoques extends View
         $this->Setores = new Setores;
         $this->Categorias = new Categorias;
         $this->Produtos = new Produtos;
-        
+        $this->Classificacoes = new Classificacoes;
         $this->dados['empresa'] = $this->UsuariosEmpresa->setCodEmpresa($_SESSION['EMP_COD'])->setCodUsuario($_SESSION['USU_COD'])->listar(0);
         $this->dados['usuario'] = $this->Usuarios->setCodUsuario($_SESSION['USU_COD'])->listar(0);
         
         $this->dados['categorias'] = $this->Categorias->setCodEmpresa($_SESSION['EMP_COD'])->listarTodos(0);
         $this->dados['setores'] = $this->Setores->setCodEmpresa($_SESSION['EMP_COD'])->listarTodos(0);
         $this->dados['estoques'] = $this->Estoques->setCodEmpresa($_SESSION['EMP_COD'])->listarTodos(0);  
+        $this->dados['classificacoes'] = $this->Classificacoes->setCodEmpresa($_SESSION['EMP_COD'])->listarTodos(0);
 
         $this->link[0] = ['link'=> 'admin','nome' => 'PAINEL ADMINISTRATIVO'];
         $this->link[1] = ['link'=> 'estoques','nome' => 'MÓDULO DE ESTOQUES'];
+        $this->link[2] = ['link'=> 'cadastros/estoques','nome' => 'GERENCIAR ESTOQUES'];
     }
     public function index()
     {
         $this->dados['title'] .= 'ACESSAR';
         $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
         $this->render('admin/estoques/estoques', $this->dados);
+    }
+    public function cadastro()
+    {
+        $this->dados['title'] .= ' CADASTRAR NOVO ESTOQUE';
+        $this->link[3] = ['link'=> 'cadastros/estoques/cadastrar','nome' => 'CADASTRAR NOVO ESTOQUE'];
+        $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
+        $this->render('admin/cadastros/estoques/cadastrar', $this->dados);
+    }
+    public function cadastrar()
+    {
+        $this->dados['title'] .= ' CADASTRAR NOVO ESTOQUE';
+        $this->link[3] = ['link'=> 'cadastros/estoques','nome' => 'CADASTRAR NOVO ESTOQUE'];
+
+        $ok = false;      
+        //Recupera os dados enviados
+        $dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);
+                
+        if (isset($_POST) && isset($dados['CRIAR_NOVO_ESTOQUE'])) {
+            unset($dados['CRIAR_NOVO_ESTOQUE']);
+            $this->dados['empresa'] = $this->UsuariosEmpresa->setCodEmpresa($_SESSION['EMP_COD'])->setCodUsuario($_SESSION['USU_COD'])->listar(0);
+            if($this->dados['empresa']['USU_COD'] == $dados['USU_COD'] && $this->dados['empresa']['EMP_COD'] == $dados['EMP_COD']){
+                
+                //Verifica se tem algum valor proibido
+                foreach ($dados as $key => $value) {
+                    $dados[$key] = $this->Check->checarString($value);
+                }
+                $dados += array(
+                    'EST_DT_CADASTRO'=> date('Y-m-d H:i:s'),
+                    'EST_DT_ATUALIZACAO'=> date('0000-00-00 00:00:00'),             
+                    'EST_STATUS'=> 1
+                );
+
+                if($this->Estoques->cadastrar($dados,0)){
+                    $ok = true;
+                    Sessao::alert('OK','Cadastro efetuado com sucesso!','fs-4 alert alert-success');
+                }else{
+                    Sessao::alert('ERRO',' EST13- Erro ao cadastrar novo estoque, entre em contato com o suporte!','fs-4 alert alert-danger');
+                }
+            }else{
+                Sessao::alert('ERRO',' EST12 - Acesso inválido(s)!','alert alert-danger');
+            }
+        }else{
+            Sessao::alert('ERRO',' EST11- Dados inválido(s)!','alert alert-danger');
+        }
+        if ($ok) {
+            $this->dados['estoques'] = $this->Estoques->setCodEmpresa($_SESSION['EMP_COD'])->listarTodos(0);
+            $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
+            $this->render('admin/cadastros/estoques/listar', $this->dados);
+        }else {
+
+            $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
+            $this->render('admin/cadastros/estoques/cadastrar', $this->dados);
+        }
     }
     public function produtos()
     {

@@ -44,6 +44,7 @@ $qtd = (is_array($classificacoes) ? count($classificacoes) : 0);
                         <table class="table table-striped table-bordered">
                             <thead class="text-center text-uppercase">
                                 <th class="text-dark">#</th>
+                                <th class="text-dark">Tipo</th>
                                 <th class="text-dark">Descrição</th>
                                 <th class="text-dark">Status</th>
                                 <?php if($_SESSION['USU_NIVEL'] >= 8){ ?><th class="text-dark">Ações</th><?php } ?> 
@@ -54,6 +55,7 @@ $qtd = (is_array($classificacoes) ? count($classificacoes) : 0);
                                     for ($i= 0; $i < $qtd; $i++) { ?>
                                     <tr class="<?= ($classificacoes[$i]['CAT_STATUS'] == 0 && $_SESSION['USU_NIVEL'] >= 8)? 'bg-secondary' : ''; ?>">
                                         <td class="text-center align-middle"><?= $b; ?></td>
+                                        <td class="text-center align-middle"><?= $classificacoes[$i]['CLA_TIPO']; ?></td>
                                         <td class="text-center align-middle"><?= $classificacoes[$i]['CLA_DESCRICAO']; ?></td>
                                         <td class="text-center align-middle"><?= ($classificacoes[$i]['CLA_STATUS'] == 1)? 'ATIVO' : 'DESATIVADO'; ?></td>
                                         <?php if($_SESSION['USU_NIVEL'] >= 8){ ?>
