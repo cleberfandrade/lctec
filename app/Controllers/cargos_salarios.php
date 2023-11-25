@@ -54,19 +54,22 @@ class cargos_salarios extends View
             if( $this->dados['empresa']['USU_COD'] == $dados['USU_COD'] && $this->dados['empresa']['EMP_COD'] == $dados['EMP_COD']){
                 //Verifica se os campos foram todos preenchidos
                 unset($dados['CADASTRAR_NOVO_CARGO_SALARIO']);
-                    $dados['CGS_SALARIO'] = number_format(str_replace(",",".",str_replace(".","",$dados['CGS_SALARIO'])), 2, '.', '');
-                    $dados += array(
-                        'CGS_DT_CADASTRO'=> date('Y-m-d H:i:s'),
-                        'CGS_DT_ATUALIZACAO'=> date('0000-00-00 00:00:00'),             
-                        'CGS_STATUS'=> 1
-                    );
+                foreach ($dados as $key => $value) {
+                    $dados[$key] = $this->Check->checarString($value);
+                }
+                $dados['CGS_SALARIO'] = number_format(str_replace(",",".",str_replace(".","",$dados['CGS_SALARIO'])), 2, '.', '');
+                $dados += array(
+                    'CGS_DT_CADASTRO'=> date('Y-m-d H:i:s'),
+                    'CGS_DT_ATUALIZACAO'=> date('0000-00-00 00:00:00'),             
+                    'CGS_STATUS'=> 1
+                );
 
-                    if($this->CargosSalarios->cadastrar($dados,0)){
-                        $ok = true;
-                        Sessao::alert('OK','Cadastro efetuado com sucesso!','fs-4 alert alert-success');
-                    }else{
-                        Sessao::alert('ERRO',' CGS3 - Erro ao cadastrar novo cargo e salário, entre em contato com o suporte!','fs-4 alert alert-danger');
-                    }
+                if($this->CargosSalarios->cadastrar($dados,0)){
+                    $ok = true;
+                    Sessao::alert('OK','Cadastro efetuado com sucesso!','fs-4 alert alert-success');
+                }else{
+                    Sessao::alert('ERRO',' CGS3 - Erro ao cadastrar novo cargo e salário, entre em contato com o suporte!','fs-4 alert alert-danger');
+                }
             }else{
                 Sessao::alert('ERRO',' CGS2 - Dados inválido(s)!','alert alert-danger');
             }

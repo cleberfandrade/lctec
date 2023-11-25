@@ -304,11 +304,7 @@ class clientes extends View
                 unset($dados['STATUS_CLIENTE']);
                 $this->Clientes->setCodEmpresa($dados['EMP_COD'])->setCodigo($dados['CLI_COD']);
 
-                if ($dados['CLI_STATUS']) {
-                    $dados['CLI_STATUS'] = 0;
-                } else {
-                    $dados['CLI_STATUS'] = 1;
-                }
+                ($dados['CLI_STATUS'] == 1)? $dados['CLI_STATUS'] = 0 : $dados['CLI_STATUS'] = 1;
                 
                 $db = array(
                     'USU_COD' => $_SESSION['USU_COD'],

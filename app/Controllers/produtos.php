@@ -144,7 +144,9 @@ class produtos extends View
 
             unset($dados['CADASTRAR_NOVO_PRODUTO']);
             if($_SESSION['USU_COD'] == $dados['USU_COD'] && isset($_SESSION['EMP_COD']) && $_SESSION['EMP_COD'] == $dados['EMP_COD']){
-
+                foreach ($dados as $key => $value) {
+                    $dados[$key] = $this->Check->checarString($value);
+                }
                 //Checar duplicidade de cadastro
                 $pro = $this->Produtos->setCodEmpresa($dados['EMP_COD'])->setCodEstoque($dados['EST_COD'])->checarNomeProduto();
                 if (!$pro) {

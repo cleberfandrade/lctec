@@ -79,6 +79,53 @@ class contas extends View
             $this->render('admin/financeiro/contas/listar', $this->dados);
         }        
     }
+    public function cadastro()
+    {
+        $this->dados['title'] .= ' CADASTRAR CONTA DA EMPRESA/NEGÓCIO';   
+        $this->link[3] = ['link'=> 'contas/cadastro','nome' => 'CADASTRO DE CONTAS'];
+        $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
+        $this->render('admin/financeiro/contas/cadastrar', $this->dados);
+    }
+    public function cadastrar()
+    {
+        $this->dados['title'] .= ' CADASTRAR CONTA DA EMPRESA/NEGÓCIO';   
+        $this->link[3] = ['link'=> 'contas/cadastro','nome' => 'CADASTRO DE CONTAS'];
+        $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
+        $ok = false;
+        $dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);
+
+        if (isset($_POST) && isset($dados['CADASTRAR_NOVA_CONTA'])) {
+            if( $this->dados['empresa']['USU_COD'] == $dados['USU_COD'] && $this->dados['empresa']['EMP_COD'] == $dados['EMP_COD']){
+                //Verifica se os campos foram todos preenchidos
+                unset($dados['CADASTRAR_NOVA_CONTA']);
+                foreach ($dados as $key => $value) {
+                    $dados[$key] = $this->Check->checarString($value);
+                }
+                $dados += array(
+                    'CTA_DT_CADASTRO'=> date('Y-m-d H:i:s'),
+                    'CTA_DT_ATUALIZACAO'=> date('0000-00-00 00:00:00'),             
+                    'CTA_STATUS'=> 1
+                );
+
+                if($this->Contas->cadastrar($dados,0)){
+                    $ok = true;
+                    Sessao::alert('OK','Cadastro efetuado com sucesso!','fs-4 alert alert-success');
+                }else{
+                    Sessao::alert('ERRO',' CTA3 - Erro ao cadastrar nova conta, entre em contato com o suporte!','fs-4 alert alert-danger');
+                }
+            }else{
+                Sessao::alert('ERRO',' CTA2 - Dados inválido(s)!','alert alert-danger');
+            }
+        }else{
+            Sessao::alert('ERRO',' CTA1 - Acesso inválido(s)!','alert alert-danger');
+        }
+        if ($ok) {
+            $this->dados['contas'] = $this->Contas->setCodEmpresa($_SESSION['EMP_COD'])->listarTodas(0);
+            $this->render('admin/financeiro/contas/listar', $this->dados);
+        }else {
+            $this->render('admin/financeiro/contas/cadastrar', $this->dados);
+        }
+    }
     public function alteracao()
     {
         $this->dados['title'] .= ' ALTERAR CONTA'; 
@@ -159,50 +206,6 @@ class contas extends View
         }else {
             $this->dados['conta'] = $this->Contas->setCodEmpresa($dados['EMP_COD'])->setCodigo($dados['CTA_COD'])->listar(0);
             $this->render('admin/financeiro/contas/alterar', $this->dados);
-        }
-    }
-    public function cadastro()
-    {
-        $this->dados['title'] .= ' CADASTRAR CONTA DA EMPRESA/NEGÓCIO';   
-        $this->link[3] = ['link'=> 'contas/cadastro','nome' => 'CADASTRO DE CONTAS'];
-        $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
-        $this->render('admin/financeiro/contas/cadastrar', $this->dados);
-    }
-    public function cadastrar()
-    {
-        $this->dados['title'] .= ' CADASTRAR CONTA DA EMPRESA/NEGÓCIO';   
-        $this->link[3] = ['link'=> 'contas/cadastro','nome' => 'CADASTRO DE CONTAS'];
-        $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
-        $ok = false;
-        $dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);
-
-        if (isset($_POST) && isset($dados['CADASTRAR_NOVA_CONTA'])) {
-            if( $this->dados['empresa']['USU_COD'] == $dados['USU_COD'] && $this->dados['empresa']['EMP_COD'] == $dados['EMP_COD']){
-                //Verifica se os campos foram todos preenchidos
-                unset($dados['CADASTRAR_NOVA_CONTA']);
-                $dados += array(
-                    'CTA_DT_CADASTRO'=> date('Y-m-d H:i:s'),
-                    'CTA_DT_ATUALIZACAO'=> date('0000-00-00 00:00:00'),             
-                    'CTA_STATUS'=> 1
-                );
-
-                if($this->Contas->cadastrar($dados,0)){
-                    $ok = true;
-                    Sessao::alert('OK','Cadastro efetuado com sucesso!','fs-4 alert alert-success');
-                }else{
-                    Sessao::alert('ERRO',' CTA3 - Erro ao cadastrar nova conta, entre em contato com o suporte!','fs-4 alert alert-danger');
-                }
-            }else{
-                Sessao::alert('ERRO',' CTA2 - Dados inválido(s)!','alert alert-danger');
-            }
-        }else{
-            Sessao::alert('ERRO',' CTA1 - Acesso inválido(s)!','alert alert-danger');
-        }
-        if ($ok) {
-            $this->dados['contas'] = $this->Contas->setCodEmpresa($_SESSION['EMP_COD'])->listarTodas(0);
-            $this->render('admin/financeiro/contas/listar', $this->dados);
-        }else {
-            $this->render('admin/financeiro/contas/cadastrar', $this->dados);
         }
     }
     public function status()

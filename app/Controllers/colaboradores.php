@@ -61,8 +61,11 @@ class colaboradores extends View
                 
         if (isset($_POST) && isset($dados['CADASTRAR_NOVO_COLABORADOR'])) {
             if( $this->dados['empresa']['USU_COD'] == $dados['USU_COD'] && $this->dados['empresa']['EMP_COD'] == $dados['EMP_COD']){
-                //Verifica se os campos foram todos preenchidos
-                unset($dados['CADASTRAR_NOVO_COLABORADOR']);
+                    //Verifica se os campos foram todos preenchidos
+                    unset($dados['CADASTRAR_NOVO_COLABORADOR']);
+                    foreach ($dados as $key => $value) {
+                        $dados[$key] = $this->Check->checarString($value);
+                    }
                     $dados += array(
                         'COL_DT_CADASTRO'=> date('Y-m-d H:i:s'),
                         'COL_DT_ATUALIZACAO'=> date('0000-00-00 00:00:00'),             
