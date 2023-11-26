@@ -11,16 +11,16 @@ class site extends View
     private $dados = [];
     public function __construct()
     {
-        $this->dados['mensagem'] = "LC-TECH";
+        $this->dados['mensagem'] = "LC-TEC";
     }
     public function index()
     { 
-        $this->dados['title'] = 'LC-TECH | Acesso Administrativo';
+        $this->dados['title'] = 'LC-TEC | Acesso Administrativo';
         $this->render('site/login', $this->dados);
     }
     public function quem_somos()
     {
-        $this->dados['title'] = 'LC-TECH | Quem Somos';
+        $this->dados['title'] = 'LC-TEC | Quem Somos';
         //$Documentos = new documentosModel();  
         //$Documentos->setDiretorio('docs/ipb');
         //$this->dados['diretorio'] = 'ipb/';
@@ -45,7 +45,7 @@ class site extends View
         session_destroy($_SESSION);
         Url::redirecionar('site/index');
     }
-    public function bloqueado()
+    public function finalizado()
     {
 
         //session_start();
@@ -58,8 +58,8 @@ class site extends View
         //session_destroy($_SESSION);
         //dump('ok');
         //exit;
-        $this->dados['title'] = 'LC-TECH | Acesse-se';
-        $this->render('site/bloqueado', $this->dados);
+        $this->dados['title'] = 'LC-TEC | Acesse-se';
+        $this->render('site/finalizado', $this->dados);
         //Url::redirecionar('site/bloqueado');
     }
     public function acesso()

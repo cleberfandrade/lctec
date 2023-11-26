@@ -7,7 +7,7 @@ class FormasPagamentos extends Model
 { 
     private $tabela = 'tb_formas_pagamentos';
     private $Model = '';
-    private $codigo,$codUsuario,$codConta,$codEmpresa,$registro;
+    private $codigo,$codUsuario,$codConta,$codEmpresa,$registro,$descricao;
 
     public function __construct()
     {
@@ -32,6 +32,11 @@ class FormasPagamentos extends Model
     public function setRegistro($registro)
     {
         $this->registro = $registro;
+        return $this;
+    }
+    public function setDescricao($descricao)
+    {
+        $this->descricao = $descricao;
         return $this;
     }
     public function listar($ver = 0)
@@ -92,6 +97,19 @@ class FormasPagamentos extends Model
     public function checarRegistro()
     {
         $parametros = "WHERE EMP_COD={$this->codEmpresa} AND FPG_DESCRICAO='{$this->registro}'";
+        $campos = "*";
+        $resultado = $this->Model->exibir($parametros, $campos, $ver = 0, $id = false);
+        if ($resultado) {
+            //Já existe
+            return $resultado[0];
+        } else {
+            //Nao existe
+            return false;
+        }
+    }
+    public function checarDescricao()
+    {
+        $parametros = "WHERE EMP_COD={$this->codEmpresa} AND FPG_DESCRICAO ='{$this->descricao}' AND FPG_STATUS=1";
         $campos = "*";
         $resultado = $this->Model->exibir($parametros, $campos, $ver = 0, $id = false);
         if ($resultado) {
