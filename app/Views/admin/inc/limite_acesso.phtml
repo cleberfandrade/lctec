@@ -3,7 +3,7 @@
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 class="modal-title fs-5" id="staticBackdropLabel">ACESSO BLOQUEADO</h1>
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">ACESSO FINALIZADO</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body text-center mx-auto">
@@ -39,7 +39,7 @@
     cl.innerHTML = `${hour}:${minute}:${second}`
   }
   
-let contador = 18;
+let contador = 1800;
 
 function somaContador(valor)
 {
@@ -62,11 +62,11 @@ function somaContador(valor)
             $('a').prop("href","#");
             $('a').appendTo("class","disabled");
             //$('body').prop("class","bg-dark");
-            $("#limite").html('ACESSO BLOQUEADO');
+            $("#limite").html('ACESSO FINALIZADO');
+            $("#bloqueado").show();
             setTimeout(function () {
-                $("#bloqueado").show();
                 window.location.href="<?= DIRPAGE ?>site/finalizado";
-            }, 3000);
+            }, 5000);
         }
     }
 }
