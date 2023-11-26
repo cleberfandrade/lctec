@@ -51,12 +51,13 @@ $qtd = (is_array($setores) ? count($setores) : 0);
                                     <div class="form-floating mb-3">
                                         <select class="form-select" name="SET_TIPO">                                        
                                             <option value="0" <?= (isset($_POST['SET_TIPO']) &&  $_POST['SET_TIPO']  == 0)? 'selected' : ''; ?>>----</option>   
-                                            <option value="1" <?= (isset($_POST['SET_TIPO']) &&  $_POST['SET_TIPO']  == 1)? 'selected' : ''; ?>>CATEGORIA(S)</option> 
-                                            <option value="2" <?= (isset($_POST['SET_TIPO']) &&  $_POST['SET_TIPO']  == 2)? 'selected' : ''; ?>>ESTOQUE(S)</option> 
-                                            <option value="3" <?= (isset($_POST['SET_TIPO']) &&  $_POST['SET_TIPO']  == 3)? 'selected' : ''; ?>>PRODUTO(S)</option> 
-                                            <option value="4" <?= (isset($_POST['SET_TIPO']) &&  $_POST['SET_TIPO']  == 4)? 'selected' : ''; ?>>SERVIÇO(S)</option> 
-                                            <option value="5" <?= (isset($_POST['SET_TIPO']) &&  $_POST['SET_TIPO']  == 5)? 'selected' : ''; ?>>SETOR TRABALHO(S)</option> 
-                                            <option value="6" <?= (isset($_POST['SET_TIPO']) &&  $_POST['SET_TIPO']  == 6)? 'selected' : ''; ?>>OUTROS</option> 
+                                            <option value="1" <?= (isset($_POST['SET_TIPO']) &&  $_POST['SET_TIPO']  == 1)? 'selected' : ''; ?>>CATEGORIAS</option> 
+                                            <option value="2" <?= (isset($_POST['SET_TIPO']) &&  $_POST['SET_TIPO']  == 2)? 'selected' : ''; ?>>CLIENTES</option> 
+                                            <option value="3" <?= (isset($_POST['SET_TIPO']) &&  $_POST['SET_TIPO']  == 3)? 'selected' : ''; ?>>ESTOQUES</option> 
+                                            <option value="4" <?= (isset($_POST['SET_TIPO']) &&  $_POST['SET_TIPO']  == 4)? 'selected' : ''; ?>>PRODUTOS</option> 
+                                            <option value="5" <?= (isset($_POST['SET_TIPO']) &&  $_POST['SET_TIPO']  == 5)? 'selected' : ''; ?>>SERVIÇOS</option> 
+                                            <option value="6" <?= (isset($_POST['SET_TIPO']) &&  $_POST['SET_TIPO']  == 6)? 'selected' : ''; ?>>COLABORADORES</option> 
+                                            <option value="7" <?= (isset($_POST['SET_TIPO']) &&  $_POST['SET_TIPO']  == 7)? 'selected' : ''; ?>>OUTROS</option> 
                                         </select>
                                         <label class="form-floating ">TIPO DO SETOR</label>
                                     </div>

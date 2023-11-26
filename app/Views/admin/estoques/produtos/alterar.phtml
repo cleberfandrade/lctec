@@ -5,6 +5,7 @@ include_once 'app/Views/admin/inc/cabecalho.phtml';
 $qtdF = (is_array($fornecedores) ? count($fornecedores) : 0);
 $qtdC = (is_array($categorias) ? count($categorias) : 0);
 $qtdS = (is_array($setores) ? count($setores) : 0);
+$qtdCL = (is_array($classificacoes) ? count($classificacoes) : 0);;
 $qtd = (is_array($produto) ? count($produto) : 0);
 
 ?>
@@ -155,7 +156,8 @@ $qtd = (is_array($produto) ? count($produto) : 0);
                                 </div>
                                 <div class="col-8 mb-2">
                                     <div class="col-12">
-                                        <div class="text-center mb-3">
+                                        <div class="mb-3">
+                                            <label class="px-5" for="2">CATEGORIA</label>
                                             <div class="form-floating mb-3">
                                                 <select class="form-select text-uppercase mb-3 form-floating" name="SET_COD">
                                                     <option value="0" <?= (isset($_POST['CAT_COD']) &&  $_POST['CAT_COD']  == "0")? 'selected' : '' ?>>---</option>
@@ -163,12 +165,39 @@ $qtd = (is_array($produto) ? count($produto) : 0);
                                                         <option value="<?= $categorias[$i]['CAT_COD']; ?>" <?= (isset($_POST['CAT_COD']) &&  $_POST['CAT_COD']  == $categorias[$i]['CAT_COD'] )? 'selected' : (isset($produto['CAT_COD']) && $produto['CAT_COD'] == $categorias[$i]['CAT_COD'] ? 'selected': '')  ?>><?= $categorias[$i]['CAT_DESCRICAO'] ?></option>
                                                     <?php } ?> 
                                                 </select>
-                                                <label class="form-floating mb-3">CATEGORIA</label>
+                                                <label class="form-floating mb-3">CATEGORIA (opcional)</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class=" mb-3">
+                                            <label class="px-5" for="2">SETOR</label>
+                                            <div class="form-floating mb-3">
+                                                <select class="form-select text-uppercase mb-3 form-floating" name="SET_COD">
+                                                    <option value="0" <?= (isset($_POST['SET_COD']) &&  $_POST['SET_COD']  == "0")? 'selected' : '' ?>>---</option>
+                                                    <?php for ($i= 0; $i < $qtdS; $i++) { ?> 
+                                                        <option value="<?= $setores[$i]['SET_COD']; ?>" <?= (isset($_POST['SET_COD']) &&  $_POST['SET_COD']  == $setores[$i]['SET_COD'] )? 'selected' :  (isset($produto['SET_COD']) && $produto['SET_COD'] == $setores[$i]['SET_COD'] ? 'selected': '') ?>><?= $setores[$i]['SET_DESCRICAO'] ?></option>
+                                                    <?php } ?> 
+                                                </select>
+                                                <label class="form-floating mb-3">SETOR (opcional)</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="text-center mb-3">
+                                            <div class="form-floating mb-3">
+                                                <select class="form-select text-uppercase mb-3 form-floating" name="SET_COD">
+                                                    <option value="0" <?= (isset($_POST['CLA_COD']) &&  $_POST['CLA_COD']  == "0")? 'selected' : '' ?>>---</option>
+                                                    <?php for ($i= 0; $i < $qtdC; $i++) { ?> 
+                                                        <option value="<?= $classificacoes[$i]['CLA_COD']; ?>" <?= (isset($_POST['CLA_COD']) &&  $_POST['CLA_COD']  == $classificacoes[$i]['CLA_COD'] )? 'selected' : (isset($produto['CAT_COD']) && $produto['CAT_COD'] == $classificacoes[$i]['CAT_COD'] ? 'selected': '')  ?>><?= $categorias[$i]['CAT_DESCRICAO'] ?></option>
+                                                    <?php } ?> 
+                                                </select>
+                                                <label class="form-floating mb-3">CLASSIFICAÇÃO (opcional)</label>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-12 mb-3 " style="height:300px">
-                                        <label for="address2" class="form-label">DESCRIÇÃO (opcional)</label>
+                                        <label for="address2" class="form-label">DESCRIÇÃO</label>
                                         <textarea type="text" class="form-control  maiusculo" name="PRO_DESCRICAO"><?= isset($_POST['PRO_DESCRICAO'])? $_POST['PRO_DESCRICAO']  : '' ?></textarea>
                                     </div>
                                 </div>

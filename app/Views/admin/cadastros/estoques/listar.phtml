@@ -3,6 +3,8 @@ use Libraries\Sessao;
 session_start();
 include_once 'app/Views/admin/inc/cabecalho.phtml'; 
 $qtd = (is_array($estoques) ? count($estoques) : 0);
+$qtdS = (is_array($setores) ? count($setores) : 0);
+$qtdCL = (is_array($classificacoes) ? count($classificacoes) : 0);
 //dump($estoques);
 ?>
 <body class="">
@@ -47,6 +49,8 @@ $qtd = (is_array($estoques) ? count($estoques) : 0);
                             <th class="text-dark">Empresa</th>
                             <th class="text-dark">Criação</th>
                             <th class="text-dark">Tipo</th>
+                            <th class="text-dark">Setor</th>
+                            <th class="text-dark">Classificação</th>
                             <th class="text-dark">Status</th>
                             <?php if($_SESSION['USU_NIVEL'] >= 8){ ?><th class="text-dark">Ações</th><?php } ?>
                         </thead>
@@ -60,6 +64,28 @@ $qtd = (is_array($estoques) ? count($estoques) : 0);
                                 <td class="text-center align-middle"><?= $estoques[$i]['EMP_NOME_FANTASIA']; ?></td>
                                 <td class="text-center align-middle"><?= $data->format('d/m/Y'); ?></td>
                                 <td class="text-center align-middle"><?= $estoques[$i]['EST_TIPO']; ?></td>
+                                <td class="text-center align-middle">
+                                <?php 
+                                    if($estoques[$i]['SET_COD'] != 0 $estoques[$i]['SET_COD'] != '') {
+                                        for ($c = 0; $c < $qtdS; $c++) { 
+                                            if ($setores[$c]['SET_COD'] == $estoques[$i]['SET_COD']) { ?>
+                                            <?= $setores[$c]['SET_DESCRICAO']; ?>   
+                                        <?php } } ?> 
+                                    <?php }else { ?>
+                                        À DEFINIR
+                                    <?php } ?> 
+                                </td>
+                                <td class="text-center align-middle">
+                                <?php 
+                                    if($estoques[$i]['CLA_COD'] != 0 or $estoques[$i]['CLA_COD'] != '') {
+                                        for ($c = 0; $c < $qtdCL; $c++) { 
+                                            if ($classificacoes[$c]['CLA_COD'] == $estoques[$i]['CLA_COD']) { ?>
+                                            <?= $classificacoes[$c]['CLA_DESCRICAO']; ?>   
+                                        <?php } } ?> 
+                                    <?php }else { ?>
+                                        À DEFINIR
+                                    <?php } ?> 
+                                </td>
                                 <td class="text-center align-middle"><?= ($estoques[$i]['EST_STATUS'] == 1)? 'ATIVO' : 'DESATIVADO'; ?></td>
                                 <?php if($_SESSION['USU_NIVEL'] >= 8){ ?>
                                 <td class="text-center align-middle">

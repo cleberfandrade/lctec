@@ -2,6 +2,7 @@
 namespace App\Controllers;
 
 use App\Models\Categorias;
+use App\Models\Classificacoes;
 use App\Models\Clientes;
 use Core\View;
 use App\Models\Empresas;
@@ -22,7 +23,7 @@ use App\Models\Setores;
 class produtos extends View
 {
     private $dados = [];
-    private $link,$Enderecos,$Clientes,$Usuarios,$Empresa,$UsuariosEmpresa,$Check,$ModulosEmpresa,$Financas,$Estoques,$Produtos,$Categorias,$Fornecedores,$Setores;
+    private $link,$Enderecos,$Clientes,$Usuarios,$Empresa,$UsuariosEmpresa,$Check,$ModulosEmpresa,$Financas,$Estoques,$Produtos,$Categorias,$Fornecedores,$Setores,$Classificacoes;
     
     public function __construct()
     {
@@ -41,6 +42,7 @@ class produtos extends View
         $this->Categorias = new Categorias;
         $this->Fornecedores = new Fornecedores;
         $this->Setores = new Setores;
+        $this->Classificacoes = new Classificacoes;
 
         $this->dados['empresas'] = $this->UsuariosEmpresa->listarTodasEmpresasUsuario(0);
         $this->dados['usuarios_empresa'] = $this->UsuariosEmpresa->setCodUsuario($_SESSION['USU_COD'])->checarUsuario();
@@ -51,6 +53,7 @@ class produtos extends View
         //$this->dados['produtos'] = $this->Produtos->setCodEmpresa($_SESSION['EMP_COD'])->listarTodos(0);
         $this->dados['fornecedores'] = $this->Fornecedores->setCodEmpresa($_SESSION['EMP_COD'])->listarTodos(0);
         $this->dados['setores'] = $this->Setores->setCodEmpresa($_SESSION['EMP_COD'])->listarTodos(0);
+        $this->dados['classificacoes'] = $this->Classificacoes->setCodEmpresa($_SESSION['EMP_COD'])->listarTodos(0);
 
         $this->link[0] = ['link'=> 'admin','nome' => 'PAINEL ADMINISTRATIVO'];
         $this->link[1] = ['link'=> 'estoques','nome' => 'MODÚLO DE ESTOQUE'];
@@ -141,7 +144,9 @@ class produtos extends View
 
             unset($dados['CADASTRAR_NOVO_PRODUTO']);
             if($_SESSION['USU_COD'] == $dados['USU_COD'] && isset($_SESSION['EMP_COD']) && $_SESSION['EMP_COD'] == $dados['EMP_COD']){
-
+                foreach ($dados as $key => $value) {
+                    $dados[$key] = $this->Check->checarString($value);
+                }
                 //Checar duplicidade de cadastro
                 $pro = $this->Produtos->setCodEmpresa($dados['EMP_COD'])->setCodEstoque($dados['EST_COD'])->checarNomeProduto();
                 if (!$pro) {
