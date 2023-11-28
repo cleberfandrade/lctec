@@ -15,7 +15,7 @@ include_once 'app/Views/admin/inc/cabecalho.phtml';
                         <div class="row gx-5 align-items-center justify-content-center">
                             <div class="col-lg-9 col-xl-9 col-xxl-9">
                                 <div class="my-1 px-4 mx-auto">
-                                    <a class="text-decoration-none" href="<?= DIRPAGE; ?>setores/alteracao/<?= $categoria['EMP_COD']?>/<?= $setor['SET_COD']?>">
+                                    <a class="text-decoration-none" href="<?= DIRPAGE; ?>setores/alteracao/<?= $setor['EMP_COD']?>/<?= $setor['SET_COD']?>">
                                         <h5 class="fs-2 fw-bolder text-uppercase text-dark">
                                             <i class="fa fa-handshake"></i> Alterar <span class="text-success"> Setores</span>
                                         </h5>
@@ -49,14 +49,15 @@ include_once 'app/Views/admin/inc/cabecalho.phtml';
                                     <label class="form-label">TIPO</label>
                                     <div class="form-floating mb-3">
                                         <select class="form-select" name="SET_TIPO">                                        
-                                        <option value="0" <?= (isset($_POST['SET_TIPO']) &&  $_POST['SET_TIPO']  == 0)? 'selected' : ((isset($setor['SET_TIPO']) && $setor['SET_TIPO']  == 0)? 'selected' : ''); ?>>----</option>   
-                                        <option value="1" <?= (isset($_POST['SET_TIPO']) &&  $_POST['SET_TIPO']  == 1)? 'selected' : ((isset($setor['SET_TIPO']) && $setor['SET_TIPO']  == 1)? 'selected' : ''); ?>>CATEGORIAS</option> 
-                                        <option value="2" <?= (isset($_POST['SET_TIPO']) &&  $_POST['SET_TIPO']  == 2)? 'selected' : ((isset($setor['SET_TIPO']) && $setor['SET_TIPO']  == 2)? 'selected' : ''); ?>>CLIENTES</option>
-                                        <option value="3" <?= (isset($_POST['SET_TIPO']) &&  $_POST['SET_TIPO']  == 3)? 'selected' : ((isset($setor['SET_TIPO']) && $setor['SET_TIPO']  == 3)? 'selected' : ''); ?>>ESTOQUES</option> 
-                                        <option value="4" <?= (isset($_POST['SET_TIPO']) &&  $_POST['SET_TIPO']  == 4)? 'selected' : ((isset($setor['SET_TIPO']) && $setor['SET_TIPO']  == 4)? 'selected' : ''); ?>>PRODUTOS</option> 
-                                        <option value="5" <?= (isset($_POST['SET_TIPO']) &&  $_POST['SET_TIPO']  == 5)? 'selected' : ((isset($setor['SET_TIPO']) && $setor['SET_TIPO']  == 5)? 'selected' : ''); ?>>SERVIÇOS</option> 
-                                        <option value="6" <?= (isset($_POST['SET_TIPO']) &&  $_POST['SET_TIPO']  == 6)? 'selected' : ((isset($setor['SET_TIPO']) && $setor['SET_TIPO']  == 6)? 'selected' : ''); ?>>COLABORADORES</option> 
-                                        <option value="7" <?= (isset($_POST['SET_TIPO']) &&  $_POST['SET_TIPO']  == 7)? 'selected' : ((isset($setor['SET_TIPO']) && $setor['SET_TIPO']  == 7)? 'selected' : ''); ?>>OUTROS</option> 
+                                            <option value="0" <?= (isset($_POST['SET_TIPO']) &&  $_POST['SET_TIPO']  == 0)? 'selected' : ((isset($setor['SET_TIPO']) && $setor['SET_TIPO']  == 0)? 'selected' : ''); ?>>----</option>   
+                                            <option value="1" <?= (isset($_POST['SET_TIPO']) &&  $_POST['SET_TIPO']  == 1)? 'selected' : ((isset($setor['SET_TIPO']) && $setor['SET_TIPO']  == 1)? 'selected' : ''); ?>>CATEGORIAS</option> 
+                                            <option value="2" <?= (isset($_POST['SET_TIPO']) &&  $_POST['SET_TIPO']  == 2)? 'selected' : ((isset($setor['SET_TIPO']) && $setor['SET_TIPO']  == 2)? 'selected' : ''); ?>>CLIENTES</option>
+                                            <option value="3" <?= (isset($_POST['SET_TIPO']) &&  $_POST['SET_TIPO']  == 3)? 'selected' : ((isset($setor['SET_TIPO']) && $setor['SET_TIPO']  == 3)? 'selected' : ''); ?>>ESTOQUES</option> 
+                                            <option value="4" <?= (isset($_POST['SET_TIPO']) &&  $_POST['SET_TIPO']  == 4)? 'selected' : ((isset($setor['SET_TIPO']) && $setor['SET_TIPO']  == 4)? 'selected' : ''); ?>>PRODUTOS</option> 
+                                            <option value="5" <?= (isset($_POST['SET_TIPO']) &&  $_POST['SET_TIPO']  == 5)? 'selected' : ((isset($setor['SET_TIPO']) && $setor['SET_TIPO']  == 5)? 'selected' : ''); ?>>SERVIÇOS</option> 
+                                            <option value="6" <?= (isset($_POST['SET_TIPO']) &&  $_POST['SET_TIPO']  == 6)? 'selected' : ((isset($setor['SET_TIPO']) && $setor['SET_TIPO']  == 6)? 'selected' : ''); ?>>COLABORADORES</option> 
+                                            <option value="7" <?= (isset($_POST['SET_TIPO']) &&  $_POST['SET_TIPO']  == 7)? 'selected' : ((isset($setor['SET_TIPO']) && $setor['SET_TIPO']  == 7)? 'selected' : ''); ?>>OUTROS</option> 
+                                        </select>
                                         <label class="form-floating ">TIPO DO SETOR</label>
                                     </div>
                                 </div>

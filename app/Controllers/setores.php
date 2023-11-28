@@ -154,7 +154,8 @@ class setores extends View
                     'SET_STATUS'=> 1
                 );
                 if($this->Setores->alterar($dados,0)){
-                        Sessao::alert('OK','Cadastro alterado com sucesso!','fs-4 alert alert-success');
+                    $ok = true;
+                    Sessao::alert('OK','Cadastro alterado com sucesso!','fs-4 alert alert-success');
                 }else{
                     Sessao::alert('ERRO',' ERRO: SET33- Erro ao alterar o setor, entre em contato com o suporte!','fs-4 alert alert-danger');
                 }

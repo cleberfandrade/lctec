@@ -66,7 +66,7 @@ class Enderecos extends Model
     }
     public function checarEnderecoUsuario()
     {
-        $parametros = " WHERE EMP_COD={$this->codEmpresa} AND USU_COD='{$this->codUsuario}'";
+        $parametros = " WHERE USU_COD='{$this->codUsuario}'";
         $campos = "*";
         $resultado = $this->Model->exibir($parametros, $campos, $ver = 0, $id = false);
         if ($resultado) {
@@ -79,7 +79,7 @@ class Enderecos extends Model
     }
     public function checarEnderecoCliente()
     {
-        $parametros = " WHERE EMP_COD={$this->codEmpresa} AND CLI_COD='{$this->codCliente}'";
+        $parametros = " WHERE CLI_COD='{$this->codCliente}'";
         $campos = "*";
         $resultado = $this->Model->exibir($parametros, $campos, $ver = 0, $id = false);
         if ($resultado) {
@@ -92,7 +92,7 @@ class Enderecos extends Model
     }
     public function checarEnderecoFornecedor()
     {
-        $parametros = " WHERE EMP_COD={$this->codEmpresa} AND FOR_COD='{$this->codFornecedor}'";
+        $parametros = "WHERE FOR_COD={$this->codFornecedor}";
         $campos = "*";
         $resultado = $this->Model->exibir($parametros, $campos, $ver = 0, $id = false);
         if ($resultado) {
@@ -105,7 +105,7 @@ class Enderecos extends Model
     }
     public function checarEnderecoEmpresa()
     {
-        $parametros = " WHERE EMP_COD='{$this->codEmpresa}'";
+        $parametros = " WHERE EMP_COD={$this->codEmpresa}";
         $campos = "*";
         $resultado = $this->Model->exibir($parametros, $campos, $ver = 0, $id = false);
         if ($resultado) {
@@ -118,7 +118,7 @@ class Enderecos extends Model
     }
     public function checarEnderecoColaborador()
     {
-        $parametros = " WHERE EMP_COD={$this->codEmpresa} AND COL_COD='{$this->codColaborador}'";
+        $parametros = " WHERE COL_COD={$this->codColaborador}";
         $campos = "*";
         $resultado = $this->Model->exibir($parametros, $campos, $ver = 0, $id = false);
         if ($resultado) {
@@ -131,7 +131,7 @@ class Enderecos extends Model
     }
     public function alterar(array $dados, $ver = 0)
     {
-        $parametros = " WHERE EMP_COD={$this->codEmpresa} AND USU_COD='{$this->codUsuario}' AND END_COD=";
+        $parametros = " WHERE USU_COD='{$this->codUsuario}' AND END_COD=";
         $this->Model->setParametros($parametros);
         $this->Model->setCodigo($this->codigo);
         $ok = false;
@@ -144,7 +144,7 @@ class Enderecos extends Model
     }
     public function alterarCliente(array $dados, $ver = 0)
     {
-        $parametros = " WHERE EMP_COD={$this->codEmpresa} AND CLI_COD='{$this->codCliente}' AND END_COD=";
+        $parametros = " WHERE CLI_COD='{$this->codCliente}' AND END_COD=";
         $this->Model->setParametros($parametros);
         $this->Model->setCodigo($this->codigo);
         $ok = false;
@@ -157,7 +157,7 @@ class Enderecos extends Model
     }
     public function alterarFornecedor(array $dados, $ver = 0)
     {
-        $parametros = " WHERE EMP_COD={$this->codEmpresa} AND FOR_COD={$this->codFornecedor} AND END_COD=";
+        $parametros = " WHERE FOR_COD={$this->codFornecedor} AND END_COD=";
         $this->Model->setParametros($parametros);
         $this->Model->setCodigo($this->codigo);
         $ok = false;
@@ -183,7 +183,7 @@ class Enderecos extends Model
     }
     public function alterarColaborador(array $dados, $ver = 0)
     {
-        $parametros = " WHERE EMP_COD={$this->codEmpresa} AND COL_COD={$this->codColaborador} AND END_COD=";
+        $parametros = " WHERE COL_COD={$this->codColaborador} AND END_COD=";
         $this->Model->setParametros($parametros);
         $this->Model->setCodigo($this->codigo);
         $ok = false;

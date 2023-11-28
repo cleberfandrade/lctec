@@ -144,7 +144,7 @@ class formas_pagamentos extends View
                 
                 $this->FormasPagamentos->setCodEmpresa($dados['EMP_COD'])->setCodigo($dados['FPG_COD']);
                 //Verificar se já existe cadastro
-                $fpg = $this->FormasPagamentos->setCodEmpresa($dados['EMP_COD'])->setDescricao($dados['FPG_DESCRICAO'])->checarDescricao(0);
+                $fpg = $this->FormasPagamentos->setCodEmpresa($dados['EMP_COD'])->setDescricao($dados['FPG_DESCRICAO'])->checarDescricao(1);
 
                 if(isset($fpg['FPG_COD']) && $fpg['FPG_COD'] == $dados['FPG_COD']){
                     $alterar = true;

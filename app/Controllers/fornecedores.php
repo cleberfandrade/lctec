@@ -133,10 +133,11 @@ class fornecedores extends View
             $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
             //verificar se o usuario que vai efetuar a acao é da empresa e se está correto(pertence) a empresa para os dados a serem alterados
             if($this->dados['empresa']['USU_COD'] == $_SESSION['USU_COD'] && $this->dados['empresa']['EMP_COD'] == $dados[2]){
-             
+               
                 $this->dados['fornecedor'] = $this->Fornecedores->setCodEmpresa($dados[2])->setCodigo($dados[3])->listar(0);
-                
+        
                 $id = $this->Enderecos->setCodFornecedor($dados[3])->checarEnderecoFornecedor(0);
+
                 unset($id[0]['FOR_COD']);
                 $this->dados['fornecedor'] += $id[0];
                 if ($this->dados['fornecedor'] != 0) {
@@ -176,10 +177,11 @@ class fornecedores extends View
                 if ($this->dados['fornecedor'] != 0) {
                     
                     $this->link[3] = ['link'=> 'fornecedores/alteracao/'.$_SESSION['EMP_COD'].'/'.$dados['FOR_COD'],'nome' => 'ALTERAR FORNECEDORES'];
-                    
+                   
                     $codEnd = $dados['END_COD'];
                     $codFor = $dados['FOR_COD'];
                     $this->Fornecedores->setCodEmpresa($dados['EMP_COD'])->setCodigo($dados['FOR_COD']);
+
                     $this->Enderecos->setCodFornecedor($dados['FOR_COD'])->setCodigo($dados['END_COD']);
 
                     $db_endereco = array(
@@ -208,7 +210,7 @@ class fornecedores extends View
                     );
 
                     if($this->Fornecedores->alterar($dados,0)){
-                        $ok = true;
+                      
                         if($codEnd != 0){
                         
                             $db_endereco += array(
@@ -216,6 +218,7 @@ class fornecedores extends View
                             );
 
                             if($this->Enderecos->alterarFornecedor($db_endereco,0)){
+                                $ok = true;
                                 Sessao::alert('OK','Cadastro alterado com sucesso!','fs-4 alert alert-success');
                             }else {
                                 Sessao::alert('OK','Cadastro alterado, endereço não alterado!','fs-4 alert alert-warning');
