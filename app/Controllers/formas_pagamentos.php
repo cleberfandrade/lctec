@@ -134,7 +134,7 @@ class formas_pagamentos extends View
 
             if($this->dados['empresa']['USU_COD'] == $dados['USU_COD'] && $this->dados['empresa']['EMP_COD'] == $dados['EMP_COD']){
 
-                $this->link[3] = ['link'=> 'formas_pagamentos/alteracao/'.$_SESSION['EMP_COD'].'/'.$dados['CAT_COD'],'nome' => 'ALTERAR FORMAS DE PAGAMENTOS'];
+                $this->link[3] = ['link'=> 'formas_pagamentos/alteracao/'.$_SESSION['EMP_COD'].'/'.$dados['FPG_COD'],'nome' => 'ALTERAR FORMAS DE PAGAMENTOS'];
 
                 unset($dados['ALTERAR_FORMA_PAGAMENTO']);
                 //Verifica se tem algum valor proibido
@@ -142,17 +142,30 @@ class formas_pagamentos extends View
                     $dados[$key] = $this->Check->checarString($value);
                 }
                 
-                $this->FormasPagamentos->setCodEmpresa($dados['EMP_COD'])->setCodigo($dados['CAT_COD']);
+                $this->FormasPagamentos->setCodEmpresa($dados['EMP_COD'])->setCodigo($dados['FPG_COD']);
+                //Verificar se já existe cadastro
+                $fpg = $this->FormasPagamentos->setCodEmpresa($dados['EMP_COD'])->setDescricao($dados['FPG_DESCRICAO'])->checarDescricao(0);
+
+                if(isset($fpg['FPG_COD']) && $fpg['FPG_COD'] == $dados['FPG_COD']){
+                    $alterar = true;
+                }elseif(!$fpg) {
+                    $alterar = true;
+                }
                 
-                $dados += array(
-                    'FPG_DT_ATUALIZACAO'=> date('Y-m-d H:i:s'),
-                    'FPG_STATUS'=> 1
-                );
-                if($this->FormasPagamentos->alterar($dados,0)){
-                    $ok = true;
-                    Sessao::alert('OK','Cadastro alterado com sucesso!','fs-4 alert alert-success');
-                }else{
-                    Sessao::alert('ERRO',' ERRO: CAT33- Erro ao alterar o forma pagamento, entre em contato com o suporte!','fs-4 alert alert-danger');
+                if($alterar){
+
+                    $dados += array(
+                        'FPG_DT_ATUALIZACAO'=> date('Y-m-d H:i:s'),
+                        'FPG_STATUS'=> 1
+                    );
+                    if($this->FormasPagamentos->alterar($dados,0)){
+                        $ok = true;
+                        Sessao::alert('OK','Cadastro alterado com sucesso!','fs-4 alert alert-success');
+                    }else{
+                        Sessao::alert('ERRO',' ERRO: CAT33- Erro ao alterar o forma pagamento, entre em contato com o suporte!','fs-4 alert alert-danger');
+                    }
+                }else {
+                    Sessao::alert('ERRO',' FPGG3- Exite um cadastro com essa descrição, utilize outra!','fs-4 alert alert-warning');
                 }
             }else{
                 Sessao::alert('ERRO',' ERRO: CAT22 - Dados inválido(s)!','alert alert-danger');
@@ -166,7 +179,7 @@ class formas_pagamentos extends View
             $this->render('admin/cadastros/formas_pagamentos/listar', $this->dados);
         }else {
             $this->dados['forma_pagamento'] = $this->FormasPagamentos->setCodEmpresa($dados['EMP_COD'])->setCodigo($dados['CAT_COD'])->listar(0);
-            $this->render('admin/cadastros/categorias/alterar', $this->dados);
+            $this->render('admin/cadastros/formas_pagamentos/alterar', $this->dados);
         }
     }
     public function status():void

@@ -1,0 +1,78 @@
+<?php 
+use Libraries\Sessao;
+session_start();
+include_once 'app/Views/admin/inc/cabecalho.phtml'; 
+$qtd = (is_array($setores) ? count($setores) : 0);
+$qtdCL = (is_array($classificacoes) ? count($classificacoes) : 0);
+?>
+<body class="">
+    <div class="d-flex" id="wrapper">
+        <?php include_once 'app/Views/admin/inc/menu_lateral.phtml'; ?>
+        <div id="page-content-wrapper">
+        <!-- Top navigation-->
+            <?php include_once 'app/Views/admin/inc/menu_topo.phtml'; ?>
+            <div class="container-fluid bg-light p-0">
+                <header class="py-3">
+                    <section class="container px-3">
+                        <div class="row gx-5 align-items-center justify-content-center">
+                            <div class="col-lg-9 col-xl-9 col-xxl-9">
+                                <div class="my-1 px-4 mx-auto">
+                                    <a class="text-decoration-none" href="<?= DIRPAGE; ?>formas_pagamentos/alteracao/<?= $forma_pagamento['EMP_COD'] ?>/<?= $forma_pagamento['FPG_COD'] ?>">
+                                        <h5 class="fs-2 fw-bolder text-uppercase text-dark">
+                                            <i class="fa fa-handshake"></i> Alterar <span class="text-success"> Formas de Pagamentos</span>
+                                        </h5>
+                                    </a>
+                                </div>
+                            </div>
+                            <?php include_once 'app/Views/admin/inc/saudacao.phtml'; ?> 
+                        </div>
+                    </section>
+                    <section class="container col-12 mx-auto px-5">
+                        <?= $breadcrumb ?>
+                    </section>
+                </header>
+                <?php include_once 'app/Views/admin/inc/alertas.phtml'; ?>
+                <section class="bg-light py-2">
+                    <div class="container col-10 px-2 py-2 mx-auto row">
+                        <form class="p-4 p-md-6 border text-uppercase rounded-3 bg-3" action="<?= DIRPAGE ?>formas_pagamentos/alterar" method="POST">
+                            <div class="row ">    
+                                <div class="col-3 mb-2 text-center">
+                                    <label class="form-label">TIPO</label>
+                                    <div class="form-floating mb-3">
+                                        <select class="form-select" name="FPG_TIPO">
+                                            <option value="0" <?= (isset($_POST['FPG_TIPO']) &&  $_POST['FPG_TIPO']  == 0)? 'selected' : ((isset($forma_pagamento['FPG_TIPO']) &&  $forma_pagamento['FPG_TIPO']  == 0)? 'selected' : '') ?>>---</option>
+                                            <option value="1"<?= (isset($_POST['FPG_TIPO']) &&  $_POST['FPG_TIPO']  == 1)? 'selected' : ((isset($forma_pagamento['FPG_TIPO']) &&  $forma_pagamento['FPG_TIPO']  == 1)? 'selected' : '') ?>>À VISTA</option>
+                                            <option value="2" <?= (isset($_POST['FPG_TIPO']) &&  $_POST['FPG_TIPO']  == 2)? 'selected' : ((isset($forma_pagamento['FPG_TIPO']) &&  $forma_pagamento['FPG_TIPO']  == 2)? 'selected' : '') ?>>À PRAZO</option>
+                                        </select>
+                                        <label class="form-floating ">TIPO DE PAGAMENTO</label>
+                                    </div>
+                                </div>
+                                <div class="col-3 text-center mb-3">
+                                    <label class="form-label">PRAZO (dias)</label>
+                                    <div class="form-floating mb-3">
+                                    <input type="text" class="form-control maiusculo" id="1" name="FPG_PRAZO" placeholder="EX:10, 20, 30, 45" value="<?= isset($_POST['FPG_PRAZO']) ? $_POST['FPG_PRAZO'] : (isset($forma_pagamento['FPG_PRAZO']) ? $forma_pagamento['FPG_PRAZO'] :''); ?>">
+                                        <label class="form-floating mb-3">PRAZO</label>
+                                    </div>
+                                </div>
+                                <div class="col-6 mb-3">
+                                    <label class="form-label" for="1">DESCRIÇÃO</label>
+                                    <div class="form-floating mb-3">
+                                        <input type="text" class="form-control maiusculo" id="1" name="FPG_DESCRICAO" placeholder="" value="<?= isset($_POST['FPG_DESCRICAO']) ? $_POST['FPG_DESCRICAO'] : (isset($forma_pagamento['FPG_DESCRICAO']) ? $forma_pagamento['FPG_DESCRICAO'] :''); ?>">
+                                        <label class="form-floating px-3" for="1">DESCRIÇÃO DA FORMA DE PAGAMENTO</label>
+                                    </div>
+                                </div>
+                                <hr class="my-4 text-dark">
+                                <input type="hidden" class="form-control" name="EMP_COD" value="<?= isset($_SESSION['EMP_COD']) ? $_SESSION['EMP_COD'] : 0; ?>">
+                                <input type="hidden" class="form-control" name="USU_COD" value="<?= isset($_SESSION['USU_COD']) ? $_SESSION['USU_COD'] : 0; ?>">
+                                <input type="hidden" class="form-control" name="FPG_COD" value="<?= isset($forma_pagamento['FPG_COD']) ? $forma_pagamento['FPG_COD'] : 0; ?>">
+                                <button class="w-100 btn btn-lg text-uppercase btn-warning" name="ALTERAR_FORMA_PAGAMENTO" type="submit"><i class="fa fa-edit"></i> Alterar</button>
+                            </div> 
+                        </form>
+                    </div>
+                </section>
+            </div>
+            <?php include_once 'app/Views/admin/inc/rodape.phtml';?>
+        </div>
+    </div>
+</body>
+</html>

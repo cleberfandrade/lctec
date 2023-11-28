@@ -41,9 +41,9 @@ class FormasPagamentos extends Model
     }
     public function listar($ver = 0)
     {
-        $parametros = "FP INNER JOIN tb_empresas E ON E.EMP_COD=FP.EMP_COD WHERE FP.FPG_COD={$this->codigo} AND FP.EMP_COD={$this->codEmpresa} ";
+        $parametros = "FP INNER JOIN tb_empresas E ON E.EMP_COD=FP.EMP_COD WHERE FP.FPG_COD={$this->codigo} AND FP.EMP_COD={$this->codEmpresa}";
         $campos = "*";
-        $resultado = $this->Model->exibir($parametros, $campos, $ver = 0, $id = false);
+        $resultado = $this->Model->exibir($parametros, $campos, $ver, $id = false);
         if ($resultado) {
             return $resultado[0];
         } else {
@@ -54,7 +54,7 @@ class FormasPagamentos extends Model
     {
         $parametros = "FP INNER JOIN tb_empresas E ON E.EMP_COD=FP.EMP_COD WHERE FP.EMP_COD={$this->codEmpresa}";
         $campos = "*";
-        $resultado = $this->Model->exibir($parametros, $campos, $ver = 0, $id = false);
+        $resultado = $this->Model->exibir($parametros, $campos, $ver, $id = false);
         if ($resultado) {
             return $resultado;
         } else {
@@ -65,7 +65,7 @@ class FormasPagamentos extends Model
     {
         $parametros = " WHERE EMP_COD=0 AND FPG_STATUS=1";
         $campos = "*";
-        $resultado = $this->Model->exibir($parametros, $campos, $ver = 0, $id = false);
+        $resultado = $this->Model->exibir($parametros, $campos, $ver, $id = false);
         if ($resultado) {
             return $resultado;
         } else {
@@ -83,7 +83,7 @@ class FormasPagamentos extends Model
     }
     public function alterar(array $dados, $ver = 0)
     {
-        $parametros = "WHERE EMP_COD={$this->codEmpresa} AND FPG_COD=";
+        $parametros = " WHERE EMP_COD={$this->codEmpresa} AND FPG_COD=";
         $this->Model->setParametros($parametros);
         $this->Model->setCodigo($this->codigo);
         $ok = false;
@@ -107,11 +107,11 @@ class FormasPagamentos extends Model
             return false;
         }
     }
-    public function checarDescricao()
+    public function checarDescricao($ver = 0)
     {
-        $parametros = "WHERE EMP_COD={$this->codEmpresa} AND FPG_DESCRICAO ='{$this->descricao}' AND FPG_STATUS=1";
+        $parametros = "WHERE EMP_COD={$this->codEmpresa} AND FPG_DESCRICAO='{$this->descricao}' AND FPG_STATUS=1";
         $campos = "*";
-        $resultado = $this->Model->exibir($parametros, $campos, $ver = 0, $id = false);
+        $resultado = $this->Model->exibir($parametros, $campos, $ver, $id = false);
         if ($resultado) {
             //Já existe
             return $resultado[0];

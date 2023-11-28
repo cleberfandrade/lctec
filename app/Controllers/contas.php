@@ -26,7 +26,7 @@ class contas extends View
 
         $this->dados['empresa'] = $this->UsuariosEmpresa->setCodEmpresa($_SESSION['EMP_COD'])->setCodUsuario($_SESSION['USU_COD'])->listar(0);
         $this->dados['usuario'] = $this->Usuarios->setCodUsuario($_SESSION['USU_COD'])->listar(0);
-        $this->dados['contas'] = $this->Financas->setCodEmpresa($_SESSION['EMP_COD'])->listarTodas();
+        $this->dados['contas'] = $this->Contas->setCodEmpresa($_SESSION['EMP_COD'])->listarTodas();
 
         $this->link[0] = ['link'=> 'admin','nome' => 'PAINEL ADMINISTRATIVO'];
         $this->link[1] = ['link'=> 'financeiro','nome' => 'MÓDULO DE FINANÇAS >>'];
@@ -57,7 +57,7 @@ class contas extends View
             
             if($this->dados['empresa']['USU_COD'] == $_SESSION['USU_COD'] && $this->dados['empresa']['EMP_COD'] == $dados[2]){
              
-                $this->dados['conta'] = $this->Financas->setCodEmpresa($dados[2])->setCodigo($dados[3])->listar(0);
+                $this->dados['conta'] = $this->Contas->setCodEmpresa($dados[2])->setCodigo($dados[3])->listar(0);
                 if ($this->dados['conta'] != 0) {
                     //$this->dados['CTA_COD'] = $dados[3];
                     $this->link[3] = ['link'=> 'financeiro/detalhar_contas/'.$_SESSION['EMP_COD'].'/'.$dados[3],'nome' => 'DETALHAR CONTA >> '.$this->dados['conta']['CTA_DESCRICAO']];
@@ -137,7 +137,7 @@ class contas extends View
             
             if($this->dados['empresa']['USU_COD'] == $_SESSION['USU_COD'] && $this->dados['empresa']['EMP_COD'] == $dados[2]){
              
-                $this->dados['conta'] = $this->Financas->setCodEmpresa($dados[2])->setCodigo($dados[3])->listar(0);
+                $this->dados['conta'] = $this->Contas->setCodEmpresa($dados[2])->setCodigo($dados[3])->listar(0);
                 if ($this->dados['conta'] != 0) {
                     $this->link[3] = ['link'=> 'financeiro/alteracao/'.$_SESSION['EMP_COD'].'/'.$dados[3],'nome' => 'ALTERAR CONTA'];
                     $ok = true;
