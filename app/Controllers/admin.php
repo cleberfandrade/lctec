@@ -18,7 +18,7 @@ class admin extends View
     public function __construct()
     {
         Sessao::naoLogado();
-        $this->dados['title'] = 'PAINEL | LC-TECH';
+        $this->dados['title'] = 'PAINEL | LC-TEC';
         $this->Usuarios = new Usuarios;
         $this->Empresa = new Empresas;
         $this->Estoques = new Estoques;
@@ -62,7 +62,7 @@ class admin extends View
     public function mes()
     {
         Sessao::naoLogado();
-        $this->dados['title'] = 'PAINEL | LC-TECH';
+        $this->dados['title'] = 'PAINEL | LC-TEC';
         /*
         $Usuarios = new Usuarios;
         $Empresa = new Empresas;

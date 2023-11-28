@@ -3,8 +3,7 @@ use Libraries\Sessao;
 session_start();
 include_once 'app/Views/admin/inc/cabecalho.phtml'; 
 $qtd = (is_array($formas_pagamentos) ? count($formas_pagamentos) : 0);
-?>
-<body class="">
+?><body class="">
     <div class="d-flex" id="wrapper">
         <?php include_once 'app/Views/admin/inc/menu_lateral.phtml'; ?>
         <div id="page-content-wrapper">
@@ -46,6 +45,7 @@ $qtd = (is_array($formas_pagamentos) ? count($formas_pagamentos) : 0);
                                 <th class="text-dark">#</th>
                                 <th class="text-dark">Tipo</th>
                                 <th class="text-dark">Descrição</th>
+                                <th class="text-dark">Prazo</th>
                                 <th class="text-dark">Status</th>
                                 <?php if($_SESSION['USU_NIVEL'] >= 8){ ?><th class="text-dark">Ações</th><?php } ?> 
                             </thead>
@@ -53,17 +53,18 @@ $qtd = (is_array($formas_pagamentos) ? count($formas_pagamentos) : 0);
                                 <?php
                                     $b = 1;
                                     for ($i= 0; $i < $qtd; $i++) { ?>
-                                    <tr class="<?= ($formas_pagamentos[$i]['CAT_STATUS'] == 0 && $_SESSION['USU_NIVEL'] >= 8)? 'bg-secondary' : ''; ?>">
+                                    <tr class="<?= ($formas_pagamentos[$i]['FPG_STATUS'] == 0 && $_SESSION['USU_NIVEL'] >= 8)? 'bg-secondary' : ''; ?>">
                                         <td class="text-center align-middle"><?= $b; ?></td>
-                                        <td class="text-center align-middle"><?= $formas_pagamentos[$i]['FPG_TIPO']; ?></td>
+                                        <td class="text-center align-middle"><?= ($formas_pagamentos[$i]['FPG_TIPO'] == 1)? 'À VISTA' : 'À PRAZO'; ?></td>
                                         <td class="text-center align-middle"><?= $formas_pagamentos[$i]['FPG_DESCRICAO']; ?></td>
+                                        <td class="text-center align-middle"><?= $formas_pagamentos[$i]['FPG_PRAZO']; ?></td>
                                         <td class="text-center align-middle"><?= ($formas_pagamentos[$i]['FPG_STATUS'] == 1)? 'ATIVO' : 'DESATIVADO'; ?></td>
                                         <?php if($_SESSION['USU_NIVEL'] >= 8){ ?>
                                             <td class="text-center align-middle">
                                                 <?php if($formas_pagamentos[$i]['FPG_STATUS'] == 0){ ?>
                                                 <button type="button" class="btn btn-success btn-sm d-print-none" data-bs-toggle='modal'  data-bs-target="#status" data-codigo="<?= $formas_pagamentos[$i]['CAT_COD']; ?>" data-nome="<?= $formas_pagamentos[$i]['FPG_DESCRICAO']; ?>"  data-status="<?= $formas_pagamentos[$i]['FPG_STATUS']; ?>" title="Deseja ativar?" ><i class="fa fa-circle-check"></i></button>
                                                 <?php }else { ?>
-                                                <a type="button" class="btn btn-warning btn-sm d-print-none" href="<?= DIRPAGE.'formas_pagamentos/alteracao/'.$formas_pagamentos[$i]['EMP_COD'].'/'.$formas_pagamentos[$i]['CAT_COD']; ?>" title="Deseja Alterar?"><i class="fa fa-edit"></i></a>
+                                                <a type="button" class="btn btn-warning btn-sm d-print-none" href="<?= DIRPAGE.'formas_pagamentos/alteracao/'.$formas_pagamentos[$i]['EMP_COD'].'/'.$formas_pagamentos[$i]['FPG_COD']; ?>" title="Deseja Alterar?"><i class="fa fa-edit"></i></a>
                                                 <button type="button" class="btn btn-danger btn-sm d-print-none" data-bs-toggle='modal'  data-bs-target="#status" data-codigo="<?= $formas_pagamentos[$i]['FPG_COD']; ?>" data-nome="<?= $formas_pagamentos[$i]['FPG_DESCRICAO']; ?>" data-status="<?= $formas_pagamentos[$i]['FPG_STATUS']; ?>"  title="Deseja desativar?" ><i class="fa fa-ban"></i></button>
                                                 <?php } ?> 
                                             </td>
