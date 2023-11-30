@@ -31,15 +31,14 @@ class modulos extends View
         $this->dados['modulos_empresa'] = $this->ModulosEmpresa->setCodEmpresa($_SESSION['EMP_COD'])->listar();
 
         $this->link[0] = ['link'=> 'admin','nome' => 'PAINEL ADMINISTRATIVO'];
+        $this->link[1] = ['link'=> 'cadastros','nome' => 'MÓDULO DE CADASTROS >> '];
+        $this->link[2] = ['link'=> 'usuarios','nome' => 'GERENCIAR MÓDULOS'];
         $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
     }
     public function index()
     {
-        $Usuarios = new Usuarios;
-        $Usuarios->setCodUsuario($_SESSION['USU_COD']);
-        $this->dados['usuario'] = $Usuarios->listar(0);
-        $this->Modulos = new Modulos;
-        $this->render('admin/configuracoes/modulos', $this->dados);
+        $this->dados['title'] .= ' MÓDULOS';
+        $this->render('admin/cadastros/modulos/listar', $this->dados);
     }
     public function alterar()
     {

@@ -1,0 +1,60 @@
+<?php 
+use Libraries\Sessao;
+session_start();
+include_once 'app/Views/admin/inc/cabecalho.phtml'; 
+$qtdME = (is_array($modulos_empresa) ? count($modulos_empresa) : 0);
+?>
+<body class="">
+    <div class="d-flex" id="wrapper">
+        <?php include_once 'app/Views/admin/inc/menu_lateral.phtml'; ?>
+        <div id="page-content-wrapper">
+        <!-- Top navigation-->
+        <?php include_once 'app/Views/admin/inc/menu_topo.phtml'; ?>
+        <div class="container-fluid bg-light p-0">
+            <header class="py-3">
+                <section class="container px-3">
+                    <div class="row gx-5 align-items-center justify-content-center">
+                        <div class="col-lg-9 col-xl-9 col-xxl-9">
+                            <div class="my-1 px-4 mx-auto">
+                                <a class="text-decoration-none" href="<?= DIRPAGE; ?>modulos">
+                                <h5 class="fs-2 fw-bolder text-uppercase text-dark"><i class="bi bi-plus-square"></i> Gerenciar <span class="text-success">Módulos</span></h5></a>
+                            </div>
+                        </div>
+                        <?php include_once 'app/Views/admin/inc/saudacao.phtml'; ?>   
+                    </div>
+                </section>
+                <section class="container col-12 mx-auto px-5">
+                    <?= $breadcrumb ?>
+                </section>
+            </header>
+            <?php include_once 'app/Views/admin/inc/alertas.phtml'; ?>  
+            <section class="container bg-light mx-auto py-2 mb-5">
+                <div class="col-12 row">
+                    <h5 class="fw-bolder text-center text-uppercase text-dark"><i class="bi bi-ban-square"></i> Módulos Ativos</h5>
+                    <?php if ($qtdME != 0) { 
+                    for ($i=0; $i < $qtdME; $i++) { ?>
+                    <div class="card  mx-auto text-<?= $modulos_empresa[$i]['MOD_COR']; ?> m-1 py-3" style="max-width: 15rem;">
+                       
+                            <div class="card-header">
+                                <i class="bi bi-plus-square"></i> <?= $modulos_empresa[$i]['MOD_NOME']; ?> 
+                                </div>
+                            <div class="card-body">
+                                <h5 class="card-title">Módulo de <?= $modulos_empresa[$i]['MOD_NOME']; ?></h5>
+                                <p class="card-text"><?= $modulos_empresa[$i]['MOD_DESCRICAO']; ?></p>
+                            </div>  
+                            <div class="card-footer text-center">
+                                <a type="button" href="<?= DIRPAGE.$modulos_empresa[$i]['MOD_LINK']?>" class="btn btn-<?= $modulos_empresa[$i]['MOD_COR']; ?> link-light text-decoration-none"><i class="bi bi-ban"></i> DESATIVAR</a>
+                            </div>
+    
+                    </div>
+                    <?php } ?>
+                    <hr>
+                    <h5 class="fw-bolder text-center text-uppercase text-dark"><i class="bi bi-ban-square"></i> Outros Módulos</h5>
+                    <?php } ?>
+                </div>
+            </section>
+        </div>
+        <?php include_once 'app/Views/admin/inc/rodape.phtml';?>
+    </div>
+</body>
+</html>

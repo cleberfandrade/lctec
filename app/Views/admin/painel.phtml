@@ -7,8 +7,13 @@ session_start();
 include_once 'inc/cabecalho.phtml'; 
 $qtdE = (is_array($estoques) ? count($estoques) : 0);
 $qtdME = (is_array($modulos_empresa) ? count($modulos_empresa) : 0);
-?>
-<body>
+?><body>
+    <style>
+        #chart {
+  max-width: 650px;
+  margin: 35px auto;
+}
+        </style>
     <div class="d-flex" id="wrapper">
         <?php include_once 'inc/menu_lateral.phtml'; ?>
         <div id="page-content-wrapper">
@@ -56,22 +61,65 @@ $qtdME = (is_array($modulos_empresa) ? count($modulos_empresa) : 0);
                             </div>
                         </div>
                     <?php }else { ?>
-                        <div class="row col-9 mx-auto m-1">
+                        <div class="row col-12 mx-auto m-1">
                             
-                            <div class="col-6 mx-auto">
+                            <div class="col-12 row mx-auto">
+                                <div class="col-6">
+                                    <div id="chart"></div>
+                                    
+                                </div>
                                 <?php include_once 'app/Views/admin/inc/calendario.phtml'; ?> 
                             </div>
-                            <div class="col-6 text-uppercase display-6 text-center mx-auto">    
-                                <?= Util::mesLowercase(date('n',$m))?>
-                                <hr>
+                            <span class="text-uppercase"><?= Util::mesLowercase(date('n',$m))?>/<?= date('Y') ?></span>
+                                    <hr>
+                            <div class="col-12 text-uppercase display-6 row text-center mx-auto mb-3">    
+                               
+                                <div class="col-sm-4 rounded-2 border border-1">
+                                    <div class="d-flex justify-content-center align-items-center p-4 bg-blue bg-opacity-10 rounded-3">
+                                        <span class="display-6 lh-1 text-blue mb-0"><i class="fas fa-user-tie"></i></span>
+                                        <div class="ms-4 h6 fw-normal mb-0">
+                                            <div class="d-flex">
+                                                <h5 class="purecounter mb-0 fw-bold" data-purecounter-start="0" data-purecounter-end="200" data-purecounter-delay="200" data-purecounter-duration="0">200</h5>
+                                                <span class="mb-0 h5">+</span>
+                                            </div>
+                                            <p class="mb-0">USUÁRIOS</p>
+                                        </div>
+                                    </div>
+			                    </div>
+                                <div class="col-sm-4 rounded-2 border border-1">
+                                    <div class="d-flex justify-content-center align-items-center p-4 bg-blue bg-opacity-10 rounded-3">
+                                        <span class="display-6 lh-1 text-blue mb-0"><i class="fas fa-user-tie"></i></span>
+                                        <div class="ms-4 h6 fw-normal mb-0">
+                                            <div class="d-flex">
+                                                <h5 class="purecounter mb-0 fw-bold" data-purecounter-start="0" data-purecounter-end="200" data-purecounter-delay="200" data-purecounter-duration="0">200</h5>
+                                                <span class="mb-0 h5">+</span>
+                                            </div>
+                                            <p class="mb-0">PRODUTOS</p>
+                                        </div>
+                                    </div>
+			                    </div>
+                                <div class="col-sm-4 rounded-2 border border-1">
+                                    <div class="d-flex justify-content-center align-items-center p-4 bg-blue bg-opacity-10 rounded-3">
+                                        <span class="display-6 lh-1 text-blue mb-0"><i class="fas fa-user-tie"></i></span>
+                                        <div class="ms-4 h6 fw-normal mb-0">
+                                            <div class="d-flex">
+                                                <h5 class="purecounter mb-0 fw-bold" data-purecounter-start="0" data-purecounter-end="200" data-purecounter-delay="200" data-purecounter-duration="0">200</h5>
+                                                <span class="mb-0 h5">+</span>
+                                            </div>
+                                            <p class="mb-0">VENDAS</p>
+                                        </div>
+                                    </div>
+			                    </div>
                             </div>
+                            <hr>
                             <div class="row col-12 mt-2">
                                 <?php if ($qtdME != 0) { 
                                     for ($i=0; $i < $qtdME; $i++) { ?>
                                     <?php if ($modulos_empresa[$i]['MOD_NOME'] == 'ESTOQUE') {
                                         if ($qtdE) { ?>
-                                            <div class="card  mx-auto text-<?= $modulos_empresa[$i]['MOD_COR']; ?> m-1 py-3" style="max-width: 15rem;">
-                                                <a href="<?= DIRPAGE.$modulos_empresa[$i]['MOD_LINK']?>" class="col-auto link-light text-decoration-none">
+                                        <div class="col-4 mb-3 round-3">
+                                            <div class="mx-auto rounded-2 text-<?= $modulos_empresa[$i]['MOD_COR']; ?>" >
+                                                <a href="<?= DIRPAGE.$modulos_empresa[$i]['MOD_LINK']?>" class="link-light text-decoration-none">
                                                     <div class="card-header"><i class="bi bi-plus-square"></i> <?= $modulos_empresa[$i]['MOD_NOME']; ?></div>
                                                     <div class="card-body">
                                                         <h5 class="card-title">Módulo de <?= $modulos_empresa[$i]['MOD_NOME']; ?></h5>
@@ -79,20 +127,26 @@ $qtdME = (is_array($modulos_empresa) ? count($modulos_empresa) : 0);
                                                     </div>
                                                 </a>
                                             </div>
+                                        </div>
                                     <?php }
                                     }else { ?>
-                                    <div class="card  mx-auto text-<?= $modulos_empresa[$i]['MOD_COR']; ?> m-1 py-3" style="max-width: 15rem;">
-                                        <a href="<?= DIRPAGE.$modulos_empresa[$i]['MOD_LINK']?>" class="col-auto link-light text-decoration-none">
-                                            <div class="card-header"><i class="bi bi-plus-square"></i> <?= $modulos_empresa[$i]['MOD_NOME']; ?></div>
-                                            <div class="card-body">
-                                                <h5 class="card-title">Módulo de <?= $modulos_empresa[$i]['MOD_NOME']; ?></h5>
-                                                <p class="card-text"><?= $modulos_empresa[$i]['MOD_DESCRICAO']; ?></p>
-                                            </div>
-                                        </a>
+                                    <div class="col-4 mb-3">
+                                        <div class=" mx-auto rounded-2 text-<?= $modulos_empresa[$i]['MOD_COR']; ?>">
+                                            <a href="<?= DIRPAGE.$modulos_empresa[$i]['MOD_LINK']?>" class="link-light text-decoration-none">
+                                                <div class="card-header"><i class="bi bi-plus-square"></i> <?= $modulos_empresa[$i]['MOD_NOME']; ?></div>
+                                                <div class="card-body">
+                                                    <h5 class="card-title">Módulo de <?= $modulos_empresa[$i]['MOD_NOME']; ?></h5>
+                                                    <p class="card-text"><?= $modulos_empresa[$i]['MOD_DESCRICAO']; ?></p>
+                                                </div>
+                                            </a>
+                                        </div>
                                     </div>
                                     <?php } } ?>
-                                    <a type="button" href="<?= DIRPAGE ?>modulos" title="Libere novos módulos para a sua empresa/negócio" class="btn mt-2 p-3 btn-dark">LIBERAR OUTROS MÓDULOS</a>
+                                    
                                     <?php } ?>
+                                    <div class="col-12 mx-auto text-center mt-3">
+                                        <a type="button" href="<?= DIRPAGE ?>modulos" title="Libere novos módulos para a sua empresa/negócio" class="btn text-center mt-2  btn-secondary">LIBERAR OUTROS MÓDULOS</a>
+                                    </div>
                                     <div class="card  mx-auto opacity-0 bg-orange m-1 py-3" style="max-width: 15rem;">
                                         <a href="#<?= DIRPAGE?>configuracoes" class="col-auto link-light text-decoration-none">
                                             <div class="card-header"><i class="bi bi-sliders"></i> CONFIGURAÇÕES</div>
@@ -122,7 +176,7 @@ $qtdME = (is_array($modulos_empresa) ? count($modulos_empresa) : 0);
                                     -->
                                 </div>
                             </div> 
-                            <div class="col-3 mx-auto m-4 mx-auto ml-3 border-start">
+                               <!--<div class="col-3 mx-auto m-4 mx-auto ml-3 border-start">
                                 <div class="">
                                     <div class="card mx-auto bg-light" style="max-width: 15rem;">
                                         <div class="card-header"><i class="bi bi-question-square"></i> SUPORTE</div>
@@ -135,14 +189,30 @@ $qtdME = (is_array($modulos_empresa) ? count($modulos_empresa) : 0);
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
                         </div>
                     <?php } ?>
                 </section>
                 <?php include_once 'inc/rodape.phtml';?>
-                <script type="text/javascript">
-                    
-                </script>
+                <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+                <script>
+                    var options = {
+                chart: {
+                    type: 'bar'
+                },
+                series: [{
+                    name: 'sales',
+                    data: [30,40,35,50,49,60,70,91,125]
+                }],
+                xaxis: {
+                    categories: [1991,1992,1993,1994,1995,1996,1997, 1998,1999]
+                }
+                }
+
+                var chart = new ApexCharts(document.querySelector("#chart"), options);
+
+                chart.render();
+                    </script>
             </div>
         </div>
     </div>
