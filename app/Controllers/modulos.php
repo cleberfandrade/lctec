@@ -6,12 +6,15 @@ use Core\View;
 use Libraries\Util;
 use Libraries\Sessao;
 use App\Models\Usuarios;
-use App\Models\Modulos;
+use App\Models\Modulos as ModelsModulos;
+use App\Models\ModulosEmpresa;
+use App\Models\UsuariosEmpresa;
+use Libraries\Check;
 
-class modulo extends View
+class modulos extends View
 {
     private $dados = [];
-    private $link,$Modulos,$Usuarios,$Empresa,$UsuariosEmpresa,$Check;
+    private $link,$Modulos,$Usuarios,$Empresa,$UsuariosEmpresa,$Check,$Util,$ModulosEmpresa;
     public function __construct()
     {
         Sessao::naoLogado();
@@ -19,7 +22,16 @@ class modulo extends View
         $this->Empresa = new Empresas;
         $this->UsuariosEmpresa = new UsuariosEmpresa;
         $this->Check = new Check;
-        $this->Modulos = new Modulos;
+        $this->Modulos = new ModelsModulos;
+        $this->ModulosEmpresa = new ModulosEmpresa;
+        $this->Util = new Util;
+
+        $this->dados['usuario'] = $this->Usuarios->setCodUsuario($_SESSION['USU_COD'])->listar(0);
+        $this->dados['empresa'] = $this->UsuariosEmpresa->setCodEmpresa($_SESSION['EMP_COD'])->setCodUsuario($_SESSION['USU_COD'])->listar(0);
+        $this->dados['modulos_empresa'] = $this->ModulosEmpresa->setCodEmpresa($_SESSION['EMP_COD'])->listar();
+
+        $this->link[0] = ['link'=> 'admin','nome' => 'PAINEL ADMINISTRATIVO'];
+        $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
     }
     public function index()
     {
@@ -37,7 +49,7 @@ class modulo extends View
         
         $Modulos = new Modulos;
 
-        $Modulos->setCodigo(0);
+        //$Modulos->setCodigo(0);
         $post = filter_input_array(INPUT_POST, FILTER_DEFAULT);
 
         if (isset($_POST) && isset($post['ALTERAR_NIVEL'])) {

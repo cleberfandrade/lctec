@@ -59,13 +59,14 @@ class usuarios extends View
                 foreach ($dados as $key => $value) {
                     $dados[$key] = $this->Check->checarString($value);
                 }
+
                 if($this->Check->checarEmail($dados['USU_EMAIL'])){
+
                     //$Usuarios->setCodEmpresa($dados['EMP_COD']);
-                    $$this->Usuarios->setEmailUsuario($dados['USU_EMAIL']);
-                    if(!$this->Usuarios->checarEmailUsuario()){
+                    $user = $this->Usuarios->setEmailUsuario($dados['USU_EMAIL'])->checarEmailUsuario();
+                    if(!$user){
 
                         $db = array(
-                            'EMP_COD' => 0,
                             'USU_DT_CADASTRO'   => date('Y-m-d H:i:s'),
                             'USU_DT_ATUALIZACAO'=> date('0000-00-00 00:00:00'),
                             'USU_NOME'      => $dados['USU_NOME'],
@@ -76,11 +77,27 @@ class usuarios extends View
                             'USU_NIVEL' => $dados['USU_NIVEL'],
                             'USU_STATUS'=> 1
                         );
+
+
                         $id = $this->Usuarios->cadastrar($db,0);
+
                         if($id){
+                            $ump =  $this->UsuariosEmpresa->setCodEmpresa($dados['EMP_COD'])->setCodUsuario($id)->checarUsuarioEmpresa(0);
+                            if(!$ump){
+
+                                $db_ump = array(
+                                    'USU_COD' => $id,
+                                    'EMP_COD' => $dados['EMP_COD'],
+                                    'UMP_DT_CADASTRO' => date('Y-m-d H:i:s'),
+                                    'UMP_STATUS' => 1
+                                );
+
+                                $this->UsuariosEmpresa->cadastrar($db_ump,0);
+                            }
+                           
+                           
                             $ok = true;
                             $endr = $this->Enderecos->setCodUsuario($id)->checarEnderecoUsuario();
-                            
 
                             if(!$endr){
 
@@ -123,6 +140,7 @@ class usuarios extends View
         }else {
             Sessao::alert('ERRO',' USU1- Acesso inválido!','fs-4 alert alert-danger');
         }
+        
         if ($ok) {
             $this->dados['usuarios'] = $this->UsuariosEmpresa->setCodEmpresa($_SESSION['EMP_COD'])->listarTodos(0);
             $this->render('admin/cadastros/usuarios/listar', $this->dados);
