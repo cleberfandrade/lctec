@@ -15,8 +15,8 @@ include_once 'app/Views/admin/inc/cabecalho.phtml';
                     <div class="row gx-5 align-items-center justify-content-center">
                         <div class="col-lg-9 col-xl-9 col-xxl-9">
                             <div class="my-1 px-4 mx-auto">
-                                <a class="text-decoration-none" href="<?= DIRPAGE; ?>recursos_humanos">
-                                <h5 class="fs-2 fw-bolder text-uppercase text-dark"><i class="bi bi-plus-square"></i> Gerenciar <span class="text-success">Recursos Humanos</span></h5></a>
+                                <a class="text-decoration-none" href="<?= DIRPAGE; ?>cadastros">
+                                <h5 class="fs-2 fw-bolder text-uppercase text-dark"><i class="bi bi-plus-square"></i> Gerenciar <span class="text-success">Cadastros</span></h5></a>
                             </div>
                         </div>
                         <?php include_once 'app/Views/admin/inc/saudacao.phtml'; ?>   
@@ -38,65 +38,65 @@ include_once 'app/Views/admin/inc/cabecalho.phtml';
                     </div>
                     <div class="col-4 text-center">
                         <div class="card-body">
+                            <h5 class="card-title">CATEGORIAS</h5>
+                            <p class="card-text">Cadastre/Altere os dados das suas categorias do sistema</p>
+                            <a href="<?= DIRPAGE ?>categorias" class="btn btn-dark">ACESSAR</a>
+                        </div>
+                    </div>
+                    <div class="col-4 text-bg-success text-center">
+                        <div class="card-body">
+                            <h5 class="card-title">CLASSIFICAÇÕES</h5>
+                            <p class="card-text">Cadastre/Altere os dados das suas classificações</p>
+                            <a href="<?= DIRPAGE ?>classificacoes" class="btn btn-dark">ACESSAR</a>
+                        </div>
+                    </div>
+                    <div class="col-4 text-center">
+                        <div class="card-body">
+                            <h5 class="card-title">CLIENTES</h5>
+                            <p class="card-text">Cadastre/Altere os dados dos seus clientes</p>
+                            <a href="<?= DIRPAGE ?>clientes" class="btn btn-dark">ACESSAR</a>
+                        </div>
+                    </div>
+                    <div class="col-4 text-bg-success  text-center">
+                        <div class="card-body">
                             <h5 class="card-title">COLABORADORES</h5>
                             <p class="card-text">Cadastre/Altere os dados dos seus colaboradores</p>
                             <a href="<?= DIRPAGE ?>colaboradores" class="btn btn-dark">ACESSAR</a>
                         </div>
                     </div>
-                    <div class="col-4 text-bg-success text-center" >
-                        <div class="card-body">
-                            <h5 class="card-title">BENEFÍCIOS</h5>
-                            <p class="card-text">Cadastre/Altere os dados do seu estoque</p>
-                            <a href="<?= DIRPAGE ?>beneficios" class="btn btn-dark">ACESSAR</a>
-                        </div>
-                    </div>
                     <div class="col-4 text-center" >
                         <div class="card-body">
-                            <h5 class="card-title">TREINAMENTOS</h5>
+                            <h5 class="card-title">EMPRESAS</h5>
                             <p class="card-text">Cadastre/Altere os dados da sua Empresa/Negócio</p>
-                            <a href="<?= DIRPAGE ?>treinamentos" class="btn btn-dark">ACESSAR</a>
+                            <a href="<?= DIRPAGE ?>empresas" class="btn btn-dark">ACESSAR</a>
                         </div>
                     </div>
                     <div class="col-4 text-bg-success text-center" >
                         <div class="card-body">
-                            <h5 class="card-title">DIVULGAÇÕES</h5>
+                            <h5 class="card-title">ESTOQUES</h5>
                             <p class="card-text">Cadastre/Altere os dados do seu estoque</p>
-                            <a href="<?= DIRPAGE ?>divulgacoes" class="btn btn-dark">ACESSAR</a>
+                            <a href="<?= DIRPAGE ?>cadastros/estoques" class="btn btn-dark">ACESSAR</a>
                         </div>
                     </div>
                     <div class="col-4 text-center" >
                         <div class="card-body">
-                            <h5 class="card-title">PROMOÇÕES</h5>
-                            <p class="card-text">Cadastre/Altere os dados da sua Empresa/Negócio</p>
-                            <a href="<?= DIRPAGE ?>promocoes" class="btn btn-dark">ACESSAR</a>
-                        </div>
-                    </div>
-                    <div class="col-4 text-bg-success text-center" >
-                        <div class="card-body">
-                            <h5 class="card-title">HORÁRIOS DE TRABALHO</h5>
-                            <p class="card-text">Cadastre/Altere os dados do seu estoque</p>
-                            <a href="<?= DIRPAGE ?>horarios" class="btn btn-dark">ACESSAR</a>
-                        </div>
-                    </div>
-                    <div class="col-4 text-center" >
-                        <div class="card-body">
-                            <h5 class="card-title">FOLHAS DE PAGAMENTOS/HOLERITES</h5>
+                            <h5 class="card-title">FORMAS DE PAGAMENTOS</h5>
                             <p class="card-text">Cadastre/Altere as suas formas de pagamentos</p>
-                            <a href="<?= DIRPAGE ?>folhas_pagamentos" class="btn btn-dark">ACESSAR</a>
+                            <a href="<?= DIRPAGE ?>formas_pagamentos" class="btn btn-dark">ACESSAR</a>
                         </div>
                     </div>
                     <div class="col-4 text-bg-success text-center" >
                         <div class="card-body">
-                            <h5 class="card-title">DESLIGAMENTOS</h5>
+                            <h5 class="card-title">FORNECEDORES</h5>
                             <p class="card-text">Cadastre/Altere os dados dos seus fornecedores</p>
-                            <a href="<?= DIRPAGE ?>desligamentos" class="btn btn-dark">ACESSAR</a>
+                            <a href="<?= DIRPAGE ?>fornecedores" class="btn btn-dark">ACESSAR</a>
                         </div>
                     </div>
                     <div class="col-4 text-center" >
                         <div class="card-body">
-                            <h5 class="card-title">RECRUTAMENTOS</h5>
-                            <p class="card-text">Cadastre/Altere as suas formas de pagamentos</p>
-                            <a href="<?= DIRPAGE ?>recrutamentos" class="btn btn-dark">ACESSAR</a>
+                            <h5 class="card-title">MÓDULOS</h5>
+                            <p class="card-text">Cadastre/Altere os módulos que utiliza</p>
+                            <a href="<?= DIRPAGE ?>modulos" class="btn btn-dark">ACESSAR</a>
                         </div>
                     </div>
                     <div class="col-4 text-bg-success text-center">
@@ -106,6 +106,31 @@ include_once 'app/Views/admin/inc/cabecalho.phtml';
                             <a href="<?= DIRPAGE ?>setores" class="btn btn-dark">ACESSAR</a>
                         </div>
                     </div>
+                    <div class="col-4 text-center">
+                        <div class="card-body">
+                            <h5 class="card-title">USUÁRIOS</h5>
+                            <p class="card-text">Cadastre/Altere os dados dos seus usuários do sistema</p>
+                            <a href="<?= DIRPAGE ?>usuarios" class="btn btn-dark">ACESSAR</a>
+                        </div>
+                    </div>
+                   
+                   
+                    
+                    <!--
+                    <div class="card text-center m-3" style="width: 18rem;">
+                        <div class="card-body">
+                            <h5 class="card-title">PRODUTOS</h5>
+                            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                            <a href="#" class="btn btn-dark">ACESSAR</a>
+                        </div>
+                    </div>
+                    <div class="opacity-25 card text-center m-3" style="width: 18rem;">
+                        <div class="card-body">
+                            <h5 class="card-title">SERVIÇOS</h5>
+                            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                            <a href="#" class="btn btn-dark">ACESSAR</a>
+                        </div>
+                    </div>-->
                 </div>
             </section>
         </div>
