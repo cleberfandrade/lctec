@@ -69,31 +69,7 @@ class cadastros extends View
         $this->render('admin/cadastros/cadastros', $this->dados);
     }
 
-    public function meus_dados()
-    {
-        $this->dados['title'] .= 'MEUS DADOS DE USUÁRIO';
-        $Usuarios = new Usuarios;
-        $Empresa = new Empresas;
-        $Check = new Check;
-        $UsuariosEmpresa = new UsuariosEmpresa;
-        $UsuariosEmpresa->setCodUsuario($_SESSION['USU_COD']);
-        $this->dados['usuarios_empresa'] = $UsuariosEmpresa->checarUsuario();
-        $this->link[2] = ['link'=> 'cadastros/usuarios','nome' => 'LISTAGEM DE USUÁRIOS'];
-        $this->link[3] = ['link'=> 'cadastros/meus_dados','nome' => 'ALTERAR MEUS DADOS DE USUÁRIO'];
-        $this->dados['breadcrumb'] = $Check->setLink($this->link)->breadcrumb();
-        
-        if (isset($this->dados['usuarios_empresa']['UMP_COD'])) {
-            $_SESSION['EMP_COD'] = $this->dados['usuarios_empresa']['EMP_COD'];
-            $Empresa->setCodigo($_SESSION['EMP_COD']);
-            $this->dados['empresa'] = $Empresa->listar(0);
-            $Usuarios->setCodUsuario($_SESSION['USU_COD']);
-            $this->dados['usuario'] = $Usuarios->listar(0);
-            $this->render('admin/cadastros/usuarios/meus_dados', $this->dados);
-        }else {
-            Sessao::alert('ERRO',' 2- Acesso inválido!','fs-4 alert alert-danger');
-            $this->render('admin/cadastros/usuarios', $this->dados);
-        }
-    }
+   
     //CADASTRO - ESTOQUES
     public function estoques()
     {

@@ -19,7 +19,7 @@ class colaboradores extends View
     public function __construct()
     {
         Sessao::naoLogado();
-        $this->dados['title'] = 'MÓDULO | CADASTROS >>';
+        $this->dados['title'] = 'MÓDULO | RECURSOS HUMANOS >>';
         $this->Usuarios = new Usuarios;
         $this->Empresa = new Empresas;
         $this->UsuariosEmpresa = new UsuariosEmpresa;
@@ -35,21 +35,40 @@ class colaboradores extends View
         $this->dados['setores'] = $this->Setores->setCodEmpresa($_SESSION['EMP_COD'])->listarTodos(0);
         $this->Check = new Check;
         $this->link[0] = ['link'=> 'admin','nome' => 'PAINEL ADMINISTRATIVO'];
-        $this->link[1] = ['link'=> 'cadastros','nome' => 'MÓDULO DE CADASTROS'];
+        $this->link[1] = ['link'=> 'recursos_humanos','nome' => 'MÓDULO DE RECURSOS HUMANOS >> '];
         $this->link[2] = ['link'=> 'colaboradores','nome' => 'GERENCIAR COLABORADORES'];
+        $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
     }
     public function index():void
     {
-        $this->dados['title'] .= ' COLABORADORES';
-        $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
-        $this->render('admin/cadastros/colaboradores/listar', $this->dados);
+        $this->dados['title'] .= ' GERENCIAR COLABORADORES';
+        $this->render('admin/recursos_humanos/colaboradores/listar', $this->dados);
     }
     public function cadastro():void
     {
         $this->dados['title'] .= ' CADASTRAR COLABORADORES';
         $this->link[3] = ['link'=> 'colaboradores/cadastro','nome' => 'CADASTRO DE COLABORADORES'];
         $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
-        $this->render('admin/cadastros/colaboradores/cadastrar', $this->dados);
+        $this->render('admin/recursos_humanos/colaboradores/cadastrar', $this->dados);
+    }
+    public function meus_dados()
+    {
+        $this->dados['title'] .= 'ÁREA DO(A) COLABORADO(A)';
+         $this->link[3] = ['link'=> 'recursos_humanos/colaboradores/meus_dados','nome' => 'ÁREA DO(A) COLABORADO(A)'];
+        $this->dados['breadcrumb'] = $Check->setLink($this->link)->breadcrumb();
+        
+        $this->dados['colaborador'] = $this->Colaboradores->setCodEmpresa($_SESSION['EMP_COD'])->setCodigo($_SESSION['COL_COD'])->listar(0);
+        
+        if ($this->dados['colaborador'] != 0) {
+            $ok = true;
+        }else{
+            Sessao::alert('ERRO',' ERRO: USU32 - Colaborador(a) não encontrado!, contate o suporte','alert alert-danger');
+        }
+        if ($ok) {
+            $this->render('admin/recursos_humanos/colaboradores/meus_dados', $this->dados);
+        }else {
+            header("Location:".DIRPAGE."site/finalizado");
+        }
     }
     public function cadastrar()
     {
@@ -117,9 +136,9 @@ class colaboradores extends View
         }
         if ($ok) {
             $this->dados['colaboradores'] = $this->Colaboradores->setCodEmpresa($_SESSION['EMP_COD'])->listarTodos(0);
-            $this->render('admin/cadastros/colaboradores/listar', $this->dados);
+            $this->render('admin/recursos_humanos/colaboradores/listar', $this->dados);
         }else {
-            $this->render('admin/cadastros/colaboradores/cadastrar', $this->dados);
+            $this->render('admin/recursos_humanos/colaboradores/cadastrar', $this->dados);
         }
     }
     public function alteracao():void
@@ -150,10 +169,10 @@ class colaboradores extends View
             Sessao::alert('ERRO',' ERRO: COL11 - Acesso inválido(s)!','alert alert-danger');
         }      
        if($ok){
-            $this->render('admin/cadastros/colaboradores/alterar', $this->dados);
+            $this->render('admin/recursos_humanos/colaboradores/alterar', $this->dados);
        }else{
             $this->dados['colaboradores'] = $this->Colaboradores->setCodEmpresa($_SESSION['EMP_COD'])->listarTodos(0);
-            $this->render('admin/cadastros/colaboradores/listar', $this->dados);
+            $this->render('admin/recursos_humanos/colaboradores/listar', $this->dados);
        }
     }
     public function alterar()
@@ -206,10 +225,10 @@ class colaboradores extends View
         $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
         if ($ok) {
             $this->dados['colaboradores'] = $this->Colaboradores->setCodEmpresa($_SESSION['EMP_COD'])->listarTodos(0);
-            $this->render('admin/cadastros/colaboradores/listar', $this->dados);
+            $this->render('admin/recursos_humanos/colaboradores/listar', $this->dados);
         }else {
             $this->dados['colaborador'] = $this->Colaboradores->setCodEmpresa($dados['EMP_COD'])->setCodigo($dados['COL_COD'])->listar(0);
-            $this->render('admin/cadastros/colaboradores/alterar', $this->dados);
+            $this->render('admin/recursos_humanos/colaboradores/alterar', $this->dados);
         }
     }
     public function status()

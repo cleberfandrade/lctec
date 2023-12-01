@@ -270,4 +270,24 @@ class usuarios extends View
         }
         echo json_encode($respota);
     }
+    public function meus_dados()
+    {
+        $this->dados['title'] .= 'MEUS DADOS DE USUÁRIO';
+       
+        $this->link[2] = ['link'=> 'cadastros/usuarios','nome' => 'LISTAGEM DE USUÁRIOS'];
+        $this->link[3] = ['link'=> 'cadastros/meus_dados','nome' => 'ALTERAR MEUS DADOS DE USUÁRIO'];
+        $this->dados['breadcrumb'] = $Check->setLink($this->link)->breadcrumb();
+        
+        $this->dados['usuarios_empresa'] = $this->UsuariosEmpresa->setCodUsuario($_SESSION['USU_COD'])->checarUsuario();
+
+        if (isset($this->dados['usuarios_empresa']['UMP_COD'])) {
+            $_SESSION['EMP_COD'] = $this->dados['usuarios_empresa']['EMP_COD'];
+            $this->dados['empresa'] = $this->Empresa->setCodigo($_SESSION['EMP_COD'])->listar(0);
+            $this->dados['usuario'] = $this->Usuarios->setCodUsuario($_SESSION['USU_COD'])->listar(0);
+            $this->render('admin/cadastros/usuarios/meus_dados', $this->dados);
+        }else {
+            Sessao::alert('ERRO',' 2- Acesso inválido!','fs-4 alert alert-danger');
+            $this->render('admin/cadastros/usuarios', $this->dados);
+        }
+    }
 }
