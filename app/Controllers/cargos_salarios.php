@@ -16,7 +16,7 @@ class cargos_salarios extends View
     public function __construct()
     {
         Sessao::naoLogado();
-        $this->dados['title'] = 'MÓDULO | CADASTROS >>';
+        $this->dados['title'] = 'MÓDULO | RECURSOS HUMANOS >>';
         $this->Usuarios = new Usuarios;
         $this->Empresa = new Empresas;
         $this->UsuariosEmpresa = new UsuariosEmpresa;
@@ -26,23 +26,23 @@ class cargos_salarios extends View
         $this->dados['cargos_salarios'] = $this->CargosSalarios->setCodEmpresa($_SESSION['EMP_COD'])->listarTodos(0);
         $this->Check = new Check;
         $this->link[0] = ['link'=> 'admin','nome' => 'PAINEL ADMINISTRATIVO'];
-        $this->link[1] = ['link'=> 'cadastros','nome' => 'MÓDULO DE CADASTROS'];
+        $this->link[1] = ['link'=> 'recursos_humanos','nome' => 'MÓDULO DE RECURSOS HUMANOS'];
         $this->link[2] = ['link'=> 'cargos_salarios','nome' => 'GERENCIAR CARGOS E SALÁRIOS'];
     }
     public function index()
     {
         $this->dados['title'] .= ' CARGOS E SALÁRIOS';
         $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
-        $this->render('admin/cadastros/cargos_salarios/listar', $this->dados);
+        $this->render('admin/recursos_humanos/cargos_salarios/listar', $this->dados);
     }
     public function cadastro():void
     {
         $this->dados['title'] .= ' CADASTRAR CARGOS E SALÁRIOS';
         $this->link[3] = ['link'=> 'cargos_salarios/cadastrar','nome' => 'CADASTRO DE CARGOS E SALÁRIOS'];
         $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
-        $this->render('admin/cadastros/cargos_salarios/cadastrar', $this->dados);
+        $this->render('admin/recursos_humanos/cargos_salarios/cadastrar', $this->dados);
     }
-    public function cadastrar():void
+    public function cadastrar()
     {
         $this->dados['title'] .= ' CADASTRAR CARGOS E SALÁRIOS';
         $this->link[3] = ['link'=> 'cargos_salarios/cadastrar','nome' => 'CADASTRO DE CARGOS E SALÁRIOS'];
@@ -78,9 +78,9 @@ class cargos_salarios extends View
         }
         if ($ok) {
             $this->dados['cargos_salarios'] = $this->CargosSalarios->setCodEmpresa($_SESSION['EMP_COD'])->listarTodos(0);
-            $this->render('admin/cadastros/cargos_salarios/listar', $this->dados);
+            $this->render('admin/recursos_humanos/cargos_salarios/listar', $this->dados);
         }else {
-            $this->render('admin/cadastros/cargos_salarios/cadastrar', $this->dados);
+            $this->render('admin/recursos_humanos/cargos_salarios/cadastrar', $this->dados);
         }
     }
     public function alteracao():void
@@ -107,13 +107,12 @@ class cargos_salarios extends View
             Sessao::alert('ERRO',' ERRO: CGS11 - Acesso inválido(s)!','alert alert-danger');
         }      
        if($ok){
-            $this->render('admin/cadastros/cargos_salarios/alterar', $this->dados);
+            $this->render('admin/recursos_humanos/cargos_salarios/alterar', $this->dados);
        }else{
             $this->dados['cargos_salarios'] = $this->CargosSalarios->setCodEmpresa($_SESSION['EMP_COD'])->listarTodos(0);
-            $this->render('admin/cadastros/cargos_salarios/listar', $this->dados);
+            $this->render('admin/recursos_humanos/cargos_salarios/listar', $this->dados);
        }
     }
-    
     public function alterar()
     {
         $this->dados['title'] .= ' CADASTRAR CARGOS E SALÁRIOS';
@@ -149,10 +148,10 @@ class cargos_salarios extends View
         }
         if ($ok) {
             $this->dados['cargos_salarios'] = $this->CargosSalarios->setCodEmpresa($_SESSION['EMP_COD'])->listarTodos(0);
-            $this->render('admin/cadastros/cargos_salarios/listar', $this->dados);
+            $this->render('admin/recursos_humanos/cargos_salarios/listar', $this->dados);
         }else {
             $this->dados['cargo_salario'] = $this->CargosSalarios->setCodEmpresa($dados['EMP_COD'])->setCodigo($dados['CGS_COD'])->listar(0);
-            $this->render('admin/cadastros/cargos_salarios/alterar', $this->dados);
+            $this->render('admin/recursos_humanos/cargos_salarios/alterar', $this->dados);
         }
     }
     public function status()
