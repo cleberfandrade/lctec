@@ -10,9 +10,12 @@ use App\Models\Modulos as ModelsModulos;
 use App\Models\ModulosEmpresa;
 use App\Models\UsuariosEmpresa;
 use Libraries\Check;
-
-class modulos extends View
-{
+dump('ok');
+    exit;
+class modulos_empresa extends View
+{ 
+    
+        
     private $dados = [];
     private $link,$Modulos,$Usuarios,$Empresa,$UsuariosEmpresa,$Check,$Util,$ModulosEmpresa;
     public function __construct()
@@ -26,10 +29,11 @@ class modulos extends View
         $this->ModulosEmpresa = new ModulosEmpresa;
         $this->Util = new Util;
 
+       
         $this->dados['usuario'] = $this->Usuarios->setCodUsuario($_SESSION['USU_COD'])->listar(0);
         $this->dados['empresa'] = $this->UsuariosEmpresa->setCodEmpresa($_SESSION['EMP_COD'])->setCodUsuario($_SESSION['USU_COD'])->listar(0);
-        $this->dados['modulos_empresa'] = $this->ModulosEmpresa->setCodEmpresa($_SESSION['EMP_COD'])->listar();
-
+        $this->dados['modulos_empresa'] = $this->ModulosEmpresa->setCodEmpresa($_SESSION['EMP_COD'])->listar(0);
+        $this->dados['modulos'] = $this->Modulos->listarTodos(0);
         $this->link[0] = ['link'=> 'admin','nome' => 'PAINEL ADMINISTRATIVO'];
         $this->link[1] = ['link'=> 'cadastros','nome' => 'MÓDULO DE CADASTROS >> '];
         $this->link[2] = ['link'=> 'usuarios','nome' => 'GERENCIAR MÓDULOS'];

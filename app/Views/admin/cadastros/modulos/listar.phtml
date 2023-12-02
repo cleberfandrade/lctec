@@ -42,15 +42,21 @@ $qtdME = (is_array($modulos_empresa) ? count($modulos_empresa) : 0);
                                 <h5 class="card-title">Módulo <?= $modulos_empresa[$i]['MOD_NOME']; ?></h5>
                                 <p class="card-text"><?= $modulos_empresa[$i]['MOD_DESCRICAO']; ?></p>
                             </div>  
+                           
                             <div class="card-footer text-center">
+                                <?php if($modulos_empresa[$i]['MOD_NOME'] != 'CADASTROS'){ ?>
                                 <a type="button" href="<?= DIRPAGE ?>modulos/status/<?= $modulos_empresa[$i]['EMP_COD']?>/<?= $modulos_empresa[$i]['MLE_COD']?>" class="btn btn-<?= $modulos_empresa[$i]['MOD_COR']; ?> link-light text-decoration-none">
-                                    <?php if ($modulos_empresa[$i]['MLE_STATUS'] == 1) { ?>
+                                    <?php if ($modulos_empresa[$i]['MLE_STATUS'] == 1 ) { ?>
                                     <i class="bi bi-ban"></i> DESATIVAR
                                     <?php }else{ ?>
                                     <i class="bi bi-check2"></i> ATIVAR
                                     <?php } ?>
                                 </a>
+                                <?php }else{ ?>
+                                    <i class="bi bi-check2"></i> ATIVADO
+                                <?php } ?>
                             </div>
+                           
                         </div>
                     </div>
                     <?php } ?>

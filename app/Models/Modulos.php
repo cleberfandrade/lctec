@@ -20,6 +20,17 @@ class Modulos extends Model
     }
     public function listar($ver = 0)
     {
+        $parametros = " WHERE MOD_COD='{$this->codigo}'";
+        $campos = "*";
+        $resultado = $this->Model->exibir($parametros, $campos, $ver = 0, $id = false);
+        if ($resultado) {
+            return $resultado[0];
+        } else {
+            return false;
+        }
+    }
+    public function listarTodos($ver = 0)
+    {
         $parametros = " ORDER BY MOD_NOME ASC";
         $campos = "*";
         $resultado = $this->Model->exibir($parametros, $campos, $ver = 0, $id = false);
