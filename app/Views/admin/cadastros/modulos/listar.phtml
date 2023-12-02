@@ -3,6 +3,7 @@ use Libraries\Sessao;
 session_start();
 include_once 'app/Views/admin/inc/cabecalho.phtml'; 
 $qtdME = (is_array($modulos_empresa) ? count($modulos_empresa) : 0);
+$qtd = (is_array($modulos) ? count($modulos) : 0);
 ?>
 <body class="">
     <div class="d-flex" id="wrapper">
@@ -17,7 +18,7 @@ $qtdME = (is_array($modulos_empresa) ? count($modulos_empresa) : 0);
                         <div class="col-lg-9 col-xl-9 col-xxl-9">
                             <div class="my-1 px-4 mx-auto">
                                 <a class="text-decoration-none" href="<?= DIRPAGE; ?>modulos">
-                                <h5 class="fs-2 fw-bolder text-uppercase text-dark"><i class="bi bi-plus-square"></i> Gerenciar <span class="text-success">Módulos</span></h5></a>
+                                <h5 class="fs-2 fw-bolder text-uppercase text-dark"><i class="bi bi-plus-square"></i> Gerenciar <span class="text-success">Módulos da Empresa</span></h5></a>
                             </div>
                         </div>
                         <?php include_once 'app/Views/admin/inc/saudacao.phtml'; ?>   
@@ -60,9 +61,34 @@ $qtdME = (is_array($modulos_empresa) ? count($modulos_empresa) : 0);
                         </div>
                     </div>
                     <?php } ?>
-                    <hr>
-                    <h5 class="fw-bolder text-center text-uppercase text-dark"><i class="bi bi-ban-square"></i> Outros Módulos</h5>
+                   
                     <?php } ?>
+                    <hr>
+                    <?php if ($qtd != 0) { $ok = false;?>
+                    <h5 class="fw-bolder text-center text-uppercase text-dark"><i class="bi bi-ban-square"></i> Outros Módulos</h5>
+                    <?php for ($i=0; $i < $qtd; $i++) { 
+                         for ($m=0; $m < $qtdME; $m++) {
+                            if ($modulos_empresa[$m]['MOD_COD'] == $modulos[$i]['MOD_COD']) { 
+                                $qtdM = $m;
+                             }
+                     } ?>
+                     <?php if (!$qtdM) {  ?>
+                        <?php if($modulos_empresa[$i]['MOD_NOME'] != 'CADASTROS'){ ?>
+                        <div class="col-4 rounded-2 text-center mb-2">
+                            <div class="card  mx-auto text-<?= $modulos[$i]['MOD_COR']; ?> py-1">
+                                <div class="card-header">
+                                    <?= $modulos[$i]['MOD_ICON']; ?> <?= $modulos[$i]['MOD_NOME']; ?> 
+                                    </div>
+                                <div class="card-body">
+                                    <h5 class="card-title">Módulo <?= $modulos[$i]['MOD_NOME']; ?></h5>
+                                    <p class="card-text"><?= $modulos[$i]['MOD_DESCRICAO']; ?></p>
+                                </div>  
+                            </div>
+                        </div>  
+                        <?php } ?>
+                        <?php } ?>    
+                     <?php } ?>
+                   <?php } ?>
                 </div>
             </section>
         </div>

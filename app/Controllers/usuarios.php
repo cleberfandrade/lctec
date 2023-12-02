@@ -276,7 +276,7 @@ class usuarios extends View
        
         $this->link[2] = ['link'=> 'cadastros/usuarios','nome' => 'LISTAGEM DE USUÁRIOS'];
         $this->link[3] = ['link'=> 'cadastros/meus_dados','nome' => 'ALTERAR MEUS DADOS DE USUÁRIO'];
-        $this->dados['breadcrumb'] = $Check->setLink($this->link)->breadcrumb();
+        $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
         
         $this->dados['usuarios_empresa'] = $this->UsuariosEmpresa->setCodUsuario($_SESSION['USU_COD'])->checarUsuario();
 
