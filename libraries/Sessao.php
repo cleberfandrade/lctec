@@ -50,6 +50,18 @@ class Sessao
             Url::redirecionar('login');
         }
     }
+    public static function logadoSistema()
+    {
+        if(isset($_SESSION['USU_COD']) && !isset($_SESSION['USU_NIVEL']) && $_SESSION['USU_NIVEL'] >= 30){
+            Url::redirecionar('lctec');
+        }
+    }
+    public static function naoLogadoSistema()
+    {
+        if(!isset($_SESSION['USU_COD']) && !isset($_SESSION['USU_NIVEL']) && $_SESSION['USU_NIVEL'] >= 30){
+            Url::redirecionar('login');
+        }
+    }
     public static function criarSessao(array $dados = [])
     {
         foreach ($dados as $key => $value) {
