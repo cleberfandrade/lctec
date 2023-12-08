@@ -121,6 +121,20 @@ $qtdF = (is_array($fornecedores) ? count($fornecedores) : 0);
                                     <label class="form-label">PARCELA</label>
                                 </div> 
                             </div> 
+                            <div class="col-12">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="LAN_RESULTADOS" id="flexRadioDefault1" checked>
+                                    <label class="form-check-label" for="flexRadioDefault1">
+                                       PARTICIPA DOS RESULTADOS
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="LAN_RESULTADOS" id="flexRadioDefault2" >
+                                    <label class="form-check-label" for="flexRadioDefault2">
+                                        NÃO PARTICIPA DOS RESULTADOS
+                                    </label>
+                                </div>
+                            </div>
                             <div class="col-6 form-floating mb-3">
                                 <input type="text" class="form-control form-control-lg  maiusculo" name="LAN_DESCRICAO" value="<?= isset($_POST['LAN_DESCRICAO'])? $_POST['LAN_DESCRICAO']  : '' ?>"/>
                                 <label for="4" class="form-label">DESCRIÇÃO</label>
