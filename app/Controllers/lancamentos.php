@@ -39,7 +39,7 @@ class lancamentos extends View
         $this->dados['lancamentos'] = $this->Lancamentos->setCodEmpresa($_SESSION['EMP_COD'])->listarTodos(0);
         $this->dados['categorias'] = $this->Categorias->setCodEmpresa($_SESSION['EMP_COD'])->listarTodos(0);
         $this->dados['contas'] = $this->Contas->setCodEmpresa($_SESSION['EMP_COD'])->listarTodas(0);
-        $this->dados['classificacoes'] = $this->Classificacoes->setCodEmpresa($_SESSION['EMP_COD'])->listarTodos(0);
+        $this->dados['classificacoes'] = $this->Classificacoes->setCodEmpresa($_SESSION['EMP_COD'])->setTipo('LAN')->listarTodosPorTipo(0);
         $this->dados['fornecedores'] = $this->Fornecedores->setCodEmpresa($_SESSION['EMP_COD'])->listarTodos(0);
         $this->dados['clientes'] = $this->Clientes->setCodEmpresa($_SESSION['EMP_COD'])->listarTodos(0);
         
@@ -80,13 +80,40 @@ class lancamentos extends View
                 $lan = $this->Lancamentos->setCodEmpresa($dados['EMP_COD'])->setDataVencimento($dados['LAN_DT_VENCIMENTO'])->setDescricao($dados['LAN_DESCRICAO'])->checarDescricao();
                             
                 if(!$lan){
+                    $total = 0;
+                    if ($dados['LAN_PARCELA'] >=2) {
+                        $vl_parcela = ($dados['LAN_VALOR']/$dados['LAN_PARCELA']);
+                        $vl_parcela = number_format($vl_parcela,2,'.',',');
+                        $descricao = $dados['LAN_DESCRICAO'];
+                        $qtd = $dados['LAN_PARCELA'];
 
-                    $dados += array(
-                        'LAN_DT_CADASTRO'=> date('Y-m-d H:i:s'),
-                        'LAN_DT_ATUALIZACAO'=> date('0000-00-00 00:00:00'),          
-                        'LAN_STATUS'=> 1
-                    );
-                    if($this->Lancamentos->cadastrar($dados,0)){
+                        unset($dados['LAN_VALOR']);
+                        unset($dados['LAN_DESCRICAO']);
+                       
+                        for ($i = 1; $i <= $qtd; $i++) { 
+                            $dados += array(
+                                'LAN_VALOR' => $vl_parcela,
+                                'LAN_DESCRICAO' => $descricao.' - '.$i.'/'.$qtd,
+                                'LAN_DT_CADASTRO'=> date('Y-m-d H:i:s'),
+                                'LAN_DT_ATUALIZACAO'=> date('0000-00-00 00:00:00'),          
+                                'LAN_STATUS'=> 1
+                            );
+                            if($this->Lancamentos->cadastrar($dados,0)){
+                                $total++;
+                            }
+                        }
+                    } else {
+                        $dados += array(
+                            'LAN_DT_CADASTRO'=> date('Y-m-d H:i:s'),
+                            'LAN_DT_ATUALIZACAO'=> date('0000-00-00 00:00:00'),          
+                            'LAN_STATUS'=> 1
+                        );
+                        if($this->Lancamentos->cadastrar($dados,0)){
+                            $total++;
+                        }
+                    }
+
+                    if($total){
                         $ok = true;
                         Sessao::alert('OK','Cadastro efetuado com sucesso!','fs-4 alert alert-success');
                     }else{

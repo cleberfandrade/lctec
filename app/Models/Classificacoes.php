@@ -7,7 +7,7 @@ class Classificacoes extends Model
 { 
     private $tabela = 'tb_classificacoes';
     private $Model = '';
-    private $codigo,$codEmpresa,$descricao;
+    private $codigo,$codEmpresa,$tipo,$descricao;
 
     public function __construct()
     {
@@ -17,6 +17,11 @@ class Classificacoes extends Model
     public function setCodigo($codigo)
     {
         $this->codigo = $codigo;
+        return $this;
+    }
+    public function setTipo($tipo)
+    {
+        $this->tipo = $tipo;
         return $this;
     }
     public function setCodEmpresa($codEmpresa)
@@ -43,6 +48,17 @@ class Classificacoes extends Model
     public function listarTodos($ver = 0)
     {
         $parametros = "WHERE EMP_COD={$this->codEmpresa} ORDER BY CLA_DESCRICAO";
+        $campos = "*";
+        $resultado = $this->Model->exibir($parametros, $campos, $ver = 0, $id = false);
+        if ($resultado) {
+            return $resultado;
+        } else {
+            return false;
+        }
+    }
+    public function listarTodosPorTipo($ver = 0)
+    {
+        $parametros = "WHERE EMP_COD={$this->codEmpresa} AND CLA_TIPO='{$this->tipo}' ORDER BY CLA_DESCRICAO";
         $campos = "*";
         $resultado = $this->Model->exibir($parametros, $campos, $ver = 0, $id = false);
         if ($resultado) {

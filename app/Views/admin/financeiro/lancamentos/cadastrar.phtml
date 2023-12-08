@@ -62,27 +62,27 @@ $qtdF = (is_array($fornecedores) ? count($fornecedores) : 0);
                             <div class="col-4 form-floating mb-3">
                                 <select class="form-select text-uppercase mb-3 form-floating" name="CAT_COD">
                                     <option value="0" <?= (isset($_POST['CAT_COD']) &&  $_POST['CAT_COD']  == "0")? 'selected' : '' ?>>---</option>
-                                    <?php for ($i= 0; $i < $qtdCA; $i++) { ?> 
+                                    <?php for ($i= 0; $i < $qtdCA; $i++) { if ($categorias[$i]['CAT_STATUS'] == 1) { ?> 
                                         <option value="<?= $categorias[$i]['CAT_COD']; ?>" <?= (isset($_POST['CAT_COD']) &&  $_POST['CAT_COD']  == $categorias[$i]['CAT_COD'] )? 'selected' : '' ?>><?= $categorias[$i]['CAT_DESCRICAO'] ?></option>
-                                    <?php } ?> 
+                                    <?php } } ?> 
                                 </select>
                                 <label class="form-floating mb-3">CATEGORIA</label>
                             </div>
                             <div class="col-4 form-floating mb-3">
                                 <select class="form-select text-uppercase mb-3 form-floating" name="CLA_COD">
                                     <option value="0" <?= (isset($_POST['CLA_COD']) &&  $_POST['CLA_COD']  == "0")? 'selected' : '' ?>>---</option>
-                                    <?php for ($i= 0; $i < $qtdCLA; $i++) { ?> 
+                                    <?php for ($i= 0; $i < $qtdCLA; $i++) { if ($classificacoes[$i]['CLA_STATUS'] == 1) { ?> 
                                         <option value="<?= $classificacoes[$i]['CLA_COD']; ?>" <?= (isset($_POST['CLA_COD']) &&  $_POST['CLA_COD']  == $classificacoes[$i]['CLA_COD'] )? 'selected' : '' ?>><?= $classificacoes[$i]['CLA_DESCRICAO'] ?></option>
-                                    <?php } ?> 
+                                        <?php } } ?> 
                                 </select>
                                 <label class="form-floating mb-3">CLASSIFICAÇÃO</label>
                             </div>
                             <div class="col-4 form-floating mb-3">
                                 <select class="form-select text-uppercase mb-3 form-floating" name="CLI_COD">
                                     <option value="0" <?= (isset($_POST['CLI_COD']) &&  $_POST['CLI_COD']  == "0")? 'selected' : '' ?>>---</option>
-                                    <?php for ($i= 0; $i < $qtdCLI; $i++) { ?> 
+                                    <?php for ($i= 0; $i < $qtdCLI; $i++) { if ($clientes[$i]['CLI_STATUS'] == 1) { ?> 
                                         <option value="<?= $clientes[$i]['CLI_COD']; ?>" <?= (isset($_POST['CLI_COD']) &&  $_POST['CLI_COD']  == $clientes[$i]['CLI_COD'] )? 'selected' : '' ?>><?= $clientes[$i]['CLI_NOME'] ?></option>
-                                    <?php } ?> 
+                                    <?php } } ?> 
                                 </select>
                                 <label class="form-floating mb-3">P/ CLIENTE</label>
                             </div>
@@ -90,9 +90,9 @@ $qtdF = (is_array($fornecedores) ? count($fornecedores) : 0);
                                 <select class="form-select " name="FOR_COD">     
                                     <option value="0" <?= (isset($_POST['FOR_COD']) &&  $_POST['FOR_COD']  == 0)? 'selected' : '' ?>>---</option>                     
                                     <?php 
-                                    for ($i=0; $i < $qtdF; $i++) { ?>
+                                    for ($i=0; $i < $qtdF; $i++) { if ($fornecedores[$i]['FOR_STATUS'] == 1) { ?> 
                                         <option value="<?= $fornecedores[$i]['FOR_COD'] ?>" <?= (isset($_POST['FOR_COD']) &&  $_POST['FOR_COD']  == $fornecedores[$i]['FOR_COD'])? 'selected' : '' ?>><?= $fornecedores[$i]['FOR_NOME_FANTASIA'] ?></option>
-                                    <?php } ?>
+                                        <?php } } ?> 
                                 </select>
                                 <label class="form-label">P/ FORNECEDOR?</label>
                             </div>
@@ -134,7 +134,7 @@ $qtdF = (is_array($fornecedores) ? count($fornecedores) : 0);
                         <div class="col-8 mx-auto text-center mb-3">
                             <span class="text-center fs-5 mb-3">CASO SEJA UM PAGAMENTO PARCELADO, O SISTEMA CRIARÁ <b>AUTOMATICAMENTE</b><br> OS LANÇAMENTOS FUTUROS DE ACORDO COM O NÚMERO DE PARCELAS DEFINIDO</span>
                         </div>
-                        <input type="hidden" class="form-control" name="EMP_COD" value="<?= isset($estoque['EMP_COD']) ? $estoque['EMP_COD'] : 0; ?>">
+                        <input type="hidden" class="form-control" name="EMP_COD" value="<?= isset($empresa['EMP_COD']) ? $empresa['EMP_COD'] : 0; ?>">
                         <input type="hidden" class="form-control" name="USU_COD" value="<?= isset($_SESSION['USU_COD']) ? $_SESSION['USU_COD'] : 0; ?>">
                         <button class="w-100 btn btn-lg text-uppercase btn-success" name="CADASTRAR_NOVO_LANCAMENTO" type="submit"><i class="fa fa-save"></i> Cadastrar</button>
                     </form>
@@ -152,12 +152,31 @@ $qtdF = (is_array($fornecedores) ? count($fornecedores) : 0);
                     thousands:'.', decimal:',',
                     affixesStay: true
                 });
+                /*
                 $("#LAN_PARCELA").on("change", function(){
                     var LAN_PARCELA = $(this).val();
-                    console.log(LAN_PARCELA);
+                    
                     var LAN_VALOR = $(".real").val();
+                   
+                    // Remove qualquer caractere em branco do final do texto:
+                    str = LAN_VALOR.replace(/^\s+|\s+$/g, '');
+
+                    // Lista de caracteres especiais que serão substituídos:
+                    const from = ",:;-";
+
+                    // Lista de caracteres que serão adicionados em relação aos anteriores:
+                    const to   = "";
+
+                    // Substitui todos os caracteres especiais:
+                    for (let i = 0, l = from.length; i < l; i++) {
+                    str = str.replace(new RegExp(from.charAt(i), 'g'), to.charAt(i));
+                    }
+
+                    // Remove qualquer caractere inválido que possa ter sobrado no texto:
+                    LAN_VALOR = str.replace(/[^a-z0-9 -]/g, '');
                     console.log(LAN_VALOR);
-                    var novo = parseFloat(LAN_VALOR/LAN_PARCELA);
+                    var novo = parseFloat(LAN_VALOR/LAN_PARCELA).toFixed(2);
+                    novo = novo/100
                     console.log(novo);
                     $("#LAN_VALOR").val(novo);
                     $('#LAN_VALOR').maskMoney({
@@ -166,7 +185,7 @@ $qtdF = (is_array($fornecedores) ? count($fornecedores) : 0);
                         thousands:'.', decimal:',',
                         affixesStay: true
                     });
-                });
+                })*/
             })
             </script>
         </div>

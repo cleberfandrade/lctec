@@ -3,7 +3,7 @@ use Libraries\Sessao;
 session_start();
 include_once 'app/Views/admin/inc/cabecalho.phtml'; 
 $qtd = (is_array($lancamentos) ? count($lancamentos) : 0);
-$qtdP = (is_array($contas_pagar) ? count($contas_pagar) : 0);
+$qtdC = (is_array($contas) ? count($contas) : 0);
 $qtdR = (is_array($contas_receber) ? count($contas_receber) : 0);
 ?>
 <body class="">
@@ -63,10 +63,12 @@ $qtdR = (is_array($contas_receber) ? count($contas_receber) : 0);
                         <?php
                          $b = 1;
                          for ($i= 0; $i < $qtd; $i++) { 
-                             $data = new DateTime($lancamentos[$i]['CLI_DT_CADASTRO']);
+                             $data = new DateTime($lancamentos[$i]['LAN_DT_CADASTRO']);
                         ?>
                          <tr class="<?= ($lancamentos[$i]['LAN_STATUS'] == 0 && $_SESSION['USU_NIVEL'] >= 8)? 'bg-secondary' : ''; ?>">
                             <td class="text-center align-middle"><?= $b; ?></td>
+                            <td class="text-center align-middle"><?= $lancamentos[$i]['LAN_TIPO']; ?></td>
+                            <td class="text-center align-middle"><?= $lancamentos[$i]['LAN_DESCRICAO']; ?></td>
                         </tr>
                         <?php $b++; } ?>
                         </tbody>
