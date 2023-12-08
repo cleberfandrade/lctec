@@ -57,7 +57,7 @@ class Lancamentos extends Model
     }
     public function listarTodos($ver = 0)
     {
-        $parametros = "L INNER JOIN tb_empresas E ON E.EMP_COD=L.EMP_COD WHERE PR.EMP_COD={$this->codEmpresa} ORDER BY L.PAG_COD";
+        $parametros = "L INNER JOIN tb_empresas E ON E.EMP_COD=L.EMP_COD WHERE L.EMP_COD={$this->codEmpresa} ORDER BY L.LAN_DESCRICAO, LAN_DT_CADASTRO DESC";
         $campos = "*";
         $resultado = $this->Model->exibir($parametros, $campos, $ver = 0, $id = false);
         if ($resultado) {
