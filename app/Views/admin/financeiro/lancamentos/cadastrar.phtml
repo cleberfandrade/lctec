@@ -74,7 +74,25 @@ $qtdF = (is_array($fornecedores) ? count($fornecedores) : 0);
                                         <option value="<?= $classificacoes[$i]['CLA_COD']; ?>" <?= (isset($_POST['CLA_COD']) &&  $_POST['CLA_COD']  == $classificacoes[$i]['CLA_COD'] )? 'selected' : '' ?>><?= $classificacoes[$i]['CLA_DESCRICAO'] ?></option>
                                     <?php } ?> 
                                 </select>
+                                <label class="form-floating mb-3">CATEGORIA</label>
+                            </div>
+                            <div class="col-4 form-floating mb-3">
+                                <select class="form-select text-uppercase mb-3 form-floating" name="CLA_COD">
+                                    <option value="0" <?= (isset($_POST['CLA_COD']) &&  $_POST['CLA_COD']  == "0")? 'selected' : '' ?>>---</option>
+                                    <?php for ($i= 0; $i < $qtdCL; $i++) { ?> 
+                                        <option value="<?= $classificacoes[$i]['CLA_COD']; ?>" <?= (isset($_POST['CLA_COD']) &&  $_POST['CLA_COD']  == $classificacoes[$i]['CLA_COD'] )? 'selected' : '' ?>><?= $classificacoes[$i]['CLA_DESCRICAO'] ?></option>
+                                    <?php } ?> 
+                                </select>
                                 <label class="form-floating mb-3">CLASSIFICAÇÃO</label>
+                            </div>
+                            <div class="col-4 form-floating mb-3">
+                                <select class="form-select text-uppercase mb-3 form-floating" name="CLA_COD">
+                                    <option value="0" <?= (isset($_POST['CLA_COD']) &&  $_POST['CLA_COD']  == "0")? 'selected' : '' ?>>---</option>
+                                    <?php for ($i= 0; $i < $qtdCL; $i++) { ?> 
+                                        <option value="<?= $classificacoes[$i]['CLA_COD']; ?>" <?= (isset($_POST['CLA_COD']) &&  $_POST['CLA_COD']  == $classificacoes[$i]['CLA_COD'] )? 'selected' : '' ?>><?= $classificacoes[$i]['CLA_DESCRICAO'] ?></option>
+                                    <?php } ?> 
+                                </select>
+                                <label class="form-floating mb-3">P/ CLIENTE</label>
                             </div>
                             <div class="col-4 form-floating mb-3">
                                 <select class="form-select " name="FOR_COD">     
@@ -96,18 +114,24 @@ $qtdF = (is_array($fornecedores) ? count($fornecedores) : 0);
                                     <span class="input-group-text">R$</span>
                                     <div class="form-floating">
                                         <input type="text" class="form-control form-control-lg real" id="LAN_VALOR" name="LAN_VALOR" placeholder="" value="<?= isset($_POST['LAN_VALOR']) ? $_POST['LAN_VALOR'] : ''; ?>">
-                                        <label class="form-label" for="2">VALOR A PAGAR</label>
+                                        <label class="form-label" for="2">VALOR</label>
                                     </div>
                                 </div>
                                
                             </div>
-                            <div class="col-8 form-floating mb-3">
+                            <div class="col-6 form-floating mb-3">
                                 <input type="text" class="form-control form-control-lg  maiusculo" name="LAN_DESCRICAO" value="<?= isset($_POST['LAN_DESCRICAO'])? $_POST['LAN_DESCRICAO']  : '' ?>"/>
                                 <label for="4" class="form-label">DESCRIÇÃO</label>
                             </div>
+                            <div class="col-6 form-floating mb-3">
+                                <textarea type="text" rows="10" class="form-control  maiusculo" name="LAN_OBSERVACAO"><?= isset($_POST['LAN_OBSERVACAO'])? $_POST['LAN_OBSERVACAO']  : '' ?></textarea>
+                                <label for="4" class="form-label">OBSERVAÇÃO</label>
+                            </div>
                         </div> 
                         <hr class="my-4 text-dark">
-                        <span class="text-center fs-3 mb-3">CASO SEJA UM PAGAMENTO PARCELADO, O SISTEMA CRIARÁ <b>AUTOMATICAMENTE</b><br> OS LANÇAMENTOS FUTUROS DE ACORDO COM O NÚMERO DE PARCELAS DEFINIDO</span>
+                        <div class="col-8 mx-auto text-center mb-3">
+                            <span class="text-center fs-3 mb-3">CASO SEJA UM PAGAMENTO PARCELADO, O SISTEMA CRIARÁ <b>AUTOMATICAMENTE</b><br> OS LANÇAMENTOS FUTUROS DE ACORDO COM O NÚMERO DE PARCELAS DEFINIDO</span>
+                        </div>
                         <input type="hidden" class="form-control" name="EMP_COD" value="<?= isset($estoque['EMP_COD']) ? $estoque['EMP_COD'] : 0; ?>">
                         <input type="hidden" class="form-control" name="USU_COD" value="<?= isset($_SESSION['USU_COD']) ? $_SESSION['USU_COD'] : 0; ?>">
                         <button class="w-100 btn btn-lg text-uppercase btn-success" name="CADASTRAR_NOVO_LANCAMENTO" type="submit"><i class="fa fa-save"></i> Cadastrar</button>

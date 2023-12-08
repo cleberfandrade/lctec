@@ -14,7 +14,7 @@ use Libraries\Sessao;
 class categorias extends View
 {
     private $dados = [];
-    public $link,$Usuarios,$Empresa,$UsuariosEmpresa,$Check,$Categorias,$Setores;
+    public $link,$Usuarios,$Empresa,$UsuariosEmpresa,$Check,$Categorias,$Setores,$Classificacoes;
     public function __construct()
     {
         Sessao::naoLogado();

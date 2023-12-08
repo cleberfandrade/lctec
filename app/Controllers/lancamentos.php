@@ -1,6 +1,7 @@
 <?php
 namespace App\Controllers;
 
+use App\Models\Categorias;
 use App\Models\Classificacoes;
 use App\Models\Clientes;
 use App\Models\Contas;
@@ -18,7 +19,7 @@ use App\Models\Lancamentos as ModelsLancamentos;
 class lancamentos extends View
 {
     private $dados = [];
-    private $link,$Financas,$Check,$Usuarios,$UsuariosEmpresa, $Lancamentos,$Contas,$Classificacoes,$Clientes,$Fornecedores;
+    private $link,$Financas,$Check,$Usuarios,$UsuariosEmpresa, $Lancamentos,$Categorias,$Contas,$Classificacoes,$Clientes,$Fornecedores;
     public function __construct()
     {
         Sessao::naoLogado();
@@ -28,6 +29,7 @@ class lancamentos extends View
         $this->Usuarios = new Usuarios;
         $this->UsuariosEmpresa = new UsuariosEmpresa;
         $this->Lancamentos = new ModelsLancamentos;
+        $this->Categorias = new Categorias;
         $this->Contas = new Contas;
         $this->Classificacoes = new Classificacoes;
         $this->Fornecedores = new Fornecedores;
@@ -35,6 +37,7 @@ class lancamentos extends View
         $this->dados['empresa'] = $this->UsuariosEmpresa->setCodEmpresa($_SESSION['EMP_COD'])->setCodUsuario($_SESSION['USU_COD'])->listar(0);
         $this->dados['usuario'] = $this->Usuarios->setCodUsuario($_SESSION['USU_COD'])->listar(0);
         $this->dados['lancamentos'] = $this->Lancamentos->setCodEmpresa($_SESSION['EMP_COD'])->listarTodos(0);
+        $this->dados['categorias'] = $this->Categorias->setCodEmpresa($_SESSION['EMP_COD'])->listarTodos(0);
         $this->dados['contas'] = $this->Contas->setCodEmpresa($_SESSION['EMP_COD'])->listarTodas(0);
         $this->dados['classificacoes'] = $this->Classificacoes->setCodEmpresa($_SESSION['EMP_COD'])->listarTodos(0);
         $this->dados['fornecedores'] = $this->Fornecedores->setCodEmpresa($_SESSION['EMP_COD'])->listarTodos(0);
