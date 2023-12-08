@@ -18,7 +18,7 @@ $qtdR = (is_array($contas_receber) ? count($contas_receber) : 0);
                     <div class="row gx-3 align-items-center justify-content-center">
                         <div class="col-lg-9 col-xl-9 col-xxl-9">
                             <div class="my-1 px-4 mx-auto">
-                                <a class="text-decoration-none" href="<?= DIRPAGE; ?>financeiro">
+                                <a class="text-decoration-none" href="<?= DIRPAGE; ?>lancamentos">
                                 <h5 class="fs-2 fw-bolder text-uppercase text-dark mb-2">
                                     <i class="bi bi-coin"></i> Gerenciar  <span class="text-success">Lançamentos</span></h5></a>
                             </div>
@@ -51,10 +51,8 @@ $qtdR = (is_array($contas_receber) ? count($contas_receber) : 0);
                             <th class="text-dark">Parcela</th>
                             <th class="text-dark">Classificação</th>
                             <th class="text-dark">Categoria</th>
-                            <th class="text-dark">Forma de Pgto</th>
                             <th class="text-dark">Data Venc.</th>
                             <th class="text-dark">Valor</th>
-                            <th class="text-dark">Data Pagamento</th>
                             <th class="text-dark">Obs</th>
                             <th class="text-dark">Status</th>
                             <?php if($_SESSION['USU_NIVEL'] >= 8){ ?><th class="text-dark">Ações</th><?php } ?>
@@ -63,12 +61,64 @@ $qtdR = (is_array($contas_receber) ? count($contas_receber) : 0);
                         <?php
                          $b = 1;
                          for ($i= 0; $i < $qtd; $i++) { 
-                             $data = new DateTime($lancamentos[$i]['LAN_DT_CADASTRO']);
+                             $data = new DateTime($lancamentos[$i]['LAN_DT_VENCIMENTO']);
                         ?>
                          <tr class="<?= ($lancamentos[$i]['LAN_STATUS'] == 0 && $_SESSION['USU_NIVEL'] >= 8)? 'bg-secondary' : ''; ?>">
                             <td class="text-center align-middle"><?= $b; ?></td>
-                            <td class="text-center align-middle"><?= $lancamentos[$i]['LAN_TIPO']; ?></td>
+                            <td class="text-center align-middle"><?= ($lancamentos[$i]['LAN_TIPO'] == 1)? 'A PAGAR': (($lancamentos[$i]['LAN_TIPO'] == 2) ? 'A RECEBER' : 'N.I.'); ?></td>
+                            <td class="text-center align-middle">
+                            <?php 
+                                if($lancamentos[$i]['CTA_COD'] != 0 or $lancamentos[$i]['CTA_COD'] != '') {
+                                    for ($c = 0; $c < $qtdC; $c++) { 
+                                        if ($contas[$c]['CTA_COD'] == $lancamentos[$i]['CTA_COD']) { ?>
+                                        <?= $contas[$c]['CTA_DESCRICAO']; ?>   
+                                    <?php } } ?> 
+                                <?php }else { ?>
+                                    À DEFINIR
+                                <?php } ?> 
+                            </td>
                             <td class="text-center align-middle"><?= $lancamentos[$i]['LAN_DESCRICAO']; ?></td>
+                            <td class="text-center align-middle"><?= $lancamentos[$i]['LAN_PARCELA']; ?></td>
+                            <td class="text-center align-middle">
+                                <?php 
+                                if($lancamentos[$i]['CLA_COD'] != 0 or $lancamentos[$i]['CLA_COD'] != '') {
+                                    for ($c = 0; $c < $qtdCL; $c++) { 
+                                        if ($classificacoes[$c]['CLA_COD'] == $lancamentos[$i]['CLA_COD']) { ?>
+                                        <?= $classificacoes[$c]['CLA_DESCRICAO']; ?>   
+                                    <?php } } ?> 
+                                <?php }else { ?>
+                                    À DEFINIR
+                                <?php } ?> 
+                            </td>
+                            <td class="text-center align-middle">
+                                <?php 
+                                    if($lancamentos[$i]['CAT_COD'] != 0 or $lancamentos[$i]['CAT_COD'] != '') {
+                                        for ($c = 0; $c < $qtdCA; $c++) { 
+                                            if ($categorias[$c]['CAT_COD'] == $lancamentos[$i]['CAT_COD']) { ?>
+                                            <?= $categorias[$c]['CAT_DESCRICAO']; ?>   
+                                        <?php } } ?> 
+                                    <?php }else { ?>
+                                        À DEFINIR
+                                    <?php } ?> 
+                            </td>
+                            <td class="text-center align-middle"><?= $data->format('d/m/Y'); ?></td>
+                            <td class="text-center align-middle"><?= number_format($lancamentos[$i]['LAN_VALOR'],2,',','.'); ?></td>
+                            <td class="text-center align-middle">
+                                <?php if($lancamentos[$i]['LAN_OBSERVACAO'] != '') { ?>
+                                <button type="button" class="btn btn-dark btn-sm d-print-none" data-bs-toggle='modal'  data-bs-target="#obs" title="" data-codigo="<?= $lancamentos[$i]['LAN_COD']; ?>" data-obs="<?= $lancamentos[$i]['LAN_OBSERVACAO']; ?>" title="Visualizar?" ><i class="fa fa-eye"></i></button>
+                                <?php } ?> 
+                            </td>
+                            <td class="text-center align-middle"><?= ($lancamentos[$i]['LAN_STATUS'] == 1)? 'ATIVO' : 'DESATIVADO'; ?></td>
+                            <?php if($_SESSION['USU_NIVEL'] >= 8){ ?>
+                            <td class="text-center align-middle">
+                                <?php if($lancamentos[$i]['LAN_STATUS'] == 0){ ?>
+                                <button type="button" class="btn btn-success btn-sm d-print-none" data-bs-toggle='modal'  data-bs-target="#status" data-codigo="<?= $lancamentos[$i]['LAN_COD']; ?>" data-nome="<?= $lancamentos[$i]['CLI_NOME']; ?>" data-status="<?= $lancamentos[$i]['LAN_STATUS']; ?>" title="Deseja ativar?" ><i class="fa fa-ban"></i></button>
+                                <?php }else { ?>
+                                <a type="button" class="btn btn-warning btn-sm d-print-none" href="<?= DIRPAGE.'lancamentos/alteracao/'.$lancamentos[$i]['EMP_COD'].'/'.$lancamentos[$i]['LAN_COD']; ?>" title="Alterar lancamento"><i class="fa fa-edit"></i></a>
+                                <button type="button" class="btn btn-danger btn-sm d-print-none" data-bs-toggle='modal'  data-bs-target="#status" data-codigo="<?= $lancamentos[$i]['LAN_COD']; ?>" data-nome="<?= $lancamentos[$i]['LAN_DESCRICAO']; ?>" data-status="<?= $lancamentos[$i]['LAN_STATUS']; ?>" title="Deseja desativar?" ><i class="fa fa-ban"></i></button>
+                                <?php } ?>
+                            </td>
+                            <?php } ?>
                         </tr>
                         <?php $b++; } ?>
                         </tbody>

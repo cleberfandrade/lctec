@@ -84,26 +84,38 @@ class lancamentos extends View
                     $total = 0;
                     
                     if ($dados['LAN_PARCELA'] >=2) {
-
+    
+                        $dados['LAN_VALOR'] = str_replace(',', '.', str_replace('.', '', $dados['LAN_VALOR']));
                         $vl_parcela = ($dados['LAN_VALOR']/$dados['LAN_PARCELA']);
-                        $vl_parcela = number_format($vl_parcela,2,'.',',');
+                       
                         $descricao = $dados['LAN_DESCRICAO'];
                         $qtd = $dados['LAN_PARCELA'];
-                      
+                        $qtdDias = 30;
+                        $data = new \DateTime($dados['LAN_DT_VENCIMENTO']);
+                        $vencimento = $data->format('d/m/Y');
                         unset($dados['LAN_VALOR']);
                         unset($dados['LAN_DESCRICAO']);
-                       
+                        unset($dados['LAN_DT_VENCIMENTO']);
+                        unset($dados['LAN_PARCELA']);
                         for ($i = 1; $i <= $qtd; $i++) { 
                             $dados += array(
                                 'LAN_VALOR' => $vl_parcela,
+                                'LAN_DT_VENCIMENTO' => $vencimento,
                                 'LAN_DESCRICAO' => $descricao.' - '.$i.'/'.$qtd,
+                                'LAN_PARCELA' => $i,
                                 'LAN_DT_CADASTRO'=> date('Y-m-d H:i:s'),
                                 'LAN_DT_ATUALIZACAO'=> date('0000-00-00 00:00:00'),          
                                 'LAN_STATUS'=> 1
                             );
-                            if($this->Lancamentos->cadastrar($dados,0)){
-                                $total++;
-                            }
+                           
+                            //if($this->Lancamentos->cadastrar($dados,0)){
+                                //$total++;
+                                $vencimento = date('d/m/Y', strtotime("+{$qtdDias} days",strtotime($vencimento)));
+                                unset($dados['LAN_DESCRICAO']);
+                                unset($dados['LAN_DT_VENCIMENTO']);
+                                unset($dados['LAN_PARCELA']);
+                                dump($vencimento);
+                            //}
                         }
                     } else {
                         $dados += array(
@@ -115,7 +127,7 @@ class lancamentos extends View
                             $total++;
                         }
                     }
-
+                    exit;
                     if($total){
                         $ok = true;
                         Sessao::alert('OK','Cadastro efetuado com sucesso!','fs-4 alert alert-success');
