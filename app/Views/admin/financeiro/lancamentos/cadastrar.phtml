@@ -3,7 +3,9 @@ use Libraries\Sessao;
 session_start();
 include_once 'app/Views/admin/inc/cabecalho.phtml'; 
 $qtdC = (is_array($contas) ? count($contas) : 0);
-$qtdL = (is_array($classificacoes) ? count($classificacoes) : 0);
+$qtdCA = (is_array($categorias) ? count($categorias) : 0);
+$qtdCLA = (is_array($classificacoes) ? count($classificacoes) : 0);
+$qtdCLI = (is_array($clientes) ? count($clientes) : 0);
 $qtdF = (is_array($fornecedores) ? count($fornecedores) : 0);
 ?>
 <body class="">
@@ -18,7 +20,7 @@ $qtdF = (is_array($fornecedores) ? count($fornecedores) : 0);
                     <div class="row gx-3 align-items-center justify-content-center">
                         <div class="col-lg-9 col-xl-9 col-xxl-9">
                             <div class="my-1 px-4 mx-auto">
-                                <a class="text-decoration-none" href="<?= DIRPAGE; ?>financeiro">
+                                <a class="text-decoration-none" href="<?= DIRPAGE; ?>lancamentos/cadastro">
                                 <h5 class="fs-2 fw-bolder text-uppercase text-dark mb-2">
                                     <i class="bi bi-coin"></i> Cadastrar  <span class="text-success">Lançamentos a Pagar e/ou Receber</span></h5></a>
                             </div>
@@ -37,7 +39,7 @@ $qtdF = (is_array($fornecedores) ? count($fornecedores) : 0);
                         <div class="row ">    
                             <div class="col-4 mb-2">
                                 <div class="form-floating mb-3">
-                                    <select class="form-select text-uppercase mb-3 form-floating" name="SET_COD">
+                                    <select class="form-select text-uppercase mb-3 form-floating" name="CTA_COD">
                                         <option value="0" <?= (isset($_POST['CTA_COD']) &&  $_POST['CTA_COD']  == "0")? 'selected' : '' ?>>---</option>
                                         <?php for ($i= 0; $i < $qtdC; $i++) { ?> 
                                             <option value="<?= $contas[$i]['CTA_COD']; ?>" <?= (isset($_POST['CTA_COD']) &&  $_POST['CTA_COD']  == $contas[$i]['CTA_COD'] )? 'selected' : '' ?>><?= $contas[$i]['CTA_DESCRICAO'] ?></option>
@@ -56,22 +58,12 @@ $qtdF = (is_array($fornecedores) ? count($fornecedores) : 0);
                                     <label class="form-label">TIPO</label>
                                 </div>
                             </div>
-                            <div class="col-4 mb-2">
-                                <div class="form-floating mb-3">   
-                                    <select class="form-select" name="LAN_PARCELA">
-                                        <option value="1" <?= (isset($_POST['LAN_PARCELA']) &&  $_POST['LAN_PARCELA']  == 1)? 'selected' : '' ?>>1x ÚNICA</option>
-                                        <?php for ($i=2; $i <= 360; $i++) { ?>
-                                            <option value="<?= $i?>" <?= (isset($_POST['LAN_PARCELA']) &&  $_POST['LAN_PARCELA']  == $i)? 'selected' : '' ?>><?= $i ?>x</option>
-                                        <?php } ?>
-                                    </select>
-                                    <label class="form-label">PARCELA</label>
-                                </div> 
-                            </div> 
+                            
                             <div class="col-4 form-floating mb-3">
-                                <select class="form-select text-uppercase mb-3 form-floating" name="CLA_COD">
-                                    <option value="0" <?= (isset($_POST['CLA_COD']) &&  $_POST['CLA_COD']  == "0")? 'selected' : '' ?>>---</option>
-                                    <?php for ($i= 0; $i < $qtdCL; $i++) { ?> 
-                                        <option value="<?= $classificacoes[$i]['CLA_COD']; ?>" <?= (isset($_POST['CLA_COD']) &&  $_POST['CLA_COD']  == $classificacoes[$i]['CLA_COD'] )? 'selected' : '' ?>><?= $classificacoes[$i]['CLA_DESCRICAO'] ?></option>
+                                <select class="form-select text-uppercase mb-3 form-floating" name="CAT_COD">
+                                    <option value="0" <?= (isset($_POST['CAT_COD']) &&  $_POST['CAT_COD']  == "0")? 'selected' : '' ?>>---</option>
+                                    <?php for ($i= 0; $i < $qtdCA; $i++) { ?> 
+                                        <option value="<?= $categorias[$i]['CAT_COD']; ?>" <?= (isset($_POST['CAT_COD']) &&  $_POST['CAT_COD']  == $categorias[$i]['CAT_COD'] )? 'selected' : '' ?>><?= $categorias[$i]['CAT_DESCRICAO'] ?></option>
                                     <?php } ?> 
                                 </select>
                                 <label class="form-floating mb-3">CATEGORIA</label>
@@ -79,17 +71,17 @@ $qtdF = (is_array($fornecedores) ? count($fornecedores) : 0);
                             <div class="col-4 form-floating mb-3">
                                 <select class="form-select text-uppercase mb-3 form-floating" name="CLA_COD">
                                     <option value="0" <?= (isset($_POST['CLA_COD']) &&  $_POST['CLA_COD']  == "0")? 'selected' : '' ?>>---</option>
-                                    <?php for ($i= 0; $i < $qtdCL; $i++) { ?> 
+                                    <?php for ($i= 0; $i < $qtdCLA; $i++) { ?> 
                                         <option value="<?= $classificacoes[$i]['CLA_COD']; ?>" <?= (isset($_POST['CLA_COD']) &&  $_POST['CLA_COD']  == $classificacoes[$i]['CLA_COD'] )? 'selected' : '' ?>><?= $classificacoes[$i]['CLA_DESCRICAO'] ?></option>
                                     <?php } ?> 
                                 </select>
                                 <label class="form-floating mb-3">CLASSIFICAÇÃO</label>
                             </div>
                             <div class="col-4 form-floating mb-3">
-                                <select class="form-select text-uppercase mb-3 form-floating" name="CLA_COD">
-                                    <option value="0" <?= (isset($_POST['CLA_COD']) &&  $_POST['CLA_COD']  == "0")? 'selected' : '' ?>>---</option>
-                                    <?php for ($i= 0; $i < $qtdCL; $i++) { ?> 
-                                        <option value="<?= $classificacoes[$i]['CLA_COD']; ?>" <?= (isset($_POST['CLA_COD']) &&  $_POST['CLA_COD']  == $classificacoes[$i]['CLA_COD'] )? 'selected' : '' ?>><?= $classificacoes[$i]['CLA_DESCRICAO'] ?></option>
+                                <select class="form-select text-uppercase mb-3 form-floating" name="CLI_COD">
+                                    <option value="0" <?= (isset($_POST['CLI_COD']) &&  $_POST['CLI_COD']  == "0")? 'selected' : '' ?>>---</option>
+                                    <?php for ($i= 0; $i < $qtdCLI; $i++) { ?> 
+                                        <option value="<?= $clientes[$i]['CLI_COD']; ?>" <?= (isset($_POST['CLI_COD']) &&  $_POST['CLI_COD']  == $clientes[$i]['CLI_COD'] )? 'selected' : '' ?>><?= $clientes[$i]['CLI_NOME'] ?></option>
                                     <?php } ?> 
                                 </select>
                                 <label class="form-floating mb-3">P/ CLIENTE</label>
@@ -113,12 +105,22 @@ $qtdF = (is_array($fornecedores) ? count($fornecedores) : 0);
                                 <div class="input-group form-floating mb-3">
                                     <span class="input-group-text">R$</span>
                                     <div class="form-floating">
-                                        <input type="text" class="form-control form-control-lg real" id="LAN_VALOR" name="LAN_VALOR" placeholder="" value="<?= isset($_POST['LAN_VALOR']) ? $_POST['LAN_VALOR'] : ''; ?>">
+                                        <input type="text" class="form-control form-control-lg real" id="LAN_VALOR" name="LAN_VALOR" placeholder="" value="<?= isset($_POST['LAN_VALOR']) ? $_POST['LAN_VALOR'] : '0,00'; ?>">
                                         <label class="form-label" for="2">VALOR</label>
                                     </div>
                                 </div>
-                               
                             </div>
+                            <div class="col-4 mb-2">
+                                <div class="form-floating mb-3">   
+                                    <select class="form-select" id="LAN_PARCELA" name="LAN_PARCELA">
+                                        <option value="1" <?= (isset($_POST['LAN_PARCELA']) &&  $_POST['LAN_PARCELA']  == 1)? 'selected' : '' ?>>1x ÚNICA</option>
+                                        <?php for ($i=2; $i <= 360; $i++) { ?>
+                                            <option value="<?= $i?>" <?= (isset($_POST['LAN_PARCELA']) &&  $_POST['LAN_PARCELA']  == $i)? 'selected' : '' ?>><?= $i ?>x</option>
+                                        <?php } ?>
+                                    </select>
+                                    <label class="form-label">PARCELA</label>
+                                </div> 
+                            </div> 
                             <div class="col-6 form-floating mb-3">
                                 <input type="text" class="form-control form-control-lg  maiusculo" name="LAN_DESCRICAO" value="<?= isset($_POST['LAN_DESCRICAO'])? $_POST['LAN_DESCRICAO']  : '' ?>"/>
                                 <label for="4" class="form-label">DESCRIÇÃO</label>
@@ -139,6 +141,34 @@ $qtdF = (is_array($fornecedores) ? count($fornecedores) : 0);
                 </div>
             </section>
             <?php include_once 'app/Views/admin/inc/rodape.phtml';?>
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+            <script src="<?= DIRJS ?>jquery.maskMoney.js"></script>
+            <script>
+            $(document).ready(function(){
+
+                $('.real').maskMoney({
+                    prefix:'',
+                    allowNegative: true,
+                    thousands:'.', decimal:',',
+                    affixesStay: true
+                });
+                $("#LAN_PARCELA").on("change", function(){
+                    var LAN_PARCELA = $(this).val();
+                    console.log(LAN_PARCELA);
+                    var LAN_VALOR = $(".real").val();
+                    console.log(LAN_VALOR);
+                    var novo = parseFloat(LAN_VALOR/LAN_PARCELA);
+                    console.log(novo);
+                    $("#LAN_VALOR").val(novo);
+                    $('#LAN_VALOR').maskMoney({
+                        prefix:'',
+                        allowNegative: true,
+                        thousands:'.', decimal:',',
+                        affixesStay: true
+                    });
+                });
+            })
+            </script>
         </div>
     </div>
 </body>
