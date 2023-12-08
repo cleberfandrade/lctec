@@ -2,8 +2,11 @@
 use Libraries\Sessao;
 session_start();
 include_once 'app/Views/admin/inc/cabecalho.phtml'; 
-$qtdP = (is_array($contas_pagar) ? count($contas_pagar) : 0);
-$qtdR = (is_array($contas_receber) ? count($contas_receber) : 0);
+$qtdC = (is_array($contas) ? count($contas) : 0);
+$qtdCA = (is_array($categorias) ? count($categorias) : 0);
+$qtdCLA = (is_array($classificacoes) ? count($classificacoes) : 0);
+$qtdCLI = (is_array($clientes) ? count($clientes) : 0);
+$qtdF = (is_array($fornecedores) ? count($fornecedores) : 0);
 ?>
 <body class="">
     <div class="d-flex" id="wrapper">
@@ -17,9 +20,9 @@ $qtdR = (is_array($contas_receber) ? count($contas_receber) : 0);
                     <div class="row gx-3 align-items-center justify-content-center">
                         <div class="col-lg-9 col-xl-9 col-xxl-9">
                             <div class="my-1 px-4 mx-auto">
-                                <a class="text-decoration-none" href="<?= DIRPAGE; ?>financeiro">
+                                <a class="text-decoration-none" href="<?= DIRPAGE; ?>lancamentos/alteracao/<?= $lancamento['EMP_COD'] ?>/<?= $lancamento['LAN_COD']?>">
                                 <h5 class="fs-2 fw-bolder text-uppercase text-dark mb-2">
-                                    <i class="bi bi-coin"></i> Gerenciar  <span class="text-success">Contas a Pagar e Receber</span></h5></a>
+                                    <i class="bi bi-coin"></i> Cadastrar  <span class="text-success">Lançamentos a Pagar e/ou Receber</span></h5></a>
                             </div>
                         </div>
                         <?php include_once 'app/Views/admin/inc/saudacao.phtml'; ?>
@@ -31,10 +34,133 @@ $qtdR = (is_array($contas_receber) ? count($contas_receber) : 0);
             </header>
             <?php include_once 'app/Views/admin/inc/alertas.phtml'; ?>  
             <section class="bg-light  text-dark row  py-2">
-                <div class="container mx-auto col-12 row">
+                <div class="container mx-auto col-11 row">
+                    <form class="p-4 p-md-6 border text-uppercase rounded-3 bg-3" action="<?= DIRPAGE ?>lancamentos/alterar" method="POST">
+                        <div class="row ">    
+                            <div class="col-4 mb-2">
+                                <div class="form-floating mb-3">
+                                    <select class="form-select text-uppercase mb-3 form-floating" name="CTA_COD">
+                                        <option value="0" <?= (isset($_POST['CTA_COD']) &&  $_POST['CTA_COD']  == "0")? 'selected' : '' ?>>---</option>
+                                        <?php for ($i= 0; $i < $qtdC; $i++) { ?> 
+                                            <option value="<?= $contas[$i]['CTA_COD']; ?>" <?= (isset($_POST['CTA_COD']) &&  $_POST['CTA_COD']  == $contas[$i]['CTA_COD'] )? 'selected' : (isset($lancamento['CTA_COD']) && $lancamento['CTA_COD'] == $contas[$i]['CTA_COD'] ? 'selected': '') ?>><?= $contas[$i]['CTA_DESCRICAO'] ?></option>
+                                        <?php } ?> 
+                                    </select>
+                                    <label class="form-floating mb-3">CONTA</label>
+                                </div>
+                            </div> 
+                            <div class="col-4 mb-2">
+                                <div class="form-floating mb-3">
+                                    <select class="form-select" name="LAN_TIPO">
+                                        <option value="0"<?= (isset($_POST['LAN_TIPO']) &&  $_POST['LAN_TIPO']  == 0)? 'selected' : (isset($lancamento['LAN_TIPO']) && $lancamento['LAN_TIPO'] == 0 ? 'selected': '') ?>>---</option>
+                                        <option value="1"<?= (isset($_POST['LAN_TIPO']) &&  $_POST['LAN_TIPO']  == 1)? 'selected' : (isset($lancamento['LAN_TIPO']) && $lancamento['LAN_TIPO'] == 1 ? 'selected': '') ?>>A PAGAR</option>
+                                        <option value="2"<?= (isset($_POST['LAN_TIPO']) &&  $_POST['LAN_TIPO']  == 2)? 'selected' : (isset($lancamento['LAN_TIPO']) && $lancamento['LAN_TIPO'] == 2 ? 'selected': '') ?>>A RECEBER</option>
+                                    </select>
+                                    <label class="form-label">TIPO</label>
+                                </div>
+                            </div>
+                            
+                            <div class="col-4 form-floating mb-3">
+                                <select class="form-select text-uppercase mb-3 form-floating" name="CAT_COD">
+                                    <option value="0" <?= (isset($_POST['CAT_COD']) &&  $_POST['CAT_COD']  == "0")? 'selected' : '' ?>>---</option>
+                                    <?php for ($i= 0; $i < $qtdCA; $i++) { if ($categorias[$i]['CAT_STATUS'] == 1) { ?> 
+                                        <option value="<?= $categorias[$i]['CAT_COD']; ?>" <?= (isset($_POST['CAT_COD']) &&  $_POST['CAT_COD']  == $categorias[$i]['CAT_COD'] )? 'selected' : (isset($lancamento['CAT_COD']) && $lancamento['CAT_COD'] == $categorias[$i]['CAT_COD'] ? 'selected': '') ?>><?= $categorias[$i]['CAT_DESCRICAO'] ?></option>
+                                    <?php } } ?> 
+                                </select>
+                                <label class="form-floating mb-3">CATEGORIA</label>
+                            </div>
+                            <div class="col-4 form-floating mb-3">
+                                <select class="form-select text-uppercase mb-3 form-floating" name="CLA_COD">
+                                    <option value="0" <?= (isset($_POST['CLA_COD']) &&  $_POST['CLA_COD']  == "0")? 'selected' :'' ?>>---</option>
+                                    <?php for ($i= 0; $i < $qtdCLA; $i++) { if ($classificacoes[$i]['CLA_STATUS'] == 1) { ?> 
+                                        <option value="<?= $classificacoes[$i]['CLA_COD']; ?>" <?= (isset($_POST['CLA_COD']) &&  $_POST['CLA_COD']  == $classificacoes[$i]['CLA_COD'] )? 'selected' : (isset($lancamento['CLA_COD']) && $lancamento['CLA_COD'] == $classificacoes[$i]['CLA_COD'] ? 'selected': '') ?>><?= $classificacoes[$i]['CLA_DESCRICAO'] ?></option>
+                                        <?php } } ?> 
+                                </select>
+                                <label class="form-floating mb-3">CLASSIFICAÇÃO</label>
+                            </div>
+                            <div class="col-4 form-floating mb-3">
+                                <select class="form-select text-uppercase mb-3 form-floating" name="CLI_COD">
+                                    <option value="0" <?= (isset($_POST['CLI_COD']) &&  $_POST['CLI_COD']  == "0")? 'selected' : '' ?>>---</option>
+                                    <?php for ($i= 0; $i < $qtdCLI; $i++) { if ($clientes[$i]['CLI_STATUS'] == 1) { ?> 
+                                        <option value="<?= $clientes[$i]['CLI_COD']; ?>" <?= (isset($_POST['CLI_COD']) &&  $_POST['CLI_COD']  == $clientes[$i]['CLI_COD'] )? 'selected' : (isset($lancamento['CLI_COD']) && $lancamento['CLI_COD'] == $clientes[$i]['CLI_COD'] ? 'selected': '') ?>><?= $clientes[$i]['CLI_NOME'] ?></option>
+                                    <?php } } ?> 
+                                </select>
+                                <label class="form-floating mb-3">P/ CLIENTE</label>
+                            </div>
+                            <div class="col-4 form-floating mb-3">
+                                <select class="form-select " name="FOR_COD">     
+                                    <option value="0" <?= (isset($_POST['FOR_COD']) &&  $_POST['FOR_COD']  == 0)? 'selected' : '' ?>>---</option>                     
+                                    <?php 
+                                    for ($i=0; $i < $qtdF; $i++) { if ($fornecedores[$i]['FOR_STATUS'] == 1) { ?> 
+                                        <option value="<?= $fornecedores[$i]['FOR_COD'] ?>" <?= (isset($_POST['FOR_COD']) &&  $_POST['FOR_COD']  == $fornecedores[$i]['FOR_COD'])? 'selected' : (isset($lancamento['FOR_COD']) && $lancamento['FOR_COD'] == $fornecedores[$i]['FOR_COD'] ? 'selected': '') ?>><?= $fornecedores[$i]['FOR_NOME_FANTASIA'] ?></option>
+                                        <?php } } ?> 
+                                </select>
+                                <label class="form-label">P/ FORNECEDOR?</label>
+                            </div>
+                            <div class="col-4 form-floating mb-3">
+                               
+                                <input type="date" class="form-control form-control-lg" name="LAN_DT_VENCIMENTO" placeholder="" value="<?= isset($_POST['LAN_DT_VENCIMENTO']) ? $_POST['LAN_DT_VENCIMENTO'] : (isset($lancamento['LAN_DT_VENCIMENTO']) ? $lancamento['LAN_DT_VENCIMENTO'] : ''); ?>">
+                                <label class="px-3" for="2">DATA DE VENCIMENTO</label>
+                            </div> 
+                            <div class="col-4 ">
+                                <div class="input-group form-floating mb-3">
+                                    <span class="input-group-text">R$</span>
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control form-control-lg real" id="LAN_VALOR" name="LAN_VALOR" placeholder="" value="<?= isset($_POST['LAN_VALOR']) ? $_POST['LAN_VALOR'] : (isset($lancamento['LAN_VALOR']) ? $lancamento['LAN_VALOR'] : '0,00'); ?>">
+                                        <label class="form-label" for="2">VALOR</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-4 mb-2">
+                                <div class="form-floating mb-3">   
+                                    <select class="form-select" id="LAN_PARCELA" name="LAN_PARCELA">
+                                        <option value="1" <?= (isset($_POST['LAN_PARCELA']) &&  $_POST['LAN_PARCELA']  == 1)? 'selected' : '' ?>>1x ÚNICA</option>
+                                        <?php for ($i=2; $i <= 360; $i++) { ?>
+                                            <option value="<?= $i?>" <?= (isset($_POST['LAN_PARCELA']) &&  $_POST['LAN_PARCELA']  == $i)? 'selected' : (isset($lancamento['LAN_PARCELA']) && $lancamento['LAN_PARCELA'] == $i ? 'selected': '') ?>><?= $i ?>x</option>
+                                        <?php } ?>
+                                    </select>
+                                    <label class="form-label">PARCELA</label>
+                                </div> 
+                            </div> 
+                            <div class="col-12 mb-3 row mx-auto text-center  ">
+                                <div class="form-check form-check-inline col-3 mx-auto  form-switch">
+                                    <input class="form-check-input" name="LAN_RESULTADOS" type="checkbox" id="flexSwitchCheckChecked" checked>
+                                    <label class="form-check-label" for="flexSwitchCheckChecked">PARTICIPA DOS RESULTADOS</label>
+                                </div>
+                            </div>
+                            <div class="col-6 form-floating mb-3">
+                                <input type="text" class="form-control form-control-lg  maiusculo" name="LAN_DESCRICAO" value="<?= isset($_POST['LAN_DESCRICAO'])? $_POST['LAN_DESCRICAO']  : (isset($lancamento['LAN_DESCRICAO']) ? $lancamento['LAN_DESCRICAO'] : '') ?>"/>
+                                <label for="4" class="form-label">DESCRIÇÃO</label>
+                            </div>
+                            <div class="col-6 form-floating mb-3">
+                                <textarea type="text" rows="10" class="form-control  maiusculo" name="LAN_OBSERVACAO"><?= isset($_POST['LAN_OBSERVACAO'])? $_POST['LAN_OBSERVACAO']  : (isset($lancamento['LAN_OBSERVACAO']) ? $lancamento['LAN_OBSERVACAO'] : '') ?></textarea>
+                                <label for="4" class="form-label">OBSERVAÇÃO</label>
+                            </div>
+                        </div> 
+                        <hr class="my-4 text-dark">
+                        <div class="col-8 mx-auto text-center mb-3">
+                            <span class="text-center fs-5 mb-3">CASO SEJA UM PAGAMENTO PARCELADO, O SISTEMA CRIARÁ <b>AUTOMATICAMENTE</b><br> OS LANÇAMENTOS FUTUROS DE ACORDO COM O NÚMERO DE PARCELAS DEFINIDO</span>
+                        </div>
+                        <input type="hidden" class="form-control" name="EMP_COD" value="<?= isset($lancamento['EMP_COD']) ? $lancamento['EMP_COD'] : 0; ?>">
+                        <input type="hidden" class="form-control" name="USU_COD" value="<?= isset($_SESSION['USU_COD']) ? $_SESSION['USU_COD'] : 0; ?>">
+                        <input type="hidden" class="form-control" name="LAN_COD" value="<?= isset($lancamento['LAN_COD']) ? $lancamento['LAN_COD'] : 0; ?>">
+                        <button class="w-100 btn btn-lg text-uppercase btn-warning" name="CADASTRAR_NOVO_LANCAMENTO" type="submit"><i class="fa fa-save"></i> Alterar</button>
+                    </form>
                 </div>
             </section>
             <?php include_once 'app/Views/admin/inc/rodape.phtml';?>
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+            <script src="<?= DIRJS ?>jquery.maskMoney.js"></script>
+            <script>
+            $(document).ready(function(){
+
+                $('.real').maskMoney({
+                    prefix:'',
+                    allowNegative: true,
+                    thousands:'.', decimal:',',
+                    affixesStay: true
+                });
+            })
+            </script>
         </div>
     </div>
 </body>
