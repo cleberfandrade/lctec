@@ -51,9 +51,9 @@ $qtdF = (is_array($fornecedores) ? count($fornecedores) : 0);
                             <div class="col-4 mb-2">
                                 <div class="form-floating mb-3">
                                     <select class="form-select" name="LAN_TIPO">
-                                        <option value="0" <?= (isset($_POST['LAN_TIPO']) &&  $_POST['LAN_TIPO']  == 0)? 'selected' : '' ?>>---</option>
+                                        <option value="0"<?= (isset($_POST['LAN_TIPO']) &&  $_POST['LAN_TIPO']  == 0)? 'selected' : '' ?>>---</option>
                                         <option value="1"<?= (isset($_POST['LAN_TIPO']) &&  $_POST['LAN_TIPO']  == 1)? 'selected' : '' ?>>A PAGAR</option>
-                                        <option value="2" <?= (isset($_POST['LAN_TIPO']) &&  $_POST['LAN_TIPO']  == 2)? 'selected' : '' ?>>A RECEBER</option>
+                                        <option value="2"<?= (isset($_POST['LAN_TIPO']) &&  $_POST['LAN_TIPO']  == 2)? 'selected' : '' ?>>A RECEBER</option>
                                     </select>
                                     <label class="form-label">TIPO</label>
                                 </div>

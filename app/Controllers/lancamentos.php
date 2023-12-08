@@ -69,7 +69,8 @@ class lancamentos extends View
         $dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);
         if (isset($_POST) && isset($dados['CADASTRAR_NOVO_LANCAMENTO'])) {
             unset($dados['CADASTRAR_NOVO_LANCAMENTO']);
-            if( $this->dados['empresa']['USU_COD'] == $dados['USU_COD'] && $this->dados['empresa']['EMP_COD'] == $dados['EMP_COD']){
+            
+            if($this->dados['empresa']['USU_COD'] == $dados['USU_COD'] && $this->dados['empresa']['EMP_COD'] == $dados['EMP_COD']){
                 
                 //Verifica se tem algum valor proibido
                 foreach ($dados as $key => $value) {
@@ -78,15 +79,17 @@ class lancamentos extends View
                 
                 //Verificar se já existe cadastro
                 $lan = $this->Lancamentos->setCodEmpresa($dados['EMP_COD'])->setDataVencimento($dados['LAN_DT_VENCIMENTO'])->setDescricao($dados['LAN_DESCRICAO'])->checarDescricao();
-                            
+                      
                 if(!$lan){
                     $total = 0;
+                    
                     if ($dados['LAN_PARCELA'] >=2) {
+
                         $vl_parcela = ($dados['LAN_VALOR']/$dados['LAN_PARCELA']);
                         $vl_parcela = number_format($vl_parcela,2,'.',',');
                         $descricao = $dados['LAN_DESCRICAO'];
                         $qtd = $dados['LAN_PARCELA'];
-
+                      
                         unset($dados['LAN_VALOR']);
                         unset($dados['LAN_DESCRICAO']);
                        
@@ -98,6 +101,8 @@ class lancamentos extends View
                                 'LAN_DT_ATUALIZACAO'=> date('0000-00-00 00:00:00'),          
                                 'LAN_STATUS'=> 1
                             );
+                            dump($dados);
+                            exit;
                             if($this->Lancamentos->cadastrar($dados,0)){
                                 $total++;
                             }
