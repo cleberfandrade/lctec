@@ -39,7 +39,7 @@
     cl.innerHTML = `${hour}:${minute}:${second}`
   }
   
-let contador = 3600;
+let contador = 2800;
 
 function somaContador(valor)
 {
@@ -48,7 +48,7 @@ function somaContador(valor)
     //const dataHoraBrasil = dataAtual.toLocaleString('pt-BR', options);
     if(contador != 0){
         contador = contador - valor;
-        const units = new Date(contador * 1000).toLocaleDateString(navigator.language, {hour:'2-digit', minute:'2-digit', second: '2-digit'},options).substring(12, 20)
+        const units = new Date(contador * 1000).toLocaleDateString(navigator.language, { minute:'2-digit', second: '2-digit'},options).substring(12, 20)
         $("#limite").html(units);
     }else{
         //console.log(contador);
