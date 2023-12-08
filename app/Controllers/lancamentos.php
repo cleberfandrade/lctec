@@ -101,8 +101,6 @@ class lancamentos extends View
                                 'LAN_DT_ATUALIZACAO'=> date('0000-00-00 00:00:00'),          
                                 'LAN_STATUS'=> 1
                             );
-                            dump($dados);
-                            exit;
                             if($this->Lancamentos->cadastrar($dados,0)){
                                 $total++;
                             }
