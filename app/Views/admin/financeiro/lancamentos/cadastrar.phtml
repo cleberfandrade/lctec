@@ -2,8 +2,9 @@
 use Libraries\Sessao;
 session_start();
 include_once 'app/Views/admin/inc/cabecalho.phtml'; 
-$qtdP = (is_array($contas_pagar) ? count($contas_pagar) : 0);
-$qtdR = (is_array($contas_receber) ? count($contas_receber) : 0);
+$qtdC = (is_array($contas) ? count($contas) : 0);
+$qtdL = (is_array($classificacoes) ? count($classificacoes) : 0);
+$qtdF = (is_array($fornecedores) ? count($fornecedores) : 0);
 ?>
 <body class="">
     <div class="d-flex" id="wrapper">
@@ -46,21 +47,25 @@ $qtdR = (is_array($contas_receber) ? count($contas_receber) : 0);
                                 </div>
                             </div> 
                             <div class="col-4 mb-2">
-                                <label class="form-label">TIPO</label>
-                                <select class="form-select" name="LAN_TIPO">
-                                    <option value="0" <?= (isset($_POST['LAN_TIPO']) &&  $_POST['LAN_TIPO']  == 0)? 'selected' : '' ?>>---</option>
-                                    <option value="1"<?= (isset($_POST['LAN_TIPO']) &&  $_POST['LAN_TIPO']  == 1)? 'selected' : '' ?>>RECEITA</option>
-                                    <option value="2" <?= (isset($_POST['LAN_TIPO']) &&  $_POST['LAN_TIPO']  == 2)? 'selected' : '' ?>>DESPESA</option>
-                                </select>
+                                <div class="form-floating mb-3">
+                                    <select class="form-select" name="LAN_TIPO">
+                                        <option value="0" <?= (isset($_POST['LAN_TIPO']) &&  $_POST['LAN_TIPO']  == 0)? 'selected' : '' ?>>---</option>
+                                        <option value="1"<?= (isset($_POST['LAN_TIPO']) &&  $_POST['LAN_TIPO']  == 1)? 'selected' : '' ?>>A PAGAR</option>
+                                        <option value="2" <?= (isset($_POST['LAN_TIPO']) &&  $_POST['LAN_TIPO']  == 2)? 'selected' : '' ?>>A RECEBER</option>
+                                    </select>
+                                    <label class="form-label">TIPO</label>
+                                </div>
                             </div>
                             <div class="col-4 mb-2">
-                                <label class="form-label">PARCELA</label>
-                                <select class="form-select" name="LAN_PARCELA">
-                                    <option value="1" <?= (isset($_POST['LAN_PARCELA']) &&  $_POST['LAN_PARCELA']  == 1)? 'selected' : '' ?>>ÚNICA</option>
-                                    <?php for ($i=2; $i <= 360; $i++) { ?>
-                                        <option value="<?= $i?>" <?= (isset($_POST['LAN_PARCELA']) &&  $_POST['LAN_PARCELA']  == $i)? 'selected' : '' ?>><?= $i ?>x</option>
-                                    <?php } ?>
-                                </select>
+                                <div class="form-floating mb-3">   
+                                    <select class="form-select" name="LAN_PARCELA">
+                                        <option value="1" <?= (isset($_POST['LAN_PARCELA']) &&  $_POST['LAN_PARCELA']  == 1)? 'selected' : '' ?>>1x ÚNICA</option>
+                                        <?php for ($i=2; $i <= 360; $i++) { ?>
+                                            <option value="<?= $i?>" <?= (isset($_POST['LAN_PARCELA']) &&  $_POST['LAN_PARCELA']  == $i)? 'selected' : '' ?>><?= $i ?>x</option>
+                                        <?php } ?>
+                                    </select>
+                                    <label class="form-label">PARCELA</label>
+                                </div> 
                             </div> 
                             <div class="col-4 form-floating mb-3">
                                 <select class="form-select text-uppercase mb-3 form-floating" name="CLA_COD">
@@ -81,20 +86,24 @@ $qtdR = (is_array($contas_receber) ? count($contas_receber) : 0);
                                 </select>
                                 <label class="form-label">P/ FORNECEDOR?</label>
                             </div>
-                            <div class="col-4 mb-3">
-                                <label class="px-3" for="2">DATA DE VENCIMENTO</label>
+                            <div class="col-4 form-floating mb-3">
+                               
                                 <input type="date" class="form-control form-control-lg" name="LAN_DT_VENCIMENTO" placeholder="" value="<?= isset($_POST['LAN_DT_VENCIMENTO']) ? $_POST['LAN_DT_VENCIMENTO'] : ''; ?>">
+                                <label class="px-3" for="2">DATA DE VENCIMENTO</label>
                             </div> 
-                            <div class="col-4 mb-3">
-                                <label class="px-5" for="2">VALOR A PAGAR</label>
-                                <div class="input-group">
+                            <div class="col-4 ">
+                                <div class="input-group form-floating mb-3">
                                     <span class="input-group-text">R$</span>
-                                    <input type="text" class="form-control form-control-lg real2" id="LAN_VALOR" name="LAN_VALOR" placeholder="" value="<?= isset($_POST['LAN_VALOR']) ? $_POST['LAN_VALOR'] : ''; ?>">
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control form-control-lg real" id="LAN_VALOR" name="LAN_VALOR" placeholder="" value="<?= isset($_POST['LAN_VALOR']) ? $_POST['LAN_VALOR'] : ''; ?>">
+                                        <label class="form-label" for="2">VALOR A PAGAR</label>
+                                    </div>
                                 </div>
+                               
                             </div>
-                            <div class="col-8 mb-3">
-                                <label for="address2" class="form-label">DESCRIÇÃO</label>
-                                <input type="text" class="form-control  maiusculo" name="LAN_DESCRICAO" value="<?= isset($_POST['LAN_DESCRICAO'])? $_POST['LAN_DESCRICAO']  : '' ?>"/>
+                            <div class="col-8 form-floating mb-3">
+                                <input type="text" class="form-control form-control-lg  maiusculo" name="LAN_DESCRICAO" value="<?= isset($_POST['LAN_DESCRICAO'])? $_POST['LAN_DESCRICAO']  : '' ?>"/>
+                                <label for="4" class="form-label">DESCRIÇÃO</label>
                             </div>
                         </div> 
                         <hr class="my-4 text-dark">

@@ -1,13 +1,16 @@
 <?php
 namespace App\Controllers;
 
+use App\Models\Classificacoes;
+use App\Models\Clientes;
+use App\Models\Contas;
 use Core\View;
 use Libraries\Check;
 use Libraries\Sessao;
 use Libraries\Url;
-
 use App\Models\Empresas;
 use App\Models\Financas;
+use App\Models\Fornecedores;
 use App\Models\Usuarios;
 use App\Models\UsuariosEmpresa;
 use App\Models\Lancamentos as ModelsLancamentos;
@@ -15,7 +18,7 @@ use App\Models\Lancamentos as ModelsLancamentos;
 class lancamentos extends View
 {
     private $dados = [];
-    private $link,$Financas,$Check,$Usuarios,$UsuariosEmpresa, $Lancamentos;
+    private $link,$Financas,$Check,$Usuarios,$UsuariosEmpresa, $Lancamentos,$Contas,$Classificacoes,$Clientes,$Fornecedores;
     public function __construct()
     {
         Sessao::naoLogado();
@@ -24,12 +27,23 @@ class lancamentos extends View
         $this->Check = new Check;
         $this->Usuarios = new Usuarios;
         $this->UsuariosEmpresa = new UsuariosEmpresa;
-        $this->Pagamentos = new ModelsLancamentos;
+        $this->Lancamentos = new ModelsLancamentos;
+        $this->Contas = new Contas;
+        $this->Classificacoes = new Classificacoes;
+        $this->Fornecedores = new Fornecedores;
+        $this->Clientes= new Clientes;
         $this->dados['empresa'] = $this->UsuariosEmpresa->setCodEmpresa($_SESSION['EMP_COD'])->setCodUsuario($_SESSION['USU_COD'])->listar(0);
         $this->dados['usuario'] = $this->Usuarios->setCodUsuario($_SESSION['USU_COD'])->listar(0);
         $this->dados['lancamentos'] = $this->Lancamentos->setCodEmpresa($_SESSION['EMP_COD'])->listarTodos(0);
+        $this->dados['contas'] = $this->Contas->setCodEmpresa($_SESSION['EMP_COD'])->listarTodas(0);
+        $this->dados['classificacoes'] = $this->Classificacoes->setCodEmpresa($_SESSION['EMP_COD'])->listarTodos(0);
+        $this->dados['fornecedores'] = $this->Fornecedores->setCodEmpresa($_SESSION['EMP_COD'])->listarTodos(0);
+        $this->dados['clientes'] = $this->Clientes->setCodEmpresa($_SESSION['EMP_COD'])->listarTodos(0);
+        
+        $this->link[0] = ['link'=> 'admin','nome' => 'PAINEL ADMINISTRATIVO'];
+        $this->link[1] = ['link'=> 'financeiro','nome' => 'MÓDULO FINANCEIRO'];
+        $this->link[2] = ['link'=> 'lancamentos','nome' => 'GERENCIAR LANÇAMENTOS'];
     }
-
     public function index()
     {
         $this->dados['title'] .= ' GERENCIAR LANÇAMENTOS A PARGAR E RECEBER';   
@@ -105,7 +119,7 @@ class lancamentos extends View
             //verificar se o usuario que vai efetuar a acao é da empresa e se está correto(pertence) a empresa para os dados a serem alterados
             if($this->dados['empresa']['USU_COD'] == $_SESSION['USU_COD'] && $this->dados['empresa']['EMP_COD'] == $dados[2]){
              
-                $this->dados['lancamento'] = $this->Categorias->setCodEmpresa($dados[2])->setCodigo($dados[3])->listar(0);
+                $this->dados['lancamento'] = $this->Lancamentos->setCodEmpresa($dados[2])->setCodigo($dados[3])->listar(0);
                 if ($this->dados['lancamento'] != 0) {
                     $ok = true;
                 }
@@ -177,7 +191,7 @@ class lancamentos extends View
             if($this->dados['empresa']['USU_COD'] == $_SESSION['USU_COD'] && $this->dados['empresa']['EMP_COD'] == $dados['EMP_COD']){
                 
                 unset($dados['STATUS_LANCAMENTO']);
-                $this->Setores->setCodEmpresa($dados['EMP_COD'])->setCodigo($dados['LAN_COD']);
+                $this->Lancamentos->setCodEmpresa($dados['EMP_COD'])->setCodigo($dados['LAN_COD']);
                 ($dados['LAN_STATUS'] == 1)? $dados['LAN_STATUS'] = 0: $dados['LAN_STATUS'] = 1;
                               
                 $db = array(
@@ -185,7 +199,7 @@ class lancamentos extends View
                     'LAN_DT_ATUALIZACAO'=> date('Y-m-d H:i:s'),
                     'LAN_STATUS' => $dados['LAN_STATUS']
                 );
-                if($this->Setores->alterar($db,0)){
+                if($this->Lancamentos->alterar($db,0)){
                     $respota = array(
                         'COD'=>'OK',
                         'MENSAGEM' => 'Status alterado com sucesso!'
