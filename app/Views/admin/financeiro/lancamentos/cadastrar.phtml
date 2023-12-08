@@ -154,10 +154,28 @@ $qtdF = (is_array($fornecedores) ? count($fornecedores) : 0);
                 });
                 $("#LAN_PARCELA").on("change", function(){
                     var LAN_PARCELA = $(this).val();
-                    console.log(LAN_PARCELA);
+                    
                     var LAN_VALOR = $(".real").val();
+                   
+                    // Remove qualquer caractere em branco do final do texto:
+                    str = LAN_VALOR.replace(/^\s+|\s+$/g, '');
+
+                    // Lista de caracteres especiais que serão substituídos:
+                    const from = ",:;-";
+
+                    // Lista de caracteres que serão adicionados em relação aos anteriores:
+                    const to   = "";
+
+                    // Substitui todos os caracteres especiais:
+                    for (let i = 0, l = from.length; i < l; i++) {
+                    str = str.replace(new RegExp(from.charAt(i), 'g'), to.charAt(i));
+                    }
+
+                    // Remove qualquer caractere inválido que possa ter sobrado no texto:
+                    LAN_VALOR = str.replace(/[^a-z0-9 -]/g, '');
                     console.log(LAN_VALOR);
-                    var novo = parseFloat(LAN_VALOR/LAN_PARCELA);
+                    var novo = parseFloat(LAN_VALOR/LAN_PARCELA).toFixed(2);
+                    novo = novo/100
                     console.log(novo);
                     $("#LAN_VALOR").val(novo);
                     $('#LAN_VALOR').maskMoney({
