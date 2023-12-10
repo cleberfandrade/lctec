@@ -76,7 +76,7 @@ class lancamentos extends View
                 foreach ($dados as $key => $value) {
                     $dados[$key] = $this->Check->checarString($value);
                 }
-                
+                ($dados['LAN_RESULTADOS'] == "on")? $dados['LAN_RESULTADOS'] = 1: $dados['LAN_RESULTADOS'] = 0;
                 //Verificar se já existe cadastro
                 $lan = $this->Lancamentos->setCodEmpresa($dados['EMP_COD'])->setDataVencimento($dados['LAN_DT_VENCIMENTO'])->setDescricao($dados['LAN_DESCRICAO'])->checarDescricao();
                       
@@ -203,7 +203,8 @@ class lancamentos extends View
                 foreach ($dados as $key => $value) {
                     $dados[$key] = $this->Check->checarString($value);
                 }
-                
+                ($dados['LAN_RESULTADOS'] == "on")? $dados['LAN_RESULTADOS'] = 1: $dados['LAN_RESULTADOS'] = 0;
+              
                 $this->Lancamentos->setCodEmpresa($dados['EMP_COD'])->setCodigo($dados['LAN_COD']);
                 
                 $dados += array(
