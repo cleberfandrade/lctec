@@ -123,7 +123,7 @@ $qtdF = (is_array($fornecedores) ? count($fornecedores) : 0);
                             </div> 
                             <div class="col-12 mb-3 row mx-auto text-center  ">
                                 <div class="form-check form-check-inline col-3 mx-auto  form-switch">
-                                    <input class="form-check-input" name="LAN_RESULTADOS" type="checkbox" id="flexSwitchCheckChecked" checked>
+                                    <input class="form-check-input" name="LAN_RESULTADOS" type="checkbox" id="flexSwitchCheckChecked" <?= (isset($_POST['LAN_RESULTADOS']) && $_POST['LAN_RESULTADOS'] == 1)? 'checked': ((isset($lancamento['LAN_RESULTADOS']) && $lancamento['LAN_RESULTADOS'] == 1) ? 'checked' : ''); ?> >
                                     <label class="form-check-label" for="flexSwitchCheckChecked">PARTICIPA DOS RESULTADOS</label>
                                 </div>
                             </div>
