@@ -185,6 +185,13 @@ class lancamentos extends View
             $this->render('admin/financeiro/lancamentos/listar', $this->dados);
         }
     }
+    public function filtrar()
+    {
+        $this->dados['title'] .= ' GERENCIAR LANÇAMENTOS A PARGAR E RECEBER';   
+        $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
+        $ok = false;
+        $dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);       
+    }
     public function alterar()
     {
         $this->dados['title'] .= ' ALTERAR LANÇAMENTOS';

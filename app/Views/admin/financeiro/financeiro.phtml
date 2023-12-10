@@ -41,35 +41,42 @@ $qtd = (is_array($contas) ? count($contas) : 0);
                         </div>
                     <?php }else { ?>
                         <div class="row col-12 text-center mb-2 mx-auto">
-                            <div class="card col-4 bg-success text-white mx-auto text-center py-4">
-                                <a href="<?= DIRPAGE ?>contas" class="row text-white link text-decoration-none">    
-                                    <div class="col-2">
-                                        <p class="fs-1 display-1 mt-4 text-white"><i class="bi bi-bank "></i></p>
-                                    </div>    
-                                    <div class="col-10 text-white">
-                                        <h5 class="card-title mt-2">CONTAS DA EMPRESA/NEGÓCIO</h5>
-                                        <p class="card-text">Crie/Altere os dados da sua conta principal</p>
-                                    </div>
-                                </a>
-                            </div>
                             <div class="col-4 text-bg-success text-center">
+                                <div class="card-body">
+                                    <h5 class="card-title mt-2">CONTAS DA EMPRESA/NEGÓCIO</h5>
+                                    <p class="card-text">Crie/Altere os dados da sua conta principal</p>
+                                    <a href="<?= DIRPAGE ?>contas" class="btn btn-dark">ACESSAR</a>
+                                </div>
+                            </div>
+                            <div class="col-4 text-center">
                                 <div class="card-body">
                                     <h5 class="card-title">LANÇAMENTOS</h5>
                                     <p class="card-text">Cadastre/Altere os lançamentos financeiros da sua Empresa/negócio</p>
                                     <a href="<?= DIRPAGE ?>lancamentos" class="btn btn-dark">ACESSAR</a>
                                 </div>
                             </div>
-                            <div class="col-4 row text-center ">
-                                <a class="btn btn-primary mb-1 fs-3 align-middle" href="<?= DIRPAGE ?>financeiro/pagamentos/receber"><i class="bi bi-arrow-bar-up"></i> CONTAS A RECEBER</a>
-                                <a class="btn btn-danger fs-3 text-center align-middle" href="<?= DIRPAGE ?>financeiro/pagamentos/pagar" role="button"><i class="bi bi-arrow-bar-down"></i> CONTAS A PAGAR</a>
-                            </div>
-                            <div class="col-4 text-center">
+                            <div class="col-4 text-bg-success text-center">
                                 <div class="card-body">
                                     <h5 class="card-title">MOVIMENTAÇÕES</h5>
                                     <p class="card-text">Acesse todas as movimentações da suas contas do sistema</p>
                                     <a href="<?= DIRPAGE ?>movimentacoes" class="btn btn-dark">ACESSAR</a>
                                 </div>
                             </div>
+                            <div class="col-6 text-bg-secondary text-center">
+                                <div class="card-body">
+                                    <h5 class="card-title">CONTAS A RECEBER</h5>
+                                    <p class="card-text"></p>
+                                    <a href="<?= DIRPAGE ?>financeiro/pagamentos/receber" class="btn btn-dark">ACESSAR</a>
+                                </div>
+                            </div>
+                            <div class="col-6 text-center">
+                                <div class="card-body">
+                                    <h5 class="card-title">CONTAS A PAGAR</h5>
+                                    <p class="card-text"></p>
+                                    <a href="<?= DIRPAGE ?>financeiro/pagamentos/pagar" class="btn btn-dark">ACESSAR</a>
+                                </div>
+                            </div>
+                            
                         </div>
                         <hr>
                         <!--<div class="card bg-secondary text-white mx-auto  text-center py-4 mb-4" style="width: 20rem;">
