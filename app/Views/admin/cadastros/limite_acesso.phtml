@@ -33,7 +33,7 @@ include_once 'app/Views/admin/inc/cabecalho.phtml';
                     <form class="p-4 p-md-6 col-6 row border mx-auto rounded-3 bg-3" action="<?= DIRPAGE ?>cadastros/alterar_limite_acesso" method="POST">
                         <div class="form-floating mx-auto col-8 mb-3">    
                           
-                            <input class="form-control" type="number" minlength="0" min="5" max="50" maxlength="2" name="tempo" id="tempo" required>
+                            <input class="form-control" type="number" name="LMA_TEMPO" minlength="0" min="5" max="50" maxlength="2" name="tempo" id="tempo" required>
                             <label for="tempo">Tempo:</label>
                         </div>
                         <input type="hidden" class="form-control" name="USU_COD" value="<?= isset($_SESSION['USU_COD']) ? $_SESSION['USU_COD'] : 0; ?>">
