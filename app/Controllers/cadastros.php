@@ -40,17 +40,12 @@ class cadastros extends View
         $this->dados['empresa'] = $this->UsuariosEmpresa->setCodEmpresa($_SESSION['EMP_COD'])->setCodUsuario($_SESSION['USU_COD'])->listar(0);
         $this->dados['empresas'] = $this->UsuariosEmpresa->listarTodasEmpresasUsuario(0);
         $this->dados['usuario'] = $this->Usuarios->setCodUsuario($_SESSION['USU_COD'])->listar(0);
+        $this->dados['usuarios_empresa'] = $UsuariosEmpresa->setCodUsuario($_SESSION['USU_COD'])->checarUsuario();
+        $this->dados['modulos_empresa'] = $ModulosEmpresa->setCodEmpresa($_SESSION['EMP_COD'])->listar();
 
-        $Usuarios->setCodUsuario($_SESSION['USU_COD']);
-        $this->dados['usuario'] = $Usuarios->listar(0);
-        $UsuariosEmpresa->setCodUsuario($_SESSION['USU_COD']);
-        $this->dados['usuarios_empresa'] = $UsuariosEmpresa->checarUsuario();
         if (isset($this->dados['usuarios_empresa']['UMP_COD'])) {
             $_SESSION['EMP_COD'] = $this->dados['usuarios_empresa']['EMP_COD'];
-            $Empresa->setCodigo($_SESSION['EMP_COD']);
-            $this->dados['empresa'] = $Empresa->listar(0);
-            $ModulosEmpresa->setCodEmpresa($_SESSION['EMP_COD']);
-            $this->dados['modulos_empresa'] = $ModulosEmpresa->listar();
+            $this->dados['empresa'] = $Empresa->setCodigo($_SESSION['EMP_COD'])->listar(0); 
         }else {
             $this->dados['modulos_empresa'] = false;
             $this->dados['empresa'] = false;
@@ -68,7 +63,13 @@ class cadastros extends View
         $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
         $this->render('admin/cadastros/cadastros', $this->dados);
     }
-
+    public function limite_acesso()
+    {
+        $this->dados['title'] .= ' LIMITE DE ACESSO';
+        $this->link[2] = ['link'=> 'cadastros/limite_acesso','nome' => 'GERENCIAR LIMITE DE ACESSO'];
+        $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
+        $this->render('admin/cadastros/limite_acesso', $this->dados);
+    }
    
     //CADASTRO - ESTOQUES
     public function estoques()

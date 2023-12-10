@@ -1,0 +1,49 @@
+<?php 
+use Libraries\Sessao;
+session_start();
+include_once 'app/Views/admin/inc/cabecalho.phtml'; 
+?>
+<body class="">
+    <div class="d-flex" id="wrapper">
+        <?php include_once 'app/Views/admin/inc/menu_lateral.phtml'; ?>
+        <div id="page-content-wrapper">
+        <!-- Top navigation-->
+        <?php include_once 'app/Views/admin/inc/menu_topo.phtml'; ?>
+        <div class="container-fluid bg-light p-0">
+            <header class="py-3">
+                <section class="container px-3">
+                    <div class="row gx-5 align-items-center justify-content-center">
+                        <div class="col-lg-9 col-xl-9 col-xxl-9">
+                            <div class="my-1 px-4 mx-auto">
+                                <a class="text-decoration-none" href="<?= DIRPAGE; ?>cadastros/limite_acesso">
+                                <h5 class="fs-2 fw-bolder text-uppercase text-dark"><i class="bi bi-alarm"></i> Gerenciar <span class="text-success">Limite de Acesso</span></h5></a>
+                            </div>
+                        </div>
+                        <?php include_once 'app/Views/admin/inc/saudacao.phtml'; ?>   
+                    </div>
+                </section>
+                <section class="container col-12 mx-auto px-5">
+                    <?= $breadcrumb ?>
+                </section>
+            </header>
+            <?php include_once 'app/Views/admin/inc/alertas.phtml'; ?>  
+            <section class="container bg-light mx-auto py-2 mb-5">
+                <div class="col-8 mx-auto row">
+                    <h2 class="mx-auto mb-2 text-uppercase">Defina o tempo de acesso (em minutos):</h2>
+                    <form class="p-4 p-md-6 col-6 row border mx-auto rounded-3 bg-3" action="<?= DIRPAGE ?>usuarios/alterar" method="POST">
+                        <div class="form-floating mx-auto col-8 mb-3">    
+                          
+                            <input class="form-control" type="number" minlength="0" min="5" max="50" maxlength="2" name="tempo" id="tempo" required>
+                            <label for="tempo">Tempo:</label>
+                        </div>
+                        <input type="hidden" class="form-control" name="USU_COD" value="<?= isset($_SESSION['USU_COD']) ? $_SESSION['USU_COD'] : 0; ?>">
+                        <input type="hidden" class="form-control" name="EMP_COD" value="<?= isset($_SESSION['EMP_COD']) ? $_SESSION['EMP_COD'] : 0; ?>">
+                        <button class="mx-auto text-center btn-block btn btn-lg text-uppercase btn-warning" name="TEMPO_LIMITE" type="submit">Definir Tempo</button>
+                    </form>
+                </div>
+            </section>
+        </div>
+        <?php include_once 'app/Views/admin/inc/rodape.phtml';?>
+    </div>
+</body>
+</html>
