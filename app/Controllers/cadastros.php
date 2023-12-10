@@ -20,7 +20,7 @@ use Libraries\Sessao;
 class cadastros extends View
 {
     private $dados = [];
-    private $link,$Enderecos,$Usuarios,$Empresa,$UsuariosEmpresa,$Check,$CargosSalarios,$Estoques;
+    private $link,$Enderecos,$Usuarios,$Empresa,$UsuariosEmpresa,$Check,$CargosSalarios,$Estoques, $Limites;
     public function __construct()
     {
         Sessao::naoLogado();
@@ -37,6 +37,7 @@ class cadastros extends View
         $ModulosEmpresa = new ModulosEmpresa;
         $this->CargosSalarios = new CargosSalarios;
         $this->Check = new Check;
+        $this->Limites = new Check;
         $this->dados['empresa'] = $this->UsuariosEmpresa->setCodEmpresa($_SESSION['EMP_COD'])->setCodUsuario($_SESSION['USU_COD'])->listar(0);
         $this->dados['empresas'] = $this->UsuariosEmpresa->listarTodasEmpresasUsuario(0);
         $this->dados['usuario'] = $this->Usuarios->setCodUsuario($_SESSION['USU_COD'])->listar(0);
@@ -70,7 +71,49 @@ class cadastros extends View
         $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
         $this->render('admin/cadastros/limite_acesso', $this->dados);
     }
-   
+    public function alterar_limite_acesso()
+    {
+        $this->dados['title'] .= ' LIMITE DE ACESSO';
+        $this->link[2] = ['link'=> 'cadastros/limite_acesso','nome' => 'GERENCIAR LIMITE DE ACESSO'];
+        $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
+        $ok = false;
+        
+        $dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);
+        
+        if (isset($_POST) && isset($dados['TEMPO_LIMITE'])) {
+            
+            unset($dados['TEMPO_LIMITE']);
+            
+            if($_SESSION['USU_COD'] == $dados['USU_COD'] && $_SESSION['EMP_COD'] == $dados['EMP_COD']){
+
+                //Verifica se tem algum valor proibido
+                foreach ($dados as $key => $value) {
+                    $dados[$key] = $this->Check->checarString($value);
+                }
+
+                $dados += array(
+                   'LMA_DT_ATUALIZACAO' => date('Y-m-d H:i:s'),
+                   'LMA_STATUS' => 1
+                );
+                if($this->Estoques->alterar($dados,0)){
+                    $ok = true;
+                    Sessao::alert('OK','Cadastro alterado com sucesso!','fs-4 alert alert-success');
+                }else{
+                    Sessao::alert('ERRO',' LMA3- Erro ao alterar o limite de acesso, entre em contato com o suporte!','fs-4 alert alert-danger');
+                }
+            }else{
+                Sessao::alert('ERRO',' LMA2- Acesso inválido!','fs-4 alert alert-danger');
+            }
+        }else {
+            Sessao::alert('ERRO',' LMA1- Dados inválido(s)!','fs-4 alert alert-danger');
+        }
+
+        if($ok) {
+            $this->dados['estoque'] = $this->Estoques->setCodEmpresa($_SESSION['EMP_COD'])->listarTodos(0);
+           
+        }
+        $this->render('admin/cadastros/limite_acesso', $this->dados);
+    }
     //CADASTRO - ESTOQUES
     public function estoques()
     {
