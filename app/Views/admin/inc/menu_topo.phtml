@@ -4,14 +4,20 @@
         <button class="navbar-toggler text-white" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
         <a class="text-decoration-none" href="<?= DIRPAGE; ?>empresas"><span class="text-success"><?= ($_SESSION['EMP_COD'] != 0)? $empresa['EMP_NOME_FANTASIA'] : 'LC-<span class="text-success">TEC</span>'?></span></a>
         <div id="navbarSupportedContent" class="collapse navbar-collapse">
-            <ul class="navbar-nav ms-auto mt-2 mt-lg-0 fs-6 text-uppercase">
-                <li>
-                    <div class="container">   
-                        <div class="col-md-12 fs-4 text-uppercase text-center text-3">
-                            <p class="col-12" id="time"></p>
-                        </div>
+            <ul class="navbar-nav ms-auto mt-2 mt-lg-0 fs-6 text-uppercase align-items-center align-middle ">
+                <li class="row mx-auto container align-items-center align-middle ">
+                    <div class="col">   
+                        <i class="bi bi-bell-slash text-secondary" title="Nenhum aviso"></i>
                     </div>
+                    <div class="col">
+                        <i class="bi bi-wifi text-secondary" title="ON"></i>
+                    </div>
+                    <div class="col">
+                        <i class="bi bi-bookmarks text-secondary" title="Nenhuma tarefa"></i>
+                    </div>
+                    <div class="col text-secondary fs-4">|</div>
                 </li>
+                
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle fs-4" title="<?= 'Olá '.$_SESSION['USU_NOME'] ?>" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="bi bi-person-circle"></i></a>    
                     <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
@@ -20,7 +26,7 @@
                     </div>
                 </li>
                 <!--  <span class="px-2 text-secondary row align-items-center align-middle mx-auto">-->
-                <span class="px-4 text-secondary text-center mt-1 mx-auto"><?= $_SESSION['USU_NOME'] ?><br><div style="font-size:0.85em;" id="limite"></div></span>
+                <span class="px-4 text-secondary text-center mt-0 mx-auto"><?= $_SESSION['USU_NOME'] ?><br><div style="font-size:0.85em;" id="limite"></div></span>
             </ul>
         </div>
     </div>
