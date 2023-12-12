@@ -3,6 +3,7 @@ namespace App\Controllers;
 
 use App\Models\Empresas;
 use App\Models\Contas as ModelsContas;
+use App\Models\Movimentacoes;
 use App\Models\Usuarios;
 use App\Models\UsuariosEmpresa;
 use App\Models\Vendedores;
@@ -14,7 +15,7 @@ use Libraries\Url;
 class contas extends View
 {
     private $dados = [];
-    private $link,$Financas,$Check,$Usuarios,$UsuariosEmpresa,$Contas;
+    private $link,$Financas,$Check,$Usuarios,$UsuariosEmpresa,$Contas,$Movimentacoes;
     public function __construct()
     {
         Sessao::naoLogado();
@@ -23,7 +24,8 @@ class contas extends View
         $this->Check = new Check;
         $this->Usuarios = new Usuarios;
         $this->UsuariosEmpresa = new UsuariosEmpresa;
-
+        $this->Movimentacoes = new Movimentacoes;
+        
         $this->dados['empresa'] = $this->UsuariosEmpresa->setCodEmpresa($_SESSION['EMP_COD'])->setCodUsuario($_SESSION['USU_COD'])->listar(0);
         $this->dados['usuario'] = $this->Usuarios->setCodUsuario($_SESSION['USU_COD'])->listar(0);
         $this->dados['contas'] = $this->Contas->setCodEmpresa($_SESSION['EMP_COD'])->listarTodas();
@@ -85,6 +87,86 @@ class contas extends View
         $this->link[3] = ['link'=> 'contas/cadastro','nome' => 'CADASTRO DE CONTAS'];
         $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
         $this->render('admin/financeiro/contas/cadastrar', $this->dados);
+    }
+    public function saques()
+    {
+        $this->dados['title'] .= ' SACAR DA CONTA DA EMPRESA/NEGÓCIO';   
+        $this->link[3] = ['link'=> 'contas/cadastro','nome' => 'SAQUE EM CONTA'];
+        $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
+
+        $dados = filter_input_array(INPUT_GET, FILTER_SANITIZE_URL);
+        $dados = explode("/",$dados['url']);
+        $ok = false;
+        if($this->dados['empresa']['USU_COD'] == $_SESSION['USU_COD'] && $this->dados['empresa']['EMP_COD'] == $dados[2]){
+             
+            $this->dados['conta'] = $this->Contas->setCodEmpresa($dados[2])->setCodigo($dados[3])->listar(0);
+            if ($this->dados['conta'] != 0) {
+                $this->link[3] = ['link'=> 'contas/saques/'.$this->dados['conta']['EMP_COD'].'/'.$this->dados['conta']['CTA_COD'],'nome' => 'TRANSFERÊNCIA DA CONTA'];
+                $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
+                $ok = true;
+            }
+        }else{
+            Sessao::alert('ERRO',' ERRO: CTA22 - Acesso inválido(s)!','alert alert-danger');
+        }
+        if($ok){
+            $this->render('admin/financeiro/contas/saques', $this->dados);
+        }else {
+            $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
+            $this->render('admin/financeiro/contas', $this->dados);
+        }
+    }
+    public function depositos()
+    {
+        $this->dados['title'] .= ' DEPOSITAR NA CONTA DA EMPRESA/NEGÓCIO';   
+        $this->link[3] = ['link'=> 'contas/cadastro','nome' => 'DEPOSITO EM CONTA'];
+        $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
+
+        $dados = filter_input_array(INPUT_GET, FILTER_SANITIZE_URL);
+        $dados = explode("/",$dados['url']);
+        $ok = false;
+        if($this->dados['empresa']['USU_COD'] == $_SESSION['USU_COD'] && $this->dados['empresa']['EMP_COD'] == $dados[2]){
+             
+            $this->dados['conta'] = $this->Contas->setCodEmpresa($dados[2])->setCodigo($dados[3])->listar(0);
+            if ($this->dados['conta'] != 0) {
+                $this->link[3] = ['link'=> 'contas/depositos/'.$this->dados['conta']['EMP_COD'].'/'.$this->dados['conta']['CTA_COD'],'nome' => 'TRANSFERÊNCIA DA CONTA'];
+                $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
+                $ok = true;
+            }
+        }else{
+            Sessao::alert('ERRO',' ERRO: CTA22 - Acesso inválido(s)!','alert alert-danger');
+        }
+        if($ok){
+            $this->render('admin/financeiro/contas/depositos', $this->dados);
+        }else {
+            $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
+            $this->render('admin/financeiro/contas', $this->dados);
+        }
+    }
+    public function transferencias()
+    {
+        $this->dados['title'] .= ' TRANSFERÊNCIA DA CONTA DA EMPRESA/NEGÓCIO';   
+       
+
+        $dados = filter_input_array(INPUT_GET, FILTER_SANITIZE_URL);
+        $dados = explode("/",$dados['url']);
+        $ok = false;
+        if($this->dados['empresa']['USU_COD'] == $_SESSION['USU_COD'] && $this->dados['empresa']['EMP_COD'] == $dados[2]){
+             
+            $this->dados['conta'] = $this->Contas->setCodEmpresa($dados[2])->setCodigo($dados[3])->listar(0);
+            if ($this->dados['conta'] != 0) {
+                $this->link[3] = ['link'=> 'contas/transferencias/'.$this->dados['conta']['EMP_COD'].'/'.$this->dados['conta']['CTA_COD'],'nome' => 'TRANSFERÊNCIA DA CONTA'];
+                $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
+                $ok = true;
+            }
+        }else{
+            Sessao::alert('ERRO',' ERRO: CTA22 - Acesso inválido(s)!','alert alert-danger');
+        }
+        if($ok){
+            $this->render('admin/financeiro/contas/transferencias', $this->dados);
+        }else {
+            $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
+            $this->render('admin/financeiro/contas', $this->dados);
+        }
     }
     public function cadastrar()
     {
@@ -164,7 +246,7 @@ class contas extends View
         $dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);
         if (isset($_POST) && isset($dados['ALTERAR_CONTA'])) {
            
-            if($this->dados['empresa']['USU_COD'] == $dados['USU_COD'] && $this->dados['empresa']['EMP_COD'] == $dados['EMP_COD']){
+            if($_SESSION['USU_COD'] == $dados['USU_COD_ATUALIZACAO'] && $this->dados['empresa']['EMP_COD'] == $dados['EMP_COD']){
                 //Verifica se os campos foram todos preenchidos
                 unset($dados['ALTERAR_CONTA']);
 
@@ -172,18 +254,23 @@ class contas extends View
                 foreach ($dados as $key => $value) {
                     $dados[$key] = $this->Check->checarString($value);
                 }
+
                 $this->dados['conta'] = $this->Contas->setCodEmpresa($dados['EMP_COD'])->setCodigo($dados['CTA_COD']);
 
                 if ($this->dados['conta'] != 0) {
 
                     $this->link[3] = ['link'=> 'contas/alteracao/'.$_SESSION['EMP_COD'].'/'.$dados['CTA_COD'],'nome' => 'ALTERAR CONTAS'];
         
+                    $this->Contas->setCodEmpresa($dados['EMP_COD'])->setCodigo($dados['CTA_COD']);
+                   
                     unset($dados['CTA_COD']);
                     unset($dados['EMP_COD']);
+
                     $dados += array(
-                        'CTA_DT_ATUALIZACAO'=> date('Y-m-d H:i:s')
+                        'CTA_DT_ATUALIZACAO'=> date('Y-m-d H:i:s'),
+                        'CTA_STATUS' => 1
                     );
-                                        
+                   
                     if($this->Contas->alterar($dados,0)){
                         $ok = true;
                         Sessao::alert('OK','Cadastro alterado com sucesso!','fs-4 alert alert-success');

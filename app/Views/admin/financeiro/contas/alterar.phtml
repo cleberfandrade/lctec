@@ -60,10 +60,10 @@ include_once 'app/Views/admin/inc/cabecalho.phtml';
                                 </div>
                                  
                                 <hr class="my-4 text-dark">
-                                <input type="hidden" class="form-control" name="EMP_COD" value="<?= isset($_SESSION['EMP_COD']) ? $_SESSION['EMP_COD'] : 0; ?>">
-                                <input type="hidden" class="form-control" name="USU_COD" value="<?= isset($_SESSION['USU_COD']) ? $_SESSION['USU_COD'] : 0; ?>">
-                                <input type="hidden" class="form-control" name="CTA_COD" value="<?= isset($_SESSION['CTA_COD']) ? $_SESSION['CTA_COD'] : 0; ?>">
-                                <button class="w-100 btn btn-lg text-uppercase btn-success" name="CADASTRAR_NOVA_CONTA" type="submit"><i class="fa fa-save"></i> Cadastrar</button>
+                                <input type="hidden" class="form-control" name="EMP_COD" value="<?= isset($conta['EMP_COD']) ? $conta['EMP_COD'] : 0; ?>">
+                                <input type="hidden" class="form-control" name="USU_COD_ATUALIZACAO" value="<?= isset($_SESSION['USU_COD']) ? $_SESSION['USU_COD'] : 0; ?>">
+                                <input type="hidden" class="form-control" name="CTA_COD" value="<?= isset($conta['CTA_COD']) ? $conta['CTA_COD'] : 0; ?>">
+                                <button class="w-100 btn btn-lg text-uppercase btn-warning" name="ALTERAR_CONTA" type="submit"><i class="fa fa-save"></i> Alterar</button>
                             </div> 
                         </form>
                     </div>

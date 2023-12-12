@@ -63,21 +63,21 @@ $qtd = (is_array($conta) ? count($conta) : 0);
                             <div class="card-body">
                                 <h5 class="card-title">DEPOSITAR</h5>
                                 <p class="card-text">Deposite valores na conta Empresa/negócio</p>
-                                <a href="<?= DIRPAGE ?>contas/depositar/<?= $conta['EMP_COD'] ?>/<?= $conta['CTA_COD'] ?>" class="btn btn-dark">ACESSAR</a>
+                                <a href="<?= DIRPAGE ?>contas/depositos/<?= $conta['EMP_COD'] ?>/<?= $conta['CTA_COD'] ?>" class="btn btn-dark">ACESSAR</a>
                             </div>
                         </div>
                         <div class="col-4 text-bg-danger text-center">
                             <div class="card-body">
                                 <h5 class="card-title">RETIRAR</h5>
                                 <p class="card-text">Retire valores da conta Empresa/negócio</p>
-                                <a href="<?= DIRPAGE ?>contas/retirar/<?= $conta['EMP_COD'] ?>/<?= $conta['CTA_COD'] ?>" class="btn btn-dark">ACESSAR</a>
+                                <a href="<?= DIRPAGE ?>contas/saques/<?= $conta['EMP_COD'] ?>/<?= $conta['CTA_COD'] ?>" class="btn btn-dark">ACESSAR</a>
                             </div>
                         </div>
                         <div class="col-4 text-bg-secondary text-center">
                             <div class="card-body">
                                 <h5 class="card-title">TRANSFERIR</h5>
                                 <p class="card-text">Envie valores para outra conta cadastrada no sistema</p>
-                                <a href="<?= DIRPAGE ?>contas/transferir/<?= $conta['EMP_COD'] ?>/<?= $conta['CTA_COD'] ?>" class="btn btn-dark">ACESSAR</a>
+                                <a href="<?= DIRPAGE ?>contas/transferencias/<?= $conta['EMP_COD'] ?>/<?= $conta['CTA_COD'] ?>" class="btn btn-dark">ACESSAR</a>
                             </div>
                         </div>
                     </div>
