@@ -3,6 +3,8 @@ use Libraries\Sessao;
 session_start();
 include_once 'app/Views/admin/inc/cabecalho.phtml'; 
 $qtd = (is_array($conta) ? count($conta) : 0);
+$qtdF = (is_array($formas_pagamentos) ? count($formas_pagamentos) : 0);
+$qtdCL = (is_array($classificacoes) ? count($classificacoes) : 0);
 ?>
 <body class="">
     <div class="d-flex" id="wrapper">
@@ -62,6 +64,32 @@ $qtd = (is_array($conta) ? count($conta) : 0);
                                         <label class="px-3" for="2">DATA</label>
                                     </div> 
                                 </div> 
+                                <div class="col-6">
+                                        <div class=" mb-3">
+                                            <label class="px-5" for="2">FORMA DE PAGAMENTO</label>
+                                            <div class="form-floating mb-3">
+                                                <select class="form-select text-uppercase mb-3 form-floating" name="FPG_COD">
+                                                    <option value="0" <?= (isset($_POST['FPG_COD']) &&  $_POST['FPG_COD']  == "0")? 'selected' : '' ?>>---</option>
+                                                    <?php for ($i= 0; $i < $qtdF; $i++) { if ($formas_pagamentos[$i]['FPG_STATUS'] == 1) { ?> 
+                                                        <option value="<?= $formas_pagamentos[$i]['FPG_COD']; ?>" <?= (isset($_POST['FPG_COD']) &&  $_POST['FPG_COD']  == $formas_pagamentos[$i]['FPG_COD'] )? 'selected' : '' ?>><?= $formas_pagamentos[$i]['FPG_DESCRICAO'] ?></option>
+                                                    <?php } } ?> 
+                                                </select>
+                                                <label class="form-floating mb-3">FORMA DE PAGAMENTO</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-6 mb-3">
+                                        <label class="form-label">CLASSIFICAÇÃO</label>
+                                        <div class="form-floating mb-3">
+                                            <select class="form-select text-uppercase mb-3 form-floating" name="CLA_COD">
+                                                <option value="0" <?= (isset($_POST['CLA_COD']) &&  $_POST['CLA_COD']  == "0")? 'selected' : '' ?>>---</option>
+                                                <?php for ($i= 0; $i < $qtdCL; $i++) { if ($classificacoes[$i]['CLA_STATUS'] == 1) { ?> 
+                                                    <option value="<?= $classificacoes[$i]['CLA_COD']; ?>" <?= (isset($_POST['CLA_COD']) &&  $_POST['CLA_COD']  == $classificacoes[$i]['CLA_COD'] )? 'selected' : '' ?>><?= $classificacoes[$i]['CLA_DESCRICAO'] ?></option>
+                                                <?php } } ?> 
+                                            </select>
+                                            <label class="form-floating mb-3">CLASSIFICAÇÃO (opcional)</label>
+                                        </div>
+                                    </div>
                                 <div class="col-12 mb-3">
                                    
                                     <div class="form-floating">

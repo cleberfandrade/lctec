@@ -122,6 +122,8 @@ class lancamentos extends View
                             }
                         }
                     } else {
+                        $dados['LAN_VALOR'] = $this->Check->onlyNumbers($dados['LAN_VALOR']);
+                        $dados['LAN_VALOR'] = $this->Check->formatMoneyDb($dados['LAN_VALOR']);
                         $dados += array(
                             'LAN_DT_CADASTRO'=> date('Y-m-d H:i:s'),
                             'LAN_DT_ATUALIZACAO'=> date('0000-00-00 00:00:00'),          
@@ -213,7 +215,8 @@ class lancamentos extends View
                 ($dados['LAN_RESULTADOS'] == "on")? $dados['LAN_RESULTADOS'] = 1: $dados['LAN_RESULTADOS'] = 0;
               
                 $this->Lancamentos->setCodEmpresa($dados['EMP_COD'])->setCodigo($dados['LAN_COD']);
-                
+                $dados['LAN_VALOR'] = $this->Check->onlyNumbers($dados['LAN_VALOR']);
+                $dados['LAN_VALOR'] = $this->Check->formatMoneyDb($dados['LAN_VALOR']);
                 $dados += array(
                     'LAN_DT_ATUALIZACAO'=> date('Y-m-d H:i:s'),
                     'LAN_STATUS'=> 1

@@ -11,6 +11,7 @@ use Libraries\Sessao;
 use Libraries\Url;
 use App\Models\Empresas;
 use App\Models\Financas;
+use App\Models\FormasPagamentos;
 use App\Models\Fornecedores;
 use App\Models\Usuarios;
 use App\Models\UsuariosEmpresa;
@@ -20,7 +21,7 @@ use App\Models\Movimentacoes as ModelsMovimentacoes;
 class movimentacoes extends View
 {
     private $dados = [];
-    private $link,$Financas,$Check,$Usuarios,$UsuariosEmpresa,$Lancamentos,$Categorias,$Contas,$Classificacoes,$Clientes,$Fornecedores, $Movimentacoes;
+    private $link,$Financas,$Check,$Usuarios,$UsuariosEmpresa,$Lancamentos,$Categorias,$Contas,$Classificacoes,$Clientes,$Fornecedores, $Movimentacoes, $FormasPagamentos;
     public function __construct()
     {
         Sessao::naoLogado();
@@ -36,11 +37,14 @@ class movimentacoes extends View
         $this->Fornecedores = new Fornecedores;
         $this->Clientes= new Clientes;
         $this->Movimentacoes = new ModelsMovimentacoes;
+        $this->FormasPagamentos = new FormasPagamentos;
 
         $this->dados['empresa'] = $this->UsuariosEmpresa->setCodEmpresa($_SESSION['EMP_COD'])->setCodUsuario($_SESSION['USU_COD'])->listar(0);
         $this->dados['usuario'] = $this->Usuarios->setCodUsuario($_SESSION['USU_COD'])->listar(0);
         $this->dados['lancamentos'] = $this->Lancamentos->setCodEmpresa($_SESSION['EMP_COD'])->listarTodos(0);
         $this->dados['contas'] = $this->Contas->setCodEmpresa($_SESSION['EMP_COD'])->listarTodas(0);
+        $this->dados['classificacoes'] = $this->Classificacoes->setCodEmpresa($_SESSION['EMP_COD'])->setTipo('LAN')->listarTodosPorTipo(0);
+        $this->dados['formas_pagamentos'] = $this->FormasPagamentos->setCodEmpresa($_SESSION['EMP_COD'])->listarTodas(0);
 
         $this->link[0] = ['link'=> 'admin','nome' => 'PAINEL ADMINISTRATIVO'];
         $this->link[1] = ['link'=> 'financeiro','nome' => 'MÓDULO FINANCEIRO'];
@@ -78,6 +82,10 @@ class movimentacoes extends View
                     foreach ($dados as $key => $value) {
                         $dados[$key] = $this->Check->checarString($value);
                     }
+                    //$dados['MOV_VALOR'] = number_format($dados['MOV_VALOR'],2, '.', ',');
+                    //$dados['MOV_VALOR'] = str_replace(',', '.', str_replace('.', '', $dados['MOV_VALOR']));
+                    $dados['MOV_VALOR'] = $this->Check->onlyNumbers($dados['MOV_VALOR']);
+                    $dados['MOV_VALOR'] = $this->Check->formatMoneyDb($dados['MOV_VALOR']);
                     $dados += array(
                         'MOV_DT_CADASTRO'=> date('Y-m-d H:i:s'),
                         'MOV_DT_ATUALIZACAO'=> date('0000-00-00 00:00:00'),   
