@@ -40,7 +40,7 @@ class Movimentacoes extends Model
             return false;
         }
     }
-    public function listarTodos($ver = 0)
+    public function listarTodas($ver = 0)
     {
         $parametros = "M INNER JOIN tb_empresas E ON E.EMP_COD=M.EMP_COD WHERE M.EMP_COD={$this->codEmpresa}";
         $campos = "*";

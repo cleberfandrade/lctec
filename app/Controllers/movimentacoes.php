@@ -100,10 +100,10 @@ class movimentacoes extends View
             Sessao::alert('ERRO',' CTA1 - Acesso inválido(s)!','alert alert-danger');
         }
         if ($ok) {
-            $this->dados['contas'] = $this->Contas->setCodEmpresa($_SESSION['EMP_COD'])->listarTodas(0);
-            $this->render('admin/financeiro/contas/listar', $this->dados);
+            $this->dados['movimentacoes'] = $this->Movimentacoes->setCodEmpresa($_SESSION['EMP_COD'])->listarTodas(0);
+            $this->render('admin/financeiro/movimentacoes/listar', $this->dados);
         }else {
-            $this->render('admin/financeiro/contas/cadastrar', $this->dados);
+            $this->render('admin/financeiro/movimentacoes/cadastrar', $this->dados);
         }
     }
 }
