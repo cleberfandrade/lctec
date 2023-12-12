@@ -87,7 +87,7 @@ class modulo_empresa extends View
               
               $db = array(
                   'MDE_DT_ATUALIZACAO'=> date('Y-m-d H:i:s'),
-                  'FOR_STATUS' => $dados['FOR_STATUS']
+                  'MOD_STATUS' => $dados['MOD_STATUS']
               );
 
               if($this->ModulosEmpresa->alterar($db,0)){
