@@ -80,7 +80,8 @@ class movimentacoes extends View
                     }
                     $dados += array(
                         'MOV_DT_CADASTRO'=> date('Y-m-d H:i:s'),
-                        'MOV_DT_ATUALIZACAO'=> date('0000-00-00 00:00:00'),             
+                        'MOV_DT_ATUALIZACAO'=> date('0000-00-00 00:00:00'),   
+                        'MOV_TOKEN' => $this->Check->token(10,'',true),          
                         'MOV_STATUS'=> 1
                     );
 
