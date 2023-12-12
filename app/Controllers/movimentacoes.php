@@ -36,7 +36,7 @@ class movimentacoes extends View
         $this->Fornecedores = new Fornecedores;
         $this->Clientes= new Clientes;
         $this->Movimentacoes = new ModelsMovimentacoes;
-        
+
         $this->dados['empresa'] = $this->UsuariosEmpresa->setCodEmpresa($_SESSION['EMP_COD'])->setCodUsuario($_SESSION['USU_COD'])->listar(0);
         $this->dados['usuario'] = $this->Usuarios->setCodUsuario($_SESSION['USU_COD'])->listar(0);
         $this->dados['lancamentos'] = $this->Lancamentos->setCodEmpresa($_SESSION['EMP_COD'])->listarTodos(0);
@@ -44,12 +44,66 @@ class movimentacoes extends View
 
         $this->link[0] = ['link'=> 'admin','nome' => 'PAINEL ADMINISTRATIVO'];
         $this->link[1] = ['link'=> 'financeiro','nome' => 'MÓDULO FINANCEIRO'];
-        $this->link[2] = ['link'=> 'lancamentos','nome' => 'GERENCIAR MOVIMENTAÇÕES'];
+        $this->link[2] = ['link'=> 'movimentacoes','nome' => 'GERENCIAR MOVIMENTAÇÕES'];
     }
     public function index()
     {
-        $this->dados['title'] .= ' GERENCIAR MOVIMENTAÇÕES A PARGAR E RECEBER';   
+        $this->dados['title'] .= ' GERENCIAR MOVIMENTAÇÕES';   
         $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
         $this->render('admin/financeiro/movimentacoes/listar', $this->dados);
+    }
+    public function cadastro()
+    {
+        $this->dados['title'] .= ' CADASTRAR MOVIMENTAÇÕES DA EMPRESA/NEGÓCIO';   
+        $this->link[3] = ['link'=> 'movimentacoes/cadastro','nome' => 'CADASTRO DE MOVIMENTAÇÕES'];
+        $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
+        $this->render('admin/financeiro/movimentacoes/cadastrar', $this->dados);
+    }
+    public function cadastrar()
+    {
+        $this->dados['title'] .= ' CADASTRAR MOVIMENTAÇÃO DA EMPRESA/NEGÓCIO';   
+        $this->link[3] = ['link'=> 'movimentacoes/cadastro','nome' => 'CADASTRO DE MOVIMENTAÇÕES'];
+        $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
+        $ok = false;
+        $dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);
+
+        if (isset($_POST) && isset($dados['CADASTRAR_NOVA_MOVIMENTACAO'])) {
+            if( $this->dados['empresa']['USU_COD'] == $dados['USU_COD'] && $this->dados['empresa']['EMP_COD'] == $dados['EMP_COD']){
+                //Verifica se os campos foram todos preenchidos
+                unset($dados['CADASTRAR_NOVA_MOVIMENTACAO']);
+
+                $this->dados['conta'] = $this->Contas->setCodEmpresa($dados['EMP_COD'])->setCodigo($dados['CTA_COD'])->listar(0);
+                if ($this->dados['conta'] != 0) {
+
+                    foreach ($dados as $key => $value) {
+                        $dados[$key] = $this->Check->checarString($value);
+                    }
+                    $dados += array(
+                        'MOV_DT_CADASTRO'=> date('Y-m-d H:i:s'),
+                        'MOV_DT_ATUALIZACAO'=> date('0000-00-00 00:00:00'),             
+                        'MOV_STATUS'=> 1
+                    );
+
+                    if($this->Movimentacoes->cadastrar($dados,0)){
+                        $ok = true;
+                        Sessao::alert('OK','Cadastro efetuado com sucesso!','fs-4 alert alert-success');
+                    }else{
+                        Sessao::alert('ERRO',' CTA3 - Erro ao cadastrar nova conta, entre em contato com o suporte!','fs-4 alert alert-danger');
+                    }
+                }else{
+                    Sessao::alert('ERRO',' CTA2 - Dados inválido(s)!','alert alert-danger');
+                } 
+            }else{
+                Sessao::alert('ERRO',' CTA2 - Dados inválido(s)!','alert alert-danger');
+            }
+        }else{
+            Sessao::alert('ERRO',' CTA1 - Acesso inválido(s)!','alert alert-danger');
+        }
+        if ($ok) {
+            $this->dados['contas'] = $this->Contas->setCodEmpresa($_SESSION['EMP_COD'])->listarTodas(0);
+            $this->render('admin/financeiro/contas/listar', $this->dados);
+        }else {
+            $this->render('admin/financeiro/contas/cadastrar', $this->dados);
+        }
     }
 }

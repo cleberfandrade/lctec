@@ -25,7 +25,7 @@ class contas extends View
         $this->Usuarios = new Usuarios;
         $this->UsuariosEmpresa = new UsuariosEmpresa;
         $this->Movimentacoes = new Movimentacoes;
-        
+
         $this->dados['empresa'] = $this->UsuariosEmpresa->setCodEmpresa($_SESSION['EMP_COD'])->setCodUsuario($_SESSION['USU_COD'])->listar(0);
         $this->dados['usuario'] = $this->Usuarios->setCodUsuario($_SESSION['USU_COD'])->listar(0);
         $this->dados['contas'] = $this->Contas->setCodEmpresa($_SESSION['EMP_COD'])->listarTodas();
@@ -91,7 +91,7 @@ class contas extends View
     public function saques()
     {
         $this->dados['title'] .= ' SACAR DA CONTA DA EMPRESA/NEGÓCIO';   
-        $this->link[3] = ['link'=> 'contas/cadastro','nome' => 'SAQUE EM CONTA'];
+        $this->link[2] = ['link'=> 'financeiro/contas','nome' => 'GERENCIAR CONTAS'];
         $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
 
         $dados = filter_input_array(INPUT_GET, FILTER_SANITIZE_URL);
@@ -101,7 +101,8 @@ class contas extends View
              
             $this->dados['conta'] = $this->Contas->setCodEmpresa($dados[2])->setCodigo($dados[3])->listar(0);
             if ($this->dados['conta'] != 0) {
-                $this->link[3] = ['link'=> 'contas/saques/'.$this->dados['conta']['EMP_COD'].'/'.$this->dados['conta']['CTA_COD'],'nome' => 'TRANSFERÊNCIA DA CONTA'];
+                $this->link[3] = ['link'=> 'financeiro/detalhar_contas/'.$_SESSION['EMP_COD'].'/'.$dados[3],'nome' => 'DETALHAR CONTA >> '.$this->dados['conta']['CTA_DESCRICAO']];
+                $this->link[4] = ['link'=> 'contas/saques/'.$this->dados['conta']['EMP_COD'].'/'.$this->dados['conta']['CTA_COD'],'nome' => 'SAQUE DA CONTA'];
                 $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
                 $ok = true;
             }
@@ -118,7 +119,7 @@ class contas extends View
     public function depositos()
     {
         $this->dados['title'] .= ' DEPOSITAR NA CONTA DA EMPRESA/NEGÓCIO';   
-        $this->link[3] = ['link'=> 'contas/cadastro','nome' => 'DEPOSITO EM CONTA'];
+        $this->link[2] = ['link'=> 'financeiro/contas','nome' => 'GERENCIAR CONTAS'];
         $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
 
         $dados = filter_input_array(INPUT_GET, FILTER_SANITIZE_URL);
@@ -128,7 +129,8 @@ class contas extends View
              
             $this->dados['conta'] = $this->Contas->setCodEmpresa($dados[2])->setCodigo($dados[3])->listar(0);
             if ($this->dados['conta'] != 0) {
-                $this->link[3] = ['link'=> 'contas/depositos/'.$this->dados['conta']['EMP_COD'].'/'.$this->dados['conta']['CTA_COD'],'nome' => 'TRANSFERÊNCIA DA CONTA'];
+                $this->link[3] = ['link'=> 'financeiro/detalhar_contas/'.$_SESSION['EMP_COD'].'/'.$dados[3],'nome' => 'DETALHAR CONTA >> '.$this->dados['conta']['CTA_DESCRICAO']];
+                $this->link[4] = ['link'=> 'contas/depositos/'.$this->dados['conta']['EMP_COD'].'/'.$this->dados['conta']['CTA_COD'],'nome' => 'DEPÓSITO NA CONTA'];
                 $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
                 $ok = true;
             }
@@ -145,7 +147,8 @@ class contas extends View
     public function transferencias()
     {
         $this->dados['title'] .= ' TRANSFERÊNCIA DA CONTA DA EMPRESA/NEGÓCIO';   
-       
+        $this->link[2] = ['link'=> 'financeiro/contas','nome' => 'GERENCIAR CONTAS'];
+        $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
 
         $dados = filter_input_array(INPUT_GET, FILTER_SANITIZE_URL);
         $dados = explode("/",$dados['url']);
@@ -154,7 +157,8 @@ class contas extends View
              
             $this->dados['conta'] = $this->Contas->setCodEmpresa($dados[2])->setCodigo($dados[3])->listar(0);
             if ($this->dados['conta'] != 0) {
-                $this->link[3] = ['link'=> 'contas/transferencias/'.$this->dados['conta']['EMP_COD'].'/'.$this->dados['conta']['CTA_COD'],'nome' => 'TRANSFERÊNCIA DA CONTA'];
+                $this->link[3] = ['link'=> 'financeiro/detalhar_contas/'.$_SESSION['EMP_COD'].'/'.$dados[3],'nome' => 'DETALHAR CONTA >> '.$this->dados['conta']['CTA_DESCRICAO']];
+                $this->link[4] = ['link'=> 'contas/transferencias/'.$this->dados['conta']['EMP_COD'].'/'.$this->dados['conta']['CTA_COD'],'nome' => 'TRANSFERÊNCIA DA CONTA'];
                 $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
                 $ok = true;
             }
