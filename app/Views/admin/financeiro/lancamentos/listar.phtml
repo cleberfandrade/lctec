@@ -58,13 +58,13 @@ $qtdP = ceil($qtdL/$qtdPg);
                                 <?php } ?>
                                 </select>
                             </div>
-                            <div class="col-4 row">
-                                <input type="radio" class="btn-check" name="LAN_TIPO" id="option5" autocomplete="off" value="0" <?= (isset($_POST['LAN_TIPO']) &&  $_POST['LAN_TIPO']  == 0)? 'checked' : '' ?>>
-                                <label class="btn col" for="option5">TODOS</label>
-                                <input type="radio" class="btn-check" name="LAN_TIPO" id="option2" autocomplete="off" value="1" <?= (isset($_POST['LAN_TIPO']) &&  $_POST['LAN_TIPO']  == 1)? 'checked' : '' ?>>
-                                <label class="btn col" for="option2">À PAGAR</label>
-                                <input type="radio" class="btn-check" name="LAN_TIPO" id="option3" autocomplete="off" value="2" <?= (isset($_POST['LAN_TIPO']) &&  $_POST['LAN_TIPO']  == 2)? 'checked' : '' ?>>
-                                <label class="btn col" for="option3">À RECEBER</label>                                
+                            <div class="col-4 mx-auto">
+                                <input type="radio" class="btn-check" name="LAN_TIPO" id="option5" value="0" <?= (isset($_POST['LAN_TIPO']) &&  $_POST['LAN_TIPO']  == 0)? 'checked' : '' ?>>
+                                <label class="btn col" for="option5">TODOS</label></input>
+                                <input type="radio" class="btn-check" name="LAN_TIPO" id="option2" value="1" <?= (isset($_POST['LAN_TIPO']) &&  $_POST['LAN_TIPO']  == 1)? 'checked' : '' ?>/>
+                                <label class="btn col" for="option2">À PAGAR</label></input>
+                                <input type="radio" class="btn-check" name="LAN_TIPO" id="option3" value="2" <?= (isset($_POST['LAN_TIPO']) &&  $_POST['LAN_TIPO']  == 2)? 'checked' : '' ?>/>
+                                <label class="btn col" for="option3">À RECEBER</label>     </input>                           
                             </div>
                             <div class="col-2 row mx-auto ">
                                 <div class="form-check form-switch">
@@ -78,20 +78,22 @@ $qtdP = ceil($qtdL/$qtdPg);
                                     <input type="date" class="form-control" name="LAN_DT_FINAL" value="<?= isset($_POST['LAN_DT_FINAL']) ? $_POST['LAN_DT_FINAL'] : date('Y-m-t'); ?>">
                                 </div>
                             </div>
+                            
                         </div>
-                        <div class="col-12 row mx-auto mt-2">
-                            <div class="col-8 mx-auto">
+                        <div class="col-12 row mx-auto mt-3">
+                            <div class="col-4">
                                 <button type='submit' name='btnPrint' class='btn btn-outline-dark text-center' onclick='window.print();'>
                                     <i class="bi bi-printer"></i>
                                 </button>
                             </div>
-                            <div class="col-4">
-                                <ul class="pagination col-5 mx-auto text-center">
-                                    <li class="page-item"><a class="page-link" href="#"><<</a></li>
-                                    <li class="page-item active"><a class="page-link">1</a></li>
-                                    <li class="page-item "><a class="page-link">2</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                    <li class="page-item"><button type="submit" name="LAN_PAGINA" class="page-link" title="<?= $qtdP ?>" value="<?= $qtdP ?>">>></button></li>
+            
+                            <div class="col-8 mx-auto">
+                                <ul class="pagination col-12 text-center">
+                                    <li class="page-item"><button type="submit" name="LAN_PAGINA" class="page-link" value="1">Primeira</button></li>
+                                    <li class="page-item "><button type="submit" name="LAN_PAGINA" class="page-link" title="<?= $qtdP ?>" value="<?= $qtdP-1 ?>"><<</button></li>
+                                    <li class="page-item active"><button class="page-link"><?= $LAN_PAGINA ?></button></li>
+                                    <li class="page-item"><button type="submit" name="LAN_PAGINA" class="page-link" title="<?= $qtdP ?>" value="<?= $qtdP+1 ?>">>></button></li>
+                                    <li class="page-item"><button type="submit" name="LAN_PAGINA" class="page-link" title="<?= $qtdP ?>" value="<?= $qtdP ?>">Última>></button></li>
                                 </ul>
                             </div>
                         </div>
