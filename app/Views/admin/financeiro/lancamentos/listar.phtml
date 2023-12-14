@@ -8,7 +8,7 @@ $qtdL = (is_array($lan_todos) ? count($lan_todos) : 0);
 $qtdC = (is_array($contas) ? count($contas) : 0);
 //$qtdR = (is_array($contas_receber) ? count($contas_receber) : 0);
 //dump($qtdL);
-$qtdPg = (isset($_POST['LAN_QTD']) && $_POST['LAN_QTD'] != '0') ? $_POST['LAN_QTD'] : 10;
+$qtdPg = (isset($_POST['LAN_QTD']) && $_POST['LAN_QTD'] != 10) ? $_POST['LAN_QTD'] : 10;
 $qtdP = ceil($qtdL/$qtdPg);
 ?>
 <body class="">
@@ -44,9 +44,7 @@ $qtdP = ceil($qtdL/$qtdPg);
                             <p class="card-text">Cadastre seus lançamentos</p>
                             <a href="<?= DIRPAGE ?>lancamentos/cadastro" class="btn btn-dark">NOVO CADASTRO</a>
                         </div>
-                    </div>
-                    <?php
-                    if($qtd != 0) { ?>
+                    </div>  
                     <form class="p-4 p-md-6 border text-uppercase rounded-3 bg-3 d-print-none" id="filtrar" name="filtrar" action="<?= DIRPAGE ?>lancamentos" method="POST">
                         <div class="col-12 row mx-auto align-items-center align-middle ">
                             <div class="col-2 row">    
@@ -107,8 +105,13 @@ $qtdP = ceil($qtdL/$qtdPg);
                         </div>
                         <input type="hidden" class="form-control" name="EMP_COD" value="<?= isset($empresa['EMP_COD']) ? $empresa['EMP_COD'] : 0; ?>">
                         <input type="hidden" class="form-control" name="filtrar" value="1">
-
                     </form>
+                    <section class="container col-12 mx-auto p-1 text-center fs-4 d-print-none">
+                    <?= $qtd ?> RESULTADOS
+                    </section>
+                
+                    <?php
+                    if($qtd != 0) { ?>
                     <table class="table table-striped table-bordered">
                         <thead class="text-center text-uppercase">
                             <th class="text-dark">#</th>

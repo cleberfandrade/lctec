@@ -64,15 +64,13 @@ class lancamentos extends View
             if (isset($dados['LAN_DT_INICIAL']) && isset($dados['LAN_DT_FINAL'])) {
                 if (strtotime($dados['LAN_DT_FINAL']) > strtotime($dados['LAN_DT_INICIAL'])) {
                     $dados['DATA'] = 1;
-                    $this->dados['lancamentos'] = $this->Lancamentos->setCodEmpresa($_SESSION['EMP_COD'])->listarFiltro($dados,1);
+                    $this->dados['lancamentos'] = $this->Lancamentos->setCodEmpresa($_SESSION['EMP_COD'])->listarFiltro($dados,0);
                 } else {
                     Sessao::alert('ERRO',' Datas inválidas!','alert alert-danger');
                 }
             } else {
-                $this->dados['lancamentos'] = $this->Lancamentos->setCodEmpresa($_SESSION['EMP_COD'])->listarFiltro($dados,1);
+                $this->dados['lancamentos'] = $this->Lancamentos->setCodEmpresa($_SESSION['EMP_COD'])->listarFiltro($dados,0);
             }
-            //dump($this->dados);
-            //exit;
         }else {
             $this->dados['LAN_PAGINA'] = 1;
         }
