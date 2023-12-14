@@ -50,6 +50,13 @@ class lancamentos extends View
     public function index()
     {
         $this->dados['title'] .= ' GERENCIAR LANÇAMENTOS A PARGAR E RECEBER';   
+
+        $dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);
+        if (isset($_POST) && isset($dados['filtrar'])) {
+            $qtd = $dados['qtd'];
+            dump($qtd);
+        }
+
         $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
         $this->render('admin/financeiro/lancamentos/listar', $this->dados);
     }
