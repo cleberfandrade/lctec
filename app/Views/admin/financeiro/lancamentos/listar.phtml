@@ -67,12 +67,12 @@ $qtdP = ceil($qtdL/$qtdPg);
                                 <label class="btn col" for="option3">À RECEBER</label>     </input>                           
                             </div>
                             <div class="col-5 mx-auto">
-                                <input type="radio" class="btn-check btn-outline-dark" name="LAN_RESULTADOS" id="option5" value="2" <?= (!isset($_POST['LAN_RESULTADOS']) or  $_POST['LAN_RESULTADOS']  == 2)? 'checked' : '' ?>>
-                                <label class="btn col" for="option5">TODOS</label></input>
-                                <input type="radio" class="btn-check" name="LAN_RESULTADOS" id="option2" value="1" <?= (isset($_POST['LAN_RESULTADOS']) &&  $_POST['LAN_RESULTADOS']  == 1)? 'checked' : '' ?>/>
-                                <label class="btn col" for="option2">PARTICIPA</label></input>
-                                <input type="radio" class="btn-check" name="LAN_RESULTADOS" id="option3" value="0" <?= (isset($_POST['LAN_RESULTADOS']) &&  $_POST['LAN_RESULTADOS']  == 0)? 'checked' : '' ?>/>
-                                <label class="btn col" for="option3">NÃO PARTICIPA</label></input>                           
+                                <input type="radio" class="btn-check" name="LAN_RESULTADOS" id="op6" value="2" <?= (!isset($_POST['LAN_RESULTADOS']) or  $_POST['LAN_RESULTADOS']  == 2)? 'checked' : '' ?>>
+                                <label class="btn col" for="op6">TODOS</label></input>
+                                <input type="radio" class="btn-check" name="LAN_RESULTADOS" id="op7" value="1" <?= (isset($_POST['LAN_RESULTADOS']) &&  $_POST['LAN_RESULTADOS']  == 1)? 'checked' : '' ?>/>
+                                <label class="btn col" for="op7">PARTICIPA</label></input>
+                                <input type="radio" class="btn-check" name="LAN_RESULTADOS" id="op8" value="0" <?= (isset($_POST['LAN_RESULTADOS']) &&  $_POST['LAN_RESULTADOS']  == 0)? 'checked' : '' ?>/>
+                                <label class="btn col" for="op8">NÃO PARTICIPA</label></input>                           
                             </div>
                             <!--<div class="col-2 row mx-auto ">
                                 <div class="form-check form-switch">
