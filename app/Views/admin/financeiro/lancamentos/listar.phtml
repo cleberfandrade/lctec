@@ -13,8 +13,8 @@ $qtdR = (is_array($contas_receber) ? count($contas_receber) : 0);
         <!-- Top navigation-->
         <?php include_once 'app/Views/admin/inc/menu_topo.phtml'; ?>
         <div class="container-fluid bg-light p-0">
-            <header class="py-3">
-                <section class="container px-3">
+            <header class="py-3 d-print-none">
+                <section class="container px-3 ">
                     <div class="row gx-3 align-items-center justify-content-center">
                         <div class="col-lg-9 col-xl-9 col-xxl-9">
                             <div class="my-1 px-4 mx-auto">
@@ -26,14 +26,14 @@ $qtdR = (is_array($contas_receber) ? count($contas_receber) : 0);
                         <?php include_once 'app/Views/admin/inc/saudacao.phtml'; ?>
                     </div>
                 </section>
-                <section class="container col-12 mx-auto px-5">
+                <section class="container col-12 mx-auto px-5 d-print-none">
                     <?= $breadcrumb ?>
                 </section>
             </header>
             <?php include_once 'app/Views/admin/inc/alertas.phtml'; ?>  
             <section class="bg-light text-dark row py-2">
-                <div class="container mx-auto col-12 row">
-                    <div class="card bg-success mx-auto text-center col-12 py-1 mb-2">
+                <div class="container mx-auto col-12 row ">
+                    <div class="card bg-success mx-auto text-center col-12 py-1 mb-2 d-print-none">
                         <div class="card-body text-white">
                             <h5 class="card-title">LANÇAMENTOS</h5>
                             <p class="card-text">Cadastre seus lançamentos</p>
@@ -42,18 +42,16 @@ $qtdR = (is_array($contas_receber) ? count($contas_receber) : 0);
                     </div>
                     <?php
                     if($qtd != 0) { ?>
-                    <form class="p-4 p-md-6 border text-uppercase rounded-3 bg-3" id="filtrar" name="filtrar" action="<?= DIRPAGE ?>lancamentos" method="POST">
+                    <form class="p-4 p-md-6 border text-uppercase rounded-3 bg-3 d-print-none" id="filtrar" name="filtrar" action="<?= DIRPAGE ?>lancamentos" method="POST">
                         <div class="col-12 row mx-auto align-items-center align-middle ">
-                            <div class="col-1 dropdown">
-                                <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    QTD
-                                </button>
-                                <ul class="dropdown-menu">
-                                    <?php for ($q=10; $q <= 100; $q++) { ?>
-                                        <?php if ($q > 10) { $q += 9; } ?>
-                                        <li><button class="dropdown-item" name="qtd" type="button" value="<?= $q ?>"><?= $q ?></button></li>
-                                    <?php } ?>
-                                </ul>
+                            <div class="col-2 row">    
+                                <select class="col-1 form-select" name="LAN_QTD" >
+                                <option value="0">...</option>
+                                <?php for ($q=10; $q <= 100; $q++) { ?>
+                                    <?php if ($q > 10) { $q += 9; } ?>
+                                    <option value="<?= $q ?>" <?= (isset($_POST['LAN_QTD']) &&  $_POST['LAN_QTD']  == $q)? 'selected' : '' ?>><?= $q ?></option>
+                                <?php } ?>
+                                </select>
                             </div>
                             <div class="col-4 row">
                                 <input type="radio" class="btn-check" name="LAN_TIPO" id="option5" autocomplete="off" value="0" <?= (isset($_POST['LAN_TIPO']) &&  $_POST['LAN_TIPO']  == 0)? 'checked' : '' ?>>
@@ -63,10 +61,9 @@ $qtdR = (is_array($contas_receber) ? count($contas_receber) : 0);
                                 <input type="radio" class="btn-check" name="LAN_TIPO" id="option3" autocomplete="off" value="2" <?= (isset($_POST['LAN_TIPO']) &&  $_POST['LAN_TIPO']  == 2)? 'checked' : '' ?>>
                                 <label class="btn col" for="option3">À RECEBER</label>                                
                             </div>
-                            <div class="col-3 row mx-auto ">
+                            <div class="col-2 row mx-auto ">
                                 <div class="form-check form-switch">
-                                    <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" <?= (isset($_POST['LAN_RESULTADOS']) && $_POST['LAN_RESULTADOS'] == 1)? 'checked': ''?>>
-                                    <label class="form-check-label" for="flexSwitchCheckChecked">PARTICIPA DOS RESULTADOS</label>
+                                    <input class="form-check-input" type="checkbox" name="LAN_RESULTADOS" title="PARTICIPA DOS RESULTADOS" role="switch" id="flexSwitchCheckChecked" <?= (isset($_POST['LAN_RESULTADOS']) && $_POST['LAN_RESULTADOS'] == 'on')? 'checked': ''?>>
                                 </div>
                             </div>
                             <div class="col-4 row mx-auto">
@@ -77,6 +74,25 @@ $qtdR = (is_array($contas_receber) ? count($contas_receber) : 0);
                                 </div>
                             </div>
                         </div>
+                        <div class="col-12 row mx-auto mt-2">
+                            <div class="col-8 mx-auto">
+                                <button type='submit' name='btnPrint' class='btn btn-outline-dark text-center' onclick='window.print();'>
+                                    <i class="bi bi-printer"></i>
+                                </button>
+                            </div>
+                            <div class="col-4">
+                                <ul class="pagination col-5 mx-auto text-center">
+                                    <li class="page-item"><a class="page-link" href="#"><<</a></li>
+                                    <li class="page-item active"><a class="page-link" href="<?= DIRPAGE ?>lancamentos">1</a></li>
+                                    <li class="page-item "><a class="page-link" href="<?= DIRPAGE ?>lancamentos">2</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">>></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <input type="hidden" class="form-control" name="EMP_COD" value="<?= isset($empresa['EMP_COD']) ? $empresa['EMP_COD'] : 0; ?>">
+                        <input type="hidden" class="form-control" name="filtrar" value="1">
+
                     </form>
                     <table class="table table-striped table-bordered">
                         <thead class="text-center text-uppercase">
@@ -91,8 +107,8 @@ $qtdR = (is_array($contas_receber) ? count($contas_receber) : 0);
                             <th class="text-dark">Data Venc.</th>
                             <th class="text-dark">Valor</th>
                             <th class="text-dark">Obs</th>
-                            <th class="text-dark">Status</th>
-                            <?php if($_SESSION['USU_NIVEL'] >= 8){ ?><th class="text-dark">Ações</th><?php } ?>
+                            <th class="text-dark ">Status</th>
+                            <?php if($_SESSION['USU_NIVEL'] >= 8){ ?><th class="text-dark d-print-none">Ações</th><?php } ?>
                         </thead>
                         <tbody>
                         <?php
@@ -148,7 +164,7 @@ $qtdR = (is_array($contas_receber) ? count($contas_receber) : 0);
                             </td>
                             <td class="text-center align-middle"><?= ($lancamentos[$i]['LAN_STATUS'] == 1)? 'ATIVO' : 'DESATIVADO'; ?></td>
                             <?php if($_SESSION['USU_NIVEL'] >= 8){ ?>
-                            <td class="text-center align-middle">
+                            <td class="text-center align-middle d-print-none">
                                 <?php if($lancamentos[$i]['LAN_STATUS'] == 0){ ?>
                                 <button type="button" class="btn btn-success btn-sm d-print-none" data-bs-toggle='modal'  data-bs-target="#status" data-codigo="<?= $lancamentos[$i]['LAN_COD']; ?>" data-nome="<?= $lancamentos[$i]['CLI_NOME']; ?>" data-status="<?= $lancamentos[$i]['LAN_STATUS']; ?>" title="Deseja ativar?" ><i class="fa fa-ban"></i></button>
                                 <?php }else { ?>
@@ -161,15 +177,7 @@ $qtdR = (is_array($contas_receber) ? count($contas_receber) : 0);
                         <?php $b++; } ?>
                         </tbody>
                     </table>
-                    <div class="container col-2 mx-auto">
-                        <ul class="pagination col-12 mx-auto text-center">
-                            <li class="page-item"><a class="page-link" href="#"><<</a></li>
-                            <li class="page-item active"><a class="page-link" href="<?= DIRPAGE ?>lancamentos">1</a></li>
-                            <li class="page-item "><a class="page-link" href="<?= DIRPAGE ?>lancamentos">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                            <li class="page-item"><a class="page-link" href="#">>></a></li>
-                        </ul>
-                    </div>
+                    
                     <?php }else { ?>
                         <h4 class="text-center text-warning fs-4">EMPRESA SEM NENHUM LANÇAMENTO CADASTRADO</h4>
                     <?php } ?>
