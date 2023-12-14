@@ -57,16 +57,20 @@ class Lancamentos extends Model
     }
     public function listarFiltro(array $dados, $ver = 0)
     {
-        (isset($dados['LAN_TIPO']) && $dados['LAN_RESULTADOS'] !=0) ? $tipo = " AND L.LAN_TIPO=".$dados['LAN_TIPO']."" : $tipo = '';
-        (isset($dados['LAN_RESULTADOS']) && $dados['LAN_RESULTADOS']  == "on")? $resultados = 'AND L.LAN_RESULTADOS="1"': $resultados = ' AND L.LAN_RESULTADOS="0"';
+        
+        (isset($dados['LAN_TIPO']) && $dados['LAN_RESULTADOS'] != 0) ? $tipo = " AND L.LAN_TIPO=".$dados['LAN_TIPO'].""  : $tipo = '';
+        (isset($dados['LAN_RESULTADOS']) && $dados['LAN_RESULTADOS']  == 1)? $resultados = 'AND L.LAN_RESULTADOS="1"': (($dados['LAN_RESULTADOS']  == 2) ? $resultados = ' AND L.LAN_RESULTADOS="0"' : $resultados = '');
         (isset($dados['LAN_QTD']) && $dados['LAN_QTD'] != 0)? $qtd = $dados['LAN_QTD'] : $qtd = 10;
         (isset($dados['LAN_PAGINA']) && $dados['LAN_PAGINA'] != 0)? $pagina = $dados['LAN_PAGINA'] : $pagina = 1;
 
         $inicio = ($pagina * $qtd) - $pagina;
+       // dump($qtd);
 
-        $parametros = "L INNER JOIN tb_empresas E ON E.EMP_COD=L.EMP_COD WHERE L.EMP_COD={$this->codEmpresa} $tipo ORDER BY L.LAN_DT_CADASTRO LIMIT $inicio, $qtd";
+        $parametros = "L INNER JOIN tb_empresas E ON E.EMP_COD=L.EMP_COD WHERE L.EMP_COD={$this->codEmpresa}{$tipo}{$resultados} ORDER BY L.LAN_DT_CADASTRO LIMIT $inicio, $qtd";
         $campos = "*";
-        $resultado = $this->Model->exibir($parametros, $campos, $ver = 0, $id = false);
+        $resultado = $this->Model->exibir($parametros, $campos, $ver, $id = false);
+        dump($resultado);
+        //exit;
         if ($resultado) {
             return $resultado;
         } else {
