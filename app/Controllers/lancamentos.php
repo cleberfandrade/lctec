@@ -51,13 +51,19 @@ class lancamentos extends View
     {
         $this->dados['title'] .= ' GERENCIAR LANÇAMENTOS A PARGAR E RECEBER';   
 
+        $this->dados['lan_todos'] = $this->Lancamentos->setCodEmpresa($_SESSION['EMP_COD'])->listarTodos(0);
+
         $dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);
        
         if (isset($_POST) && isset($dados['filtrar'])) {
            
-            //$this->dados['LAN_QTD'] = $dados['LAN_QTD'];
+            $this->dados['LAN_PAGINA'] = (isset($dados['LAN_PAGINA']) && $dados['LAN_PAGINA'] != '') ? $dados['LAN_PAGINA'] : 1;
+
             $this->dados['lancamentos'] = $this->Lancamentos->setCodEmpresa($_SESSION['EMP_COD'])->listarFiltro($dados,0);
-            //dump($qtd);
+            //dump($this->dados);
+            //exit;
+        }else {
+            $this->dados['LAN_PAGINA'] = 1;
         }
 
         $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();

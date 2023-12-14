@@ -3,8 +3,13 @@ use Libraries\Sessao;
 session_start();
 include_once 'app/Views/admin/inc/cabecalho.phtml'; 
 $qtd = (is_array($lancamentos) ? count($lancamentos) : 0);
+$qtdL = (is_array($lan_todos) ? count($lan_todos) : 0);
+
 $qtdC = (is_array($contas) ? count($contas) : 0);
-$qtdR = (is_array($contas_receber) ? count($contas_receber) : 0);
+//$qtdR = (is_array($contas_receber) ? count($contas_receber) : 0);
+//dump($qtdL);
+$qtdPg = (isset($_POST['LAN_QTD']) && $_POST['LAN_QTD'] != '0') ? $_POST['LAN_QTD'] : 10;
+$qtdP = ceil($qtdL/$qtdPg);
 ?>
 <body class="">
     <div class="d-flex" id="wrapper">
@@ -49,7 +54,7 @@ $qtdR = (is_array($contas_receber) ? count($contas_receber) : 0);
                                 <option value="0">...</option>
                                 <?php for ($q=10; $q <= 100; $q++) { ?>
                                     <?php if ($q > 10) { $q += 9; } ?>
-                                    <option value="<?= $q ?>" <?= (isset($_POST['LAN_QTD']) &&  $_POST['LAN_QTD']  == $q)? 'selected' : '' ?>><?= $q ?></option>
+                                    <option value="<?= $q ?>" <?= (isset($_POST['LAN_QTD']) &&  $_POST['LAN_QTD']  == $q)? 'selected' : $qtdPg ?>><?= $q ?></option>
                                 <?php } ?>
                                 </select>
                             </div>
@@ -83,10 +88,10 @@ $qtdR = (is_array($contas_receber) ? count($contas_receber) : 0);
                             <div class="col-4">
                                 <ul class="pagination col-5 mx-auto text-center">
                                     <li class="page-item"><a class="page-link" href="#"><<</a></li>
-                                    <li class="page-item active"><a class="page-link" href="<?= DIRPAGE ?>lancamentos">1</a></li>
-                                    <li class="page-item "><a class="page-link" href="<?= DIRPAGE ?>lancamentos">2</a></li>
+                                    <li class="page-item active"><a class="page-link">1</a></li>
+                                    <li class="page-item "><a class="page-link">2</a></li>
                                     <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">>></a></li>
+                                    <li class="page-item"><button type="submit" name="LAN_PAGINA" class="page-link" title="<?= $qtdP ?>" value="<?= $qtdP ?>">>></button></li>
                                 </ul>
                             </div>
                         </div>
