@@ -98,9 +98,9 @@ $qtdP = ceil($qtdL/$qtdPg);
                             <div class="col-4 mx-auto">
                                 <ul class="pagination col-12 text-center">
                                     <li class="page-item"><button type="submit" name="LAN_PAGINA" class="page-link" value="1">Primeira</button></li>
-                                    <?php if($qtdP-1 > 1){ ?> <li class="page-item "><button type="submit" name="LAN_PAGINA" class="page-link" title="<?= $qtdP ?>" value="<?= ($qtdP > 1)? $qtdP-1: '' ?>"><<</button></li> <?php } ?>
+                                    <?php if($qtdP-1 > 1){ ?> <li class="page-item "><button type="submit" name="LAN_PAGINA" class="page-link" title="<?= $LAN_PAGINA-1 ?>" value="<?= ($LAN_PAGINA > 1)? $LAN_PAGINA-1: '' ?>"><<</button></li> <?php } ?>
                                     <li class="page-item active"><button class="page-link"><?= $LAN_PAGINA ?></button></li>
-                                    <?php if($qtdP+1 > $qtdP){ ?><li class="page-item"><button type="submit" name="LAN_PAGINA" class="page-link" title="<?= $qtdP ?>" value="<?= $qtdP+1 ?>">>></button></li><?php } ?>
+                                    <?php if($qtdP+1 > $qtdP){ ?><li class="page-item"><button type="submit" name="LAN_PAGINA" class="page-link" title="<?= $LAN_PAGINA+1 ?>" value="<?= $LAN_PAGINA+1 ?>">>></button></li><?php } ?>
                                     <li class="page-item"><button type="submit" name="LAN_PAGINA" class="page-link" title="<?= $qtdP ?>" value="<?= $qtdP ?>">Última>></button></li>
                                 </ul>
                             </div>
