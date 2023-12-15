@@ -64,13 +64,16 @@ class Lancamentos extends Model
         
         (isset($dados['LAN_PAGINA']) && $dados['LAN_PAGINA'] != 0)? $pagina = $dados['LAN_PAGINA'] : $pagina = 1;
         (isset($dados['LAN_QTD']) && $dados['LAN_QTD'] != 10)? $limit = $dados['LAN_QTD'] : $limit = 10;
+        
+        $qtd = $dados['LAN_QTD_TOTAL'];
 
         $offset = ($pagina - 1) * $limit;
         //$n_pagina = ceil($dados['LAN_QTD_TOTAL']/$limit);
         //$offset = ($pagina * $qtd) - $limit;
         //dump($limit);
 
-        $parametros = "L INNER JOIN tb_empresas E ON E.EMP_COD=L.EMP_COD WHERE L.EMP_COD={$this->codEmpresa}{$tipo}{$resultados}{$data} ORDER BY L.LAN_DT_CADASTRO LIMIT {$limit} OFFSET {$offset}";
+        //$parametros = "L INNER JOIN tb_empresas E ON E.EMP_COD=L.EMP_COD WHERE L.EMP_COD={$this->codEmpresa}{$tipo}{$resultados}{$data} ORDER BY L.LAN_DT_CADASTRO LIMIT {$limit} OFFSET {$offset}";
+        $parametros = "L INNER JOIN tb_empresas E ON E.EMP_COD=L.EMP_COD WHERE L.EMP_COD={$this->codEmpresa}{$tipo}{$resultados}{$data} ORDER BY L.LAN_DT_CADASTRO LIMIT {$offset},{$limit}";
         $campos = "*";
         $resultado = $this->Model->exibir($parametros, $campos, $ver, $id = false);
         //dump($resultado);
