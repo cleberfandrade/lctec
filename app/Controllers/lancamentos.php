@@ -50,10 +50,12 @@ class lancamentos extends View
     public function index()
     {
         $this->dados['title'] .= ' GERENCIAR LANÇAMENTOS A PARGAR E RECEBER';   
+        $dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);
 
         $this->dados['lan_todos'] = $this->Lancamentos->setCodEmpresa($_SESSION['EMP_COD'])->listarTodos(0);
+       
         $dados['LAN_QTD_TOTAL'] = (is_array($this->dados['lan_todos']) ? count($this->dados['lan_todos']) : 0);
-        $dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);
+       
        
         if (isset($_POST) && isset($dados['filtrar'])) {
 
@@ -71,6 +73,7 @@ class lancamentos extends View
             $this->dados['LAN_PAGINA'] = 1;
         }
         $this->dados['lancamentos'] = $this->Lancamentos->setCodEmpresa($_SESSION['EMP_COD'])->listarFiltro($dados,0);
+
         $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
         $this->render('admin/financeiro/lancamentos/listar', $this->dados);
     }
