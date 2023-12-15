@@ -48,7 +48,7 @@ class Lancamentos extends Model
     {
         $parametros = "L INNER JOIN tb_empresas E ON E.EMP_COD=L.EMP_COD WHERE L.EMP_COD={$this->codEmpresa} AND L.LAN_COD={$this->codigo}";
         $campos = "*";
-        $resultado = $this->Model->exibir($parametros, $campos, $ver = 0, $id = false);
+        $resultado = $this->Model->exibir($parametros, $campos, $ver, $id = false);
         if ($resultado) {
             return $resultado[0];
         } else {
@@ -65,7 +65,6 @@ class Lancamentos extends Model
         (isset($dados['LAN_PAGINA']) && $dados['LAN_PAGINA'] != 0)? $pagina = $dados['LAN_PAGINA'] : $pagina = 1;
         (isset($dados['LAN_QTD']) && $dados['LAN_QTD'] != 10)? $limit = $dados['LAN_QTD'] : $limit = 10;
 
-        //$limit = 10;
         $offset = ($pagina - 1) * $limit;
         //$n_pagina = ceil($dados['LAN_QTD_TOTAL']/$limit);
         //$offset = ($pagina * $qtd) - $limit;
@@ -86,7 +85,7 @@ class Lancamentos extends Model
     {
         $parametros = "L INNER JOIN tb_empresas E ON E.EMP_COD=L.EMP_COD WHERE L.EMP_COD={$this->codEmpresa} ORDER BY L.LAN_DT_CADASTRO";
         $campos = "*";
-        $resultado = $this->Model->exibir($parametros, $campos, $ver = 0, $id = false);
+        $resultado = $this->Model->exibir($parametros, $campos, $ver, $id = false);
         if ($resultado) {
             return $resultado;
         } else {
@@ -97,7 +96,7 @@ class Lancamentos extends Model
     {
         $parametros = "L INNER JOIN tb_empresas E ON E.EMP_COD=L.EMP_COD WHERE L.EMP_COD={$this->codEmpresa} AND L.LAN_TIPO='{$this->tipo}' ORDER BY L.LAN_DT_VENCIMENTO DESC";
         $campos = "*";
-        $resultado = $this->Model->exibir($parametros, $campos, $ver = 0, $id = false);
+        $resultado = $this->Model->exibir($parametros, $campos, $ver, $id = false);
         if ($resultado) {
             return $resultado;
         } else {
