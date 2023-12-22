@@ -33,9 +33,11 @@ $qtdLP = (is_array($lancamentos_pagar) ? count($lancamentos_pagar) : 0);
             
             <section class="bg-light text-dark row py-2">
                 <section class="container col-12 mx-auto p-1 text-center fs-4 d-print-none">
-                    <div class="container input-group mb-3 mx-auto col-6">
-                        <input type="text" id="pesquisar" class="form-control form-control-lg col-6" placeholder="Descrição do lançamento">
-                        <button class="btn btn-outline-secondary" type="button" id="button-addon2">BUSCAR</button>
+                    <div class="container mx-auto col-8 row">
+                        <div class="container input-group mb-3 mx-auto col-6">
+                            <input type="text" id="pesquisar" class="form-control form-control-lg col-6" placeholder="Descrição do lançamento">
+                            <button class="btn btn-outline-secondary" type="button" id="button-addon2">BUSCAR</button>
+                        </div>
                     </div>
                     <?= $qtdLP ?> RESULTADOS
                 </section>

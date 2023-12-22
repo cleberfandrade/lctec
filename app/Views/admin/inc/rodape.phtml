@@ -23,3 +23,29 @@
     </div>
 </footer>
 <?php include_once 'app/Views/admin/inc/limite_acesso.phtml';?>
+<script>
+    const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+    const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+
+    setInterval(async () => {
+       
+        
+        window.addEventListener("offline", (event) => {
+            const statusDisplay = document.getElementById("status_conexao");
+            //statusDisplay.title  = "OFFline";
+            $(statusDisplay).attr('data-bs-content','OFFline');
+            console.log('OFFline');
+        });
+
+        window.addEventListener("online", (event) => {
+            const statusDisplay = document.getElementById("status_conexao");
+            //console.log(statusDisplay);
+            $(statusDisplay).attr('data-bs-content','Online');
+            //statusDisplay.getElementsByTagName('data-bs-content')[0].innerText  = 'Online';
+            //statusDisplay.title  = "Online";
+            console.log('Online');
+        });
+    
+    }, 3000);
+    
+</script>
