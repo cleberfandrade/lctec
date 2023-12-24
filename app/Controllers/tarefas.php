@@ -41,4 +41,11 @@ class tarefas extends View
         $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
         $this->render('admin/cadastros/tarefas/colunas', $this->dados);
     }
+    public function cadastro()
+    {
+        $this->dados['title'] .= ' CADASTRAR NOVA TAREFAS';
+        $this->link[3] = ['link'=> 'cadastros/tarefas/cadastrar','nome' => 'CADASTRAR NOVA TAREFA'];
+        $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
+        $this->render('admin/cadastros/tarefas/cadastrar', $this->dados);
+    }
 }
