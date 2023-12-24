@@ -33,13 +33,22 @@ include_once 'app/Views/admin/inc/cabecalho.phtml';
             </header>
             <?php include_once 'app/Views/admin/inc/alertas.phtml'; ?>  
             <section class="container bg-light mx-auto py-2 mb-5">
-                <div class="card bg-success mx-auto text-center col-12 py-1 mb-2 d-print-none">
-                    <div class="card-body text-white">
-                        <h5 class="card-title">TAREFAS</h5>
-                        <p class="card-text">Cadastre suas tarefas</p>
-                        <a href="<?= DIRPAGE ?>tarefas/cadastro" class="btn btn-dark">NOVO CADASTRO</a>
-                    </div>
-                </div>  
+                <div class="mx-auto row text-center col-12 py-1 mb-2 d-print-none">
+                    <div class="card bg-success mx-auto text-center col-6 py-1 mb-2 d-print-none">
+                        <div class="card-body text-white">
+                            <h5 class="card-title">TAREFAS</h5>
+                            <p class="card-text">Cadastre suas tarefas</p>
+                            <a href="<?= DIRPAGE ?>tarefas/cadastro" class="btn btn-dark">NOVO CADASTRO</a>
+                        </div>
+                    </div>  
+                    <div class="card bg-success mx-auto text-center col-6 py-1 mb-2 d-print-none">
+                        <div class="card-body text-white">
+                            <h5 class="card-title">COLUNAS</h5>
+                            <p class="card-text">Cadastre as colunas para suas tarefas</p>
+                            <a href="<?= DIRPAGE ?>tarefas/colunas" class="btn btn-dark">NOVO CADASTRO</a>
+                        </div>
+                    </div>  
+                </div>
             </section>
         </div>
         <?php include_once 'app/Views/admin/inc/rodape.phtml';?>
