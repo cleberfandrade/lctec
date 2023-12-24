@@ -33,7 +33,7 @@ class tarefas extends View
 
         $this->dados['tarefas'] = $this->Tarefas->setCodEmpresa($_SESSION['EMP_COD'])->listarTodos(0);
         $this->dados['colunas'] = $this->Colunas->setCodEmpresa($_SESSION['EMP_COD'])->listarTodos(0);
-        $this->dados['classificacoes'] = $this->Classificacoes->setCodEmpresa($_SESSION['EMP_COD'])->setTipo('TAR')->listarTodosPorTipo(0);
+        $this->dados['classificacoes'] = $this->Classificacoes->setCodEmpresa($_SESSION['EMP_COD'])->setTipo('TAREFAS')->listarTodosPorTipo(0);
         
         $this->link[0] = ['link'=> 'admin','nome' => 'PAINEL ADMINISTRATIVO'];
         $this->link[1] = ['link'=> 'cadastros','nome' => 'MÓDULO DE CADASTROS'];

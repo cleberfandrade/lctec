@@ -2,7 +2,8 @@
 use Libraries\Sessao;
 session_start();
 include_once 'app/Views/admin/inc/cabecalho.phtml'; 
-$qtdC = (is_array($categorias) ? count($categorias) : 0);
+$qtdCLA = (is_array($classificacoes) ? count($classificacoes) : 0);
+$qtdCLN = (is_array($colunas) ? count($colunas) : 0);
 ?>
 <body class="">
     <div class="d-flex" id="wrapper">
@@ -34,4 +35,62 @@ $qtdC = (is_array($categorias) ? count($categorias) : 0);
                 <section class="bg-light py-2">
                     <div class="container col-10 px-2 py-2 mx-auto row">
                         <form class="p-4 p-md-6 border text-uppercase rounded-3 bg-3" action="<?= DIRPAGE ?>tarefas/cadastrar" method="POST">
-                            <div class="row ">    
+                            <div class="row ">
+                                <div class="col-4 form-floating mb-3">
+                                    <select class="form-select text-uppercase mb-3 form-floating" name="CLA_COD">
+                                        <option value="0" <?= (isset($_POST['CLA_COD']) &&  $_POST['CLA_COD']  == "0")? 'selected' : '' ?>>---</option>
+                                        <?php for ($i= 0; $i < $qtdCLA; $i++) { if ($classificacoes[$i]['CLA_STATUS'] == 1) { ?> 
+                                            <option value="<?= $classificacoes[$i]['CLA_COD']; ?>" <?= (isset($_POST['CLA_COD']) &&  $_POST['CLA_COD']  == $classificacoes[$i]['CLA_COD'] )? 'selected' : '' ?>><?= $classificacoes[$i]['CLA_DESCRICAO'] ?></option>
+                                            <?php } } ?> 
+                                    </select>
+                                    <label class="form-floating mb-3">CLASSIFICAÇÃO</label>
+                                </div>
+                                <div class="col-4 form-floating mb-3">
+                                    <input type="date" class="form-control form-control-lg" name="TRF_DATA" placeholder="" value="<?= isset($_POST['TRF_DATA']) ? $_POST['TRF_DATA'] : ''; ?>">
+                                    <label class="px-3" for="2">DATA</label>
+                                </div> 
+                                <div class="col-4 form-floating mb-3">
+                                    <input type="time" class="form-control form-control-lg" name="TRF_HORARIO" placeholder="" value="<?= isset($_POST['TRF_HORARIO']) ? $_POST['TRF_HORARIO'] : ''; ?>">
+                                    <label class="px-3" for="2">HORÁRIO</label>
+                                </div> 
+                                <div class="col-4 mb-2 form-floating ">
+                                    <select class="form-select " name="TRF_NIVEL">                                        
+                                        <?php for ($i=1; $i <= 50; $i++) { ?>
+                                            <option value="<?= $i?>" <?= (isset($_POST['TRF_NIVEL']) &&  $_POST['TRF_NIVEL']  == $i)? 'selected' : '' ?>><?= $i ?></option>
+                                        <?php } ?>
+                                    </select>
+                                    <label class="form-label">NÍVEL DA TAREFA</label>
+                                </div>
+                                <div class="col-8 mb-3">
+                                    <div class="form-floating mb-3">
+                                        <input type="text" class="form-control maiusculo" id="1" name="TRF_DESCRICAO" placeholder="" value="<?= isset($_POST['TRF_DESCRICAO']) ? $_POST['TRF_DESCRICAO'] :''; ?>">
+                                        <label class="form-floating px-3" for="1">DESCRIÇÃO DA TAREFA</label>
+                                    </div>
+                                </div>
+                                <div class="col-4 form-floating mb-3">
+                                    <select class="form-select text-uppercase mb-3 form-floating" name="CLA_COD">
+                                        <option value="0" <?= (isset($_POST['CLN_COD']) &&  $_POST['CLN_COD']  == "0")? 'selected' : '' ?>>---</option>
+                                        <?php for ($i= 0; $i < $qtdCLN; $i++) { if ($colunas[$i]['CLA_STATUS'] == 1) { ?> 
+                                            <option value="<?= $colunas[$i]['CLN_COD']; ?>" <?= (isset($_POST['CLN_COD']) &&  $_POST['CLN_COD']  == $colunas[$i]['CLN_COD'] )? 'selected' : '' ?>><?= $colunas[$i]['CLN_DESCRICAO'] ?></option>
+                                            <?php } } ?> 
+                                    </select>
+                                    <label class="form-floating mb-3">CLASSIFICAÇÃO</label>
+                                </div>
+                                <div class="col-8 form-floating mb-3">
+                                    <textarea type="text" rows="10" class="form-control  maiusculo" name="TRF_OBSERVACAO"><?= isset($_POST['TRF_OBSERVACAO'])? $_POST['TRF_OBSERVACAO']  : '' ?></textarea>
+                                    <label for="4" class="form-label">OBSERVAÇÃO</label>
+                                </div>
+                                <hr class="my-4 text-dark">
+                                <input type="hidden" class="form-control" name="EMP_COD" value="<?= isset($_SESSION['EMP_COD']) ? $_SESSION['EMP_COD'] : 0; ?>">
+                                <input type="hidden" class="form-control" name="USU_COD" value="<?= isset($_SESSION['USU_COD']) ? $_SESSION['USU_COD'] : 0; ?>">
+                                <button class="w-100 btn btn-lg text-uppercase btn-success" name="CADASTRAR_NOVA_TAREFA" type="submit"><i class="fa fa-save"></i> Cadastrar</button>
+                            </div> 
+                        </form>
+                    </div>
+                </section>
+            </div>
+            <?php include_once 'app/Views/admin/inc/rodape.phtml';?>
+        </div>
+    </div>
+</body>
+</html>
