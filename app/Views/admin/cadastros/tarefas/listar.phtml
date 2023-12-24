@@ -2,6 +2,9 @@
 use Libraries\Sessao;
 session_start();
 include_once 'app/Views/admin/inc/cabecalho.phtml'; 
+$qtdCLA = (is_array($classificacoes) ? count($classificacoes) : 0);
+$qtdCLN = (is_array($colunas) ? count($colunas) : 0);
+$qtd = (is_array($tarefas) ? count($tarefas) : 0);
 ?>
 <body class="">
     <div class="d-flex" id="wrapper">
@@ -49,6 +52,35 @@ include_once 'app/Views/admin/inc/cabecalho.phtml';
                         </div>
                     </div>  
                 </div>
+                <?php if ($qtd != 0) { ?>
+                <table class="table table-striped table-bordered">
+                    <thead class="text-center text-uppercase">
+                        <th class="text-dark">#</th>
+                        <th class="text-dark">Tipo</th>
+                        <th class="text-dark">Descrição</th>
+                        <th class="text-dark">Status</th>
+                        <?php if($_SESSION['USU_NIVEL'] >= 8){ ?><th class="text-dark">Ações</th><?php } ?> 
+                    </thead>
+                    <tbody>
+                        <?php
+                        $b = 1;
+                        for ($c= 0; $c < $qtdCLN; $c++) { ?>
+                            <tr>
+                                <td class="text-center align-middle"><?= $b; ?></td>
+                                <?php $c = 1; for ($i= 0; $i < $qtd; $i++) { ?>
+                                <tr class="<?= ($tarefas[$i]['TRF_STATUS'] == 0 && $_SESSION['USU_NIVEL'] >= 8)? 'bg-secondary' : ''; ?>">
+                                    <td class="text-center align-middle"><?= $c; ?></td>
+                                    <?php if($_SESSION['USU_NIVEL'] >= 8){ ?>
+                                    <?php } ?> 
+                                </tr>
+                            <?php $c++;  } ?>
+                            </tr>
+                        <?php $b++; } ?>
+                    </tbody>
+                </table>
+                <?php }else { ?>
+                        <h4 class="text-center text-warning fs-4">EMPRESA SEM NENHUMA CLASSIFICAÇÃO CADASTRADA</h4>
+                    <?php } ?>
             </section>
         </div>
         <?php include_once 'app/Views/admin/inc/rodape.phtml';?>
