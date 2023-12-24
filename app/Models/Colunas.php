@@ -47,7 +47,7 @@ class Colunas extends Model
     }
     public function listarTodos($ver = 0)
     {
-        $parametros = "C INNER JOIN Cb_empresas E ON E.EMP_COD=C.EMP_COD WHERE C.EMP_COD={$this->codEmpresa} ORDER BY C.CLN_DT_CADASTRO";
+        $parametros = "C INNER JOIN tb_empresas E ON E.EMP_COD=C.EMP_COD WHERE C.EMP_COD={$this->codEmpresa} ORDER BY C.CLN_DT_CADASTRO";
         $campos = "*";
         $resultado = $this->Model->exibir($parametros, $campos, $ver, $id = false);
         if ($resultado) {

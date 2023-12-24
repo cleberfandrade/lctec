@@ -52,7 +52,7 @@ class classificacoes extends View
         $ok = false;
         $dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);
                 
-        if (isset($_POST) && isset($dados['CADASTRAR_NOVO_CLASSIFICACAO'])) {
+        if (isset($_POST) && isset($dados['CADASTRAR_NOVA_CLASSIFICACAO'])) {
             unset($dados['CADASTRAR_NOVA_CLASSIFICACAO']);
             if( $this->dados['empresa']['USU_COD'] == $dados['USU_COD'] && $this->dados['empresa']['EMP_COD'] == $dados['EMP_COD']){
                 
@@ -152,7 +152,8 @@ class classificacoes extends View
                     'CLA_STATUS'=> 1
                 );
                 if($this->Classificacoes->alterar($dados,0)){
-                        Sessao::alert('OK','Cadastro alterado com sucesso!','fs-4 alert alert-success');
+                    $ok = true;
+                    Sessao::alert('OK','Cadastro alterado com sucesso!','fs-4 alert alert-success');
                 }else{
                     Sessao::alert('ERRO',' ERRO: CLA33- Erro ao alterar a classificação, entre em contato com o suporte!','fs-4 alert alert-danger');
                 }

@@ -53,7 +53,7 @@ $qtd = (is_array($classificacoes) ? count($classificacoes) : 0);
                                 <?php
                                     $b = 1;
                                     for ($i= 0; $i < $qtd; $i++) { ?>
-                                    <tr class="<?= ($classificacoes[$i]['CAT_STATUS'] == 0 && $_SESSION['USU_NIVEL'] >= 8)? 'bg-secondary' : ''; ?>">
+                                    <tr class="<?= ($classificacoes[$i]['CLA_STATUS'] == 0 && $_SESSION['USU_NIVEL'] >= 8)? 'bg-secondary' : ''; ?>">
                                         <td class="text-center align-middle"><?= $b; ?></td>
                                         <td class="text-center align-middle"><?= $classificacoes[$i]['CLA_TIPO']; ?></td>
                                         <td class="text-center align-middle"><?= $classificacoes[$i]['CLA_DESCRICAO']; ?></td>
@@ -61,9 +61,9 @@ $qtd = (is_array($classificacoes) ? count($classificacoes) : 0);
                                         <?php if($_SESSION['USU_NIVEL'] >= 8){ ?>
                                             <td class="text-center align-middle">
                                                 <?php if($classificacoes[$i]['CLA_STATUS'] == 0){ ?>
-                                                <button type="button" class="btn btn-success btn-sm d-print-none" data-bs-toggle='modal'  data-bs-target="#status" title="Ativar categoria" data-codigo="<?= $classificacoes[$i]['CAT_COD']; ?>" data-nome="<?= $classificacoes[$i]['CLA_DESCRICAO']; ?>"  data-status="<?= $classificacoes[$i]['CLA_STATUS']; ?>" title="Deseja ativar?" ><i class="fa fa-circle-check"></i></button>
+                                                <button type="button" class="btn btn-success btn-sm d-print-none" data-bs-toggle='modal'  data-bs-target="#status" title="Ativar categoria" data-codigo="<?= $classificacoes[$i]['CLA_COD']; ?>" data-nome="<?= $classificacoes[$i]['CLA_DESCRICAO']; ?>"  data-status="<?= $classificacoes[$i]['CLA_STATUS']; ?>" title="Deseja ativar?" ><i class="fa fa-circle-check"></i></button>
                                                 <?php }else { ?>
-                                                <a type="button" class="btn btn-warning btn-sm d-print-none" href="<?= DIRPAGE.'classificacoes/alteracao/'.$classificacoes[$i]['EMP_COD'].'/'.$classificacoes[$i]['CAT_COD']; ?>" title="Deseja Alterar?"><i class="fa fa-edit"></i></a>
+                                                <a type="button" class="btn btn-warning btn-sm d-print-none" href="<?= DIRPAGE.'classificacoes/alteracao/'.$classificacoes[$i]['EMP_COD'].'/'.$classificacoes[$i]['CLA_COD']; ?>" title="Deseja Alterar?"><i class="fa fa-edit"></i></a>
                                                 <button type="button" class="btn btn-danger btn-sm d-print-none" data-bs-toggle='modal'  data-bs-target="#status" data-codigo="<?= $classificacoes[$i]['CLA_COD']; ?>" data-nome="<?= $classificacoes[$i]['CLA_DESCRICAO']; ?>" data-status="<?= $classificacoes[$i]['CLA_STATUS']; ?>"  title="Deseja desativar?" ><i class="fa fa-ban"></i></button>
                                                 <?php } ?> 
                                             </td>
