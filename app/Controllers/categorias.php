@@ -186,7 +186,7 @@ class categorias extends View
             if($this->dados['empresa']['USU_COD'] == $_SESSION['USU_COD'] && $this->dados['empresa']['EMP_COD'] == $dados['EMP_COD']){
                 
                 unset($dados['STATUS_CATEGORIA']);
-                $this->Setores->setCodEmpresa($dados['EMP_COD'])->setCodigo($dados['CAT_COD']);
+                $this->Categorias->setCodEmpresa($dados['EMP_COD'])->setCodigo($dados['CAT_COD']);
                 ($dados['CAT_STATUS'] == 1)? $dados['CAT_STATUS'] = 0: $dados['CAT_STATUS'] = 1;
                 
                 $db = array(
@@ -194,7 +194,7 @@ class categorias extends View
                     'CAT_DT_ATUALIZACAO'=> date('Y-m-d H:i:s'),
                     'CAT_STATUS' => $dados['CAT_STATUS']
                 );
-                if($this->Setores->alterar($db,0)){
+                if($this->Categorias->alterar($db,0)){
                     $respota = array(
                         'COD'=>'OK',
                         'MENSAGEM' => 'Status alterado com sucesso!'
