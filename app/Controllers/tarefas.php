@@ -32,7 +32,7 @@ class tarefas extends View
         $this->dados['usuario'] = $this->Usuarios->setCodUsuario($_SESSION['USU_COD'])->listar(0);
 
         $this->dados['tarefas'] = $this->Tarefas->setCodEmpresa($_SESSION['EMP_COD'])->listarTodos(0);
-        $this->dados['colunas'] = $this->Colunas->setCodEmpresa($_SESSION['EMP_COD'])->listarTodos(0);
+        $this->dados['colunas'] = $this->Colunas->setCodEmpresa($_SESSION['EMP_COD'])->setTipo(1)->listarTodosPorTipo(0);
         $this->dados['classificacoes'] = $this->Classificacoes->setCodEmpresa($_SESSION['EMP_COD'])->setTipo('TAREFAS')->listarTodosPorTipo(0);
         
         $this->link[0] = ['link'=> 'admin','nome' => 'PAINEL ADMINISTRATIVO'];
@@ -48,6 +48,7 @@ class tarefas extends View
     public function colunas()
     {
         $this->dados['title'] .= ' GERENCIAR COLUNAS TAREFAS';   
+        $this->link[3] = ['link'=> 'cadastros/tarefas/colunas','nome' => 'CADASTRAR NOVA COLUNA'];
         $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
         $this->render('admin/cadastros/tarefas/colunas', $this->dados);
     }
@@ -229,13 +230,13 @@ class tarefas extends View
     }
     public function cadastrar_colunas()
     {
-        $this->dados['title'] .= ' CADASTRAR SUAS TAREFAS';
-        $this->link[3] = ['link'=> 'tarefas/cadastrar','nome' => 'CADASTRAR SUAS TAREFAS'];
+        $this->dados['title'] .= ' CADASTRAR COLUNAS TAREFAS';
+        $this->link[3] = ['link'=> 'cadastros/tarefas/colunas','nome' => 'CADASTRAR NOVA COLUNA'];
         $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
         $ok = false;
         $dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);
-        if (isset($_POST) && isset($dados['CADASTRAR_NOVA_TAREFA'])) {
-            unset($dados['CADASTRAR_NOVA_TAREFA']);
+        if (isset($_POST) && isset($dados['CADASTRAR_NOVA_COLUNA_TAREFA'])) {
+            unset($dados['CADASTRAR_NOVA_COLUNA_TAREFA']);
             if( $this->dados['empresa']['USU_COD'] == $dados['USU_COD'] && $this->dados['empresa']['EMP_COD'] == $dados['EMP_COD']){
                 
                 //Verifica se tem algum valor proibido
@@ -244,22 +245,22 @@ class tarefas extends View
                 }
                 
                 //Verificar se já existe cadastro
-                $this->Tarefas->setCodEmpresa($dados['EMP_COD'])->setDescricao($dados['TRF_DESCRICAO']);
-                $cat = $this->Tarefas->checarDescricao();
+                $this->Colunas->setCodEmpresa($dados['EMP_COD'])->setDescricao($dados['CLN_DESCRICAO'])->setTipo(1);
+                $cln = $this->Colunas->checarDescricao();
                 
-                if(!$cat){
+                if(!$cln){
 
                     $dados += array(
-                        'TRF_DT_CADASTRO'=> date('Y-m-d H:i:s'),
-                        'TRF_DT_ATUALIZACAO'=> date('0000-00-00 00:00:00'),          
-                        'TRF_STATUS'=> 1
+                        'CLN_DT_CADASTRO'=> date('Y-m-d H:i:s'),
+                        'CLN_DT_ATUALIZACAO'=> date('0000-00-00 00:00:00'),          
+                        'CLN_STATUS'=> 1
                     );
 
-                    if($this->Tarefas->cadastrar($dados,0)){
+                    if($this->Colunas->cadastrar($dados,0)){
                         $ok = true;
                         Sessao::alert('OK','Cadastro efetuado com sucesso!','fs-4 alert alert-success');
                     }else{
-                        Sessao::alert('ERRO',' TRF4- Erro ao cadastrar nova tarefa, entre em contato com o suporte!','fs-4 alert alert-danger');
+                        Sessao::alert('ERRO',' TRF4- Erro ao cadastrar nova coluna, entre em contato com o suporte!','fs-4 alert alert-danger');
                     }
                 }else {
                     Sessao::alert('ERRO',' TRF3- Cadastro já realizado!','fs-4 alert alert-warning');
@@ -271,10 +272,10 @@ class tarefas extends View
             Sessao::alert('ERRO',' TRF1 - Acesso inválido(s)!','alert alert-danger');
         }
         if ($ok) {
-            $this->dados['tarefas'] = $this->Tarefas->setCodEmpresa($_SESSION['EMP_COD'])->listarTodos(0);
-            $this->render('admin/cadastros/tarefas/listar', $this->dados);
+            $this->dados['colunas'] = $this->Colunas->setCodEmpresa($_SESSION['EMP_COD'])->setTipo(1)->listarTodosPorTipo(0);
+            $this->render('admin/cadastros/tarefas/colunas', $this->dados);
         }else {
-            $this->render('admin/cadastros/tarefas/cadastrar', $this->dados);
+            $this->render('admin/cadastros/tarefas/colunas', $this->dados);
         }
     }
 }

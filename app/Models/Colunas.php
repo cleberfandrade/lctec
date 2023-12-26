@@ -56,6 +56,17 @@ class Colunas extends Model
             return false;
         }
     }
+    public function listarTodosPorTipo($ver = 0)
+    {
+        $parametros = "C INNER JOIN tb_empresas E ON E.EMP_COD=C.EMP_COD WHERE C.EMP_COD={$this->codEmpresa} AND C.CLN_TIPO={$this->tipo} ORDER BY C.CLN_DT_CADASTRO";
+        $campos = "*";
+        $resultado = $this->Model->exibir($parametros, $campos, $ver, $id = false);
+        if ($resultado) {
+            return $resultado;
+        } else {
+            return false;
+        }
+    }
     public function cadastrar(array $dados, $ver = 0)
     {
         $ok = $this->Model->cadastrar($dados, $ver);
@@ -93,7 +104,7 @@ class Colunas extends Model
     }
     public function checarDescricao()
     {
-        $parametros = "WHERE EMP_COD={$this->codEmpresa} AND CLN_DESCRICAO='{$this->descricao}' AND CLN_DATA='{$this->data}'";
+        $parametros = "WHERE EMP_COD={$this->codEmpresa} AND CLN_DESCRICAO='{$this->descricao}' AND CLN_TIPO={$this->tipo}";
         $campos = "*";
         $resultado = $this->Model->exibir($parametros, $campos, $ver = 0, $id = false);
         if ($resultado) {

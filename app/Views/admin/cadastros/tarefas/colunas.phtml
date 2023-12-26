@@ -37,20 +37,18 @@ $qtdCLN = (is_array($colunas) ? count($colunas) : 0);
                         <form class="p-4 p-md-6 border text-uppercase rounded-3 bg-3" action="<?= DIRPAGE ?>tarefas/cadastrar_colunas" method="POST">
                             <div class="row ">
                                 <div class="col-3 mb-2 text-center">
-                                    <label class="form-label">TIPO</label>
                                     <div class="form-floating mb-3">
                                         <select class="form-select" name="CLN_TIPO">                                        
-                                            <option value="0" <?= (isset($_POST['CLN_TIPO']) &&  $_POST['CLN_TIPO']  == 0)? 'selected' : ''; ?>>----</option>   
                                             <option value="1" <?= (isset($_POST['CLN_TIPO']) &&  $_POST['CLN_TIPO']  == 1)? 'selected' : ''; ?>>TAREFAS</option> 
                                             <option value="2" <?= (isset($_POST['CLN_TIPO']) &&  $_POST['CLN_TIPO']  == 2)? 'selected' : ''; ?>>PRODUÇÃO</option> 
                                         </select>
-                                        <label class="form-floating ">TIPO DO SETOR</label>
+                                        <label class="form-floating ">TIPO DA COLUNA</label>
                                     </div>
                                 </div>
                                 <div class="col-3 mb-2 form-floating ">
-                                    <select class="form-select " name="CLN_NIVEL">                                        
+                                    <select class="form-select " name="CLN_POSICAO">                                        
                                         <?php for ($i=1; $i <= 50; $i++) { ?>
-                                            <option value="<?= $i?>" <?= (isset($_POST['CLN_NIVEL']) &&  $_POST['CLN_NIVEL']  == $i)? 'selected' : '' ?>><?= $i ?></option>
+                                            <option value="<?= $i?>" <?= (isset($_POST['CLN_POSICAO']) &&  $_POST['CLN_POSICAO']  == $i)? 'selected' : '' ?>><?= $i ?></option>
                                         <?php } ?>
                                     </select>
                                     <label class="form-label">POSIÇÃO DA COLUNA</label>
@@ -68,6 +66,36 @@ $qtdCLN = (is_array($colunas) ? count($colunas) : 0);
                             </div> 
                         </form>
                     </div>
+                </section>
+                <section class="bg-light py-2">
+                    <hr class="my-4 text-dark">
+                    <table class="table table-striped table-bordered">
+                        <thead class="text-center text-uppercase">
+                            <th class="text-dark">#</th>
+                            <th class="text-dark">Tipo</th>
+                            <th class="text-dark">Descrição</th>
+                            <th class="text-dark">Posição</th>
+                            <th class="text-dark">Status</th>
+                            <?php if($_SESSION['USU_NIVEL'] >= 8){ ?><th class="text-dark">Ações</th><?php } ?> 
+                        </thead>
+                        <tbody>
+                            <?php
+                            $b = 1;
+                            for ($i= 0; $i < $qtdCLN; $i++) { ?>
+                                <tr class="<?= ($colunas[$i]['CLN_STATUS'] == 0 && $_SESSION['USU_NIVEL'] >= 8)? 'bg-secondary' : ''; ?>">
+                                    <td class="text-center align-middle"><?= $b; ?></td>
+                                    <td class="text-center align-middle"><?= ($colunas[$i]['CLN_TIPO'] == 1)? 'TAREFAS' : 'PRODUÇÃO'; ?></td>
+                                    <td class="text-center align-middle"><?= $colunas[$i]['CLN_DESCRICAO']; ?></td>
+                                    <td class="text-center align-middle"><?= $colunas[$i]['CLN_POSICAO']; ?></td>
+                                    <td class="text-center align-middle"><?= ($colunas[$i]['CLN_STATUS'] == 1)? 'ATIVO' : 'DESATIVADO'; ?></td>
+                                    <?php if($_SESSION['USU_NIVEL'] >= 8){ ?>
+                                        
+                                        <td class="text-center align-middle"></td>
+                                    <?php } ?> 
+                                </tr>
+                            <?php $b++;  } ?>
+                        </tbody>
+                    </table>
                 </section>
             </div>
             <?php include_once 'app/Views/admin/inc/rodape.phtml';?>
