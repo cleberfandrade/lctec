@@ -227,4 +227,54 @@ class tarefas extends View
         }
         echo json_encode($respota);
     }
+    public function cadastrar_colunas()
+    {
+        $this->dados['title'] .= ' CADASTRAR SUAS TAREFAS';
+        $this->link[3] = ['link'=> 'tarefas/cadastrar','nome' => 'CADASTRAR SUAS TAREFAS'];
+        $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
+        $ok = false;
+        $dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);
+        if (isset($_POST) && isset($dados['CADASTRAR_NOVA_TAREFA'])) {
+            unset($dados['CADASTRAR_NOVA_TAREFA']);
+            if( $this->dados['empresa']['USU_COD'] == $dados['USU_COD'] && $this->dados['empresa']['EMP_COD'] == $dados['EMP_COD']){
+                
+                //Verifica se tem algum valor proibido
+                foreach ($dados as $key => $value) {
+                    $dados[$key] = $this->Check->checarString($value);
+                }
+                
+                //Verificar se já existe cadastro
+                $this->Tarefas->setCodEmpresa($dados['EMP_COD'])->setDescricao($dados['TRF_DESCRICAO']);
+                $cat = $this->Tarefas->checarDescricao();
+                
+                if(!$cat){
+
+                    $dados += array(
+                        'TRF_DT_CADASTRO'=> date('Y-m-d H:i:s'),
+                        'TRF_DT_ATUALIZACAO'=> date('0000-00-00 00:00:00'),          
+                        'TRF_STATUS'=> 1
+                    );
+
+                    if($this->Tarefas->cadastrar($dados,0)){
+                        $ok = true;
+                        Sessao::alert('OK','Cadastro efetuado com sucesso!','fs-4 alert alert-success');
+                    }else{
+                        Sessao::alert('ERRO',' TRF4- Erro ao cadastrar nova tarefa, entre em contato com o suporte!','fs-4 alert alert-danger');
+                    }
+                }else {
+                    Sessao::alert('ERRO',' TRF3- Cadastro já realizado!','fs-4 alert alert-warning');
+                }
+            }else{
+                Sessao::alert('ERRO',' TRF2 - Dados inválido(s)!','alert alert-danger');
+            }
+        }else{
+            Sessao::alert('ERRO',' TRF1 - Acesso inválido(s)!','alert alert-danger');
+        }
+        if ($ok) {
+            $this->dados['tarefas'] = $this->Tarefas->setCodEmpresa($_SESSION['EMP_COD'])->listarTodos(0);
+            $this->render('admin/cadastros/tarefas/listar', $this->dados);
+        }else {
+            $this->render('admin/cadastros/tarefas/cadastrar', $this->dados);
+        }
+    }
 }
