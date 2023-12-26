@@ -3,6 +3,7 @@ namespace App\Controllers;
 
 use App\Models\Classificacoes;
 use App\Models\Colunas;
+use App\Models\ColunasTarefas;
 use App\Models\Tarefas as ModelsTarefas;
 use App\Models\Usuarios;
 use App\Models\UsuariosEmpresa;
@@ -15,7 +16,7 @@ use Libraries\Url;
 class tarefas extends View
 {
     private $dados = [];
-    private $link,$Check,$Usuarios,$UsuariosEmpresa, $Tarefas,$Classificacoes, $Colunas;
+    private $link,$Check,$Usuarios,$UsuariosEmpresa, $Tarefas,$Classificacoes, $Colunas, $ColunasTarefas;
 
     public function __construct()
     {
@@ -27,12 +28,14 @@ class tarefas extends View
         $this->Tarefas = new ModelsTarefas;
         $this->Colunas = new Colunas;
         $this->Classificacoes = new Classificacoes;
+        $this->ColunasTarefas = new ColunasTarefas;
 
         $this->dados['empresa'] = $this->UsuariosEmpresa->setCodEmpresa($_SESSION['EMP_COD'])->setCodUsuario($_SESSION['USU_COD'])->listar(0);
         $this->dados['usuario'] = $this->Usuarios->setCodUsuario($_SESSION['USU_COD'])->listar(0);
 
         $this->dados['tarefas'] = $this->Tarefas->setCodEmpresa($_SESSION['EMP_COD'])->listarTodos(0);
         $this->dados['colunas'] = $this->Colunas->setCodEmpresa($_SESSION['EMP_COD'])->setTipo(1)->listarTodosPorTipo(0);
+        //$this->dados['colunas_tarefas'] = $this->ColunasTarefas->setCodEmpresa($_SESSION['EMP_COD'])->listarColunasTarefas(0);
         $this->dados['classificacoes'] = $this->Classificacoes->setCodEmpresa($_SESSION['EMP_COD'])->setTipo('TAREFAS')->listarTodosPorTipo(0);
         
         $this->link[0] = ['link'=> 'admin','nome' => 'PAINEL ADMINISTRATIVO'];
@@ -74,7 +77,6 @@ class tarefas extends View
                 foreach ($dados as $key => $value) {
                     $dados[$key] = $this->Check->checarString($value);
                 }
-                
                 //Verificar se já existe cadastro
                 $this->Tarefas->setCodEmpresa($dados['EMP_COD'])->setDescricao($dados['TRF_DESCRICAO']);
                 $cat = $this->Tarefas->checarDescricao();
@@ -243,7 +245,7 @@ class tarefas extends View
                 foreach ($dados as $key => $value) {
                     $dados[$key] = $this->Check->checarString($value);
                 }
-                
+              
                 //Verificar se já existe cadastro
                 $this->Colunas->setCodEmpresa($dados['EMP_COD'])->setDescricao($dados['CLN_DESCRICAO'])->setTipo(1);
                 $cln = $this->Colunas->checarDescricao();

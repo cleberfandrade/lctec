@@ -4,6 +4,7 @@ namespace App\Controllers;
 use App\Models\Empresas;
 use App\Models\Estoques;
 use App\Models\ModulosEmpresa;
+use App\Models\Tarefas;
 use Core\View;
 use App\Models\Usuarios;
 use App\Models\UsuariosEmpresa;
@@ -14,7 +15,7 @@ use Libraries\Util;
 class admin extends View
 {
     private $dados = [];
-    private $link,$Util,$Check,$Empresa,$Usuarios,$Estoques,$UsuariosEmpresa,$ModulosEmpresa;
+    private $link,$Util,$Check,$Empresa,$Usuarios,$Estoques,$UsuariosEmpresa,$ModulosEmpresa, $Tarefas;
     public function __construct()
     {
         Sessao::naoLogado();
@@ -24,6 +25,7 @@ class admin extends View
         $this->Estoques = new Estoques;
         $this->UsuariosEmpresa = new UsuariosEmpresa;
         $this->ModulosEmpresa = new ModulosEmpresa;
+        $this->Tarefas = new Tarefas;
         $this->Util = new Util;
         $this->Check = new Check;
         $this->dados['usuarios_empresa'] = $this->UsuariosEmpresa->setCodUsuario($_SESSION['USU_COD'])->checarUsuario();
@@ -34,6 +36,7 @@ class admin extends View
         $this->dados['empresa'] = $this->UsuariosEmpresa->setCodEmpresa($_SESSION['EMP_COD'])->setCodUsuario($_SESSION['USU_COD'])->listar(0);
         $this->dados['modulos_empresa'] = $this->ModulosEmpresa->setCodEmpresa($_SESSION['EMP_COD'])->listar();
         $this->dados['estoques'] = $this->Estoques->setCodEmpresa($_SESSION['EMP_COD'])->listarTodos(0);
+        $this->dados['tarefas'] = $this->Tarefas->setCodEmpresa($_SESSION['EMP_COD'])->listarTodos(0);
 
         $this->link[0] = ['link'=> 'admin','nome' => 'PAINEL ADMINISTRATIVO'];
         $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();

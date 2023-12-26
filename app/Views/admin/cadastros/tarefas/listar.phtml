@@ -53,33 +53,31 @@ $qtd = (is_array($tarefas) ? count($tarefas) : 0);
                     </div>  
                 </div>
                 <?php if ($qtd != 0) { ?>
-                <table class="table table-striped table-bordered">
-                    <thead class="text-center text-uppercase">
-                        <th class="text-dark">#</th>
-                        <th class="text-dark">Tipo</th>
-                        <th class="text-dark">Descrição</th>
-                        <th class="text-dark">Status</th>
-                        <?php if($_SESSION['USU_NIVEL'] >= 8){ ?><th class="text-dark">Ações</th><?php } ?> 
-                    </thead>
-                    <tbody>
-                        <?php
-                        $b = 1;
-                        for ($c= 0; $c < $qtdCLN; $c++) { ?>
-                            <tr>
-                                <td class="text-center align-middle"><?= $b; ?></td>
-                                <?php $c = 1; for ($i= 0; $i < $qtd; $i++) { ?>
-                                <tr class="<?= ($tarefas[$i]['TRF_STATUS'] == 0 && $_SESSION['USU_NIVEL'] >= 8)? 'bg-secondary' : ''; ?>">
-                                    <td class="text-center align-middle"><?= $c; ?></td>
-                                    <?php if($_SESSION['USU_NIVEL'] >= 8){ ?>
-                                    <?php } ?> 
-                                </tr>
-                            <?php $c++;  } ?>
-                            </tr>
-                        <?php $b++; } ?>
-                    </tbody>
-                </table>
+                    <div class="mx-auto row text-center col-12 py-1 mb-2 d-print-none">
+                        <?php 
+                         for ($c= 0; $c < $qtdCLN; $c++) {
+                            $t = 1; ?>
+                            <table class="table row col table-striped table-bordered">
+                                <thead class="text-center text-uppercase">
+                                    <th colspan="2" class="text-center align-middle"><?= $colunas[$c]['CLN_DESCRICAO']; ?></th>
+                                    <th class="text-center align-middle"><a type="button" class="btn btn-warning btn-sm d-print-none" href="<?= DIRPAGE.'tarefas/alteracao_colunas/'.$colunas[$c]['EMP_COD'].'/'.$colunas[$c]['CLN_COD']; ?>" title="Alterar coluna"><i class="fa fa-edit"></i></a></th>
+                                    <tr>  
+                                        <?php for ($i=0; $i < $qtd; $i++) {
+                                            if($tarefas[$i]['CLN_COD'] == $colunas[$c]['CLN_COD']){ ?>
+                                            <tr class="<?= ($tarefas[$i]['TRF_STATUS'] == 0 && $_SESSION['USU_NIVEL'] >= 8)? 'bg-secondary' : ''; ?>">
+                                                <td class="text-center align-middle"><?= $t; ?></td>
+                                                <td class="text-center align-middle"><?= $tarefas[$i]['TRF_DESCRICAO']; ?></td>
+                                                <td><button type="button" class="btn btn-success btn-sm d-print-none" data-bs-toggle='modal'  data-bs-target="#status" data-codigo="<?= $tarefas[$i]['TRF_COD']; ?>" data-nome="<?= $tarefas[$i]['TRF_DESCRICAO']; ?>" data-status="<?= $tarefas[$i]['CLN_COD']; ?>" title="Deseja mudar?" ><i class="fa fa-ban"></i></button></td>
+                                            </tr>
+                                            <?php $t++; } ?>
+                                        <?php  } ?>
+                                    </tr>
+                                </thead>
+                            </table> 
+                        <?php } ?>
+                        </div>
                 <?php }else { ?>
-                        <h4 class="text-center text-warning fs-4">EMPRESA SEM NENHUMA CLASSIFICAÇÃO CADASTRADA</h4>
+                        <h4 class="text-center text-warning fs-4">EMPRESA SEM NENHUMA TAREFA CADASTRADA</h4>
                     <?php } ?>
             </section>
         </div>
@@ -87,3 +85,20 @@ $qtd = (is_array($tarefas) ? count($tarefas) : 0);
     </div>
 </body>
 </html>
+<!--- <thead class="text-center text-uppercase">
+                        <th class="text-dark">#</th>
+                        <th class="text-dark">Tipo</th>
+                        <th class="text-dark">Descrição</th>
+                        <th class="text-dark">Status</th>
+                        <?php // if($_SESSION['USU_NIVEL'] >= 8){ ?><th class="text-dark">Ações</th><?php //} ?> 
+                    </thead> 
+                    
+                    
+                    <?php //$c = 1; for ($i= 0; $i < $qtd; $i++) { ?>
+                                <tr class="<?php // ($tarefas[$i]['TRF_STATUS'] == 0 && $_SESSION['USU_NIVEL'] >= 8)? 'bg-secondary' : ''; ?>">
+                                    <td class="text-center align-middle"><?php  // $c; ?></td>
+                                    <?php   if($_SESSION['USU_NIVEL'] >= 8){ ?>
+                                    <?php   } ?> 
+                                </tr>
+                            <?php //$c++;   } ?>
+                    --->

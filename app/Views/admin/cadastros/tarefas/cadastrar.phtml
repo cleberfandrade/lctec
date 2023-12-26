@@ -68,13 +68,13 @@ $qtdCLN = (is_array($colunas) ? count($colunas) : 0);
                                     </div>
                                 </div>
                                 <div class="col-4 form-floating mb-3">
-                                    <select class="form-select text-uppercase mb-3 form-floating" name="CLA_COD">
-                                        <option value="1" <?= (isset($_POST['CLN_COD']) &&  $_POST['CLN_COD']  == 1)? 'selected' : '' ?>>---</option>
-                                        <?php for ($i= 2; $i < $qtdCLN; $i++) { if ($colunas[$i]['CLA_STATUS'] == 2) { ?> 
+                                    <select class="form-select text-uppercase mb-3 form-floating" name="CLN_COD">
+                                        <option value="0" <?= (isset($_POST['CLN_COD']) &&  $_POST['CLN_COD']  == 0)? 'selected' : '' ?>>---</option>
+                                        <?php for ($i= 1; $i < $qtdCLN; $i++) { if ($colunas[$i]['CLN_STATUS'] == 1) { ?> 
                                             <option value="<?= $colunas[$i]['CLN_COD']; ?>" <?= (isset($_POST['CLN_COD']) &&  $_POST['CLN_COD']  == $colunas[$i]['CLN_COD'] )? 'selected' : '' ?>><?= $colunas[$i]['CLN_DESCRICAO'] ?></option>
                                             <?php } } ?> 
                                     </select>
-                                    <label class="form-floating mb-3">CLASSIFICAÇÃO</label>
+                                    <label class="form-floating mb-3">COLUNA</label>
                                 </div>
                                 <div class="col-8 form-floating mb-3">
                                     <textarea type="text" rows="10" class="form-control  maiusculo" name="TRF_OBSERVACAO"><?= isset($_POST['TRF_OBSERVACAO'])? $_POST['TRF_OBSERVACAO']  : '' ?></textarea>
