@@ -251,8 +251,8 @@ class produtos extends View
                 unset($dados['PRO_COD']);
                 
                 $dados += array(
-                    'CAT_DT_ATUALIZACAO'=> date('Y-m-d H:i:s'),
-                    'CAT_STATUS'=> 1
+                    'PRO_DT_ATUALIZACAO'=> date('Y-m-d H:i:s'),
+                    'PRO_STATUS'=> 1
                 );
                 if($this->Produtos->alterar($dados,0)){
                     $ok = true;
