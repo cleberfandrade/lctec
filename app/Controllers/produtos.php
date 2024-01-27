@@ -232,6 +232,10 @@ class produtos extends View
 
         if (isset($_POST) && isset($dados['ALTERAR_PRODUTO'])) {
 
+            dump($dados);
+            dump($this->dados);
+            exit;
+
             if($this->dados['empresa']['USU_COD'] == $_SESSION['USU_COD'] && $this->dados['empresa']['EMP_COD'] == $dados['EMP_COD']){
 
                 $this->link[2] = ['link'=> 'estoques/gerenciar/'.$_SESSION['EMP_COD'].'/'.$dados['EST_COD'],'nome' => 'GERENCIAR ESTOQUE'];
@@ -247,7 +251,7 @@ class produtos extends View
                 
                 $this->Produtos->setCodEmpresa($dados['EMP_COD'])->setCodEstoque($dados['EST_COD'])->setCodigo($dados['PRO_COD']);
                 
-                $codProduto =  $dados['PRO_COD'];
+                $codigo = $dados['PRO_COD'];
                 unset($dados['PRO_COD']);
                 
                 $dados += array(
@@ -271,7 +275,7 @@ class produtos extends View
             $this->dados['produtos'] = $this->Produtos->setCodEmpresa($_SESSION['EMP_COD'])->setCodEstoque($dados['EST_COD'])->listarTodos(0);
             $this->render('admin/estoques/produtos/listar', $this->dados);
         }else {
-            $this->dados['produto'] = $this->Produtos->setCodEmpresa($dados['EMP_COD'])->setCodEstoque($dados['EST_COD'])->setCodigo($codProduto)->listar(0);
+            $this->dados['produto'] = $this->Produtos->setCodEmpresa($dados['EMP_COD'])->setCodEstoque($dados['EST_COD'])->setCodigo($codigo)->listar(0);
             $this->render('admin/estoques/produtos/alterar', $this->dados);
         }
     }

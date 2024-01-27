@@ -159,7 +159,7 @@ dump($produto);
                                         <div class="mb-3">
                                             <label class="px-5" for="2">CATEGORIA</label>
                                             <div class="form-floating mb-3">
-                                                <select class="form-select text-uppercase mb-3 form-floating" name="SET_COD">
+                                                <select class="form-select text-uppercase mb-3 form-floating" name="CAT_COD">
                                                     <option value="0" <?= (isset($_POST['CAT_COD']) &&  $_POST['CAT_COD']  == "0")? 'selected' : '' ?>>---</option>
                                                     <?php for ($i= 0; $i < $qtdC; $i++) { ?> 
                                                         <option value="<?= $categorias[$i]['CAT_COD']; ?>" <?= (isset($_POST['CAT_COD']) &&  $_POST['CAT_COD']  == $categorias[$i]['CAT_COD'] )? 'selected' : (isset($produto['CAT_COD']) && $produto['CAT_COD'] == $categorias[$i]['CAT_COD'] ? 'selected': '')  ?>><?= $categorias[$i]['CAT_DESCRICAO'] ?></option>
@@ -186,10 +186,10 @@ dump($produto);
                                     <div class="col-12">
                                         <div class="text-center mb-3">
                                             <div class="form-floating mb-3">
-                                                <select class="form-select text-uppercase mb-3 form-floating" name="SET_COD">
+                                                <select class="form-select text-uppercase mb-3 form-floating" name="CLA_COD">
                                                     <option value="0" <?= (isset($_POST['CLA_COD']) &&  $_POST['CLA_COD']  == "0")? 'selected' : '' ?>>---</option>
                                                     <?php for ($i= 0; $i < $qtdC; $i++) { ?> 
-                                                        <option value="<?= $classificacoes[$i]['CLA_COD']; ?>" <?= (isset($_POST['CLA_COD']) &&  $_POST['CLA_COD']  == $classificacoes[$i]['CLA_COD'] )? 'selected' : (isset($produto['CAT_COD']) && $produto['CAT_COD'] == $classificacoes[$i]['CAT_COD'] ? 'selected': '')  ?>><?= $categorias[$i]['CAT_DESCRICAO'] ?></option>
+                                                        <option value="<?= $classificacoes[$i]['CLA_COD']; ?>" <?= (isset($_POST['CLA_COD']) &&  $_POST['CLA_COD']  == $classificacoes[$i]['CLA_COD'] )? 'selected' : (isset($produto['CLA_COD']) && $produto['CLA_COD'] == $classificacoes[$i]['CLA_COD'] ? 'selected': '')  ?>><?= $classificacoes[$i]['CLA_DESCRICAO'] ?></option>
                                                     <?php } ?> 
                                                 </select>
                                                 <label class="form-floating mb-3">CLASSIFICAÇÃO (opcional)</label>
