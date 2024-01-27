@@ -38,17 +38,17 @@ include_once 'app/Views/admin/inc/cabecalho.phtml';
                                     <label class="form-label">TIPO</label>
                                     <div class="form-floating mb-3">
                                         <select class="form-select" name="CLA_TIPO">                                        
-                                            <option value="0" <?= (isset($_POST['CLA_TIPO']) &&  $_POST['CLA_TIPO']  == 0)? 'selected' : (($classificacao['CLA_TIPO'] == 0)? 'selected' : ''); ?>>----</option>   
-                                            <option value="CATEGORIAS" <?= (isset($_POST['CLA_TIPO']) &&  $_POST['CLA_TIPO']  == 'CATEGORIAS')? 'selected' : ''; ?>>CATEGORIAS</option> 
-                                            <option value="COLABORADORES" <?= (isset($_POST['CLA_TIPO']) &&  $_POST['CLA_TIPO']  == 'COLABORADORES')? 'selected' : ''; ?>>COLABORADORES</option> 
-                                            <option value="CLIENTES" <?= (isset($_POST['CLA_TIPO']) &&  $_POST['CLA_TIPO']  == 'CLIENTES')? 'selected' : ''; ?>>CLIENTES</option>
-                                            <option value="ESTOQUES" <?= (isset($_POST['CLA_TIPO']) &&  $_POST['CLA_TIPO']  == 'ESTOQUES')? 'selected' : ''; ?>>ESTOQUES</option> 
-                                            <option value="FORNECEDORES" <?= (isset($_POST['CLA_TIPO']) &&  $_POST['CLA_TIPO']  == 'FORNECEDORES')? 'selected' : ''; ?>>FORNECEDORES</option> 
-                                            <option value="LANÇAMENTOS" <?= (isset($_POST['CLA_TIPO']) &&  $_POST['CLA_TIPO']  == 'LANÇAMENTOS')? 'selected' : ''; ?>>LANÇAMENTOS</option> 
-                                            <option value="OUTROS" <?= (isset($_POST['CLA_TIPO']) &&  $_POST['CLA_TIPO']  == 'OUTROS')? 'selected' : ''; ?>>OUTROS</option> 
-                                            <option value="PRODUTOS" <?= (isset($_POST['CLA_TIPO']) &&  $_POST['CLA_TIPO']  == 'PRODUTOS')? 'selected' : ''; ?>>PRODUTOS</option> 
-                                            <option value="SERVIÇOS" <?= (isset($_POST['CLA_TIPO']) &&  $_POST['CLA_TIPO']  == 'SERVIÇOS')? 'selected' : ''; ?>>SERVIÇOS</option> 
-                                            <option value="TAREFAS" <?= (isset($_POST['CLA_TIPO']) &&  $_POST['CLA_TIPO']  == 'TAREFAS')? 'selected' : ''; ?>>TAREFAS</option> 
+                                            <option value="0" <?= (isset($_POST['CLA_TIPO']) &&  $_POST['CLA_TIPO']  == 0)? 'selected' : ''; ?>>----</option>   
+                                            <option value="1" <?= (isset($_POST['CLA_TIPO']) &&  $_POST['CLA_TIPO']  == 1)? 'selected' : ''; ?>>CATEGORIAS</option> 
+                                            <option value="2" <?= (isset($_POST['CLA_TIPO']) &&  $_POST['CLA_TIPO']  == 2)? 'selected' : ''; ?>>COLABORADORES</option> 
+                                            <option value="3" <?= (isset($_POST['CLA_TIPO']) &&  $_POST['CLA_TIPO']  == 3)? 'selected' : ''; ?>>CLIENTES</option>
+                                            <option value="4" <?= (isset($_POST['CLA_TIPO']) &&  $_POST['CLA_TIPO']  == 4)? 'selected' : ''; ?>>ESTOQUES</option> 
+                                            <option value="5" <?= (isset($_POST['CLA_TIPO']) &&  $_POST['CLA_TIPO']  == 5)? 'selected' : ''; ?>>FORNECEDORES</option> 
+                                            <option value="6" <?= (isset($_POST['CLA_TIPO']) &&  $_POST['CLA_TIPO']  == 6)? 'selected' : ''; ?>>LANÇAMENTOS</option> 
+                                            <option value="7" <?= (isset($_POST['CLA_TIPO']) &&  $_POST['CLA_TIPO']  == 7)? 'selected' : ''; ?>>OUTROS</option> 
+                                            <option value="8" <?= (isset($_POST['CLA_TIPO']) &&  $_POST['CLA_TIPO']  == 8)? 'selected' : ''; ?>>PRODUTOS</option> 
+                                            <option value="9" <?= (isset($_POST['CLA_TIPO']) &&  $_POST['CLA_TIPO']  == 9)? 'selected' : ''; ?>>SERVIÇOS</option> 
+                                            <option value="10" <?= (isset($_POST['CLA_TIPO']) &&  $_POST['CLA_TIPO']  == 10)? 'selected' : ''; ?>>TAREFAS</option> 
                                         </select>
                                         <label class="form-floating ">TIPO DA CLASSIFICAÇÃO</label>
                                     </div>

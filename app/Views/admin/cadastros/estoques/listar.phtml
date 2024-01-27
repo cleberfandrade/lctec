@@ -66,12 +66,12 @@ $qtdCL = (is_array($classificacoes) ? count($classificacoes) : 0);
                                 <td class="text-center align-middle"><?= $estoques[$i]['EST_TIPO']; ?></td>
                                 <td class="text-center align-middle">
                                 <?php 
-                                    if($estoques[$i]['SET_COD'] != 0 $estoques[$i]['SET_COD'] != '') {
+                                    if($estoques[$i]['SET_COD'] != 0  or $estoques[$i]['SET_COD'] != '') {
                                         for ($c = 0; $c < $qtdS; $c++) { 
-                                            if ($setores[$c]['SET_COD'] == $estoques[$i]['SET_COD']) { ?>
+                                           if ($setores[$c]['SET_COD'] == $estoques[$i]['SET_COD']) { ?>
                                             <?= $setores[$c]['SET_DESCRICAO']; ?>   
                                         <?php } } ?> 
-                                    <?php }else { ?>
+                                    <?php  }else { ?>
                                         À DEFINIR
                                     <?php } ?> 
                                 </td>

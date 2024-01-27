@@ -54,27 +54,21 @@ $qtdCL = (is_array($classificacoes) ? count($classificacoes) : 0);
                             </div>
                             <div class="col-4 text-center mb-3">
                                 <label class="form-label">SETOR</label>
-                                <div class="form-floating mb-3">
-                                    <select class="form-select text-uppercase mb-3 form-floating" name="SET_COD">
-                                        <option value="0" <?= (isset($_POST['SET_COD']) &&  $_POST['SET_COD']  == "0")? 'selected' : '' ?>>---</option>
-                                        <?php for ($i= 0; $i < $qtdS; $i++) { ?> 
-                                            <option value="<?= $setores[$i]['SET_COD']; ?>" <?= (isset($_POST['SET_COD']) &&  $_POST['SET_COD']  == $setores[$i]['SET_COD'] )? 'selected' : '' ?>><?= $setores[$i]['SET_DESCRICAO'] ?></option>
-                                        <?php } ?> 
-                                    </select>
-                                    <label class="form-floating mb-3">SETOR DO ESTOQUE</label>
-                                </div>
+                                <select class="form-select text-uppercase mb-3 form-floating" name="SET_COD">
+                                    <option value="0" <?= (isset($_POST['SET_COD']) &&  $_POST['SET_COD']  == "0")? 'selected' : '' ?>>---</option>
+                                    <?php for ($i= 0; $i < $qtdS; $i++) { ?> 
+                                        <option value="<?= $setores[$i]['SET_COD']; ?>" <?= (isset($_POST['SET_COD']) &&  $_POST['SET_COD']  == $setores[$i]['SET_COD'] )? 'selected' : '' ?>><?= $setores[$i]['SET_DESCRICAO'] ?></option>
+                                    <?php } ?> 
+                                </select>
                             </div>
                             <div class="col-4 text-center mb-3">
                                 <label class="form-label">CLASSIFICAÇÃO</label>
-                                <div class="form-floating mb-3">
-                                    <select class="form-select text-uppercase mb-3 form-floating" name="CLA_COD">
-                                        <option value="0" <?= (isset($_POST['CLA_COD']) &&  $_POST['CLA_COD']  == "0")? 'selected' : '' ?>>---</option>
-                                        <?php for ($i= 0; $i < $qtdCL; $i++) { ?> 
-                                            <option value="<?= $classificacoes[$i]['CLA_COD']; ?>" <?= (isset($_POST['CLA_COD']) &&  $_POST['CLA_COD']  == $classificacoes[$i]['CLA_COD'] )? 'selected' : '' ?>><?= $classificacoes[$i]['CLA_DESCRICAO'] ?></option>
-                                        <?php } ?> 
-                                    </select>
-                                    <label class="form-floating mb-3">CLASSIFICAÇÃO DO ESTOQUE</label>
-                                </div>
+                                <select class="form-select text-uppercase mb-3 form-floating" name="CLA_COD">
+                                    <option value="0" <?= (isset($_POST['CLA_COD']) &&  $_POST['CLA_COD']  == "0")? 'selected' : '' ?>>---</option>
+                                    <?php for ($i= 0; $i < $qtdCL; $i++) { ?> 
+                                        <option value="<?= $classificacoes[$i]['CLA_COD']; ?>" <?= (isset($_POST['CLA_COD']) &&  $_POST['CLA_COD']  == $classificacoes[$i]['CLA_COD'] )? 'selected' : '' ?>><?= $classificacoes[$i]['CLA_DESCRICAO'] ?></option>
+                                    <?php } ?> 
+                                </select>
                             </div>
                             <div class="col-8 mb-2">
                                 <label class="form-label" for="1">INFORME UMA DESCRIÇÃO</label>
@@ -82,7 +76,8 @@ $qtdCL = (is_array($classificacoes) ? count($classificacoes) : 0);
                             </div> 
                             <hr class="my-4 text-dark">
                             <input type="hidden" class="form-control" name="USU_COD" value="<?= isset($_SESSION['USU_COD']) ? $_SESSION['USU_COD'] : 0; ?>">
-                            <button class="w-100 btn btn-lg text-uppercase btn-success" name="CRIAR_NOVO_ESTOQUE" type="submit"><i class="fa fa-save"></i> CRIAR</button>
+                            <a class="col-4 btn btn-lg text-uppercase btn-secondary" href="<?= DIRPAGE; ?>cadastros/estoques"><i class="bi bi-ban"></i> Cancelar</a>
+                            <button class="col-8 btn btn-lg text-uppercase btn-success" name="CRIAR_NOVO_ESTOQUE" type="submit"><i class="fa fa-save"></i> CRIAR</button>
                             <hr class="my-4 text-dark">
                         </div>
                     </form>

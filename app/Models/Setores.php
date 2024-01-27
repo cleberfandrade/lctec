@@ -7,7 +7,7 @@ class Setores extends Model
 { 
     private $tabela = 'tb_setores';
     private $Model = '';
-    private $codigo,$codEmpresa,$descricao;
+    private $codigo,$codEmpresa,$descricao,$tipo;
 
     public function __construct()
     {
@@ -29,6 +29,11 @@ class Setores extends Model
         $this->descricao = $descricao;
         return $this;
     }
+    public function setTipo($tipo)
+    {
+        $this->tipo = $tipo;
+        return $this;
+    }
     public function listar($ver = 0)
     {
         $parametros = "S INNER JOIN tb_empresas E ON S.EMP_COD=E.EMP_COD WHERE S.EMP_COD={$this->codEmpresa} AND S.SET_COD={$this->codigo}";
@@ -36,6 +41,17 @@ class Setores extends Model
         $resultado = $this->Model->exibir($parametros, $campos, $ver, $id = false);
         if ($resultado) {
             return $resultado[0];
+        } else {
+            return false;
+        }
+    }
+    public function listarTodosTipo($ver = 0)
+    {
+        $parametros = "S INNER JOIN tb_empresas E ON S.EMP_COD=E.EMP_COD WHERE S.EMP_COD={$this->codEmpresa} AND S.SET_TIPO={$this->tipo} ORDER BY S.SET_DESCRICAO";
+        $campos = "*";
+        $resultado = $this->Model->exibir($parametros, $campos, $ver = 0, $id = false);
+        if ($resultado) {
+            return $resultado;
         } else {
             return false;
         }
