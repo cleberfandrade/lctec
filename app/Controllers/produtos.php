@@ -250,8 +250,9 @@ class produtos extends View
                 }
                 
                 $this->Produtos->setCodEmpresa($dados['EMP_COD'])->setCodEstoque($dados['EST_COD'])->setCodigo($dados['PRO_COD']);
-                
-                $codigo = $dados['PRO_COD'];
+                $cod = 0;
+                $cod = $dados['PRO_COD'];
+
                 unset($dados['PRO_COD']);
                 
                 $dados += array(
@@ -275,7 +276,8 @@ class produtos extends View
             $this->dados['produtos'] = $this->Produtos->setCodEmpresa($_SESSION['EMP_COD'])->setCodEstoque($dados['EST_COD'])->listarTodos(0);
             $this->render('admin/estoques/produtos/listar', $this->dados);
         }else {
-            $this->dados['produto'] = $this->Produtos->setCodEmpresa($dados['EMP_COD'])->setCodEstoque($dados['EST_COD'])->setCodigo($codigo)->listar(0);
+           //$this->dados['produto'] = $this->Produtos->setCodEmpresa($dados['EMP_COD'])->setCodEstoque($dados['EST_COD'])->setCodigo($cod);
+           //->listar(0);
             $this->render('admin/estoques/produtos/alterar', $this->dados);
         }
     }
