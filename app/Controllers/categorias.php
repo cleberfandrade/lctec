@@ -151,6 +151,8 @@ class categorias extends View
                 }
                 
                 $this->Categorias->setCodEmpresa($dados['EMP_COD'])->setCodigo($dados['CAT_COD']);
+
+                unset($dados['CAT_COD']);
                 
                 $dados += array(
                     'CAT_DT_ATUALIZACAO'=> date('Y-m-d H:i:s'),

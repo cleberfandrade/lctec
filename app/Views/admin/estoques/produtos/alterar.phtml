@@ -7,7 +7,7 @@ $qtdC = (is_array($categorias) ? count($categorias) : 0);
 $qtdS = (is_array($setores) ? count($setores) : 0);
 $qtdCL = (is_array($classificacoes) ? count($classificacoes) : 0);;
 $qtd = (is_array($produto) ? count($produto) : 0);
-
+dump($produto);
 ?>
 <body class="">
     <div class="d-flex" id="wrapper">
@@ -93,32 +93,32 @@ $qtd = (is_array($produto) ? count($produto) : 0);
                                     <label class="px-3" for="1">NOME DO PRODUTO</label>
                                 </div>    
                                 <div class="col-4 form-floating mb-3">
-                                    <input type="text" class="form-control maiusculo" id="1" name="PRO_GRUPO" placeholder="" value="<?= isset($_POST['PRO_GRUPO']) ? $_POST['PRO_GRUPO'] : (isset($produto['PRO_GRUPO'])? : '') ; ?>">
+                                    <input type="text" class="form-control maiusculo" id="1" name="PRO_GRUPO" placeholder="" value="<?= isset($_POST['PRO_GRUPO']) ? $_POST['PRO_GRUPO'] : (isset($produto['PRO_GRUPO'])? $produto['PRO_GRUPO'] : '') ; ?>">
                                     <label class="px-3" for="1">GRUPO (opcional)</label>
                                 </div>   
                                 <div class="col-4 form-floating mb-3">
-                                    <input type="text" class="form-control maiusculo" id="2" name="PRO_CODIGO" placeholder="" value="<?= isset($_POST['PRO_CODIGO']) ? $_POST['PRO_CODIGO'] : (isset($produto['PRO_CODIGO'])? : '') ; ?>">
+                                    <input type="text" class="form-control maiusculo" id="2" name="PRO_CODIGO" placeholder="" value="<?= isset($_POST['PRO_CODIGO']) ? $_POST['PRO_CODIGO'] : (isset($produto['PRO_CODIGO'])? $produto['PRO_CODIGO'] : '') ; ?>">
                                     <label class="px-3" for="2">CÓDIGO (opcional)</label>
                                 </div> 
                                 <div class="col-4 form-floating mb-3">
-                                    <input type="text" class="form-control maiusculo" id="2" name="PRO_REFERENCIA" placeholder="" value="<?= isset($_POST['PRO_REFERENCIA']) ? $_POST['PRO_REFERENCIA'] : (isset($produto['PRO_REFERENCIA'])? : '') ; ?>">
+                                    <input type="text" class="form-control maiusculo" id="2" name="PRO_REFERENCIA" placeholder="" value="<?= isset($_POST['PRO_REFERENCIA']) ? $_POST['PRO_REFERENCIA'] : (isset($produto['PRO_REFERENCIA'])? $produto['PRO_REFERENCIA'] : '') ; ?>">
                                     <label class="px-3" for="2">REFERÊNCIA (opcional)</label>
                                 </div> 
                                 <div class="col-4 form-floating mb-3">
-                                    <input type="text" class="form-control maiusculo" id="2" name="PRO_IMPOSTO" placeholder="" value="<?= isset($_POST['PRO_IMPOSTO']) ? $_POST['PRO_IMPOSTO'] : (isset($produto['PRO_IMPOSTO'])? : '') ; ?>">
+                                    <input type="text" class="form-control maiusculo" id="2" name="PRO_IMPOSTO" placeholder="" value="<?= isset($_POST['PRO_IMPOSTO']) ? $_POST['PRO_IMPOSTO'] : (isset($produto['PRO_IMPOSTO'])? $produto['PRO_IMPOSTO'] : '') ; ?>">
                                     <label class="px-3" for="2">IMPOSTO (opcional)</label>
                                 </div> 
                                 <hr>
                                 <div class="col-4 form-floating mb-3">
-                                    <input type="text" class="form-control maiusculo" id="2" name="PRO_QUANTIDADE" placeholder="0" value="<?= isset($_POST['PRO_QUANTIDADE']) ? $_POST['PRO_QUANTIDADE'] : (isset($produto['PRO_QUANTIDADE'])? : '') ; ?>">
+                                    <input type="text" class="form-control maiusculo" id="2" name="PRO_QUANTIDADE" placeholder="0" value="<?= isset($_POST['PRO_QUANTIDADE']) ? $_POST['PRO_QUANTIDADE'] : (isset($produto['PRO_QUANTIDADE'])? $produto['PRO_QUANTIDADE'] : '') ; ?>">
                                     <label class="px-3" for="2">QUANTIDADE</label>
                                 </div> 
                                 <div class="col-4 form-floating mb-3">
-                                    <input type="text" class="form-control maiusculo" id="MARGEM" name="PRO_QTD_MIN" placeholder="10" value="<?= isset($_POST['PRO_QTD_MIN']) ? $_POST['PRO_QTD_MIN'] : (isset($produto['PRO_QTD_MIN'])? : '') ; ?>">
+                                    <input type="text" class="form-control maiusculo" id="MARGEM" name="PRO_QTD_MIN" placeholder="10" value="<?= isset($_POST['PRO_QTD_MIN']) ? $_POST['PRO_QTD_MIN'] : (isset($produto['PRO_QTD_MIN'])? $produto['PRO_QTD_MIN'] : '') ; ?>">
                                     <label class="px-3" for="2">QUANTIDADE MÍNIMA (opcional)</label>
                                 </div> 
                                 <div class="col-4 form-floating mb-3">
-                                    <input type="text" class="form-control maiusculo" id="2" name="PRO_QTD_MAX" placeholder="100" value="<?= isset($_POST['PRO_QTD_MAX']) ? $_POST['PRO_QTD_MAX'] : (isset($produto['PRO_QTD_MAX'])? : '') ; ?>">
+                                    <input type="text" class="form-control maiusculo" id="2" name="PRO_QTD_MAX" placeholder="100" value="<?= isset($_POST['PRO_QTD_MAX']) ? $_POST['PRO_QTD_MAX'] : (isset($produto['PRO_QTD_MAX'])? $produto['PRO_QTD_MAX'] : '') ; ?>">
                                     <label class="px-3" for="2">QUANTIDADE MAXÍMA (opcional)</label>
                                 </div> 
                                 <hr>
@@ -129,20 +129,20 @@ $qtd = (is_array($produto) ? count($produto) : 0);
                                         <label class="px-3" for="2">PREÇO CUSTO</label>  
                                         <div class="input-group">    
                                             <span class="input-group-text">R$</span>  
-                                            <input type="text" class="form-control form-control-lg  real" id="" name="PRO_PRECO_UNITARIO" placeholder="" value="<?= isset($_POST['PRO_PRECO_UNITARIO']) ? $_POST['PRO_PRECO_UNITARIO'] : (isset($produto['PRO_PRECO_UNITARIO'])? : '') ; ?>">
+                                            <input type="text" class="form-control form-control-lg  real" id="" name="PRO_PRECO_UNITARIO" placeholder="" value="<?= isset($_POST['PRO_PRECO_UNITARIO']) ? $_POST['PRO_PRECO_UNITARIO'] : (isset($produto['PRO_PRECO_UNITARIO'])? $produto['PRO_PRECO_UNITARIO'] : '') ; ?>">
                                         </div>
                                     </div> 
                                     <div class="col-10 mb-3">
                                         <label class="px-3" for="2">MARG. DE LUCRO % (opc)</label>
                                         <div class="input-group">    
-                                            <input type="text" class="form-control form-control-lg" id="PRO_MARGEM" name="PRO_MARGEM" placeholder="" value="<?= isset($_POST['PRO_MARGEM']) ? $_POST['PRO_MARGEM'] : (isset($produto['PRO_MARGEM'])? : '') ; ?>">
+                                            <input type="text" class="form-control form-control-lg" id="PRO_MARGEM" name="PRO_MARGEM" placeholder="" value="<?= isset($_POST['PRO_MARGEM']) ? $_POST['PRO_MARGEM'] : (isset($produto['PRO_MARGEM'])? $produto['PRO_MARGEM'] : '') ; ?>">
                                             <span class="input-group-text">%</span>
                                         </div>
                                     </div> 
                                     <div class="col-10 mb-3">
                                         <label class="px-3" for="2">DESC. MAX % (opc)</label>
                                         <div class="input-group">
-                                            <input type="text" class="form-control form-control-lg" name="PRO_DESCONTO" placeholder="" value="<?= isset($_POST['PRO_DESCONTO']) ? $_POST['PRO_DESCONTO'] : (isset($produto['PRO_DESCONTO'])? : '') ; ?>">
+                                            <input type="text" class="form-control form-control-lg" name="PRO_DESCONTO" placeholder="" value="<?= isset($_POST['PRO_DESCONTO']) ? $_POST['PRO_DESCONTO'] : (isset($produto['PRO_DESCONTO'])? $produto['PRO_DESCONTO'] : '') ; ?>">
                                             <span class="input-group-text">%</span>
                                         </div>
                                     </div> 
@@ -150,7 +150,7 @@ $qtd = (is_array($produto) ? count($produto) : 0);
                                         <label class="px-5" for="2">PREÇO VENDA</label>
                                         <div class="input-group">
                                             <span class="input-group-text">R$</span>
-                                            <input type="text" class="form-control form-control-lg real2" id="PRO_PRECO_VENDA" name="PRO_PRECO_VENDA" placeholder="" value="<?= isset($_POST['PRO_PRECO_VENDA']) ? $_POST['PRO_PRECO_VENDA'] : (isset($produto['PRO_PRECO_VENDA'])? : '') ; ?>">
+                                            <input type="text" class="form-control form-control-lg real2" id="PRO_PRECO_VENDA" name="PRO_PRECO_VENDA" placeholder="" value="<?= isset($_POST['PRO_PRECO_VENDA']) ? $_POST['PRO_PRECO_VENDA'] : (isset($produto['PRO_PRECO_VENDA'])? $produto['PRO_PRECO_VENDA'] : '') ; ?>">
                                         </div>
                                     </div>
                                 </div>
@@ -204,8 +204,10 @@ $qtd = (is_array($produto) ? count($produto) : 0);
                                 <hr class="my-4 text-dark">
                                 <input type="hidden" class="form-control" name="EST_COD" value="<?= isset($estoque['EST_COD']) ? $estoque['EST_COD'] : 0; ?>">
                                 <input type="hidden" class="form-control" name="EMP_COD" value="<?= isset($estoque['EMP_COD']) ? $estoque['EMP_COD'] : 0; ?>">
+                                <input type="hidden" class="form-control" name="PRO_COD" value="<?= isset($estoque['PRO_COD']) ? $estoque['PRO_COD'] : 0; ?>">
                                 <input type="hidden" class="form-control" name="USU_COD" value="<?= isset($_SESSION['USU_COD']) ? $_SESSION['USU_COD'] : 0; ?>">
-                                <button class="w-100 btn btn-lg text-uppercase btn-success" name="CADASTRAR_NOVO_PRODUTO" type="submit"><i class="fa fa-save"></i> Cadastrar</button>
+                                <a class="btn btn-lg col-6 text-uppercase btn-secondary" href="<?= DIRPAGE; ?>estoques/produtos/<?= $produto['EMP_COD']?>/<?= $produto['EST_COD']?>"><i class="bi bi-ban"></i> Cancelar</a>
+                                <button class="col-6 btn btn-lg text-uppercase btn-warning" name="ALTERAR_PRODUTO" type="submit"><i class="fa fa-edit"></i> Alterar</button>
                                 <hr class="my-4 text-dark">
                             </div> 
                         </form>

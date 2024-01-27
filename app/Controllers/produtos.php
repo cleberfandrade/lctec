@@ -223,6 +223,58 @@ class produtos extends View
             $this->render('admin/estoques/produtos/listar', $this->dados);
         }
     }
+    public function alterar()
+    {
+        $this->dados['title'] .= ' ALTERAR PRODUTOS';
+        
+        $ok = false;
+        $dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);       
+
+        if (isset($_POST) && isset($dados['ALTERAR_PRODUTO'])) {
+
+            if($this->dados['empresa']['USU_COD'] == $_SESSION['USU_COD'] && $this->dados['empresa']['EMP_COD'] == $dados['EMP_COD']){
+
+                $this->link[2] = ['link'=> 'estoques/gerenciar/'.$_SESSION['EMP_COD'].'/'.$dados['EST_COD'],'nome' => 'GERENCIAR ESTOQUE'];
+                $this->link[3] = ['link'=> 'estoques/produtos/'.$_SESSION['EMP_COD'].'/'.$dados['EST_COD'],'nome' => 'GERENCIAR PRODUTOS'];
+                $this->link[4] = ['link'=> 'estoques/produtos/alteracao/'.$_SESSION['EMP_COD'].'/'.$dados['EST_COD'].'/'.$dados['EST_COD'],'nome' => 'ALTERAR PRODUTOS'];   
+    
+
+                unset($dados['ALTERAR_PRODUTO']);
+                //Verifica se tem algum valor proibido
+                foreach ($dados as $key => $value) {
+                    $dados[$key] = $this->Check->checarString($value);
+                }
+                
+                $this->Produtos->setCodEmpresa($dados['EMP_COD'])->setCodEstoque($dados['EST_COD'])->setCodigo($dados['PRO_COD']);
+                
+                $codProduto =  $dados['PRO_COD'];
+                unset($dados['PRO_COD']);
+                
+                $dados += array(
+                    'CAT_DT_ATUALIZACAO'=> date('Y-m-d H:i:s'),
+                    'CAT_STATUS'=> 1
+                );
+                if($this->Produtos->alterar($dados,0)){
+                    $ok = true;
+                    Sessao::alert('OK','Cadastro alterado com sucesso!','fs-4 alert alert-success');
+                }else{
+                    Sessao::alert('ERRO',' ERRO: PRO33- Erro ao alterar o produto, entre em contato com o suporte!','fs-4 alert alert-danger');
+                }
+            }else{
+                Sessao::alert('ERRO',' ERRO: PRO22 - Dados inválido(s)!','alert alert-danger');
+            }
+        }else{
+            Sessao::alert('ERRO',' ERRO: PRO21 - Acesso inválido(s)!','alert alert-danger');
+        }
+        $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
+        if ($ok) {
+            $this->dados['produtos'] = $this->Produtos->setCodEmpresa($_SESSION['EMP_COD'])->setCodEstoque($dados['EST_COD'])->listarTodos(0);
+            $this->render('admin/estoques/produtos/listar', $this->dados);
+        }else {
+            $this->dados['produto'] = $this->Produtos->setCodEmpresa($dados['EMP_COD'])->setCodEstoque($dados['EST_COD'])->setCodigo($codProduto)->listar(0);
+            $this->render('admin/estoques/produtos/alterar', $this->dados);
+        }
+    }
     public function status():void
     {
        //Recupera os dados enviados
