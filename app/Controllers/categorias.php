@@ -30,8 +30,8 @@ class categorias extends View
         $this->dados['empresa'] = $this->UsuariosEmpresa->setCodEmpresa($_SESSION['EMP_COD'])->setCodUsuario($_SESSION['USU_COD'])->listar(0);
         $this->dados['usuario'] = $this->Usuarios->setCodUsuario($_SESSION['USU_COD'])->listar(0);
         $this->dados['categorias'] = $this->Categorias->setCodEmpresa($_SESSION['EMP_COD'])->listarTodos(0);
-        $this->dados['setores'] = $this->Setores->setCodEmpresa($_SESSION['EMP_COD'])->listarTodos(0);
-        $this->dados['classificacoes'] = $this->Classificacoes->setCodEmpresa($_SESSION['EMP_COD'])->listarTodos(0);
+        $this->dados['setores'] = $this->Setores->setCodEmpresa($_SESSION['EMP_COD'])->listarTodosPorTipo(1);
+        $this->dados['classificacoes'] = $this->Classificacoes->setCodEmpresa($_SESSION['EMP_COD'])->listarTodosPorTipo(1);
 
         $this->link[0] = ['link'=> 'admin','nome' => 'PAINEL ADMINISTRATIVO'];
         $this->link[1] = ['link'=> 'cadastros','nome' => 'MÓDULO DE CADASTROS'];
@@ -152,6 +152,8 @@ class categorias extends View
                 
                 $this->Categorias->setCodEmpresa($dados['EMP_COD'])->setCodigo($dados['CAT_COD']);
 
+                $cod = $dados['CAT_COD'];
+                
                 unset($dados['CAT_COD']);
                 
                 $dados += array(
@@ -175,7 +177,7 @@ class categorias extends View
             $this->dados['categorias'] = $this->Categorias->setCodEmpresa($_SESSION['EMP_COD'])->listarTodos(0);
             $this->render('admin/cadastros/categorias/listar', $this->dados);
         }else {
-            $this->dados['categoria'] = $this->Categorias->setCodEmpresa($dados['EMP_COD'])->setCodigo($dados['CAT_COD'])->listar(0);
+            $this->dados['categoria'] = $this->Categorias->setCodEmpresa($dados['EMP_COD'])->setCodigo($cod)->listar(0);
             $this->render('admin/cadastros/categorias/alterar', $this->dados);
         }
     }

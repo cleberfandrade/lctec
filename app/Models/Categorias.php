@@ -7,7 +7,7 @@ class Categorias extends Model
 { 
     private $tabela = 'tb_categorias';
     private $Model = '';
-    private $codigo,$codEmpresa,$descricao;
+    private $codigo,$codEmpresa,$descricao,$tipo;
 
     public function __construct()
     {
@@ -29,6 +29,11 @@ class Categorias extends Model
         $this->descricao = $descricao;
         return $this;
     }
+    public function setTipo($tipo)
+    {
+        $this->tipo = $tipo;
+        return $this;
+    }
     public function listar($ver = 0)
     {
         $parametros = "C INNER JOIN tb_empresas E ON C.EMP_COD=E.EMP_COD WHERE C.EMP_COD={$this->codEmpresa} AND C.CAT_COD={$this->codigo}";
@@ -36,6 +41,17 @@ class Categorias extends Model
         $resultado = $this->Model->exibir($parametros, $campos, $ver, $id = false);
         if ($resultado) {
             return $resultado[0];
+        } else {
+            return false;
+        }
+    }
+    public function listarTodosPorTipo($ver = 0)
+    {
+        $parametros = "C INNER JOIN tb_empresas E ON C.EMP_COD=E.EMP_COD WHERE C.EMP_COD={$this->codEmpresa} AND C.CAT_TIPO={$this->tipo} ORDER BY C.CAT_DESCRICAO";
+        $campos = "*";
+        $resultado = $this->Model->exibir($parametros, $campos, $ver = 0, $id = false);
+        if ($resultado) {
+            return $resultado;
         } else {
             return false;
         }
