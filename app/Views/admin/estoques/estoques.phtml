@@ -33,21 +33,50 @@ $qtdE = (is_array($empresas) ? count($empresas) : 0);
                 </section>
             </header>
             <?php include_once 'app/Views/admin/inc/alertas.phtml'; ?>
+            <section class="container bg-light mx-auto py-2 mb-5">
+                <div class="col-12 row">
+                    <div class="col-4 text-bg-success text-center">
+                        <div class="card-body">
+                            <h5 class="card-title">COMPRAS</h5>
+                            <p class="card-text">Cadastre/Altere as suas compras de produtos</p>
+                            <a href="<?= DIRPAGE ?>estoques/compras" class="btn btn-dark">ACESSAR</a>
+                        </div>
+                    </div>
+                    <div class="col-4 text-center">
+                        <div class="card-body">
+                            <h5 class="card-title">BAIXAS</h5>
+                            <p class="card-text">Cadastre/Altere os dados das baixas no estoque</p>
+                            <a href="<?= DIRPAGE ?>estoques/baixas" class="btn btn-dark">ACESSAR</a>
+                        </div>
+                    </div>
+                    <div class="col-4 text-bg-success text-center">
+                        <div class="card-body">
+                            <h5 class="card-title">MOVIMENTAÇÕES</h5>
+                            <p class="card-text">Cadastre/Altere as suas compras de produtos</p>
+                            <a href="<?= DIRPAGE ?>estoques/movimentacoes" class="btn btn-dark">ACESSAR</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
             <section class="bg-light py-2">
-                <div class="container col-10 px-2 py-2 mx-auto row">
+                <div class=" col-11 mx-auto row">
+                <hr class="my-4 text-dark">
                 <?php
                     if($qtd != 0) {
-                    for ($i=0; $i < $qtd; $i++) {  ?>
-                    <div class="card text-white mx-auto text-bg-success m-1 py-3" style="max-width: 35rem;">
+                    for ($i=0; $i < $qtd; $i++) {  
+                        if ($estoques[$i]['EST_STATUS'] == 1) {
+                        
+                        ?>
+                        <div class="card col-5 m-2 text-white mx-auto text-bg-success m-1 py-3" style="max-width: 45rem;">
                             <a href="<?= DIRPAGE.'estoques/produtos/'.$estoques[$i]['EMP_COD'].'/'.$estoques[$i]['EST_COD']; ?>" title="Acessar Estoque" class="col-auto link-light text-decoration-none">
                             <div class="card-header"><i class="bi bi-box"></i> <?= $estoques[$i]['EST_TIPO']; ?></div>
                             <div class="card-body">
                                 <div class="row col-12">
-                                    <div class="col-9">
+                                    <div class="col-8">
                                         <h5 class="card-title">Descrição: <?= $estoques[$i]['EST_DESCRICAO']; ?></h5>
                                         <p class="card-text">Empresa/Negócio: <?= $estoques[$i]['EMP_NOME_FANTASIA']; ?></p>
                                     </div>
-                                    <div class="col-3">
+                                    <div class="col-4">
                                         <h2 class="card-title">
                                             <?php 
                                                 $Produtos->setCodEmpresa($estoques[$i]['EMP_COD']);
@@ -66,6 +95,35 @@ $qtdE = (is_array($empresas) ? count($empresas) : 0);
                         <div class="col-12 mr-1">
                             <a type="button" class="btn btn-outline-warning btn-sm d-print-none" href="<?= DIRPAGE.'cadastros/alteracao_estoques/'.$estoques[$i]['EMP_COD'].'/'.$estoques[$i]['EST_COD']; ?>" title="Alterar estoque"><i class="fa fa-edit"></i></a>
                         </div>
+                        <?php }elseif ( $estoques[$i]['EST_STATUS'] == 0 && $_SESSION['USU_NIVEL'] >= 8) { ?>
+                            <div class="card col-5 m-2 text-white mx-auto text-bg-secondary m-1 py-3" style="max-width: 45rem;">
+                                <div class="card-header"><i class="bi bi-box"></i> <?= $estoques[$i]['EST_TIPO']; ?></div>
+                                <div class="card-body">
+                                    <div class="row col-12">
+                                        <div class="col-8">
+                                            <h5 class="card-title">Descrição: <?= $estoques[$i]['EST_DESCRICAO']; ?></h5>
+                                            <p class="card-text">Empresa/Negócio: <?= $estoques[$i]['EMP_NOME_FANTASIA']; ?></p>
+                                        </div>
+                                        <div class="col-4">
+                                            <h2 class="card-title">
+                                                <?php 
+                                                    $Produtos->setCodEmpresa($estoques[$i]['EMP_COD']);
+                                                    $Produtos->setCodEstoque($estoques[$i]['EST_COD']);
+                                                    $Produtos->setTipo(1);
+                                                    $prod = $Produtos->listarTodosTipo(0);
+                                                    $qtdP = (is_array($prod) ? count($prod) : 0);
+                                                    echo $qtdP;
+                                                ?>
+                                            </h2>
+                                            <p class="card-text">Produto(s)</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 mr-1">
+                                    <a type="button" class="btn btn-outline-warning btn-sm d-print-none" href="<?= DIRPAGE.'cadastros/estoques/'.$estoques[$i]['EMP_COD']; ?>" title="Alterar estoque"><i class="fa fa-edit"></i></a>
+                                </div>
+                            </div>
+                        <?php } ?>
                     </div>
                     <?php } }else { ?>
                         <h4 class="text-center text-warning fs-4">EMPRESA SEM NENHUM ESTOQUE CRIADO</h4>

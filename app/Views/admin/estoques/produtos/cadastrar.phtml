@@ -201,7 +201,8 @@ $qtdCL = (is_array($classificacoes) ? count($classificacoes) : 0);
                                 <input type="hidden" class="form-control" name="EST_COD" value="<?= isset($estoque['EST_COD']) ? $estoque['EST_COD'] : 0; ?>">
                                 <input type="hidden" class="form-control" name="EMP_COD" value="<?= isset($estoque['EMP_COD']) ? $estoque['EMP_COD'] : 0; ?>">
                                 <input type="hidden" class="form-control" name="USU_COD" value="<?= isset($_SESSION['USU_COD']) ? $_SESSION['USU_COD'] : 0; ?>">
-                                <button class="w-100 btn btn-lg text-uppercase btn-success" name="CADASTRAR_NOVO_PRODUTO" type="submit"><i class="fa fa-save"></i> Cadastrar</button>
+                                <a class="col-4 btn btn-lg text-uppercase btn-secondary" href="<?= DIRPAGE; ?>estoques/produtos/<?= $estoque['EMP_COD']?>/<?= $estoque['EST_COD']?>"><i class="bi bi-ban"></i> Cancelar</a>
+                                <button class="col-8 btn btn-lg text-uppercase btn-success" name="CADASTRAR_NOVO_PRODUTO" type="submit"><i class="fa fa-save"></i> Cadastrar</button>
                                 <hr class="my-4 text-dark">
                             </div> 
                         </form>

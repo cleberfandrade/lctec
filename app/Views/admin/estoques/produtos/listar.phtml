@@ -6,6 +6,7 @@ $qtd = (is_array($produtos) ? count($produtos) : 0);
 $qtdC = (is_array($categorias) ? count($categorias) : 0);
 $qtdS = (is_array($setores) ? count($setores) : 0);
 $qtdCL = (is_array($classificacoes) ? count($classificacoes) : 0);
+
 ?>
 <body class="">
     <div class="d-flex" id="wrapper">
@@ -73,6 +74,7 @@ $qtdCL = (is_array($classificacoes) ? count($classificacoes) : 0);
                                 <?php 
                                     if($produtos[$i]['CAT_COD'] != 0 or $produtos[$i]['CAT_COD'] != '') {
                                         for ($c = 0; $c < $qtdC; $c++) { 
+                                            
                                             if ($categorias[$c]['CAT_COD'] == $produtos[$i]['CAT_COD']) { ?>
                                             <?= $categorias[$c]['CAT_DESCRICAO']; ?>   
                                         <?php } } ?> 
@@ -116,7 +118,7 @@ $qtdCL = (is_array($classificacoes) ? count($classificacoes) : 0);
                         </tbody>
                     </table>
                 <?php }else { ?>
-                        <h4 class="text-center text-warning fs-4">EMPRESA SEM  NENHUM PRODUTO CADASTRADO</h4>
+                        <h4 class="text-center text-warning fs-4">ESTOQUE SEM  NENHUM PRODUTO CADASTRADO</h4>
                     <?php } ?>
                 </div>
             </section>

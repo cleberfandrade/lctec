@@ -273,8 +273,8 @@ class usuarios extends View
     public function meus_dados()
     {
         $this->dados['title'] .= 'MEUS DADOS DE USUÁRIO';
-       
-        $this->link[2] = ['link'=> 'cadastros/usuarios','nome' => 'LISTAGEM DE USUÁRIOS'];
+        $this->link[2] = ['link'=> 'usuarios','nome' => 'GERENCIAR USUÁRIOS'];
+        //$this->link[2] = ['link'=> 'cadastros/usuarios','nome' => 'LISTAGEM DE USUÁRIOS'];
         $this->link[3] = ['link'=> 'cadastros/meus_dados','nome' => 'ALTERAR MEUS DADOS DE USUÁRIO'];
         $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
         

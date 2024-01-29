@@ -1,0 +1,22 @@
+CLASSIFICACOES
+="0">----   
+="1"CATEGORIAS
+="2"COLABORADORES
+="3"CLIENTES
+="4"ESTOQUES
+="5"FORNECEDORES
+="6"    6?    6?    LANÇAMENTOS 
+="7"    7?    7?    OUTROS 
+="8"    8?    8?    PRODUTOS 
+="9"    9?    9?    SERVIÇOS      
+="10"    10?    10?    TAREFAS 
+
+SETORES
+="0"    0?     0?    ----   
+="1"    1?     1?    CATEGORIAS 
+="2"    2?     2?    CLIENTES
+="3"    3?     3?    ESTOQUES 
+="4"    4?     4?    PRODUTOS 
+="5"    5?     5?    SERVIÇOS 
+="6"    6?     6?    COLABORADORES 
+="7"    7?     7?    OUTROS 
