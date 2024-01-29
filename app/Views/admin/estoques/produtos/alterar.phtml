@@ -202,9 +202,9 @@ $qtd = (is_array($produto) ? count($produto) : 0);
                                     </div>
                                 </div>
                                 <hr class="my-4 text-dark">
-                                <input type="hidden" class="form-control" name="EST_COD" value="<?= isset($estoque['EST_COD']) ? $estoque['EST_COD'] : 0; ?>">
-                                <input type="hidden" class="form-control" name="EMP_COD" value="<?= isset($estoque['EMP_COD']) ? $estoque['EMP_COD'] : 0; ?>">
-                                <input type="hidden" class="form-control" name="PRO_COD" value="<?= isset($estoque['PRO_COD']) ? $estoque['PRO_COD'] : 0; ?>">
+                                <input type="hidden" class="form-control" name="EST_COD" value="<?= isset($produto['EST_COD']) ? $produto['EST_COD'] : 0; ?>">
+                                <input type="hidden" class="form-control" name="EMP_COD" value="<?= isset($produto['EMP_COD']) ? $produto['EMP_COD'] : 0; ?>">
+                                <input type="hidden" class="form-control" name="PRO_COD" value="<?= isset($produto['PRO_COD']) ? $produto['PRO_COD'] : 0; ?>">
                                 <input type="hidden" class="form-control" name="USU_COD" value="<?= isset($_SESSION['USU_COD']) ? $_SESSION['USU_COD'] : 0; ?>">
                                 <a class="btn btn-lg col-6 text-uppercase btn-secondary" href="<?= DIRPAGE; ?>estoques/produtos/<?= $produto['EMP_COD']?>/<?= $produto['EST_COD']?>"><i class="bi bi-ban"></i> Cancelar</a>
                                 <button class="col-6 btn btn-lg text-uppercase btn-warning" name="ALTERAR_PRODUTO" type="submit"><i class="fa fa-edit"></i> Alterar</button>

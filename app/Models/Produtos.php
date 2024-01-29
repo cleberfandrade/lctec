@@ -40,7 +40,7 @@ class Produtos extends Model
         return $this;
     }
 
-    public function listar($ver = 0)
+    public function listar($ver)
     {
         $parametros = "WHERE EMP_COD={$this->codEmpresa} AND EST_COD={$this->codEstoque} AND PRO_COD={$this->codigo}";
         $campos = "*";
