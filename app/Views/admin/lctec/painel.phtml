@@ -24,6 +24,10 @@ include_once 'app/Views/admin/inc/cabecalho.phtml';
                                             <i class="bi bi-house"></i> Painel <span class="text-success">LC-TEC</span>
                                         </h5>
                                     </a>
+                                    <div class="col-12 my-1 px-4 mx-auto">
+                                        <a type="button" class="btn btn-sm btn-success"  href="<?= DIRPAGE; ?>tarefas" title="Nova Tarefa"><i class="bi bi-bookmarks"></i> + TAREFA</a>
+                                        <a type="button" class="btn btn-sm btn-dark"  href="<?= DIRPAGE; ?>avisos" title="Novo Aviso"><i class="bi bi-bell"></i> + AVISO</a>
+                                    </div>
                                 </div>
                             </div>
                             <?php include_once 'app/Views/admin/inc/saudacao.phtml'; ?>   
