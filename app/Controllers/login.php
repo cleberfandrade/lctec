@@ -306,7 +306,60 @@ class login extends View
         */
         $this->render('site/lembrar',$this->dados);
     }
-    
+    public function auth_admin()
+    {
+        $Check = new Check();
+        $Usuarios = new Usuarios();
+        $Url = new Url();
+        $dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);
+        if (isset($_POST) && isset($dados['acesso'])) {
+            
+            if (!empty($dados['email_usuario']) && !empty($dados['senha_usuario'])) {
+                //Validar Dados
+                $dados['email_usuario'] = $Check->checarString($dados['email_usuario']);
+                $dados['senha_usuario'] = $Check->checarString($dados['senha_usuario']);
+                if($Check->checarEmail($dados['email_usuario'])){
+                    $Usuarios->setEmailUsuario($dados['email_usuario']);
+                    //$senha = $Check->codificarSenha($dados['senha_usuario']);
+                    $Usuarios->setSenhaUsuario($dados['senha_usuario']);
+                    $user = $Usuarios->Acessar(0);
+                    //checar se retornou algum usuario
+                    if(!empty($user) && $user != 0){
+                        //Checar se o status do usuario == 1: ativado/desativado
+                        if($user['USU_STATUS'] == 1){
+                           
+                            //Criando sessao para acessar a area administrativa
+                            if(Sessao::criarSessao($user)){
+                                Sessao::alert('OK',' Bem vindo(a) '.$_SESSION['USU_NOME'].'','m-0 fs-4 alert alert-success');
+                                //Sessao::alert('OK',' Acesso efetuado com sucesso!','m-0 fs-4 alert alert-success');
+                                //Redirecionando o usuário para a página painel do sistema admin/painel
+                                if($user['USU_NIVEL'] >= 5){
+                                    header("Location:".DIRPAGE."admin/lctec/painel");
+                                }else{
+                                    header("Location:".DIRPAGE."site/acesso");
+                                }
+                                
+                                //$Url->redirecionar('admin/painel');
+                                //$this->render('admin/painel', $this->dados);
+                            }else{
+                                Sessao::alert('ERRO',' 6- O sistema encontroiu um erro interno, contate o administrador','alert alert-danger');
+                            }
+                        }else {
+                            Sessao::alert('ERRO',' 5- Usuário desativado, contate o administrador','alert alert-danger');
+                        }
+                    }else{
+                        Sessao::alert('ERRO',' 4- Usuário ou senha inválido(s)!','alert alert-danger');
+                    }
+                }else{
+                    Sessao::alert('ERRO',' 3- Usuário ou senha inválido(s)!','alert alert-danger');
+                }
+            }else{
+                Sessao::alert('ERRO',' 2- Usuário ou senha inválido(s)!','alert alert-danger');
+            }           
+        }else{
+            Sessao::alert('ERRO',' 1- Dados inválido(s)!','alert alert-danger');
+        }
+    }
     /*
     //LINK DO EMAIL PARA CHECAR SOLICITACAO DE MUDANCA DE SENHA
     public function token()

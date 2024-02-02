@@ -62,6 +62,12 @@ class admin extends View
         Sessao::naoLogado();
         $this->render('site/login_admin', $this->dados);
     }
+    public function lctec()
+    {
+        $this->dados['title'] = 'ACESSO ADMINISTRATIVO - GERENCIAL | LC-TEC';
+        Sessao::naoLogado();
+        $this->render('admin/lctec/painel', $this->dados);
+    }
     public function mes()
     {
         Sessao::naoLogado();

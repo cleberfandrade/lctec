@@ -1,0 +1,42 @@
+<?php 
+ use App\Models\Tarefas;
+
+ $Tarefas = new Tarefas;
+ $trf = $Tarefas->setCodEmpresa($_SESSION['EMP_COD'])->listarTodos(0);
+ $qtdTR = (is_array($trf) ? count($trf) : 0);
+    //if ($tarefas[$i]['CLN_COD'] <= 3)
+?>
+
+<nav class="navbar navbar-fixed navbar-expand-lg navbar-dark bg-dark d-print-none">
+    <div class="container-fluid">
+        <button class="btn btn-dark" id="sidebarToggle"><span class="navbar-toggler-icon"></span></button>
+        <button class="navbar-toggler text-white" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+        <a class="text-decoration-none" href="<?= DIRPAGE; ?>empresas"><span class="text-success"><?= ($_SESSION['EMP_COD'] != 0)? $empresa['EMP_NOME_FANTASIA'] : 'LC-<span class="text-success">TEC</span>'?></span></a>
+        <div id="navbarSupportedContent" class="collapse navbar-collapse">
+            <ul class="navbar-nav ms-auto mt-2 mt-lg-0 fs-6 text-uppercase align-items-center align-middle ">
+                <li class="row mx-auto container align-items-center align-middle ">
+                    <div class="col">   
+                        <a type="button" class="btn btn-sm btn-dark" data-bs-toggle="tooltip" data-bs-title="0 Aviso(s)" data-bs-content=""><i class="bi bi-bell-slash text-secondary"></i></a>
+                    </div>
+                    <div class="col">
+                        <a type="button" class="btn btn-sm btn-dark" id="status_conexao" data-bs-content="" data-bs-toggle="tooltip"><i class="bi bi-wifi text-secondary" title=""></i></a>
+                    </div>
+                    <div class="col">
+                        <a type="button" class="btn btn-sm btn-dark" data-bs-toggle="tooltip" href="<?= DIRPAGE ?>tarefas" data-bs-title="<?= $qtdTR ?> Tarefa(s)" data-bs-content=""><i class="bi bi-bookmarks text-secondary"></i></a>
+                    </div>
+                    <div class="col text-secondary fs-4">|</div>
+                </li>
+                
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle fs-4" title="<?= 'Olá '.$_SESSION['USU_NOME'] ?>" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="bi bi-person-circle"></i></a>    
+                    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="<?= DIRPAGE?>usuarios/meus_dados">MEUS DADOS</a>
+                        <a class="dropdown-item" href="<?= DIRPAGE?>login/sair">SAIR</a>
+                    </div>
+                </li>
+                <!--  <span class="px-2 text-secondary row align-items-center align-middle mx-auto">-->
+                <span class="px-4 text-secondary text-center mt-0 mx-auto"><?= $_SESSION['USU_NOME'] ?><br><div style="font-size:0.85em;" id="limite"></div></span>
+            </ul>
+        </div>
+    </div>
+</nav>

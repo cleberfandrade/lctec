@@ -1,0 +1,53 @@
+<?php 
+use Libraries\Sessao;
+session_start();
+include_once 'inc/cabecalho.phtml';
+
+?>
+
+<body class="bg-dark" bs-data="">
+    <main class="flex-shrink-0">
+        <?php //include_once 'inc/nav.phtml'; ?>
+        <!-- Header-->
+        <header class="bg-dark py-2">
+            <section class="container px-5">
+                <div class="row gx-5 align-items-center justify-content-center">
+                    <div class="col-lg-10 col-xl-10 col-xxl-10">
+                        <div class="my-5 text-center text-xl-start">
+                            <a class="text-decoration-none" href="<?= DIRPAGE; ?>login/index"><h1 class="display-5 text-center fw-bolder text-uppercase text-white mb-2">Acesso <span class="text-success">Gerencial</span></h1></a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </header>
+        <div class="container col-xl-10 col-xxl-8 px-2 py-1">
+            <div class="row align-items-center g-lg-12">
+                <div class="col-12 text-center text-lg-start text-white-50">
+                <h1 class="display-5 text-center fw-bolder text-uppercase text-3 mb-2">LC-<span class="text-success">TEC</span></h1>
+                    <p class="col-lg lead text-center fs-6">DESENVOLVENDO SOLUÇÕES <br/>PARA O SEU NEGÓCIO</p>
+                </div>
+                <div class="col-12 col-sm-12 col-md-8 col-lg-5 mx-auto">
+                <?= Sessao::alert('ERRO'); ?>
+                    <form class="p-2 p-md-4" action="<?= DIRPAGE ?>login/auth_admin" method="POST">
+                        <div class="form-floating mb-1">
+                            <input type="email" class="form-control" id="email" name="email_usuario" placeholder="Informe seu email" value="<?= isset($_POST['email_usuario']) ? $_POST['email_usuario'] : '' ?>">
+                            <label for="email">Seu Email</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="password" class="form-control" name="senha_usuario" id="floatingPassword" placeholder="Digite sua senha">
+                            <label for="floatingPassword">Sua Senha</label>
+                        </div>
+                        <button class="w-100 btn btn-lg text-uppercase btn-outline-success" name="acesso" value="<?= $_SESSION['acesso'] ?>" type="submit"><i class="fa fa-sign-in"></i> Entrar</button>
+                        <hr class="my-3 text-white">
+                        <div class="form-floating m-2 mb-0 text-uppercase text-center">
+                            <p><a href="<?= DIRPAGE ?>login/lembrar" class="text-secondary text-center text-decoration-none">Esqueci minha senha</a></p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+    <?php //include_once 'inc/rodape.phtml'; ?>
+</body>
+
+</html>
