@@ -26,11 +26,11 @@ include_once 'inc/cabecalho.phtml';
                                 <p class="lead fw-bold opacity-75">
                                 Para utilizar o sitema LC<span class="text-dark">-TEC</span> é necessário que você cadastre o sua <b class="text-dark">empresa/negócio</b><p> crie e utilize ao máximo dos recursos disponíveis</p></p>
                 
-                                <a href="<?= DIRPAGE ?>cadastros/cadastro_empresas" class="col-auto btn btn-success text-uppercase">Clique aqui</a>
+                                <a href="<?= DIRPAGE ?>empresas/cadastro" class="col-auto btn btn-success text-uppercase">Clique aqui</a>
                             </div>
                         </div>
                         <div class="col-4 text-center text-lg-start opacity-50">
-                            <h1 class="display-5 text-center fw-bolder text-uppercase text-3 mb-2">LC-<span class="text-success">TECH</span></h1>
+                            <h1 class="display-5 text-center fw-bolder text-uppercase text-3 mb-2">LC-<span class="text-success">TEC</span></h1>
                             <p class="col-lg lead text-center">DESENVOLVENDO SOLUÇÕES <br/>PARA O SEU NEGÓCIO</p>
                         </div>
                     </div>
@@ -47,7 +47,7 @@ include_once 'inc/cabecalho.phtml';
                             </a>
                         </div>
                         <?php } ?>
-                        <div class="col mx-auto">
+                        <div class="col-12 mx-auto">
                             <!--<a href="<?php // DIRPAGE ?>financeiro/pdv" class="btn btn-secondary">
                                 <div class="card bg-secondary text-white mx-auto text-uppercase text-center py-1 " style="width: 25rem;">
                                     <h5 class="card-title">PDV</h5>
@@ -56,7 +56,7 @@ include_once 'inc/cabecalho.phtml';
                                 </div>
                             </a>-->
                             <h5 class="text-white text-center">PDV  <p class="text-white">Ponto de Venda</p></h5>
-                            <div class="col-9 mx-auto">
+                            <div class="col-8 mx-auto">
                                 <form class="p-2 p-md-4" action="<?= DIRPAGE ?>financeiro/auth" method="POST">
                                     <div class="form-floating mb-1">
                                         <input type="email" class="form-control" id="email" name="VDD_EMAIL" placeholder="Informe seu email" value="<?= isset($_POST['VDD_EMAIL']) ? $_POST['VDD_EMAIL'] : '' ?>">

@@ -52,15 +52,14 @@ class login extends View
                                 //Redirecionando o usuário para a página painel do sistema admin/painel
                                 if($user['USU_NIVEL'] >= 5){
                                     header("Location:".DIRPAGE."admin/painel");
-                                }
-                                else {
+                                }else {
                                     header("Location:".DIRPAGE."site/acesso");
                                 }
                                 
                                 //$Url->redirecionar('admin/painel');
                                 //$this->render('admin/painel', $this->dados);
                             }else{
-                                Sessao::alert('ERRO',' 6- O sistema encontroiu um erro interno, contate o administrador','alert alert-danger');
+                                Sessao::alert('ERRO',' 6- O sistema encontrou um erro interno, contate o administrador','alert alert-danger');
                             }
                         }else {
                             Sessao::alert('ERRO',' 5- Usuário desativado, contate o administrador','alert alert-danger');
