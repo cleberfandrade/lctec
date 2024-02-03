@@ -33,8 +33,10 @@ class empresas extends View
         $this->dados['usuario'] = $this->Usuarios->setCodUsuario($_SESSION['USU_COD'])->listar(0);
         $this->dados['clientes'] = $this->Clientes->setCodEmpresa($_SESSION['EMP_COD'])->listarTodos(0);
         $this->link[0] = ['link'=> 'admin','nome' => 'PAINEL ADMINISTRATIVO'];
-        $this->link[1] = ['link'=> 'cadastros','nome' => 'MÓDULO DE CADASTROS'];
-        $this->link[2] = ['link'=> 'empresas','nome' => 'GERENCIAR SUA EMPRESA/NEGÓCIO'];
+        if (isset($_SESSION['EMP_COD']) && $_SESSION['EMP_COD'] != 0) {
+            $this->link[1] = ['link'=> 'cadastros','nome' => 'MÓDULO DE CADASTROS'];
+            $this->link[2] = ['link'=> 'empresas','nome' => 'GERENCIAR SUA EMPRESA/NEGÓCIO'];
+        }
     }
     public function index()
     { 

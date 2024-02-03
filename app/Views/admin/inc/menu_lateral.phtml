@@ -4,7 +4,7 @@
     <div class="d-flex align-items-start">
         <div class="list-group list-group-flush text-uppercase" >
             <a class="list-group-item list-group-item-action list-group-item-dark p-3 px-3" title="Painel Administrativo" href="<?= DIRPAGE?>admin"><i class="bi bi-house"></i>  PAINEL</a>
-            <?php if ($_SESSION['EMP_COD'] != 0) { ?>
+            <?php   if (isset($_SESSION['EMP_COD']) && $_SESSION['EMP_COD'] != 0) { ?>
             <a class="list-group-item list-group-item-action list-group-item-dark p-3 px-3" title="Cadastros da Empresa/Negócio" href="<?= DIRPAGE?>cadastros"><i class="bi bi-plus-square"></i> CADASTROS</a>
             <a class="list-group-item list-group-item-action list-group-item-dark p-3 px-3" title="Estoques da Empresa/Negócio" href="<?= DIRPAGE?>estoques"><i class="bi bi-plus-square"></i> ESTOQUES</a>
             <!--<a class="list-group-item list-group-item-action list-group-item-dark p-3 px-3" title="Ponto de Venda da Empresa/Negócio" href="<?php //DIRPAGE?>financeiro/pdv"><i class="bi bi-cash-coin"></i> PDV</a>

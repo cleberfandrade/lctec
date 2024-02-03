@@ -57,7 +57,9 @@ class cadastros extends View
         }
 
         $this->link[0] = ['link'=> 'admin','nome' => 'PAINEL ADMINISTRATIVO'];
-        $this->link[1] = ['link'=> 'cadastros','nome' => 'MÓDULO DE CADASTROS'];
+        if (isset($_SESSION['EMP_COD']) && $_SESSION['EMP_COD'] != 0) {
+            $this->link[1] = ['link'=> 'cadastros','nome' => 'MÓDULO DE CADASTROS'];
+        }
     }
     public function index()
     {

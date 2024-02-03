@@ -44,9 +44,9 @@ $qtdME = (is_array($modulos_empresa) ? count($modulos_empresa) : 0);
                     <?php include_once 'app/Views/admin/inc/alertas.phtml'; ?>  
                 </header>
                 <section class="container row mx-auto col-12 py-2 mb-5">
-                    <?php if ($_SESSION['EMP_COD'] == 0) { ?>
+                    <?php if (isset($_SESSION['EMP_COD']) && $_SESSION['EMP_COD'] == 0) { ?>
                         <div class="row mx-auto m-4 ">
-                            <div class="container col-8 ">
+                            <div class="container col-12">
                                 <div class="p-2 text-center text-white  bg-success rounded-3">
                                     <h1 class="text-emphasis opacity-75">CADASTRE A SUA EMPRESA</h1>
                                     <p class="lead fw-bold opacity-75">
@@ -55,10 +55,10 @@ $qtdME = (is_array($modulos_empresa) ? count($modulos_empresa) : 0);
                                     <a href="<?= DIRPAGE ?>empresas/cadastro" class="col-auto btn btn-success text-uppercase">Clique aqui</a>
                                 </div>
                             </div>
-                            <div class="col-4 text-center text-lg-start opacity-50">
+                            <!--<div class="col-4 text-center text-lg-start opacity-50">
                                 <h1 class="display-5 text-center fw-bolder text-uppercase text-3 mb-2">LC-<span class="text-success">TEC</span></h1>
                                 <p class="col-lg lead text-center fs-6">DESENVOLVENDO SOLUÇÕES <br/>PARA O SEU NEGÓCIO</p>
-                            </div>
+                            </div>-->
                         </div>
                     <?php }else { ?>
                         <div class="row col-12 mx-auto m-1">
