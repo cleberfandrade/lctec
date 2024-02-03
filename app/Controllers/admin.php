@@ -56,9 +56,9 @@ class admin extends View
         $this->dados['title'] = 'ACESSO | LC-TEC';
         $this->render('site/acesso', $this->dados);
     }
-    public function administrador()
+    public function gerencial()
     {
-        $this->dados['title'] = 'ACESSO ADMINISTRATIVO | LC-TEC';
+        $this->dados['title'] = 'ACESSO GERENCIAL | LC-TEC';
         Sessao::naoLogado();
         $this->render('site/login_admin', $this->dados);
     }

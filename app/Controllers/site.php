@@ -95,10 +95,10 @@ class site extends View
     { 
         echo "error";
     }
-    public function administrador()
+    public function gerencial()
     {
         Sessao::logado();
-        $this->dados['title'] = 'ACESSO ADMINISTRATIVO | LC-TEC';
+        $this->dados['title'] = 'ACESSO GERENCIAL | LC-TEC';
         $this->render('site/login_admin', $this->dados);
     }
 }
