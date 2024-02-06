@@ -1,10 +1,12 @@
 <?php 
+use App\Models\Produtos;
 use Libraries\Sessao;
 session_start();
-
+$Produtos = new Produtos;
 include_once 'app/Views/admin/inc/cabecalho.phtml'; 
 $qtd = (is_array($estoques) ? count($estoques) : 0);
 $qtdE = (is_array($empresas) ? count($empresas) : 0);
+$qtdM = (is_array($movimentacoes) ? count($movimentacoes) : 0);
 ?>
 
 <body class="">
@@ -76,9 +78,10 @@ $qtdE = (is_array($empresas) ? count($empresas) : 0);
                                         <option value="1" <?= (isset($_POST['MOV_MOTIVO']) &&  $_POST['MOV_MOTIVO']  == 1)? 'selected' : '' ?>>COMPRA</option>
                                         <option value="2" <?= (isset($_POST['MOV_MOTIVO']) &&  $_POST['MOV_MOTIVO']  == 2)? 'selected' : '' ?>>VENDA</option>
                                         <option value="3" <?= (isset($_POST['MOV_MOTIVO']) &&  $_POST['MOV_MOTIVO']  == 3)? 'selected' : '' ?>>AJUSTE</option>
-                                        <option value="4" <?= (isset($_POST['MOV_MOTIVO']) &&  $_POST['MOV_MOTIVO']  == 4)? 'selected' : '' ?>>DEVOLUÇÃO</option>
-                                        <option value="5" <?= (isset($_POST['MOV_MOTIVO']) &&  $_POST['MOV_MOTIVO']  == 5)? 'selected' : '' ?>>PERDA</option>
-                                        <option value="6" <?= (isset($_POST['MOV_MOTIVO']) &&  $_POST['MOV_MOTIVO']  == 6)? 'selected' : '' ?>>OUTROS</option>
+                                        <option value="4" <?= (isset($_POST['MOV_MOTIVO']) &&  $_POST['MOV_MOTIVO']  == 4)? 'selected' : '' ?>>DEVOLUÇÃO CLIENTE</option>
+                                        <option value="5" <?= (isset($_POST['MOV_MOTIVO']) &&  $_POST['MOV_MOTIVO']  == 5)? 'selected' : '' ?>>DEVOLUÇÃO FORNECEDOR</option>
+                                        <option value="6" <?= (isset($_POST['MOV_MOTIVO']) &&  $_POST['MOV_MOTIVO']  == 6)? 'selected' : '' ?>>PERDA</option>
+                                        <option value="7" <?= (isset($_POST['MOV_MOTIVO']) &&  $_POST['MOV_MOTIVO']  == 7)? 'selected' : '' ?>>OUTROS</option>
                                     </select>
                                     <label class="form-label">MOTIVO</label>
                                 </div>
@@ -95,7 +98,6 @@ $qtdE = (is_array($empresas) ? count($empresas) : 0);
                                 <input type="hidden" class="form-control" name="USU_COD" value="<?= isset($_SESSION['USU_COD']) ? $_SESSION['USU_COD'] : 0; ?>">
                                 <a class="col-4 btn btn-lg text-uppercase btn-secondary" href="<?= DIRPAGE; ?>estoques"><i class="bi bi-ban"></i> Cancelar</a>
                                 <button class="col-8 btn btn-lg text-uppercase btn-success" name="CADASTRAR_NOVA_MOVIMENTACAO_ESTOQUE" type="submit"><i class="fa fa-save"></i> Cadastrar</button>
-                                <hr class="my-4 text-dark">
                             </div>
                         </form>
                     </div>
@@ -109,15 +111,40 @@ $qtdE = (is_array($empresas) ? count($empresas) : 0);
                             <th class="text-dark">ESTOQUE</th>
                             <th class="text-dark">CÓDIGO</th>
                             <th class="text-dark">PRODUTO</th>
-                            <th class="text-dark">TIPO</th>
+                            <th class="text-dark">DATA</th>
+                            <th class="text-dark">ENTRADA</th>
+                            <th class="text-dark">SAÍDA</th>
                             <th class="text-dark">MOTIVO</th>
-                            <th class="text-dark">QTD</th>
                             <th class="text-dark">Status</th>
                             <th class="text-dark">Ações</th>
                         </thead>
                         <tbody>
-                            <?php ?>
-                        </tbody>
+                            <?php $b = 1; for ($i=0; $i < $qtdM; $i++) { 
+                                 $data = new DateTime($movimentacoes[$i]['MOV_DT_MOVIMENTACAO']);
+                                ?>
+                            <tr class="<?= ($movimentacoes[$i]['MOV_STATUS'] == 0 && $_SESSION['USU_NIVEL'] >= 8)? 'bg-secondary' : '';?>">
+                                <td class="text-center align-middle"><?= $b; ?></td>
+                                <td class="text-center align-middle"><?= $movimentacoes[$i]['EST_DESCRICAO']; ?></td>
+                                <td class="text-center align-middle"><?= $movimentacoes[$i]['PRO_COD']; ?></td>
+                                <td class="text-center align-middle">
+                                    <?php $produto = $Produtos->setCodEmpresa($movimentacoes[$i]['EMP_COD'])->setCodEstoque($movimentacoes[$i]['EST_COD'])->setCodigo($movimentacoes[$i]['PRO_COD'])->listar(0);
+                                    echo $produto['PRO_NOME'];
+                                    ?>
+                                </td>
+                                <td class="text-center align-middle"><?= $data->format('d/m/Y'); ?></td>
+                                <?= ($movimentacoes[$i]['MOV_TIPO'] == 1)? '<td class="text-center align-middle"><span class="text-primary">'.$movimentacoes[$i]['MOV_QUANTIDADE'].'</span></td><td></td>' : '<td></td><td class="text-center align-middle"><span class="text-danger">'.$movimentacoes[$i]['MOV_QUANTIDADE'].'</span>'; ?></td>
+                                <td class="text-center align-middle">
+
+                                    <?= $movimentacoes[$i]['MOV_MOTIVO']; ?>
+                                
+                                </td>
+                                <td class="text-center align-middle"><?= ($movimentacoes[$i]['MOV_STATUS'] == 1)? 'ATIVO' : 'DESATIVADO'; ?></td>
+                                <td class="text-center align-middle">
+                                    <a type="button" class="btn btn-warning btn-sm d-print-none" href="<?= DIRPAGE.'estoque/alteracao_movimentacao/'.$movimentacoes[$i]['EMP_COD'].'/'.$movimentacoes[$i]['EST_COD'].'/'.$movimentacoes[$i]['MOV_COD']; ?>" title="Alterar movimentacao"><i class="fa fa-edit"></i></a>
+                                    <button type="button" class="btn btn-danger btn-sm d-print-none" data-bs-toggle='modal'  data-bs-target="#status" title="" data-codigo="<?= $movimentacoes[$i]['COL_COD']; ?>" data-estoque="<?= $movimentacoes[$i]['EST_COD']; ?>"  data-status="<?= $movimentacoes[$i]['MOV_STATUS']; ?>" title="Deseja excluir?" ><i class="fa fa-trash"></i></button>
+                                </td>
+                            </tr>
+                        <?php $b++; } ?>
                     </table>
                 </div>
             </section>
@@ -146,12 +173,46 @@ $qtdE = (is_array($empresas) ? count($empresas) : 0);
                 document.getElementById("EST_COD").value ='';
                 document.getElementById("EST_COD").value = EST_COD;
                 
+
+               
                 for(var i=0;dados.length>i;i++){
                     $(selecionado).append($('<option>', {
                         value: dados[i].PRO_COD,
-                        text: html(dados[i].PRO_NOME)
+                        text: dados[i].PRO_NOME
                     }));
+                    console.log(codificarHtml(dados[i].PRO_NOME))
                 }
+                function codificarHtml(texto){
+                    var htmlCodigo = { 
+                                '&aacute;' : {'code' : 'á'},
+                                '&Aacute;' : {'code' : 'Á'},
+                                '&atilde;' : {'code' : 'ã'},
+                                '&Atilde;' : {'code' : 'Ã'},
+                                '&agrave;' : {'code' : 'à'},
+                                '&Agrave;' : {'code' : 'À'},                       
+                                '&eacute;' : {'code' : 'é'},
+                                '&Eacute;' : {'code' : 'É'},
+                                '&iacute;' : {'code' : 'í'},
+                                '&Iacute;' : {'code' : 'Í'},
+                                '&oacute;' : {'code' : 'ó'},
+                                '&Oacute;' : {'code ': 'Ó'}, 
+                                '&otilde;' : {'code' : 'õ'},
+                                '&Otilde;' : {'code' : 'Õ'},
+                                '&uacute;' : {'code' : 'ú'},
+                                '&Uacute;' : {'code' : 'Ú'},
+                                '&ccedil;' : {'code' : 'ç'},
+                                '&Ccedil;' : {'code' : 'Ç'}                      };
+                    var acentos = ['á', 'Á', 'ã', 'Ã', 'à', 'À', 'é', 'É', 'í', 'Í', 'ó', 'Ó', 'õ', 'Õ', 'ú', 'Ú', 'ç', 'Ç'];
+                    
+                    for(var i=0; i<acentos.length; i++){
+                        if(htmlCodigo [acentos[i]] != undefined){
+                            texto = texto.replaceAll(acentos[i], htmlCodigo[acentos[i]].code );
+                        }
+                    }
+                    return texto;
+                }
+
+               
                 //if (resposta['PROCOD'] !== 'ERRO') {
                    // $('#retorno').addClass('alert alert-success');
                 //}else{
