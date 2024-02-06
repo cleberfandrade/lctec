@@ -67,6 +67,14 @@ class estoques extends View
         $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
         $this->render('admin/cadastros/estoques/cadastrar', $this->dados);
     }
+    public function gerenciar()
+    {
+        $this->dados['title'] .= ' GERENCIAR ESTOQUE';
+        $this->link[3] = ['link'=> 'cadastros/estoques/gerenciar','nome' => 'GERENCIAR ESTOQUE'];
+
+        $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
+        $this->render('admin/estoques/gerenciar', $this->dados);
+    }
     public function cadastrar()
     {
         $this->dados['title'] .= ' CADASTRAR NOVO ESTOQUE';
@@ -206,4 +214,15 @@ class estoques extends View
       }
       echo json_encode($respota);
     }
+    public function listar_produtos()
+    {
+        $dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);
+        if (isset($_POST) && isset($dados['PRODUTOS_ESTOQUE'])) {
+            if($this->dados['empresa']['USU_COD'] == $_SESSION['USU_COD'] && $this->dados['empresa']['EMP_COD'] == $dados['EMP_COD']){
+                $this->dados['produtos'] = $this->Estoques->setCodEmpresa($dados['EMP_COD'])->setCodigo($dados['EST_COD'])->listarProdutosEstoque(0);
+                echo json_encode($this->dados['produtos']);
+            }
+        }
+    }
+
 }

@@ -3,9 +3,8 @@ use Libraries\Sessao;
 session_start();
 
 include_once 'app/Views/admin/inc/cabecalho.phtml'; 
-$qtd = (is_array($estoque) ? count($estoque) : 0);
+$qtd = (is_array($estoques) ? count($estoques) : 0);
 $qtdE = (is_array($empresas) ? count($empresas) : 0);
-
 ?>
 <body class="">
     <div class="d-flex" id="wrapper">
@@ -31,17 +30,65 @@ $qtdE = (is_array($empresas) ? count($empresas) : 0);
                 </section>
             </header>
             <?php include_once 'app/Views/admin/inc/alertas.phtml'; ?>  
-            <section class="bg-light py-2">
-                    <div class="card bg-success mx-auto text-center col-6 py-2 mb-4">
-                        <div class="card-body text-white">
-                            <h5 class="card-title"><i class="bi bi-box2-fill"></i> PRODUTOS</h5>
-                            <p class="card-text">Cadastre/Altere os produtos deste estoque</p>
-                            <a href="<?= DIRPAGE ?>estoques/produtos/<?= $estoque['EMP_COD']?>/<?= $estoque['EST_COD']?>" class="btn btn-dark"><i class="bi bi-box2-fill"></i> ACESSAR</a>
+            <section class="container bg-light mx-auto py-2 mb-5">
+                <div class="col-12 row">
+                    <div class="col-12 text-bg-success text-center">
+                        <div class="card-body">
+                            <h5 class="card-title">SELECIONE O ESTOQUE</h5>
+                            <p class="card-text">
+                                <select class="form-select" id="buscar_produtos" name="EST_COD">     
+                                    <option value="0" <?= (isset($_POST['EST_COD']) &&  $_POST['EST_COD']  == 0)? 'selected' : '' ?>>---</option>                     
+                                    <?php 
+                                    for ($i=0; $i < $qtd; $i++) { ?>
+                                        <option value="<?= $estoques[$i]['EST_COD'] ?>" <?= (isset($_POST['EST_COD']) &&  $_POST['EST_COD']  == $estoques[$i]['EST_COD'])? 'selected' : '' ?>><?= $estoques[$i]['EST_DESCRICAO'] ?></option>
+                                    <?php } ?>
+                                </select>
+                            </p>
                         </div>
+                    </div>
+                    <hr class="my-4 text-dark">
+                    <div class="container col-10 px-2 py-2 mx-auto row">
+                        <form class="p-4 p-md-6 border text-uppercase rounded-3 bg-3" action="<?= DIRPAGE ?>produtos/cadastrar" method="POST">
+                            <div class="row">   
+                                <hr class="my-4 text-dark">
+                                <h5 class="card-title"><i class="bi bi-box2-fill"></i> PRODUTOS</h5>
+                                <div class="card-body" id="retorno">
+
+                                </div>
+                                <input type="hidden" class="form-control" name="EMP_COD" value="<?= isset($estoques['EMP_COD']) ? $estoques['EMP_COD'] : 0; ?>">
+                                <input type="hidden" class="form-control" name="USU_COD" value="<?= isset($_SESSION['USU_COD']) ? $_SESSION['USU_COD'] : 0; ?>">
+                                <a class="col-4 btn btn-lg text-uppercase btn-secondary" href="<?= DIRPAGE; ?>estoques/"><i class="bi bi-ban"></i> Cancelar</a>
+                                <button class="col-8 btn btn-lg text-uppercase btn-success" name="CADASTRAR_NOVA_MOVIMENTACAO_ESTOQUE" type="submit"><i class="fa fa-save"></i> Cadastrar</button>
+                                <hr class="my-4 text-dark">
+                            </div>
+                        </form>
                     </div>
             </section>
             <?php include_once 'app/Views/admin/inc/rodape.phtml';?>
         </div>
     </div>
+    
+    <script type="text/javascript">
+        $("#buscar_produtos").change(function(){
+            var EST_COD = $(this).find('option:selected').val();
+            var EMP_COD = <?php echo $_SESSION['EMP_COD']; ?>
+            //setTimeout(function () {
+                    //$('#status').modal('hide');
+            //}, 100);
+            $.post('<?php //= DIRPAGE; ?>estoques/listar_produtos', {PRODUTOS_ESTOQUE: true,EMP_COD: EMP_COD,EST_COD:EST_COD,cache: false}, function(retorno) {
+                //var resposta = JSON.parse(retorno);
+                //console.log(resposta);
+                //if (resposta['PROCOD'] !== 'ERRO') {
+                   // $('#retorno').addClass('alert alert-success');
+                //}else{
+                    //$('#retorno').addClass('alert alert-warning');
+               // }
+               // $('#resposta').html(resposta['MENSAGEM']);
+               // setTimeout( () => { window.location.href="<?php //DIRPAGE ?>estoques/produtos/"+EMP_COD+"/"+EST_COD}, 100);
+            });
+
+        });
+    </script>
 </body>
+
 </html>    

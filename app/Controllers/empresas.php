@@ -47,7 +47,7 @@ class empresas extends View
     public function cadastro():void
     {
         $this->dados['title'] .= ' CADASTRAR NOVA EMPRESA/NEGÓCIO';
-        $this->link[3] = ['link'=> 'clientes/cadastrar','nome' => 'CADASTRAR NOVA EMPRESA/NEGÓCIO'];
+        $this->link[3] = ['link'=> 'empresas/cadastrar','nome' => 'CADASTRAR NOVA EMPRESA/NEGÓCIO'];
         $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
         $this->render('admin/cadastros/empresas/cadastrar', $this->dados);
     }
@@ -350,5 +350,16 @@ class empresas extends View
             $this->render('admin/cadastros/empresas/alterar', $this->dados);
         }
 
+    }
+    public function exclusao():void
+    {
+        $this->dados['title'] .= ' EXCLUSÃO DE EMPRESA/NEGÓCIO';
+        $this->link[3] = ['link'=> 'empresas/exclusao','nome' => 'EXCLUSÃO DE EMPRESA/NEGÓCIO'];
+        $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
+        $this->render('admin/cadastros/empresas/exclusao', $this->dados);
+    }
+    public function excluir():void
+    {
+        
     }
 }
