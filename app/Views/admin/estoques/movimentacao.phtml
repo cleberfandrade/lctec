@@ -180,7 +180,8 @@ $qtdM = (is_array($movimentacoes) ? count($movimentacoes) : 0);
                         value: dados[i].PRO_COD,
                         text: dados[i].PRO_NOME
                     }));
-                    console.log(codificarHtml(dados[i].PRO_NOME))
+                    console.log(dados[i].PRO_NOME);
+                    console.log(codificarHtml(dados[i].PRO_NOME));
                 }
                 function codificarHtml(texto){
                     var htmlCodigo = { 

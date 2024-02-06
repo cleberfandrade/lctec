@@ -228,9 +228,10 @@ class estoques extends View
         if (isset($_POST) && isset($dados['PRODUTOS_ESTOQUE'])) {
             if($this->dados['empresa']['USU_COD'] == $_SESSION['USU_COD'] && $this->dados['empresa']['EMP_COD'] == $dados['EMP_COD']){
                 $this->dados['produtos'] = $this->Estoques->setCodEmpresa($dados['EMP_COD'])->setCodigo($dados['EST_COD'])->listarProdutosEstoque(0);
-                $this->dados['produtos'] = json_encode($this->dados['produtos']['PRO_NOME']);
+                //$this->dados['produtos'] += array(json_encode($this->dados['produtos']['PRO_NOME']));
+                //dump($this->dados['produtos']);
                 //$string = htmlentities(string $string [, int $flags = ENT_COMPAT | ENT_HTML401 [, string $encoding = ini_get("default_charset") [, bool $double_encode = true ]]] );
-                echo json_encode($this->dados['produtos'],JSON_UNESCAPED_UNICODE);
+                echo json_encode($this->dados['produtos']);
             }
         }
     }
