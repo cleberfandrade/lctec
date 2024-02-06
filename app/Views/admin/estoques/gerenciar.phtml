@@ -53,7 +53,32 @@ $qtdE = (is_array($empresas) ? count($empresas) : 0);
                                 <hr class="my-4 text-dark">
                                 <h5 class="card-title"><i class="bi bi-box2-fill"></i> PRODUTOS</h5>
                                 <div class="card-body" id="retorno">
+                                    <select class="form-select" id="produtos" name="PRO_COD">   
 
+                                    </select>
+                                </div>
+                                <div class="col-4 form-floating mb-2">
+                                    <select class="form-select" name="MOV_TIPO">
+                                        <option value="0" <?= (isset($_POST['MOV_TIPO']) &&  $_POST['MOV_TIPO']  == 0)? 'selected' : '' ?>>---</option>
+                                        <option value="1" <?= (isset($_POST['MOV_TIPO']) &&  $_POST['MOV_TIPO']  == 1)? 'selected' : '' ?>>ENTRADA</option>
+                                        <option value="2" <?= (isset($_POST['MOV_TIPO']) &&  $_POST['MOV_TIPO']  == 2)? 'selected' : '' ?>>SAÍDA</option>
+                                    </select>
+                                    <label class="form-label">TIPO</label>
+                                </div>
+                                <div class="col-4 form-floating mb-2">
+                                    <select class="form-select" name="MOV_MOTIVO">
+                                        <option value="0" <?= (isset($_POST['MOV_MOTIVO']) &&  $_POST['MOV_MOTIVO']  == 0)? 'selected' : '' ?>>---</option>
+                                        <option value="1" <?= (isset($_POST['MOV_MOTIVO']) &&  $_POST['MOV_MOTIVO']  == 1)? 'selected' : '' ?>>COMPRA</option>
+                                        <option value="2" <?= (isset($_POST['MOV_MOTIVO']) &&  $_POST['MOV_MOTIVO']  == 2)? 'selected' : '' ?>>VENDA</option>
+                                        <option value="3" <?= (isset($_POST['MOV_MOTIVO']) &&  $_POST['MOV_MOTIVO']  == 3)? 'selected' : '' ?>>DEVOLUCÃO</option>
+                                        <option value="4" <?= (isset($_POST['MOV_MOTIVO']) &&  $_POST['MOV_MOTIVO']  == 4)? 'selected' : '' ?>>PERDA</option>
+                                        <option value="5" <?= (isset($_POST['MOV_MOTIVO']) &&  $_POST['MOV_MOTIVO']  == 5)? 'selected' : '' ?>>OUTROS</option>
+                                    </select>
+                                    <label class="form-label">MOTIVO</label>
+                                </div>
+                                <div class="col-4 form-floating mb-3">
+                                    <input type="text" class="form-control maiusculo" id="2" name="PRO_QUANTIDADE" placeholder="0" value="<?= isset($_POST['PRO_QUANTIDADE']) ? $_POST['PRO_QUANTIDADE'] : ''; ?>">
+                                    <label class="px-3" for="2">QUANTIDADE</label>
                                 </div>
                                 <input type="hidden" class="form-control" name="EMP_COD" value="<?= isset($estoques['EMP_COD']) ? $estoques['EMP_COD'] : 0; ?>">
                                 <input type="hidden" class="form-control" name="USU_COD" value="<?= isset($_SESSION['USU_COD']) ? $_SESSION['USU_COD'] : 0; ?>">
@@ -69,25 +94,30 @@ $qtdE = (is_array($empresas) ? count($empresas) : 0);
     </div>
     
     <script type="text/javascript">
+        
         $("#buscar_produtos").change(function(){
             var EST_COD = $(this).find('option:selected').val();
-            var EMP_COD = <?php echo $_SESSION['EMP_COD']; ?>
-            //setTimeout(function () {
-                    //$('#status').modal('hide');
-            //}, 100);
-            $.post('<?php //= DIRPAGE; ?>estoques/listar_produtos', {PRODUTOS_ESTOQUE: true,EMP_COD: EMP_COD,EST_COD:EST_COD,cache: false}, function(retorno) {
-                //var resposta = JSON.parse(retorno);
-                //console.log(resposta);
+            var EMP_COD = <?php echo $_SESSION['EMP_COD']; ?>;
+            carregarProdutos(EST_COD, EMP_COD,"#produtos");
+        });
+        function carregarProdutos(EST_COD, EMP_COD,selecionado="#produtos"){
+            $.post('<?= DIRPAGE; ?>estoques/listar_produtos', {PRODUTOS_ESTOQUE: true,EMP_COD: EMP_COD,EST_COD:EST_COD,cache: false}, function(retorno) {
+                var resposta = JSON.parse(retorno);
+                console.log(resposta);
+                $(selecionado).find('option').remove().end();
+                    $(selecionado).append($('<option>', {
+                        value: 0,
+                        text: '---'
+                }));
                 //if (resposta['PROCOD'] !== 'ERRO') {
                    // $('#retorno').addClass('alert alert-success');
                 //}else{
                     //$('#retorno').addClass('alert alert-warning');
                // }
                // $('#resposta').html(resposta['MENSAGEM']);
-               // setTimeout( () => { window.location.href="<?php //DIRPAGE ?>estoques/produtos/"+EMP_COD+"/"+EST_COD}, 100);
+    
             });
-
-        });
+        }
     </script>
 </body>
 
