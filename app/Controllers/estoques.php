@@ -10,6 +10,7 @@ use App\Models\Estoques as ModelsEstoques;
 use App\Models\Financas;
 use App\Models\Fornecedores;
 use App\Models\ModulosEmpresa;
+use App\Models\Movimentacoes;
 use App\Models\Produtos;
 use App\Models\Setores;
 use Libraries\Util;
@@ -23,7 +24,10 @@ use Libraries\Sessao;
 class estoques extends View
 {
     private $dados = [];
-    private $link,$Enderecos,$Clientes,$Usuarios,$Produtos,$Empresa,$UsuariosEmpresa,$Check,$CargosSalarios,$ModulosEmpresa,$Financas,$Estoques,$Setores,$Categorias, $Classificacoes;
+    private $link,$Enderecos,$Clientes,
+    $Usuarios,$Produtos,$Empresa,$UsuariosEmpresa,
+    $Check,$CargosSalarios,$ModulosEmpresa,$Financas,
+    $Estoques,$Setores,$Categorias,$Classificacoes,$Movimentacoes;
     public function __construct()
     {
         Sessao::naoLogado();
@@ -41,6 +45,8 @@ class estoques extends View
         $this->Categorias = new Categorias;
         $this->Produtos = new Produtos;
         $this->Classificacoes = new Classificacoes;
+        $this->Movimentacoes = new Movimentacoes;
+
         $this->dados['empresa'] = $this->UsuariosEmpresa->setCodEmpresa($_SESSION['EMP_COD'])->setCodUsuario($_SESSION['USU_COD'])->listar(0);
         $this->dados['usuario'] = $this->Usuarios->setCodUsuario($_SESSION['USU_COD'])->listar(0);
         
@@ -49,6 +55,8 @@ class estoques extends View
         
         $this->dados['setores'] = $this->Setores->setCodEmpresa($_SESSION['EMP_COD'])->setTipo(4)->listarTodosPorTipo(0); 
         $this->dados['classificacoes'] = $this->Classificacoes->setCodEmpresa($_SESSION['EMP_COD'])->setTipo(4)->listarTodosPorTipo(0);
+
+        $this->dados['movimentacoes'] = $this->Movimentacoes->setCodEmpresa($_SESSION['EMP_COD'])->listarTodas(0); 
 
         $this->link[0] = ['link'=> 'admin','nome' => 'PAINEL ADMINISTRATIVO'];
         $this->link[1] = ['link'=> 'estoques','nome' => 'MÓDULO DE ESTOQUES'];
@@ -67,13 +75,13 @@ class estoques extends View
         $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
         $this->render('admin/cadastros/estoques/cadastrar', $this->dados);
     }
-    public function gerenciar()
+    public function movimentacao()
     {
-        $this->dados['title'] .= ' GERENCIAR ESTOQUE';
-        $this->link[3] = ['link'=> 'cadastros/estoques/gerenciar','nome' => 'GERENCIAR ESTOQUE'];
+        $this->dados['title'] .= ' MOVIMENTAÇÃO DO ESTOQUE';
+        $this->link[2] = ['link'=> 'estoques/movimentacao','nome' => 'MOVIMENTAÇÃO DO ESTOQUE'];
 
         $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
-        $this->render('admin/estoques/gerenciar', $this->dados);
+        $this->render('admin/estoques/movimentacao', $this->dados);
     }
     public function cadastrar()
     {
@@ -220,8 +228,58 @@ class estoques extends View
         if (isset($_POST) && isset($dados['PRODUTOS_ESTOQUE'])) {
             if($this->dados['empresa']['USU_COD'] == $_SESSION['USU_COD'] && $this->dados['empresa']['EMP_COD'] == $dados['EMP_COD']){
                 $this->dados['produtos'] = $this->Estoques->setCodEmpresa($dados['EMP_COD'])->setCodigo($dados['EST_COD'])->listarProdutosEstoque(0);
+                //dump($this->dados['produtos'JSON_UNESCAPED_UNICODE]);
                 echo json_encode($this->dados['produtos']);
             }
+        }
+    }
+    public function cadastrar_movimentacao()
+    {
+        $this->dados['title'] .= ' MOVIMENTAÇÃO DO ESTOQUE';
+        $this->link[3] = ['link'=> 'cadastros/estoques/gerenciar','nome' => 'MOVIMENTAÇÃO DO ESTOQUE'];
+
+        $ok = false;      
+        //Recupera os dados enviados
+        $dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);
+                
+        if (isset($_POST) && isset($dados['CADASTRAR_NOVA_MOVIMENTACAO_ESTOQUE'])) {
+            unset($dados['CADASTRAR_NOVA_MOVIMENTACAO_ESTOQUE']);
+
+            $this->dados['empresa'] = $this->UsuariosEmpresa->setCodEmpresa($_SESSION['EMP_COD'])->setCodUsuario($_SESSION['USU_COD'])->listar(0);
+           
+            if($this->dados['empresa']['USU_COD'] == $dados['USU_COD'] && $this->dados['empresa']['EMP_COD'] == $dados['EMP_COD']){
+
+                //Verifica se tem algum valor proibido
+                foreach ($dados as $key => $value) {
+                    $dados[$key] = $this->Check->checarString($value);
+                }
+                $dados += array(
+                    'MOV_DT_CADASTRO'=> date('Y-m-d H:i:s'),
+                    'MOV_DT_ATUALIZACAO'=> date('0000-00-00 00:00:00'),             
+                    'MOV_STATUS'=> 1
+                );
+
+                if($this->Movimentacoes->cadastrar($dados,0)){
+                    $ok = true;
+                    Sessao::alert('OK','Cadastro efetuado com sucesso!','fs-4 alert alert-success');
+                }else{
+                    Sessao::alert('ERRO',' EST13- Erro ao cadastrar nova movimentação, entre em contato com o suporte!','fs-4 alert alert-danger');
+                }
+            
+            }else{
+                Sessao::alert('ERRO',' EST12 - Acesso inválido(s)!','alert alert-danger');
+            }
+
+        }else{
+            Sessao::alert('ERRO',' EST11- Dados inválido(s)!','alert alert-danger');
+        }
+        if ($ok) {
+            $this->dados['movimentacoes'] = $this->Movimentacoes->setCodEmpresa($_SESSION['EMP_COD'])->listarTodas(0);
+            $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
+            $this->render('admin/estoques/movimentacao', $this->dados);
+        }else {
+            $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
+            $this->render('admin/estoques/movimentacao', $this->dados);
         }
     }
 
