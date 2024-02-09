@@ -125,12 +125,11 @@ class produtos extends View
         }else {
             Sessao::alert('ERRO',' 1- Acesso inválido(s)!','fs-4 alert alert-danger');
         }
+        $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
         if ($ok) {
-            $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
             $this->render('admin/estoques/produtos/cadastrar', $this->dados);    
         } else {
             $this->dados['estoques'] = $this->Estoques->setCodEmpresa($_SESSION['EMP_COD'])->listarTodos(0);
-            $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
             $this->render('admin/estoques', $this->dados);   
         }
     }
@@ -177,13 +176,12 @@ class produtos extends View
         }else{
             Sessao::alert('ERRO',' 1- Acesso inválido(s)!','fs-4 alert alert-danger');
         }
+        $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
+        $this->dados['estoques'] = $this->Estoques->setCodEmpresa($_SESSION['EMP_COD'])->listarTodos(0);
         if ($ok) {
-            $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
             $this->render('admin/estoques/produtos/listar', $this->dados);
         } else {
             $this->dados['estoque'] = $this->Estoques->setCodEmpresa($_SESSION['EMP_COD'])->setCodigo($dados['EST_COD'])->listar(0);
-            $this->dados['estoques'] = $this->Estoques->setCodEmpresa($_SESSION['EMP_COD'])->listarTodos(0);
-            $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
             $this->render('admin/estoques/produtos/cadastrar', $this->dados);
         }
     }
@@ -215,8 +213,8 @@ class produtos extends View
         }else{
             Sessao::alert('ERRO',' ERRO: PRO11 - Acesso inválido(s)!','alert alert-danger');
         }      
+        $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
         if($ok){
-            $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
             $this->render('admin/estoques/produtos/alterar', $this->dados);
         }else{
             $this->dados['produtos'] = $this->Produtos->setCodEmpresa($_SESSION['EMP_COD'])->listarTodos(0);
@@ -268,6 +266,7 @@ class produtos extends View
         }else{
             Sessao::alert('ERRO',' ERRO: PRO21 - Acesso inválido(s)!','alert alert-danger');
         }
+        
         $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
         $this->dados['setores'] = $this->Setores->setCodEmpresa($_SESSION['EMP_COD'])->setTipo(4)->listarTodosPorTipo(0);
         $this->dados['classificacoes'] = $this->Classificacoes->setCodEmpresa($_SESSION['EMP_COD'])->setTipo(8)->listarTodosPorTipo(0);

@@ -34,12 +34,11 @@ $qtd = (is_array($produto) ? count($produto) : 0);
                         <?= $breadcrumb ?>
                     </section>
                 </header>
-                <section class="container py-2">
-                    <hr>
-                    <?= Sessao::alert('OK'); ?>
-                    <?= Sessao::alert('ERRO'); ?>
-                </section>
+                <?php include_once 'app/Views/admin/inc/alertas.phtml'; ?>  
                 <section class="bg-light py-2">
+                    <div class="col-12 mx-auto text-center m-1">
+                        <a class="col-4 btn btn-sm text-uppercase btn-secondary" href="<?= DIRPAGE; ?>estoques"><i class="bi bi-arrow-left"></i> VOLTAR AOS ESTOQUES</a>
+                    </div>
                     <div class="container col-10 px-2 py-2 mx-auto row">
                         <form class="p-4 p-md-6 border text-uppercase rounded-3 bg-3" action="<?= DIRPAGE ?>produtos/alterar" method="POST">
                             <div class="row ">    
@@ -129,7 +128,7 @@ $qtd = (is_array($produto) ? count($produto) : 0);
                                         <label class="px-3" for="2">PREÇO CUSTO</label>  
                                         <div class="input-group">    
                                             <span class="input-group-text">R$</span>  
-                                            <input type="text" class="form-control form-control-lg  real" id="" name="PRO_PRECO_UNITARIO" placeholder="" value="<?= isset($_POST['PRO_PRECO_UNITARIO']) ? $_POST['PRO_PRECO_UNITARIO'] : (isset($produto['PRO_PRECO_UNITARIO'])? $produto['PRO_PRECO_UNITARIO'] : '') ; ?>">
+                                            <input type="text" class="form-control form-control-lg" id="PRO_PRECO_UNITARIO" name="PRO_PRECO_UNITARIO" placeholder="" value="<?= isset($_POST['PRO_PRECO_UNITARIO']) ? $_POST['PRO_PRECO_UNITARIO'] : (isset($produto['PRO_PRECO_UNITARIO'])? $produto['PRO_PRECO_UNITARIO'] : '') ; ?>">
                                         </div>
                                     </div> 
                                     <div class="col-10 mb-3">
@@ -196,7 +195,7 @@ $qtd = (is_array($produto) ? count($produto) : 0);
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-12 mb-3 " style="height:300px">
+                                    <div class="col-12 mb-3" style="height:10px">
                                         <label for="address2" class="form-label">DESCRIÇÃO</label>
                                         <textarea type="text" class="form-control  maiusculo" name="PRO_DESCRICAO"><?= isset($_POST['PRO_DESCRICAO'])? $_POST['PRO_DESCRICAO']  : '' ?></textarea>
                                     </div>
@@ -219,36 +218,61 @@ $qtd = (is_array($produto) ? count($produto) : 0);
             <script>
             $(document).ready(function(){
 
-                $('.real').maskMoney({
+                /*$('.real').maskMoney({
                     prefix:'',
                     allowNegative: true,
-                    thousands:'.', decimal:',',
+                    thousands:'', decimal:'.',
                     affixesStay: true
-                });
+                });*/
 
               
 
                 $("#PRO_MARGEM").on("change", function(){
                     var PRO_MARGEM =  $(this).val();
                     PRO_MARGEM = parseFloat(PRO_MARGEM/100);
-                    var PRO_PRECO_UNITARIO = $(".real").val();
+                    var PRO_PRECO_UNITARIO = $("#PRO_PRECO_UNITARIO").val();
                     PRO_PRECO_UNITARIO = parseFloat(PRO_PRECO_UNITARIO);
-                    var novo = parseFloat(PRO_PRECO_UNITARIO+(PRO_PRECO_UNITARIO*PRO_MARGEM)).toFixed(2);
+                    var novo = parseFloat(PRO_PRECO_UNITARIO + (PRO_PRECO_UNITARIO * PRO_MARGEM)).toFixed(2);
+                    $("#PRO_PRECO_VENDA").val('');
                     $("#PRO_PRECO_VENDA").val(novo);
                     $('#PRO_PRECO_VENDA').maskMoney({
                         prefix:'',
                         allowNegative: true,
-                        thousands:'.', decimal:',',
+                        thousands:'', decimal:'.',
                         affixesStay: true
                     });
                 });
 
-                $('#PRO_PRECO_VENDA').maskMoney({
+                $("#PRO_PRECO_UNITARIO").on("blur", function(){
+                    var PRO_MARGEM =  $(this).val();
+                    
+                    PRO_MARGEM = parseFloat(PRO_MARGEM/100);
+                    var PRO_PRECO_UNITARIO = $("#PRO_PRECO_UNITARIO").val();
+                    PRO_PRECO_UNITARIO = parseFloat(PRO_PRECO_UNITARIO);
+                    console.log(PRO_PRECO_UNITARIO)
+                    var novo = parseFloat(PRO_PRECO_UNITARIO + (PRO_PRECO_UNITARIO * PRO_MARGEM)).toFixed(2);
+                    $("#PRO_PRECO_VENDA").val('');
+                    $("#PRO_PRECO_VENDA").val(novo);
+                    $('#PRO_PRECO_VENDA').maskMoney({
+                        prefix:'',
+                        allowNegative: true,
+                        thousands:'', decimal:'.',
+                        affixesStay: true
+                    });
+                    $('#PRO_PRECO_UNITARIO').maskMoney({
+                        prefix:'',
+                        allowNegative: true,
+                        thousands:'', decimal:'.',
+                        affixesStay: true
+                    });
+                });
+
+                /*$('#PRO_PRECO_VENDA').maskMoney({
                     prefix:'',
                     allowNegative: true,
-                    thousands:'.', decimal:',',
+                    thousands:'', decimal:'.',
                     affixesStay: true
-                });
+                })*/
             })
             </script>
         </div>

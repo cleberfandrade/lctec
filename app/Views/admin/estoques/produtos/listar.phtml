@@ -42,6 +42,9 @@ $qtdCL = (is_array($classificacoes) ? count($classificacoes) : 0);
                             <a href="<?= DIRPAGE ?>produtos/cadastro/<?= $estoque['EMP_COD']?>/<?= $estoque['EST_COD']?>" class="btn btn-dark">NOVO CADASTRO</a>
                         </div>
                     </div>
+                    <div class="col-12 mx-auto text-center m-1">
+                        <a class="col-4 btn btn-sm text-uppercase btn-secondary" href="<?= DIRPAGE; ?>estoques"><i class="bi bi-arrow-left"></i> VOLTAR AOS ESTOQUES</a>
+                    </div>
                 <?php if($qtd != 0) { ?>
                     <table class="table table-striped table-bordered">
                         <thead class="text-center text-uppercase">
@@ -106,8 +109,10 @@ $qtdCL = (is_array($classificacoes) ? count($classificacoes) : 0);
                                 </td>
                                 <td class="text-center align-middle"><?= $produtos[$i]['PRO_NOME']; ?></td>
                                 <td class="text-center align-middle"><?= $produtos[$i]['PRO_QUANTIDADE']; ?></td>
-                                <td class="text-center align-middle"><?= number_format($produtos[$i]['PRO_PRECO_UNITARIO'],2,',','.'); ?></td>
-                                <td class="text-center align-middle"><?= number_format($produtos[$i]['PRO_PRECO_VENDA'],2,',','.'); ?></td>
+                                <!--<td class="text-center align-middle"><?php //= number_format($produtos[$i]['PRO_PRECO_UNITARIO'],2,',','.'); ?></td>
+                                <td class="text-center align-middle"><?php //= number_format($produtos[$i]['PRO_PRECO_VENDA'],2,',','.'); ?></td>-->
+                                <td class="text-center align-middle"><?= $produtos[$i]['PRO_PRECO_UNITARIO']; ?></td>
+                                <td class="text-center align-middle"><?= $produtos[$i]['PRO_PRECO_VENDA']; ?></td>
                                 <td class="text-center align-middle"><?= ($produtos[$i]['EST_STATUS'] == 1)? 'ATIVO' : 'DESATIVADO'; ?></td>
                                 <td class="text-center align-middle">
                                     <a type="button" class="btn btn-warning btn-sm d-print-none" href="<?= DIRPAGE.'produtos/alteracao/'.$produtos[$i]['EMP_COD'].'/'.$produtos[$i]['EST_COD'].'/'.$produtos[$i]['PRO_COD']; ?>" title="Alterar produto"><i class="fa fa-edit"></i></a>

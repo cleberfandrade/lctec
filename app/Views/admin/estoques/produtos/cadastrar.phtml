@@ -34,6 +34,9 @@ $qtdCL = (is_array($classificacoes) ? count($classificacoes) : 0);
                 </header>
                 <?php include_once 'app/Views/admin/inc/alertas.phtml'; ?>  
                 <section class="bg-light py-2">
+                    <div class="col-12 mx-auto text-center m-1">
+                        <a class="col-4 btn btn-sm text-uppercase btn-secondary" href="<?= DIRPAGE; ?>estoques"><i class="bi bi-arrow-left"></i> VOLTAR AOS ESTOQUES</a>
+                    </div>
                     <div class="container col-10 px-2 py-2 mx-auto row">
                         <form class="p-4 p-md-6 border text-uppercase rounded-3 bg-3" action="<?= DIRPAGE ?>produtos/cadastrar" method="POST">
                             <div class="row ">    
@@ -210,36 +213,59 @@ $qtdCL = (is_array($classificacoes) ? count($classificacoes) : 0);
             <script>
             $(document).ready(function(){
 
-                $('.real').maskMoney({
+                /*$('.real').maskMoney({
                     prefix:'',
                     allowNegative: true,
-                    thousands:'.', decimal:',',
+                    thousands:'', decimal:'.',
                     affixesStay: true
-                });
+                });*/
 
               
 
                 $("#PRO_MARGEM").on("change", function(){
                     var PRO_MARGEM =  $(this).val();
                     PRO_MARGEM = parseFloat(PRO_MARGEM/100);
-                    var PRO_PRECO_UNITARIO = $(".real").val();
+                    var PRO_PRECO_UNITARIO = $("#PRO_PRECO_UNITARIO").val();
                     PRO_PRECO_UNITARIO = parseFloat(PRO_PRECO_UNITARIO);
                     var novo = parseFloat(PRO_PRECO_UNITARIO+(PRO_PRECO_UNITARIO*PRO_MARGEM)).toFixed(2);
                     $("#PRO_PRECO_VENDA").val(novo);
                     $('#PRO_PRECO_VENDA').maskMoney({
                         prefix:'',
                         allowNegative: true,
-                        thousands:'.', decimal:',',
+                        thousands:'', decimal:'.',
                         affixesStay: true
                     });
                 });
 
-                $('#PRO_PRECO_VENDA').maskMoney({
+                $("#PRO_PRECO_UNITARIO").on("blur", function(){
+                    var PRO_MARGEM =  $(this).val();
+
+                    PRO_MARGEM = parseFloat(PRO_MARGEM/100);
+                    var PRO_PRECO_UNITARIO = $("#PRO_PRECO_UNITARIO").val();
+                    PRO_PRECO_UNITARIO = parseFloat(PRO_PRECO_UNITARIO);
+                    var novo = parseFloat(PRO_PRECO_UNITARIO + (PRO_PRECO_UNITARIO * PRO_MARGEM)).toFixed(2);
+                    $("#PRO_PRECO_VENDA").val('');
+                    $("#PRO_PRECO_VENDA").val(novo);
+                    $('#PRO_PRECO_VENDA').maskMoney({
+                        prefix:'',
+                        allowNegative: true,
+                        thousands:'', decimal:'.',
+                        affixesStay: true
+                    });
+                    $('#PRO_PRECO_UNITARIO').maskMoney({
+                        prefix:'',
+                        allowNegative: true,
+                        thousands:'', decimal:'.',
+                        affixesStay: true
+                    });
+                });
+
+                /*$('#PRO_PRECO_VENDA').maskMoney({
                     prefix:'',
                     allowNegative: true,
-                    thousands:'.', decimal:',',
+                    thousands:'', decimal:'.',
                     affixesStay: true
-                });
+                });*/
             })
             </script>
         </div>
