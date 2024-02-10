@@ -345,23 +345,32 @@ class estoques extends View
                     //}
                 }
                 if ($liberado) {
-                    if($this->Movimentacoes->cadastrar($dados,0)){
-                        $db = array(
-                            'PRO_DT_ATUALIZACAO'=> date('Y-m-d H:i:s'),
-                            'PRO_QUANTIDADE' => $this->dados['produto']['PRO_QUANTIDADE']
-                        );
-                        $this->Produtos->setCodEmpresa($dados['EMP_COD'])->setCodEstoque($dados['EST_COD'])->setCodigo($dados['PRO_COD']);
-                        if($this->Produtos->alterar($db,0)){
-                            $ok = true;
+
+                    if($this->Movimentacoes->checarRegistro(0)){
+
+                        if($this->Movimentacoes->alterar($dados,0)){
+                            $db = array(
+                                'PRO_DT_ATUALIZACAO'=> date('Y-m-d H:i:s'),
+                                'PRO_QUANTIDADE' => $this->dados['produto']['PRO_QUANTIDADE']
+                            );
+                            $this->Produtos->setCodEmpresa($dados['EMP_COD'])->setCodEstoque($dados['EST_COD'])->setCodigo($dados['PRO_COD']);
+                            if($this->Produtos->alterar($db,0)){
+                                $ok = true;
+                                $respota = array(
+                                    'COD'=>'OK',
+                                    'MENSAGEM' => 'Reversão efetuada com sucesso!'
+                                );
+                            }
+                        }else{
                             $respota = array(
-                                'COD'=>'OK',
-                                'MENSAGEM' => 'Reversão efetuada com sucesso!'
+                                'COD'=>'ERRO',
+                                'MENSAGEM'=> 'ERRO 5- Erro ao reveter sua movimentação de estoque, entre em contato com o suporte!'
                             );
                         }
-                    }else{
+                    }else {
                         $respota = array(
                             'COD'=>'ERRO',
-                            'MENSAGEM'=> 'ERRO 4- Erro ao reveter sua movimentação de estoque, entre em contato com o suporte!'
+                            'MENSAGEM'=> 'ERRO 4- Alteração já foi realizada!'
                         );
                     }
                 }else {

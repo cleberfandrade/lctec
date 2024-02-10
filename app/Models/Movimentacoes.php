@@ -72,7 +72,7 @@ class Movimentacoes extends Model
     }
     public function alterar(array $dados, $ver = 0)
     {
-        $parametros = "WHERE EMP_COD={$this->codEmpresa} AND MOV_COD=";
+        $parametros = "WHERE EMP_COD={$this->codEmpresa} AND EST_COD={$this->codEstoque} AND MOV_COD=";
         $this->Model->setParametros($parametros);
         $this->Model->setCodigo($this->codigo);
         $ok = false;
@@ -83,11 +83,11 @@ class Movimentacoes extends Model
             return false;
         }
     }
-    public function checarRegistro()
+    public function checarRegistro($ver = 0)
     {
         $parametros = "WHERE EMP_COD={$this->codEmpresa} AND EST_COD={$this->codEstoque} AND  MOV_COD='{$this->codigo}'";
         $campos = "*";
-        $resultado = $this->Model->exibir($parametros, $campos, $ver = 0, $id = false);
+        $resultado = $this->Model->exibir($parametros, $campos, $ver, $id = false);
         if ($resultado) {
             //Já existe
             return $resultado[0];
