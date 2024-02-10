@@ -307,9 +307,10 @@ class estoques extends View
             $this->render('admin/estoques/movimentacao', $this->dados);
         }
     }
-    public function reverter_movimentacao()
+    public function reverter_movimentacao():void
     {
         $dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);
+        $ok = false; 
         if (isset($_POST) && isset($dados['EXCLUIR_MOVIMENTACAO_PRODUTO'])) {
 
             unset($dados['EXCLUIR_MOVIMENTACAO_PRODUTO']);
@@ -355,27 +356,36 @@ class estoques extends View
                         $this->Produtos->setCodEmpresa($dados['EMP_COD'])->setCodEstoque($dados['EST_COD'])->setCodigo($dados['PRO_COD']);
                         if($this->Produtos->alterar($db,0)){
                             $ok = true;
-                            Sessao::alert('OK','Reversão efetuada com sucesso!','fs-4 alert alert-success');
+                            $respota = array(
+                                'COD'=>'OK',
+                                'MENSAGEM' => 'Reversão efetuada com sucesso!'
+                            );
                         }
                     }else{
-                        Sessao::alert('ERRO',' MOV24- Erro ao reverter sua movimentação, entre em contato com o suporte!','fs-4 alert alert-danger');
+                        $respota = array(
+                            'COD'=>'ERRO',
+                            'MENSAGEM'=> 'ERRO 4- Erro ao reveter sua movimentação de estoque, entre em contato com o suporte!'
+                        );
                     }
                 }else {
-                    Sessao::alert('ERRO',' MOV23 - Alteração na movimentação foi recusada porque o estoque do produto ficará negativo!','alert alert-danger');
+                    $respota = array(
+                        'COD'=>'ERRO',
+                        'MENSAGEM'=> 'ERRO 3- Alteração na movimentação foi recusada porque o estoque do produto ficará negativo!'
+                    );
                 }
             }else{
-                Sessao::alert('ERRO',' MOV22 - Acesso inválido(s)!','alert alert-danger');
+                $respota = array(
+                    'COD'=>'ERRO',
+                    'MENSAGEM'=> 'ERRO 2- Dados inválido(s)!'
+                );
             }
       
         }else{
-            Sessao::alert('ERRO',' MOV21- Dados inválido(s)!','alert alert-danger');
+            $respota = array(
+                'COD'=>'ERRO',
+                'MENSAGEM'=> 'ERRO 1- Acesso inválido!'
+            );
         }
-        $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
-        if ($ok) {
-            $this->dados['movimentacoes'] = $this->Movimentacoes->setCodEmpresa($_SESSION['EMP_COD'])->listarTodas(0);
-            $this->render('admin/estoques/movimentacao', $this->dados);
-        }else {
-            $this->render('admin/estoques', $this->dados);
-        }
+        echo json_encode($respota);
     }
 }
