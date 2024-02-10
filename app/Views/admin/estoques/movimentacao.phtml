@@ -44,7 +44,12 @@ $qtdMotivos = (is_array($motivos) ? count($motivos) : 0);
                     <?= $breadcrumb ?>
                 </section>
             </header>
-            <?php include_once 'app/Views/admin/inc/alertas.phtml'; ?>  
+            <section class="container py-1">
+                <hr>
+                <div id="resposta2" class="fs-4 text-center"></div>
+                <?= Sessao::alert('OK'); ?>
+                <?= Sessao::alert('ERRO'); ?>
+            </section>
             <section class="container bg-light mx-auto py-2 mb-5">
                 <div class="col-12 row">
                     <div class="col-8 mx-auto text-bg-success text-center">
