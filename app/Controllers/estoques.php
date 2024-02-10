@@ -227,11 +227,14 @@ class estoques extends View
         $dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);
         if (isset($_POST) && isset($dados['PRODUTOS_ESTOQUE'])) {
             if($this->dados['empresa']['USU_COD'] == $_SESSION['USU_COD'] && $this->dados['empresa']['EMP_COD'] == $dados['EMP_COD']){
+                
                 $this->dados['produtos'] = $this->Estoques->setCodEmpresa($dados['EMP_COD'])->setCodigo($dados['EST_COD'])->listarProdutosEstoque(0);
                 //$this->dados['produtos'] += array(json_encode($this->dados['produtos']['PRO_NOME']));
                 //dump($this->dados['produtos']);
                 //$string = htmlentities(string $string [, int $flags = ENT_COMPAT | ENT_HTML401 [, string $encoding = ini_get("default_charset") [, bool $double_encode = true ]]] );
-                echo json_encode($this->dados['produtos']);
+                
+                $string = json_encode($this->dados['produtos']);
+                print($string);
             }
         }
     }
@@ -283,16 +286,16 @@ class estoques extends View
                             Sessao::alert('OK','Cadastro efetuado com sucesso!','fs-4 alert alert-success');
                         }
                     }else{
-                        Sessao::alert('ERRO',' EST13- Erro ao cadastrar nova movimentação, entre em contato com o suporte!','fs-4 alert alert-danger');
+                        Sessao::alert('ERRO',' MOV14- Erro ao cadastrar nova movimentação, entre em contato com o suporte!','fs-4 alert alert-danger');
                     }
                 }else {
                     Sessao::alert('ERRO',' MOVI13 - A movimentação foi recusada porque o  estoque do produto ficará negativo!','alert alert-danger');
                 }
             }else{
-                Sessao::alert('ERRO',' EST12 - Acesso inválido(s)!','alert alert-danger');
+                Sessao::alert('ERRO',' MOV12 - Acesso inválido(s)!','alert alert-danger');
             }
         }else{
-            Sessao::alert('ERRO',' EST11- Dados inválido(s)!','alert alert-danger');
+            Sessao::alert('ERRO',' MOV11- Dados inválido(s)!','alert alert-danger');
         }
 
         if ($ok) {
@@ -304,11 +307,75 @@ class estoques extends View
             $this->render('admin/estoques/movimentacao', $this->dados);
         }
     }
-    public function excluir_movimentacao()
+    public function reverter_movimentacao()
     {
         $dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);
-        if (isset($_POST) && isset($dados['EXCLUSAO_MOVIMENTACAO'])) {
-        
+        if (isset($_POST) && isset($dados['EXCLUIR_MOVIMENTACAO_PRODUTO'])) {
+
+            unset($dados['EXCLUIR_MOVIMENTACAO_PRODUTO']);
+
+            $this->dados['empresa'] = $this->UsuariosEmpresa->setCodEmpresa($_SESSION['EMP_COD'])->setCodUsuario($_SESSION['USU_COD'])->listar(0);
+            
+            if($this->dados['empresa']['USU_COD'] == $dados['USU_COD'] && $this->dados['empresa']['EMP_COD'] == $dados['EMP_COD']){
+
+                $dados += array(
+                    'MOV_DT_ATUALIZACAO'=> date('Y-m-d H:i:s'),             
+                    'MOV_STATUS'=> 0
+                );
+                $this->Movimentacoes->setCodEmpresa($_SESSION['EMP_COD'])
+                ->setCodEstoque($dados['EST_COD'])
+                ->setCodProduto($dados['PRO_COD'])
+                ->setCodigo($dados['MOV_COD']);
+
+                //BUSCANDO OS DADOS DA MOVIMENTACAO
+                $this->dados['movimentacao'] = $this->Movimentacoes->setCodEmpresa($_SESSION['EMP_COD'])->setCodigo($dados['MOV_COD'])->listar(0);
+                //BUSCANDO OS DADOS DO PRODUTO
+                $this->dados['produto'] = $this->Produtos->setCodEmpresa($_SESSION['EMP_COD'])->setCodEstoque($dados['EST_COD'])->setCodigo($dados['PRO_COD'])->listar(0);
+
+                $liberado = false;
+                
+                //VERIFICANDO SE A MOVIMENTACAO FOI DE ENTRADA OU SAÍDA
+                if ($this->dados['movimentacao']['MOV_TIPO'] == 1) {
+                    //REVERTENDO A MOVIMENTACAO DIMINUINDO NO ESTOQUE DO PRODUTO
+                    $this->dados['produto']['PRO_QUANTIDADE']-= $this->dados['movimentacao']['MOV_QUANTIDADE'];  
+                    $liberado = true;
+                }else {
+                    //REVERTENDO A MOVIMENTACAO ACRESCENTANDO NO ESTOQUE DO PRODUTO
+                    //if ($this->dados['produto']['PRO_QUANTIDADE'] >=0 && ($this->dados['produto']['PRO_QUANTIDADE']-= $dados['MOV_QUANTIDADE'])>=0) {
+                    $this->dados['produto']['PRO_QUANTIDADE']+= $this->dados['movimentacao']['MOV_QUANTIDADE'];
+                    $liberado = true;
+                    //}
+                }
+                if ($liberado) {
+                    if($this->Movimentacoes->cadastrar($dados,0)){
+                        $db = array(
+                            'PRO_DT_ATUALIZACAO'=> date('Y-m-d H:i:s'),
+                            'PRO_QUANTIDADE' => $this->dados['produto']['PRO_QUANTIDADE']
+                        );
+                        $this->Produtos->setCodEmpresa($dados['EMP_COD'])->setCodEstoque($dados['EST_COD'])->setCodigo($dados['PRO_COD']);
+                        if($this->Produtos->alterar($db,0)){
+                            $ok = true;
+                            Sessao::alert('OK','Reversão efetuada com sucesso!','fs-4 alert alert-success');
+                        }
+                    }else{
+                        Sessao::alert('ERRO',' MOV24- Erro ao reverter sua movimentação, entre em contato com o suporte!','fs-4 alert alert-danger');
+                    }
+                }else {
+                    Sessao::alert('ERRO',' MOV23 - Alteração na movimentação foi recusada porque o estoque do produto ficará negativo!','alert alert-danger');
+                }
+            }else{
+                Sessao::alert('ERRO',' MOV22 - Acesso inválido(s)!','alert alert-danger');
+            }
+      
+        }else{
+            Sessao::alert('ERRO',' MOV21- Dados inválido(s)!','alert alert-danger');
+        }
+        $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
+        if ($ok) {
+            $this->dados['movimentacoes'] = $this->Movimentacoes->setCodEmpresa($_SESSION['EMP_COD'])->listarTodas(0);
+            $this->render('admin/estoques/movimentacao', $this->dados);
+        }else {
+            $this->render('admin/estoques', $this->dados);
         }
     }
 }

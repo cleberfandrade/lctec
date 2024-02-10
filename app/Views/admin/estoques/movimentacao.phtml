@@ -146,7 +146,7 @@ $qtdMotivos = (is_array($motivos) ? count($motivos) : 0);
                             <?php $b = 1; for ($i=0; $i < $qtdM; $i++) { 
                                  $data = new DateTime($movimentacoes[$i]['MOV_DT_MOVIMENTACAO']);
                                 ?>
-                            <tr class="<?= ($movimentacoes[$i]['MOV_STATUS'] == 0 && $_SESSION['USU_NIVEL'] >= 8)? 'bg-secondary' : '';?>">
+                            <tr class="<?= ($movimentacoes[$i]['MOV_STATUS'] == 0 && $_SESSION['USU_NIVEL'] >= 10)? 'bg-secondary' : '';?>">
                                 <td class="text-center align-middle"><?= $b; ?></td>
                                 <td class="text-center align-middle"><?= $movimentacoes[$i]['EST_DESCRICAO']; ?></td>
                                 <td class="text-center align-middle"><?= $movimentacoes[$i]['PRO_COD']; ?></td>
@@ -164,8 +164,7 @@ $qtdMotivos = (is_array($motivos) ? count($motivos) : 0);
                                 </td>
                                 <td class="text-center align-middle"><?= ($movimentacoes[$i]['MOV_STATUS'] == 1)? 'ATIVO' : 'DESATIVADO'; ?></td>
                                 <td class="text-center align-middle">
-                                    <a type="button" class="btn btn-warning btn-sm d-print-none" href="<?= DIRPAGE.'estoque/alteracao_movimentacao/'.$movimentacoes[$i]['EMP_COD'].'/'.$movimentacoes[$i]['EST_COD'].'/'.$movimentacoes[$i]['MOV_COD']; ?>" title="Alterar movimentacao"><i class="fa fa-edit"></i></a>
-                                    <button type="button" class="btn btn-danger btn-sm d-print-none" data-bs-toggle='modal'  data-bs-target="#status" title="" data-codigo="<?= $movimentacoes[$i]['MOV_COD']; ?>" data-estoque="<?= $movimentacoes[$i]['EST_COD']; ?>"  data-status="<?= $movimentacoes[$i]['MOV_STATUS']; ?>" title="Deseja excluir?" ><i class="fa fa-trash"></i></button>
+                                    <button type="button" class="btn btn-danger btn-sm d-print-none" data-bs-toggle='modal'  data-bs-target="#status" title="" data-codigo="<?= $movimentacoes[$i]['MOV_COD']; ?>" data-produto="<?= $movimentacoes[$i]['PRO_COD']; ?>" data-nome="<?= $produto['PRO_NOME']; ?>" data-estoque="<?= $movimentacoes[$i]['EST_COD']; ?>"  data-status="<?= $movimentacoes[$i]['MOV_STATUS']; ?>" title="Deseja excluir?" ><i class="fa fa-trash"></i></button>
                                 </td>
                             </tr>
                         <?php $b++; } ?>
@@ -181,17 +180,17 @@ $qtdMotivos = (is_array($motivos) ? count($motivos) : 0);
     <div class="modal" id="status" tabindex="-1" role="dialog" data-bs-backdrop="true" aria-labelledby="status" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
-                <div id="title" class="modal-header text-center text-uppercase">
+                <div id="title" class="modal-header mx-auto text-center text-uppercase">
                     Deseja <b>Reverter a movimentação</b> deste Produto?
                 </div>
                 <div class="modal-body text-center">
-                    <p class="text-center text-uppercase mx-auto">Confirma mudança de status deste registro?</p>
+                    <p class="text-center text-uppercase mx-auto">Confirma reversão deste registro?</p>
                     <span id="PRO_NOME" class="mt-3 text-center h5"></span>
                 </div>
                 <div class="modal-footer">
                     <input type="hidden" id="MOV_STATUS" name="MOV_STATUS" value="" />
-                    <input type="hidden" id="PRO_COD" name="PRO_COD" value="" />
                     <input type="hidden" id="MOV_COD" name="MOV_COD" value="" />
+                    <input type="hidden" id="PRO_COD" name="PRO_COD" value="" />
                     <input type="hidden" id="EST_COD" name="EST_COD" value="" />
                     <input type="hidden" id="EMP_COD" name="EMP_COD" value="<?= $empresa['EMP_COD'] ?>" />
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">CANCELAR</button>
@@ -213,9 +212,9 @@ $qtdMotivos = (is_array($motivos) ? count($motivos) : 0);
                 var dados = JSON.parse(retorno);
                 
                 $(selecionado).find('option').remove().end();
-                    $(selecionado).append($('<option>', {
-                        value: 0,
-                        text: '---'
+                $(selecionado).append($('<option>', {
+                    value: 0,
+                    text: '---'
                 }));
                 //console.log(dados);
                 document.getElementById("EST_COD").value ='';
@@ -271,6 +270,56 @@ $qtdMotivos = (is_array($motivos) ? count($motivos) : 0);
     
             });
         }
+
+        $(document).ready(function() {
+            $('#status').on('show.bs.modal', function(event) {
+                var button = null;
+                var button = $(event.relatedTarget); // Button that triggered the modal
+                var codigo = null;
+                var codigo = button.data('codigo'); // Extract info from data-* attributes
+                var nome = button.data('nome');
+                var status = button.data('status');
+                var estoque = button.data('estoque');
+                var produto = button.data('produto'); 
+                var modal = $(this);
+                modal.find('#MOV_COD').val(codigo);
+                modal.find('#PRO_COD').val(produto);
+                modal.find('#EST_COD').val(estoque);
+                modal.find('#MOV_STATUS').val(status);
+                modal.find('#sts').val(codigo);
+                modal.find('#PRO_NOME').html(nome);
+
+                if (status === 1) {
+                    modal.find('#sts').html('<i class="fa fa-ban"></i> CONFIRMAR');
+                    modal.find('#title').html('Deseja reverter a movimentação?');
+                }else{
+                    //modal.find('#sts').html('<i class="fa fa-circle-check"></i> CONFIRMAR');
+                    //modal.find('#title').html('Deseja ativar a movimentação?');
+                }
+            });
+        });
+        $("#sts").click(function(){
+            var PRO_COD = $('#PRO_COD').val();
+            var EMP_COD = $('#EMP_COD').val();
+            var EST_COD = $('#EST_COD').val();
+            var MOV_COD = $('#sts').val();
+            var MOV_STATUS = $('#MOV_STATUS').val();
+            setTimeout(function () {
+                    $('#status').modal('hide');
+            }, 100);
+            $.post('<?= DIRPAGE; ?>estoques/reverter_movimentacao', {PRO_COD: PRO_COD,EXCLUIR_MOVIMENTACAO_PRODUTO: true,EMP_COD: EMP_COD,EST_COD:EST_COD,MOV_COD:MOV_COD, MOV_STATUS: MOV_STATUS,cache: false}, function(retorno) {
+                var resposta = JSON.parse(retorno);
+                if (resposta['COD'] !== 'ERRO') {
+                    $('#resposta').addClass('alert alert-success');
+                }else{
+                    $('#resposta').addClass('alert alert-warning');
+                }
+                $('#resposta').html(resposta['MENSAGEM']);
+                setTimeout( () => { window.location.href="<?= DIRPAGE ?>estoques/movimentacao/"+EMP_COD+"/"+EST_COD}, 100);
+            });
+
+        });
+
     </script>
 </body>
 

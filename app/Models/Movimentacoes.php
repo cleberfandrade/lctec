@@ -7,7 +7,7 @@ class Movimentacoes extends Model
 { 
     private $tabela = 'tb_movimentacoes';
     private $Model = '';
-    private $codigo,$codUsuario,$codConta,$codEmpresa;
+    private $codigo,$codUsuario,$codProduto, $codEstoque,$codEmpresa;
 
     public function __construct()
     {
@@ -29,9 +29,19 @@ class Movimentacoes extends Model
         $this->codEmpresa = $codEmpresa;
         return $this;
     }
+    public function setCodEstoque($codEstoque)
+    {
+        $this->codEstoque = $codEstoque;
+        return $this;
+    }
+    public function setCodProduto($codProduto)
+    {
+        $this->codProduto = $codProduto;
+        return $this;
+    }
     public function listar($ver = 0)
     {
-        $parametros = "M INNER JOIN tb_empresas E ON E.EMP_COD=M.EMP_COD WHERE M.MOV_COD={$this->codigo} AND M.EMP_COD={$this->codEmpresa} ";
+        $parametros = "M INNER JOIN tb_empresas E ON E.EMP_COD=M.EMP_COD INNER JOIN tb_estoques ES ON ES.EST_COD=M.EST_COD INNER JOIN tb_produtos P ON P.PRO_COD=M.PRO_COD WHERE M.MOV_COD={$this->codigo} AND M.EMP_COD={$this->codEmpresa} ";
         $campos = "*";
         $resultado = $this->Model->exibir($parametros, $campos, $ver = 0, $id = false);
         if ($resultado) {
@@ -75,7 +85,7 @@ class Movimentacoes extends Model
     }
     public function checarRegistro()
     {
-        $parametros = "WHERE EMP_COD={$this->codEmpresa} AND MOV_COD='{$this->codigo}'";
+        $parametros = "WHERE EMP_COD={$this->codEmpresa} AND EST_COD={$this->codEstoque} AND  MOV_COD='{$this->codigo}'";
         $campos = "*";
         $resultado = $this->Model->exibir($parametros, $campos, $ver = 0, $id = false);
         if ($resultado) {

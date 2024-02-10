@@ -116,7 +116,7 @@ $qtdCL = (is_array($classificacoes) ? count($classificacoes) : 0);
                                 <td class="text-center align-middle"><?= ($produtos[$i]['EST_STATUS'] == 1)? 'ATIVO' : 'DESATIVADO'; ?></td>
                                 <td class="text-center align-middle">
                                     <a type="button" class="btn btn-warning btn-sm d-print-none" href="<?= DIRPAGE.'produtos/alteracao/'.$produtos[$i]['EMP_COD'].'/'.$produtos[$i]['EST_COD'].'/'.$produtos[$i]['PRO_COD']; ?>" title="Alterar produto"><i class="fa fa-edit"></i></a>
-                                    <button type="button" class="btn btn-danger btn-sm d-print-none" data-bs-toggle='modal'  data-bs-target="#status" title="" data-codigo="<?= $produtos[$i]['COL_COD']; ?>" data-nome="<?= $produtos[$i]['COL_NOME']; ?>" data-estoque="<?= $produtos[$i]['EST_COD']; ?>"  data-status="<?= $produtos[$i]['CAT_STATUS']; ?>" title="Deseja excluir?" ><i class="fa fa-ban"></i></button>
+                                    <button type="button" class="btn btn-danger btn-sm d-print-none" data-bs-toggle='modal'  data-bs-target="#status" title="" data-codigo="<?= $produtos[$i]['COL_COD']; ?>" data-nome="<?= $produtos[$i]['PRO_NOME']; ?>" data-estoque="<?= $produtos[$i]['EST_COD']; ?>"  data-status="<?= $produtos[$i]['PRO_STATUS']; ?>" title="Deseja excluir?" ><i class="fa fa-trash"></i></button>
                                 </td>
                             </tr>
                         <?php $b++; } ?>
