@@ -332,7 +332,7 @@ $qtdMotivos = (is_array($motivos) ? count($motivos) : 0);
                     $('#resposta2').addClass('alert alert-warning');
                 }
                 $('#resposta2').html(resposta['MENSAGEM']);
-                //setTimeout( () => { window.location.href="<?php //= DIRPAGE ?>estoques/movimentacao/"+EMP_COD+"/"+EST_COD}, 100);
+                setTimeout( () => { window.location.href="<?= DIRPAGE ?>estoques/movimentacao/"+EMP_COD+"/"+EST_COD}, 300);
             });
 
         });
