@@ -323,8 +323,7 @@ $qtdMotivos = (is_array($motivos) ? count($motivos) : 0);
                 EST_COD:EST_COD,
                 MOV_COD:MOV_COD, 
                 USU_COD:USU_COD,
-                MOV_STATUS: MOV_STATUS,
-                cache: false
+                MOV_STATUS: MOV_STATUS
             }, function(retorno) {
                 var resposta = JSON.parse(retorno);
                 if (resposta['COD'] !== 'ERRO') {
