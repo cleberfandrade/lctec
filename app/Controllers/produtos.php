@@ -180,8 +180,10 @@ class produtos extends View
         $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
         $this->dados['estoques'] = $this->Estoques->setCodEmpresa($_SESSION['EMP_COD'])->listarTodos(0);
         if ($ok) {
+            $this->dados['produtos'] = $this->Produtos->setCodEmpresa($this->dados['estoque']['EMP_COD'])->setCodEstoque($this->dados['estoque']['EST_COD'])->listarTodos(0);
             $this->render('admin/estoques/produtos/listar', $this->dados);
         } else {
+
             $this->dados['estoque'] = $this->Estoques->setCodEmpresa($_SESSION['EMP_COD'])->setCodigo($dados['EST_COD'])->listar(0);
             $this->render('admin/estoques/produtos/cadastrar', $this->dados);
         }
