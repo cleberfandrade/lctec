@@ -110,7 +110,11 @@ $qtdMotivos = (is_array($motivos) ? count($motivos) : 0);
                                     <input type="text" class="form-control maiusculo" id="2" name="MOV_QUANTIDADE" placeholder="0" value="<?= isset($_POST['MOV_QUANTIDADE']) ? $_POST['MOV_QUANTIDADE'] : ''; ?>">
                                     <label class="px-3" for="2">QUANTIDADE</label>
                                 </div>
-                                <div class="col-12 mb-2 " style="height:100px">
+                                <div class="col-4 mx-auto fs-4 text-center">
+                                    <label class="px-2" for="2">QUANTIDADE ATUAL</label>
+                                    <b class="text-dark"><br><span id="PRO_QUANTIDADE">0</span></b>
+                                </div>
+                                <div class="col-8 mb-2 " style="height:100px">
                                     <label for="address2" class="form-label">DESCRIÇÃO</label>
                                     <textarea type="text" class="form-control  maiusculo" name="MOV_DESCRICAO"><?= isset($_POST['MOV_DESCRICAO'])? $_POST['MOV_DESCRICAO']  : '' ?></textarea>
                                 </div>
@@ -153,8 +157,10 @@ $qtdMotivos = (is_array($motivos) ? count($motivos) : 0);
                         <tbody>
                             <?php $b = 1; for ($i=0; $i < $qtdM; $i++) { 
                                  $data = new DateTime($movimentacoes[$i]['MOV_DT_MOVIMENTACAO']);
-                                ?>
-                            <tr class="<?= ($movimentacoes[$i]['MOV_STATUS'] == 0 && $_SESSION['USU_NIVEL'] >= 10)? 'bg-secondary' : '';?>">
+                                
+                            if($movimentacoes[$i]['MOV_STATUS'] != 0){ 
+                            ?>
+                            <tr class="<?= ($movimentacoes[$i]['MOV_STATUS'] == 0 && $_SESSION['USU_NIVEL'] >= 5)? 'bg-secondary' : '';?>">
                                 <td class="text-center align-middle"><?= $b; ?></td>
                                 <td class="text-center align-middle"><?= $movimentacoes[$i]['EST_DESCRICAO']; ?></td>
                                 <td class="text-center align-middle"><?= $movimentacoes[$i]['PRO_COD']; ?></td>
@@ -175,7 +181,30 @@ $qtdMotivos = (is_array($motivos) ? count($motivos) : 0);
                                     <button type="button" class="btn btn-danger btn-sm d-print-none" data-bs-toggle='modal'  data-bs-target="#status" title="" data-codigo="<?= $movimentacoes[$i]['MOV_COD']; ?>" data-produto="<?= $movimentacoes[$i]['PRO_COD']; ?>" data-nome="<?= $produto['PRO_NOME']; ?>" data-estoque="<?= $movimentacoes[$i]['EST_COD']; ?>"  data-status="<?= $movimentacoes[$i]['MOV_STATUS']; ?>" title="Deseja excluir?" ><i class="fa fa-trash"></i></button>
                                 </td>
                             </tr>
-                        <?php $b++; } ?>
+                        <?php }else { ?>
+                            <tr class="<?= ($_SESSION['USU_NIVEL'] >= 7)? 'bg-secondary' : '';?>">
+                                <td class="text-center align-middle"><?= $b; ?></td>
+                                <td class="text-center align-middle"><?= $movimentacoes[$i]['EST_DESCRICAO']; ?></td>
+                                <td class="text-center align-middle"><?= $movimentacoes[$i]['PRO_COD']; ?></td>
+                                <td class="text-center align-middle">
+                                    <?php $produto = $Produtos->setCodEmpresa($movimentacoes[$i]['EMP_COD'])->setCodEstoque($movimentacoes[$i]['EST_COD'])->setCodigo($movimentacoes[$i]['PRO_COD'])->listar(0);
+                                    echo $produto['PRO_NOME'];
+                                    ?>
+                                </td>
+                                <td class="text-center align-middle"><?= $data->format('d/m/Y'); ?></td>
+                                <?= ($movimentacoes[$i]['MOV_TIPO'] == 1)? '<td class="text-center align-middle"><span class="text-primary">'.$movimentacoes[$i]['MOV_QUANTIDADE'].'</span></td><td></td>' : '<td></td><td class="text-center align-middle"><span class="text-danger">'.$movimentacoes[$i]['MOV_QUANTIDADE'].'</span>'; ?></td>
+                                <td class="text-center align-middle">
+                                    <?php for ($m=0; $m < $qtdMotivos; $m++) { ?>
+                                        <?= (isset($movimentacoes[$i]['MOV_MOTIVO']) &  $movimentacoes[$i]['MOV_MOTIVO']  == $m)? $motivos[$m]: '' ?>
+                                    <?php } ?>
+                                </td>
+                                <td class="text-center align-middle"><?= ($movimentacoes[$i]['MOV_STATUS'] == 1)? 'ATIVO' : 'DESATIVADO'; ?></td>
+                                <td class="text-center align-middle">
+        
+                                </td>
+                            </tr>
+                            <?php } ?>
+                        <?php  $b++; } ?>
                     </table>
                     <?php }else { ?>
                         <h4 class="text-center text-warning fs-4">NENHUMA MOVIMENTAÇÃO DE PRODUTOS</h4>
@@ -215,10 +244,11 @@ $qtdMotivos = (is_array($motivos) ? count($motivos) : 0);
             var EMP_COD = <?php echo $_SESSION['EMP_COD']; ?>;
             carregarProdutos(EST_COD, EMP_COD,"#produtos");
         });
+        
         function carregarProdutos(EST_COD, EMP_COD,selecionado="#produtos"){
             $.post('<?= DIRPAGE; ?>estoques/listar_produtos', {PRODUTOS_ESTOQUE: true,EMP_COD: EMP_COD,EST_COD:EST_COD,cache: false}, function(retorno) {
                 
-                var dados = JSON.parse(retorno);
+                dados = JSON.parse(retorno);
                 
                 $(selecionado).find('option').remove().end();
                 $(selecionado).append($('<option>', {
@@ -228,16 +258,14 @@ $qtdMotivos = (is_array($motivos) ? count($motivos) : 0);
                 //console.log(dados);
                 document.getElementById("EST_COD").value ='';
                 document.getElementById("EST_COD").value = EST_COD;
-                
 
-               
                 for(var i=0;dados.length>i;i++){
                     $(selecionado).append($('<option>', {
                         value: dados[i].PRO_COD,
                         text: dados[i].PRO_NOME
                     }));
-                    console.log(dados[i].PRO_NOME);
-                    console.log(codificarHtml(dados[i].PRO_NOME));
+                    //console.log(dados[i].PRO_NOME);
+                    //console.log(codificarHtml(dados[i].PRO_NOME));
                 }
                 function codificarHtml(texto){
                     var htmlCodigo = { 
@@ -268,18 +296,20 @@ $qtdMotivos = (is_array($motivos) ? count($motivos) : 0);
                     }
                     return texto;
                 }
-
-               
-                //if (resposta['PROCOD'] !== 'ERRO') {
-                   // $('#retorno').addClass('alert alert-success');
-                //}else{
-                    //$('#retorno').addClass('alert alert-warning');
-               // }
-               // $('#resposta').html(resposta['MENSAGEM']);
     
             });
         }
+        $("#produtos").change(function(){
 
+            var PRO_COD = $(this).find('option:selected').val();
+            var EST_COD = $('#EST_COD').val();
+            var EMP_COD = <?php echo $_SESSION['EMP_COD']; ?>;
+
+            $.post('<?= DIRPAGE; ?>estoques/listar_produto', {PRODUTOS: true,EMP_COD: EMP_COD,EST_COD:EST_COD,PRO_COD: PRO_COD}, function(retorno) {
+                db = JSON.parse(retorno);
+                $('#PRO_QUANTIDADE').html(db.PRO_QUANTIDADE);
+            });
+        });
         $(document).ready(function() {
             $('#status').on('show.bs.modal', function(event) {
                 var button = null;
