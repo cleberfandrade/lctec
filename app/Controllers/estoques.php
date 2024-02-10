@@ -323,10 +323,7 @@ class estoques extends View
                     'MOV_DT_ATUALIZACAO'=> date('Y-m-d H:i:s'),             
                     'MOV_STATUS'=> 0
                 );
-                $this->Movimentacoes->setCodEmpresa($_SESSION['EMP_COD'])
-                ->setCodEstoque($dados['EST_COD'])
-                ->setCodProduto($dados['PRO_COD'])
-                ->setCodigo($dados['MOV_COD']);
+                $this->Movimentacoes->setCodEmpresa($_SESSION['EMP_COD'])->setCodEstoque($dados['EST_COD'])->setCodProduto($dados['PRO_COD'])->setCodigo($dados['MOV_COD']);
 
                 //BUSCANDO OS DADOS DA MOVIMENTACAO
                 $this->dados['movimentacao'] = $this->Movimentacoes->setCodEmpresa($_SESSION['EMP_COD'])->setCodigo($dados['MOV_COD'])->listar(0);
