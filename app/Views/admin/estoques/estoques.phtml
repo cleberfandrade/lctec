@@ -79,10 +79,7 @@ $qtdE = (is_array($empresas) ? count($empresas) : 0);
                                     <div class="col-4">
                                         <h2 class="card-title">
                                             <?php 
-                                                $Produtos->setCodEmpresa($estoques[$i]['EMP_COD']);
-                                                $Produtos->setCodEstoque($estoques[$i]['EST_COD']);
-                                                $Produtos->setTipo(1);
-                                                $prod = $Produtos->listarTodosTipo(0);
+                                                $prod = $Produtos->setCodEmpresa($estoques[$i]['EMP_COD'])->setCodEstoque($estoques[$i]['EST_COD'])->setTipo(1)->setStatus(1)->listarTodosTipo(0);
                                                 $qtdP = (is_array($prod) ? count($prod) : 0);
                                                 echo $qtdP;
                                             ?>
@@ -95,7 +92,7 @@ $qtdE = (is_array($empresas) ? count($empresas) : 0);
                         <div class="col-12 mr-1">
                             <a type="button" class="btn btn-outline-warning btn-sm d-print-none" href="<?= DIRPAGE.'cadastros/alteracao_estoques/'.$estoques[$i]['EMP_COD'].'/'.$estoques[$i]['EST_COD']; ?>" title="Alterar estoque"><i class="fa fa-edit"></i></a>
                         </div>
-                        <?php }elseif ( $estoques[$i]['EST_STATUS'] == 0 && $_SESSION['USU_NIVEL'] >= 8) { ?>
+                        <?php }elseif ( $estoques[$i]['EST_STATUS'] == 0 && $_SESSION['USU_NIVEL'] >= 11) { ?>
                             <div class="card col-5 m-2 text-white mx-auto text-bg-secondary m-1 py-3" style="max-width: 45rem;">
                                 <div class="card-header"><i class="bi bi-box"></i> <?= $estoques[$i]['EST_TIPO']; ?></div>
                                 <div class="card-body">

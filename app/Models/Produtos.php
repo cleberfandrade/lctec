@@ -7,7 +7,7 @@ class Produtos extends Model
 { 
     private $tabela = 'tb_produtos';
     private $Model = '';
-    private $codigo,$codEstoque,$codCliente,$tipo, $codEmpresa,$codVenda, $codFornecedor,$nome;
+    private $codigo,$codEstoque,$codCliente,$tipo, $codEmpresa,$codVenda, $codFornecedor,$nome,$status;
 
     public function __construct()
     {
@@ -17,6 +17,11 @@ class Produtos extends Model
     public function setTipo($tipo)
     {
         $this->tipo = $tipo;
+        return $this;
+    }
+    public function setStatus($status)
+    {
+        $this->status = $status;
         return $this;
     }
     public function setCodigo($codigo)
@@ -64,7 +69,11 @@ class Produtos extends Model
     }
     public function listarTodosTipo($ver = 0)
     {
-        $parametros = "P INNER JOIN tb_empresas E ON P.EMP_COD=E.EMP_COD INNER JOIN tb_estoques ET ON P.EST_COD=ET.EST_COD WHERE P.EMP_COD={$this->codEmpresa} AND P.EST_COD={$this->codEstoque} AND P.PRO_TIPO={$this->tipo} ORDER BY P.PRO_COD";
+        if ($this->status) {
+            $parametros = "P INNER JOIN tb_empresas E ON P.EMP_COD=E.EMP_COD INNER JOIN tb_estoques ET ON P.EST_COD=ET.EST_COD WHERE P.EMP_COD={$this->codEmpresa} AND P.EST_COD={$this->codEstoque} AND P.PRO_TIPO={$this->tipo} AND P.PRO_STATUS={$this->status} ORDER BY P.PRO_COD";    
+        }else {
+            $parametros = "P INNER JOIN tb_empresas E ON P.EMP_COD=E.EMP_COD INNER JOIN tb_estoques ET ON P.EST_COD=ET.EST_COD WHERE P.EMP_COD={$this->codEmpresa} AND P.EST_COD={$this->codEstoque} AND P.PRO_TIPO={$this->tipo} ORDER BY P.PRO_COD";
+        }
         $campos = "*";
         $resultado = $this->Model->exibir($parametros, $campos, $ver = 0, $id = false);
         if ($resultado) {
