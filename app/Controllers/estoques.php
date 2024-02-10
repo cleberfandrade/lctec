@@ -1,5 +1,8 @@
 <?php
+
 namespace App\Controllers;
+
+header("Content-Type: text/html; charset=UTF-8",true);
 
 use App\Models\Categorias;
 use App\Models\Classificacoes;
@@ -232,7 +235,7 @@ class estoques extends View
                 //$this->dados['produtos'] += array(json_encode($this->dados['produtos']['PRO_NOME']));
                 //dump($this->dados['produtos']);
                 //$string = htmlentities(string $string [, int $flags = ENT_COMPAT | ENT_HTML401 [, string $encoding = ini_get("default_charset") [, bool $double_encode = true ]]] );
-                
+                //$this->dados['produtos']= utf8_encode($this->dados['produtos']);
                 echo json_encode($this->dados['produtos'],JSON_UNESCAPED_UNICODE);
                 //print_r($string);
             }

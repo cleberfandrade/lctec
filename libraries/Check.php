@@ -59,7 +59,7 @@
      public static function checarString($string)
      {
         $string = strip_tags(trim($string));
-        $string = htmlentities($string);
+        $string = htmlentities($string, ENT_QUOTES | ENT_IGNORE, "UTF-8");
         return $string;
      }
      public function codificarSenha($string)
