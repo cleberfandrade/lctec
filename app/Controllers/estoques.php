@@ -314,15 +314,20 @@ class estoques extends View
         if (isset($_POST) && isset($dados['EXCLUIR_MOVIMENTACAO_PRODUTO'])) {
 
             unset($dados['EXCLUIR_MOVIMENTACAO_PRODUTO']);
-
+            unset($dados['MOV_STATUS']);
             $this->dados['empresa'] = $this->UsuariosEmpresa->setCodEmpresa($_SESSION['EMP_COD'])->setCodUsuario($_SESSION['USU_COD'])->listar(0);
             
             if($this->dados['empresa']['USU_COD'] == $dados['USU_COD'] && $this->dados['empresa']['EMP_COD'] == $dados['EMP_COD']){
+
+                foreach ($dados as $key => $value) {
+                    $dados[$key] = $this->Check->checarString($value);
+                }
 
                 $dados += array(
                     'MOV_DT_ATUALIZACAO'=> date('Y-m-d H:i:s'),             
                     'MOV_STATUS'=> 0
                 );
+                //dump($dados);
                 $this->Movimentacoes->setCodEmpresa($_SESSION['EMP_COD'])->setCodEstoque($dados['EST_COD'])->setCodProduto($dados['PRO_COD'])->setCodigo($dados['MOV_COD']);
 
                 //BUSCANDO OS DADOS DA MOVIMENTACAO
@@ -331,7 +336,6 @@ class estoques extends View
                 $this->dados['produto'] = $this->Produtos->setCodEmpresa($_SESSION['EMP_COD'])->setCodEstoque($dados['EST_COD'])->setCodigo($dados['PRO_COD'])->listar(0);
 
                 $liberado = false;
-                
                 //VERIFICANDO SE A MOVIMENTACAO FOI DE ENTRADA OU SAÍDA
                 if ($this->dados['movimentacao']['MOV_TIPO'] == 1) {
                     //REVERTENDO A MOVIMENTACAO DIMINUINDO NO ESTOQUE DO PRODUTO
@@ -344,6 +348,7 @@ class estoques extends View
                     $liberado = true;
                     //}
                 }
+
                 if ($liberado) {
 
                     if($this->Movimentacoes->checarRegistro(0)){

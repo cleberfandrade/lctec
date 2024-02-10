@@ -44,12 +44,7 @@ $qtdMotivos = (is_array($motivos) ? count($motivos) : 0);
                     <?= $breadcrumb ?>
                 </section>
             </header>
-            <section class="container py-1">
-                <hr>
-                <div id="resposta2" class="fs-4 text-center"></div>
-                <?= Sessao::alert('OK'); ?>
-                <?= Sessao::alert('ERRO'); ?>
-            </section>
+            <?php include_once 'app/Views/admin/inc/alertas.phtml'; ?>  
             <section class="container bg-light mx-auto py-2 mb-5">
                 <div class="col-12 row">
                     <div class="col-8 mx-auto text-bg-success text-center">
@@ -129,7 +124,13 @@ $qtdMotivos = (is_array($motivos) ? count($motivos) : 0);
                     </div>
             </section>
             <section class="bg-light text-dark">
-            <?php include_once 'app/Views/admin/inc/alertas.phtml'; ?>  
+                <section class="container py-1">
+                    <hr>
+                    <div id="resposta2" class="fs-4 text-center"></div>
+                    <?= Sessao::alert('OK'); ?>
+                    <?= Sessao::alert('ERRO'); ?>
+                </section>
+           
                 <div class="container mx-auto col-12 px-2 py-2 row ">
                     
                     <div class="col-12 mx-auto text-center m-1">
@@ -165,9 +166,9 @@ $qtdMotivos = (is_array($motivos) ? count($motivos) : 0);
                                 <td class="text-center align-middle"><?= $data->format('d/m/Y'); ?></td>
                                 <?= ($movimentacoes[$i]['MOV_TIPO'] == 1)? '<td class="text-center align-middle"><span class="text-primary">'.$movimentacoes[$i]['MOV_QUANTIDADE'].'</span></td><td></td>' : '<td></td><td class="text-center align-middle"><span class="text-danger">'.$movimentacoes[$i]['MOV_QUANTIDADE'].'</span>'; ?></td>
                                 <td class="text-center align-middle">
-
-                                    <?= $movimentacoes[$i]['MOV_MOTIVO']; ?>
-                                
+                                    <?php for ($m=0; $m < $qtdMotivos; $m++) { ?>
+                                        <?= (isset($movimentacoes[$i]['MOV_MOTIVO']) &  $movimentacoes[$i]['MOV_MOTIVO']  == $m)? $motivos[$m]: '' ?>
+                                    <?php } ?>
                                 </td>
                                 <td class="text-center align-middle"><?= ($movimentacoes[$i]['MOV_STATUS'] == 1)? 'ATIVO' : 'DESATIVADO'; ?></td>
                                 <td class="text-center align-middle">
@@ -332,7 +333,7 @@ $qtdMotivos = (is_array($motivos) ? count($motivos) : 0);
                     $('#resposta2').addClass('alert alert-warning');
                 }
                 $('#resposta2').html(resposta['MENSAGEM']);
-                setTimeout( () => { window.location.href="<?= DIRPAGE ?>estoques/movimentacao/"+EMP_COD+"/"+EST_COD}, 300);
+                setTimeout( () => { window.location.href="<?= DIRPAGE ?>estoques/movimentacao/"+EMP_COD+"/"+EST_COD}, 5000);
             });
 
         });
