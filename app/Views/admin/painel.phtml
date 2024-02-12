@@ -33,13 +33,14 @@ $qtdMV = (is_array($movimentacoes) ? count($movimentacoes) : 0);
                                 <div class="col-8 my-1 px-4 mx-auto">
                                     <a class="text-decoration-none" href="<?= DIRPAGE; ?>admin/painel">
                                         <h5 class="fs-2 fw-bolder text-uppercase text-dark mb-1">
-                                            <i class="bi bi-house"></i> Painel <span class="text-success">Administrativo</span>
+                                            <i class="bi bi-house"></i> Painel <span class="text-white">Administrativo</span>
                                         </h5>
                                     </a>
+                                    <a class="text-decoration-none py-3" href="<?= DIRPAGE; ?>empresas"><span class="text-success"><?= ($_SESSION['EMP_COD'] != 0)? $empresa['EMP_NOME_FANTASIA'] : 'LC-<span class="text-success">TEC</span>'?></span></a>
                                 </div>
-                                <div class="col-4 mx-auto">
-                                    <div class="col-12 text-center text-lg-start opacity-50">
-                                        <h1 class="display-5 text-center fw-bolder text-uppercase text-3 mb-1">LC-<span class="text-success">TEC</span></h1>
+                                <div class="col-4 mx-auto text-white">
+                                    <div class="col-12 text-center text-lg-start opacity-100">
+                                        <h1 class="display-5 text-center fw-bolder text-uppercase text-3 mb-1">LC-<span class="text-dark">TEC</span></h1>
                                         <p class="col-lg lead text-center fs-6">DESENVOLVENDO SOLUÇÕES <br/>PARA O SEU NEGÓCIO</p>
                                     </div>
                                 </div>
@@ -205,15 +206,16 @@ $qtdMV = (is_array($movimentacoes) ? count($movimentacoes) : 0);
                 <script>
                     var options = {
                 chart: {
-                    type: 'bar'
+                    type: 'bar',
+                    colors: ['#50DD98']
                 },
                 series: [{
                     name: 'estoque',
-                    data: [30,40,35,50]
+                    data: [35,50]
                 }],
                 xaxis: {
-                    categories: [2020,2021,2023,2024]
-                }
+                    categories: [2023,2024]
+                    }
                 }
 
                 var chart = new ApexCharts(document.querySelector("#chart"), options);

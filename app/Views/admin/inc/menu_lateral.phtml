@@ -4,7 +4,7 @@ $ModulosEmpresa = new ModulosEmpresa;
 $mk = $ModulosEmpresa->setCodEmpresa($_SESSION['EMP_COD'])->listar(0);
 $qtdMK = (is_array($mk) ? count($mk) : 0);
 ?>
-<div class="bg-dark position-relative d-print-none" id="sidebar-wrapper" style="font-size: 1.12rem;">
+<div class="bg-dark position-relative d-print-none" id="sidebar-wrapper" style="font-size: 1rem;">
     <div class="sidebar-heading fw-bold fs-3 text-white" style="width: auto; height:69px;">LC-<span class="text-success">TEC</span></div>
 
     <div class="d-flex align-items-start">
