@@ -11,7 +11,7 @@ use Libraries\Check;
 use Libraries\Sessao;
 use Libraries\Url;
 
-class tarefas extends View
+class suporte extends View
 {
     private $dados = [];
     private $link,$Check,$Empresa, $Usuarios,$UsuariosEmpresa;
@@ -19,7 +19,7 @@ class tarefas extends View
     public function __construct()
     {
         Sessao::naoLogado();
-        $this->dados['title'] = 'MÓDULO | CADASTROS >>';
+        $this->dados['title'] = 'HELP!! SUPORTE AO SISTEMA >>';
         $this->Empresa = new Empresas;
         $this->Usuarios = new Usuarios;
         $this->UsuariosEmpresa = new UsuariosEmpresa;
@@ -31,6 +31,7 @@ class tarefas extends View
     {
         $this->dados['title'] .= ' SUPORTE AO SISTEMA';   
         $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
+        
         $this->render('admin/suporte', $this->dados);
     }
 }

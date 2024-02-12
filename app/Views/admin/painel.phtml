@@ -17,13 +17,16 @@ $qtdMV = (is_array($movimentacoes) ? count($movimentacoes) : 0);
   margin: 35px auto;
 }
         </style>
-    <div class="d-flex" id="wrapper">
+    <div class="d-flex" id="wrapper" style="font-family: WF Visual Sans Text,sans-serif;">
         <?php include_once 'inc/menu_lateral.phtml'; ?>
         <div id="page-content-wrapper">
-            <!-- Top navigation-->
+            <!-- Top navigation 
+            #50DD98
+        
+        -->
             <?php include_once 'inc/menu_topo.phtml'; ?>
             <div class="container-fluid bg-light p-0">
-                <header class="py-3">
+                <header class="py-3" style="background-color: #40bf7b;">
                     <section class="container px-3">
                         <div class="row gx-5">
                             <div class="row col-lg-9 col-xl-9 col-xxl-9">
@@ -44,8 +47,9 @@ $qtdMV = (is_array($movimentacoes) ? count($movimentacoes) : 0);
                             <?php include_once 'app/Views/admin/inc/saudacao.phtml'; ?>   
                         </div>
                     </section>
-                    <?php include_once 'app/Views/admin/inc/alertas.phtml'; ?>  
+                     
                 </header>
+                <?php include_once 'app/Views/admin/inc/alertas.phtml'; ?>
                 <section class="container row mx-auto col-12 py-2 mb-5">
                     <?php if (isset($_SESSION['EMP_COD']) && $_SESSION['EMP_COD'] == 0) { ?>
                         <div class="row mx-auto m-4 ">
