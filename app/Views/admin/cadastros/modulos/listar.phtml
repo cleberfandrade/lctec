@@ -22,7 +22,7 @@ $ModulosEmpresa = new ModulosEmpresa;
                     <div class="row gx-5 align-items-center justify-content-center">
                         <div class="col-lg-9 col-xl-9 col-xxl-9">
                             <div class="my-1 px-4 mx-auto">
-                                <a class="text-decoration-none" href="<?= DIRPAGE; ?>modulos">
+                                <a class="text-decoration-none" href="<?= DIRPAGE; ?>modulo_empresa">
                                 <h5 class="fs-2 fw-bolder text-uppercase text-dark"><i class="bi bi-plus-square"></i> Gerenciar <span class="text-success">Módulos da Empresa</span></h5></a>
                             </div>
                         </div>
@@ -67,8 +67,13 @@ $ModulosEmpresa = new ModulosEmpresa;
                         </div>
                         <?php } ?>
                     <?php } ?>
+                   
+                    <?php if ($qtdME != $qtd) { ?>
                     <hr>
-                    <h5 class="fw-bolder text-center text-uppercase text-dark"><i class="bi bi-ban-square"></i> Outros Módulos</h5>
+                    <h5 class="fw-bolder text-center text-uppercase text-dark"><i class="bi bi-ban-square"></i>Ative Outros Módulos</h5> 
+                    <?php }else { ?>
+                        <h5 class="fw-bolder mt-4 text-center text-uppercase text-warning"><i class="bi bi-ban-square"></i> Todos os Módulos Estão Ativados</h5> 
+                    <?php } ?>
                     <?php
                     for ($i=0; $i < $qtd; $i++) {  
                         $ck = $ModulosEmpresa->setCodEmpresa($_SESSION['EMP_COD'])->setCodModulo($modulos[$i]['MOD_COD'])->checarRegistroModuloEmpresa(0);

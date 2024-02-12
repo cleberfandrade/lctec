@@ -70,14 +70,15 @@ $qtdMV = (is_array($movimentacoes) ? count($movimentacoes) : 0);
                         </div>
                     <?php }else { ?>
                         <div class="row col-12 mx-auto m-1">
-                            
+                            <?php if($_SESSION['USU_NIVEL'] >= 10){ ?>
                             <div class="col-12 row mx-auto">
                                 <div class="col-6">
                                     <div id="chart"></div>
-                                    
+                    
                                 </div>
                                 <?php include_once 'app/Views/admin/inc/calendario.phtml'; ?> 
                             </div>
+                            <?php } ?>
                             <span class="text-uppercase"><?= Util::mesLowercase(date('n',$m))?>/<?= date('Y') ?></span>
                                     <hr>
                             <div class="col-12 text-uppercase display-6 row text-center mx-auto mb-3">    
@@ -206,15 +207,21 @@ $qtdMV = (is_array($movimentacoes) ? count($movimentacoes) : 0);
                 <script>
                     var options = {
                 chart: {
-                    type: 'bar'
+                    type: 'area'
                 },
-                colors: ['#50DD98','#546E7A'],
-                series: [{
-                    name: 'estoque',
-                    data: [35,50]
-                }],
+                colors: ['#50DD98','#d4526e'],
+                series: [
+                    {
+                        name: 'Receita',
+                        data: [3500.00,500.00,150.00]
+                    },
+                    {
+                        name: 'Despesas',
+                        data: [150.00,75.00,1200.00]
+                    }
+                ],
                 xaxis: {
-                    categories: [2023,2024]
+                    categories: ['JAN','FEV','MAR']
                     }
                 }
                 var chart = new ApexCharts(document.querySelector("#chart"), options);
