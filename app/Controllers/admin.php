@@ -4,6 +4,8 @@ namespace App\Controllers;
 use App\Models\Empresas;
 use App\Models\Estoques;
 use App\Models\ModulosEmpresa;
+use App\Models\Movimentacoes;
+use App\Models\Produtos;
 use App\Models\Tarefas;
 use Core\View;
 use App\Models\Usuarios;
@@ -15,7 +17,7 @@ use Libraries\Util;
 class admin extends View
 {
     private $dados = [];
-    private $link,$Util,$Check,$Empresa,$Usuarios,$Estoques,$UsuariosEmpresa,$ModulosEmpresa, $Tarefas;
+    private $link,$Util,$Check,$Empresa,$Usuarios,$Estoques,$UsuariosEmpresa,$ModulosEmpresa, $Tarefas,$Produtos,$Movimentacoes;
     public function __construct()
     {
         Sessao::naoLogado();
@@ -28,6 +30,21 @@ class admin extends View
         $this->Tarefas = new Tarefas;
         $this->Util = new Util;
         $this->Check = new Check;
+        $this->Produtos = new Produtos;
+        $this->Movimentacoes = new Movimentacoes;
+
+        /*
+        $motivos = array(
+            0 => '---',
+            1 =>'COMPRA',
+            2 =>'VENDA',
+            3 =>'AJUSTE',
+            4 =>'DEVOLUÇÃO CLIENTE',
+            5=>'DEVOLUÇÃO FORNECEDOR',
+            6=>'PERDA',
+            7=>'OUTROS'
+        );
+        */
         $this->dados['usuarios_empresa'] = $this->UsuariosEmpresa->setCodUsuario($_SESSION['USU_COD'])->checarUsuario();
         if (isset($this->dados['usuarios_empresa']['UMP_COD'])) {
           $_SESSION['EMP_COD'] = $this->dados['usuarios_empresa']['EMP_COD'];
@@ -36,6 +53,12 @@ class admin extends View
         $this->dados['empresa'] = $this->UsuariosEmpresa->setCodEmpresa($_SESSION['EMP_COD'])->setCodUsuario($_SESSION['USU_COD'])->listar(0);
         $this->dados['modulos_empresa'] = $this->ModulosEmpresa->setCodEmpresa($_SESSION['EMP_COD'])->listar();
         $this->dados['estoques'] = $this->Estoques->setCodEmpresa($_SESSION['EMP_COD'])->listarTodos(0);
+        $this->dados['produtos'] = $this->Produtos->setCodEmpresa($_SESSION['EMP_COD'])->setStatus(1)->listarTodosGeral(0);
+        
+        $this->dados['usuarios'] = $this->UsuariosEmpresa->setCodEmpresa($_SESSION['EMP_COD'])->setStatus(1)->listarUsuariosEmpresa(0);
+        
+        $this->dados['movimentacoes'] = $this->Movimentacoes->setCodEmpresa($_SESSION['EMP_COD'])->setTipo(2)->setStatus(1)->listarTodasPorTipo(0); 
+
         $this->dados['tarefas'] = $this->Tarefas->setCodEmpresa($_SESSION['EMP_COD'])->listarTodos(0);
 
         $this->link[0] = ['link'=> 'admin','nome' => 'PAINEL ADMINISTRATIVO'];

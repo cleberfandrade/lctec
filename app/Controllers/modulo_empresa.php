@@ -33,7 +33,7 @@ class modulo_empresa extends View
 
         $this->link[0] = ['link'=> 'admin','nome' => 'PAINEL ADMINISTRATIVO'];
         $this->link[1] = ['link'=> 'cadastros','nome' => 'MÓDULO DE CADASTROS >> '];
-        $this->link[2] = ['link'=> 'usuarios','nome' => 'GERENCIAR MÓDULOS DA EMPRESA'];
+        $this->link[2] = ['link'=> 'modulos_empresa','nome' => 'GERENCIAR MÓDULOS DA EMPRESA'];
         $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
     }
     public function index()
@@ -43,35 +43,52 @@ class modulo_empresa extends View
     }
     public function alterar()
     {
-        $Usuarios = new Usuarios;
-        $Usuarios->setCodUsuario($_SESSION['USU_COD']);
-        $this->dados['usuario'] = $Usuarios->listar(0);
-        
-        $Modulos = new Modulos;
 
-        //$Modulos->setCodigo(0);
-        $post = filter_input_array(INPUT_POST, FILTER_DEFAULT);
+        $dados = filter_input_array(INPUT_GET, FILTER_SANITIZE_URL);
+        $dados = explode("/",$dados['url']);
+        $ok = false;
+        if (isset($dados[1]) && $dados[1] == 'alterar' && isset($dados[2]) && isset($dados[3]) && isset($dados[4])) {
+            /* [2] = EMP_COD [3] = MOD_COD [4] = MLE_STATUS */
+            if ($_SESSION['EMP_COD'] == $dados[2]) {
 
-        if (isset($_POST) && isset($post['ALTERAR_NIVEL'])) {
-            unset($post['ALTERAR_NIVEL']);
-            if (empty($post['NIV_COD'])) {
-                Sessao::alert('ERRO',' 2- Houve um erro ao obter o código do Nível, entre em contato com o desenvolvedor!','text-uppercase fs-4 alert alert-danger');
-            } else {
-                foreach ($post as $key => $value) {
-                    $dados[$key] = $value;
+                $ck = $this->ModulosEmpresa->setCodEmpresa($dados[2])->setCodModulo($dados[3])->checarRegistroModuloEmpresa(0);
+           
+                if ($ck) {
+                    //EXCLUIR MÓDULO
+                    $this->ModulosEmpresa->setCodigo($ck['MLE_COD']);
+                    if($this->ModulosEmpresa->excluir(0)){
+                        $ok = true;
+                        Sessao::alert('OK','Exclusão efetuada com sucesso!','fs-4 alert alert-success');
+                    }else {
+                        Sessao::alert('ERRO',' MLE4- Erro ao excluir cadastro, entre em contato com o suporte!','fs-4 alert alert-danger');
+                    }
+                } else {
+                   //CADASTRAR MÓDULO
+                   $db = array(
+                    'EMP_COD' => $dados[2],
+                    'MOD_COD' => $dados[3],
+                    'MLE_DT_CADASTRO'=> date('Y-m-d H:i:s'),
+                    'MLE_STATUS' => 1
+                );
+                    if ($this->ModulosEmpresa->cadastrar($db,0)) {
+                        $ok = true;
+                        Sessao::alert('OK','Cadastro efetuado com sucesso!','fs-4 alert alert-success');
+                    } else {
+                        Sessao::alert('ERRO',' MLE3- Erro ao cadastrar módulo, entre em contato com o suporte!','fs-4 alert alert-danger');
+                    }
                 }
-                //unset($dados['NIV_COD']);
-                //$Niveis->setCodigo($post['NIV_COD']);
-                //if($Niveis->alterar($dados,0)){
-                  //  Sessao::alert('OK',' Nível alterado com sucesso!','fs-4 alert alert-success');
-                //}else{
-                 //   Sessao::alert('ERRO',' 3- Erro ao alterar cadastro, entre em contato com o desenvolvedor!','fs-4 alert alert-danger');
-                //}
+            } else {
+                Sessao::alert('ERRO',' MLE2 - Acesso inválido(s)!','alert alert-danger');
             }
+
         }else{
-            Sessao::alert('ERRO',' 1- Dados inválido(s)!','fs-4 alert alert-danger');
+            Sessao::alert('ERRO',' MLE1- Dados inválido(s)!','fs-4 alert alert-danger');
         }
-        $this->render('admin/configuracoes/empresa', $this->dados);
+        $this->dados['modulos'] = $this->Modulos->listarTodos(0);
+        $this->dados['modulos_empresa'] = $this->ModulosEmpresa->setCodEmpresa($_SESSION['EMP_COD'])->listar(0);
+        
+        $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
+        $this->render('admin/cadastros/modulos/listar', $this->dados);
     }
     public function status():void
     {

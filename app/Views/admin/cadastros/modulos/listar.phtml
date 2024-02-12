@@ -1,10 +1,14 @@
 <?php 
 use Libraries\Sessao;
+use App\Models\ModulosEmpresa;
+
 session_start();
+
 include_once 'app/Views/admin/inc/cabecalho.phtml'; 
 $qtdME = (is_array($modulos_empresa) ? count($modulos_empresa) : 0);
 $qtd = (is_array($modulos) ? count($modulos) : 0);
 
+$ModulosEmpresa = new ModulosEmpresa;
 ?>
 <body class="">
     <div class="d-flex" id="wrapper">
@@ -34,69 +38,59 @@ $qtd = (is_array($modulos) ? count($modulos) : 0);
                 <div class="col-12 row">
                     <h5 class="fw-bolder text-center text-uppercase text-dark"><i class="bi bi-ban-square"></i> Módulos Ativos</h5>
                     <?php if ($qtdME != 0) { 
-                    for ($i=0; $i < $qtdME; $i++) { ?>
-                    <div class="col-4 rounded-2 text-center mb-2">
-                        <div class="card  mx-auto text-<?= $modulos_empresa[$i]['MOD_COR']; ?> py-1">
-                            <div class="card-header">
-                                <?= $modulos_empresa[$i]['MOD_ICON']; ?> <?= $modulos_empresa[$i]['MOD_NOME']; ?> 
-                                </div>
-                            <div class="card-body">
-                                <h5 class="card-title text-uppercase">Módulo <?= $modulos_empresa[$i]['MOD_NOME']; ?></h5>
-                                <p class="card-text"><?= $modulos_empresa[$i]['MOD_DESCRICAO']; ?></p>
-                            </div>  
-                           
-                            <div class="card-footer text-center">
-                                <?php if($modulos_empresa[$i]['MOD_NOME'] != 'CADASTROS'){ ?>
-                                <a type="button" href="<?= DIRPAGE ?>modulo_empresa/alterar/<?= $modulos_empresa[$i]['EMP_COD']?>/<?= $modulos_empresa[$i]['MOD_COD']?>/<?= $modulos_empresa[$i]['MLE_STATUS'] ?>" class="btn btn-<?= $modulos_empresa[$i]['MOD_COR']; ?> link-light text-decoration-none">
-                                    <?php if ($modulos_empresa[$i]['MLE_STATUS'] == 1 ) { ?>
-                                    <i class="bi bi-ban"></i> DESATIVAR
+                        for ($i=0; $i < $qtdME; $i++) { ?>
+                        <div class="col-4 rounded-2 text-center mb-2">
+                            <div class="card  mx-auto text-<?= $modulos_empresa[$i]['MOD_COR']; ?> py-1">
+                                <div class="card-header">
+                                    <?= $modulos_empresa[$i]['MOD_ICON']; ?> <?= $modulos_empresa[$i]['MOD_NOME']; ?> 
+                                    </div>
+                                <div class="card-body">
+                                    <h5 class="card-title text-uppercase">Módulo <?= $modulos_empresa[$i]['MOD_NOME']; ?></h5>
+                                    <p class="card-text"><?= $modulos_empresa[$i]['MOD_DESCRICAO']; ?></p>
+                                </div>  
+                            
+                                <div class="card-footer text-center">
+                                    <?php if($modulos_empresa[$i]['MOD_NOME'] != 'CADASTROS'){ ?>
+                                    <a type="button" href="<?= DIRPAGE ?>modulo_empresa/alterar/<?= $modulos_empresa[$i]['EMP_COD']?>/<?= $modulos_empresa[$i]['MOD_COD']?>/<?= $modulos_empresa[$i]['MLE_STATUS'] ?>" class="btn btn-<?= $modulos_empresa[$i]['MOD_COR']; ?> link-light text-decoration-none">
+                                        <?php if ($modulos_empresa[$i]['MLE_STATUS'] == 1 ) { ?>
+                                        <i class="bi bi-ban"></i> DESATIVAR
+                                        <?php }else{ ?>
+                                        <i class="bi bi-check2"></i> ATIVAR
+                                        <?php } ?>
+                                    </a>
                                     <?php }else{ ?>
-                                    <i class="bi bi-check2"></i> ATIVAR
+                                        <i class="bi bi-check2"></i> ATIVADO
                                     <?php } ?>
-                                </a>
-                                <?php }else{ ?>
-                                    <i class="bi bi-check2"></i> ATIVADO
-                                <?php } ?>
+                                </div>
+                            
                             </div>
-                           
                         </div>
-                    </div>
-                    <?php } ?>
-                   
+                        <?php } ?>
                     <?php } ?>
                     <hr>
-                    <?php if ($qtd != 0) { $ok = false; ?>
                     <h5 class="fw-bolder text-center text-uppercase text-dark"><i class="bi bi-ban-square"></i> Outros Módulos</h5>
                     <?php
-                    $p = 0;
-                    for ($i=0; $i < $qtd; $i++) { 
-                        for ($m=0; $m < $qtdME; $m++) {
-                            if ($modulos_empresa[$m]['MOD_COD'] != $modulos[$i]['MOD_COD']) { 
-                               $p = $i;
-                            }
-                        }
-                    }
-                    for ($i=$p; $i < $qtd; $i++) {   ?>
-                    <div class="col-4 rounded-2 text-center mb-2">
-                        <div class="card mx-auto text-<?= $modulos[$i]['MOD_COR']; ?> py-1">
-                            <div class="card-header">
-                                <?= $modulos[$i]['MOD_ICON']; ?> <?= $modulos[$i]['MOD_NOME']; ?> 
+                    for ($i=0; $i < $qtd; $i++) {  
+                        $ck = $ModulosEmpresa->setCodEmpresa($_SESSION['EMP_COD'])->setCodModulo($modulos[$i]['MOD_COD'])->checarRegistroModuloEmpresa(0);
+                        if (!$ck) { ?>
+                            <div class="col-4 rounded-2 text-center mb-2">
+                                <div class="card mx-auto text-<?= $modulos[$i]['MOD_COR']; ?> py-1">
+                                    <div class="card-header">
+                                        <?= $modulos[$i]['MOD_ICON']; ?> <?= $modulos[$i]['MOD_NOME']; ?> 
+                                        </div>
+                                    <div class="card-body">
+                                        <h5 class="card-title text-uppercase">Módulo <?= $modulos[$i]['MOD_NOME']; ?></h5>
+                                        <p class="card-text"><?= $modulos[$i]['MOD_DESCRICAO']; ?></p>
+                                    </div>  
+                                    <a type="button" href="<?= DIRPAGE ?>modulo_empresa/alterar/<?= $_SESSION['EMP_COD']?>/<?= $modulos[$i]['MOD_COD']?>/<?= $modulos[$i]['MOD_STATUS'] ?>" class="btn btn-<?= $modulos[$i]['MOD_COR']; ?> link-light text-decoration-none">
+                                        <?php if ($modulos[$i]['MOD_STATUS'] == 1 ) { ?>
+                                            <i class="bi bi-check2"></i> ATIVAR
+                                        <?php } ?>
+                                    </a>
                                 </div>
-                            <div class="card-body">
-                                <h5 class="card-title text-uppercase">Módulo <?= $modulos[$i]['MOD_NOME']; ?></h5>
-                                <p class="card-text"><?= $modulos[$i]['MOD_DESCRICAO']; ?></p>
                             </div>  
-                            <a type="button" href="<?= DIRPAGE ?>modulo_empresa/alterar/<?= $_SESSION['EMP_COD']?>/<?= $modulos[$i]['MOD_COD'] ?>" class="btn btn-<?= $modulos[$i]['MOD_COR']; ?> link-light text-decoration-none">
-                                <?php if ($modulos[$i]['MOD_STATUS'] == 1 ) { ?>
-                                <i class="bi bi-ban"></i> DESATIVAR
-                                <?php }else{ ?>
-                                <i class="bi bi-check2"></i> ATIVAR
-                                <?php } ?>
-                            </a>
-                        </div>
-                    </div>  
-                    <?php } 
-                }  ?>    
+                        <?php  }
+                    }  ?>    
                 </div>
             </section>
         </div>
@@ -104,3 +98,4 @@ $qtd = (is_array($modulos) ? count($modulos) : 0);
     </div>
 </body>
 </html>
+<!-- <a type="button" href="<?php //= DIRPAGE ?>modulo_empresa/alterar/<?php //= $_SESSION['EMP_COD']?>/<?php //= $modulos[$i]['MOD_COD'] ?>" class="btn btn-<?php //= $modulos[$i]['MOD_COR']; ?> link-light text-decoration-none"></a> !>

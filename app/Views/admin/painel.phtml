@@ -7,6 +7,9 @@ session_start();
 include_once 'inc/cabecalho.phtml'; 
 $qtdE = (is_array($estoques) ? count($estoques) : 0);
 $qtdME = (is_array($modulos_empresa) ? count($modulos_empresa) : 0);
+$qtdU = (is_array($usuarios) ? count($usuarios) : 0);
+$qtdP = (is_array($produtos) ? count($produtos) : 0);
+$qtdMV = (is_array($movimentacoes) ? count($movimentacoes) : 0);
 ?><body>
     <style>
         #chart {
@@ -79,7 +82,7 @@ $qtdME = (is_array($modulos_empresa) ? count($modulos_empresa) : 0);
                                         <span class="display-6 lh-1 text-blue mb-0"><i class="fas fa-user-tie"></i></span>
                                         <div class="ms-4 h6 fw-normal mb-0">
                                             <div class="d-flex">
-                                                <h5 class="purecounter mb-0 fw-bold" data-purecounter-start="0" data-purecounter-end="200" data-purecounter-delay="200" data-purecounter-duration="0">200</h5>
+                                                <h5 class="purecounter mb-0 fw-bold" data-purecounter-start="0" data-purecounter-end="200" data-purecounter-delay="200" data-purecounter-duration="0"><?= $qtdU ?></h5>
                                                 <span class="mb-0 h5">+</span>
                                             </div>
                                             <p class="mb-0">USUÁRIOS</p>
@@ -91,7 +94,7 @@ $qtdME = (is_array($modulos_empresa) ? count($modulos_empresa) : 0);
                                         <span class="display-6 lh-1 text-blue mb-0"><i class="fas fa-user-tie"></i></span>
                                         <div class="ms-4 h6 fw-normal mb-0">
                                             <div class="d-flex">
-                                                <h5 class="purecounter mb-0 fw-bold" data-purecounter-start="0" data-purecounter-end="200" data-purecounter-delay="200" data-purecounter-duration="0">200</h5>
+                                                <h5 class="purecounter mb-0 fw-bold" data-purecounter-start="0" data-purecounter-end="200" data-purecounter-delay="200" data-purecounter-duration="0"><?= $qtdP ?></h5>
                                                 <span class="mb-0 h5">+</span>
                                             </div>
                                             <p class="mb-0">PRODUTOS</p>
@@ -103,7 +106,7 @@ $qtdME = (is_array($modulos_empresa) ? count($modulos_empresa) : 0);
                                         <span class="display-6 lh-1 text-blue mb-0"><i class="fas fa-user-tie"></i></span>
                                         <div class="ms-4 h6 fw-normal mb-0">
                                             <div class="d-flex">
-                                                <h5 class="purecounter mb-0 fw-bold" data-purecounter-start="0" data-purecounter-end="200" data-purecounter-delay="200" data-purecounter-duration="0">200</h5>
+                                                <h5 class="purecounter mb-0 fw-bold" data-purecounter-start="0" data-purecounter-end="200" data-purecounter-delay="200" data-purecounter-duration="0"><?= $qtdMV ?></h5>
                                                 <span class="mb-0 h5">+</span>
                                             </div>
                                             <p class="mb-0">VENDAS</p>
@@ -145,7 +148,7 @@ $qtdME = (is_array($modulos_empresa) ? count($modulos_empresa) : 0);
                                     
                                     <?php } ?>
                                     <div class="col-12 mx-auto text-center mt-3">
-                                        <a type="button" href="<?= DIRPAGE ?>modulo_empresa" title="Libere novos módulos para a sua empresa/negócio" class="btn text-center mt-2  btn-secondary">LIBERAR OUTROS MÓDULOS</a>
+                                        <a type="button" href="<?= DIRPAGE ?>modulo_empresa" title="Libere novos módulos para a sua empresa/negócio" class="btn text-center mt-2  btn-secondary">ATIVAR/DESATIVAR MÓDULOS</a>
                                     </div>
                                     <div class="card  mx-auto opacity-0 bg-orange m-1 py-3" style="max-width: 15rem;">
                                         <a href="#<?= DIRPAGE?>configuracoes" class="col-auto link-light text-decoration-none">

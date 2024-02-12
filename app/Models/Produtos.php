@@ -67,6 +67,17 @@ class Produtos extends Model
             return false;
         }
     }
+    public function listarTodosGeral($ver = 0)
+    {
+        $parametros = "P INNER JOIN tb_empresas E ON P.EMP_COD=E.EMP_COD INNER JOIN tb_estoques ET ON P.EST_COD=ET.EST_COD WHERE P.EMP_COD={$this->codEmpresa} AND P.PRO_STATUS={$this->status} ORDER BY P.PRO_COD";
+        $campos = "*";
+        $resultado = $this->Model->exibir($parametros, $campos, $ver = 0, $id = false);
+        if ($resultado) {
+            return $resultado;
+        } else {
+            return false;
+        }
+    }
     public function listarTodosTipo($ver = 0)
     {
         if ($this->status) {

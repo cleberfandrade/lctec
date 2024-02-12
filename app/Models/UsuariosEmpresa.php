@@ -7,7 +7,7 @@ class UsuariosEmpresa extends Model
 {
     private $tabela = 'tb_usuarios_empresa';
     private $Model = '';
-    private $email, $codigo,$codUsuario,$codEmpresa;
+    private $email, $codigo,$codUsuario,$codEmpresa,$status;
     public function __construct()
     {
         $this->Model = new Model();
@@ -16,6 +16,11 @@ class UsuariosEmpresa extends Model
     public function setCodigo($codigo)
     {
         $this->codigo = $codigo;
+        return $this;
+    }
+    public function setStatus($status)
+    {
+        $this->status = $status;
         return $this;
     }
     public function setCodUsuario($codUsuario)
@@ -46,6 +51,20 @@ class UsuariosEmpresa extends Model
         $ok = $this->Model->alterar($dados, $ver);
         if ($ok) {
             return true;
+        } else {
+            return false;
+        }
+    }
+    public function listarUsuariosEmpresa($ver = 0)
+    {
+        $parametros = " UMP INNER JOIN tb_usuarios USU ON UMP.USU_COD=USU.USU_COD 
+                            INNER JOIN tb_empresas EMP ON UMP.EMP_COD=EMP.EMP_COD 
+                            INNER JOIN tb_enderecos EN ON EMP.EMP_COD=EN.EMP_COD 
+                            WHERE UMP.EMP_COD='{$this->codEmpresa}' AND UMP.UMP_STATUS='{$this->status}' ORDER BY USU.USU_NOME ASC";
+        $campos = "*";
+        $resultado = $this->Model->exibir($parametros, $campos, $ver, $id = false);
+        if ($resultado) {
+            return $resultado;
         } else {
             return false;
         }
