@@ -74,9 +74,9 @@ class Movimentacoes extends Model
     public function listarTodasPorTipo($ver = 0)
     {
         if ($this->status) {
-            $parametros = "M INNER JOIN tb_empresas E ON E.EMP_COD=M.EMP_COD INNER JOIN tb_estoques ES ON ES.EST_COD=M.EST_COD WHERE M.EMP_COD={$this->codEmpresa} M.MOV_TIPO={$this->tipo} AND M.MOV_STATUS={$this->status} ORDER BY M.MOV_COD DESC";
+            $parametros = "M INNER JOIN tb_empresas E ON E.EMP_COD=M.EMP_COD INNER JOIN tb_estoques ES ON ES.EST_COD=M.EST_COD WHERE M.EMP_COD={$this->codEmpresa} AND M.MOV_TIPO={$this->tipo} AND M.MOV_STATUS={$this->status} ORDER BY M.MOV_COD DESC";
         } else {
-            $parametros = "M INNER JOIN tb_empresas E ON E.EMP_COD=M.EMP_COD INNER JOIN tb_estoques ES ON ES.EST_COD=M.EST_COD WHERE M.EMP_COD={$this->codEmpresa} M.MOV_TIPO={$this->tipo} ORDER BY M.MOV_COD DESC";
+            $parametros = "M INNER JOIN tb_empresas E ON E.EMP_COD=M.EMP_COD INNER JOIN tb_estoques ES ON ES.EST_COD=M.EST_COD WHERE M.EMP_COD={$this->codEmpresa} AND M.MOV_TIPO={$this->tipo} ORDER BY M.MOV_COD DESC";
         }
         $campos = "*";
         $resultado = $this->Model->exibir($parametros, $campos, $ver = 0, $id = false);
