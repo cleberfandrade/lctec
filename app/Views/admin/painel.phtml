@@ -36,7 +36,7 @@ $qtdMV = (is_array($movimentacoes) ? count($movimentacoes) : 0);
                                             <i class="bi bi-house"></i> Painel <span class="text-white">Administrativo</span>
                                         </h5>
                                     </a>
-                                    <a class="text-decoration-none py-3" href="<?= DIRPAGE; ?>empresas"><span class="text-success"><?= ($_SESSION['EMP_COD'] != 0)? $empresa['EMP_NOME_FANTASIA'] : 'LC-<span class="text-success">TEC</span>'?></span></a>
+                                    <a class="text-decoration-none mt-3 h5 py-3" href="<?= DIRPAGE; ?>empresas" title="Acesse sua empresa"><span class="text-success"><?= ($_SESSION['EMP_COD'] != 0)? $empresa['EMP_NOME_FANTASIA'] : 'LC-<span class="text-success">TEC</span>'?></span></a>
                                 </div>
                                 <div class="col-4 mx-auto text-white">
                                     <div class="col-12 text-center text-lg-start opacity-100">
@@ -208,9 +208,7 @@ $qtdMV = (is_array($movimentacoes) ? count($movimentacoes) : 0);
                 chart: {
                     type: 'bar'
                 },
-                style: {
-                    colors: ['#50DD98', '#50DD98']
-                },
+                colors: ['#50DD98','#546E7A'],
                 series: [{
                     name: 'estoque',
                     data: [35,50]
@@ -219,7 +217,6 @@ $qtdMV = (is_array($movimentacoes) ? count($movimentacoes) : 0);
                     categories: [2023,2024]
                     }
                 }
-
                 var chart = new ApexCharts(document.querySelector("#chart"), options);
 
                 chart.render();
