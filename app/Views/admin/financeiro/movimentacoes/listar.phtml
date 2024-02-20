@@ -1,6 +1,6 @@
 <?php 
 use Libraries\Sessao;
-session_start();
+
 include_once 'app/Views/admin/inc/cabecalho.phtml'; 
 $qtd = (is_array($movimentacoes) ? count($movimentacoes) : 0);
 $qtdFP = (is_array($formas_pgto) ? count($formas_pgto) : 0);
