@@ -46,7 +46,7 @@ class Controller
     {
         $classe = '\\App\\Controllers\\' . $this->controller;
         if (class_exists($classe)) {
-            $classeCarregar = new $classe;
+            $classeCarregar = new $classe();
             $metodo = $this->method;
             $classeCarregar->$metodo();
         } else {
