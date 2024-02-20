@@ -1,6 +1,9 @@
 <?php
 use Libraries\Sessao;
-session_start();
+if (!isset($_SESSION)) {
+    session_start();
+}
+ob_start();
 ?>
 <section class="container py-1">
     <div id="resposta" class="fs-4 text-center"></div>

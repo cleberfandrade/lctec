@@ -11,16 +11,16 @@ class site extends View
     private $dados = [];
     public function __construct()
     {
-        $this->dados['mensagem'] = "LC-TEC";
+        $this->dados['mensagem'] = "LC/TEC";
     }
     public function index()
     { 
-        $this->dados['title'] = 'LC-TEC | Acesso Administrativo';
+        $this->dados['title'] = 'LC/TEC | Acesso Administrativo';
         $this->render('site/login', $this->dados);
     }
     public function quem_somos()
     {
-        $this->dados['title'] = 'LC-TEC | Quem Somos';
+        $this->dados['title'] = 'LC/TEC | Quem Somos';
         //$Documentos = new documentosModel();  
         //$Documentos->setDiretorio('docs/ipb');
         //$this->dados['diretorio'] = 'ipb/';
@@ -36,7 +36,7 @@ class site extends View
     }
     public function cadastro()
     {
-        $this->dados['title'] = 'LC-TECH | Cadastre-se';
+        $this->dados['title'] = 'LC/TEC | Cadastre-se';
         $this->render('site/cadastro', $this->dados);
     }
     public function sair()
@@ -58,13 +58,13 @@ class site extends View
         //session_destroy($_SESSION);
         //dump('ok');
         //exit;
-        $this->dados['title'] = 'LC-TEC | Acesse-se';
+        $this->dados['title'] = 'LC/TEC | Acesse-se';
         $this->render('site/finalizado', $this->dados);
         //Url::redirecionar('site/bloqueado');
     }
     public function acesso()
     {
-        $this->dados['title'] = 'ACESSO | LC-TEC';
+        $this->dados['title'] = 'ACESSO | LC/TEC';
         $this->render('site/acesso', $this->dados);
     }
     public function descadastramento()
@@ -98,7 +98,7 @@ class site extends View
     public function gerencial()
     {
         Sessao::logado();
-        $this->dados['title'] = 'ACESSO GERENCIAL | LC-TEC';
+        $this->dados['title'] = 'ACESSO GERENCIAL | LC/TEC';
         $this->render('site/login_admin', $this->dados);
     }
 }

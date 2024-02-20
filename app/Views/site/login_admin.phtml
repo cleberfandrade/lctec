@@ -1,6 +1,6 @@
 <?php 
 use Libraries\Sessao;
-session_start();
+
 include_once 'inc/cabecalho.phtml';
 
 ?>
@@ -22,10 +22,7 @@ include_once 'inc/cabecalho.phtml';
         </header>
         <div class="container col-xl-10 col-xxl-8 px-2 py-1">
             <div class="row align-items-center g-lg-9">
-                <div class="col-12 text-center text-lg-start text-white-50">
-                <h1 class="display-5 text-center fw-bolder text-uppercase text-3 mb-2">LC-<span class="text-success">TEC</span></h1>
-                    <p class="col-lg lead text-center fs-6">DESENVOLVENDO SOLUÇÕES <br/>PARA O SEU NEGÓCIO</p>
-                </div>
+                <?php include_once 'inc/logo.phtml'; ?>
                 <div class="col-12 col-md-5 mx-auto">
                 <?= Sessao::alert('ERRO'); ?>
                     <form class="p-2 p-md-4" action="<?= DIRPAGE ?>login/auth_admin" method="POST">
@@ -37,7 +34,7 @@ include_once 'inc/cabecalho.phtml';
                             <input type="password" class="form-control" name="senha_usuario" id="floatingPassword" placeholder="Digite sua senha">
                             <label for="floatingPassword">Sua Senha</label>
                         </div>
-                        <button class="w-100 btn btn-lg text-uppercase btn-outline-success" name="acesso" value="<?= $_SESSION['acesso'] ?>" type="submit"><i class="fa fa-sign-in"></i> Entrar</button>
+                        <button class="w-100 btn btn-lg text-uppercase btn-outline-success" name="acesso" value="<?= isset($_SESSION['acesso']) ? $_SESSION['acesso'] : '' ?>" type="submit"><i class="fa fa-sign-in"></i> Entrar</button>
                         <hr class="my-3 text-white">
                         <div class="form-floating m-2 mb-0 text-uppercase text-center">
                             <p><a href="<?= DIRPAGE ?>login/lembrar" class="btn btn-outline-success text-white text-center text-decoration-none">Esqueci minha senha</a></p>

@@ -3,7 +3,6 @@ use Libraries\Sessao;
 use Libraries\Url;
 use Libraries\Util;
 $Util = new Util;
-session_start();
 include_once 'inc/cabecalho.phtml'; 
 $qtdE = (is_array($estoques) ? count($estoques) : 0);
 $qtdME = (is_array($modulos_empresa) ? count($modulos_empresa) : 0);
@@ -40,7 +39,7 @@ $qtdMV = (is_array($movimentacoes) ? count($movimentacoes) : 0);
                                 </div>
                                 <div class="col-4 mx-auto text-white">
                                     <div class="col-12 text-center text-lg-start opacity-100">
-                                        <h1 class="display-5 text-center fw-bolder text-uppercase text-3 mb-1">LC-<span class="text-dark">TEC</span></h1>
+                                        <h1 class="fs-5 text-center fw-bolder text-uppercase text-3">LC/<span class="text-dark">TEC</span></h1>
                                         <p class="col-lg lead text-center fs-6">DESENVOLVENDO SOLUÇÕES <br/>PARA O SEU NEGÓCIO</p>
                                     </div>
                                 </div>
