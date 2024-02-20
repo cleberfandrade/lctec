@@ -11,8 +11,11 @@ ob_start();
 ini_set('display_errors', 1);
 date_default_timezone_set("America/Sao_Paulo");
 
-
-$pastaInterna = "lctec/";
+if (!empty($_SERVER['HTTPS'])) {
+    $pastaInterna = "";
+}else{
+    $pastaInterna = "lctec/";
+}
 define('DIRPAGE', "http://{$_SERVER['HTTP_HOST']}/{$pastaInterna}");
 
 #Diretorios Publicos
