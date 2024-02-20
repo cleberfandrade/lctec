@@ -37,6 +37,6 @@ define ('DB',[
     "DRIVER" => "mysql",
     "HOSTNAME" => "localhost",
     "DATABASE"=> "u693937037_lctec",
-    "USERNAME" => "root",
-    "PASSWORD"=> ""
+    "USERNAME" => "u693937037_administrador",
+    "PASSWORD"=> "Cf@10100801"
 ]);
