@@ -8,7 +8,7 @@ if (!isset($_SESSION)) {
 }
 ob_start();
 
-ini_set('display_errors', 0);
+ini_set('display_errors', 1);
 date_default_timezone_set("America/Sao_Paulo");
 
 

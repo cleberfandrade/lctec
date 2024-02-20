@@ -1,14 +1,16 @@
 <?php 
 use Libraries\Sessao;
-session_start();
+if (!isset($_SESSION)) {
+    session_start();
+}
+ob_start();
 include_once 'inc/cabecalho.phtml';
 
 ?>
 
 <body class="bg-dark" bs-data="">
     <main class="flex-shrink-0">
-        <?php //include_once 'inc/nav.phtml'; ?>
-        <!-- Header-->
+            <!-- Header-->
         <header class="bg-dark py-2">
             <section class="container px-5">
                 <div class="row gx-5 align-items-center justify-content-center">
@@ -37,7 +39,7 @@ include_once 'inc/cabecalho.phtml';
                             <input type="password" class="form-control" name="senha_usuario" id="floatingPassword" placeholder="Digite sua senha">
                             <label for="floatingPassword">Sua Senha</label>
                         </div>
-                        <button class="w-100 btn btn-lg text-uppercase btn-success" name="acesso" value="<?= $_SESSION['acesso'] ?>" type="submit"><i class="fa fa-sign-in"></i> Entrar</button>
+                        <button class="w-100 btn btn-lg text-uppercase btn-success" name="acesso" value="<?= isset($_SESSION['acesso']) ? $_SESSION['acesso']: '' ?>" type="submit"><i class="fa fa-sign-in"></i> Entrar</button>
                         <hr class="my-3 text-white">
                         <div class="form-floating m-2 mb-0 text-uppercase text-center">
                             <p><a href="<?= DIRPAGE ?>login/lembrar" class="btn btn-outline-success text-white text-center text-decoration-none">Esqueci minha senha</a></p>
