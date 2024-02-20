@@ -1,13 +1,8 @@
 <?php 
 use Libraries\Sessao;
-if (!isset($_SESSION)) {
-    session_start();
-}
-ob_start();
+$_SESSION['acesso'] = date('i:s');
 include_once 'inc/cabecalho.phtml';
-
 ?>
-
 <body class="bg-dark" bs-data="">
     <main class="flex-shrink-0">
             <!-- Header-->
