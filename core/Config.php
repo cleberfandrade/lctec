@@ -12,7 +12,7 @@ ini_set('display_errors', 0);
 date_default_timezone_set("America/Sao_Paulo");
 
 
-$pastaInterna = "lctec/";
+$pastaInterna = "";
 define('DIRPAGE', "http://{$_SERVER['HTTP_HOST']}/{$pastaInterna}");
 
 #Diretorios Publicos
@@ -30,12 +30,13 @@ define('DIRJS', DIRPAGE . "public/js/");
 define('DIRADMINC', DIRPAGE . "app/Views/admin/inc/");
 define('CONTROLLER', 'site');
 define('CONTROLLERERRO', 'site/error');
-define('EMAILADM', 'contato@lctech.com.br');
+define('EMAILADM', 'contato@lctec.com.br');
+define('EMAILSUPORTE','suporte@lctec.com.br');
 #Acesso ao banco de dados
 define ('DB',[
     "DRIVER" => "mysql",
     "HOSTNAME" => "localhost",
-    "DATABASE"=> "lctech",
+    "DATABASE"=> "u693937037_lctec",
     "USERNAME" => "root",
     "PASSWORD"=> ""
 ]);
