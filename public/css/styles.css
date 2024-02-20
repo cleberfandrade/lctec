@@ -11280,7 +11280,7 @@ textarea.form-control-lg {
 
 #sidebar-wrapper {
   min-height: 100vh;
-  margin-left: -16rem;
+  margin-left: -15rem;
   transition: margin 0.25s ease-out;
 }
 
@@ -11290,7 +11290,7 @@ textarea.form-control-lg {
 }
 
 #sidebar-wrapper .list-group {
-  width: 16rem;
+  width: 15rem;
 }
 
 #page-content-wrapper {
