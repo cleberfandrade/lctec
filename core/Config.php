@@ -13,10 +13,12 @@ date_default_timezone_set("America/Sao_Paulo");
 
 if (!empty($_SERVER['HTTPS'])) {
     $pastaInterna = "";
+    define('DIRPAGE', "https://{$_SERVER['HTTP_HOST']}/{$pastaInterna}");
 }else{
     $pastaInterna = "lctec/";
+    define('DIRPAGE', "http://{$_SERVER['HTTP_HOST']}/{$pastaInterna}");
 }
-define('DIRPAGE', "http://{$_SERVER['HTTP_HOST']}/{$pastaInterna}");
+
 
 #Diretorios Publicos
 define('DIRIMG', DIRPAGE . "public/images/");
