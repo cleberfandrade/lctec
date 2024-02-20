@@ -41,14 +41,14 @@ include_once 'inc/cabecalho.phtml'; ?>
                                 <input type="text" class="form-control maiusculo" id="logradouro" name="logradouro_usuario" placeholder="Informe seu endereço" value="<?= isset($_POST['logradouro_usuario']) ? $_POST['logradouro_usuario'] : ''; ?>">
                                 <label for="logradouro">Seu Endereço</label>
                             </div>
+                            <div class="form-floating col-2 mb-3">
+                                <input type="text" class="form-control" id="floatingInput" name="numero_usuario" placeholder="n°" value="<?= isset($_POST['numero_usuario']) ? $_POST['numero_usuario'] : ''; ?>">
+                                <label for="floatingInput">n°</label>
+                            </div>
                             <div class="form-floating col-2 mb-2">
                                 <label class="form-label">CEP</label>
                                 <input type="text" id="END_CEP" name="END_CEP" class="form-control" onkeypress="cepMascara(this);" value="<?= isset($_POST['END_CEP']) ? $_POST['END_CEP'] : '' ?>">
                             </div>
-                            <div class="form-floating col-2 mb-3">
-                                <input type="text" class="form-control" id="floatingInput" name="numero_usuario" placeholder="n°" value="<?= isset($_POST['numero_usuario']) ? $_POST['numero_usuario'] : ''; ?>">
-                                <label for="floatingInput">n°</label>
-                            </div> 
                             <div class="form-floating col-5 mb-3">
                                 <input type="text" class="form-control maiusculo" id="floatingInput" name="bairro_usuario" placeholder="Informe seu bairro" value="<?= isset($_POST['bairro_usuario']) ? $_POST['bairro_usuario'] : ''; ?>">
                                 <label for="floatingInput">Bairro</label>
