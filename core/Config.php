@@ -12,7 +12,7 @@ ini_set('display_errors', 0);
 date_default_timezone_set("America/Sao_Paulo");
 
 
-$pastaInterna = "";
+$pastaInterna = "lctec/";
 define('DIRPAGE', "http://{$_SERVER['HTTP_HOST']}/{$pastaInterna}");
 
 #Diretorios Publicos
