@@ -215,7 +215,7 @@ class login extends View
                
                 $this->Usuarios->setEmailUsuario($dados['EML_EMAIL']);
 
-                if(!$this->Usuarios->checarEmailUsuario()){
+                if($this->Usuarios->checarEmailUsuario()){
                    
                     $token = bin2hex(random_bytes(50));
     
