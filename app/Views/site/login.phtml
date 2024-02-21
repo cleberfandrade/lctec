@@ -18,13 +18,13 @@ include_once 'inc/cabecalho.phtml';
             </section>
         </header>
         <div class="container col-xl-10 col-xxl-8 px-2 py-1">
-            <div class="row align-items-center g-lg-5">
-                <div class="col-12 col-sm-12 col-md-4 col-lg-7 text-center text-lg-start text-white-50">
+            <div class="row align-items-center mt-5">
+                <div class="col-12 col-sm-12 col-md-4 col-lg-6 text-center text-lg-start text-white-50">
                     <?php include_once 'inc/logo.phtml'; ?>
                 </div>
-                <div class="col-12 col-sm-12 col-md-8 col-lg-5 mx-auto">
+                <div class="col-12 col-sm-12 col-md-8 col-lg-6 mx-auto">
                 <?= Sessao::alert('ERRO'); ?>
-                    <form class="p-2 p-md-4" action="<?= DIRPAGE ?>login/auth" method="POST">
+                    <form class="p-3 p-md-4" action="<?= DIRPAGE ?>login/auth" method="POST">
                         <div class="form-floating mb-1">
                             <input type="email" class="form-control" id="email" name="email_usuario" placeholder="Informe seu email" value="<?= isset($_POST['email_usuario']) ? $_POST['email_usuario'] : '' ?>">
                             <label for="email">Seu Email</label>
