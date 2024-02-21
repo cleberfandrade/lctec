@@ -47,7 +47,7 @@ class Recuperacoes extends Model
     }
     public function excluir($ver = 0)
     {
-        $parametros = "WHERE USU_COD='{$this->codUsuario}' AND REC_COD=";
+        $parametros = "WHERE REC_COD=";
         $this->Model->setParametros($parametros);
         $this->Model->setCodigo($this->codigo);
         $ok = false;

@@ -238,6 +238,7 @@ class login extends View
                     $this->mail->IsHTML(true); 
                     $this->mail->SMTPAuth = true; 
                     //$mail->Username = $informacoes['INF_EMAIL_2']; 
+                    $this->mail->Username = "";
                     $this->mail->Password = 'Cf@10100801';
 
                     //$mail->setFrom($remetente, "Igreja Presbiteriana do Brasil Em Santo Anastácio/SP");
