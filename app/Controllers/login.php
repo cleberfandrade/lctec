@@ -258,9 +258,9 @@ class login extends View
                     $ver = 0;
                     $ok = false;
                     $excluirTokenAnterior = false;
-                    $checagem = $this->Recuperacoes->setEmail($destinatario)->Recuperacoes->checarSolicitacoesAnterioes();
+                    $checagem = $this->Recuperacoes->setEmail($destinatario)->checarSolicitacoesAnterioes();
                     if($checagem){
-                        $oke = $this->Recuperacoes->setCodigo($checagem['REC_COD'])->Recuperacoes->excluir(0);
+                        $oke = $this->Recuperacoes->setCodigo($checagem['REC_COD'])->excluir(0);
                         if($oke){
                             $excluirTokenAnterior = true;
                         }
