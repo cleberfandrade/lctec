@@ -8,12 +8,12 @@ use Libraries\Sessao;
 use App\Models\Usuarios;
 use App\Models\Enderecos;
 use App\Models\Recuperacoes;
-use PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\PHPMailer;
 
 class login extends View
 {
     private $dados = [];
-    public $link,$Enderecos,$Usuarios,$Empresa,$UsuariosEmpresa,$Check,$Clientes, $Fornecedores, $Recuperacoes;
+    public $link,$Enderecos,$Usuarios,$Empresa,$UsuariosEmpresa,$Check,$Clientes, $Fornecedores, $Recuperacoes,$mail;
     public function __construct()
     {
         Sessao::logado();
@@ -23,6 +23,7 @@ class login extends View
         $this->Usuarios = new Usuarios;
         $this->Enderecos = new Enderecos;
         $this->Recuperacoes = new Recuperacoes;
+        $this->mail = new PHPMailer;
     }
     public function index()
     { 
@@ -201,7 +202,7 @@ class login extends View
         $this->dados['title'] = 'LC/TEC / SOLICITAÇÃO DE NOVA SENHA';
         $dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);
          
-        $mail = new PHPMailer();
+        //$mail = new PHPMailer();
         //$Emails = new emailsModel();
         //$info = New informacoesModel;
         
@@ -230,29 +231,29 @@ class login extends View
                     $destinatario = $dados['EML_EMAIL'];
                     //$remetente = $informacoes['INF_EMAIL_2'];
                     
-                    $mail->IsSMTP();
-                    $mail->SMTPSecure = 'ssl';
-                    $mail->Host = "smtp.hostinger.com"; 
-                    $mail->Port = 465;
-                    $mail->IsHTML(true); 
-                    $mail->SMTPAuth = true; 
+                    $this->mail->IsSMTP();
+                    $this->mail->SMTPSecure = 'ssl';
+                    $this->mail->Host = "smtp.hostinger.com"; 
+                    $this->mail->Port = 465;
+                    $this->mail->IsHTML(true); 
+                    $this->mail->SMTPAuth = true; 
                     //$mail->Username = $informacoes['INF_EMAIL_2']; 
-                    $mail->Password = 'Cf@10100801';
+                    $this->mail->Password = 'Cf@10100801';
 
                     //$mail->setFrom($remetente, "Igreja Presbiteriana do Brasil Em Santo Anastácio/SP");
-                    $mail->FromName = 'CONTATO DO SISTEMA LC/TEC'; 
-                    $mail->Subject = "Solicitação de Nova Senha";
+                    $this->mail->FromName = 'CONTATO DO SISTEMA LC/TEC'; 
+                    $this->mail->Subject = "Solicitação de Nova Senha";
                     $link = DIRPAGE . 'login/token/' . $token;
                     $mensagem = "Olá, você solicitou o reset da sua senha de acesso em nosso sistema";
                     $mensagem .= "<p>Para criar uma nova senha, clique no link abaixo</p>";
                     $mensagem .= "<p><a href=" . $link . " target='_blanck' title='Clique aqui'>Clique aqui</a> para criar uma nova senha de acesso</p>";
                     //$mensagem .= "<p><hr><img style='width:90px;' src='" . DIRIMG . "logo.png'></p>";
                     //$mensagem .= "<p style='font-size:10px;'>Tel: (18) 99107-7297</p>";
-                    $mail->Body = $mensagem;
+                    $this->mail->Body = $mensagem;
                     //$mail->AltBody = 'Use um visualizador de e-mail com suporte a HTML';
                     //$mail->addAttachment('storage/public/images/logo.png');
                     //$mail->addAddress($informacoes['INF_EMAIL_1'],'Contato do Site');
-                    $mail->addAddress($destinatario,'Recuperação de Senha de acesso');
+                    $this->mail->addAddress($destinatario,'Recuperação de Senha de acesso');
                     
                     $ver = 0;
                     $ok = false;
@@ -273,10 +274,10 @@ class login extends View
                             Sessao::alert('ERRO','ERRO 6: Encontramos um problema ao cadastrar sua solicitação, por favor tente mais tarde!','fs-4 alert alert-danger');
                         } else {
                            
-                            if ($mail->Send()) {
+                            if ($this->mail->Send()) {
                                 Sessao::alert('OK', 'Email Enviado com sucesso, aguarde o recebimento do link','fs-4 alert alert-success');
                             } else {
-                                Sessao::alert('ERRO', 'ERRO 5: Erro ao enviar email' . $mail->ErrorInfo,'fs-4 alert alert-danger');
+                                Sessao::alert('ERRO', 'ERRO 5: Erro ao enviar email' . $this->mail->ErrorInfo,'fs-4 alert alert-danger');
                             }
                         }
                     }else{
