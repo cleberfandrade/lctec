@@ -9,6 +9,8 @@ use App\Models\Usuarios;
 use App\Models\Enderecos;
 use App\Models\Recuperacoes;
 use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
 
 class login extends View
 {
