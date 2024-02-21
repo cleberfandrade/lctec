@@ -8,7 +8,7 @@ class Recuperacoes extends Model
     private $tabela = 'tb_recuperacoes';
     private $Model = '';
     private $Informacoes = '';
-    private $codigo, $codUsuario, $codEmpresa;
+    private $codigo, $codUsuario, $codEmpresa,$email;
 
     public function __construct()
     {
@@ -18,6 +18,11 @@ class Recuperacoes extends Model
     public function setCodigo($codigo)
     {
         $this->codigo = $codigo;
+        return $this;
+    }
+    public function setEmail($email)
+    {
+        $this->email = $email;
         return $this;
     }
     public function setCodUsuario($codUsuario)
@@ -50,6 +55,19 @@ class Recuperacoes extends Model
         if ($ok) {
             return true;
         } else {
+            return false;
+        }
+    }
+    public function checarSolicitacoesAnterioes()
+    {
+        $parametros = "WHERE REC_EMAIL='{$this->email}'";
+        $campos = "*";
+        $resultado = $this->Model->exibir($parametros, $campos, $ver = 0, $id = false);
+        if ($resultado) {
+            //Já existe
+            return $resultado[0];
+        } else {
+            //Nao existe
             return false;
         }
     }

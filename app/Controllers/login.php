@@ -256,7 +256,7 @@ class login extends View
                     $ver = 0;
                     $ok = false;
                     $excluirTokenAnterior = false;
-                    $checagem = $this->Recuperacoes->setEmailToken($destinatario)->Recuperacoes->checarSolicitacoesAnterioes();
+                    $checagem = $this->Recuperacoes->setEmail($destinatario)->Recuperacoes->checarSolicitacoesAnterioes();
                     if($checagem){
                         $oke = $this->Recuperacoes->setCodigo($checagem['REC_COD'])->Recuperacoes->excluir(0);
                         if($oke){
@@ -273,7 +273,6 @@ class login extends View
                         } else {
                            
                             if ($mail->Send()) {
-                                
                                 Sessao::alert('OK', 'Email Enviado com sucesso, aguarde o recebimento do link','fs-4 alert alert-success');
                             } else {
                                 Sessao::alert('ERRO', 'ERRO 5: Erro ao enviar email' . $mail->ErrorInfo,'fs-4 alert alert-danger');
@@ -291,7 +290,6 @@ class login extends View
         }else{
             Sessao::alert('ERRO',' 1- Dados inválido(s)!','fs-4 alert alert-danger');
         }
-        */
         $this->render('site/lembrar',$this->dados);
     }
     public function auth_admin()
