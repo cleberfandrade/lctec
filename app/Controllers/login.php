@@ -27,19 +27,17 @@ class login extends View
     }
     public function auth()
     {
-        $Url = new Url();
         $dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);
         if (isset($_POST) && isset($dados['acesso'])) {
             
             if (!empty($dados['email_usuario']) && !empty($dados['senha_usuario'])) {
                 //Validar Dados
-                $dados['email_usuario'] = $Check->checarString($dados['email_usuario']);
-                $dados['senha_usuario'] = $Check->checarString($dados['senha_usuario']);
+                $dados['email_usuario'] = $this->Check->checarString($dados['email_usuario']);
+                $dados['senha_usuario'] = $this->Check->checarString($dados['senha_usuario']);
                 if($this->Check->checarEmail($dados['email_usuario'])){
                     $this->Usuarios->setEmailUsuario($dados['email_usuario']);
                     //$senha = $Check->codificarSenha($dados['senha_usuario']);
-                    $this->Usuarios->setSenhaUsuario($dados['senha_usuario']);
-                    $user = $this->Usuarios->Acessar(0);
+                    $user = $this->Usuarios->setSenhaUsuario($dados['senha_usuario'])->Acessar(0);
                     //checar se retornou algum usuario
                     if(!empty($user) && $user != 0){
                         //Checar se o status do usuario == 1: ativado/desativado
@@ -80,7 +78,7 @@ class login extends View
     }
     public function sair()
     {
-        $this->dados['title'] = 'Login | Acesso Administrativo';
+        $this->dados['title'] = 'LC/TEC | Acesso Administrativo';
         Sessao::logado();
         $this->Usuarios->setCodUsuario($_SESSION['USU_COD']);
         $dados = array(
