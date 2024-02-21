@@ -4,6 +4,8 @@ $_SESSION['ALTERAR_SENHA_USUARIO'] = date('Y-m-d H:i:s');
 include_once 'inc/cabecalho.phtml'; 
 ?>
     <main class="flex-shrink-0">
+        <?php// include_once 'inc/nav.phtml'; ?>
+
         <!-- Header-->
         <header class="bg-3 py-3">
             <section class="container px-5">
@@ -18,7 +20,9 @@ include_once 'inc/cabecalho.phtml';
         </header>
         <div class="container col-xl-10 col-xxl-8 px-4 py-5">
             <div class="row align-items-center g-lg-5 py-5">
-                <?php include_once 'inc/logo.phtml'; ?>
+                <div class="col-12 text-center align-middle text-white-50">
+                    <?php include_once 'inc/logo.phtml'; ?>
+                </div>
                 <div class="col-md-10 mx-auto col-lg-6">
                     <?= Sessao::alert('ERRO') ?> 
                     <?= Sessao::alert('OK') ?>   
@@ -36,6 +40,7 @@ include_once 'inc/cabecalho.phtml';
                             <label for="floatingInput">confirmação de senha</label>
                         </div>
                         <input type="hidden" name="ALTERAR_SENHA" value=""/>
+
                         <button class="w-100 btn btn-lg text-uppercase btn-success" name="ALTERAR_SENHA_USUARIO" value="<?= isset($_SESSION['ALTERAR_SENHA_USUARIO'])? $_SESSION['ALTERAR_SENHA_USUARIO'] : '' ?>" type="submit"><i class="fa fa-sign-in"></i> Alterar Senha</button>
                         <hr class="my-4 text-white">
                         <div class="form-floating mb-3 text-center">
