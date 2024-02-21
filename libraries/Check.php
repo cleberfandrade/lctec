@@ -35,7 +35,7 @@
         $link = self::getLink();
     
         $qtd = (is_array($link) ? count($link) : 0);
-        dump($qtd);
+        dump($link);
         $printar = '<nav aria-label="breadcrumb mx-auto align-middle"><ol class="breadcrumb align-middle">';
         for ($i=0; $i < $qtd; $i++) { 
             $printar .=' <li class="breadcrumb-item ';
