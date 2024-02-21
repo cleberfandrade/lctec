@@ -15,9 +15,11 @@ class login extends View
     public function __construct()
     {
         Sessao::logado();
-        $this->dados['title'] = 'Login | Acesso Administrativo';
+        $this->dados['title'] = 'LC/TEC | Acesso Administrativo';
+
         $this->Check = new Check; 
         $this->Usuarios = new Usuarios;
+        $this->Enderecos = new Enderecos;
     }
     public function index()
     { 
@@ -25,8 +27,6 @@ class login extends View
     }
     public function auth()
     {
-        $Check = new Check();
-        $Usuarios = new Usuarios();
         $Url = new Url();
         $dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);
         if (isset($_POST) && isset($dados['acesso'])) {
@@ -35,11 +35,11 @@ class login extends View
                 //Validar Dados
                 $dados['email_usuario'] = $Check->checarString($dados['email_usuario']);
                 $dados['senha_usuario'] = $Check->checarString($dados['senha_usuario']);
-                if($Check->checarEmail($dados['email_usuario'])){
-                    $Usuarios->setEmailUsuario($dados['email_usuario']);
+                if($this->Check->checarEmail($dados['email_usuario'])){
+                    $this->Usuarios->setEmailUsuario($dados['email_usuario']);
                     //$senha = $Check->codificarSenha($dados['senha_usuario']);
-                    $Usuarios->setSenhaUsuario($dados['senha_usuario']);
-                    $user = $Usuarios->Acessar(0);
+                    $this->Usuarios->setSenhaUsuario($dados['senha_usuario']);
+                    $user = $this->Usuarios->Acessar(0);
                     //checar se retornou algum usuario
                     if(!empty($user) && $user != 0){
                         //Checar se o status do usuario == 1: ativado/desativado
@@ -82,12 +82,11 @@ class login extends View
     {
         $this->dados['title'] = 'Login | Acesso Administrativo';
         Sessao::logado();
-        $Usuarios = new usuarios;
-        $Usuarios->setCodUsuario($_SESSION['USU_COD']);
+        $this->Usuarios->setCodUsuario($_SESSION['USU_COD']);
         $dados = array(
             'USU_DT_ATUALIZACAO' => date('Y-m-d H:i:s')
         );
-        if($Usuarios->alterar($dados,0)){
+        if($this->Usuarios->alterar($dados,0)){
             Sessao::alert('OK','Acesso encerrado com sucesso!','fs-4 alert alert-success');
         }else{
             Sessao::alert('OK','Acesso encerrado!','fs-4 alert alert-success');
@@ -104,19 +103,14 @@ class login extends View
         //foreach ($informacoes as $key => $value) {
           //  $this->dados[$key] = $value;
        // }
-        $this->dados['title'] = 'Recuperar minha senha | Acesso Administrativo';
+        $this->dados['title'] = 'LC/TEC | SOLICITAÇÃO DE NOVA SENHA';
         Sessao::logado();
-        
         session_destroy();
-       
         $this->render('site/lembrar', $this->dados);
     }
    public function novo_cadastro()
    {
-        $this->dados['title'] = 'LC-TECH | Cadastre-se';
-        $Users = new Usuarios(); 
-        $Check = new Check();
-        $Url = new Url();
+        $this->dados['title'] = 'LC/TEC | CADASTRE=SE';
         //Recupera os dados enviados
         $dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);
         if (isset($_POST) && isset($dados['cadastro'])) {
@@ -124,24 +118,24 @@ class login extends View
             unset($dados['cadastro']);
             if (!empty($dados['nome_usuario']) && !empty($dados['sobrenome_usuario']) && !empty($dados['logradouro_usuario']) && !empty($dados['numero_usuario']) && !empty($dados['bairro_usuario']) && !empty($dados['cidade_usuario']) && !empty($dados['sexo_usuario']) && !empty($dados['email_usuario']) && !empty($dados['senha_usuario']) && !empty($dados['conf_senha_usuario'])){
                  //Validar Dados
-                 $dados_usuario['nome_usuario'] = $Check->checarString($dados['nome_usuario']);
-                 $dados_usuario['sobrenome_usuario'] = $Check->checarString($dados['sobrenome_usuario']);
-                 $dados_usuario['email_usuario'] = $Check->checarString($dados['email_usuario']);
-                 $dados_usuario['sexo_usuario'] = $Check->checarString($dados['sexo_usuario']);
+                 $dados_usuario['nome_usuario'] = $this->Check->checarString($dados['nome_usuario']);
+                 $dados_usuario['sobrenome_usuario'] = $this->Check->checarString($dados['sobrenome_usuario']);
+                 $dados_usuario['email_usuario'] = $this->Check->checarString($dados['email_usuario']);
+                 $dados_usuario['sexo_usuario'] = $this->Check->checarString($dados['sexo_usuario']);
  
-                 $dados_usuario['senha_usuario'] = $Check->checarString($dados['senha_usuario']);
-                 $dados_usuario['conf_senha_usuario'] = $Check->checarString($dados['conf_senha_usuario']);
+                 $dados_usuario['senha_usuario'] = $this->Check->checarString($dados['senha_usuario']);
+                 $dados_usuario['conf_senha_usuario'] = $this->Check->checarString($dados['conf_senha_usuario']);
  
-                 $dados_endereco['logradouro_usuario'] = $Check->checarString($dados['logradouro_usuario']);
-                 $dados_endereco['numero_usuario'] = $Check->checarString($dados['numero_usuario']);
-                 $dados_endereco['bairro_usuario'] = $Check->checarString($dados['bairro_usuario']);
-                 $dados_endereco['cidade_usuario'] = $Check->checarString($dados['cidade_usuario']);
+                 $dados_endereco['logradouro_usuario'] = $this->Check->checarString($dados['logradouro_usuario']);
+                 $dados_endereco['numero_usuario'] = $this->Check->checarString($dados['numero_usuario']);
+                 $dados_endereco['bairro_usuario'] = $this->Check->checarString($dados['bairro_usuario']);
+                 $dados_endereco['cidade_usuario'] = $this->Check->checarString($dados['cidade_usuario']);
                  //Verificar se é um email no formato válido
-                 if($Check->checarEmail($dados_usuario['email_usuario'])){
+                 if($this->Check->checarEmail($dados_usuario['email_usuario'])){
                     
                     //Checar se o email já está cadastrado no sistema 
-                    $Users->setEmailUsuario($dados_usuario['email_usuario']);
-                    if(!$Users->checarEmailUsuario()){
+                    $this->Usuarios->setEmailUsuario($dados_usuario['email_usuario']);
+                    if(!$this->Usuarios->checarEmailUsuario()){
         
                         if($dados_usuario['senha_usuario'] == $dados_usuario['conf_senha_usuario']){
                             $db = array(
@@ -156,9 +150,9 @@ class login extends View
                                 'USU_STATUS'=> 1
                             );
                             
-                            $db['USU_SENHA'] = $Check->codificarSenha($dados_usuario['senha_usuario']);
+                            $db['USU_SENHA'] = $this->Check->codificarSenha($dados_usuario['senha_usuario']);
     
-                            $id = $Users->cadastrar($db,0);
+                            $id = $this->Usuarios->cadastrar($db,0);
                             if($id){
                                 $db_endereco = array(
                                     'USU_COD' => $id,
@@ -171,10 +165,9 @@ class login extends View
                                     'END_CIDADE' =>  $dados_endereco['cidade_usuario'],
                                     'END_STATUS' => 1
                                 );
-                                $Enderecos = new Enderecos;
-                                $Enderecos->setCodUsuario($id);
-                                if(!$Enderecos->checarEnderecoUsuario()){
-                                    $Enderecos->cadastrar($db_endereco,0);
+                                $this->Enderecos->setCodUsuario($id);
+                                if(!$this->Enderecos->checarEnderecoUsuario()){
+                                    $this->Enderecos->cadastrar($db_endereco,0);
                                     Sessao::alert('OK','Cadastro efetuado com sucesso!','fs-4 alert alert-success');
                                 }else {
                                     Sessao::alert('OK','Cadastro efetuado com sucesso, atualize seu endereço','fs-4 alert alert-success');
@@ -202,9 +195,7 @@ class login extends View
    }
     public function recover()
     {
-        $this->dados['title'] = 'Solicitar nova senha | IPBSA';
-        $Check = new Check();
-        $Users = new usuarios();
+        $this->dados['title'] = 'LC/TEC / SOLICITAÇÃO DE NOVA SENHA';
         $dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);
         /* 
         //$mail = new PHPMailer();
@@ -315,13 +306,11 @@ class login extends View
             
             if (!empty($dados['email_usuario']) && !empty($dados['senha_usuario'])) {
                 //Validar Dados
-                $dados['email_usuario'] = $Check->checarString($dados['email_usuario']);
-                $dados['senha_usuario'] = $Check->checarString($dados['senha_usuario']);
-                if($Check->checarEmail($dados['email_usuario'])){
-                    $Usuarios->setEmailUsuario($dados['email_usuario']);
+                $dados['email_usuario'] = $this->Check->checarString($dados['email_usuario']);
+                $dados['senha_usuario'] = $this->Check->checarString($dados['senha_usuario']);
+                if($this->Check->checarEmail($dados['email_usuario'])){
                     //$senha = $Check->codificarSenha($dados['senha_usuario']);
-                    $Usuarios->setSenhaUsuario($dados['senha_usuario']);
-                    $user = $Usuarios->Acessar(0);
+                    $user =$this->Usuarios->setEmailUsuario($dados['email_usuario'])->setSenhaUsuario($dados['senha_usuario'])->Acessar(0);
                     //checar se retornou algum usuario
                     if(!empty($user) && $user != 0){
                         //Checar se o status do usuario == 1: ativado/desativado
