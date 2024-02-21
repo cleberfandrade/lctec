@@ -102,8 +102,11 @@ class login extends View
           //  $this->dados[$key] = $value;
        // }
         $this->dados['title'] = 'LC/TEC | SOLICITAÇÃO DE NOVA SENHA';
+
         Sessao::logado();
+        
         session_destroy();
+        
         $this->render('site/lembrar', $this->dados);
     }
    public function novo_cadastro()
