@@ -350,7 +350,7 @@ class login extends View
             Sessao::alert('ERRO',' 1- Dados inválido(s)!','alert alert-danger');
         }
     }
-    /*
+    
     //LINK DO EMAIL PARA CHECAR SOLICITACAO DE MUDANCA DE SENHA
     public function token()
     {
@@ -360,8 +360,8 @@ class login extends View
         $token_url = isset($pag[2]) ? $pag[2] : 1;
 
         if ($token_url != '') {
-            $Recuperacoes = new recuperacoesModel;
-            $Recuperacoes->setToken($token_url);
+            //$Recuperacoes = new recuperacoesModel;
+            $this->Recuperacoes->setToken($token_url);
             $this->dados['recuperacoes'] = array();
             $this->dados['recuperacoes'] = $Recuperacoes->checarToken();
            
@@ -376,10 +376,10 @@ class login extends View
                     } else {
                         Sessao::alert('ERRO','ERRO 3: Link expirado, faça uma nova solicitação','fs-4 alert alert-danger');
                         
-                        $Recuperacoes->setToken($this->dados['recuperacoes']['REC_TOKEN']);
+                        $this->Recuperacoes->setToken($this->dados['recuperacoes']['REC_TOKEN']);
                         $token_usuario = checarToken(0);
-                        $Recuperacoes->setCodigo($token_usuario['REC_COD']);
-                        $Recuperacoes->excluir(0);
+                        $this->Recuperacoes->setCodigo($token_usuario['REC_COD']);
+                        $this->Recuperacoes->excluir(0);
                         $this->render('site/lembrar', $this->dados);
                     }
                 } else {
@@ -398,22 +398,22 @@ class login extends View
     }
     public function nova_senha()
     {
-        $info = New informacoesModel;
-        $Recuperacoes = new recuperacoesModel;
-        $informacoes = $info->listar();
-        foreach ($informacoes as $key => $value) {
-            $this->dados[$key] = $value;
-        }
-        $this->dados['title'] = 'Nova senha de acesso | IPB/Santo Anastácio-SP';
+        //$info = New informacoesModel;
+        //$Recuperacoes = new recuperacoesModel;
+       // $informacoes = $info->listar();
+       // foreach ($informacoes as $key => $value) {
+       //     $this->dados[$key] = $value;
+        //}
+        $this->dados['title'] = 'LC/TEC | NOVA SENHA DE ACESSO';
         Sessao::logado();
         $pag = filter_input(INPUT_GET,'url', FILTER_DEFAULT);
         $pag = explode('/',  $pag);
         $token_url = isset($pag[2]) ? $pag[2] : 1;
         if ($token_url != '') {
-            $Recuperacoes->setToken($token_url);
+            $this->Recuperacoes->setToken($token_url);
             $token_usuario = checarToken(0);
-            $Recuperacoes->setCodigo($token_usuario['REC_COD']);
-            $Recuperacoes->excluir(0);
+            $this->Recuperacoes->setCodigo($token_usuario['REC_COD']);
+            $this->Recuperacoes->excluir(0);
             
             $this->render('site/nova_senha', $this->dados);
         }else {
