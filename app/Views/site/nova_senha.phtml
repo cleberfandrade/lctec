@@ -1,12 +1,10 @@
 <?php
 use Libraries\Sessao;
-$_SESSION['ALTERAR_SENHA_USUARIO'] = date('Y-m-d H:i:s');
+$_SESSION['ALTERAR_SENHA'] = date('Y-m-d H:i:s');
 include_once 'inc/cabecalho.phtml'; 
 ?>
     <main class="flex-shrink-0">
-        <?php// include_once 'inc/nav.phtml'; ?>
-
-        <!-- Header-->
+       <!-- Header-->
         <header class="bg-3 py-3">
             <section class="container px-5">
                 <div class="row gx-5 align-items-center justify-content-center">
@@ -26,7 +24,7 @@ include_once 'inc/cabecalho.phtml';
                 <div class="col-md-10 mx-auto col-lg-6">
                     <?= Sessao::alert('ERRO') ?> 
                     <?= Sessao::alert('OK') ?>   
-                    <form class="p-4 p-md-6 border rounded-3 bg-3" action="<?= DIRPAGE ?>login/cadastrar_nova_senha" method="POST">
+                    <form class="p-2 p-md-6 border rounded-3 bg-3" action="<?= DIRPAGE ?>login/cadastrar_nova_senha" method="POST">
                         <div class="form-floating mb-3">
                             <input type="email" class="form-control desatible" id="floatingInput" name="EML_EMAIL" placeholder="Informe seu email nome@examplo.com" value="<?= isset($_POST['EML_EMAIL']) ? $_POST['EML_EMAIL'] : '' ?>">
                             <label for="floatingInput">Email</label>
@@ -40,7 +38,6 @@ include_once 'inc/cabecalho.phtml';
                             <label for="floatingInput">confirmação de senha</label>
                         </div>
                         <input type="hidden" name="ALTERAR_SENHA" value=""/>
-
                         <button class="w-100 btn btn-lg text-uppercase btn-success" name="ALTERAR_SENHA_USUARIO" value="<?= isset($_SESSION['ALTERAR_SENHA_USUARIO'])? $_SESSION['ALTERAR_SENHA_USUARIO'] : '' ?>" type="submit"><i class="fa fa-sign-in"></i> Alterar Senha</button>
                         <hr class="my-4 text-white">
                         <div class="form-floating mb-3 text-center">
