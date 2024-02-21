@@ -7,11 +7,12 @@ use Libraries\Url;
 use Libraries\Sessao;
 use App\Models\Usuarios;
 use App\Models\Enderecos;
+use App\Models\Recuperacoes;
 
 class login extends View
 {
     private $dados = [];
-    public $link,$Enderecos,$Usuarios,$Empresa,$UsuariosEmpresa,$Check,$Clientes, $Fornecedores;
+    public $link,$Enderecos,$Usuarios,$Empresa,$UsuariosEmpresa,$Check,$Clientes, $Fornecedores, $Recuperacoes;
     public function __construct()
     {
         Sessao::logado();
@@ -20,6 +21,7 @@ class login extends View
         $this->Check = new Check; 
         $this->Usuarios = new Usuarios;
         $this->Enderecos = new Enderecos;
+        $this->Recuperacoes = new Recuperacoes;
     }
     public function index()
     { 
@@ -197,8 +199,8 @@ class login extends View
     {
         $this->dados['title'] = 'LC/TEC / SOLICITAÇÃO DE NOVA SENHA';
         $dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);
-        /* 
-        //$mail = new PHPMailer();
+         
+        $mail = new PHPMailer();
         //$Emails = new emailsModel();
         //$info = New informacoesModel;
         
@@ -207,11 +209,11 @@ class login extends View
 
         if (isset($_POST) && isset($dados['ENVIAR_EMAIL'])) {
 
-            if($Check->checarEmail($dados['EML_EMAIL'])){
+            if($this->Check->checarEmail($dados['EML_EMAIL'])){
                
-                $Usuarios->setEmailUsuario($dados['EML_EMAIL']);
+                $this->Usuarios->setEmailUsuario($dados['EML_EMAIL']);
 
-                if(!$Usuarios->checarEmailUsuario()){
+                if(!$this->Usuarios->checarEmailUsuario()){
                    
                     $token = bin2hex(random_bytes(50));
     
@@ -234,32 +236,29 @@ class login extends View
                     $mail->IsHTML(true); 
                     $mail->SMTPAuth = true; 
                     //$mail->Username = $informacoes['INF_EMAIL_2']; 
-                    $mail->Password = 'IPBsa2020@';
+                    $mail->Password = 'Cf@10100801';
 
                     //$mail->setFrom($remetente, "Igreja Presbiteriana do Brasil Em Santo Anastácio/SP");
-                    $mail->FromName = 'CONTATO DO SITE IPB/Santo Anastácio'; 
+                    $mail->FromName = 'CONTATO DO SISTEMA LC/TEC'; 
                     $mail->Subject = "Solicitação de Nova Senha";
                     $link = DIRPAGE . 'login/token/' . $token;
-                    $mensagem = "Olá, você efetuou cadastro em nosso sistema";
-                    $mensagem .= "<p>Para ativar sua conta clique no link abaixo</p>";
-                    $mensagem .= "<p><a href=" . $link . " target='_blanck' title='Clique aqui'>Clique aqui</a> para ativar sua conta</p>";
-                    $mensagem .= "<p><hr><img style='width:90px;' src='" . DIRIMG . "logo.png'></p>";
-                    $mensagem .= "<p style='font-size:10px;'>Tel: (18) 99107-7297</p>";
+                    $mensagem = "Olá, você solicitou o reset da sua senha de acesso em nosso sistema";
+                    $mensagem .= "<p>Para criar uma nova senha, clique no link abaixo</p>";
+                    $mensagem .= "<p><a href=" . $link . " target='_blanck' title='Clique aqui'>Clique aqui</a> para criar uma nova senha de acesso</p>";
+                    //$mensagem .= "<p><hr><img style='width:90px;' src='" . DIRIMG . "logo.png'></p>";
+                    //$mensagem .= "<p style='font-size:10px;'>Tel: (18) 99107-7297</p>";
                     $mail->Body = $mensagem;
                     //$mail->AltBody = 'Use um visualizador de e-mail com suporte a HTML';
                     //$mail->addAttachment('storage/public/images/logo.png');
                     //$mail->addAddress($informacoes['INF_EMAIL_1'],'Contato do Site');
-                    $mail->addAddress($destinatario,'Contato do Site');
-                    
+                    $mail->addAddress($destinatario,'Recuperação de Senha de acesso');
                     
                     $ver = 0;
                     $ok = false;
                     $excluirTokenAnterior = false;
-                    $Recuperacoes->setEmailToken($destinatario);
-                    $checagem = $Recuperacoes->checarSolicitacoesAnterioes();
+                    $checagem = $this->Recuperacoes->setEmailToken($destinatario)->Recuperacoes->checarSolicitacoesAnterioes();
                     if($checagem){
-                        $Recuperacoes->setCodigo($checagem['REC_COD']);
-                        $oke = $Recuperacoes->excluir(0);
+                        $oke = $this->Recuperacoes->setCodigo($checagem['REC_COD'])->Recuperacoes->excluir(0);
                         if($oke){
                             $excluirTokenAnterior = true;
                         }
@@ -268,8 +267,7 @@ class login extends View
                     }
                     
                     if($excluirTokenAnterior){
-                        $ok = $Recuperacoes->cadastrar($dadosRecuperacao,0);
-                       
+                        $ok = $this->Recuperacoes->cadastrar($dadosRecuperacao,0);
                         if (!$ok) {
                             Sessao::alert('ERRO','ERRO 6: Encontramos um problema ao cadastrar sua solicitação, por favor tente mais tarde!','fs-4 alert alert-danger');
                         } else {
