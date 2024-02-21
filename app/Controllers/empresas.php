@@ -108,6 +108,7 @@ class empresas extends View
                 //CADASTRAR NOVA EMPRESA
                 $id = $this->Empresa->cadastrar($db_empresa,0);
                 if($id){
+                    Sessao::criarSessao($db_empresa);                        
                     $ok = true;
                 }else{
                     $ok = false;
@@ -136,6 +137,7 @@ class empresas extends View
                 //CADASTRAR O ENDERECO DA EMPRESA
                 if($this->Enderecos->cadastrar($db_endereco,0)){
                     $ok = true;
+                    
                 }else {
                     $ok = true;
                 }
@@ -158,6 +160,7 @@ class empresas extends View
                     //CADASTRAR O USUARIO NA EMPRESA
                     if($this->UsuariosEmpresa->cadastrar($db_usuario_empresa,0)){
                         $ok2 = true;
+                       
                     }else {
                         $ok2 = false;
                         Sessao::alert('ERRO',' 2- Erro ao vincular nova empresa ao usuário, contate o suporte!','fs-4 alert alert-danger');
