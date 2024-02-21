@@ -1,11 +1,9 @@
 <?php
 use Libraries\Sessao;
-$_SESSION['lembrar'] = date('Y-m-d H:i:s');
-
-
-include_once 'inc/cabecalho.phtml'; ?>
+$_SESSION['ALTERAR_SENHA_USUARIO'] = date('Y-m-d H:i:s');
+include_once 'inc/cabecalho.phtml'; 
+?>
     <main class="flex-shrink-0">
-        <?php include_once 'inc/nav.phtml'; ?>
         <!-- Header-->
         <header class="bg-3 py-3">
             <section class="container px-5">
@@ -20,8 +18,10 @@ include_once 'inc/cabecalho.phtml'; ?>
         </header>
         <div class="container col-xl-10 col-xxl-8 px-4 py-5">
             <div class="row align-items-center g-lg-5 py-5">
+                <?php include_once 'inc/logo.phtml'; ?>
                 <div class="col-md-10 mx-auto col-lg-6">
-                    <?= Sessao::alert('ERRO') ?>    
+                    <?= Sessao::alert('ERRO') ?> 
+                    <?= Sessao::alert('OK') ?>   
                     <form class="p-4 p-md-6 border rounded-3 bg-3" action="<?= DIRPAGE ?>login/cadastrar_nova_senha" method="POST">
                         <div class="form-floating mb-3">
                             <input type="email" class="form-control desatible" id="floatingInput" name="EML_EMAIL" placeholder="Informe seu email nome@examplo.com" value="<?= isset($_POST['EML_EMAIL']) ? $_POST['EML_EMAIL'] : '' ?>">
@@ -36,11 +36,14 @@ include_once 'inc/cabecalho.phtml'; ?>
                             <label for="floatingInput">confirmação de senha</label>
                         </div>
                         <input type="hidden" name="ALTERAR_SENHA" value=""/>
-                        <button class="w-100 btn btn-lg text-uppercase btn-success" name="ALTERAR_SENHA_USUARIO" value="<?= $_SESSION['ALTERAR_SENHA_USUARIO'] ?>" type="submit"><i class="fa fa-sign-in"></i> Alterar Senha</button>
-                        <a href="<?= DIRPAGE ?>login" class="gap-2 text-white text-center text-decoration-none">Voltar ao acesso.</a>
+                        <button class="w-100 btn btn-lg text-uppercase btn-success" name="ALTERAR_SENHA_USUARIO" value="<?= isset($_SESSION['ALTERAR_SENHA_USUARIO'])? $_SESSION['ALTERAR_SENHA_USUARIO'] : '' ?>" type="submit"><i class="fa fa-sign-in"></i> Alterar Senha</button>
+                        <hr class="my-4 text-white">
+                        <div class="form-floating mb-3 text-center">
+                            <a href="<?= DIRPAGE ?>login" class="text-white text-uppercase  text-decoration-none">Voltar ao acesso</a>
+                        </div>
                     </form>
                 </div>
             </div>
         </div>
     </main>
-<?php include_once 'inc/footer.phtml'; ?>
+<?php include_once 'inc/rodape.phtml'; ?>

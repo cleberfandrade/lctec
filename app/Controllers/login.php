@@ -350,7 +350,6 @@ class login extends View
             Sessao::alert('ERRO',' 1- Dados inválido(s)!','alert alert-danger');
         }
     }
-    
     //LINK DO EMAIL PARA CHECAR SOLICITACAO DE MUDANCA DE SENHA
     public function token()
     {
@@ -415,5 +414,12 @@ class login extends View
         }else {
             $this->render('site/lembrar', $this->dados);
         }
+    }
+    public function cadastrar_nova_senha()
+    {
+        $this->dados['title'] = 'LC/TEC | NOVA SENHA DE ACESSO';
+        Sessao::logado();
+        //Recupera os dados enviados
+        $dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);
     }
 }
