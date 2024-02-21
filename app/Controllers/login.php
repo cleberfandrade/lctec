@@ -360,10 +360,8 @@ class login extends View
         $token_url = isset($pag[2]) ? $pag[2] : 1;
 
         if ($token_url != '') {
-            //$Recuperacoes = new recuperacoesModel;
-            $this->Recuperacoes->setToken($token_url);
             $this->dados['recuperacoes'] = array();
-            $this->dados['recuperacoes'] = $Recuperacoes->checarToken();
+            $this->dados['recuperacoes'] = $this->Recuperacoes->setToken($token_url)->checarToken();
            
             if (!empty($this->dados['recuperacoes'])) {
                 if ($this->dados['recuperacoes']['REC_TOKEN'] == $token_url) {
@@ -376,10 +374,8 @@ class login extends View
                     } else {
                         Sessao::alert('ERRO','ERRO 3: Link expirado, faça uma nova solicitação','fs-4 alert alert-danger');
                         
-                        $this->Recuperacoes->setToken($this->dados['recuperacoes']['REC_TOKEN']);
-                        $token_usuario = checarToken(0);
-                        $this->Recuperacoes->setCodigo($token_usuario['REC_COD']);
-                        $this->Recuperacoes->excluir(0);
+                        $token_usuario = $this->Recuperacoes->setToken($this->dados['recuperacoes']['REC_TOKEN'])->checarToken(0);
+                        $this->Recuperacoes->setCodigo($token_usuario['REC_COD'])->excluir(0);
                         $this->render('site/lembrar', $this->dados);
                     }
                 } else {
