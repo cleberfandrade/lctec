@@ -420,5 +420,4 @@ class login extends View
             $this->render('site/lembrar', $this->dados);
         }
     }
-    */
 }
