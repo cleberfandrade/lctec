@@ -247,9 +247,10 @@ class login extends View
                     $this->mail->FromName = 'CONTATO DO SISTEMA LC/TEC'; 
                     $this->mail->Subject = "Solicitação de Nova Senha";
                     $link = DIRPAGE . 'login/token/' . $token;
-                    $mensagem = "Olá, você solicitou o reset da sua senha de acesso em nosso sistema";
+                    $mensagem = "OLA, VOCÊ SOLICITOU UMA NOVA SENHA DE ACESSO EM NOSSO SISTEMA";
                     $mensagem .= "<p>Para criar uma nova senha, clique no link abaixo</p>";
                     $mensagem .= "<p><a href=" . $link . " target='_blanck' title='Clique aqui'>Clique aqui</a> para criar uma nova senha de acesso</p>";
+                    $mensagem .= "<p>Caso não tenha feito, ou recebeu este email por engano, desconsidere</p>";
                     //$mensagem .= "<p><hr><img style='width:90px;' src='" . DIRIMG . "logo.png'></p>";
                     //$mensagem .= "<p style='font-size:10px;'>Tel: (18) 99107-7297</p>";
                     $this->mail->Body = $mensagem;
