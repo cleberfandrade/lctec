@@ -32,7 +32,9 @@ class empresas extends View
         $this->dados['empresas'] = $this->UsuariosEmpresa->listarTodasEmpresasUsuario(0);
         $this->dados['usuario'] = $this->Usuarios->setCodUsuario($_SESSION['USU_COD'])->listar(0);
         $this->dados['clientes'] = $this->Clientes->setCodEmpresa($_SESSION['EMP_COD'])->listarTodos(0);
+        
         $this->link[0] = ['link'=> 'admin','nome' => 'PAINEL ADMINISTRATIVO'];
+        
         if (isset($_SESSION['EMP_COD']) && $_SESSION['EMP_COD'] != 0) {
             $this->link[1] = ['link'=> 'cadastros','nome' => 'MÓDULO DE CADASTROS'];
             $this->link[2] = ['link'=> 'empresas','nome' => 'GERENCIAR SUA EMPRESA/NEGÓCIO'];
@@ -47,14 +49,22 @@ class empresas extends View
     public function cadastro():void
     {
         $this->dados['title'] .= ' CADASTRAR NOVA EMPRESA/NEGÓCIO';
-        $this->link[3] = ['link'=> 'empresas/cadastrar','nome' => 'CADASTRAR NOVA EMPRESA/NEGÓCIO'];
+        if (isset($_SESSION['EMP_COD']) && $_SESSION['EMP_COD'] != 0) {
+            $this->link[3] = ['link'=> 'empresas/cadastrar','nome' => 'CADASTRAR NOVA EMPRESA/NEGÓCIO'];
+        }else{
+            $this->link[1] = ['link'=> 'empresas/cadastrar','nome' => 'CADASTRAR NOVA EMPRESA/NEGÓCIO'];
+        }
         $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
         $this->render('admin/cadastros/empresas/cadastrar', $this->dados);
     }
     public function cadastrar():void
     {
         $this->dados['title'] .= ' CADASTRAR SEUS CLIENTES';
-        $this->link[3] = ['link'=> 'empresas/cadastrar','nome' => 'CADASTRAR NOVA EMPRESA/NEGÓCIO'];
+        if (isset($_SESSION['EMP_COD']) && $_SESSION['EMP_COD'] != 0) {
+            $this->link[3] = ['link'=> 'empresas/cadastrar','nome' => 'CADASTRAR NOVA EMPRESA/NEGÓCIO'];
+        }else{
+            $this->link[1] = ['link'=> 'empresas/cadastrar','nome' => 'CADASTRAR NOVA EMPRESA/NEGÓCIO'];
+        }
         $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
         $ok = false;
         $dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);
