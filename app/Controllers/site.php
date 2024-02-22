@@ -47,20 +47,11 @@ class site extends View
     }
     public function finalizado()
     {
-
-        //session_start();
-        if (isset($_SESSION)) {
-            session_start();
-        }
-        ob_start();
-        
         unset($_SESSION['USU_COD']);
-        //session_destroy($_SESSION);
-        //dump('ok');
-        //exit;
+        session_destroy($_SESSION);
         $this->dados['title'] = 'LC/TEC | Acesse-se';
         $this->render('site/finalizado', $this->dados);
-        //Url::redirecionar('site/bloqueado');
+
     }
     public function acesso()
     {
