@@ -83,7 +83,7 @@ $qtdMV = (is_array($movimentacoes) ? count($movimentacoes) : 0);
                             <hr>
                             <div class="col-12 text-uppercase display-6 row text-center mx-auto mb-3">    
                     
-                                <div class="col-sm-4 rounded-2 border border-1">
+                                <div class="col-4 col-sm-4 rounded-2 border border-1">
                                     <div class="d-flex justify-content-center align-items-center p-4 bg-blue bg-opacity-10 rounded-3">
                                         <span class="display-6 lh-1 text-blue mb-0"><i class="fas fa-user-tie"></i></span>
                                         <div class="ms-4 h6 fw-normal mb-0">
@@ -95,7 +95,7 @@ $qtdMV = (is_array($movimentacoes) ? count($movimentacoes) : 0);
                                         </div>
                                     </div>
 			                    </div>
-                                <div class="col-sm-4 rounded-2 border border-1">
+                                <div class="col-4 col-sm-4 rounded-2 border border-1">
                                     <div class="d-flex justify-content-center align-items-center p-4 bg-blue bg-opacity-10 rounded-3">
                                         <span class="display-6 lh-1 text-blue mb-0"><i class="bi bi-bag-check"></i></span>
                                         <div class="ms-4 h6 fw-normal mb-0">
@@ -107,7 +107,7 @@ $qtdMV = (is_array($movimentacoes) ? count($movimentacoes) : 0);
                                         </div>
                                     </div>
 			                    </div>
-                                <div class="col-sm-4 rounded-2 border border-1">
+                                <div class="col-4 col-sm-4 rounded-2 border border-1">
                                     <div class="d-flex justify-content-center align-items-center p-4 bg-blue bg-opacity-10 rounded-3">
                                         <span class="display-6 lh-1 text-blue mb-0"><i class="fa-solid fa-cart-shopping"></i></span>
                                         <div class="ms-4 h6 fw-normal mb-0">
@@ -126,7 +126,7 @@ $qtdMV = (is_array($movimentacoes) ? count($movimentacoes) : 0);
                                     for ($i=0; $i < $qtdME; $i++) { ?>
                                     <?php if ($modulos_empresa[$i]['MOD_NOME'] == 'ESTOQUE') {
                                         if ($qtdE) { ?>
-                                        <div class="col-4 mb-3 round-3">
+                                        <div class="col-6 col-sm-4 mb-3 round-3">
                                             <div class="mx-auto rounded-2 <?= $modulos_empresa[$i]['MOD_COR']; ?>" >
                                                 <a href="<?= DIRPAGE.$modulos_empresa[$i]['MOD_LINK']?>" class="link-light text-decoration-none">
                                                     <div class="card-header"><i class="bi bi-plus-square"></i> <?= $modulos_empresa[$i]['MOD_NOME']; ?></div>
@@ -139,7 +139,7 @@ $qtdMV = (is_array($movimentacoes) ? count($movimentacoes) : 0);
                                         </div>
                                     <?php }
                                     }else { ?>
-                                    <div class="col-4 mb-3">
+                                    <div class="col-6 col-sm-4 mb-3">
                                         <div class=" mx-auto rounded-2 <?= $modulos_empresa[$i]['MOD_COR']; ?>">
                                             <a href="<?= DIRPAGE.$modulos_empresa[$i]['MOD_LINK']?>" class="link-light text-decoration-none">
                                                 <div class="card-header text-uppercase"><i class="bi bi-plus-square"></i> <?= $modulos_empresa[$i]['MOD_NOME']; ?></div>
@@ -156,31 +156,17 @@ $qtdMV = (is_array($movimentacoes) ? count($movimentacoes) : 0);
                                     <div class="col-12 mx-auto text-center mt-3">
                                         <a type="button" href="<?= DIRPAGE ?>modulo_empresa" title="Libere novos módulos para a sua empresa/negócio" class="btn text-center mt-2  btn-secondary">ATIVAR/DESATIVAR MÓDULOS</a>
                                     </div>
-                                    <div class="card  mx-auto opacity-0 bg-orange m-1 py-3" style="max-width: 15rem;">
-                                        <a href="#<?= DIRPAGE?>configuracoes" class="col-auto link-light text-decoration-none">
-                                            <div class="card-header"><i class="bi bi-sliders"></i> CONFIGURAÇÕES</div>
-                                            <div class="card-body">
-                                                <h5 class="card-title text-uppercase">Módulo configurações do sistema</h5>
-                                                <p class="card-text"></p>
-                                            </div>
-                                        </a>
-                                    </div>
                                     <hr class="my-4 text-dark">
 
                                     <!--
                                     <div class="opacity-25 card text-bg-warning mb-3" style="max-width: 18rem;">
-                                    <div class="card-header">VENDAS</div>
-                                    <div class="card-body">
-                                        <h5 class="card-title">Módulo de Controle de Vendas</h5>
-                                        <p class="card-text"></p>
-                                    </div>
-                                    </div>
-                                    <div class="opacity-25 card text-bg-info mb-3" style="max-width: 18rem;">
-                                    <div class="card-header">RECURSOS HUMANOS</div>
-                                    <div class="card-body">
-                                        <h5 class="card-title">Módulo de Recursos Humanos</h5>
-                                        <p class="card-text"></p>
-                                    </div>
+                                        <div class="card-header">VENDAS</div>
+                                        <div class="card-body">
+                                            <h5 class="card-title">Módulo de Controle de Vendas</h5>
+                                            <p class="card-text"></p>
+                                        </div>
+                                        </div>
+
                                     </div>
                                     -->
                                 </div>
