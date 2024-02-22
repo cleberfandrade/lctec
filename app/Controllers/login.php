@@ -300,9 +300,6 @@ class login extends View
     }
     public function auth_admin()
     {
-        $Check = new Check();
-        $Usuarios = new Usuarios();
-        $Url = new Url();
         $dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);
         if (isset($_POST) && isset($dados['acesso'])) {
             
@@ -405,11 +402,9 @@ class login extends View
         $pag = explode('/',  $pag);
         $token_url = isset($pag[2]) ? $pag[2] : 1;
         if ($token_url != '') {
-            $this->Recuperacoes->setToken($token_url);
-            $token_usuario = checarToken(0);
+            $token_usuario = $this->Recuperacoes->setToken($token_url)->checarToken(0);
             $this->Recuperacoes->setCodigo($token_usuario['REC_COD']);
             $this->Recuperacoes->excluir(0);
-            
             $this->render('site/nova_senha', $this->dados);
         }else {
             $this->render('site/lembrar', $this->dados);
@@ -420,6 +415,56 @@ class login extends View
         $this->dados['title'] = 'LC/TEC | NOVA SENHA DE ACESSO';
         Sessao::logado();
         //Recupera os dados enviados
+        $pag = filter_input(INPUT_GET,'url', FILTER_DEFAULT);
+        $pag = explode('/',  $pag);
+        $token_url = isset($pag[2]) ? $pag[2] : 1;
         $dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);
+        if (isset($_POST) && isset($dados['ALTERAR_SENHA_USUARIO'])) {
+            unset($dados['ALTERAR_SENHA_USUARIO']);
+            if(!empty($dados['EML_SENHA']) && !empty($dados['EML_CONF_SENHA'])){
+                //USUARIO ESTA ALTERANDO SUA SENHA
+                if($dados['EML_SENHA'] == $dados['EML_CONF_SENHA']){
+                    unset($dados['EML_CONF_SENHA']);
+                    $dados['USU_SENHA']= $this->Check->codificarSenha($dados['EML_SENHA']);
+                    if($this->Check->checarEmail($dados['EML_EMAIL'])){
+                        //$this->Usuarios->setEmailUsuario($dados['EML_EMAIL']);
+                        $user = $this->Usuarios->setEmailUsuario($dados['EML_EMAIL'])->checarEmailUsuario();
+                        if($user){
+                            //$dUsuarios = $this->Usuarios->buscarDadosUsuario(0);
+                            $this->Usuarios->setCodUsuario($user['USU_COD']);
+                            unset($dados['EML_EMAIL']);
+                            unset($dados['EML_SENHA']);
+                            unset($dados['ALTERAR_SENHA']);
+                           
+                            if($this->Usuarios->alterar($dados,0)){
+                                
+                                Sessao::alert('OK','Senha de acesso alterada com sucesso!','fs-4 alert alert-success');
+
+                                if ($token_url != '') {
+                                    $token_usuario = $this->Recuperacoes->setToken($token_url)-> checarToken(0);
+                                    $this->Recuperacoes->setCodigo($token_usuario['REC_COD'])->excluir(0);
+                                    $this->render('site/nova_senha', $this->dados);
+                                }
+
+                            }else{
+                                Sessao::alert('ERRO',' 5- Erro ao alterar sua senha, contate a manutenção!','fs-4 alert alert-danger');
+                            }
+                        }else {
+                            Sessao::alert('ERRO',' 4- Email não cadastrado, digite outro email!','fs-4 alert alert-danger');
+                        }
+                    }else {
+                        Sessao::alert('ERRO',' 3- Email inválido, digite um email válido!','fs-4 alert alert-danger');
+                    }
+                }else {
+                    Sessao::alert('ERRO',' 2- Senha não confere com a digitada!','fs-4 alert alert-danger');
+                }
+            }else {
+                Sessao::alert('ERRO',' 1- Preencha todos os campos!','fs-4 alert alert-danger');
+            }
+        }else {
+            Sessao::alert('ERRO',' 11- Dados inválido(s)!','fs-4 alert alert-danger');
+        }
+        $this->render('site/nova_senha', $this->dados);
+
     }
 }
