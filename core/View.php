@@ -21,7 +21,7 @@ class View
                     $texto = '';
                 }
                 $this->dados['mensagemErro'] =  "ERRO 404, PÁGINA {$texto} NÃO ENCONTRADA!";
-                $pagina = (string) '404';
+                $pagina = (string) 'erro';
                 include_once 'app/Views/site/' . $pagina . '.phtml';
             }
         }
