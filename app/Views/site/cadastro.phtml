@@ -41,23 +41,23 @@ include_once 'inc/cabecalho.phtml'; ?>
                                 <input type="text" class="form-control maiusculo" id="logradouro" name="logradouro_usuario" placeholder="Informe seu endereço" value="<?= isset($_POST['logradouro_usuario']) ? $_POST['logradouro_usuario'] : ''; ?>">
                                 <label for="logradouro">Seu Endereço</label>
                             </div>
-                            <div class="form-floating col-2 mb-3">
+                            <div class="form-floating col-6 col-sm-2 mb-3">
                                 <input type="text" class="form-control" id="floatingInput" name="numero_usuario" placeholder="n°" value="<?= isset($_POST['numero_usuario']) ? $_POST['numero_usuario'] : ''; ?>">
                                 <label for="floatingInput">n°</label>
                             </div>
-                            <div class="form-floating col-2 mb-2">
-                                <label class="form-label">CEP</label>
+                            <div class="form-floating col-6 col-sm-2 mb-3">
                                 <input type="text" id="END_CEP" name="END_CEP" class="form-control" onkeypress="cepMascara(this);" value="<?= isset($_POST['END_CEP']) ? $_POST['END_CEP'] : '' ?>">
+                                <label for="floatingInput">CEP</label>
                             </div>
-                            <div class="form-floating col-5 mb-3">
+                            <div class="form-floating col-6 col-sm-5 mb-3">
                                 <input type="text" class="form-control maiusculo" id="floatingInput" name="bairro_usuario" placeholder="Informe seu bairro" value="<?= isset($_POST['bairro_usuario']) ? $_POST['bairro_usuario'] : ''; ?>">
                                 <label for="floatingInput">Bairro</label>
                             </div> 
-                            <div class="form-floating col-4 mb-3">
+                            <div class="form-floating col-6 col-sm-4 mb-3">
                                 <input type="text" class="form-control maiusculo" id="floatingInput" name="cidade_usuario" placeholder="Informe sua Cidade" value="<?= isset($_POST['cidade_usuario']) ? $_POST['cidade_usuario'] : ''; ?>">
                                 <label for="floatingInput">Cidade</label>
                             </div> 
-                            <div class="form-floating col-3 mb-2">
+                            <div class="form-floating col-6 col-sm-3 mb-2">
                                 <select id="UF" class="form-select text-uppercase" name="END_ESTADO">
                                         <option value="0" <?= (isset($_POST['END_ESTADO']) &&  $_POST['END_ESTADO']  == "0")? 'selected' : '' ?>>---</option>
                                         <option value="AC" <?= (isset($_POST['END_ESTADO']) &&  $_POST['END_ESTADO']  == "AC")? 'selected' : '' ?>>Acre</option>
@@ -93,7 +93,7 @@ include_once 'inc/cabecalho.phtml'; ?>
                         </div> 
                         <div class="row">
                             <hr>
-                            <div class="col-5 text-center mb-3">
+                            <div class="col-6 col-sm-5 text-center mb-3">
                                 <label for="inputPassword6" class="col-form-label">Seu Sexo</label>
                                 <div class="mx-auto text-center">   
                                     <div class="form-check form-check-inline">
@@ -110,7 +110,7 @@ include_once 'inc/cabecalho.phtml'; ?>
                                     </div>
                                 </div>
                             </div> 
-                            <div class="col-7 text-center mb-3">
+                            <div class="col-12 col-sm-7 text-center mb-3">
                                 <label for="inputPassword6" class="col-form-label">Email</label>
                                 <div class="form-floating mb-3">
                                     <input type="email" class="form-control" id="email" name="email_usuario" placeholder="Informe seu email nome@examplo.com" value="<?= isset($_POST['email_usuario']) ? $_POST['email_usuario'] : ''; ?>">
@@ -119,11 +119,11 @@ include_once 'inc/cabecalho.phtml'; ?>
                             </div>
                         </div> 
                         <div class="row">
-                            <div class="col-6 form-floating mb-3">
+                            <div class="col-12 col-sm-6 form-floating mb-3">
                                 <input type="password" class="form-control" name="senha_usuario" id="floatingPassword" placeholder="Digite sua senha">
                                 <label for="floatingPassword">Senha</label>
                             </div>
-                            <div class="col-6 form-floating mb-3">
+                            <div class="col-12 col-sm-6 form-floating mb-3">
                                 <input type="password" class="form-control" name="conf_senha_usuario" id="floatingPassword" placeholder="Confirme sua senha">
                                 <label for="floatingPassword">Confirme a Senha</label>
                             </div>

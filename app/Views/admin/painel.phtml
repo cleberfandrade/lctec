@@ -54,11 +54,10 @@ $qtdMV = (is_array($movimentacoes) ? count($movimentacoes) : 0);
                     <?php if (isset($_SESSION['EMP_COD']) && $_SESSION['EMP_COD'] == 0) { ?>
                         <div class="row mx-auto m-4 ">
                             <div class="container col-12">
-                                <div class="p-2 text-center text-white  bg-success rounded-3">
-                                    <h1 class="text-emphasis opacity-75">CADASTRE A SUA EMPRESA</h1>
-                                    <p class="lead fw-bold opacity-75">
-                                    Para utilizar o sitema LC<span class="text-dark">-TECH</span> é necessário que você cadastre o sua <b class="text-dark">empresa/negócio</b><p> crie e utilize ao máximo dos recursos disponíveis</p></p>
-                    
+                                <div class="p-4 text-center text-white  bg-success rounded-3">
+                                    <h1 class="text-emphasis opacity-75 mt-4">CADASTRE A SUA EMPRESA</h1>
+                                    <p class="lead fw-bold opacity-75 mt-3 text-uppercase">
+                                    Para utilizar o sitema LC/<span class="text-dark">TEC</span> <br> é necessário que você cadastre o sua <b class="text-dark">empresa/negócio</b><p class="text-uppercase mt-5"> crie e utilize ao máximo dos recursos disponíveis</p></p>
                                     <a href="<?= DIRPAGE ?>empresas/cadastro" class="col-auto btn btn-success text-uppercase">Clique aqui</a>
                                 </div>
                             </div>

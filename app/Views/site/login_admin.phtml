@@ -21,9 +21,9 @@ include_once 'inc/cabecalho.phtml';
             </section>
         </header>
         <div class="container col-xl-10 col-xxl-8 px-2 py-1">
-            <div class="row align-items-center g-lg-9">
+            <div class="row align-items-center mt-5 g-lg-9">
                 <?php include_once 'inc/logo.phtml'; ?>
-                <div class="col-12 col-md-5 mx-auto">
+                <div class="col-12 col-md-6 mx-auto">
                 <?= Sessao::alert('ERRO'); ?>
                     <form class="p-2 p-md-4" action="<?= DIRPAGE ?>login/auth_admin" method="POST">
                         <div class="form-floating mb-1">
