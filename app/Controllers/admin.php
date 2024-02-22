@@ -1,6 +1,7 @@
 <?php
 namespace App\Controllers;
 
+use App\Models\Avisos;
 use App\Models\Empresas;
 use App\Models\Estoques;
 use App\Models\ModulosEmpresa;
@@ -17,7 +18,7 @@ use Libraries\Util;
 class admin extends View
 {
     private $dados = [];
-    private $link,$Util,$Check,$Empresa,$Usuarios,$Estoques,$UsuariosEmpresa,$ModulosEmpresa, $Tarefas,$Produtos,$Movimentacoes;
+    private $link,$Util,$Check,$Empresa,$Usuarios,$Estoques,$UsuariosEmpresa,$ModulosEmpresa, $Tarefas,$Produtos,$Movimentacoes,$Avisos;
     public function __construct()
     {
         Sessao::naoLogado();
@@ -32,7 +33,14 @@ class admin extends View
         $this->Check = new Check;
         $this->Produtos = new Produtos;
         $this->Movimentacoes = new Movimentacoes;
+        $this->Avisos = new Avisos;
 
+        /**
+         * AVISOS - TIPO
+         * 0 => GERAL
+         * 0 => PRODUTO
+         * 
+        */
         /*
         $motivos = array(
             0 => '---',

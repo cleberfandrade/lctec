@@ -3,11 +3,11 @@ namespace App\Models;
 
 use Core\Model;
 
-class Categorias extends Model
+class Avisos extends Model
 { 
     private $tabela = 'tb_avisos';
     private $Model = '';
-    private $codigo,$codEmpresa,$descricao,$tipo;
+    private $codigo,$codEmpresa,$codUsuario, $descricao,$tipo;
 
     public function __construct()
     {
@@ -17,6 +17,11 @@ class Categorias extends Model
     public function setCodigo($codigo)
     {
         $this->codigo = $codigo;
+        return $this;
+    }
+    public function setCodUsuario($codUsuario)
+    {
+        $this->codUsuario = $codUsuario;
         return $this;
     }
     public function setCodEmpresa($codEmpresa)
@@ -36,7 +41,18 @@ class Categorias extends Model
     }
     public function listar($ver = 0)
     {
-        $parametros = "C INNER JOIN tb_empresas E ON C.EMP_COD=E.EMP_COD WHERE C.EMP_COD={$this->codEmpresa} AND C.CAT_COD={$this->codigo}";
+        $parametros = "A INNER JOIN tb_empresas E ON A.EMP_COD=E.EMP_COD WHERE A.EMP_COD={$this->codEmpresa} AND A.AVS_COD={$this->codigo}";
+        $campos = "*";
+        $resultado = $this->Model->exibir($parametros, $campos, $ver, $id = false);
+        if ($resultado) {
+            return $resultado[0];
+        } else {
+            return false;
+        }
+    }
+    public function listarAvisoUsuario($ver = 0)
+    {
+        $parametros = "A INNER JOIN tb_empresas E ON A.EMP_COD=E.EMP_COD WHERE A.EMP_COD={$this->codEmpresa} AND A.AVS_USU_COD={$this->codUsuario}";
         $campos = "*";
         $resultado = $this->Model->exibir($parametros, $campos, $ver, $id = false);
         if ($resultado) {
@@ -47,7 +63,7 @@ class Categorias extends Model
     }
     public function listarTodosPorTipo($ver = 0)
     {
-        $parametros = "C INNER JOIN tb_empresas E ON C.EMP_COD=E.EMP_COD WHERE C.EMP_COD={$this->codEmpresa} AND C.CAT_TIPO={$this->tipo} ORDER BY C.CAT_DESCRICAO";
+        $parametros = "A INNER JOIN tb_empresas E ON A.EMP_COD=E.EMP_COD WHERE A.EMP_COD={$this->codEmpresa} AND A.AVS_TIPO={$this->tipo} ORDER BY A.AVS_DT_CADASTRO";
         $campos = "*";
         $resultado = $this->Model->exibir($parametros, $campos, $ver = 0, $id = false);
         if ($resultado) {
@@ -58,7 +74,7 @@ class Categorias extends Model
     }
     public function listarTodos($ver = 0)
     {
-        $parametros = "WHERE EMP_COD={$this->codEmpresa} ORDER BY CAT_DESCRICAO";
+        $parametros = "WHERE EMP_COD={$this->codEmpresa} ORDER BY AVS_DT_CADASTRO";
         $campos = "*";
         $resultado = $this->Model->exibir($parametros, $campos, $ver = 0, $id = false);
         if ($resultado) {
@@ -78,7 +94,7 @@ class Categorias extends Model
     }
     public function excluir(array $dados, $ver = 0)
     {
-        $parametros = " WHERE EMP_COD={$this->codEmpresa} AND CAT_COD=";
+        $parametros = " WHERE EMP_COD={$this->codEmpresa} AND AVS_COD=";
         $this->Model->setParametros($parametros);
         $this->Model->setCodigo($this->codigo);
         $ok = false;
@@ -91,7 +107,7 @@ class Categorias extends Model
     }
     public function checarDescricao()
     {
-        $parametros = "WHERE EMP_COD={$this->codEmpresa} AND CAT_DESCRICAO ='{$this->descricao}' AND CAT_STATUS=1";
+        $parametros = "WHERE EMP_COD={$this->codEmpresa} AND AVS_DESCRICAO ='{$this->descricao}' AND AVS_STATUS=1";
         $campos = "*";
         $resultado = $this->Model->exibir($parametros, $campos, $ver = 0, $id = false);
         if ($resultado) {
