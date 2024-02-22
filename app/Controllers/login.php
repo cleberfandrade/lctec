@@ -199,7 +199,7 @@ class login extends View
         } 
 
         $this->render('site/cadastro', $this->dados);
-   }
+    }
     public function recover()
     {
         $this->dados['title'] = 'LC/TEC / SOLICITAÇÃO DE NOVA SENHA';
@@ -324,7 +324,7 @@ class login extends View
                                 if($user['USU_NIVEL'] >= 20 && $user['USU_NIVEL'] <= 30){
                                     header("Location:".DIRPAGE."lctec");
                                 }else{
-                                    header("Location:".DIRPAGE."site/administrador");
+                                    header("Location:".DIRPAGE."admin/painel");
                                 }
                                 
                                 //$Url->redirecionar('admin/painel');
