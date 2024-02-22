@@ -116,9 +116,11 @@ $qtdE = (is_array($empresa) ? count($empresa) : 0);
                                         </div>
                                     </div>
                                 </div>
+                                <?php if($_SESSION['USU_NIVEL'] >= 10){ ?>
                                 <div class="col-12 mr-1">
                                     <a type="button" class="btn btn-outline-warning btn-sm d-print-none" href="<?= DIRPAGE.'cadastros/estoques/'.$estoques[$i]['EMP_COD']; ?>" title="Alterar estoque"><i class="fa fa-edit"></i></a>
                                 </div>
+                                <?php } ?>
                             </div>
                         <?php } ?>
                     </div>

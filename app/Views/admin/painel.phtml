@@ -97,7 +97,7 @@ $qtdMV = (is_array($movimentacoes) ? count($movimentacoes) : 0);
 			                    </div>
                                 <div class="col-sm-4 rounded-2 border border-1">
                                     <div class="d-flex justify-content-center align-items-center p-4 bg-blue bg-opacity-10 rounded-3">
-                                        <span class="display-6 lh-1 text-blue mb-0"><i class="fas fa-user-tie"></i></span>
+                                        <span class="display-6 lh-1 text-blue mb-0"><i class="bi bi-bag-check"></i></span>
                                         <div class="ms-4 h6 fw-normal mb-0">
                                             <div class="d-flex">
                                                 <h5 class="purecounter mb-0 fw-bold" data-purecounter-start="0" data-purecounter-end="200" data-purecounter-delay="200" data-purecounter-duration="0"><?= $qtdP ?></h5>
@@ -109,7 +109,7 @@ $qtdMV = (is_array($movimentacoes) ? count($movimentacoes) : 0);
 			                    </div>
                                 <div class="col-sm-4 rounded-2 border border-1">
                                     <div class="d-flex justify-content-center align-items-center p-4 bg-blue bg-opacity-10 rounded-3">
-                                        <span class="display-6 lh-1 text-blue mb-0"><i class="fas fa-user-tie"></i></span>
+                                        <span class="display-6 lh-1 text-blue mb-0"><i class="fa-solid fa-cart-shopping"></i></span>
                                         <div class="ms-4 h6 fw-normal mb-0">
                                             <div class="d-flex">
                                                 <h5 class="purecounter mb-0 fw-bold" data-purecounter-start="0" data-purecounter-end="200" data-purecounter-delay="200" data-purecounter-duration="0"><?= $qtdMV ?></h5>
@@ -127,7 +127,7 @@ $qtdMV = (is_array($movimentacoes) ? count($movimentacoes) : 0);
                                     <?php if ($modulos_empresa[$i]['MOD_NOME'] == 'ESTOQUE') {
                                         if ($qtdE) { ?>
                                         <div class="col-4 mb-3 round-3">
-                                            <div class="mx-auto rounded-2 text-<?= $modulos_empresa[$i]['MOD_COR']; ?>" >
+                                            <div class="mx-auto rounded-2 <?= $modulos_empresa[$i]['MOD_COR']; ?>" >
                                                 <a href="<?= DIRPAGE.$modulos_empresa[$i]['MOD_LINK']?>" class="link-light text-decoration-none">
                                                     <div class="card-header"><i class="bi bi-plus-square"></i> <?= $modulos_empresa[$i]['MOD_NOME']; ?></div>
                                                     <div class="card-body">
@@ -140,7 +140,7 @@ $qtdMV = (is_array($movimentacoes) ? count($movimentacoes) : 0);
                                     <?php }
                                     }else { ?>
                                     <div class="col-4 mb-3">
-                                        <div class=" mx-auto rounded-2 text-<?= $modulos_empresa[$i]['MOD_COR']; ?>">
+                                        <div class=" mx-auto rounded-2 <?= $modulos_empresa[$i]['MOD_COR']; ?>">
                                             <a href="<?= DIRPAGE.$modulos_empresa[$i]['MOD_LINK']?>" class="link-light text-decoration-none">
                                                 <div class="card-header text-uppercase"><i class="bi bi-plus-square"></i> <?= $modulos_empresa[$i]['MOD_NOME']; ?></div>
                                                 <div class="card-body">

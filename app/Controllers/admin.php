@@ -38,8 +38,9 @@ class admin extends View
         /**
          * AVISOS - TIPO
          * 0 => GERAL
-         * 0 => PRODUTO
-         * 
+         * 1 => PRODUTO
+         * 2 => SERVICO
+         * 3 => CONTA
         */
         /*
         $motivos = array(

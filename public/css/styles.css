@@ -11314,4 +11314,16 @@ body.sb-sidenav-toggled #wrapper #sidebar-wrapper {
   body.sb-sidenav-toggled #wrapper #sidebar-wrapper {
     margin-left: -15rem;
   }
+
+}
+.bg-1{
+  color: #363636;
+  background-color: #50bda0;
+}
+.bg-2{
+  color: #93b86d;
+  background-color: #5d5a56;
+}
+.bg-teal{
+  background-color: rgba(var(--bs-teal), var(--bs-bg-opacity)) !important;
 }
