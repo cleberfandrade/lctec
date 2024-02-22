@@ -57,7 +57,7 @@ class login extends View
                                 Sessao::alert('OK',' Bem vindo(a) '.$_SESSION['USU_NOME'].'','m-0 fs-4 alert alert-success');
                                 //Sessao::alert('OK',' Acesso efetuado com sucesso!','m-0 fs-4 alert alert-success');
                                 //Redirecionando o usuário para a página painel do sistema admin/painel
-                                if($user['USU_NIVEL'] >= 5){
+                                if($user['USU_NIVEL'] <= 10){
                                     header("Location:".DIRPAGE."admin/painel");
                                 }else {
                                     header("Location:".DIRPAGE."site/acesso");
@@ -323,7 +323,7 @@ class login extends View
                                 Sessao::alert('OK',' Bem vindo(a) '.$_SESSION['USU_NOME'].'','m-0 fs-4 alert alert-success');
                                 //Sessao::alert('OK',' Acesso efetuado com sucesso!','m-0 fs-4 alert alert-success');
                                 //Redirecionando o usuário para a página painel do sistema admin/painel
-                                if($user['USU_NIVEL'] >= 10){
+                                if($user['USU_NIVEL'] >= 20 && $user['USU_NIVEL'] <= 30){
                                     header("Location:".DIRPAGE."lctec");
                                 }else{
                                     header("Location:".DIRPAGE."site/administrador");
