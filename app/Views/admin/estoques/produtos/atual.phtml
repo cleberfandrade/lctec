@@ -34,20 +34,6 @@ $qtdC = (is_array($categorias) ? count($categorias) : 0);
             <?php include_once 'app/Views/admin/inc/alertas.phtml'; ?>
             <section class="container bg-light mx-auto py-2 mb-5">
                 <div class="col-12 row">
-                    <div class="col-8 mx-auto text-bg-success text-center">
-                        <div class="card-body">
-                            <h5 class="card-title">SELECIONE O ESTOQUE</h5>
-                            <p class="card-text">
-                                <select class="form-select" id="buscar_produtos" name="EST_COD">     
-                                    <option value="0" <?= (isset($_POST['EST_COD']) &&  $_POST['EST_COD']  == 0)? 'selected' : '' ?>>---</option>                     
-                                    <?php 
-                                    for ($i=0; $i < $qtd; $i++) { if ($estoques[$i]['EST_STATUS'] == 1) { ?>
-                                        <option value="<?= $estoques[$i]['EST_COD'] ?>" <?= (isset($_POST['EST_COD']) &&  $_POST['EST_COD']  == $estoques[$i]['EST_COD'])? 'selected' : '' ?>><?= $estoques[$i]['EST_DESCRICAO'] ?></option>
-                                    <?php } } ?>
-                                </select>
-                            </p>
-                        </div>
-                    </div>
                     <hr class="my-4 text-dark">
                     <div class="col-12 mx-auto text-center m-1">
                         <a class="col-4 btn btn-sm text-uppercase btn-secondary" href="<?= DIRPAGE; ?>estoques/movimentacao"><i class="bi bi-arrow-left"></i> VOLTAR AS MOVIMENTAÇÕES</a>   
@@ -58,41 +44,62 @@ $qtdC = (is_array($categorias) ? count($categorias) : 0);
                         <thead class="text-center text-uppercase">
                             <th class="text-dark">#</th>
                             <th class="text-dark">ESTOQUE</th>
-                            <th class="text-dark">TIPO</th>
-                            <th class="text-dark">CÓDIGO</th>
+                            <!--<th class="text-dark">TIPO</th>
+                            <th class="text-dark">CÓDIGO</th>-->
                             <th class="text-dark">NOME</th>
                             <th class="text-dark">QTD MINÍMA</th>
                             <th class="text-dark">QTD ATUAL</th>
+                            <th class="text-dark">SALDO</th>
                             <th class="text-dark">STATUS</th>
-                            <th class="text-dark">PREÇO UNITÁRIO</th>
-                            <th class="text-dark">PREÇO VENDA</th>
+                             <!--<th class="text-dark">PREÇO UNITÁRIO</th>
+                            <th class="text-dark">PREÇO VENDA</th>-->
                             <th class="text-dark">Ações</th>
                         </thead>
                         <tbody>
                         <?php
                             $b = 1;
-                            for ($i= 0; $i < $qtd; $i++) { ?>
-                            <tr class="<?= ($produtos[$i]['PRO_STATUS'] == 0 && $_SESSION['USU_NIVEL'] >= 8)? 'bg-secondary' : '';?>">
+                            for ($i= 0; $i < $qtd; $i++) { 
+                                $status = ($produtos[$i]['PRO_QTD_MIN']>= $produtos[$i]['PRO_QUANTIDADE'])? 'bg-warning' : 'text-success';
+                                $aviso = ($produtos[$i]['PRO_QTD_MIN']>= $produtos[$i]['PRO_QUANTIDADE'])? 'É NECESSÁRIO COMPRAR MAIS DESTE PRODUTO' : 'ESTOQUE ACIMA DO MÍNIMO';
+                                ?>
+                            <tr title="<?= $aviso ?>" class="<?= ($produtos[$i]['PRO_STATUS'] == 0 && $_SESSION['USU_NIVEL'] >= 8)? 'bg-secondary' : $status ;?>">
                                 <td class="text-center align-middle">
-                                    <?= $b; ?>
+                                    <?= $b.' '; ?>
                                 </td>
                                 <td class="text-center align-middle"><?= $produtos[$i]['EST_DESCRICAO']; ?></td>
-                                <td class="text-center align-middle"><?= ($produtos[$i]['PRO_TIPO'] == 1)? 'PRODUTO': (($produtos[$i]['PRO_TIPO'] == 2) ? 'SERVIÇO' : 'N.I.'); ?></td>
-                                <td class="text-center align-middle"><?= $produtos[$i]['PRO_CODIGO']; ?></td>
+                                <!--<td class="text-center align-middle"><?php // ($produtos[$i]['PRO_TIPO'] == 1)? 'PRODUTO': (($produtos[$i]['PRO_TIPO'] == 2) ? 'SERVIÇO' : 'N.I.'); ?></td>
+                                <td class="text-center align-middle"><?php //= $produtos[$i]['PRO_CODIGO']; ?></td>-->
 
                                 <td class="text-center align-middle"><?= $produtos[$i]['PRO_NOME']; ?></td>
                                 <td class="text-center align-middle"><?= $produtos[$i]['PRO_QTD_MIN']; ?></td>
                                 <td class="text-center align-middle"><?= $produtos[$i]['PRO_QUANTIDADE']; ?></td>
+                                
+                                    <?php
+                                    $saldo = ($produtos[$i]['PRO_QUANTIDADE']-$produtos[$i]['PRO_QTD_MIN']); 
+                                    if ($saldo >=1) { ?>
+                                        <td class="text-center align-middle">
+                                        <?php echo '<b class="text-success">'.$saldo.'</b>';
+                                         ?>
+                                         </td>
+                                    <?php } else { ?>
+                                        <td class="text-center bg-danger align-middle">
+                                        <?php echo '<b class="text-warning">'.$saldo.'</b>';
+                                        ?>
+                                        </td>
+                                    <?php }                                   
+                                    ?>
+                                
                                 <td class="text-center align-middle">
                                 <?php
-                                    $status = ($produtos[$i]['PRO_QTD_MIN']>= $produtos[$i]['PRO_QUANTIDADE'])? '<b class="text-danger">COMPRAR</b>' : '<b class="text-success">OK</b>';
+                                    $status = ($produtos[$i]['PRO_QTD_MIN']>= $produtos[$i]['PRO_QUANTIDADE'])? '<b class="text-danger"><i class="bi bi-exclamation-diamond"></i> COMPRAR</b>' : '<b class="text-success">OK</b>';
                                     echo $status;
                                 ?>
                                 </td>
+                                
                                 <!--<td class="text-center align-middle"><?php //= number_format($produtos[$i]['PRO_PRECO_UNITARIO'],2,',','.'); ?></td>
                                 <td class="text-center align-middle"><?php //= number_format($produtos[$i]['PRO_PRECO_VENDA'],2,',','.'); ?></td>-->
-                                <td class="text-center align-middle">R$ <?= $produtos[$i]['PRO_PRECO_UNITARIO']; ?></td>
-                                <td class="text-center align-middle">R$ <?= $produtos[$i]['PRO_PRECO_VENDA']; ?></td>
+                                 <!--<td class="text-center align-middle">R$ <?php //= $produtos[$i]['PRO_PRECO_UNITARIO']; ?></td>
+                                <td class="text-center align-middle">R$ <?php //= $produtos[$i]['PRO_PRECO_VENDA']; ?></td>-->
                                 <td class="text-center align-middle">
                                     <a type="button" class="btn btn-outline-secondary btn-sm d-print-none" href="<?= DIRPAGE.'produtos/detalhar/'.$produtos[$i]['EMP_COD'].'/'.$produtos[$i]['EST_COD'].'/'.$produtos[$i]['PRO_COD']; ?>" title="Detalhar produto"><i class="bi bi-eye"></i></a>
                                 </td>
