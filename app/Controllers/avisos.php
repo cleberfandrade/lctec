@@ -1,7 +1,7 @@
 <?php
 namespace App\Controllers;
 
-use App\Models\Avisos;
+use App\Models\Avisos as ModelsAviso;
 use App\Models\Empresas;
 use App\Models\Estoques;
 use App\Models\ModulosEmpresa;
@@ -15,7 +15,7 @@ use Libraries\Check;
 use Libraries\Sessao;
 use Libraries\Util;
 
-class admin extends View
+class avisos extends View
 {
     private $dados = [];
     private $link,$Util,$Check,$Empresa,$Usuarios,$Estoques,$UsuariosEmpresa,$ModulosEmpresa, $Tarefas,$Produtos,$Movimentacoes,$Avisos;
@@ -33,7 +33,7 @@ class admin extends View
         $this->Check = new Check;
         $this->Produtos = new Produtos;
         $this->Movimentacoes = new Movimentacoes;
-        $this->Avisos = new Avisos;
+        $this->Avisos = new ModelsAviso;
         
         $this->dados['usuarios_empresa'] = $this->UsuariosEmpresa->setCodUsuario($_SESSION['USU_COD'])->checarUsuario();
         if (isset($this->dados['usuarios_empresa']['UMP_COD'])) {
@@ -79,32 +79,84 @@ class admin extends View
          * 1 => ESTOQUE SEM DEFINICAO DE QUANTIDADE
          * 2 => ESTOQUE DE PRODUTO ABAIXO DO MINIMO
          */
+        $this->Produtos = new Produtos;
+        $this->Movimentacoes = new Movimentacoes;
+        $this->Avisos = new ModelsAviso;
         //CHECAR PRODUTOS COM ESTOQUE ABAIXO DO MINIMO
+        $this->dados['avisos'] = $this->Avisos->setCodEmpresa($_SESSION['EMP_COD'])->listarTodos(0);
         $this->dados['produtos'] = $this->Produtos->setCodEmpresa($_SESSION['EMP_COD'])->setStatus(1)->listarTodosGeral(0);
+        $qtdA = (is_array($this->dados['avisos']) ? count($this->dados['avisos']) : 0);
         $qtdP = (is_array($this->dados['produtos']) ? count($this->dados['produtos']) : 0);
-
-        for ($i=0; $i < $qtdP; $i++) { 
-            if (isset($this->dados['produtos'][$i]['PRO_QTD_MIN'])) {
-                $aviso = ($this->dados['produtos'][$i]['PRO_QTD_MIN']>= $this->dados['produtos'][$i]['PRO_QUANTIDADE'])? 'É NECESSÁRIO COMPRAR MAIS DESTE PRODUTO' : '';
-                if (!empty($aviso)) {
-                    $dados = array(
-                        'EMP_COD' => $this->dados['produtos'][$i]['EMP_COD'],
-                        'USU_COD' => $_SESSION['USU_COD'],
-                        'AVS_DT_CADASTRO'=> date('Y-m-d H:i:s'),
-                        'AVS_DT_VISUALIZACAO'=> date('0000-00-00 00:00:00'),  
-                        'AVS_TIPO' => 2,  
-                        'AVS_REFERENCIA' => 2,  
-                        'AVS_DESCRICAO' => $aviso,        
-                        'AVS_STATUS'=> 1
-                    );
-                    if($this->Avisos->cadastrar($dados,0)){
-                        $respota = array(
-                            'COD'=>'OK',
-                            'MENSAGEM' => 'Status de avisso checado com sucesso!'
-                        );
+        
+        if ($qtdP) {
+            for ($i=0; $i < $qtdP; $i++) { 
+                if ($qtdA) {
+                    for ($a=0; $a < $qtdA; $a++) { 
+                        if (isset($this->dados['produtos'][$i]['PRO_QTD_MIN'])) {
+                            if ($this->dados['avisos'][$a]['AVS_STATUS'] == 1 && $this->dados['avisos'][$a]['PRO_COD'] == $this->dados['produtos'][$i]['PRO_COD']) {
+                                //JA AVISOU
+                            }else {
+                                //NAO AVISOU
+                                $aviso = ($this->dados['produtos'][$i]['PRO_QTD_MIN']>= $this->dados['produtos'][$i]['PRO_QUANTIDADE'])? 'É NECESSÁRIO COMPRAR MAIS DESTE PRODUTO' : '';
+                                if (!empty($aviso)) {
+                                    $dados = array(
+                                        'EMP_COD' => $this->dados['produtos'][$i]['EMP_COD'],
+                                        'USU_COD' => $_SESSION['USU_COD'],
+                                        'PRO_COD' => $this->dados['produtos'][$i]['PRO_COD'],
+                                        'AVS_DT_CADASTRO'=> date('Y-m-d H:i:s'),
+                                        'AVS_DT_VISUALIZACAO'=> date('0000-00-00 00:00:00'),  
+                                        'AVS_TIPO' => 2,  
+                                        'AVS_REFERENCIA' => 2,  
+                                        'AVS_DESCRICAO' => $aviso,        
+                                        'AVS_STATUS'=> 1
+                                    );
+                                    if($this->Avisos->cadastrar($dados,0)){
+                                        $respota = array(
+                                            'COD'=>'OK',
+                                            'MENSAGEM' => 'Status de avisso checado com sucesso!'
+                                        );
+                                    }
+                                }
+                            } 
+                        }
+                    }
+                }else {
+                    //NOVO AVISO
+                    if (isset($this->dados['produtos'][$i]['PRO_QTD_MIN'])) {
+                        $aviso = ($this->dados['produtos'][$i]['PRO_QTD_MIN']>= $this->dados['produtos'][$i]['PRO_QUANTIDADE'])? 'É NECESSÁRIO COMPRAR MAIS '.$this->dados['produtos'][$i]['PRO_NOME'] : '';
+                        if (!empty($aviso)) {
+                            $dados = array(
+                                'EMP_COD' => $this->dados['produtos'][$i]['EMP_COD'],
+                                'USU_COD' => $_SESSION['USU_COD'],
+                                'PRO_COD' => $this->dados['produtos'][$i]['PRO_COD'],
+                                'AVS_DT_CADASTRO'=> date('Y-m-d H:i:s'),
+                                'AVS_DT_VISUALIZACAO'=> date('0000-00-00 00:00:00'),  
+                                'AVS_TIPO' => 2,  
+                                'AVS_REFERENCIA' => 2,  
+                                'AVS_DESCRICAO' => $aviso,        
+                                'AVS_STATUS'=> 1
+                            );
+                            if($this->Avisos->cadastrar($dados,0)){
+                                $respota = array(
+                                    'COD'=>'OK',
+                                    'MENSAGEM' => 'Status de avisso checado com sucesso!'
+                                );
+                            }else {
+                                $respota = array(
+                                    'COD'=>'ERRO',
+                                    'MENSAGEM' => 'ERRO NO CADASTRO DO AVISO!'
+                                );
+                            }
+                        }
                     }
                 }
-            } 
+            }
+        }else {
+            $respota = array(
+                'COD'=>'ERRO',
+                'MENSAGEM' => 'ERRO!'
+            );
         }
+        
     }
 }
