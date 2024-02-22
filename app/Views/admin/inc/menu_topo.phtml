@@ -1,9 +1,15 @@
 <?php 
  use App\Models\Tarefas;
+ use App\Models\Avisos as ModelsAviso;
 
  $Tarefas = new Tarefas;
  $trf = $Tarefas->setCodEmpresa($_SESSION['EMP_COD'])->listarTodos(0);
  $qtdTR = (is_array($trf) ? count($trf) : 0);
+
+ $Avisos = new ModelsAviso;
+ //CHECAR PRODUTOS COM ESTOQUE ABAIXO DO MINIMO
+ $avisos = $Avisos->setCodEmpresa($_SESSION['EMP_COD'])->listarTodos(0);
+ $qtdAvisos = (is_array($avisos) ? count($avisos) : 0);
     //if ($tarefas[$i]['CLN_COD'] <= 3)
 ?>
 
@@ -16,7 +22,8 @@
             <ul class="navbar-nav ms-auto mt-2 mt-lg-0 fs-6 text-uppercase align-items-center align-middle ">
                 <li class="row mx-auto container align-items-center align-middle ">
                     <div class="col">   
-                        <a type="button" class="btn btn-sm btn-dark" data-bs-toggle="tooltip" data-bs-title="0 Aviso(s)" data-bs-content=""><i class="bi bi-bell-slash text-secondary"></i></a>
+                        <a type="button" class="btn btn-sm btn-dark" data-bs-toggle="tooltip" href="#" data-bs-title="<?= $qtdAvisos ?> Aviso(s)" data-bs-content=""><?= $qtdAvisos >= 1 ? '
+                        <button class="btn btn-warning" type="button"><i class="bi bi-bell text-dark"></i></button>' : '<i class="bi bi-bell-slash text-secondary">' ?> </i></a>
                     </div>
                     <!--<div class="col">
                         <a type="button" class="btn btn-sm btn-dark" id="status_conexao" data-bs-content="" data-bs-toggle="tooltip"><i class="bi bi-wifi text-secondary" title=""></i></a>
@@ -40,3 +47,14 @@
         </div>
     </div>
 </nav>
+<?= $qtdAvisos >= 1 ? '<div class="py-2 bg-warning col-12">
+    <div class="toast" role="alert" id="myToast" aria-live="polite" aria-atomic="true" data-bs-delay="10000">
+        <div role="alert" aria-live="assertive" aria-atomic="true">...</div>
+    </div>
+</div>' : ''?>
+<script>
+    const myToastEl = document.getElementById('myToast')
+myToastEl.addEventListener('hidden.bs.toast', () => {
+  // do something...
+})
+</script>
