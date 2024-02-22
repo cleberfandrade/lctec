@@ -1,6 +1,7 @@
 <?php
 namespace App\Controllers;
 
+use App\Models\Empresas;
 use Core\View;
 
 use Libraries\Util;
