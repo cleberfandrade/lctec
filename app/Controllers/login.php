@@ -44,7 +44,8 @@ class login extends View
                     //$this->Usuarios;
                     //$senha = $Check->codificarSenha($dados['senha_usuario']);
                     $user = $this->Usuarios->setEmailUsuario($dados['email_usuario'])->setSenhaUsuario($dados['senha_usuario'])->Acessar(0);
-
+                    dump($dados['email_usuario']);
+                    dump($dados['senha_usuario']);
                     dump($user);
                     exit;
                     //checar se retornou algum usuario
