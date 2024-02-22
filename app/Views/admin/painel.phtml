@@ -126,7 +126,7 @@ $qtdMV = (is_array($movimentacoes) ? count($movimentacoes) : 0);
                                     for ($i=0; $i < $qtdME; $i++) { ?>
                                     <?php if ($modulos_empresa[$i]['MOD_NOME'] == 'ESTOQUE') {
                                         if ($qtdE) { ?>
-                                        <div class="col-6 col-sm-4 mb-3 round-3">
+                                        <div class="col-12 col-sm-6 col-lg-4 mb-3">
                                             <div class="mx-auto rounded-2 <?= $modulos_empresa[$i]['MOD_COR']; ?>" >
                                                 <a href="<?= DIRPAGE.$modulos_empresa[$i]['MOD_LINK']?>" class="link-light text-decoration-none">
                                                     <div class="card-header"><i class="bi bi-plus-square"></i> <?= $modulos_empresa[$i]['MOD_NOME']; ?></div>
@@ -139,7 +139,7 @@ $qtdMV = (is_array($movimentacoes) ? count($movimentacoes) : 0);
                                         </div>
                                     <?php }
                                     }else { ?>
-                                    <div class="col-6 col-sm-4 mb-3">
+                                    <div class="col-12 col-sm-6 col-lg-4 mb-3">
                                         <div class=" mx-auto rounded-2 <?= $modulos_empresa[$i]['MOD_COR']; ?>">
                                             <a href="<?= DIRPAGE.$modulos_empresa[$i]['MOD_LINK']?>" class="link-light text-decoration-none">
                                                 <div class="card-header text-uppercase"><i class="bi bi-plus-square"></i> <?= $modulos_empresa[$i]['MOD_NOME']; ?></div>
