@@ -26,7 +26,7 @@ class modulo_empresa extends View
         $this->Modulos = new ModelsModulos;
         $this->ModulosEmpresa = new ModulosEmpresa;
         $this->Util = new Util;
-
+        $this->dados['title'] = 'MÓDULO | CADASTROS >> ';
         $this->dados['usuario'] = $this->Usuarios->setCodUsuario($_SESSION['USU_COD'])->listar(0);
         $this->dados['empresa'] = $this->UsuariosEmpresa->setCodEmpresa($_SESSION['EMP_COD'])->setCodUsuario($_SESSION['USU_COD'])->listar(0);
         $this->dados['modulos_empresa'] = $this->ModulosEmpresa->setCodEmpresa($_SESSION['EMP_COD'])->listar(0);
@@ -35,16 +35,17 @@ class modulo_empresa extends View
         $this->link[0] = ['link'=> 'admin','nome' => 'PAINEL ADMINISTRATIVO'];
         $this->link[1] = ['link'=> 'cadastros','nome' => 'MÓDULO DE CADASTROS >> '];
         $this->link[2] = ['link'=> 'modulos_empresa','nome' => 'GERENCIAR MÓDULOS DA EMPRESA'];
+        
         $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
     }
     public function index()
     {
-        $this->dados['title'] .= ' MÓDULOS';
+        $this->dados['title'] .= ' MÓDULOS DA EMPRESA';
         $this->render('admin/cadastros/modulos/listar', $this->dados);
     }
     public function alterar()
     {
-
+        $this->dados['title'] .= ' MÓDULOS DA EMPRESA';
         $dados = filter_input_array(INPUT_GET, FILTER_SANITIZE_URL);
         $dados = explode("/",$dados['url']);
         $ok = false;

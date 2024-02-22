@@ -86,6 +86,11 @@ class estoques extends View
         $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
         $this->render('admin/estoques/movimentacao', $this->dados);
     }
+    public function produtos_atual()
+    {
+        $this->dados['title'] .= ' ESTOQUE ATUAL DOS PRODUTOS';
+        $this->link[2] = ['link'=> 'estoques/produtos/atual','nome' => 'MOVIMENTAÇÃO DO ESTOQUE'];
+    }
     public function cadastrar()
     {
         $this->dados['title'] .= ' CADASTRAR NOVO ESTOQUE';
@@ -284,6 +289,9 @@ class estoques extends View
                 $liberado = false;
                 if ($dados['MOV_TIPO'] == 1) {
                     $liberado = true;
+                    dump($this->dados['produto']['PRO_QUANTIDADE']);
+                    dump($this->dados['MOV_QUANTIDADE']);
+                    exit;
                     $this->dados['produto']['PRO_QUANTIDADE']+= $dados['MOV_QUANTIDADE'];  
                 }else {
                     if ($this->dados['produto']['PRO_QUANTIDADE'] >=0 && ($this->dados['produto']['PRO_QUANTIDADE']-= $dados['MOV_QUANTIDADE'])>=0) {
