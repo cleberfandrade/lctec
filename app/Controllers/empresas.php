@@ -184,7 +184,7 @@ class empresas extends View
                     $db_modulos_empresa = [];
                     $m = 0;
                     //LIBERAR MODULOS PARA EMPRESA
-                    for ($i = 1; $i <= 3; $i++) {           
+                    for ($i = 1; $i <= 2; $i++) {           
                        
                         $this->ModulosEmpresa->setCodModulo($i);
                         $this->ModulosEmpresa->setCodEmpresa($id);
