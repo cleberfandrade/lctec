@@ -89,7 +89,11 @@ class estoques extends View
     public function produtos_atual()
     {
         $this->dados['title'] .= ' ESTOQUE ATUAL DOS PRODUTOS';
-        $this->link[2] = ['link'=> 'estoques/produtos/atual','nome' => 'MOVIMENTAÇÃO DO ESTOQUE'];
+        $this->link[2] = ['link'=> 'estoques/produtos/atual','nome' => 'ESTOQUE ATUAL DOS PRODUTOS'];
+        $this->dados['produtos'] = $this->Produtos->setCodEmpresa($_SESSION['EMP_COD'])->setStatus(1)->listarTodosGeral(0);
+        $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
+        $this->render('admin/estoques/produtos/atual', $this->dados);
+
     }
     public function cadastrar()
     {
@@ -287,14 +291,15 @@ class estoques extends View
                 );
                 $this->dados['produto'] = $this->Produtos->setCodEmpresa($dados['EMP_COD'])->setCodEstoque($dados['EST_COD'])->setCodigo($dados['PRO_COD'])->listar(0);
                 $liberado = false;
+               
                 if ($dados['MOV_TIPO'] == 1) {
                     $liberado = true;
-                    dump($this->dados['produto']['PRO_QUANTIDADE']);
-                    dump($this->dados['MOV_QUANTIDADE']);
-                    exit;
+                   
                     $this->dados['produto']['PRO_QUANTIDADE']+= $dados['MOV_QUANTIDADE'];  
                 }else {
-                    if ($this->dados['produto']['PRO_QUANTIDADE'] >=0 && ($this->dados['produto']['PRO_QUANTIDADE']-= $dados['MOV_QUANTIDADE'])>=0) {
+                   
+                    if ($this->dados['produto']['PRO_QUANTIDADE'] >=0 && ($this->dados['produto']['PRO_QUANTIDADE']-$dados['MOV_QUANTIDADE'])>=0) {
+                        
                         $this->dados['produto']['PRO_QUANTIDADE']-= $dados['MOV_QUANTIDADE'];
                         $liberado = true;
                     }

@@ -48,6 +48,9 @@ class cadastros extends View
         $this->dados['usuarios_empresa'] = $UsuariosEmpresa->setCodUsuario($_SESSION['USU_COD'])->checarUsuario();
         $this->dados['modulos_empresa'] = $ModulosEmpresa->setCodEmpresa($_SESSION['EMP_COD'])->listar();
 
+        $this->dados['setores'] = $this->Setores->setCodEmpresa($_SESSION['EMP_COD'])->listarTodos(0); 
+        $this->dados['classificacoes'] = $this->Classificacoes->setCodEmpresa($_SESSION['EMP_COD'])->listarTodos(0);
+
         if (isset($this->dados['usuarios_empresa']['UMP_COD'])) {
             $_SESSION['EMP_COD'] = $this->dados['usuarios_empresa']['EMP_COD'];
             $this->dados['empresa'] = $Empresa->setCodigo($_SESSION['EMP_COD'])->listar(0); 
@@ -126,6 +129,10 @@ class cadastros extends View
         $this->dados['title'] .= ' ESTOQUES';
         $this->link[2] = ['link'=> 'cadastros/estoques','nome' => 'GERENCIAR ESTOQUES'];
         $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
+        
+        $this->dados['setores'] = $this->Setores->setCodEmpresa($_SESSION['EMP_COD'])->setTipo(4)->listarTodosPorTipo(0); 
+        $this->dados['classificacoes'] = $this->Classificacoes->setCodEmpresa($_SESSION['EMP_COD'])->setTipo(4)->listarTodosPorTipo(0);
+        
         $this->Estoques->setCodEmpresa($_SESSION['EMP_COD']);
         $this->dados['estoques'] = $this->Estoques->listarTodos(0);
 
@@ -139,6 +146,7 @@ class cadastros extends View
         
         $this->dados['setores'] = $this->Setores->setCodEmpresa($_SESSION['EMP_COD'])->setTipo(4)->listarTodosPorTipo(4); 
         $this->dados['classificacoes'] = $this->Classificacoes->setCodEmpresa($_SESSION['EMP_COD'])->setTipo(4)->listarTodosPorTipo(0);
+        
         $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
         $this->render('admin/cadastros/estoques/cadastrar', $this->dados);
     }
@@ -179,6 +187,9 @@ class cadastros extends View
         }else{
             Sessao::alert('ERRO',' EST11- Dados inválido(s)!','alert alert-danger');
         }
+        $this->dados['setores'] = $this->Setores->setCodEmpresa($_SESSION['EMP_COD'])->setTipo(4)->listarTodosPorTipo(0); 
+        $this->dados['classificacoes'] = $this->Classificacoes->setCodEmpresa($_SESSION['EMP_COD'])->setTipo(4)->listarTodosPorTipo(0);
+
         if ($ok) {
             $this->dados['estoques'] = $this->Estoques->setCodEmpresa($_SESSION['EMP_COD'])->listarTodos(0);
             $this->render('admin/cadastros/estoques/listar', $this->dados);
@@ -212,6 +223,8 @@ class cadastros extends View
         }else{
             Sessao::alert('ERRO',' ERRO: EST21 - Acesso inválido(s)!','alert alert-danger');
         }      
+        $this->dados['setores'] = $this->Setores->setCodEmpresa($_SESSION['EMP_COD'])->setTipo(4)->listarTodosPorTipo(0); 
+        $this->dados['classificacoes'] = $this->Classificacoes->setCodEmpresa($_SESSION['EMP_COD'])->setTipo(4)->listarTodosPorTipo(0);
         if($ok){
                 $this->render('admin/cadastros/estoques/alterar', $this->dados);
         }else{
@@ -265,7 +278,8 @@ class cadastros extends View
         }else {
             Sessao::alert('ERRO',' EST31- Dados inválido(s)!','fs-4 alert alert-danger');
         }
-
+        $this->dados['setores'] = $this->Setores->setCodEmpresa($_SESSION['EMP_COD'])->setTipo(4)->listarTodosPorTipo(0); 
+        $this->dados['classificacoes'] = $this->Classificacoes->setCodEmpresa($_SESSION['EMP_COD'])->setTipo(4)->listarTodosPorTipo(0);
         if($ok) {
             $this->dados['estoque'] = $this->Estoques->setCodEmpresa($_SESSION['EMP_COD'])->setCodigo($dados['EST_COD'])->listar(0);
             $this->render('admin/cadastros/estoques/alteracao_estoques', $this->dados);
