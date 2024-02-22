@@ -62,7 +62,7 @@ class Usuarios extends Model
     }
     public function Acessar($ver = 0)
     {
-        $parametros = " U INNER JOIN tb_enderecos E ON E.USU_COD=U.USU_COD WHERE U.USU_EMAIL='{$this->email}'";
+        $parametros = " U LEFT OUTER JOIN tb_enderecos E ON E.USU_COD=U.USU_COD WHERE U.USU_EMAIL='{$this->email}'";
         $campos = "*";
         $resultado = $this->Model->exibir($parametros, $campos, $ver, $id = false);
         if ($resultado) {
