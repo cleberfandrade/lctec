@@ -111,11 +111,16 @@ class avisos extends View
                                         'AVS_STATUS'=> 1
                                     );
                                     if($this->Avisos->cadastrar($dados,0)){
-                                        $respota = array(
+                                        $resposta = array(
                                             'COD'=>'OK',
                                             'MENSAGEM' => 'Status de avisso checado com sucesso!'
                                         );
                                     }
+                                }else {
+                                    $resposta = array(
+                                        'COD'=>'OK',
+                                        'MENSAGEM' => 'Status de avisso checado com sucesso!'
+                                    );
                                 }
                             } 
                         }
@@ -123,7 +128,7 @@ class avisos extends View
                 }else {
                     //NOVO AVISO
                     if (isset($this->dados['produtos'][$i]['PRO_QTD_MIN'])) {
-                        $aviso = ($this->dados['produtos'][$i]['PRO_QTD_MIN']>= $this->dados['produtos'][$i]['PRO_QUANTIDADE'])? 'É NECESSÁRIO COMPRAR MAIS '.$this->dados['produtos'][$i]['PRO_NOME'] : '';
+                        $aviso = ($this->dados['produtos'][$i]['PRO_QTD_MIN'] >= $this->dados['produtos'][$i]['PRO_QUANTIDADE'])? 'É NECESSÁRIO COMPRAR MAIS '.$this->dados['produtos'][$i]['PRO_NOME'] : '';
                         if (!empty($aviso)) {
                             $dados = array(
                                 'EMP_COD' => $this->dados['produtos'][$i]['EMP_COD'],
@@ -137,12 +142,12 @@ class avisos extends View
                                 'AVS_STATUS'=> 1
                             );
                             if($this->Avisos->cadastrar($dados,0)){
-                                $respota = array(
+                                $resposta = array(
                                     'COD'=>'OK',
                                     'MENSAGEM' => 'Status de avisso checado com sucesso!'
                                 );
                             }else {
-                                $respota = array(
+                                $resposta = array(
                                     'COD'=>'ERRO',
                                     'MENSAGEM' => 'ERRO NO CADASTRO DO AVISO!'
                                 );
@@ -152,11 +157,11 @@ class avisos extends View
                 }
             }
         }else {
-            $respota = array(
+            $resposta = array(
                 'COD'=>'ERRO',
                 'MENSAGEM' => 'ERRO!'
             );
         }
-        
+        echo json_encode($resposta);
     }
 }
