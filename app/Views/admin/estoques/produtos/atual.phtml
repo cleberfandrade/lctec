@@ -91,7 +91,7 @@ $qtdC = (is_array($categorias) ? count($categorias) : 0);
                                 
                                 <td class="text-center align-middle">
                                 <?php
-                                    $status = ($produtos[$i]['PRO_QTD_MIN']>= $produtos[$i]['PRO_QUANTIDADE'])? '<b class="text-danger"><i class="bi bi-exclamation-diamond"></i> COMPRAR</b>' : '<b class="text-success">OK</b>';
+                                    $status = ($produtos[$i]['PRO_QTD_MIN']>= $produtos[$i]['PRO_QUANTIDADE'])? '<b class="text-danger"><i class="bi bi-exclamation-diamond"></i> COMPRAR+</b>' : '<b class="text-success">ACIMA DO MÍNIMO</b>';
                                     echo $status;
                                 ?>
                                 </td>

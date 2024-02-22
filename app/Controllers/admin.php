@@ -22,7 +22,7 @@ class admin extends View
     public function __construct()
     {
         Sessao::naoLogado();
-        $this->dados['title'] = 'PAINEL | LC-TEC';
+        $this->dados['title'] = 'PAINEL | LC/TEC';
         $this->Usuarios = new Usuarios;
         $this->Empresa = new Empresas;
         $this->Estoques = new Estoques;
@@ -35,13 +35,7 @@ class admin extends View
         $this->Movimentacoes = new Movimentacoes;
         $this->Avisos = new Avisos;
 
-        /**
-         * AVISOS - TIPO
-         * 0 => GERAL
-         * 1 => PRODUTO
-         * 2 => SERVICO
-         * 3 => CONTA
-        */
+       
         /*
         $motivos = array(
             0 => '---',
@@ -63,6 +57,7 @@ class admin extends View
         $this->dados['modulos_empresa'] = $this->ModulosEmpresa->setCodEmpresa($_SESSION['EMP_COD'])->listar();
         $this->dados['estoques'] = $this->Estoques->setCodEmpresa($_SESSION['EMP_COD'])->listarTodos(0);
         $this->dados['produtos'] = $this->Produtos->setCodEmpresa($_SESSION['EMP_COD'])->setStatus(1)->listarTodosGeral(0);
+
         
         $this->dados['usuarios'] = $this->UsuariosEmpresa->setCodEmpresa($_SESSION['EMP_COD'])->setStatus(1)->listarUsuariosEmpresa(0);
         
@@ -70,6 +65,8 @@ class admin extends View
 
         $this->dados['tarefas'] = $this->Tarefas->setCodEmpresa($_SESSION['EMP_COD'])->listarTodos(0);
 
+        $this->dados['avisos'] = $this->Avisos->setCodEmpresa($_SESSION['EMP_COD'])->listarTodos(0);
+        
         $this->link[0] = ['link'=> 'admin','nome' => 'PAINEL ADMINISTRATIVO'];
         $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
     }

@@ -45,7 +45,14 @@
             //statusDisplay.title  = "Online";
             console.log('Online');
         });
-    
+        
     }, 3000);
-    
+    setInterval(async () => {
+        var EMP_COD = <?php echo $_SESSION['EMP_COD']; ?>;
+
+        $.post('<?= DIRPAGE; ?>avisos/checarAvisos', {EMP_COD: EMP_COD}, function(retorno) {
+            //db = JSON.parse(retorno);
+            //$('#PRO_QUANTIDADE').html(db.PRO_QUANTIDADE);
+        });
+    }, 5000);
 </script>
