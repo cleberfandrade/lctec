@@ -159,8 +159,7 @@ class login extends View
                             $db['USU_SENHA'] = $this->Check->codificarSenha($dados_usuario['senha_usuario']);
     
                             $id = $this->Usuarios->cadastrar($db,0);
-                            dump($id);
-                            exit;
+                    
                             if($id){
                                 $db_endereco = array(
                                     'USU_COD' => $id,
