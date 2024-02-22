@@ -44,10 +44,6 @@ class login extends View
                     //$this->Usuarios;
                     //$senha = $Check->codificarSenha($dados['senha_usuario']);
                     $user = $this->Usuarios->setEmailUsuario($dados['email_usuario'])->setSenhaUsuario($dados['senha_usuario'])->Acessar(0);
-                    dump($dados['email_usuario']);
-                    dump($dados['senha_usuario']);
-                    dump($user);
-                    exit;
                     //checar se retornou algum usuario
                     if(!empty($user) && $user != 0){
                         //Checar se o status do usuario == 1: ativado/desativado
@@ -119,8 +115,8 @@ class login extends View
         
         $this->render('site/lembrar', $this->dados);
     }
-   public function novo_cadastro()
-   {
+    public function novo_cadastro()
+    {
         $this->dados['title'] = 'LC/TEC | CADASTRE=SE';
         //Recupera os dados enviados
         $dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);
@@ -163,6 +159,8 @@ class login extends View
                             $db['USU_SENHA'] = $this->Check->codificarSenha($dados_usuario['senha_usuario']);
     
                             $id = $this->Usuarios->cadastrar($db,0);
+                            dump($id);
+                            exit;
                             if($id){
                                 $db_endereco = array(
                                     'USU_COD' => $id,
