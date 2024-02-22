@@ -63,6 +63,7 @@ $qtdC = (is_array($categorias) ? count($categorias) : 0);
                             <th class="text-dark">NOME</th>
                             <th class="text-dark">QTD MINÍMA</th>
                             <th class="text-dark">QTD ATUAL</th>
+                            <th class="text-dark">STATUS</th>
                             <th class="text-dark">PREÇO UNITÁRIO</th>
                             <th class="text-dark">PREÇO VENDA</th>
                             <th class="text-dark">Ações</th>
@@ -82,6 +83,12 @@ $qtdC = (is_array($categorias) ? count($categorias) : 0);
                                 <td class="text-center align-middle"><?= $produtos[$i]['PRO_NOME']; ?></td>
                                 <td class="text-center align-middle"><?= $produtos[$i]['PRO_QTD_MIN']; ?></td>
                                 <td class="text-center align-middle"><?= $produtos[$i]['PRO_QUANTIDADE']; ?></td>
+                                <td class="text-center align-middle">
+                                <?php
+                                    $status = ($produtos[$i]['PRO_QTD_MIN']>= $produtos[$i]['PRO_QUANTIDADE'])? '<b class="text-danger">COMPRAR</b>' : '<b class="text-success">OK</b>';
+                                    echo $status;
+                                ?>
+                                </td>
                                 <!--<td class="text-center align-middle"><?php //= number_format($produtos[$i]['PRO_PRECO_UNITARIO'],2,',','.'); ?></td>
                                 <td class="text-center align-middle"><?php //= number_format($produtos[$i]['PRO_PRECO_VENDA'],2,',','.'); ?></td>-->
                                 <td class="text-center align-middle">R$ <?= $produtos[$i]['PRO_PRECO_UNITARIO']; ?></td>

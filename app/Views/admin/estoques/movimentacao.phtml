@@ -167,7 +167,7 @@ $qtdMotivos = (is_array($motivos) ? count($motivos) : 0);
                                 
                             if($movimentacoes[$i]['MOV_STATUS'] != 0){ 
                             ?>
-                            <tr class="<?= ($movimentacoes[$i]['MOV_STATUS'] == 0 && $_SESSION['USU_NIVEL'] >= 5)? 'bg-secondary' : '';?>">
+                            <tr class="<?= ($movimentacoes[$i]['MOV_STATUS'] == 0 && $_SESSION['USU_NIVEL'] >= 8)? 'bg-secondary' : '';?>">
                                 <td class="text-center align-middle"><?= $b; ?></td>
                                 <td class="text-center align-middle"><?= $movimentacoes[$i]['EST_DESCRICAO']; ?></td>
                                 <td class="text-center align-middle"><?= $movimentacoes[$i]['PRO_COD']; ?></td>
@@ -189,7 +189,7 @@ $qtdMotivos = (is_array($motivos) ? count($motivos) : 0);
                                 </td>
                             </tr>
                         <?php }else { ?>
-                            <tr class="<?= ($_SESSION['USU_NIVEL'] >= 7)? 'bg-secondary' : '';?>">
+                            <tr class="<?= ($_SESSION['USU_NIVEL'] >= 8)? 'bg-secondary' : '';?>">
                                 <td class="text-center align-middle"><?= $b; ?></td>
                                 <td class="text-center align-middle"><?= $movimentacoes[$i]['EST_DESCRICAO']; ?></td>
                                 <td class="text-center align-middle"><?= $movimentacoes[$i]['PRO_COD']; ?></td>
@@ -267,10 +267,12 @@ $qtdMotivos = (is_array($motivos) ? count($motivos) : 0);
                 document.getElementById("EST_COD").value = EST_COD;
 
                 for(var i=0;dados.length>i;i++){
-                    $(selecionado).append($('<option>', {
-                        value: dados[i].PRO_COD,
-                        text: dados[i].PRO_NOME
-                    }));
+                    if(dados[i].PRO_STATUS == 1){
+                        $(selecionado).append($('<option>', {
+                            value: dados[i].PRO_COD,
+                            text: dados[i].PRO_NOME
+                        }));
+                    }
                     //console.log(dados[i].PRO_NOME);
                     //console.log(codificarHtml(dados[i].PRO_NOME));
                 }

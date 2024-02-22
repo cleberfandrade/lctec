@@ -9,7 +9,9 @@ $qtdME = (is_array($modulos_empresa) ? count($modulos_empresa) : 0);
 $qtdU = (is_array($usuarios) ? count($usuarios) : 0);
 $qtdP = (is_array($produtos) ? count($produtos) : 0);
 $qtdMV = (is_array($movimentacoes) ? count($movimentacoes) : 0);
-?><body>
+!isset($m)? $m = $Util->getMesAtual():''; 
+?>
+<body>
     <style>
         #chart {
   max-width: 650px;
@@ -68,7 +70,7 @@ $qtdMV = (is_array($movimentacoes) ? count($movimentacoes) : 0);
                         </div>
                     <?php }else { ?>
                         <div class="row col-12 mx-auto m-1">
-                            <?php if($_SESSION['USU_NIVEL'] >= 10){ ?>
+                            <?php if($_SESSION['USU_NIVEL'] >= 11){ ?>
                             <div class="col-12 row mx-auto">
                                 <div class="col-6">
                                     <div id="chart"></div>
@@ -78,7 +80,7 @@ $qtdMV = (is_array($movimentacoes) ? count($movimentacoes) : 0);
                             </div>
                             <?php } ?>
                             <span class="text-uppercase"><?= Util::mesLowercase(date('n',$m))?>/<?= date('Y') ?></span>
-                                    <hr>
+                            <hr>
                             <div class="col-12 text-uppercase display-6 row text-center mx-auto mb-3">    
                     
                                 <div class="col-sm-4 rounded-2 border border-1">
