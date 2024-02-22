@@ -41,9 +41,12 @@ class login extends View
                 $dados['email_usuario'] = $this->Check->checarString($dados['email_usuario']);
                 $dados['senha_usuario'] = $this->Check->checarString($dados['senha_usuario']);
                 if($this->Check->checarEmail($dados['email_usuario'])){
-                    $this->Usuarios->setEmailUsuario($dados['email_usuario']);
+                    //$this->Usuarios;
                     //$senha = $Check->codificarSenha($dados['senha_usuario']);
-                    $user = $this->Usuarios->setSenhaUsuario($dados['senha_usuario'])->Acessar(0);
+                    $user = $this->Usuarios->setEmailUsuario($dados['email_usuario'])->setSenhaUsuario($dados['senha_usuario'])->Acessar(0);
+
+                    dump($user);
+                    exit;
                     //checar se retornou algum usuario
                     if(!empty($user) && $user != 0){
                         //Checar se o status do usuario == 1: ativado/desativado
