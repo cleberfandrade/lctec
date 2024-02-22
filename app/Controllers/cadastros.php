@@ -247,7 +247,7 @@ class cadastros extends View
             $this->link[3] = ['link'=> 'cadastros/estoques/alteracao_estoques/'.$_SESSION['EMP_COD'].'/'.$dados['EST_COD'],'nome' => 'ALTERAR ESTOQUES'];
             $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
             
-            unset($dados['ALTERAR_ESTOQUE']);
+           
             
             if($_SESSION['USU_COD'] == $dados['USU_COD'] && $_SESSION['EMP_COD'] == $dados['EMP_COD']){
 
@@ -255,10 +255,10 @@ class cadastros extends View
                 //foreach ($dados as $key => $value) {
                   //  $dados[$key] = $this->Check->checarString($value);
                 //}
-
-                $this->Estoques->setCodEmpresa($dados['EMP_COD']);
-                $this->Estoques->setCodigo($dados['EST_COD']);
-
+                unset($dados['ALTERAR_ESTOQUE']);
+                $this->Estoques->setCodEmpresa($dados['EMP_COD'])->setCodigo($dados['EST_COD']);
+                $codEstoque = $dados['EST_COD'];
+                $codEmpresa = $dados['EMP_COD'];
                 unset($dados['EST_COD']);
                 unset($dados['EMP_COD']);
 
@@ -281,8 +281,10 @@ class cadastros extends View
         $this->dados['setores'] = $this->Setores->setCodEmpresa($_SESSION['EMP_COD'])->setTipo(4)->listarTodosPorTipo(0); 
         $this->dados['classificacoes'] = $this->Classificacoes->setCodEmpresa($_SESSION['EMP_COD'])->setTipo(4)->listarTodosPorTipo(0);
         if($ok) {
-            $this->dados['estoque'] = $this->Estoques->setCodEmpresa($_SESSION['EMP_COD'])->setCodigo($dados['EST_COD'])->listar(0);
-            $this->render('admin/cadastros/estoques/alteracao_estoques', $this->dados);
+            $this->dados['estoque'] = $this->Estoques->setCodEmpresa($_SESSION['EMP_COD'])->setCodigo($codEstoque)->listar(0);
+            ///$this->render('admin/cadastros/estoques/listar', $this->dados);
+            $this->render('admin/cadastros/estoques/alterar', $this->dados);
+            //$this->render('admin/cadastros/estoques/alterar/'.$_SESSION['EMP_COD'].'/'.$codEstoque, $this->dados);
         }else{
             $this->dados['estoques'] = $this->Estoques->setCodEmpresa($_SESSION['EMP_COD'])->listarTodos(0);
             $this->render('admin/cadastros/estoques/listar', $this->dados);
