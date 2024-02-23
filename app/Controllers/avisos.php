@@ -102,7 +102,7 @@ class avisos extends View
                                 //checar se já foi corrigido o problema 
                                 if ($this->dados['produtos'][$i]['PRO_QUANTIDADE'] >= $this->dados['produtos'][$i]['PRO_QTD_MIN']) {
                                     $this->Avisos->setCodEmpresa($this->dados['avisos'][$a]['EMP_COD']);
-                                    $this->Avisos->setCodigo($this->dados['avisos'][$a]['AVS_COD'])
+                                    $this->Avisos->setCodigo($this->dados['avisos'][$a]['AVS_COD']);
                                     $this->Avisos->excluir(0);
                                     $resposta = array(
                                         'COD'=>'OK',
