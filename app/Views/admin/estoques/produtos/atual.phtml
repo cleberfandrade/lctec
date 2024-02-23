@@ -5,7 +5,7 @@ use Libraries\Sessao;
 
 include_once 'app/Views/admin/inc/cabecalho.phtml'; 
 $qtd = (is_array($estoques) ? count($estoques) : 0);
-$qtd = (is_array($produtos) ? count($produtos) : 0);
+$qtdP = (is_array($produtos) ? count($produtos) : 0);
 $qtdC = (is_array($categorias) ? count($categorias) : 0);
 ?>
 <body class="">
@@ -58,7 +58,7 @@ $qtdC = (is_array($categorias) ? count($categorias) : 0);
                         <tbody>
                         <?php
                             $b = 1;
-                            for ($i= 0; $i < $qtd; $i++) { 
+                            for ($i= 0; $i < $qtdP; $i++) { 
                                 $status = ($produtos[$i]['PRO_QTD_MIN']>= $produtos[$i]['PRO_QUANTIDADE'])? 'bg-warning' : 'text-success';
                                 $aviso = ($produtos[$i]['PRO_QTD_MIN']>= $produtos[$i]['PRO_QUANTIDADE'])? 'É NECESSÁRIO COMPRAR MAIS DESTE PRODUTO' : 'ESTOQUE ACIMA DO MÍNIMO';
                                 ?>
