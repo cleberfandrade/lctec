@@ -329,9 +329,10 @@ class estoques extends View
         }
 
         if ($ok) {
-            $this->dados['movimentacoes'] = $this->Movimentacoes->setCodEmpresa($_SESSION['EMP_COD'])->listarTodas(0);
-            $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
-            $this->render('admin/estoques/movimentacao', $this->dados);
+            header("Location:".DIRPAGE."estoques/movimentacao");
+            //$this->dados['movimentacoes'] = $this->Movimentacoes->setCodEmpresa($_SESSION['EMP_COD'])->listarTodas(0);
+            //$this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
+            //$this->render('admin/estoques/movimentacao', $this->dados);
         }else {
             $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
             $this->render('admin/estoques/movimentacao', $this->dados);
