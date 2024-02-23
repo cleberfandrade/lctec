@@ -87,17 +87,21 @@ class avisos extends View
         $this->dados['produtos'] = $this->Produtos->setCodEmpresa($_SESSION['EMP_COD'])->setStatus(1)->listarTodosGeral(0);
         $qtdA = (is_array($this->dados['avisos']) ? count($this->dados['avisos']) : 0);
         $qtdP = (is_array($this->dados['produtos']) ? count($this->dados['produtos']) : 0);
-        
+    
         if ($qtdP) {
             for ($i=0; $i < $qtdP; $i++) { 
+                    //checar se existe algum aviso cadastrado
                 if ($qtdA) {
                     for ($a=0; $a < $qtdA; $a++) { 
+                        //checar se foi definido quantidade mínima para o produto a ser verificado
                         if (isset($this->dados['produtos'][$i]['PRO_QTD_MIN'])) {
+                            //checar se já foi realizado o aviso sobre o produto a ser verificado
                             if ($this->dados['avisos'][$a]['AVS_STATUS'] == 1 && $this->dados['avisos'][$a]['PRO_COD'] == $this->dados['produtos'][$i]['PRO_COD']) {
                                 //JA AVISOU
                             }else {
                                 //NAO AVISOU
                                 $aviso = ($this->dados['produtos'][$i]['PRO_QTD_MIN']>= $this->dados['produtos'][$i]['PRO_QUANTIDADE'])? 'É NECESSÁRIO COMPRAR MAIS DESTE PRODUTO' : '';
+                               //checar se o produto está com estoque abaixo do mínimo definido
                                 if (!empty($aviso)) {
                                     $dados = array(
                                         'EMP_COD' => $this->dados['produtos'][$i]['EMP_COD'],
@@ -110,6 +114,7 @@ class avisos extends View
                                         'AVS_DESCRICAO' => $aviso,        
                                         'AVS_STATUS'=> 1
                                     );
+                                    //realizar o cadastro do aviso ao usuário
                                     if($this->Avisos->cadastrar($dados,0)){
                                         $resposta = array(
                                             'COD'=>'OK',
