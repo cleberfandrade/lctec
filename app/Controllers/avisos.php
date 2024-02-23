@@ -100,7 +100,7 @@ class avisos extends View
                                 //JA AVISOU
                                 //checar se já foi corrigido o problema 
                                 if ($this->dados['produtos'][$i]['PRO_QUANTIDADE'] >= $this->dados['produtos'][$i]['PRO_QTD_MIN']) {
-                                    $aviso_antigo = $this->Avisos->setCodEmpresa($this->dados['avisos'][$a]['EMP_COD'])->setCodigo($this->dados['avisos'][$a]['AVS_COD'])->excluir(0);
+                                    $this->Avisos->setCodEmpresa($this->dados['avisos'][$a]['EMP_COD'])->setCodigo($this->dados['avisos'][$a]['AVS_COD'])->excluir(0);
                                     $resposta = array(
                                         'COD'=>'OK',
                                         'MENSAGEM' => 'Aviso excluído com sucesso!'
@@ -117,7 +117,7 @@ class avisos extends View
                                             'AVS_DT_VISUALIZACAO'=> date('0000-00-00 00:00:00'),  
                                             'AVS_TIPO' => 2,  
                                             'AVS_REFERENCIA' => 2,  
-                                            'AVS_DESCRICAO' => $aviso,        
+                                            'AVS_DESCRICAO' => $this->dados['aviso'][$a]['AVS_DESCRICAO'],        
                                             'AVS_STATUS'=> 1
                                         );
                                         //realizar o cadastro do aviso ao usuário
