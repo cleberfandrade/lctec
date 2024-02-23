@@ -98,6 +98,8 @@ class avisos extends View
                             //checar se já foi realizado o aviso sobre o produto a ser verificado
                             if ($this->dados['avisos'][$a]['AVS_STATUS'] == 1 && $this->dados['avisos'][$a]['PRO_COD'] == $this->dados['produtos'][$i]['PRO_COD']) {
                                 //JA AVISOU
+                                //checar se já foi corrigido o problema
+                                
                             }else {
                                 //NAO AVISOU
                                 $aviso = ($this->dados['produtos'][$i]['PRO_QTD_MIN']>= $this->dados['produtos'][$i]['PRO_QUANTIDADE'])? 'É NECESSÁRIO COMPRAR MAIS DESTE PRODUTO' : '';
