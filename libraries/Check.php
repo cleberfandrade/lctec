@@ -3,7 +3,7 @@
 
  class Check
  {
-     private $string,$link;
+    private $string,$link;
      
     public function setLink($link)
     {
@@ -14,24 +14,24 @@
     {
         return $this->link ;
     }
-     public static function checarNome($string)
-     {
+    public static function checarNome($string)
+    {
         if(preg_match('',$string)){
             return true;
         }else{
             return false;
         }
-     }
-     public static function checarEmail($string)
-     {
+    }
+    public static function checarEmail($string)
+    {
         if(filter_var($string,FILTER_VALIDATE_EMAIL)){
             return true;
         }else{
             return false;
         }
-     }
-     public function breadcrumb()
-     {
+    }
+    public function breadcrumb()
+    {
         $link = self::getLink();
     
         $qtd = (is_array($link) ? count($link) : 0);
@@ -55,32 +55,32 @@
         }
         $printar.='</ol></nav>';
         return $printar;
-     }
+    }
 
-     public static function checarString($string)
-     {
+    public static function checarString($string)
+    {
         $string = strip_tags(trim($string));
         $string = htmlspecialchars($string,ENT_QUOTES);
         //$string = htmlentities($string, ENT_QUOTES | ENT_IGNORE, "UTF-8");
         return $string;
-     }
-     public function codificarSenha($string)
+    }
+    public function codificarSenha($string)
     {
         $codificada  = password_hash($string, PASSWORD_DEFAULT);
         return $codificada;
     }
-     public function getString()
-     {
-          return $this->string;
-     }
-     public function setString($string)
-     {
-          $this->string = $string;
+    public function getString()
+    {
+        return $this->string;
+    }
+    public function setString($string)
+    {
+        $this->string = $string;
 
-          return $this;
-     }
-     public function token($tamanho=10, $id="", $up=false) 
-     {
+        return $this;
+    }
+    public function token($tamanho=10, $id="", $up=false) 
+    {
         $characters = $id.'abcdefghijklmnopqrstuvwxyz0123456789';
         $charactersLength = strlen($characters);
         $randomString = '';
@@ -88,20 +88,20 @@
             $randomString .= $characters[rand(0, $charactersLength - 1)];
         }
         if($up === true) {
-          return strtoupper($id.$randomString);
+            return strtoupper($id.$randomString);
         } else {
-          return $id.$randomString;
+            return $id.$randomString;
         }
-      }
-      public function onlyNumbers($str)
-      {
-          $str = preg_replace('/\D/', '', $str);
-          return $str;
-      }
-      public function formatMoneyDb($str)
-{
-    $str = number_format((self::onlyNumbers($str) / 100), 2);
-    $str = str_replace(',', '', $str);
-    return $str;
-}
+    }
+    public function onlyNumbers($str)
+    {
+        $str = preg_replace('/\D/', '', $str);
+        return $str;
+    }
+    public function formatMoneyDb($str)
+    {
+        $str = number_format((self::onlyNumbers($str) / 100), 2);
+        $str = str_replace(',', '', $str);
+        return $str;
+    }
  }

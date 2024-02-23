@@ -52,29 +52,29 @@ class transacoes extends View
     }
     public function index()
     {
-        $this->dados['title'] .= ' GERENCIAR MOVIMENTAÇÕES';   
+        $this->dados['title'] .= ' GERENCIAR TRANSAÇÕES';   
         $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
         $this->render('admin/financeiro/movimentacoes/listar', $this->dados);
     }
     public function cadastro()
     {
-        $this->dados['title'] .= ' CADASTRAR MOVIMENTAÇÕES DA EMPRESA/NEGÓCIO';   
+        $this->dados['title'] .= ' CADASTRAR TRANSAÇÃO DA EMPRESA/NEGÓCIO';   
         $this->link[3] = ['link'=> 'movimentacoes/cadastro','nome' => 'CADASTRO DE MOVIMENTAÇÕES'];
         $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
         $this->render('admin/financeiro/movimentacoes/cadastrar', $this->dados);
     }
     public function cadastrar()
     {
-        $this->dados['title'] .= ' CADASTRAR MOVIMENTAÇÃO DA EMPRESA/NEGÓCIO';   
-        $this->link[3] = ['link'=> 'movimentacoes/cadastro','nome' => 'CADASTRO DE MOVIMENTAÇÕES'];
+        $this->dados['title'] .= ' CADASTRAR TRANSAÇÃO DA EMPRESA/NEGÓCIO';   
+        $this->link[3] = ['link'=> 'transacoes/cadastro','nome' => 'CADASTRO DE MOVIMENTAÇÕES'];
         $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
         $ok = false;
         $dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);
 
-        if (isset($_POST) && isset($dados['CADASTRAR_NOVA_MOVIMENTACAO'])) {
+        if (isset($_POST) && isset($dados['CADASTRAR_NOVA_TRANSACAO'])) {
             if( $this->dados['empresa']['USU_COD'] == $dados['USU_COD'] && $this->dados['empresa']['EMP_COD'] == $dados['EMP_COD']){
                 //Verifica se os campos foram todos preenchidos
-                unset($dados['CADASTRAR_NOVA_MOVIMENTACAO']);
+                unset($dados['CADASTRAR_NOVA_TRANSACAO']);
 
                 $this->dados['conta'] = $this->Contas->setCodEmpresa($dados['EMP_COD'])->setCodigo($dados['CTA_COD'])->listar(0);
                 if ($this->dados['conta'] != 0) {

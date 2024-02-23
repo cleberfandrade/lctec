@@ -301,6 +301,22 @@ class estoques extends View
                     if ($this->dados['produto']['PRO_QUANTIDADE'] >=0 && ($this->dados['produto']['PRO_QUANTIDADE']-$dados['MOV_QUANTIDADE'])>=0) {
                         
                         $this->dados['produto']['PRO_QUANTIDADE']-= $dados['MOV_QUANTIDADE'];
+                        
+                        //REGISTRAR VENDA - MOTIVO 2 => VENDA
+                        /* if($dados['MOV_MOTIVO']  == 2){
+                            $db_transacao = array(
+                                'TRS_DT_CADASTRO'=> date('Y-m-d H:i:s'),
+                                'TRS_DT_ATUALIZACAO'=> date('0000-00-00 00:00:00'),   
+                                'TRS_TIPO' => 2,
+                                'ITS_COD' => $this->dados['produto']['PRO_COD'],
+                                'ITS_QUANTIDADE'=> $dados['MOV_QUANTIDADE'],
+                                'TRS_TOKEN' => $this->Check->token(10,'',true),          
+                                'TRS_STATUS'=> 1
+                            );
+                        }else {
+                            # code...
+                        }*/
+
                         $liberado = true;
                     }
                 }
