@@ -117,7 +117,7 @@ class avisos extends View
                                             'AVS_DT_VISUALIZACAO'=> date('0000-00-00 00:00:00'),  
                                             'AVS_TIPO' => 2,  
                                             'AVS_REFERENCIA' => 2,  
-                                            'AVS_DESCRICAO' => $this->dados['aviso'][$a]['AVS_DESCRICAO'],        
+                                            'AVS_DESCRICAO' => $this->dados['avisos'][$a]['AVS_DESCRICAO'],        
                                             'AVS_STATUS'=> 1
                                         );
                                         //realizar o cadastro do aviso ao usuário
