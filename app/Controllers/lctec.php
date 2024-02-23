@@ -27,13 +27,33 @@ class lctec extends View
         $this->dados['empresa'] = $this->UsuariosEmpresa->setCodEmpresa($_SESSION['EMP_COD'])->setCodUsuario($_SESSION['USU_COD'])->listar(0);
         $this->dados['usuario'] = $this->Usuarios->setCodUsuario($_SESSION['USU_COD'])->listar(0);
         
-        $this->link[1] = ['link'=> 'lctec','nome' => 'PAINEL ADMINISTRATIVO LCTEC'];
-        $this->link[0] = ['link'=> '#','nome' => 'MÓDULO DA LCTEC >>'];
+        $this->link[0] = ['link'=> 'lctec','nome' => 'PAINEL GERENCIAL | LC/TEC'];
+        //$this->link[1] = ['link'=> 'lctec','nome' => 'MÓDULO LC/TEC >>'];
         $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
     }
     public function index()
     {
-        $this->dados['title'] .= ' PAINEL ADMINISTRATIVO LCTEC';   
+        Sessao::logadoSistema();
+        $this->dados['title'] .= ' PAINEL GERENCIAL | LC/TEC';   
+        $this->render('admin/lctec/painel', $this->dados);
+    }
+    public function modulos()
+    {
+        Sessao::logadoSistema();
+        $this->dados['title'] .= ' LC/TEC >> MÓDULOS DO SISTEMA';   
+        $this->link[1] = ['link'=> 'lctec','nome' => 'MÓDULOS LC/TEC >>'];
+        $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
+        $this->render('admin/lctec/modulos/modulos', $this->dados);
+    }
+    public function avisos()
+    {
+        $this->dados['title'] .= ' PAINEL GERENCIAL LC/TEC';   
+        Sessao::logadoSistema();
+        $this->render('admin/lctec/painel', $this->dados);
+    }
+    public function empresas()
+    {
+        $this->dados['title'] .= ' PAINEL GERENCIAL LC/TEC';   
         Sessao::logadoSistema();
         $this->render('admin/lctec/painel', $this->dados);
     }

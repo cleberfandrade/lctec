@@ -38,8 +38,8 @@ class tarefas extends View
         //$this->dados['colunas_tarefas'] = $this->ColunasTarefas->setCodEmpresa($_SESSION['EMP_COD'])->listarColunasTarefas(0);
         $this->dados['classificacoes'] = $this->Classificacoes->setCodEmpresa($_SESSION['EMP_COD'])->setTipo('TAREFAS')->listarTodosPorTipo(0);
         
-        $this->link[0] = ['link'=> 'admin','nome' => 'PAINEL ADMINISTRATIVO'];
-        $this->link[1] = ['link'=> 'cadastros','nome' => 'MÓDULO DE CADASTROS'];
+        $this->link[0] = ['link'=> 'lctec','nome' => 'PAINEL ADMINISTRATIVO'];
+        $this->link[1] = ['link'=> 'lctec/cadastros','nome' => 'MÓDULO DE CADASTROS'];
         $this->link[2] = ['link'=> 'tarefas','nome' => 'GERENCIAR TAREFAS'];
     }
     public function index()

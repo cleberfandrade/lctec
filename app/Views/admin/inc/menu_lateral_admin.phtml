@@ -3,8 +3,10 @@
 
     <div class="d-flex align-items-start">
     <div class="list-group list-group-flush text-uppercase mb-4" >
-        <a class="list-group-item list-group-item-action list-group-item-dark p-3 px-3" title="Painel Administrativo" href="<?= DIRPAGE?>admin"><i class="bi bi-house"></i>  PAINEL</a>
-        <?php if ($_SESSION['EMP_COD'] != 0) { ?>
+        
+        <a class="list-group-item list-group-item-action list-group-item-dark p-3 px-3" title="Painel Administrativo" href="<?= DIRPAGE?>admin"><i class="bi bi-house"></i>  PAINEL ADM</a>
+        <?php if ($_SESSION['EMP_COD'] != 0 && $_SESSION['USU_NIVEL'] >=11) { ?>
+        <a class="list-group-item list-group-item-action list-group-item-dark p-3 px-3" title="Painel Administrativo" href="<?= DIRPAGE?>admin"><i class="bi bi-house"></i>  PAINEL LC/TEC</a>
         <a class="list-group-item list-group-item-action list-group-item-dark p-3 px-3" title="Empresas/Negócios" href="<?= DIRPAGE?>lctec/empresas"><i class="bi bi-plus-square"></i> EMPRESAS</a>
         <a class="list-group-item list-group-item-action list-group-item-dark p-3 px-3" title="Equipes" href="<?= DIRPAGE?>lctec/equipes"><i class="bi bi-cash-coin"></i> ADMINISTRATIVO</a>
         <a class="list-group-item list-group-item-action list-group-item-dark p-3 px-3" title="Equipes" href="<?= DIRPAGE?>lctec/equipes"><i class="bi bi-cash-coin"></i> EQUIPES</a>
