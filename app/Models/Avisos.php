@@ -92,13 +92,13 @@ class Avisos extends Model
             return false;
         }
     }
-    public function excluir(array $dados, $ver = 0)
+    public function excluir($ver = 0)
     {
         $parametros = " WHERE EMP_COD={$this->codEmpresa} AND AVS_COD=";
         $this->Model->setParametros($parametros);
         $this->Model->setCodigo($this->codigo);
         $ok = false;
-        $ok = $this->Model->deletar($dados, $ver);
+        $ok = $this->Model->deletar($ver);
         if ($ok) {
             return true;
         } else {
