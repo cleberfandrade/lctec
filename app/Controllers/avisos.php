@@ -101,7 +101,9 @@ class avisos extends View
                                 //JA AVISOU
                                 //checar se já foi corrigido o problema 
                                 if ($this->dados['produtos'][$i]['PRO_QUANTIDADE'] >= $this->dados['produtos'][$i]['PRO_QTD_MIN']) {
-                                    $this->Avisos->setCodEmpresa($this->dados['avisos'][$a]['EMP_COD'])->setCodigo($this->dados['avisos'][$a]['AVS_COD'])->excluir(0);
+                                    $this->Avisos->setCodEmpresa($this->dados['avisos'][$a]['EMP_COD']);
+                                    $this->Avisos->setCodigo($this->dados['avisos'][$a]['AVS_COD'])
+                                    $this->Avisos->excluir(0);
                                     $resposta = array(
                                         'COD'=>'OK',
                                         'MENSAGEM' => 'Aviso excluído com sucesso!'
@@ -109,7 +111,7 @@ class avisos extends View
                                 } else {
                                    //VERIFICAR SE A DATA É DIFERENTE DÁ DO AVISO
                                    // Comparando as Datas
-                                   if (strtotime($this->dados['avisos'][$a]['AVS_DT_CADASTRO']) < strtotime(date('Y-m-d H:i:s'))) {
+                                   if (strtotime($this->dados['avisos'][$a]['AVS_DATA']) < strtotime(date('Y-m-d'))) {
                                         $dados = array(
                                             'EMP_COD' => $this->dados['produtos'][$i]['EMP_COD'],
                                             'USU_COD' => $_SESSION['USU_COD'],
