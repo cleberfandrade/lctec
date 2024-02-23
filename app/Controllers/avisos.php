@@ -99,10 +99,41 @@ class avisos extends View
                             if ($this->dados['avisos'][$a]['AVS_STATUS'] == 1 && $this->dados['avisos'][$a]['PRO_COD'] == $this->dados['produtos'][$i]['PRO_COD']) {
                                 //JA AVISOU
                                 //checar se já foi corrigido o problema 
-                                if ($this->dados['produtos'][$i]['PRO_QUANTIDADE']>= $this->dados['produtos'][$i]['PRO_QTD_MIN']) {
-                                    
+                                if ($this->dados['produtos'][$i]['PRO_QUANTIDADE'] >= $this->dados['produtos'][$i]['PRO_QTD_MIN']) {
+                                    $aviso_antigo = $this->Avisos->setCodEmpresa($this->dados['avisos'][$a]['EMP_COD'])->setCodigo($this->dados['avisos'][$a]['AVS_COD'])->excluir(0);
+                                    $resposta = array(
+                                        'COD'=>'OK',
+                                        'MENSAGEM' => 'Aviso excluído com sucesso!'
+                                    );
                                 } else {
-                                   
+                                   //VERIFICAR SE A DATA É DIFERENTE DÁ DO AVISO
+                                   // Comparando as Datas
+                                   if (strtotime($this->dados['avisos'][$a]['AVS_DT_CADASTRO']) < strtotime(date('Y-m-d H:i:s'))) {
+                                        $dados = array(
+                                            'EMP_COD' => $this->dados['produtos'][$i]['EMP_COD'],
+                                            'USU_COD' => $_SESSION['USU_COD'],
+                                            'PRO_COD' => $this->dados['produtos'][$i]['PRO_COD'],
+                                            'AVS_DT_CADASTRO'=> date('Y-m-d H:i:s'),
+                                            'AVS_DT_VISUALIZACAO'=> date('0000-00-00 00:00:00'),  
+                                            'AVS_TIPO' => 2,  
+                                            'AVS_REFERENCIA' => 2,  
+                                            'AVS_DESCRICAO' => $aviso,        
+                                            'AVS_STATUS'=> 1
+                                        );
+                                        //realizar o cadastro do aviso ao usuário
+                                        if($this->Avisos->cadastrar($dados,0)){
+                                            $resposta = array(
+                                                'COD'=>'OK',
+                                                'MENSAGEM' => 'Status de aviso Recadastrado com sucesso!'
+                                            );
+                                        }
+                                   } else {
+                                    //JÁ AVISADO
+                                    $resposta = array(
+                                        'COD'=>'OK',
+                                        'MENSAGEM' => 'Status de aviso já realizado com sucesso!'
+                                    );
+                                   }
                                 }
                                 
                             }else {
@@ -125,13 +156,13 @@ class avisos extends View
                                     if($this->Avisos->cadastrar($dados,0)){
                                         $resposta = array(
                                             'COD'=>'OK',
-                                            'MENSAGEM' => 'Status de avisso checado com sucesso!'
+                                            'MENSAGEM' => 'Status de aviso checado com sucesso!'
                                         );
                                     }
                                 }else {
                                     $resposta = array(
                                         'COD'=>'OK',
-                                        'MENSAGEM' => 'Status de avisso checado com sucesso!'
+                                        'MENSAGEM' => 'Status de aviso checado com sucesso!'
                                     );
                                 }
                             } 
