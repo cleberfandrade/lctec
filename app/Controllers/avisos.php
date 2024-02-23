@@ -122,12 +122,12 @@ class avisos extends View
                                             'AVS_STATUS'=> 1
                                         );
                                         //realizar o cadastro do aviso ao usuário
-                                        if($this->Avisos->cadastrar($dados,0)){
-                                            $resposta = array(
-                                                'COD'=>'OK',
-                                                'MENSAGEM' => 'Status de aviso Recadastrado com sucesso!'
-                                            );
-                                        }
+                                        //if($this->Avisos->cadastrar($dados,0)){
+                                         //   $resposta = array(
+                                             //   'COD'=>'OK',
+                                             //   'MENSAGEM' => 'Status de aviso Recadastrado com sucesso!'
+                                          //  );
+                                      //  }
                                    } else {
                                     //JÁ AVISADO
                                     $resposta = array(
