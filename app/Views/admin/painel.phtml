@@ -76,7 +76,9 @@ $qtdMV = (is_array($movimentacoes) ? count($movimentacoes) : 0);
                                     <div id="chart"></div>
                     
                                 </div>
-                                <?php include_once 'app/Views/admin/inc/calendario.phtml'; ?> 
+                                <div class="row col-6 col-md-6 col-lg-6 mx-auto">
+                                    <?php include_once 'app/Views/admin/inc/calendario.phtml'; ?> 
+                                </div>
                             </div>
                             <?php } ?>
                             <span class="text-uppercase"><?= Util::mesLowercase(date('n',$m))?>/<?= date('Y') ?></span>
