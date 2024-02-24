@@ -41,19 +41,19 @@ $qtd = (is_array($conta) ? count($conta) : 0);
                         <div class="card col bg-success m-1">
                             <div class="card-body text-white">
                                 <h5 class="card-title">ENTRADAS <i class="bi bi-arrow-down-square"></i></h5>
-                                <p class="card-text "><h2> <i class="bi bi-plus-square"></i> R$ <?= number_format($conta['CTA_SALDO'],2,',','.') ?></h2></p>
+                                <p class="card-text "><h2> <i class="bi bi-plus-square"></i> R$ <?= $conta['CTA_SALDO'] ?></h2></p>
                             </div>
                         </div>
                         <div class="card col bg-danger m-1">
                             <div class="card-body text-white">
                                 <h5 class="card-title">SAÍDAS <i class="bi bi-arrow-up-square"></i></h5>
-                                <p class="card-text"><h2> <i class="bi bi-dash-square"></i> R$ <?= number_format($conta['CTA_SALDO'],2,',','.') ?></h2></p>
+                                <p class="card-text"><h2> <i class="bi bi-dash-square"></i> R$ <?= $conta['CTA_SALDO'] ?></h2></p>
                             </div>
                         </div>
                         <div class="card col m-1">
                             <div class="card-body">
                                 <h5 class="card-title">SALDO <i class="bi bi-currency-dollar"></i></h5>
-                                <p class="card-text"><h2> <i class="bi bi-plus-square"></i> R$ <?= number_format($conta['CTA_SALDO'],2,',','.') ?></h2></p>
+                                <p class="card-text"><h2> <i class="bi bi-plus-square"></i> R$ <?= $conta['CTA_SALDO'] ?></h2></p>
                             </div>
                         </div>
                     </div>

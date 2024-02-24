@@ -48,7 +48,7 @@ include_once 'app/Views/admin/inc/cabecalho.phtml';
                                     <label class="px-3" for="2">SALDO INICIAL(ATUAL)</label>  
                                     <div class="input-group">    
                                         <span class="input-group-text">R$</span>  
-                                        <input type="text" class="form-control form-control-lg real" id="" name="CTA_SALDO" value="<?= isset($_POST['CTA_SALDO']) ? $_POST['CTA_SALDO'] : (isset($conta['CTA_TIPO'])? number_format($conta[$i]['CTA_SALDO'],2,',','.') : ''); ?>">
+                                        <input type="text" class="form-control form-control-lg real" id="" name="CTA_SALDO" value="<?= isset($_POST['CTA_SALDO']) ? $_POST['CTA_SALDO'] : (isset($conta['CTA_TIPO'])? $conta[$i]['CTA_SALDO'] : '0.00'); ?>">
                                     </div>
                                 </div>
                                 <div class="col-10 mb-3">
