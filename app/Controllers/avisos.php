@@ -88,7 +88,10 @@ class avisos extends View
         $this->dados['produtos'] = $this->Produtos->setCodEmpresa($_SESSION['EMP_COD'])->setStatus(1)->listarTodosGeral(0);
         $qtdA = (is_array($this->dados['avisos']) ? count($this->dados['avisos']) : 0);
         $qtdP = (is_array($this->dados['produtos']) ? count($this->dados['produtos']) : 0);
-    
+        $resposta = array(
+            'COD'=>'OK',
+            'MENSAGEM' => ''
+        );
         if ($qtdP) {
             for ($i=0; $i < $qtdP; $i++) { 
                     //checar se existe algum aviso cadastrado
