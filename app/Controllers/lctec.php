@@ -34,6 +34,7 @@ class lctec extends View
     public function index()
     {
         Sessao::logadoSistema();
+        $this->dados['empresa'] = $this->UsuariosEmpresa->setCodEmpresa($_SESSION['EMP_COD'])->setCodUsuario($_SESSION['USU_COD'])->listar(0);
         $this->dados['title'] .= ' PAINEL GERENCIAL | LC/TEC';   
         $this->render('admin/lctec/painel', $this->dados);
     }
@@ -47,14 +48,20 @@ class lctec extends View
     }
     public function avisos()
     {
-        $this->dados['title'] .= ' PAINEL GERENCIAL LC/TEC';   
+        $this->dados['title'] .= ' AVISOS LC/TEC';   
         Sessao::logadoSistema();
         $this->render('admin/lctec/painel', $this->dados);
     }
     public function empresas()
     {
-        $this->dados['title'] .= ' PAINEL GERENCIAL LC/TEC';   
+        $this->dados['title'] .= ' EMPRESAS LC/TEC';   
         Sessao::logadoSistema();
         $this->render('admin/lctec/painel', $this->dados);
+    }
+    public function suporte()
+    {
+        $this->dados['title'] .= ' SUPORTE LC/TEC';   
+        Sessao::logadoSistema();
+        $this->render('admin/lctec/suporte/listar', $this->dados);
     }
 }
