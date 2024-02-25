@@ -67,7 +67,7 @@ class Empresas extends Model
         $campos = "*";
         $resultado = $this->Model->exibir($parametros, $campos, $ver = 0, $id = false);
         if ($resultado) {
-            return $resultado[0];
+            return $resultado;
         } else {
             return false;
         }
