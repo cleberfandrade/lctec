@@ -14,45 +14,76 @@ use Libraries\Check;
 class modulos extends View
 {
     private $dados = [];
-    private $link,$Modulos,$Usuarios,$Empresa,$UsuariosEmpresa,$Check,$Util,$ModulosEmpresa;
+    private $link,$Modulos,$Usuarios,$Empresas,$UsuariosEmpresa,$Check,$Util,$ModulosEmpresa;
     public function __construct()
     {
-        Sessao::naoLogado();
-        $this->Usuarios = new Usuarios;
-        $this->Empresa = new Empresas;
-        $this->UsuariosEmpresa = new UsuariosEmpresa;
+        Sessao::logadoSistema();
+        $this->Empresas = new Empresas;
         $this->Check = new Check;
-        $this->Modulos = new ModelsModulos;
-        $this->ModulosEmpresa = new ModulosEmpresa;
         $this->Util = new Util;
 
+        $this->Usuarios = new Usuarios;
         $this->dados['usuario'] = $this->Usuarios->setCodUsuario($_SESSION['USU_COD'])->listar(0);
+        $this->UsuariosEmpresa = new UsuariosEmpresa;
         $this->dados['empresa'] = $this->UsuariosEmpresa->setCodEmpresa($_SESSION['EMP_COD'])->setCodUsuario($_SESSION['USU_COD'])->listar(0);
-        $this->dados['modulos_empresa'] = $this->ModulosEmpresa->setCodEmpresa($_SESSION['EMP_COD'])->listar();
+        
+        $this->Modulos = new ModelsModulos;
+        $this->dados['modulos'] = $this->Modulos->listarTodos();
 
-        $this->link[0] = ['link'=> 'admin','nome' => 'PAINEL ADMINISTRATIVO'];
-        $this->link[1] = ['link'=> 'cadastros','nome' => 'MÓDULO DE CADASTROS >> '];
-        $this->link[2] = ['link'=> 'usuarios','nome' => 'GERENCIAR MÓDULOS'];
+        $this->ModulosEmpresa = new ModulosEmpresa;
+
+        $this->link[0] = ['link'=> 'lctec','nome' => 'PAINEL GERENCIAL | LC/TEC'];
+        $this->link[1] = ['link'=> 'lctec/modulos','nome' => 'MÓDULOS LC/TEC >>'];
+        
         $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
     }
     public function index()
     {
-        $this->dados['title'] .= ' MÓDULOS';
-        $this->render('admin/cadastros/modulos/listar', $this->dados);
+        Sessao::logadoSistema();
+        $this->dados['title'] .= ' LC/TEC >> MÓDULOS DO SISTEMA';   
+        $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
+        $this->render('admin/lctec/modulos/modulos', $this->dados);
+    }
+    public function alteracao()
+    {
+        Sessao::logadoSistema();
+        $this->dados['title'] .= ' LC/TEC >> ALTERAR MÓDULO DO SISTEMA';   
+        $this->link[2] = ['link'=> 'lctec/modulos/alteracao','nome' => 'ALTERAR MÓDULO'];
+
+        $dados = filter_input_array(INPUT_GET, FILTER_SANITIZE_URL);
+        $dados = explode("/",$dados['url']);
+        $ok = false;
+        if (isset($dados[1]) && $dados[1] == 'alteracao' && isset($dados[2])) {
+            
+            if($this->dados['empresa']['USU_COD'] == $_SESSION['USU_COD'] && $_SESSION['USU_NIVEL'] >= 15){
+
+                $this->dados['modulo'] = $this->Modulos->setCodigo($dados[2])->listar(0);
+                if ($this->dados['modulo'] != 0) {
+                    $ok = true;
+                }else {
+                    $ok = false;
+                }
+            }else{
+                Sessao::alert('ERRO',' ERRO: CLI22 - Acesso nao permitido!','alert alert-danger');
+            }
+        }else{
+            Sessao::alert('ERRO',' ERRO: CLI11 - Dados inválido(s)!','alert alert-danger');
+        } 
+        if($ok){
+            $this->render('admin/lctec/modulos/alterar', $this->dados);
+        }else{
+            $this->dados['modulos'] = $this->Modulos->listarTodos(0);
+            $this->render('admin/lctec/modulos/modulos', $this->dados);
+        }
     }
     public function alterar()
     {
-        $Usuarios = new Usuarios;
-        $Usuarios->setCodUsuario($_SESSION['USU_COD']);
-        $this->dados['usuario'] = $Usuarios->listar(0);
-        
-        $Modulos = new Modulos;
 
         //$Modulos->setCodigo(0);
         $post = filter_input_array(INPUT_POST, FILTER_DEFAULT);
 
-        if (isset($_POST) && isset($post['ALTERAR_NIVEL'])) {
-            unset($post['ALTERAR_NIVEL']);
+        if (isset($_POST) && isset($post['ALTERAR_MODULO'])) {
+            unset($post['ALTERAR_MODULO']);
             if (empty($post['NIV_COD'])) {
                 Sessao::alert('ERRO',' 2- Houve um erro ao obter o código do Nível, entre em contato com o desenvolvedor!','text-uppercase fs-4 alert alert-danger');
             } else {
@@ -70,48 +101,50 @@ class modulos extends View
         }else{
             Sessao::alert('ERRO',' 1- Dados inválido(s)!','fs-4 alert alert-danger');
         }
-        $this->render('admin/configuracoes/empresa', $this->dados);
+        $this->render('admin/lctec/modulos', $this->dados);
     }
     public function status():void
     {
        //Recupera os dados enviados
-       $dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);
-       if (isset($_POST) && isset($dados['STATUS_MODULO'])) {
+       $this->link[1] = ['link'=> 'lctec','nome' => 'MÓDULOS LC/TEC >>'];
+       //$dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);
+       $dados = filter_input_array(INPUT_GET, FILTER_SANITIZE_URL);
+       $ok = false;
+       $dados = explode("/",$dados['url']);
+       if (isset($dados[1]) && $dados[1] == 'status' && isset($dados[2]) && isset($dados[3])) {
+       //if (isset($_POST) && isset($dados['STATUS_MODULO'])) {
 
-          if($this->dados['empresa']['USU_COD'] == $_SESSION['USU_COD'] && $this->dados['empresa']['EMP_COD'] == $dados['EMP_COD']){
+          if($_SESSION['USU_NIVEL'] >= 20 && $_SESSION['USU_NIVEL'] <= 30){
               //Verifica se os campos foram todos preenchidos
-              unset($dados['STATUS_MODULO']);
-              $this->ModulosEmpresa->setCodEmpresa($dados['EMP_COD'])->setCodigo($dados['FOR_COD']);
-              ($dados['MOD_STATUS'] == 1)? $dados['MOD_STATUS'] = 0 : $dados['MOD_STATUS'] = 1;
+              unset($dados['status']);
+              $this->Modulos->setCodigo($dados[2]);
+              ($dados[3] == 1)? $dados['MOD_STATUS'] = 0 : $dados['MOD_STATUS'] = 1;
               
               $db = array(
-                  'MDE_DT_ATUALIZACAO'=> date('Y-m-d H:i:s'),
-                  'FOR_STATUS' => $dados['FOR_STATUS']
+                  'MOD_DT_ATUALIZACAO'=> date('Y-m-d H:i:s'),
+                  'MOD_STATUS' => $dados['MOD_STATUS']
               );
-
-              if($this->ModulosEmpresa->alterar($db,0)){
-                  $respota = array(
-                      'COD'=>'OK',
-                      'MENSAGEM' => 'Status alterado com sucesso!'
-                  );
+             
+              if($this->Modulos->alterar($db,0)){
+                $ok = true;
+                Sessao::alert('OK','Status alterado com sucesso!','fs-4 alert alert-success');
               }else{
-                  $respota = array(
-                      'COD'=>'ERRO',
-                      'MENSAGEM'=> 'ERRO 2- Erro ao mudar status do módulo da empresa, entre em contato com o suporte!'
-                  );
+                Sessao::alert('ERRO',' ERRO: MOD33- Erro ao alterar status do módulo, entre em contato com a equipe de desenvolvimento!','fs-4 alert alert-danger');
               }
           }else {
-              $respota = array(
-                  'COD'=>'ERRO',
-                  'MENSAGEM'=> 'ERRO 2- Dados inválido(s)!'
-              );
+            Sessao::alert('ERRO',' ERRO: MOD22 - Acesso inválido(s)!','alert alert-danger');
           }
       }else {
-          $respota = array(
-              'COD'=>'ERRO',
-              'MENSAGEM'=> 'ERRO 1- Acesso inválido!'
-          );
+        Sessao::alert('ERRO',' ERRO: MOD22 - Dados inválido(s)!','alert alert-danger');
       }
-      echo json_encode($respota);
+     
+      $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
+
+      if ($ok) {
+        $this->dados['modulos'] = $this->Modulos->listarTodos();
+        $this->render('admin/lctec/modulos/modulos', $this->dados);
+      }else {
+          $this->render('admin/lctec/modulos/modulos', $this->dados);
+      }
     }
 }
