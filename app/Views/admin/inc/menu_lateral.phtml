@@ -16,7 +16,7 @@ $qtdMK = (is_array($mk) ? count($mk) : 0);
                 <?php } ?>
             <?php if ($qtdMK != 0) { 
                 for ($i=0; $i < $qtdMK; $i++) { ?>
-                    <a class="list-group-item list-group-item-action list-group-item-dark p-3 px-3" title="<?= $mk[$i]['MOD_NOME']; ?>" href="<?= DIRPAGE?><?= $mk[$i]['MOD_LINK']; ?>"><i class="bi bi-plus-square"></i> <?= $mk[$i]['MOD_NOME']; ?></a>
+                    <a class="list-group-item list-group-item-action list-group-item-dark p-3 px-3" title="<?= $mk[$i]['MOD_NOME']; ?>" href="<?= DIRPAGE?><?= $mk[$i]['MOD_LINK']; ?>"><?= !empty($mk[$i]['MOD_ICON'])? $mk[$i]['MOD_ICON'] : '<i class="bi bi-plus-square"></i>' ?> <?= $mk[$i]['MOD_NOME']; ?></a>
                 <?php } } ?>
             <!--<a class="list-group-item list-group-item-action list-group-item-dark p-3 px-3" title="Ponto de Venda da Empresa/Negócio" href="<?php //DIRPAGE?>financeiro/pdv"><i class="bi bi-cash-coin"></i> PDV</a>
             <a class="list-group-item list-group-item-action list-group-item-dark p-3 px-3" title="Configuraões do Sistema" href="<?php // DIRPAGE?>configuracoes"><i class="bi bi-sliders"></i> CONFIGURAÇÕES</a>-->
