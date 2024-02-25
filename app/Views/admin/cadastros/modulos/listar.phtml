@@ -67,7 +67,7 @@ $ModulosEmpresa = new ModulosEmpresa;
                         </div>
                         <?php } ?>
                     <?php } ?>
-                    <?php if($_SESSION['USU_NIVEL'] >= 11){ ?>
+                    <?php if($_SESSION['USU_NIVEL'] >= 10){ ?>
                         <?php if ($qtdME != $qtd) { ?>
                         <hr>
                         <h5 class="fw-bolder text-center text-uppercase text-dark"><i class="bi bi-ban-square"></i>Ative Outros Módulos</h5> 
@@ -77,7 +77,9 @@ $ModulosEmpresa = new ModulosEmpresa;
                         <?php
                         for ($i=0; $i < $qtd; $i++) {  
                             $ck = $ModulosEmpresa->setCodEmpresa($_SESSION['EMP_COD'])->setCodModulo($modulos[$i]['MOD_COD'])->checarRegistroModuloEmpresa(0);
+                        
                             if (!$ck) { ?>
+                            <?php if ($modulos[$i]['MOD_STATUS'] == 1 ) { ?>
                                 <div class="col-12 col-sm-4 col-md-6 rounded-2 text-center mb-2">
                                     <div class="card mx-auto <?= $modulos[$i]['MOD_COR']; ?> py-1">
                                         <div class="card-header">
@@ -88,12 +90,11 @@ $ModulosEmpresa = new ModulosEmpresa;
                                             <p class="card-text"><?= $modulos[$i]['MOD_DESCRICAO']; ?></p>
                                         </div>  
                                         <a type="button" href="<?= DIRPAGE ?>modulo_empresa/alterar/<?= $_SESSION['EMP_COD']?>/<?= $modulos[$i]['MOD_COD']?>/<?= $modulos[$i]['MOD_STATUS'] ?>" class="btn btn-<?= $modulos[$i]['MOD_COR']; ?> link-light text-decoration-none">
-                                            <?php if ($modulos[$i]['MOD_STATUS'] == 1 ) { ?>
-                                                <i class="bi bi-check2"></i> ATIVAR
-                                            <?php } ?>
+                                            <i class="bi bi-check2"></i> ATIVAR
                                         </a>
                                     </div>
                                 </div>  
+                                <?php } ?>
                             <?php  }
                         }  ?>    
                     <?php }else { ?>

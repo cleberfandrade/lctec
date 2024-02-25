@@ -9,10 +9,10 @@ $qtdME = (is_array($modulos) ? count($modulos) : 0);
 ?>
 <body class="max-width:100%;max-height:100%;">
     <div class="d-flex" id="wrapper">
-        <?php include_once 'app/Views/admin/inc/menu_lateral.phtml'; ?>
+        <?php include_once 'app/Views/admin/inc/menu_lateral_admin.phtml'; ?>
         <div id="page-content-wrapper">
             <!-- Top navigation-->
-            <?php include_once 'app/Views/admin/inc/menu_topo.phtml'; ?>
+            <?php include_once 'app/Views/admin/inc/menu_topo_admin.phtml'; ?>
             
             <div class="container-fluid bg-light p-0">
                 <header class="py-3">
@@ -27,7 +27,7 @@ $qtdME = (is_array($modulos) ? count($modulos) : 0);
                                     </a>
                                 </div>
                             </div>
-                            <?php include_once 'app/Views/admin/inc/saudacao.phtml'; ?>   
+                            <?php include_once 'app/Views/admin/inc/saudacao_admin.phtml'; ?>   
                         </div>
                     </section>
                     <section class="container col-12 mx-auto px-5">
@@ -74,12 +74,12 @@ $qtdME = (is_array($modulos) ? count($modulos) : 0);
                                         <?php if($_SESSION['USU_NIVEL'] >= 11 && $_SESSION['USU_NIVEL'] <= 30){ ?>
                                         <div class="card-footer mx-auto row text-center col-12">
                                             <div class="col-6 ">
-                                                <a type="button" class="btn btn-outline-warning btn-sm d-print-none" href="<?= DIRPAGE.'lctec/modulos_alterar/'.$modulos[$i]['MOD_COD']; ?>" title="Alterar Módulo"><i class="fa fa-edit"></i></a>
+                                                <a type="button" class="btn btn-outline-warning btn-sm d-print-none" href="<?= DIRPAGE.'lctec/modulos_alteracao/'.$modulos[$i]['MOD_COD']; ?>" title="Alterar Módulo"><i class="fa fa-edit"></i></a>
                                             </div>
                                             <div class="col-6">
                                                 <?= ($modulos[$i]['MOD_STATUS'] == 1)? '
                                                 <a type="button" href="'.DIRPAGE.'lctec/modulos_status/'.$modulos[$i]['MOD_COD'].'/'.$modulos[$i]['MOD_STATUS'].'" class="btn  btn-sm btn-danger text-decoration-none" title="Desativar Módulo?">
-                                                <i class="bi bi-ban"></i></a>' : '<a type="button" class="btn  btn-sm btn-success text-decoration-none" title="Ativar Módulo?"><i class="bi bi-bookmark-check"></i></a>'; ?></td>
+                                                <i class="bi bi-ban"></i></a>' : '<a type="button" href="'.DIRPAGE.'lctec/modulos_status/'.$modulos[$i]['MOD_COD'].'/'.$modulos[$i]['MOD_STATUS'].'" class="btn  btn-sm btn-success text-decoration-none" title="Ativar Módulo?"><i class="bi bi-bookmark-check"></i></a>'; ?></td>
                                             </div>
                                         </div>
                                         <?php } ?>
@@ -114,8 +114,7 @@ $qtdME = (is_array($modulos) ? count($modulos) : 0);
                             </div>
                              -->
                         </div>
-                    </div>
-                    
+                    </div>  
                 </section>
                 <?php include_once 'app/Views/admin/inc/rodape.phtml';?>
                 <script type="text/javascript">

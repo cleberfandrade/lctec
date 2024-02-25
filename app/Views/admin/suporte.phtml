@@ -56,7 +56,7 @@ input::placeholder {
                         </div>
                         <!-- Chat Box-->
                         <div class="col-7 px-0">
-                        <div class="px-4 py-5 chat-box bg-white">
+                        <div id="chat" class="px-4 py-5 chat-box bg-white">
                             <!-- Sender Message-->
                             <div class="media w-50 mb-3"><img src="https://bootstrapious.com/i/snippets/sn-chat/avatar.svg" alt="user" width="50" class="rounded-circle">
                                 <div class="media-body ms-3">
@@ -120,9 +120,11 @@ input::placeholder {
                         </div>
 
                         <!-- Typing area -->
-                        <form action="#" class="bg-light">
+                        <form id="MSG" action="#" class="bg-light">
                             <div class="input-group">
-                            <input type="text" placeholder="Envie uma mensagem" aria-describedby="button-addon2" class="form-control rounded-0 border-0 py-4 bg-light">
+                            <input type="text" id="SUP_MENSAGEM" name="SUP_MENSAGEM" placeholder="Envie uma mensagem" aria-describedby="button-addon2" class="form-control rounded-0 border-0 py-4 bg-light">
+                            <input type="hidden" class="form-control" id="EMP_COD" name="EMP_COD" value="<?= isset($_SESSION['EMP_COD']) ? $_SESSION['EMP_COD'] : 0; ?>">
+                            <input type="hidden" class="form-control" id="USU_COD" name="USU_COD" value="<?= isset($_SESSION['USU_COD']) ? $_SESSION['USU_COD'] : 0; ?>">
                             <div class="input-group-append">
                                 <button id="button-addon2" type="submit" class="btn btn-link"> <i class="fa fa-paper-plane"></i></button>
                             </div>
@@ -135,6 +137,30 @@ input::placeholder {
                 <?php include_once 'inc/rodape.phtml';?>
         </div>
     </div>
+    
 </div>
+<script type="text/javascript">
+    $("#MSG").click(function(){
+        var SUP_MENSAGEM = $('#SUP_MENSAGEM').val();
+        var EMP_COD = $('#EMP_COD').val();
+        var USU_COD = $('#USU_COD').val();
+        //var PRO_STATUS = $('#PRO_STATUS').val();
+        //setTimeout(function () {
+              //  $('#status').modal('hide');
+        //}, 100);
+        $.post('<?= DIRPAGE; ?>suporte/cadastrar', {SUP_MENSAGEM: SUP_MENSAGEM,CADASTRAR_NOVA_MENSAGEM: true,EMP_COD: EMP_COD,USU_COD:USU_COD}, function(retorno) {
+            var resposta = JSON.parse(retorno);
+            console.log(resposta);
+            //if (resposta['COD'] !== 'ERRO') {
+             //   $('#resposta').addClass('alert alert-success');
+            //}else{
+                //$('#resposta').addClass('alert alert-warning');
+           // }
+           // $('#resposta').html(resposta['MENSAGEM']);
+            //setTimeout( () => { window.location.href="<?php //= DIRPAGE ?>estoques/produtos/"+EMP_COD+"/"+EST_COD}, 100);
+        });
+
+    });
+</script>
 </body>
 </html>

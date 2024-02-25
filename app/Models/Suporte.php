@@ -3,12 +3,11 @@ namespace App\Models;
 
 use Core\Model;
 
-class ModulosEmpresa extends Model
+class Suporte extends Model
 { 
-    private $tabela = 'tb_modulos_empresa';
+    private $tabela = 'tb_suporte';
     private $Model = '';
-    private $Informacoes = '';
-    private $codigo,$codModulo, $codUsuario, $codEmpresa;
+    private $codigo, $descricao, $tipo, $codEmpresa, $data,$codUsuario;
 
     public function __construct()
     {
@@ -20,14 +19,9 @@ class ModulosEmpresa extends Model
         $this->codigo = $codigo;
         return $this;
     }
-    public function setCodModulo($codModulo)
+    public function setDescricao($descricao)
     {
-        $this->codModulo = $codModulo;
-        return $this;
-    }
-    public function setCodUsuario($codUsuario)
-    {
-        $this->codUsuario = $codUsuario;
+        $this->descricao = $descricao;
         return $this;
     }
     public function setCodEmpresa($codEmpresa)
@@ -35,11 +29,27 @@ class ModulosEmpresa extends Model
         $this->codEmpresa = $codEmpresa;
         return $this;
     }
+    public function setCodUsuario($codUsuario)
+    {
+        $this->codUsuario = $codUsuario;
+        return $this;
+    }
     public function listar($ver = 0)
     {
-        $parametros = " ME INNER JOIN tb_modulos M ON M.MOD_COD=ME.MOD_COD WHERE ME.EMP_COD={$this->codEmpresa} AND M.MOD_STATUS=1 ORDER BY M.MOD_NOME";
+        $parametros = "S INNER JOIN tb_empresas E ON S.EMP_COD=E.EMP_COD WHERE S.EMP_COD={$this->codEmpresa} AND S.SUP_COD={$this->codigo}";
         $campos = "*";
-        $resultado = $this->Model->exibir($parametros, $campos, $ver = 0, $id = false);
+        $resultado = $this->Model->exibir($parametros, $campos, $ver, $id = false);
+        if ($resultado) {
+            return $resultado[0];
+        } else {
+            return false;
+        }
+    }
+    public function listarTodosUsuario($ver = 0)
+    {
+        $parametros = "S INNER JOIN tb_empresas E ON E.EMP_COD=S.EMP_COD WHERE S.EMP_COD={$this->codEmpresa} AND S.USU_COD={$this->codUsuario} ORDER BY S.SUP_DT_CADASTRO";
+        $campos = "*";
+        $resultado = $this->Model->exibir($parametros, $campos, $ver, $id = false);
         if ($resultado) {
             return $resultado;
         } else {
@@ -57,7 +67,7 @@ class ModulosEmpresa extends Model
     }
     public function alterar(array $dados, $ver = 0)
     {
-        $parametros = "WHERE EMP_COD={$this->codEmpresa} AND MOD_EMP_COD=";
+        $parametros = "WHERE EMP_COD={$this->codEmpresa} AND SUP_COD=";
         $this->Model->setParametros($parametros);
         $this->Model->setCodigo($this->codigo);
         $ok = false;
@@ -70,7 +80,7 @@ class ModulosEmpresa extends Model
     }
     public function excluir($ver = 0)
     {
-        $parametros = "WHERE EMP_COD='{$this->codEmpresa}' AND MOD_COD='{$this->codModulo}' AND MLE_COD=";
+        $parametros = "WHERE EMP_COD='{$this->codEmpresa}' AND SUP_COD=";
         $this->Model->setParametros($parametros);
         $this->Model->setCodigo($this->codigo);
         $ok = false;
@@ -78,19 +88,6 @@ class ModulosEmpresa extends Model
         if ($ok) {
             return true;
         } else {
-            return false;
-        }
-    }
-    public function checarRegistroModuloEmpresa()
-    {
-        $parametros = "WHERE EMP_COD='{$this->codEmpresa}' AND MOD_COD='{$this->codModulo}'";
-        $campos = "*";
-        $resultado = $this->Model->exibir($parametros, $campos, $ver = 0, $id = false);
-        if ($resultado) {
-            //Já existe
-            return $resultado[0];
-        } else {
-            //Nao existe
             return false;
         }
     }
