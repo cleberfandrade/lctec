@@ -42,15 +42,20 @@ $qtd = (is_array($suporte) ? count($suporte) : 0);
                     <div class="row col-12 mx-auto m-1">
                         <ul class="list-group">
                             <li class="list-group-item bg-success text-white" aria-current="true">MENSAGENS PARA O SUPORTE</li>
-                            <?php for ($i=0; $i < $qtd; $i++) {  $data = new DateTime($suporte[$i]['SUP_DT_CADASTRO']); ?>
-                                <a href="<?= DIRPAGE ?>lctec/suporte/detalhar/<?= $suporte[$i]['SUP_COD'] ?>" class="list-group-item list-group-item-action">
-                                    <div class="d-flex w-100 text-center justify-content-between">
-                                        <h5 class="mb-1 text-center "><?= $suporte[$i]['USU_NOME'] ?></h5>
-                                        <small class="text-body-secondary"><?= $data->format('d/m/Y'); ?></small>
-                                    </div>
-                                    <p class="mb-1"></p>
-                                    <small class="text-body-secondary"><?= ($suporte[$i]['SUP_STATUS'] == 1)? 'ATIVADA' : 'DESATIVADA'; ?></small>
-                                </a>
+                            <?php if ($qtd != 0) { ?>
+                                <?php for ($i=0; $i < $qtd; $i++) {  
+                                    $data = new DateTime($suporte[$i]['SUP_DT_CADASTRO']); ?>
+                                    <a href="<?= DIRPAGE ?>lctec/suporte/detalhar/<?= $suporte[$i]['SUP_COD'] ?>" class="list-group-item list-group-item-action">
+                                        <div class="d-flex w-100 text-center justify-content-between">
+                                            <h5 class="mb-1 text-center "><?= $suporte[$i]['USU_NOME'] ?></h5>
+                                            <small class="text-body-secondary"><?= $data->format('d/m/Y'); ?></small>
+                                        </div>
+                                        <p class="mb-1"></p>
+                                        <small class="text-body-secondary"><?= ($suporte[$i]['SUP_STATUS'] == 1)? 'ATIVADA' : 'DESATIVADA'; ?></small>
+                                    </a>
+                                <?php } ?>
+                            <?php }else { ?>
+                                NENHUMA MENSAGEM CADASTRADA
                             <?php } ?>
                         </ul>
                     </div>
