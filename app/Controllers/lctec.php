@@ -45,8 +45,11 @@ class lctec extends View
     public function index()
     {
         Sessao::logadoSistema();
+        $this->dados['empresas'] = $this->Empresas->listarTodos();
+        $this->dados['usuario'] = $this->Usuarios->setCodUsuario($_SESSION['USU_COD'])->listar(0);
         $this->dados['empresa'] = $this->UsuariosEmpresa->setCodEmpresa($_SESSION['EMP_COD'])->setCodUsuario($_SESSION['USU_COD'])->listar(0);
         $this->dados['title'] .= ' PAINEL GERENCIAL | LC/TEC';   
+        
         $this->render('admin/lctec/painel', $this->dados);
     }
     
