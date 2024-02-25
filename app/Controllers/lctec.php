@@ -39,7 +39,7 @@ class lctec extends View
         $this->ModulosEmpresa = new ModulosEmpresa;
 
         $this->Suporte = new Suporte;
-        $this->dados['suporte'] = $this->Suporte->setCodEmpresa($_SESSION['EMP_COD'])->setCodUsuario(0)->listarTodasMensagensUsuario(0);
+        $this->dados['suporte'] = $this->Suporte->setCodUsuario(0)->listarTodasMensagensSuporte(0);
         
         $this->link[0] = ['link'=> 'lctec','nome' => 'PAINEL GERENCIAL | LC/TEC'];
         //$this->link[1] = ['link'=> 'lctec','nome' => 'MÓDULO LC/TEC >>'];
