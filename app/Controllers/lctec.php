@@ -5,6 +5,7 @@ use App\Models\Empresas;
 use App\Models\Financas;
 use App\Models\Modulos;
 use App\Models\ModulosEmpresa;
+use App\Models\Suporte;
 use App\Models\Usuarios;
 use App\Models\UsuariosEmpresa;
 use App\Models\Vendedores;
@@ -16,7 +17,7 @@ use Libraries\Url;
 class lctec extends View
 {
     private $dados = [];
-    private $link,$Financas,$Check,$Avisos,$Usuarios,$Empresas,$UsuariosEmpresa,$Modulos,$ModulosEmpresa,$Colaboradores,$CargosSalarios,$FolhasPagamento,$Divulgacoes,$Desligamentos,$Horarios,$Promocoes,$Recrutamentos,$Treinamentos,$Beneficios;
+    private $link,$Financas,$Check,$Avisos,$Usuarios,$Empresas,$UsuariosEmpresa,$Modulos,$Suporte,$ModulosEmpresa,$Colaboradores,$CargosSalarios,$FolhasPagamento,$Divulgacoes,$Desligamentos,$Horarios,$Promocoes,$Recrutamentos,$Treinamentos,$Beneficios;
     public function __construct()
     {
         Sessao::naoLogadoSistema();
@@ -37,6 +38,8 @@ class lctec extends View
         $this->dados['modulos'] = $this->Modulos->listarTodos();
         $this->ModulosEmpresa = new ModulosEmpresa;
 
+        $this->Suporte = new Suporte;
+        $this->dados['suporte'] = $this->Suporte->setCodEmpresa($_SESSION['EMP_COD'])->setCodUsuario(0)->listarTodasMensagensUsuario(0);
         
         $this->link[0] = ['link'=> 'lctec','nome' => 'PAINEL GERENCIAL | LC/TEC'];
         //$this->link[1] = ['link'=> 'lctec','nome' => 'MÓDULO LC/TEC >>'];

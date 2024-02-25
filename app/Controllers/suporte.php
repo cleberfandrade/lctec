@@ -28,6 +28,8 @@ class suporte extends View
 
         $this->Suporte = new ModelsSuporte;
 
+        $this->dados['suporte_usuario'] = $this->Suporte->setCodEmpresa($_SESSION['EMP_COD'])->setCodUsuario($_SESSION['USU_COD'])->listarTodasMensagensUsuario(0);
+
         $this->dados['empresa'] = $this->UsuariosEmpresa->setCodEmpresa($_SESSION['EMP_COD'])->setCodUsuario($_SESSION['USU_COD'])->listar(0);
         $this->dados['usuario'] = $this->Usuarios->setCodUsuario($_SESSION['USU_COD'])->listar(0);
 

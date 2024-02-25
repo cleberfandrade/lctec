@@ -45,9 +45,31 @@ class Suporte extends Model
             return false;
         }
     }
-    public function listarTodosUsuario($ver = 0)
+    public function listarTodasMensagensUsuario($ver = 0)
     {
-        $parametros = "S INNER JOIN tb_empresas E ON E.EMP_COD=S.EMP_COD WHERE S.EMP_COD={$this->codEmpresa} AND S.USU_COD={$this->codUsuario} ORDER BY S.SUP_DT_CADASTRO";
+        $parametros = "S INNER JOIN tb_usuarios U ON U.USU_COD=S.USU_COD INNER JOIN tb_chat C ON C.SUP_COD=S.SUP_COD WHERE C.USU_COD={$this->codUsuario} ORDER BY S.SUP_DT_CADASTRO";
+        $campos = "*";
+        $resultado = $this->Model->exibir($parametros, $campos, $ver, $id = false);
+        if ($resultado) {
+            return $resultado;
+        } else {
+            return false;
+        }
+    }
+    public function listarTodasMensagensEmpresaUsuario($ver = 0)
+    {
+        $parametros = "S INNER JOIN tb_empresas E ON E.EMP_COD=S.EMP_COD  INNER JOIN tb_chat C ON C.SUP_COD=S.SUP_COD WHERE S.EMP_COD={$this->codEmpresa} AND C.USU_COD={$this->codUsuario} ORDER BY S.SUP_DT_CADASTRO";
+        $campos = "*";
+        $resultado = $this->Model->exibir($parametros, $campos, $ver, $id = false);
+        if ($resultado) {
+            return $resultado;
+        } else {
+            return false;
+        }
+    }
+    public function listarTodasMensagensEmpresa($ver = 0)
+    {
+        $parametros = "S INNER JOIN tb_empresas E ON E.EMP_COD=S.EMP_COD INNER JOIN tb_chat C ON C.SUP_COD=S.SUP_COD WHERE S.EMP_COD={$this->codEmpresa}";
         $campos = "*";
         $resultado = $this->Model->exibir($parametros, $campos, $ver, $id = false);
         if ($resultado) {
