@@ -47,17 +47,17 @@ $qtdEmpresas = (is_array($empresas) ? count($empresas) : 0);
                                 <h2 class="fs-5 col-12 text-center fw-bolder text-uppercase text-3 mb-2">LC/<span class="text-success">TEC</span>
                                 <p class="lead text-center fs-6">DESENVOLVENDO SOLUÇÕES PARA O SEU NEGÓCIO</p></h2>
                             </div>
-                            <div class="col-12 row text-center mx-auto">
+                            <div class="col-12 row mx-auto">
                                 <ul class="list-group">
-                                    <li class="list-group-item active" aria-current="true">EMPRESAS ATIVAS</li>
-                                    <?php for ($i=0; $i < $qtdEmpresas; $i++) {  ?>
+                                    <li class="list-group-item bg-success text-white" aria-current="true">EMPRESAS ATIVAS</li>
+                                    <?php for ($i=0; $i < $qtdEmpresas; $i++) {  $data = new DateTime($empresas[$i]['EMP_DT_FUNDACAO']); ?>
                                         <a href="<?= DIRPAGE ?>lctec/empresas/<?= $empresas[$i]['EMP_COD'] ?>" class="list-group-item list-group-item-action">
-                                            <div class="d-flex w-100 justify-content-between">
-                                            <h5 class="mb-1"><?= $empresas[$i]['EMP_NOME_FANTASIA'] ?></h5>
-                                            <small class="text-body-secondary"><?= $empresas[$i]['EMP_DT_CADASTRO'] ?></small>
+                                            <div class="d-flex w-100 text-center justify-content-between">
+                                                <h5 class="mb-1 text-center "><?= $empresas[$i]['EMP_NOME_FANTASIA'] ?></h5>
+                                                <small class="text-body-secondary"><?= $data->format('d/m/Y'); ?></small>
                                             </div>
-                                            <p class="mb-1"><?= $empresas[$i]['EMP_NOME_FANTASIA'] ?></p>
-                                            <small class="text-body-secondary"><?= $empresas[$i]['EMP_NOME_FANTASIA'] ?></small>
+                                            <p class="mb-1"><?= $empresas[$i]['EMP_REGULAMENTACAO'] ?></p>
+                                            <small class="text-body-secondary"><?= ($empresas[$i]['EMP_STATUS'] == 1)? 'ATIVADA' : 'DESATIVADA'; ?></small>
                                         </a>
                                     <?php } ?>
                                 </ul>
