@@ -77,7 +77,9 @@ $qtdME = (is_array($modulos) ? count($modulos) : 0);
                                                 <a type="button" class="btn btn-outline-warning btn-sm d-print-none" href="<?= DIRPAGE.'lctec/modulos_alterar/'.$modulos[$i]['MOD_COD']; ?>" title="Alterar Módulo"><i class="fa fa-edit"></i></a>
                                             </div>
                                             <div class="col-6">
-                                                <?= ($modulos[$i]['MOD_STATUS'] == 1)? '<button class="btn btn-sm btn-success" title="Módulo Ativado"><i class="bi bi-bookmark-check"></i></button>' : '<button class="btn btn-sm  btn-danger"><i class="bi bi-ban"></i></button>'; ?></td>
+                                                <?= ($modulos[$i]['MOD_STATUS'] == 1)? '
+                                                <a type="button" href="'.DIRPAGE.'lctec/modulos_status/'.$modulos[$i]['MOD_COD'].'/'.$modulos[$i]['MOD_STATUS'].'" class="btn  btn-sm btn-danger text-decoration-none" title="Desativar Módulo?">
+                                                <i class="bi bi-ban"></i></a>' : '<a type="button" class="btn  btn-sm btn-success text-decoration-none" title="Ativar Módulo?"><i class="bi bi-bookmark-check"></i></a>'; ?></td>
                                             </div>
                                         </div>
                                         <?php } ?>

@@ -75,4 +75,46 @@ class lctec extends View
         Sessao::logadoSistema();
         $this->render('admin/lctec/suporte/listar', $this->dados);
     }
+    public function modulos_status():void
+    {
+       //Recupera os dados enviados
+       $dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);
+       if (isset($_POST) && isset($dados['STATUS_MODULO'])) {
+
+          if($this->dados['empresa']['USU_COD'] == $_SESSION['USU_COD'] && $_SESSION['USU_NIVEL'] >= 15){
+              //Verifica se os campos foram todos preenchidos
+              unset($dados['STATUS_MODULO']);
+              $this->Modulos->setCodigo($dados['MOD_COD']);
+              ($dados['MOD_STATUS'] == 1)? $dados['MOD_STATUS'] = 0 : $dados['MOD_STATUS'] = 1;
+              
+              $db = array(
+                  'MOD_DT_ATUALIZACAO'=> date('Y-m-d H:i:s'),
+                  'MOD_STATUS' => $dados['MOD_STATUS']
+              );
+
+              if($this->ModulosEmpresa->alterar($db,0)){
+                  $respota = array(
+                      'COD'=>'OK',
+                      'MENSAGEM' => 'Status alterado com sucesso!'
+                  );
+              }else{
+                  $respota = array(
+                      'COD'=>'ERRO',
+                      'MENSAGEM'=> 'ERRO 2- Erro ao mudar status do módulo, entre em contato com o suporte!'
+                  );
+              }
+          }else {
+              $respota = array(
+                  'COD'=>'ERRO',
+                  'MENSAGEM'=> 'ERRO 2- Dados inválido(s)!'
+              );
+          }
+      }else {
+          $respota = array(
+              'COD'=>'ERRO',
+              'MENSAGEM'=> 'ERRO 1- Acesso inválido!'
+          );
+      }
+      echo json_encode($respota);
+    }
 }
