@@ -40,7 +40,7 @@ class setores extends View
     public function cadastro():void
     {
         $this->dados['title'] .= ' CADASTRAR SEUS SETORES';
-        $this->link[3] = ['link'=> 'setores/cadastrar','nome' => 'CADASTRAR SEUS SETORES'];
+        $this->link[3] = ['link'=> 'setores/cadastro','nome' => 'CADASTRAR SEUS SETORES'];
         $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
         $this->render('admin/cadastros/setores/cadastrar', $this->dados);
     }

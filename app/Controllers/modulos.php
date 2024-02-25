@@ -31,7 +31,7 @@ class modulos extends View
         $this->dados['modulos'] = $this->Modulos->listarTodos();
 
         $this->ModulosEmpresa = new ModulosEmpresa;
-        
+
         $this->dados['title'] = 'MÓDULOS LC/TEC >> ';
 
         $this->link[0] = ['link'=> 'lctec','nome' => 'PAINEL GERENCIAL | LC/TEC'];
@@ -49,9 +49,53 @@ class modulos extends View
     public function cadastro():void
     {
         $this->dados['title'] .= ' CADASTRAR MÓDULOS';
-        $this->link[2] = ['link'=> 'setores/cadastrar','nome' => 'CADASTRAR MÓDULOS'];
+        $this->link[2] = ['link'=> 'modulos/cadastro','nome' => 'CADASTRAR MÓDULOS'];
+        
         $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
         $this->render('admin/lctec/modulos/cadastrar', $this->dados);
+    }
+    public function cadastrar()
+    {
+        $this->dados['title'] .= ' CADASTRAR MÓDULOS';
+        $this->link[2] = ['link'=> 'modulos/cadastro','nome' => 'CADASTRAR MÓDULOS'];
+        $ok = false;
+        $dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);
+                
+        if (isset($_POST) && isset($dados['CADASTRAR_MODULO'])) {
+            unset($dados['CADASTRAR_MODULO']);
+            if($_SESSION['USU_NIVEL'] >= 15){
+                //Verificar se já existe cadastro
+                $this->Modulos->setDescricao($dados['MOD_DESCRICAO']);
+                $mod = $this->Modulos->checarDescricao();
+                
+                if(!$mod){
+
+                    $dados += array(
+                        'MOD_DT_CADASTRO'=> date('Y-m-d H:i:s'),
+                        'MOD_DT_ATUALIZACAO'=> date('0000-00-00 00:00:00'),          
+                        'MOD_STATUS'=> 1
+                    );
+                    if($this->Modulos->cadastrar($dados,0)){
+                        $ok = true;
+                        Sessao::alert('OK','Cadastro efetuado com sucesso!','fs-4 alert alert-success');
+                    }else{
+                        Sessao::alert('ERRO',' SET4- Erro ao cadastrar novo módulo, entre em contato com o desenvolvedor!','fs-4 alert alert-danger');
+                    }
+                }else {
+                    Sessao::alert('ERRO',' SET3- Cadastro já realizado!','fs-4 alert alert-warning');
+                }
+            }else{
+                Sessao::alert('ERRO',' ERRO: CLI22 - Acesso nao permitido!','alert alert-danger');
+            }
+        }else{
+            Sessao::alert('ERRO',' SET1 - Acesso inválido(s)!','alert alert-danger');
+        }
+        if ($ok) {
+            $this->dados['modulos'] = $this->Modulos->listarTodos(0);
+            $this->render('admin/lctec/modulos/modulos', $this->dados);
+        }else {
+            $this->render('admin/lctec/modulos/cadastrar', $this->dados);
+        }
     }
     public function alteracao()
     {

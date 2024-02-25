@@ -11328,6 +11328,10 @@ body.sb-sidenav-toggled #wrapper #sidebar-wrapper {
   color: #ffffff;
   background-color:#50DD98;
 }
+.bg-4{
+  color: #ffffff;
+  background-color:#447ebb;
+}
 .bg-teal{
   background-color: rgba(var(--bs-teal), var(--bs-bg-opacity)) !important;
 }

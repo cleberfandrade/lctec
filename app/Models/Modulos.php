@@ -7,7 +7,7 @@ class Modulos extends Model
 { 
     private $tabela = 'tb_modulos';
     private $Model = '';
-    private $codigo;
+    private $codigo,$descricao;
     public function __construct()
     {
         $this->Model = new Model();
@@ -16,6 +16,11 @@ class Modulos extends Model
     public function setCodigo($codigo)
     {
         $this->codigo = $codigo;
+        return $this;
+    }
+    public function setDescricao($descricao)
+    {
+        $this->descricao = $descricao;
         return $this;
     }
     public function listar($ver = 0)
@@ -40,6 +45,15 @@ class Modulos extends Model
             return false;
         }
     }
+    public function cadastrar(array $dados, $ver = 0)
+    {
+        $ok = $this->Model->cadastrar($dados, $ver);
+        if ($ok) {
+            return $ok;
+        } else {
+            return false;
+        }
+    }
     public function alterar(array $dados, $ver = 0)
     {
         $parametros = " WHERE MOD_COD=";
@@ -50,6 +64,19 @@ class Modulos extends Model
         if ($ok) {
             return true;
         } else {
+            return false;
+        }
+    }
+    public function checarDescricao()
+    {
+        $parametros = "WHERE MOD_DESCRICAO ='{$this->descricao}' AND MOD_STATUS=1";
+        $campos = "*";
+        $resultado = $this->Model->exibir($parametros, $campos, $ver = 0, $id = false);
+        if ($resultado) {
+            //Já existe
+            return $resultado[0];
+        } else {
+            //Nao existe
             return false;
         }
     }
