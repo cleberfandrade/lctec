@@ -55,7 +55,7 @@ class colaboradores extends View
     {
         $this->dados['title'] .= 'ÁREA DO(A) COLABORADO(A)';
          $this->link[3] = ['link'=> 'recursos_humanos/colaboradores/meus_dados','nome' => 'ÁREA DO(A) COLABORADO(A)'];
-        $this->dados['breadcrumb'] = $Check->setLink($this->link)->breadcrumb();
+        $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
         
         $this->dados['colaborador'] = $this->Colaboradores->setCodEmpresa($_SESSION['EMP_COD'])->setCodigo($_SESSION['COL_COD'])->listar(0);
         

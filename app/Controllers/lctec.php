@@ -92,7 +92,7 @@ class lctec extends View
         $ok = false;
         if (isset($dados[1]) && $dados[1] == 'modulos_alteracao' && isset($dados[2])) {
             
-            if($this->dados['empresa']['USU_COD'] == $_SESSION['USU_COD'] && $_SESSION['USU_NIVEL'] >= 15){
+            if($_SESSION['USU_NIVEL'] >= 15){
 
                 $this->dados['modulo'] = $this->Modulos->setCodigo($dados[2])->listar(0);
                 if ($this->dados['modulo'] != 0) {

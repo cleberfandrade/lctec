@@ -40,7 +40,7 @@ $qtdME = (is_array($modulos) ? count($modulos) : 0);
                         <a class="col-4 btn btn-sm text-uppercase btn-secondary" href="<?= DIRPAGE; ?>lctec/modulos"><i class="bi bi-arrow-left"></i> VOLTAR AOS MÓDULOS</a>
                     </div>
                     <div class="container col-10 px-2 py-2 mx-auto row">
-                        <form class="p-4 p-md-6 border text-uppercase rounded-3 " action="<?= DIRPAGE ?>lctec/modulos_alterar" method="POST">
+                        <form class="p-4 p-md-6 border text-uppercase rounded-3 " action="<?= DIRPAGE ?>modulos/alterar" method="POST">
                             <div class="row ">    
                                 <div class="col-8 form-floating mb-3">
                                     <input type="text" class="form-control maiusculo" id="1" name="MOD_NOME" placeholder="Informe o nome do módulo" value="<?= isset($_POST['MOD_NOME']) ? $_POST['MOD_NOME'] : (isset($modulo['MOD_NOME'])? $modulo['MOD_NOME'] : '') ; ?>">
@@ -56,7 +56,7 @@ $qtdME = (is_array($modulos) ? count($modulos) : 0);
                                 </div>
                                 <div class="col-4 form-floating mb-3">
                                     <input type="text" class="form-control" id="2" name="MOD_COR" placeholder="" value="<?= isset($_POST['MOD_COR']) ? $_POST['MOD_COR'] : (isset($modulo['MOD_COR'])? $modulo['MOD_COR'] : '') ; ?>">
-                                    <label class="px-3" for="2">LINK</label>
+                                    <label class="px-3" for="2">COR</label>
                                 </div>
                                 <div class="col-12 mb-3" style="height:100px">
                                     <label for="address2" class="form-label">DESCRIÇÃO</label>

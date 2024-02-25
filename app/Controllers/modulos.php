@@ -55,7 +55,7 @@ class modulos extends View
         $ok = false;
         if (isset($dados[1]) && $dados[1] == 'alteracao' && isset($dados[2])) {
             
-            if($this->dados['empresa']['USU_COD'] == $_SESSION['USU_COD'] && $_SESSION['USU_NIVEL'] >= 15){
+            if($_SESSION['USU_NIVEL'] >= 15){
 
                 $this->dados['modulo'] = $this->Modulos->setCodigo($dados[2])->listar(0);
                 if ($this->dados['modulo'] != 0) {
@@ -78,30 +78,53 @@ class modulos extends View
     }
     public function alterar()
     {
+        $this->dados['title'] .= ' LC/TEC >> ALTERAR MÓDULO DO SISTEMA';   
+        $dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);
+        $ok = false;
+        if (isset($_POST) && isset($dados['ALTERAR_MODULO'])) {
+           
+            if($_SESSION['USU_NIVEL'] >= 20){
 
-        //$Modulos->setCodigo(0);
-        $post = filter_input_array(INPUT_POST, FILTER_DEFAULT);
+                unset($dados['ALTERAR_MODULO']);
 
-        if (isset($_POST) && isset($post['ALTERAR_MODULO'])) {
-            unset($post['ALTERAR_MODULO']);
-            if (empty($post['NIV_COD'])) {
-                Sessao::alert('ERRO',' 2- Houve um erro ao obter o código do Nível, entre em contato com o desenvolvedor!','text-uppercase fs-4 alert alert-danger');
-            } else {
-                foreach ($post as $key => $value) {
-                    $dados[$key] = $value;
+                //Verifica se tem algum valor proibido
+                foreach ($dados as $key => $value) {
+                    $dados[$key] = $this->Check->checarString($value);
                 }
-                //unset($dados['NIV_COD']);
-                //$Niveis->setCodigo($post['NIV_COD']);
-                //if($Niveis->alterar($dados,0)){
-                  //  Sessao::alert('OK',' Nível alterado com sucesso!','fs-4 alert alert-success');
-                //}else{
-                 //   Sessao::alert('ERRO',' 3- Erro ao alterar cadastro, entre em contato com o desenvolvedor!','fs-4 alert alert-danger');
-                //}
+                $this->dados['modulo'] = $this->Modulos->setCodigo($dados['MOD_COD'])->listar(0);
+
+                if ($this->dados['modulo'] != 0) {
+
+                    $this->link[2] = ['link'=> 'lctec/modulos/alteracao/'.$dados['MOD_COD'],'nome' => 'ALTERAR MODULO'];
+        
+                    $codigo = $dados['MOD_COD'];
+                    unset($dados['MOD_COD']);
+
+                    $dados += array(
+                        'MOD_DT_ATUALIZACAO'=> date('Y-m-d H:i:s')
+                    );
+                    
+                    if($this->Modulos->alterar($dados,0)){
+                        $ok = true;
+                        Sessao::alert('OK','Cadastro alterado com sucesso!','fs-4 alert alert-success');
+                    }else{
+                        Sessao::alert('ERRO',' ERRO: COL24 - Erro ao alterar módulo, entre em contato com o suporte!','fs-4 alert alert-danger');
+                    }
+                }else {
+                    Sessao::alert('ERRO',' COL23- Módulo não foi encontrado!, verifque os dados informados, ou entre em contato com o Suporte','fs-4 alert alert-danger');
+                }
             }
         }else{
             Sessao::alert('ERRO',' 1- Dados inválido(s)!','fs-4 alert alert-danger');
         }
-        $this->render('admin/lctec/modulos', $this->dados);
+        $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
+        if ($ok) {
+            $this->dados['modulos'] = $this->Modulos->listarTodos(0);
+            $this->render('admin/lctec/modulos/modulos', $this->dados);
+        }else {
+            $this->dados['modulo'] = $this->Modulos->setCodigo($codigo)->listar(0);
+            $this->render('admin/lctec/modulos/alterar', $this->dados);
+        }
     }
     public function status():void
     {
