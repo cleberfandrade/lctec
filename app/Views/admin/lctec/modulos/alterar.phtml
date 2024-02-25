@@ -47,15 +47,15 @@ $qtdME = (is_array($modulos) ? count($modulos) : 0);
                                     <label class="px-3" for="1">NOME DO MÓDULO</label>
                                 </div>    
                                 <div class="col-4 form-floating mb-3">
-                                    <input type="text" class="form-control" id="1" name="MOD_ICON" placeholder="" value="<?= isset($_POST['MOD_ICON']) ? $_POST['MOD_ICON'] : (isset($modulo['MOD_ICON'])? $modulo['MOD_NOME'] : '') ; ?>">
+                                    <textarea type="text" class="form-control" name="MOD_ICON"><?= isset($_POST['MOD_ICON']) ? $_POST['MOD_ICON'] : (isset($modulo['MOD_ICON'])? $modulo['MOD_ICON'] : '') ; ?></textarea>
                                     <label class="px-3" for="1">ICONE (opcional)</label>
                                 </div>  
                                 <div class="col-8 form-floating mb-3">
-                                    <input type="text" class="form-control" id="2" name="MOD_LINK" placeholder="" value="<?= isset($_POST['MOD_LINK']) ? $_POST['MOD_LINK'] : (isset($modulo['MOD_LINK'])? $modulo['MOD_LINK'] : '') ; ?>">
+                                    <input type="text" class="form-control" id="2" name="MOD_LINK" value="<?= isset($_POST['MOD_LINK']) ? $_POST['MOD_LINK'] : (isset($modulo['MOD_LINK'])? $modulo['MOD_LINK'] : '') ; ?>">
                                     <label class="px-3" for="2">LINK</label>
                                 </div>
                                 <div class="col-4 form-floating mb-3">
-                                    <input type="text" class="form-control" id="2" name="MOD_COR" placeholder="" value="<?= isset($_POST['MOD_COR']) ? $_POST['MOD_COR'] : (isset($modulo['MOD_COR'])? $modulo['MOD_COR'] : '') ; ?>">
+                                    <input type="text" class="form-control" id="2" name="MOD_COR" value="<?= isset($_POST['MOD_COR']) ? $_POST['MOD_COR'] : (isset($modulo['MOD_COR'])? $modulo['MOD_COR'] : '') ; ?>">
                                     <label class="px-3" for="2">COR</label>
                                 </div>
                                 <div class="col-12 mb-3" style="height:100px">

@@ -78,7 +78,7 @@ class modulos extends View
     }
     public function alterar()
     {
-        $this->dados['title'] .= ' LC/TEC >> ALTERAR MÓDULO DO SISTEMA';   
+        $this->dados['title'] = ' LC/TEC >> ALTERAR MÓDULO DO SISTEMA';   
         $dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);
         $ok = false;
         if (isset($_POST) && isset($dados['ALTERAR_MODULO'])) {
@@ -88,9 +88,9 @@ class modulos extends View
                 unset($dados['ALTERAR_MODULO']);
 
                 //Verifica se tem algum valor proibido
-                foreach ($dados as $key => $value) {
-                    $dados[$key] = $this->Check->checarString($value);
-                }
+                //foreach ($dados as $key => $value) {
+                    //$dados[$key] = $this->Check->checarString($value);
+                //}
                 $this->dados['modulo'] = $this->Modulos->setCodigo($dados['MOD_COD'])->listar(0);
 
                 if ($this->dados['modulo'] != 0) {
