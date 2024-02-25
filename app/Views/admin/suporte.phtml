@@ -1,4 +1,7 @@
-<?php include_once 'inc/cabecalho.phtml'; ?>
+<?php 
+include_once 'inc/cabecalho.phtml';
+$qtdSU = (is_array($suporte_usuario) ? count($suporte_usuario) : 0);
+?>
 <style>
     .text-small {
   font-size: 0.9rem;
@@ -35,7 +38,11 @@ input::placeholder {
                         <div class="bg-white">
 
                             <div class="bg-gray px-4 py-2 bg-light">
-                                <p class="h5 mb-0 py-1">Recente</p>
+                                <a class="text-decoration-none" href="<?= DIRPAGE; ?>suporte">
+                                    <h5 class="fs-3 fw-bolder text-uppercase text-dark mb-1">
+                                        <i class="bi bi-arrow-clockwise"></i> Atualizar <span class="text-white">mensagens</span>
+                                    </h5>
+                                </a>
                             </div>
 
                             <div class="messages-box">
@@ -44,7 +51,7 @@ input::placeholder {
                                     <div class="media"><img src="https://bootstrapious.com/i/snippets/sn-chat/avatar.svg" alt="user" width="50" class="rounded-circle">
                                         <div class="media-body ml-4">
                                             <div class="d-flex align-items-center justify-content-between mb-1">
-                                                <h6 class="mb-0">SUPORTE</h6><small class="small font-weight-bold">LC-TEC</small>
+                                                <h6 class="mb-0">SUPORTE</h6><small class="small font-weight-bold">LC/TEC</small>
                                             </div>
                                             <p class="font-italic mb-0 text-small">DESENVOLVENDO SOLUÇÕES PARA O SEU NEGÓCIO</p>
                                         </div>
@@ -57,7 +64,9 @@ input::placeholder {
                         <!-- Chat Box-->
                         <div class="col-7 px-0">
                         <div id="chat" class="px-4 py-5 chat-box bg-white">
-                            <!-- Sender Message-->
+                        <?php if ($qtdSU != 0) { 
+                            for ($i=0; $i < $qtdSU; $i++) { $data = new DateTime($suporte_usuario[$i]['SUP_DT_CADASTRO']);  ?>
+                            <!-- Sender Message
                             <div class="media w-50 mb-3"><img src="https://bootstrapious.com/i/snippets/sn-chat/avatar.svg" alt="user" width="50" class="rounded-circle">
                                 <div class="media-body ms-3">
                                     <div class="bg-light rounded py-2 px-3 mb-2">
@@ -65,68 +74,29 @@ input::placeholder {
                                     </div>
                                     <p class="small text-muted">12:00 PM | Aug 13</p>
                                 </div>
-                            </div>
+                            </div>-->
 
                             <!-- Reciever Message-->
                             <div class="media w-50 ms-auto mb-3">
                                 <div class="media-body">
                                     <div class="bg-success rounded py-2 px-3 mb-2">
-                                    <p class="text-small mb-0 text-white">Test which is a new approach to have all solutions</p>
+                                        <p class="text-small mb-0 text-white"><?= $suporte_usuario[$i]['SUP_MENSAGEM'] ?></p>
                                     </div>
-                                    <p class="small text-muted">12:00 PM | Aug 13</p>
+                                    <p class="small text-muted"><?= $data->format('d/m/Y H:i'); ?></p>
                                 </div>
                             </div>
-
-                            <!-- Sender Message-->
-                            <div class="media w-50 mb-3"><img src="https://bootstrapious.com/i/snippets/sn-chat/avatar.svg" alt="user" width="50" class="rounded-circle">
-                            <div class="media-body ms-3">
-                                <div class="bg-light rounded py-2 px-3 mb-2">
-                                <p class="text-small mb-0 text-muted">Test, which is a new approach to have</p>
-                                </div>
-                                <p class="small text-muted">12:00 PM | Aug 13</p>
-                            </div>
-                            </div>
-
-                            <!-- Recebida Message-->
-                            <div class="media w-50 ms-auto mb-3">
-                            <div class="media-body">
-                                <div class="bg-success rounded py-2 px-3 mb-2">
-                                <p class="text-small mb-0 text-white">Apollo University, Delhi, India Test</p>
-                                </div>
-                                <p class="small text-muted">12:00 PM | Aug 13</p>
-                            </div>
-                            </div>
-
-                            <!-- Enviada Message-->
-                            <div class="media w-50 mb-3"><img src="https://bootstrapious.com/i/snippets/sn-chat/avatar.svg" alt="user" width="50" class="rounded-circle">
-                            <div class="media-body me-3">
-                                <div class="bg-light rounded py-2 px-3 mb-2">
-                                <p class="text-small mb-0 text-muted">Test, which is a new approach</p>
-                                </div>
-                                <p class="small text-muted">12:00 PM | Aug 13</p>
-                            </div>
-                            </div>
-
-                            <!-- Reciever Message-->
-                            <div class="media w-50 ms-auto mb-3">
-                            <div class="media-body">
-                                <div class="bg-success rounded py-2 px-3 mb-2">
-                                <p class="text-small mb-0 text-white">Apollo University, Delhi, India Test</p>
-                                </div>
-                                <p class="small text-muted">12:00 PM | Aug 13</p>
-                            </div>
-                            </div>
-
+                            <?php } ?>
+                        <?php } ?>
                         </div>
-
+                        <div id="retorno" class="text-center"></div>
                         <!-- Typing area -->
-                        <form action="#" method="post" class="bg-light">
+                        <form id="MSG" action="#" method="post" class="bg-light">
                             <div class="input-group">
-                            <input type="text" id="CHAT_MENSAGEM" name="CHAT_MENSAGEM" placeholder="Envie uma mensagem" aria-describedby="button-addon2" class="form-control rounded-0 border-0 py-4 bg-light">
+                            <input type="text" id="SUP_MENSAGEM" name="SUP_MENSAGEM" placeholder="Envie uma mensagem" aria-describedby="button-addon2" class="form-control rounded-0 border-0 py-4 bg-light">
                             <input type="hidden" class="form-control" id="EMP_COD" name="EMP_COD" value="<?= isset($_SESSION['EMP_COD']) ? $_SESSION['EMP_COD'] : 0; ?>">
                             <input type="hidden" class="form-control" id="USU_COD" name="USU_COD" value="<?= isset($_SESSION['USU_COD']) ? $_SESSION['USU_COD'] : 0; ?>">
                             <div class="input-group-append">
-                                <button id="button-addon2" id="MSG" type="submit" class="btn btn-lg btn-link"> <i class="fa fa-paper-plane"></i></button>
+                                <button id="button-addon2"  type="submit" class="btn btn-lg btn-link"> <i class="fa fa-paper-plane"></i></button>
                             </div>
                             </div>
                         </form>
@@ -140,9 +110,9 @@ input::placeholder {
     
 </div>
 <script type="text/javascript">
-    $("#MSG").click(function(e){
+    $("#MSG").submit(function(e){
         e.preventDefault();
-        var CHAT_MENSAGEM = $('#CHAT_MENSAGEM').val();
+        var SUP_MENSAGEM = $('#SUP_MENSAGEM').val();
         var EMP_COD = $('#EMP_COD').val();
         var USU_COD = $('#USU_COD').val();
         
@@ -150,15 +120,16 @@ input::placeholder {
         //setTimeout(function () {
               //  $('#status').modal('hide');
         //}, 100);
-        $.post('<?= DIRPAGE; ?>suporte/cadastrar', {CHAT_MENSAGEM: CHAT_MENSAGEM,CADASTRAR_NOVA_MENSAGEM: true,EMP_COD: EMP_COD,USU_COD:USU_COD,USU_COD_DESTINATARIO: USU_COD_DESTINATARIO}, function(retorno) {
+        $.post('<?= DIRPAGE; ?>suporte/cadastrar', {SUP_MENSAGEM: SUP_MENSAGEM,CADASTRAR_NOVA_MENSAGEM: true,EMP_COD: EMP_COD,USU_COD:USU_COD,USU_COD_DESTINATARIO: USU_COD_DESTINATARIO}, function(retorno) {
             var resposta = JSON.parse(retorno);
             console.log(resposta);
-            //if (resposta['COD'] !== 'ERRO') {
-             //   $('#resposta').addClass('alert alert-success');
-            //}else{
-                //$('#resposta').addClass('alert alert-warning');
-           // }
-           // $('#resposta').html(resposta['MENSAGEM']);
+            if (resposta['COD'] !== 'ERRO') {
+                $('#retorno').addClass('alert alert-success');
+            }else{
+                $('#retorno').addClass('alert alert-warning');
+             }
+             $('#retorno').html(resposta['MENSAGEM']);
+             $('#SUP_MENSAGEM').val('');
             //setTimeout( () => { window.location.href="<?php //= DIRPAGE ?>estoques/produtos/"+EMP_COD+"/"+EST_COD}, 100);
         });
 

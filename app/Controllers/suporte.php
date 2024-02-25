@@ -53,42 +53,41 @@ class suporte extends View
         if (isset($_POST) && isset($dados['CADASTRAR_NOVA_MENSAGEM'])) {
             unset($dados['CADASTRAR_NOVA_MENSAGEM']);
             if( $this->dados['empresa']['USU_COD'] == $dados['USU_COD'] && $this->dados['empresa']['EMP_COD'] == $dados['EMP_COD']){
-                $mensagem = $dados['CHAT_MENSAGEM'];
-                unset($dados['CHAT_MENSAGEM']);
+                //$mensagem = $dados['SUP_MENSAGEM'];
+                //unset($dados['CHAT_MENSAGEM']);
                 //Verifica se tem algum valor proibido
                 foreach ($dados as $key => $value) {
                     $dados[$key] = $this->Check->checarString($value);
                 }
                 $dados += array(
-                    'SUP_DT_CADASTRO'=> date('Y-m-d H:i:s'),
-                    'SUP_DT_ATUALIZACAO'=> date('0000-00-00 00:00:00'),          
+                    'SUP_DT_CADASTRO'=> date('Y-m-d H:i:s'),         
                     'SUP_STATUS'=> 1
                 );
                 $id = $this->Suporte->cadastrar($dados,0);
                 if($id){
-                    $db = array(
-                        'SUP_COD'=> $id,
-                        'CHAT_DT_CADASTRO'=> date('Y-m-d H:i:s'),  
-                        'CHAT_MENSAGEM' => $mensagem,     
-                        'CHAT_STATUS'=> 1
-                    );
-                    if($this->Chat->cadastrar($db,0)){
+                   // $db = array(
+                     ///   'SUP_COD'=> $id,
+                     //   'CHAT_DT_CADASTRO'=> date('Y-m-d H:i:s'),  
+                     //   'CHAT_MENSAGEM' => $mensagem,     
+                       // 'CHAT_STATUS'=> 1
+                   // );
+                    //if($this->Chat->cadastrar($db,0)){
                         $ok = true;
                         $respota = array(
                             'COD'=>'OK',
-                            'MENSAGEM' => 'Cadastro efetuado com sucesso!'
+                            'MENSAGEM' => 'mensagem enviada! em breve entraremos em contato'
                         );
-                    }else {
-                        $respota = array(
-                            'COD'=>'ERRO',
-                            'MENSAGEM'=> 'ERRO 2- ERRO AO SALVAR SUA MENSAGEM, FALE COM O SUPORTE POR TELEFONE(s)!'
-                        );
-                    }
+                   // }else {
+                      //  $respota = array(
+                       //     'COD'=>'ERRO',
+                        //    'MENSAGEM'=> 'ERRO 4- ERRO AO SALVAR SUA MENSAGEM, FALE COM O SUPORTE POR TELEFONE(s)!'
+                      //  );
+                  //  }
                 }else{
                     //Sessao::alert('ERRO',' SET4- Erro ao cadastrar, entre em contato com o suporte!','fs-4 alert alert-danger');
                     $respota = array(
                         'COD'=>'ERRO',
-                        'MENSAGEM'=> 'ERRO 2- ERRO AO CRIAR MENSAGEM, FALE COM O SUPORTE POR TELEFONE(s)!'
+                        'MENSAGEM'=> 'ERRO 3- ERRO AO CRIAR MENSAGEM, FALE COM O SUPORTE POR TELEFONE(s)!'
                     );
                 }
             }else {
@@ -100,7 +99,7 @@ class suporte extends View
         }else {
             $respota = array(
                 'COD'=>'ERRO',
-                'MENSAGEM'=> 'ERRO 2- ACESSO INVÁLIDO(S)!'
+                'MENSAGEM'=> 'ERRO 1- ACESSO INVÁLIDO(S)!'
             );
         }
         echo json_encode($respota);

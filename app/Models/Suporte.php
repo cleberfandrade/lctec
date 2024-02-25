@@ -47,7 +47,7 @@ class Suporte extends Model
     }
     public function listarTodasMensagensUsuario($ver = 0)
     {
-        $parametros = "S INNER JOIN tb_usuarios U ON U.USU_COD=S.USU_COD INNER JOIN tb_chat C ON C.SUP_COD=S.SUP_COD WHERE C.USU_COD={$this->codUsuario} ORDER BY S.SUP_DT_CADASTRO";
+        $parametros = "S INNER JOIN tb_usuarios U ON U.USU_COD=S.USU_COD  WHERE S.USU_COD={$this->codUsuario} ORDER BY S.SUP_DT_CADASTRO";
         $campos = "*";
         $resultado = $this->Model->exibir($parametros, $campos, $ver, $id = false);
         if ($resultado) {
