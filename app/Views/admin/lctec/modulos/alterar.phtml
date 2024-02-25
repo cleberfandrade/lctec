@@ -20,9 +20,9 @@ $qtdME = (is_array($modulos) ? count($modulos) : 0);
                         <div class="row gx-5">
                             <div class="col-lg-9 col-xl-9 col-xxl-9">
                                 <div class="my-1 px-4 mx-auto">
-                                    <a class="text-decoration-none" href="<?= DIRPAGE; ?>lctec/modulos">
+                                    <a class="text-decoration-none" href="<?= DIRPAGE; ?>lctec/modulos_alteracao/<?= isset($modulo['MOD_COD']) ? $modulo['MOD_COD'] : 0; ?>">
                                         <h5 class="fs-2 fw-bolder text-uppercase text-dark mb-1">
-                                            <i class="bi bi-house"></i> ALTERAR <span class="text-success">MÓDULOS DO SISTEMA</span>
+                                            <i class="bi bi-house"></i> ALTERAR <span class="text-success">MÓDULO DO SISTEMA</span>
                                         </h5>
                                     </a>
                                 </div>
@@ -47,26 +47,26 @@ $qtdME = (is_array($modulos) ? count($modulos) : 0);
                                     <label class="px-3" for="1">NOME DO MÓDULO</label>
                                 </div>    
                                 <div class="col-4 form-floating mb-3">
-                                    <input type="text" class="form-control maiusculo" id="1" name="MOD_ICON" placeholder="" value="<?= isset($_POST['MOD_ICON']) ? $_POST['MOD_ICON'] : (isset($modulo['MOD_ICON'])? $modulo['MOD_NOME'] : '') ; ?>">
+                                    <input type="text" class="form-control" id="1" name="MOD_ICON" placeholder="" value="<?= isset($_POST['MOD_ICON']) ? $_POST['MOD_ICON'] : (isset($modulo['MOD_ICON'])? $modulo['MOD_NOME'] : '') ; ?>">
                                     <label class="px-3" for="1">ICONE (opcional)</label>
                                 </div>  
                                 <div class="col-8 form-floating mb-3">
-                                    <input type="text" class="form-control maiusculo" id="2" name="MOD_LINK" placeholder="" value="<?= isset($_POST['MOD_LINK']) ? $_POST['MOD_LINK'] : (isset($modulo['MOD_LINK'])? $modulo['MOD_LINK'] : '') ; ?>">
+                                    <input type="text" class="form-control" id="2" name="MOD_LINK" placeholder="" value="<?= isset($_POST['MOD_LINK']) ? $_POST['MOD_LINK'] : (isset($modulo['MOD_LINK'])? $modulo['MOD_LINK'] : '') ; ?>">
                                     <label class="px-3" for="2">LINK</label>
                                 </div>
                                 <div class="col-4 form-floating mb-3">
-                                    <input type="text" class="form-control maiusculo" id="2" name="MOD_COR" placeholder="" value="<?= isset($_POST['MOD_COR']) ? $_POST['MOD_COR'] : (isset($modulo['MOD_COR'])? $modulo['MOD_COR'] : '') ; ?>">
+                                    <input type="text" class="form-control" id="2" name="MOD_COR" placeholder="" value="<?= isset($_POST['MOD_COR']) ? $_POST['MOD_COR'] : (isset($modulo['MOD_COR'])? $modulo['MOD_COR'] : '') ; ?>">
                                     <label class="px-3" for="2">LINK</label>
                                 </div>
-                                <div class="col-12 mb-3" style="height:10px">
+                                <div class="col-12 mb-3" style="height:100px">
                                     <label for="address2" class="form-label">DESCRIÇÃO</label>
-                                    <textarea type="text" class="form-control  maiusculo" name="MOD_DESCRICAO"><?= isset($_POST['MOD_DESCRICAO'])? $_POST['MOD_DESCRICAO']  : (isset($modulo['MOD_DESCRICAO'])? $modulo['MOD_DESCRICAO'] : '') ?></textarea>
+                                    <textarea type="text" class="form-control" name="MOD_DESCRICAO"><?= isset($_POST['MOD_DESCRICAO'])? $_POST['MOD_DESCRICAO']  : (isset($modulo['MOD_DESCRICAO'])? $modulo['MOD_DESCRICAO'] : '') ?></textarea>
                                 </div> 
                                 <hr class="my-4 text-dark">
                                 <input type="hidden" class="form-control" name="MOD_COD" value="<?= isset($modulo['MOD_COD']) ? $modulo['MOD_COD'] : 0; ?>">
                                 <input type="hidden" class="form-control" name="USU_COD" value="<?= isset($_SESSION['USU_COD']) ? $_SESSION['USU_COD'] : 0; ?>">
     
-                                <button class="col-6 btn btn-lg text-uppercase btn-warning" name="ALTERAR_MODULO" type="submit"><i class="fa fa-edit"></i> Alterar</button>
+                                <button class=" btn btn-lg text-uppercase btn-warning" name="ALTERAR_MODULO" type="submit"><i class="fa fa-edit"></i> Alterar</button>
                                 <hr class="my-4 text-dark">
                             </div> 
                         </form>

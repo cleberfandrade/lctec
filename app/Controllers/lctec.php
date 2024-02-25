@@ -83,14 +83,29 @@ class lctec extends View
         $this->link[1] = ['link'=> 'lctec','nome' => 'MÓDULOS LC/TEC >>'];
         $dados = filter_input_array(INPUT_GET, FILTER_SANITIZE_URL);
         $dados = explode("/",$dados['url']);
-        if (isset($dados[1]) && $dados[1] == 'modulos_alteracao' && isset($dados[2]) && isset($dados[3])) {
+        $ok = false;
+        if (isset($dados[1]) && $dados[1] == 'modulos_alteracao' && isset($dados[2])) {
             
             if($this->dados['empresa']['USU_COD'] == $_SESSION['USU_COD'] && $_SESSION['USU_NIVEL'] >= 15){
 
-
+                $this->dados['modulo'] = $this->Modulos->setCodigo($dados[2])->listar(0);
+                if ($this->dados['modulo'] != 0) {
+                    $ok = true;
+                }else {
+                    $ok = false;
+                }
+            }else{
+                Sessao::alert('ERRO',' ERRO: CLI22 - Acesso nao permitido!','alert alert-danger');
             }
+        }else{
+            Sessao::alert('ERRO',' ERRO: CLI11 - Dados inválido(s)!','alert alert-danger');
+        } 
+        if($ok){
+            $this->render('admin/lctec/modulos/alterar', $this->dados);
+        }else{
+            $this->dados['modulos'] = $this->Modulos->listarTodos(0);
+            $this->render('admin/lctec/modulos/modulos', $this->dados);
         }
-
     }
     public function modulos_status():void
     {
@@ -103,7 +118,7 @@ class lctec extends View
        if (isset($dados[1]) && $dados[1] == 'modulos_status' && isset($dados[2]) && isset($dados[3])) {
        //if (isset($_POST) && isset($dados['STATUS_MODULO'])) {
 
-          if($this->dados['empresa']['USU_COD'] == $_SESSION['USU_COD'] && $_SESSION['USU_NIVEL'] >= 15){
+          if($_SESSION['USU_NIVEL'] >= 20 && $_SESSION['USU_NIVEL'] <= 30){
               //Verifica se os campos foram todos preenchidos
               unset($dados['modulos_status']);
               $this->Modulos->setCodigo($dados[2]);
