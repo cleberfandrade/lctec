@@ -1,0 +1,80 @@
+<?php 
+use Libraries\Sessao;
+use Libraries\Url;
+use Libraries\Util;
+$Util = new Util;
+
+include_once 'app/Views/admin/inc/cabecalho.phtml'; 
+$qtdME = (is_array($modulos) ? count($modulos) : 0);
+?>
+<body class="max-width:100%;max-height:100%;">
+    <div class="d-flex" id="wrapper">
+        <?php include_once 'app/Views/admin/inc/menu_lateral_admin.phtml'; ?>
+        <div id="page-content-wrapper">
+            <!-- Top navigation-->
+            <?php include_once 'app/Views/admin/inc/menu_topo_admin.phtml'; ?>
+            
+            <div class="container-fluid bg-light p-0">
+                <header class="py-3">
+                    <section class="container px-3">
+                        <div class="row gx-5">
+                            <div class="col-lg-9 col-xl-9 col-xxl-9">
+                                <div class="my-1 px-4 mx-auto">
+                                    <a class="text-decoration-none" href="<?= DIRPAGE; ?>lctec/modulos/cadastro">
+                                        <h5 class="fs-2 fw-bolder text-uppercase text-dark mb-1">
+                                            <i class="bi bi-house"></i> ALTERAR <span class="text-success">MÓDULO DO SISTEMA</span>
+                                        </h5>
+                                    </a>
+                                </div>
+                            </div>
+                            <?php include_once 'app/Views/admin/inc/saudacao_admin.phtml'; ?>   
+                        </div>
+                    </section>
+                    <section class="container col-12 mx-auto px-5">
+                        <?= $breadcrumb ?>
+                    </section>
+                </header>
+                <?php include_once 'app/Views/admin/inc/alertas.phtml'; ?>  
+                <section class="bg-light py-2">
+                    <div class="col-12 mx-auto text-center m-1">
+                        <a class="col-4 btn btn-sm text-uppercase btn-secondary" href="<?= DIRPAGE; ?>lctec/modulos"><i class="bi bi-arrow-left"></i> VOLTAR AOS MÓDULOS</a>
+                    </div>
+                    <div class="container col-10 px-2 py-2 mx-auto row">
+                        <form class="p-4 p-md-6 border text-uppercase rounded-3 " action="<?= DIRPAGE ?>modulos/cadastrar" method="POST">
+                            <div class="row ">    
+                                <div class="col-8 form-floating mb-3">
+                                    <input type="text" class="form-control maiusculo" id="1" name="MOD_NOME" placeholder="Informe o nome do módulo" value="<?= isset($_POST['MOD_NOME']) ? $_POST['MOD_NOME'] : ''; ?>">
+                                    <label class="px-3" for="1">NOME DO MÓDULO</label>
+                                </div>    
+                                <div class="col-4 form-floating mb-3">
+                                    <textarea type="text" class="form-control" name="MOD_ICON"><?= isset($_POST['MOD_ICON']) ? $_POST['MOD_ICON'] : ''; ?></textarea>
+                                    <label class="px-3" for="1">ICONE (opcional)</label>
+                                </div>  
+                                <div class="col-8 form-floating mb-3">
+                                    <input type="text" class="form-control" id="2" name="MOD_LINK" value="<?= isset($_POST['MOD_LINK']) ? $_POST['MOD_LINK'] : ''; ?>">
+                                    <label class="px-3" for="2">LINK</label>
+                                </div>
+                                <div class="col-4 form-floating mb-3">
+                                    <input type="text" class="form-control" id="2" name="MOD_COR" value="<?= isset($_POST['MOD_COR']) ? $_POST['MOD_COR'] : '' ; ?>">
+                                    <label class="px-3" for="2">COR</label>
+                                </div>
+                                <div class="col-12 mb-3" style="height:100px">
+                                    <label for="address2" class="form-label">DESCRIÇÃO</label>
+                                    <textarea type="text" class="form-control" name="MOD_DESCRICAO"><?= isset($_POST['MOD_DESCRICAO'])? $_POST['MOD_DESCRICAO']  : '' ?></textarea>
+                                </div> 
+                                <hr class="my-4 text-dark">
+                                <button class=" btn btn-lg text-uppercase btn-success" name="CADASTRAR_MODULO" type="submit"><i class="fa fa-save"></i> Cadastrar</button>
+                                <hr class="my-4 text-dark">
+                            </div> 
+                        </form>
+                    </div> 
+                </section>
+                <?php include_once 'app/Views/admin/inc/rodape.phtml';?>
+                <script type="text/javascript">
+                    
+                </script>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

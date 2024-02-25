@@ -31,6 +31,8 @@ class modulos extends View
         $this->dados['modulos'] = $this->Modulos->listarTodos();
 
         $this->ModulosEmpresa = new ModulosEmpresa;
+        
+        $this->dados['title'] = 'MÓDULOS LC/TEC >> ';
 
         $this->link[0] = ['link'=> 'lctec','nome' => 'PAINEL GERENCIAL | LC/TEC'];
         $this->link[1] = ['link'=> 'lctec/modulos','nome' => 'MÓDULOS LC/TEC >>'];
@@ -43,6 +45,13 @@ class modulos extends View
         $this->dados['title'] .= ' LC/TEC >> MÓDULOS DO SISTEMA';   
         $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
         $this->render('admin/lctec/modulos/modulos', $this->dados);
+    }
+    public function cadastro():void
+    {
+        $this->dados['title'] .= ' CADASTRAR MÓDULOS';
+        $this->link[2] = ['link'=> 'setores/cadastrar','nome' => 'CADASTRAR MÓDULOS'];
+        $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
+        $this->render('admin/lctec/modulos/cadastrar', $this->dados);
     }
     public function alteracao()
     {
