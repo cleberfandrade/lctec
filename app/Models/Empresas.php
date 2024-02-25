@@ -63,7 +63,7 @@ class Empresas extends Model
     }
     public function listarTodos($ver = 0)
     {
-        $parametros = "ORDER BY EMP_FANTASIA";
+        $parametros = "ORDER BY EMP_DT_CADASTRO,EMP_NOME_FANTASIA";
         $campos = "*";
         $resultado = $this->Model->exibir($parametros, $campos, $ver = 0, $id = false);
         if ($resultado) {

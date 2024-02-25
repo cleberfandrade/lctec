@@ -3,6 +3,8 @@ namespace App\Controllers;
 
 use App\Models\Empresas;
 use App\Models\Financas;
+use App\Models\Modulos;
+use App\Models\ModulosEmpresa;
 use App\Models\Usuarios;
 use App\Models\UsuariosEmpresa;
 use App\Models\Vendedores;
@@ -14,18 +16,27 @@ use Libraries\Url;
 class lctec extends View
 {
     private $dados = [];
-    private $link,$Financas,$Check,$Usuarios,$UsuariosEmpresa,$Colaboradores,$CargosSalarios,$FolhasPagamento,$Divulgacoes,$Desligamentos,$Horarios,$Promocoes,$Recrutamentos,$Treinamentos,$Beneficios;
+    private $link,$Financas,$Check,$Avisos,$Usuarios,$Empresas,$UsuariosEmpresa,$Modulos,$ModulosEmpresa,$Colaboradores,$CargosSalarios,$FolhasPagamento,$Divulgacoes,$Desligamentos,$Horarios,$Promocoes,$Recrutamentos,$Treinamentos,$Beneficios;
     public function __construct()
     {
         Sessao::naoLogadoSistema();
         $this->dados['title'] = 'MÓDULO | LCTEC >>'; 
+
         $this->Financas = new Financas;  
         $this->Check = new Check;
-        $this->Usuarios = new Usuarios;
-        $this->UsuariosEmpresa = new UsuariosEmpresa;
+        
+        $this->Empresas = new Empresas;
+        $this->dados['empresas'] = $this->Empresas->listarTodos();
 
-        $this->dados['empresa'] = $this->UsuariosEmpresa->setCodEmpresa($_SESSION['EMP_COD'])->setCodUsuario($_SESSION['USU_COD'])->listar(0);
+        $this->Usuarios = new Usuarios;
         $this->dados['usuario'] = $this->Usuarios->setCodUsuario($_SESSION['USU_COD'])->listar(0);
+        $this->UsuariosEmpresa = new UsuariosEmpresa;
+        $this->dados['empresa'] = $this->UsuariosEmpresa->setCodEmpresa($_SESSION['EMP_COD'])->setCodUsuario($_SESSION['USU_COD'])->listar(0);
+
+        $this->Modulos = new Modulos;
+        $this->dados['modulos'] = $this->Modulos->listarTodos();
+        $this->ModulosEmpresa = new ModulosEmpresa;
+
         
         $this->link[0] = ['link'=> 'lctec','nome' => 'PAINEL GERENCIAL | LC/TEC'];
         //$this->link[1] = ['link'=> 'lctec','nome' => 'MÓDULO LC/TEC >>'];
