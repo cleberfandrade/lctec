@@ -3,7 +3,17 @@ use Libraries\Sessao;
 
 include_once 'app/Views/admin/inc/cabecalho.phtml'; 
 $qtd = (is_array($suporte) ? count($suporte) : 0);
-dump($suporte);
+$qtdE = (is_array($empresas) ? count($empresas) : 0);
+//$new_msg = array();
+//for ($i=0; $i < $qtdE; $i++) {  
+    //for ($s=0; $s < $qtd; $s++) {  
+       // if($empresas[$i]['EMP_COD'] == $suporte[$s]['EMP_COD']){
+         //   $new_msg['NOME'] = $suporte[$s]['EMP_NOME_FANTASIA'];
+          //  $new_msg[$i][$s] = $suporte[$s];
+       // }
+   // } 
+//}
+//dump($new_msg);
 ?>
 <body class="max-width:100%;max-height:100%;">
     <div class="d-flex" id="wrapper">
@@ -40,19 +50,20 @@ dump($suporte);
                             <p class="lead text-center fs-6">DESENVOLVENDO SOLUÇÕES PARA O SEU NEGÓCIO</p></h3>
                         </div>
                     </div>
-                    <div class="row col-6 mx-auto m-1">
+                    <div class="row col-10 mx-auto m-1">
                         <ul class="list-group">
                             <li class="list-group-item bg-success text-white" aria-current="true">MENSAGENS PARA O SUPORTE</li>
                             <?php if ($qtd != 0) { ?>
-                                <?php for ($i=0; $i < $qtd; $i++) {  
+                                <?php for ($i=1; $i < $qtd; $i++) {  
+                                    ///for ($s=0; $s < $qtd; $s++) {  <i class="bi bi-check-all"></i> <i class="bi bi-check"></i>
                                     $data = new DateTime($suporte[$i]['SUP_DT_CADASTRO']); ?>
-                                    <a href="<?= DIRPAGE ?>lctec/suporte/detalhar/<?= $suporte[$i]['SUP_COD'] ?>" class="list-group-item list-group-item-action">
+                                    <a href="<?= DIRPAGE ?>lctec/suporte/detalhar/<?= $suporte[$i]['EMP_COD'] ?>" class="list-group-item list-group-item-action">
                                         <div class="d-flex w-100 text-center justify-content-between">
-                                            <h5 class="mb-1 text-center "><?= $suporte[$i]['USU_NOME'] ?></h5>
-                                            <small class="text-body-secondary"><?= $data->format('d/m/Y'); ?></small>
+                                            <h5 class="mb-1 text-center "><?= $suporte[$i]['SUP_MENSAGEM'] ?></h5>
+                                            <small class="text-body-secondary"><?= $suporte[$i]['EMP_NOME_FANTASIA'].' - '.$data->format('d/m/Y H:i'); ?></small>
                                         </div>
                                         <p class="mb-1"></p>
-                                        <small class="text-body-secondary"><?= ($suporte[$i]['SUP_STATUS'] == 1)? 'ATIVADA' : 'DESATIVADA'; ?></small>
+                                        <small class="text-body-secondary"><?= ($suporte[$i]['SUP_STATUS'] == 1)? 'AGUARDANDO RESPOSTA' : 'DESATIVADA'; ?></small>
                                     </a>
                                 <?php } ?>
                             <?php }else { ?>

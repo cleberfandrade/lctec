@@ -60,14 +60,16 @@ $qtd = (is_array($tarefas) ? count($tarefas) : 0);
                             <table class="table row col table-striped table-bordered">
                                 <thead class="text-center text-uppercase">
                                     <th colspan="2" class="text-center align-middle"><?= $colunas[$c]['CLN_DESCRICAO']; ?></th>
-                                    <th class="text-center align-middle"><a type="button" class="btn btn-warning btn-sm d-print-none" href="<?= DIRPAGE.'tarefas/alteracao_colunas/'.$colunas[$c]['EMP_COD'].'/'.$colunas[$c]['CLN_COD']; ?>" title="Alterar coluna"><i class="fa fa-edit"></i></a></th>
+                                    <th class="text-center align-middle">
+                                        <a type="button" class="btn btn-warning btn-sm d-print-none" href="<?= DIRPAGE.'tarefas/alteracao/'.$colunas[$c]['EMP_COD'].'/'.$colunas[$c]['CLN_COD']; ?>" title="Alterar coluna"><i class="fa fa-edit"></i></a></th>
                                     <tr>  
                                         <?php for ($i=0; $i < $qtd; $i++) {
                                             if($tarefas[$i]['CLN_COD'] == $colunas[$c]['CLN_COD']){ ?>
                                             <tr class="<?= ($tarefas[$i]['TRF_STATUS'] == 0 && $_SESSION['USU_NIVEL'] >= 8)? 'bg-secondary' : ''; ?>">
                                                 <td class="text-center align-middle"><?= $t; ?></td>
                                                 <td class="text-center align-middle"><?= $tarefas[$i]['TRF_DESCRICAO']; ?></td>
-                                                <td><button type="button" class="btn btn-success btn-sm d-print-none" data-bs-toggle='modal'  data-bs-target="#status" data-codigo="<?= $tarefas[$i]['TRF_COD']; ?>" data-nome="<?= $tarefas[$i]['TRF_DESCRICAO']; ?>" data-status="<?= $tarefas[$i]['CLN_COD']; ?>" title="Deseja mudar?" ><i class="fa fa-ban"></i></button></td>
+                                                <td>
+                                                    <button type="button" class="btn btn-success btn-sm d-print-none" data-bs-toggle='modal'  data-bs-target="#status" data-codigo="<?= $tarefas[$i]['TRF_COD']; ?>" data-nome="<?= $tarefas[$i]['TRF_DESCRICAO']; ?>" data-status="<?= $tarefas[$i]['CLN_COD']; ?>" title="Deseja mudar?" ><i class="fa fa-ban"></i></button></td>
                                             </tr>
                                             <?php $t++; } ?>
                                         <?php  } ?>
@@ -97,8 +99,8 @@ $qtd = (is_array($tarefas) ? count($tarefas) : 0);
                     <?php //$c = 1; for ($i= 0; $i < $qtd; $i++) { ?>
                                 <tr class="<?php // ($tarefas[$i]['TRF_STATUS'] == 0 && $_SESSION['USU_NIVEL'] >= 8)? 'bg-secondary' : ''; ?>">
                                     <td class="text-center align-middle"><?php  // $c; ?></td>
-                                    <?php   if($_SESSION['USU_NIVEL'] >= 8){ ?>
-                                    <?php   } ?> 
+                                    <?php   //if($_SESSION['USU_NIVEL'] >= 8){ ?>
+                                    <?php   //} ?> 
                                 </tr>
                             <?php //$c++;   } ?>
                     --->

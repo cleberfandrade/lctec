@@ -4,6 +4,7 @@
  $Tarefas = new Tarefas;
  $trf = $Tarefas->setCodEmpresa($_SESSION['EMP_COD'])->listarTodos(0);
  $qtdTR = (is_array($trf) ? count($trf) : 0);
+ $qtdSU = (is_array($suporte) ? count($suporte) : 0);
     //if ($tarefas[$i]['CLN_COD'] <= 3)
 ?>
 
@@ -15,6 +16,19 @@
         <div id="navbarSupportedContent" class="collapse navbar-collapse">
             <ul class="navbar-nav ms-auto mt-2 mt-lg-0 fs-6 text-uppercase align-items-center align-middle ">
                 <li class="row mx-auto container align-items-center align-middle ">
+                    <div class="col">
+                        <?php if ($qtdSU) { ?>
+                            <a type="button" class="btn btn-sm text-danger" data-bs-toggle="tooltip" href="<?= DIRPAGE?>lctec/suporte" data-bs-title="<?= $qtdSU ?> Nova(s) mensagens">
+                                <i class="piscar text-danger bi bi-chat-left-dots"></i>
+                            </a>
+                        <?php } else { ?>
+                            <a type="button" class="btn btn-sm btn-dark" data-bs-toggle="tooltip" href="<?= DIRPAGE?>lctec/suporte" data-bs-title="0 mensagens">
+                                <i class="bi bi-chat-left text-secondary"></i>
+                            </a>
+                       <?php } ?>
+                        
+                        
+                    </div>
                     <div class="col">   
                         <a type="button" class="btn btn-sm btn-dark" data-bs-toggle="tooltip" data-bs-title="0 Aviso(s)" data-bs-content=""><i class="bi bi-bell-slash text-secondary"></i></a>
                     </div>
@@ -40,3 +54,31 @@
         </div>
     </div>
 </nav>
+<style>
+    .piscar{ 
+        animation: animate 0.7s linear infinite;
+    }
+    @keyframes animate {
+        0%{ 
+            opacity: 0;
+        }
+        25%{ 
+            opacity: 0.5;
+        }
+        50%{ 
+            opacity: 1;
+        }
+        75%{ 
+            opacity: 0.5;
+        }
+        100%{ 
+            opacity: 0;
+        }
+    }
+</style>
+<?= $qtdSU >=1 ?
+'<div class=" bg-danger text-center col-12">
+<div class="alert" role="alert" id="myToast" aria-live="polite" aria-atomic="true" data-bs-delay="10000">
+    <a href="'.DIRPAGE.'lctec/suporte" class="piscar text-white">SUPORTE SOLICITADO!!</a>
+</div>
+</div>' : ''?>
