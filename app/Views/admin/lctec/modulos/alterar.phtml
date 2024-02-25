@@ -63,9 +63,7 @@ $qtdME = (is_array($modulos) ? count($modulos) : 0);
                                     <textarea type="text" class="form-control" name="MOD_DESCRICAO"><?= isset($_POST['MOD_DESCRICAO'])? $_POST['MOD_DESCRICAO']  : (isset($modulo['MOD_DESCRICAO'])? $modulo['MOD_DESCRICAO'] : '') ?></textarea>
                                 </div> 
                                 <hr class="my-4 text-dark">
-                                <input type="hidden" class="form-control" name="MOD_COD" value="<?= isset($modulo['MOD_COD']) ? $modulo['MOD_COD'] : 0; ?>">
-                                <input type="hidden" class="form-control" name="USU_COD" value="<?= isset($_SESSION['USU_COD']) ? $_SESSION['USU_COD'] : 0; ?>">
-    
+                                <input type="hidden" class="form-control" name="MOD_COD" value="<?= isset($modulo['MOD_COD']) ? $modulo['MOD_COD'] : 0; ?>">  
                                 <button class=" btn btn-lg text-uppercase btn-warning" name="ALTERAR_MODULO" type="submit"><i class="fa fa-edit"></i> Alterar</button>
                                 <hr class="my-4 text-dark">
                             </div> 
