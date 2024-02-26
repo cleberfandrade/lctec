@@ -165,18 +165,16 @@ input::placeholder {
                     });
 
                 });
-                    //var chatEl = document.getElementById("#fim");
-                    //chatEl.scrollTop = chatEl.scrollHeight;
-                    function setFocusToTextBox(){
-                       
-                        $("#fim").on('focus', function() {
-                            var pos = this.value.length;
-                            this.setSelectionRange(pos, pos);
-                        });
-                       
-                       
+                    function getMessages(letter) {
+                        var div = $("#chat");
+                        div.scrollTop(div.prop('scrollHeight'));
                     }
-                    setInterval(() =>  $("#retorno").focus(), 3000);
+
+                    $(function() {
+                        setInterval(getMessages, 1500);
+                    // getMessages();
+                    });
+                    setInterval(() =>  $("#SUP_MENSAGEM").focus(), 3000);
                 </script>
             </div>
         </div>
