@@ -58,7 +58,7 @@ class Suporte extends Model
     }
     public function listarTodasMensagensEnviadasRecebidas($ver = 0)
     {
-        $parametros = "S WHERE S.USU_COD={$this->codUsuario} or S.USU_COD_DESTINATARIO={$this->codUsuario} AND S.SUP_STATUS=1 ORDER BY S.SUP_DT_CADASTRO";
+        $parametros = "S WHERE S.USU_COD={$this->codUsuario} or S.USU_COD_DESTINATARIO={$this->codUsuario} AND S.SUP_STATUS=1 OR S.SUP_STATUS=2 ORDER BY S.SUP_DT_CADASTRO";
         $campos = "*";
         $resultado = $this->Model->exibir($parametros, $campos, $ver, $id = false);
         if ($resultado) {
@@ -80,7 +80,7 @@ class Suporte extends Model
     }
     public function listarTodasMensagensSuporte($ver = 0)
     {
-        $parametros = "S INNER JOIN tb_usuarios_empresa U ON U.USU_COD=S.USU_COD INNER JOIN tb_usuarios US ON US.USU_COD = U.USU_COD INNER JOIN tb_empresas E ON E.EMP_COD=U.EMP_COD WHERE S.USU_COD_DESTINATARIO={$this->codUsuario} AND S.SUP_STATUS=1 ORDER BY S.SUP_DT_CADASTRO";
+        $parametros = "S INNER JOIN tb_usuarios_empresa U ON U.USU_COD=S.USU_COD INNER JOIN tb_usuarios US ON US.USU_COD = U.USU_COD INNER JOIN tb_empresas E ON E.EMP_COD=U.EMP_COD WHERE S.USU_COD_DESTINATARIO={$this->codUsuario} AND S.SUP_STATUS=1 OR S.SUP_STATUS=2 ORDER BY S.SUP_DT_CADASTRO";
         $campos = "*";
         $resultado = $this->Model->exibir($parametros, $campos, $ver, $id = false);
         if ($resultado) {
