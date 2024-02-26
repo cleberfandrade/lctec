@@ -107,7 +107,7 @@ input::placeholder {
                                                             <div class="bg-light rounded py-2 px-3 mb-2">
                                                             <p class="text-small mb-0 text-muted"><?= $suporte_cliente[$i]['SUP_MENSAGEM'] ?></p>
                                                             </div>
-                                                            <p class="small text-muted"><?= (date('Y-m-d') == $data->format('Y-m-d')) ? 'Hoje às '. $data->format('H:i') : $data->format('d/m/Y H:i'); ?></p>
+                                                            <p class="small text-muted"><?= (date('Y-m-d') == $data->format('Y-m-d')) ? '<b>Hoje</b> às '. $data->format('H:i') : ((date('Y-m-d', strtotime("-1 days")) == $data->format('Y-m-d')) ? 'Ontem às '. $data->format('H:i') : $data->format('d/m/Y H:i')); ?></p>
                                                         </div>
                                                     </div>
                                             <?php } else {  ?>
@@ -117,7 +117,7 @@ input::placeholder {
                                                             <div class="bg-success rounded py-2 px-3 mb-2">
                                                                 <p class="text-small mb-0 text-white"><?= $suporte_cliente[$i]['SUP_MENSAGEM'] ?></p>
                                                             </div>
-                                                            <p class="small text-muted"><?= $data->format('d/m/Y H:i'); ?></p>
+                                                            <p class="small text-muted"><?= (date('Y-m-d') == $data->format('Y-m-d')) ? '<b>Hoje</b> às '. $data->format('H:i') : ((date('Y-m-d', strtotime("-1 days")) == $data->format('Y-m-d')) ? 'Ontem às '. $data->format('H:i') : $data->format('d/m/Y H:i')); ?></p>
                                                         </div>
                                                     </div>
                                                 <?php } ?>
@@ -172,7 +172,7 @@ input::placeholder {
                     }
 
                     $(function() {
-                        setInterval(getMessages, 1500);
+                        setInterval(getMessages, 3500);
                     // getMessages();
                     });
                     setInterval(() =>  $("#SUP_MENSAGEM").focus(), 3000);
