@@ -83,7 +83,7 @@ input::placeholder {
                                             <div class="media"><img src="https://bootstrapious.com/i/snippets/sn-chat/avatar.svg" alt="user" width="50" class="rounded-circle">
                                                 <div class="media-body ml-4">
                                                     <div class="d-flex align-items-center justify-content-between mb-1">
-                                                        <h6 class="mb-0"><?= $suporte[0]['USU_NOME'] ?></h6><small class="small font-weight-bold"><?= $suporte[0]['EMP_NOME_FANTASIA'] ?></small>
+                                                        <h6 class="mb-0"><?= $suporte[0]['USU_NOME'] ?></h6><small class="small font-weight-bold">EMPRESA: <?= $suporte[0]['EMP_NOME_FANTASIA'] ?></small>
                                                     </div>
                                                     <p class="font-italic mb-0 text-small"></p>
                                                 </div>
@@ -106,7 +106,7 @@ input::placeholder {
                                                             <div class="bg-light rounded py-2 px-3 mb-2">
                                                             <p class="text-small mb-0 text-muted"><?= $suporte[$i]['SUP_MENSAGEM'] ?></p>
                                                             </div>
-                                                            <p class="small text-muted"><?= (date('Y-m-d') == $data->format('Y-m-d')) ? 'Hoje às '. $data->format('H:i') : $data->format('d/m/Y H:i'); ?></p>
+                                                            <p id="mytext" class="small text-muted"><?= (date('Y-m-d') == $data->format('Y-m-d')) ? 'Hoje às '. $data->format('H:i') : $data->format('d/m/Y H:i'); ?></p>
                                                         </div>
                                                     </div>
                                             <?php } else {  ?>
@@ -116,7 +116,7 @@ input::placeholder {
                                                             <div class="bg-success rounded py-2 px-3 mb-2">
                                                                 <p class="text-small mb-0 text-white"><?= $suporte[$i]['SUP_MENSAGEM'] ?></p>
                                                             </div>
-                                                            <p class="small text-muted"><?= $data->format('d/m/Y H:i'); ?></p>
+                                                            <p id="mytext" class="small text-muted"><?= $data->format('d/m/Y H:i'); ?></p>
                                                         </div>
                                                     </div>
                                                 <?php } ?>
@@ -140,7 +140,9 @@ input::placeholder {
                 </section>
                 <?php include_once 'app/Views/admin/inc/rodape.phtml';?>
                 <script type="text/javascript">
-                    
+                    function setFocusToTextBox(){
+                        document.getElementById("mytext").focus();
+                    }
                 </script>
             </div>
         </div>
