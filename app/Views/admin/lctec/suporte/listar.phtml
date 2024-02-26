@@ -17,6 +17,8 @@ for ($i=0; $i < $qtdE; $i++) {
 }
 $qtdEmp = (is_array($new_msg) ? count($new_msg) : 0);
 dump($new_msg);
+dump($qtd);
+dump($suporte);
 ?>
 <body class="max-width:100%;max-height:100%;">
     <div class="d-flex" id="wrapper">
@@ -61,13 +63,13 @@ dump($new_msg);
                                     ///for ($s=0; $s < $qtd; $s++) {  <i class="bi bi-check-all"></i> <i class="bi bi-check"></i>
                                     //$data = new DateTime($suporte[$i]['SUP_DT_CADASTRO']); ?>
                                     <li>
-                                    <a href="<?= DIRPAGE ?>lctec/suporte/detalhar/<?= $new_msg[$i][2] ?>" class="list-group-item list-group-item-action">
+                                    <a href="<?= DIRPAGE ?>lctec/suporte/detalhar/<?= $new_msg[$i][2] ?>" title="Visualizar" class="list-group-item list-group-item-action">
                                         <div class="d-flex w-100 text-center justify-content-between">
                                             <h5 class=" text-center ">EMPRESA: <b><?= $new_msg[$i][1] ?></b></h5>
-                                            
+                                            <p class="mb-1 text-uppercase"><span class=" badge text-bg-danger"><?= $new_msg[$i][0]; ?></span>
+                                        <small class="piscar text-body-secondary">Nova(s) mensagen(s)<? //= ($suporte[$i]['SUP_STATUS'] == 1)? 'AGUARDANDO RESPOSTA' : 'DESATIVADA'; ?></small></p>
                                         </div>
-                                        <p class="mb-1"><span class="badge text-bg-danger"><?= $new_msg[$i][0]; ?></span>
-                                        <small class="text-body-secondary">Nova(s) mensagen(s)<? //= ($suporte[$i]['SUP_STATUS'] == 1)? 'AGUARDANDO RESPOSTA' : 'DESATIVADA'; ?></small></p>
+                                        
                                     </a>
                                     
                                     </li>
