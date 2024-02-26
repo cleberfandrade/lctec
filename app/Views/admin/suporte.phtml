@@ -74,12 +74,12 @@ input::placeholder {
                                         if ($suporte_usuario[$i]['USU_COD_DESTINATARIO'] == $_SESSION['USU_COD']) {  ?>
                                             <!-- Reciever Message-->
                                             <?php 
-                                            if ($suporte_cliente[$i]['SUP_STATUS'] == 1) {
+                                            if ($suporte_usuario[$i]['SUP_STATUS'] == 1) {
                                                 $dados = array(
                                                     'SUP_DT_ATUALIZACAO'=> date('Y-m-d H:i:s'),         
                                                     'SUP_STATUS'=> 2
                                                 );
-                                                $Sp->setCodEmpresa($suporte_cliente[$i]['EMP_COD'])->setCodigo($suporte_cliente[$i]['SUP_COD'])->alterar($dados,0); 
+                                                $Sp->setCodEmpresa($suporte_usuario[$i]['EMP_COD'])->setCodigo($suporte_usuario[$i]['SUP_COD'])->alterar($dados,0); 
                                             }else {
                                                 $status = 'opacity-50';
                                             }
@@ -95,7 +95,7 @@ input::placeholder {
                                             </div>
                                     <?php  } else {   ?>
                                             <!-- Sender Message-->
-                                            <?php if ($suporte_cliente[$i]['SUP_STATUS'] == 2) { 
+                                            <?php if ($suporte_usuario[$i]['SUP_STATUS'] == 2) { 
                                                     $status = 'opacity-50';
                                             }else {
                                                 $status = '';
