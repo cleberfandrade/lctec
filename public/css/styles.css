@@ -11338,3 +11338,23 @@ body.sb-sidenav-toggled #wrapper #sidebar-wrapper {
 .bg-body{
   background-color: #f5f5f9 !important;
 }
+.piscar{ 
+  animation: animate 0.7s linear infinite;
+}
+@keyframes animate {
+    0%{ 
+        opacity: 0;
+    }
+    25%{ 
+        opacity: 0.5;
+    }
+    50%{ 
+        opacity: 1;
+    }
+    75%{ 
+        opacity: 0.5;
+    }
+    100%{ 
+        opacity: 0;
+    }
+}
