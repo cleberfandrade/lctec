@@ -29,8 +29,8 @@ class suporte extends View
 
         $this->Suporte = new ModelsSuporte;
 
-        $this->dados['suporte_usuario'] = $this->Suporte->setCodEmpresa($_SESSION['EMP_COD'])->setCodUsuario($_SESSION['USU_COD'])->listarTodasMensagensUsuario(0);
-
+        $this->dados['suporte_usuario'] = $this->Suporte->setCodUsuario($_SESSION['USU_COD'])->listarTodasMensagensEnviadasRecebidas(0);
+    
         $this->Chat = new Chat;
 
         $this->dados['empresa'] = $this->UsuariosEmpresa->setCodEmpresa($_SESSION['EMP_COD'])->setCodUsuario($_SESSION['USU_COD'])->listar(0);
@@ -52,9 +52,7 @@ class suporte extends View
 
         if (isset($_POST) && isset($dados['CADASTRAR_NOVA_MENSAGEM'])) {
             unset($dados['CADASTRAR_NOVA_MENSAGEM']);
-            if( $this->dados['empresa']['USU_COD'] == $dados['USU_COD'] && $this->dados['empresa']['EMP_COD'] == $dados['EMP_COD']){
-                //$mensagem = $dados['SUP_MENSAGEM'];
-                //unset($dados['CHAT_MENSAGEM']);
+            if($this->dados['empresa']['USU_COD'] == $dados['USU_COD'] && $this->dados['empresa']['EMP_COD'] == $dados['EMP_COD']){
                 //Verifica se tem algum valor proibido
                 foreach ($dados as $key => $value) {
                     $dados[$key] = $this->Check->checarString($value);
@@ -65,36 +63,47 @@ class suporte extends View
                 );
                 $id = $this->Suporte->cadastrar($dados,0);
                 if($id){
-                   // $db = array(
-                     ///   'SUP_COD'=> $id,
-                     //   'CHAT_DT_CADASTRO'=> date('Y-m-d H:i:s'),  
-                     //   'CHAT_MENSAGEM' => $mensagem,     
-                       // 'CHAT_STATUS'=> 1
-                   // );
-                    //if($this->Chat->cadastrar($db,0)){
                         $ok = true;
                         $respota = array(
                             'COD'=>'OK',
                             'MENSAGEM' => 'mensagem enviada! em breve entraremos em contato'
                         );
-                   // }else {
-                      //  $respota = array(
-                       //     'COD'=>'ERRO',
-                        //    'MENSAGEM'=> 'ERRO 4- ERRO AO SALVAR SUA MENSAGEM, FALE COM O SUPORTE POR TELEFONE(s)!'
-                      //  );
-                  //  }
                 }else{
-                    //Sessao::alert('ERRO',' SET4- Erro ao cadastrar, entre em contato com o suporte!','fs-4 alert alert-danger');
+                    
                     $respota = array(
                         'COD'=>'ERRO',
                         'MENSAGEM'=> 'ERRO 3- ERRO AO CRIAR MENSAGEM, FALE COM O SUPORTE POR TELEFONE(s)!'
                     );
                 }
             }else {
-                $respota = array(
-                    'COD'=>'ERRO',
-                    'MENSAGEM'=> 'ERRO 2- DADOS INVÁLIDO(S)!'
-                );
+                if($dados['USU_COD'] == 0 && $dados['USU_COD_DESTINATARIO'] !=0 && $dados['EMP_COD'] !=0){
+                    foreach ($dados as $key => $value) {
+                        $dados[$key] = $this->Check->checarString($value);
+                    }
+                    $dados += array(
+                        'SUP_DT_CADASTRO'=> date('Y-m-d H:i:s'),         
+                        'SUP_STATUS'=> 1
+                    );
+                    $id = $this->Suporte->cadastrar($dados,0);
+                    if($id){
+                            $ok = true;
+                            $respota = array(
+                                'COD'=>'OK',
+                                'MENSAGEM' => 'mensagem enviada! em breve entraremos em contato'
+                            );
+                    }else{
+                        
+                        $respota = array(
+                            'COD'=>'ERRO',
+                            'MENSAGEM'=> 'ERRO 3- ERRO AO CRIAR MENSAGEM, FALE COM O SUPORTE POR TELEFONE(s)!'
+                        );
+                    }
+                }else{
+                    $respota = array(
+                        'COD'=>'ERRO',
+                        'MENSAGEM'=> 'ERRO 2- DADOS INVÁLIDO(S)!'
+                    );
+                }
             }
         }else {
             $respota = array(

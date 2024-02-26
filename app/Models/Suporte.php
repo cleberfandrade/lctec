@@ -45,9 +45,31 @@ class Suporte extends Model
             return false;
         }
     }
+    public function listarTodasMensagensRecebidas($ver = 0)
+    {
+        $parametros = "S WHERE S.USU_COD_DESTINATARIO={$this->codUsuario} AND S.SUP_STATUS=1 ORDER BY S.SUP_DT_CADASTRO";
+        $campos = "*";
+        $resultado = $this->Model->exibir($parametros, $campos, $ver, $id = false);
+        if ($resultado) {
+            return $resultado;
+        } else {
+            return false;
+        }
+    }
+    public function listarTodasMensagensEnviadasRecebidas($ver = 0)
+    {
+        $parametros = "S WHERE S.USU_COD={$this->codUsuario} or S.USU_COD_DESTINATARIO={$this->codUsuario} AND S.SUP_STATUS=1 ORDER BY S.SUP_DT_CADASTRO";
+        $campos = "*";
+        $resultado = $this->Model->exibir($parametros, $campos, $ver, $id = false);
+        if ($resultado) {
+            return $resultado;
+        } else {
+            return false;
+        }
+    }
     public function listarTodasMensagensUsuario($ver = 0)
     {
-        $parametros = "S INNER JOIN tb_usuarios U ON U.USU_COD=S.USU_COD  WHERE S.USU_COD={$this->codUsuario} ORDER BY S.SUP_DT_CADASTRO";
+        $parametros = "S LEFT OUTER JOIN tb_usuarios U ON U.USU_COD=S.USU_COD WHERE S.USU_COD={$this->codUsuario} OR S.USU_COD_DESTINATARIO={$this->codUsuario} ORDER BY S.SUP_DT_CADASTRO";
         $campos = "*";
         $resultado = $this->Model->exibir($parametros, $campos, $ver, $id = false);
         if ($resultado) {
@@ -69,7 +91,7 @@ class Suporte extends Model
     }
     public function listarTodasMensagensEmpresaUsuario($ver = 0)
     {
-        $parametros = "S INNER JOIN tb_usuarios_empresa US ON US.USU_COD=S.USU_COD INNER JOIN tb_empresas E ON E.EMP_COD=US.EMP_COD  WHERE US.EMP_COD={$this->codEmpresa} AND S.USU_COD={$this->codUsuario} ORDER BY S.SUP_DT_CADASTRO";
+        $parametros = "S LEFT OUTER JOIN tb_usuarios_empresa US ON US.USU_COD=S.USU_COD LEFT OUTER JOIN tb_empresas E ON E.EMP_COD=US.EMP_COD  WHERE US.EMP_COD={$this->codEmpresa} AND S.USU_COD={$this->codUsuario} OR S.USU_COD_DESTINATARIO={$this->codUsuario} AND S.SUP_STATUS=1 ORDER BY S.SUP_DT_CADASTRO";
         $campos = "*";
         $resultado = $this->Model->exibir($parametros, $campos, $ver, $id = false);
         if ($resultado) {

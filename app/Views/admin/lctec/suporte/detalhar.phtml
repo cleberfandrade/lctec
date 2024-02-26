@@ -146,7 +146,6 @@ input::placeholder {
                     var SUP_MENSAGEM = $('#SUP_MENSAGEM').val();
                     var EMP_COD = $('#EMP_COD').val();
                     var USU_COD = $('#USU_COD').val();
-                    
                     var USU_COD_DESTINATARIO = <?= $suporte[0]['USU_COD'] ?>;
                     //setTimeout(function () {
                         //  $('#status').modal('hide');
@@ -161,6 +160,7 @@ input::placeholder {
                         }
                         $('#retorno').html(resposta['MENSAGEM']);
                         $('#SUP_MENSAGEM').val('');
+                        document.getElementById("fim").focus();
                         //setTimeout( () => { window.location.href="<?php //= DIRPAGE ?>estoques/produtos/"+EMP_COD+"/"+EST_COD}, 100);
                     });
 
@@ -174,7 +174,7 @@ input::placeholder {
                             this.setSelectionRange(pos, pos);
                         });
                        
-                        //document.getElementById("fim").focus();
+                       
                     }
                     setInterval(() =>  $("#retorno").focus(), 3000);
                 </script>
