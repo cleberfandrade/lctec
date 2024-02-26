@@ -6,7 +6,7 @@ $qtd = (is_array($suporte) ? count($suporte) : 0);
 $qtdE = (is_array($empresa) ? count($empresa) : 0);
 //dump($new_msg);
 //dump($qtd);
-//dump($suporte);
+///dump($suporte);
 ?>
 <style>
     .text-small {
@@ -95,8 +95,8 @@ input::placeholder {
                             </div>
                             <div class="col-7 px-0">
                                 <div id="chat" class="px-4 py-5 chat-box bg-white">
-                                    <?php if ($qtdSU != 0) { 
-                                        for ($i=0; $i < $qtdSU; $i++) { 
+                                    <?php if ($qtd != 0) { 
+                                        for ($i=0; $i < $qtd; $i++) { 
                                             $data = new DateTime($suporte[$i]['SUP_DT_CADASTRO']);  
                                         
                                                 if ($suporte[$i]['USU_COD_DESTINATARIO'] == 0) {  ?>
