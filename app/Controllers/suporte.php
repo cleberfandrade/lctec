@@ -116,7 +116,7 @@ class suporte extends View
     public function detalhar()
     {
         $this->dados['title'] .= 'HELP!! SUPORTE AO SISTEMA';   
-        $this->link[1] = ['link'=> 'suporte/detalhar','nome' => 'DETAL AO MENSA'];
+        $this->link[1] = ['link'=> 'suporte/detalhar','nome' => 'DETALHAR MENSAGENS'];
         $dados = filter_input_array(INPUT_GET, FILTER_SANITIZE_URL);
         $dados = explode("/",$dados['url']);
         $ok = false;
@@ -124,8 +124,9 @@ class suporte extends View
         if(isset($dados[2]) && $_SESSION['USU_NIVEL'] >= 15){
 
             $this->dados['empresa'] = $this->Empresa->setCodigo($dados[2])->listar(0);
+            //dump($dados[2]);
             //$this->dados['suporte'] = $this->Suporte->setCodEmpresa($dados[2])->listarTodasMensagensEmpresa(0);
-            $this->dados['suporte'] = $this->Suporte->setCodEmpresa($dados[2])->setCodUsuario(0)->listarTodasMensagensEnviadasRecebidasSuporte(0);
+            $this->dados['suporte_cliente'] = $this->Suporte->setCodEmpresa($dados[2])->setCodUsuario(0)->listarTodasMensagensEnviadasRecebidasSuporte(0);
             $ok = true;
         }
         $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
