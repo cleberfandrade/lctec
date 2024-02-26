@@ -39,7 +39,7 @@ input::placeholder {
                             <div class="bg-white">
                                 <div class="bg-gray px-4 py-2 bg-light">
                                     <a class="text-decoration-none" href="<?= DIRPAGE; ?>suporte">
-                                        <h5 class="fs-3 fw-bolder text-uppercase text-dark mb-1">
+                                        <h5 class="fs-3 fw-bolder text-uppercase text-dark mt-4 mb-4">
                                             <i class="bi bi-arrow-clockwise"></i> Atualizar <span class="text-success">mensagens</span>
                                         </h5>
                                     </a>
@@ -71,9 +71,9 @@ input::placeholder {
                                     
                                         if ($suporte_usuario[$i]['USU_COD_DESTINATARIO'] == $_SESSION['USU_COD']) {  ?>
                                             <!-- Reciever Message-->
-                                            <div class="media w-50 mb-3 message">
+                                            <div class="media w-50 mb-2 message">
                                                 <img src="https://bootstrapious.com/i/snippets/sn-chat/avatar.svg" alt="user" width="25" class="rounded-circle">SUPORTE
-                                                <div class="media-body ms-3">
+                                                <div class="media-body ms-1">
                                                     <div class="bg-light rounded py-2 px-3 mb-2">
                                                     <p class="text-small mb-0 text-muted"><?= $suporte_usuario[$i]['SUP_MENSAGEM'] ?></p>
                                                     </div>
@@ -82,7 +82,7 @@ input::placeholder {
                                             </div>
                                     <?php  } else {   ?>
                                             <!-- Sender Message-->
-                                            <div class="media w-50 ms-auto mb-3 message">
+                                            <div class="media w-50 ms-auto mb-2 message">
                                                 Você
                                                 <div class="media-body">
                                                     <div class="bg-success rounded py-2 px-3 mb-2">
