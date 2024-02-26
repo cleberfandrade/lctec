@@ -145,25 +145,35 @@ input::placeholder {
                      $("#MSG").submit(function(e){
                     e.preventDefault();
                     var SUP_MENSAGEM = $('#SUP_MENSAGEM').val();
-                    var EMP_COD = $('#EMP_COD').val();
-                    var USU_COD = $('#USU_COD').val();
-                    var USU_COD_DESTINATARIO = <?= $suporte_cliente[0]['USU_COD'] ?>;
-                    //setTimeout(function () {
-                        //  $('#status').modal('hide');
-                    //}, 100);
-                    $.post('<?= DIRPAGE; ?>suporte/cadastrar', {SUP_MENSAGEM: SUP_MENSAGEM,CADASTRAR_NOVA_MENSAGEM: true,EMP_COD: EMP_COD,USU_COD:USU_COD,USU_COD_DESTINATARIO: USU_COD_DESTINATARIO}, function(retorno) {
-                        var resposta = JSON.parse(retorno);
-                        console.log(resposta);
-                        if (resposta['COD'] !== 'ERRO') {
-                            $('#retorno').addClass('alert alert-success');
-                        }else{
-                            $('#retorno').addClass('alert alert-warning');
-                        }
-                        $('#retorno').html(resposta['MENSAGEM']);
-                        $('#SUP_MENSAGEM').val('');
+                    if (SUP_MENSAGEM == "") {
+                        $('#retorno').addClass('alert alert-warning');
+                        $('#retorno').html('Escreva uma mensagem');
                         document.getElementById("fim").focus();
-                        //setTimeout( () => { window.location.href="<?php //= DIRPAGE ?>estoques/produtos/"+EMP_COD+"/"+EST_COD}, 100);
-                    });
+                        setTimeout( () => { 
+                            $('#retorno').html('');
+                            $('#retorno').removeClass('alert alert-warning')}, 1200);
+                    } else {
+                        var EMP_COD = $('#EMP_COD').val();
+                        var USU_COD = $('#USU_COD').val();
+                        var USU_COD_DESTINATARIO = <?= $suporte_cliente[0]['USU_COD'] ?>;
+                        //setTimeout(function () {
+                            //  $('#status').modal('hide');
+                        //}, 100);
+                        $.post('<?= DIRPAGE; ?>suporte/cadastrar', {SUP_MENSAGEM: SUP_MENSAGEM,CADASTRAR_NOVA_MENSAGEM: true,EMP_COD: EMP_COD,USU_COD:USU_COD,USU_COD_DESTINATARIO: USU_COD_DESTINATARIO}, function(retorno) {
+                            var resposta = JSON.parse(retorno);
+                            console.log(resposta);
+                            if (resposta['COD'] !== 'ERRO') {
+                                $('#retorno').addClass('alert alert-success');
+                            }else{
+                                $('#retorno').addClass('alert alert-warning');
+                            }
+                            $('#retorno').html(resposta['MENSAGEM']);
+                            $('#SUP_MENSAGEM').val('');
+                            document.getElementById("fim").focus();
+                            //setTimeout( () => { window.location.href="<?php //= DIRPAGE ?>estoques/produtos/"+EMP_COD+"/"+EST_COD}, 100);
+                        });
+                    }
+                    
 
                 });
                     function getMessages(letter) {
