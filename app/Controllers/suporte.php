@@ -41,7 +41,7 @@ class suporte extends View
     }
     public function index()
     {
-        $this->dados['title'] .= ' SUPORTE AO SISTEMA';   
+        $this->dados['title'] .= ' HELP!! SUPORTE AO SISTEMA';   
         $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
         $this->render('admin/suporte', $this->dados);
     }
@@ -103,5 +103,28 @@ class suporte extends View
             );
         }
         echo json_encode($respota);
+    }
+    public function detalhar()
+    {
+        $this->dados['title'] .= 'HELP!! SUPORTE AO SISTEMA';   
+        $this->link[1] = ['link'=> 'suporte/detalhar','nome' => 'DETAL AO MENSA'];
+        $dados = filter_input_array(INPUT_GET, FILTER_SANITIZE_URL);
+        $dados = explode("/",$dados['url']);
+        $ok = false;
+        
+        if(isset($dados[2]) && $_SESSION['USU_NIVEL'] >= 15){
+
+            $this->dados['empresa'] = $this->Empresa->setCodigo($dados[2])->listar(0);
+            $this->dados['suporte'] = $this->Suporte->setCodEmpresa($dados[2])->listarTodasMensagensEmpresa(0);
+            $ok = true;
+        }
+        $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
+        if($ok){
+            $this->render('admin/lctec/suporte/detalhar', $this->dados);
+        }else{
+            $this->dados['suporte'] = $this->Suporte->setCodUsuario(0)->listarTodasMensagensSuporte(0);
+            $this->render('admin/lctec/suporte/listar', $this->dados);
+        }
+
     }
 }

@@ -80,7 +80,7 @@ class Suporte extends Model
     }
     public function listarTodasMensagensEmpresa($ver = 0)
     {
-        $parametros = "S INNER JOIN tb_empresas E ON E.EMP_COD=S.EMP_COD WHERE S.EMP_COD={$this->codEmpresa}";
+        $parametros = "S INNER JOIN tb_empresas E ON E.EMP_COD=S.EMP_COD INNER JOIN tb_usuarios US ON US.USU_COD = S.USU_COD  WHERE S.EMP_COD={$this->codEmpresa}";
         $campos = "*";
         $resultado = $this->Model->exibir($parametros, $campos, $ver, $id = false);
         if ($resultado) {

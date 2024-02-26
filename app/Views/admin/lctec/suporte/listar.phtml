@@ -5,11 +5,14 @@ include_once 'app/Views/admin/inc/cabecalho.phtml';
 $qtd = (is_array($suporte) ? count($suporte) : 0);
 $qtdE = (is_array($empresas) ? count($empresas) : 0);
 $new_msg = array();
-for ($i=0; $i < $qtdE; $i++) {  
+$qt = 0;
+for ($s=0; $s < $qtd; $s++) {  
+
    // $new_msg[$i][] = '';
-    for ($s=0; $s < $qtd; $s++) {  
+   // $qt = 0;
+    for ($i=0; $i < $qtdE; $i++) {  
         if($empresas[$i]['EMP_COD'] == $suporte[$s]['EMP_COD']){
-            $new_msg[$i][0] = +1;
+            $new_msg[$i][0] = $qt++;
             $new_msg[$i][1] = $suporte[$s]['EMP_NOME_FANTASIA'];
             $new_msg[$i][2] = $suporte[$s]['EMP_COD'];
        }
@@ -63,7 +66,7 @@ $qtdEmp = (is_array($new_msg) ? count($new_msg) : 0);
                                     ///for ($s=0; $s < $qtd; $s++) {  <i class="bi bi-check-all"></i> <i class="bi bi-check"></i>
                                     //$data = new DateTime($suporte[$i]['SUP_DT_CADASTRO']); ?>
                                     <li>
-                                    <a href="<?= DIRPAGE ?>lctec/suporte/detalhar/<?= $new_msg[$i][2] ?>" title="Visualizar" class="list-group-item list-group-item-action">
+                                    <a href="<?= DIRPAGE ?>suporte/detalhar/<?= $new_msg[$i][2] ?>" title="Visualizar" class="list-group-item list-group-item-action">
                                         <div class="d-flex w-100 text-center justify-content-between">
                                             <h5 class=" text-center ">EMPRESA: <b><?= $new_msg[$i][1] ?></b></h5>
                                             <p class="mb-1 text-uppercase"><span class=" badge text-bg-danger"><?= $new_msg[$i][0]; ?></span>
