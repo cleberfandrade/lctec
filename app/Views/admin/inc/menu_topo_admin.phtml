@@ -55,7 +55,26 @@
     </div>
 </nav>
 <style>
-
+    .piscar{ 
+        animation: animate 0.7s linear infinite;
+    }
+    @keyframes animate {
+        0%{ 
+            opacity: 0;
+        }
+        25%{ 
+            opacity: 0.5;
+        }
+        50%{ 
+            opacity: 1;
+        }
+        75%{ 
+            opacity: 0.5;
+        }
+        100%{ 
+            opacity: 0;
+        }
+    }
 </style>
 <?= $qtdSU >=1 ?
 '<div class=" bg-danger text-center col-12">
