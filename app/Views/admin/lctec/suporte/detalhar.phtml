@@ -106,7 +106,7 @@ input::placeholder {
                                                             <div class="bg-light rounded py-2 px-3 mb-2">
                                                             <p class="text-small mb-0 text-muted"><?= $suporte[$i]['SUP_MENSAGEM'] ?></p>
                                                             </div>
-                                                            <p id="mytext" class="small text-muted"><?= (date('Y-m-d') == $data->format('Y-m-d')) ? 'Hoje às '. $data->format('H:i') : $data->format('d/m/Y H:i'); ?></p>
+                                                            <p class="small text-muted"><?= (date('Y-m-d') == $data->format('Y-m-d')) ? 'Hoje às '. $data->format('H:i') : $data->format('d/m/Y H:i'); ?></p>
                                                         </div>
                                                     </div>
                                             <?php } else {  ?>
@@ -116,21 +116,22 @@ input::placeholder {
                                                             <div class="bg-success rounded py-2 px-3 mb-2">
                                                                 <p class="text-small mb-0 text-white"><?= $suporte[$i]['SUP_MENSAGEM'] ?></p>
                                                             </div>
-                                                            <p id="mytext" class="small text-muted"><?= $data->format('d/m/Y H:i'); ?></p>
+                                                            <p class="small text-muted"><?= $data->format('d/m/Y H:i'); ?></p>
                                                         </div>
                                                     </div>
                                                 <?php } ?>
                                             <?php } ?>
                                     <?php } ?>
+                                    <input type="hidden" id="fim"/>
                                 </div>
-                                <div id="retorno" class="text-center"></div>
+                                <div id="retorno"  class="text-center"></div>
                                 <form id="MSG" action="#" method="post" class="bg-light">
                                     <div class="input-group">
-                                        <input type="text" id="SUP_MENSAGEM" name="SUP_MENSAGEM" placeholder="Envie uma mensagem" aria-describedby="button-addon2" class="form-control rounded-0 border-0 py-4 bg-light">
+                                        <input type="text" id="SUP_MENSAGEM" autofocus name="SUP_MENSAGEM" placeholder="Envie uma mensagem" aria-describedby="button-addon2" class="form-control rounded-0 border-0 py-2 bg-light">
                                         <input type="hidden" class="form-control" id="EMP_COD" name="EMP_COD" value="<?= isset($suporte[0]['EMP_COD']) ? $suporte[0]['EMP_COD'] : 0; ?>">
                                         <input type="hidden" class="form-control" id="USU_COD" name="USU_COD" value="0">
                                         <div class="input-group-append">
-                                            <button id="button-addon2"  type="submit" class="btn btn-lg btn-link"> <i class="fa fa-paper-plane"></i></button>
+                                            <button  type="submit" class="btn btn-lg btn-link"> <i class="fa fa-paper-plane"></i></button>
                                         </div>
                                     </div>
                                 </form>
@@ -140,9 +141,42 @@ input::placeholder {
                 </section>
                 <?php include_once 'app/Views/admin/inc/rodape.phtml';?>
                 <script type="text/javascript">
+                     $("#MSG").submit(function(e){
+                    e.preventDefault();
+                    var SUP_MENSAGEM = $('#SUP_MENSAGEM').val();
+                    var EMP_COD = $('#EMP_COD').val();
+                    var USU_COD = $('#USU_COD').val();
+                    
+                    var USU_COD_DESTINATARIO = <?= $suporte[0]['USU_COD'] ?>;
+                    //setTimeout(function () {
+                        //  $('#status').modal('hide');
+                    //}, 100);
+                    $.post('<?= DIRPAGE; ?>suporte/cadastrar', {SUP_MENSAGEM: SUP_MENSAGEM,CADASTRAR_NOVA_MENSAGEM: true,EMP_COD: EMP_COD,USU_COD:USU_COD,USU_COD_DESTINATARIO: USU_COD_DESTINATARIO}, function(retorno) {
+                        var resposta = JSON.parse(retorno);
+                        console.log(resposta);
+                        if (resposta['COD'] !== 'ERRO') {
+                            $('#retorno').addClass('alert alert-success');
+                        }else{
+                            $('#retorno').addClass('alert alert-warning');
+                        }
+                        $('#retorno').html(resposta['MENSAGEM']);
+                        $('#SUP_MENSAGEM').val('');
+                        //setTimeout( () => { window.location.href="<?php //= DIRPAGE ?>estoques/produtos/"+EMP_COD+"/"+EST_COD}, 100);
+                    });
+
+                });
+                    //var chatEl = document.getElementById("#fim");
+                    //chatEl.scrollTop = chatEl.scrollHeight;
                     function setFocusToTextBox(){
-                        document.getElementById("mytext").focus();
+                       
+                        $("#fim").on('focus', function() {
+                            var pos = this.value.length;
+                            this.setSelectionRange(pos, pos);
+                        });
+                       
+                        //document.getElementById("fim").focus();
                     }
+                    setInterval(() =>  $("#retorno").focus(), 3000);
                 </script>
             </div>
         </div>
