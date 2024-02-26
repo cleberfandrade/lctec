@@ -1,7 +1,9 @@
 <?php 
+use App\Models\Suporte;
+
 include_once 'inc/cabecalho.phtml';
 $qtdSU = (is_array($suporte_usuario) ? count($suporte_usuario) : 0);
-
+$Sp = new Suporte;
 ?>
 <style>
     .text-small {
@@ -71,6 +73,17 @@ input::placeholder {
                                     
                                         if ($suporte_usuario[$i]['USU_COD_DESTINATARIO'] == $_SESSION['USU_COD']) {  ?>
                                             <!-- Reciever Message-->
+                                            <?php 
+                                            if ($suporte_cliente[$i]['SUP_STATUS'] == 1) {
+                                                $dados = array(
+                                                    'SUP_DT_ATUALIZACAO'=> date('Y-m-d H:i:s'),         
+                                                    'SUP_STATUS'=> 2
+                                                );
+                                                $Sp->setCodEmpresa($suporte_cliente[$i]['EMP_COD'])->setCodigo($suporte_cliente[$i]['SUP_COD'])->alterar($dados,0); 
+                                            }else {
+                                                $status = 'opacity-50';
+                                            }
+                                            ?>
                                             <div class="media w-50 mb-2 message">
                                                 <img src="https://bootstrapious.com/i/snippets/sn-chat/avatar.svg" alt="user" width="25" class="rounded-circle">SUPORTE
                                                 <div class="media-body ms-1">
@@ -82,6 +95,12 @@ input::placeholder {
                                             </div>
                                     <?php  } else {   ?>
                                             <!-- Sender Message-->
+                                            <?php if ($suporte_cliente[$i]['SUP_STATUS'] == 2) { 
+                                                    $status = 'opacity-50';
+                                            }else {
+                                                $status = '';
+                                            }
+                                            ?>
                                             <div class="media w-50 ms-auto mb-2 message">
                                                 Você
                                                 <div class="media-body">

@@ -58,7 +58,8 @@ class suporte extends View
                     $dados[$key] = $this->Check->checarString($value);
                 }
                 $dados += array(
-                    'SUP_DT_CADASTRO'=> date('Y-m-d H:i:s'),         
+                    'SUP_DT_CADASTRO'=> date('Y-m-d H:i:s'),     
+                    'SUP_DT_ATUALIZACAO'=> date('0000-00-00 00:00:00'),             
                     'SUP_STATUS'=> 1
                 );
                 $id = $this->Suporte->cadastrar($dados,0);
@@ -82,6 +83,7 @@ class suporte extends View
                     }
                     $dados += array(
                         'SUP_DT_CADASTRO'=> date('Y-m-d H:i:s'),         
+                        'SUP_DT_ATUALIZACAO'=> date('0000-00-00 00:00:00'),         
                         'SUP_STATUS'=> 1
                     );
                     $id = $this->Suporte->cadastrar($dados,0);
