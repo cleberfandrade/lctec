@@ -70,7 +70,7 @@ input::placeholder {
                                 <div class="bg-white">
 
                                     <div class="bg-gray px-4 py-2 bg-light">
-                                        <a class="text-decoration-none" href="<?= DIRPAGE; ?>suporte">
+                                        <a class="text-decoration-none" href="<?= DIRPAGE; ?>suporte/detalhar/<?= $suporte[0]['EMP_COD'] ?>">
                                             <h5 class="fs-3 fw-bolder text-uppercase text-dark mb-1">
                                                 <i class="bi bi-arrow-clockwise"></i> Atualizar <span class="text-success">mensagens</span>
                                             </h5>
@@ -106,7 +106,7 @@ input::placeholder {
                                                             <div class="bg-light rounded py-2 px-3 mb-2">
                                                             <p class="text-small mb-0 text-muted"><?= $suporte[$i]['SUP_MENSAGEM'] ?></p>
                                                             </div>
-                                                            <p class="small text-muted"><?= (date('Y-m-d') == $data->format('Y-m-d')) ? 'Hoje às'. $data->format('H:i') : $data->format('d/m/Y H:i'); ?></p>
+                                                            <p class="small text-muted"><?= (date('Y-m-d') == $data->format('Y-m-d')) ? 'Hoje às '. $data->format('H:i') : $data->format('d/m/Y H:i'); ?></p>
                                                         </div>
                                                     </div>
                                             <?php } else {  ?>
@@ -123,6 +123,17 @@ input::placeholder {
                                             <?php } ?>
                                     <?php } ?>
                                 </div>
+                                <div id="retorno" class="text-center"></div>
+                                <form id="MSG" action="#" method="post" class="bg-light">
+                                    <div class="input-group">
+                                        <input type="text" id="SUP_MENSAGEM" name="SUP_MENSAGEM" placeholder="Envie uma mensagem" aria-describedby="button-addon2" class="form-control rounded-0 border-0 py-4 bg-light">
+                                        <input type="hidden" class="form-control" id="EMP_COD" name="EMP_COD" value="<?= isset($suporte[0]['EMP_COD']) ? $suporte[0]['EMP_COD'] : 0; ?>">
+                                        <input type="hidden" class="form-control" id="USU_COD" name="USU_COD" value="0">
+                                        <div class="input-group-append">
+                                            <button id="button-addon2"  type="submit" class="btn btn-lg btn-link"> <i class="fa fa-paper-plane"></i></button>
+                                        </div>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>
