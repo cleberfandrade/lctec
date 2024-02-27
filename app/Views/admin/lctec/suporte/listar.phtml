@@ -66,16 +66,19 @@ $qtdEmp = (is_array($new_msg) ? count($new_msg) : 0);
                     <div class="row col-10 mx-auto m-1">
                         <ul class="list-group">
                             <li class="list-group-item bg-success text-white" aria-current="true">MENSAGENS PARA O SUPORTE</li>
-                            <?php // ?>
                             <?php for ($m=0; $m < $qtdE; $i++) {  
                             $vtM = $Sp->setCodEmpresa($empresas[$m]['EMP_COD'])->setStatus(1)->listarTodasMensagensEmpresa(0);
                             $qtdMsgEmpresa = (is_array($vtM) ? count($vtM) : 0);
                                 if ($qtdMsgEmpresa >= 1) {
+                                    for ($i=0; $i < 1; $i++) { 
+                                        $codigo = $vtM[$i]['EMP_COD'];
+                                        $nome = $vtM[$i]['EMP_NOME_FANTASIA'];
+                                    }
                                     //dump($vtM);
                                     ///for ($s=0; $s < $qtd; $s++) {  <i class="bi bi-check-all"></i> <i class="bi bi-check"></i>
                                     //$data = new DateTime($suporte[$i]['SUP_DT_CADASTRO']); ?>
                                     <li>
-                                        <a href="<?= DIRPAGE ?>suporte/detalhar/<?= $vtM[$m]['EMP_COD']; ?>" title="Visualizar Mensagens da Empresa" class="list-group-item list-group-item-action">
+                                        <a href="<?= DIRPAGE ?>suporte/detalhar/<?= $codigo; ?>" title="Visualizar Mensagens da Empresa" class="list-group-item list-group-item-action">
                                             <div class="d-flex w-100 text-center justify-content-between">
                                                 <h5 class=" text-center "><b><? //= isset($vtM[$i]['EMP_NOME_FANTASIA']) ? 'EMPRESA: '.$vtM[$i]['EMP_NOME_FANTASIA'] : $vtM[$i]['USU_NOME']; ?></b></h5>
                                                 <p class="mb-1 text-uppercase"><span class=" badge text-bg-danger"><?= $qtdMsgEmpresa; ?></span>
@@ -84,7 +87,7 @@ $qtdEmp = (is_array($new_msg) ? count($new_msg) : 0);
                                             </div>
                                         </a>
                                     </li>
-                                <?php }else { ?>
+                                <?php  }else { ?>
                                     <li>NENHUMA MENSAGEM CADASTRADA</li>
                                 <?php } ?>
                             <?php }  ?>
