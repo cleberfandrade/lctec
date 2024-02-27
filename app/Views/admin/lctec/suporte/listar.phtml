@@ -71,7 +71,7 @@ $qtdEmp = (is_array($new_msg) ? count($new_msg) : 0);
                             $vtM = $Sp->setCodEmpresa($empresas[$i]['EMP_COD'])->setStatus(1)->listarTodasMensagensEmpresa(0);
                             $qtdMsgEmpresa = (is_array($vtM) ? count($vtM) : 0);
                             if ($qtdMsgEmpresa != 0) {
-                                //dump($vtM);
+                                dump($vtM);
                             ///for ($s=0; $s < $qtd; $s++) {  <i class="bi bi-check-all"></i> <i class="bi bi-check"></i>
                             //$data = new DateTime($suporte[$i]['SUP_DT_CADASTRO']); ?>
                             <li>
