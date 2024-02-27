@@ -4,13 +4,13 @@ use App\Models\Suporte;
 
 include_once 'app/Views/admin/inc/cabecalho.phtml'; 
 $qtd = (is_array($suporte_cliente) ? count($suporte_cliente) : 0);
-$qtdE = (is_array($empresa) ? count($empresa) : 0);
+$qtdE = (is_array($empresa_cliente) ? count($empresa_cliente) : 0);
 
 $Sp = new Suporte;
 
 //dump($new_msg);
 //dump($qtd);
-dump($suporte_cliente);
+//dump($suporte_cliente);
 ?>
 <style>
     .text-small {

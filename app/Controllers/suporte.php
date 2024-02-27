@@ -125,7 +125,7 @@ class suporte extends View
         
         if(isset($dados[2]) && $_SESSION['USU_NIVEL'] >= 15){
 
-            $this->dados['empresa'] = $this->Empresa->setCodigo($dados[2])->listar(0);
+            $this->dados['empresa_cliente'] = $this->Empresa->setCodigo($dados[2])->listar(0);
             //dump($dados[2]);
             //$this->dados['suporte'] = $this->Suporte->setCodEmpresa($dados[2])->listarTodasMensagensEmpresa(0);
             $this->dados['suporte_cliente'] = $this->Suporte->setCodEmpresa($dados[2])->setCodUsuario(0)->listarTodasMensagensEnviadasRecebidasSuporte(0);
