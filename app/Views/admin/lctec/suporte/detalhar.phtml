@@ -104,27 +104,6 @@ input::placeholder {
                                         for ($i=0; $i < $qtd; $i++) { 
                                             $data = new DateTime($suporte_cliente[$i]['SUP_DT_CADASTRO']);  
                                                 if ($suporte_cliente[$i]['USU_COD_DESTINATARIO'] == 0) {  ?>
-                                                    <!-- Sender Message-->
-                                                    <?php 
-                                                    if ($suporte_cliente[$i]['SUP_STATUS'] == 2) { 
-                                                        $status = 'opacity-50';
-                                                    }else {
-                                                        $status = '';
-                                                    }
-                                                    ?>
-                                                    <div class="media w-75 mb-3 <?= $status ?>"><img src="https://bootstrapious.com/i/snippets/sn-chat/avatar.svg" alt="user" width="50" class="rounded-circle">
-                                                        <div class="media-body ms-3">
-                                                            <div class="bg-light rounded py-2 px-3 mb-2">
-                                                                <p class="text-small mb-0 text-muted"><?= $suporte_cliente[$i]['SUP_MENSAGEM'] ?>
-                                                                <?php if ($suporte_cliente[$i]['SUP_STATUS'] == 1) {  ?>
-                                                                    <button type="button" class="btn btn-outline-danger btn-sm d-print-none" data-bs-toggle='modal'  data-bs-target="#status" title="Excluir" data-codigo="<?= $suporte_cliente[$i]['SUP_COD']; ?>" data-empresa="<?= $suporte_cliente[$i]['EMP_COD']; ?>"><i class="fa fa-trash"></i></button>
-                                                                <?php } ?>
-                                                                </p>
-                                                            </div>
-                                                            <p class="small text-muted"><?= (date('Y-m-d') == $data->format('Y-m-d')) ? '<b>Hoje</b> às '. $data->format('H:i') : ((date('Y-m-d', strtotime("-1 days")) == $data->format('Y-m-d')) ? 'Ontem às '. $data->format('H:i') : $data->format('d/m/Y H:i')); ?></p>
-                                                        </div>
-                                                    </div>
-                                            <?php } else {  ?>
                                                     <!-- Reciever Message-->
                                                     <?php 
                                                     if ($suporte_cliente[$i]['SUP_STATUS'] == 1) {
@@ -138,11 +117,33 @@ input::placeholder {
                                                         $checar = '<i class="bi bi-check-all"></i>';
                                                     }
                                                     ?>
-                                                    
                                                     <div class="media w-50 ms-auto mb-3 <?= $status ?>">
                                                         <div class="media-body">
                                                             <div class="bg-success rounded py-2 px-3 mb-2">
-                                                                <p class="text-small mb-0 text-white"><?= $suporte_cliente[$i]['SUP_MENSAGEM'] ?></p> <?= $checar ?>
+                                                                <p class="text-small mb-0 text-white"><?= $suporte_cliente[$i]['SUP_MENSAGEM'] ?> <?= $checar ?></p>
+                                                            </div>
+                                                            <p class="small text-muted"><?= (date('Y-m-d') == $data->format('Y-m-d')) ? '<b>Hoje</b> às '. $data->format('H:i') : ((date('Y-m-d', strtotime("-1 days")) == $data->format('Y-m-d')) ? 'Ontem às '. $data->format('H:i') : $data->format('d/m/Y H:i')); ?></p>
+                                                        </div>
+                                                    </div>
+                                                   
+                                                    
+                                            <?php } else {  ?>
+                                                    <!-- Sender Message-->
+                                                    <?php 
+                                                    if ($suporte_cliente[$i]['SUP_STATUS'] == 2) { 
+                                                        $status = 'opacity-50';
+                                                    }else {
+                                                        $status = '';
+                                                    }
+                                                    ?>
+                                                    <div class="media w-75 mb-3 <?= $status ?>">
+                                                        <div class="media-body ms-3">
+                                                            <div class="bg-light rounded py-2 px-3 mb-2">
+                                                                <p class="text-small mb-0 text-muted"><?= $suporte_cliente[$i]['SUP_MENSAGEM'] ?>
+                                                                <?php if ($suporte_cliente[$i]['SUP_STATUS'] == 1) {  ?>
+                                                                    <button type="button" class="btn btn-outline-danger btn-sm d-print-none" data-bs-toggle='modal'  data-bs-target="#status" title="Excluir" data-codigo="<?= $suporte_cliente[$i]['SUP_COD']; ?>" data-empresa="<?= $suporte_cliente[$i]['EMP_COD']; ?>"><i class="fa fa-trash"></i></button>
+                                                                <?php } ?>
+                                                                </p>
                                                             </div>
                                                             <p class="small text-muted"><?= (date('Y-m-d') == $data->format('Y-m-d')) ? '<b>Hoje</b> às '. $data->format('H:i') : ((date('Y-m-d', strtotime("-1 days")) == $data->format('Y-m-d')) ? 'Ontem às '. $data->format('H:i') : $data->format('d/m/Y H:i')); ?></p>
                                                         </div>
