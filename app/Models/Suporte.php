@@ -7,7 +7,7 @@ class Suporte extends Model
 { 
     private $tabela = 'tb_suporte';
     private $Model = '';
-    private $codigo, $descricao, $tipo, $codEmpresa, $data,$codUsuario;
+    private $codigo, $descricao, $tipo, $codEmpresa, $data,$codUsuario,$status;
 
     public function __construct()
     {
@@ -32,6 +32,11 @@ class Suporte extends Model
     public function setCodUsuario($codUsuario)
     {
         $this->codUsuario = $codUsuario;
+        return $this;
+    }
+    public function setStatus($status)
+    {
+        $this->status = $status;
         return $this;
     }
     public function listar($ver = 0)
@@ -114,7 +119,7 @@ class Suporte extends Model
     }
     public function listarTodasMensagensEmpresa($ver = 0)
     {
-        $parametros = "S INNER JOIN tb_empresas E ON E.EMP_COD=S.EMP_COD INNER JOIN tb_usuarios US ON US.USU_COD = S.USU_COD  WHERE S.EMP_COD={$this->codEmpresa}";
+        $parametros = "S INNER JOIN tb_empresas E ON E.EMP_COD=S.EMP_COD INNER JOIN tb_usuarios US ON US.USU_COD = S.USU_COD WHERE S.EMP_COD={$this->codEmpresa} AND S.SUP_STATUS={$this->status}";
         $campos = "*";
         $resultado = $this->Model->exibir($parametros, $campos, $ver, $id = false);
         if ($resultado) {
