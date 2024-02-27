@@ -75,7 +75,7 @@ input::placeholder {
                                 <div class="bg-white">
 
                                     <div class="bg-gray px-4 py-2 bg-light">
-                                        <a class="text-decoration-none" title="Atualizar" href="<?= DIRPAGE; ?>suporte/detalhar/<?= $suporte_cliente[0]['EMP_COD'] ?>">
+                                        <a class="text-decoration-none" title="Atualizar" href="<?= DIRPAGE; ?>suporte/detalhar/<?= $empresa_cliente['EMP_COD'] ?>">
                                             <h5 class="fs-3 fw-bolder text-uppercase text-dark mb-1">
                                                 <i class="bi bi-arrow-clockwise"></i> Atualizar <span class="text-success">mensagens</span>
                                             </h5>
@@ -120,8 +120,9 @@ input::placeholder {
                                                         $checar = '<i class="bi bi-check-all"></i>';
                                                     }
                                                     ?>
-                                                    <div class="media w-50 ms-auto mb-3 <?= $status ?>">
-                                                        <div class="media-body">
+                                                     <div class="media-body ms-3">
+                                                            <div class="bg-light rounded py-2 px-3 mb-2">
+                                                    
                                                             <div class="bg-success rounded py-2 px-3 mb-2">
                                                                 <p class="text-small mb-0 text-white"><?= $suporte_cliente[$i]['SUP_MENSAGEM'] ?> <?= $checar ?></p>
                                                             </div>
@@ -141,8 +142,8 @@ input::placeholder {
                                                     }
                                                     ?>
                                                     <div class="media w-75 mb-3 <?= $status ?>">
-                                                        <div class="media-body ms-3">
-                                                            <div class="bg-light rounded py-2 px-3 mb-2">
+                                                        <div class="media w-50 ms-auto mb-3 <?= $status ?>">
+                                                            <div class="media-body">
                                                                 <p class="text-small mb-0 text-muted"><?= $suporte_cliente[$i]['SUP_MENSAGEM'] ?>
                                                                 <?php if ($suporte_cliente[$i]['SUP_STATUS'] == 1) {  ?>
                                                                     <button type="button" class="btn btn-outline-danger btn-sm d-print-none" data-bs-toggle='modal'  data-bs-target="#status" title="Excluir" data-codigo="<?= $suporte_cliente[$i]['SUP_COD']; ?>" data-empresa="<?= $suporte_cliente[$i]['EMP_COD']; ?>"><i class="fa fa-trash"></i></button>
