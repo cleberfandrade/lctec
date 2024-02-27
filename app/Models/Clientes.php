@@ -62,6 +62,17 @@ class Clientes extends Model
             return false;
         }
     }
+    public function listarTodosAtivos($ver = 0)
+    {
+        $parametros = "WHERE EMP_COD={$this->codEmpresa} AND CLI_STATUS=1 ORDER BY CLI_NOME";
+        $campos = "*";
+        $resultado = $this->Model->exibir($parametros, $campos, $ver = 0, $id = false);
+        if ($resultado) {
+            return $resultado;
+        } else {
+            return false;
+        }
+    }
     public function cadastrar(array $dados, $ver = 0)
     {
         $ok = $this->Model->cadastrar($dados, $ver);
