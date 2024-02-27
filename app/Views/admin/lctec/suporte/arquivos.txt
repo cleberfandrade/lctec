@@ -1,0 +1,36 @@
+for ($m=0; $m < $qtdE; $i++) {  
+                                //$vtM = $Sp->setCodEmpresa($empresas[$m]['EMP_COD'])->setStatus(1)->listarTodasMensagensEmpresa(0);
+                                $qtdMsgEmpresa = 0;
+                               // $qtdMsgEmpresa = (is_array($vtM) ? count($vtM) : 0);
+                                if ($qtdMsgEmpresa >= 1) { ?>
+                                    <li>
+                                        <a href="<?= DIRPAGE ?>suporte/detalhar/<?= $vtM[0]['EMP_COD']; ?>" title="Visualizar Mensagens da Empresa" class="list-group-item list-group-item-action">
+                                            <div class="d-flex w-100 text-center justify-content-between">
+                                                <h5 class=" text-center "><b><?= isset($vtM[0]['EMP_NOME_FANTASIA']) ? 'EMPRESA: '.$vtM[0]['EMP_NOME_FANTASIA']: ''; ?></b></h5>
+                                                <p class="mb-1 text-uppercase"><span class=" badge text-bg-danger"><?= $qtdMsgEmpresa; ?></span>
+                                                    <small class="piscar text-body-secondary">Nova(s) mensagen(s)<? //= ($suporte[$i]['SUP_STATUS'] == 1)? 'AGUARDANDO RESPOSTA' : 'DESATIVADA'; ?></small>
+                                                </p>
+                                            </div>
+                                        </a>
+                                    </li>
+                                <?php  }else { ?>
+                                    <li>NENHUMA MENSAGEM CADASTRADA</li>
+                                <?php } ?>
+                            <?php }  ?>
+                            
+
+
+                            
+$qt = 0;
+for ($i=0; $i < $qtdE; $i++) {  
+    $new_msg[$i][0] = 0;
+    for ($s=0; $s < $qtd; $s++) {  
+       
+        if($empresas[$i]['EMP_COD'] == $suporte[$s]['EMP_COD']){
+            $new_msg[$i][0] += 1;
+            $new_msg[$i][1] = $suporte[$s]['EMP_NOME_FANTASIA'];
+            $new_msg[$i][2] = $suporte[$s]['EMP_COD'];
+        }
+    } 
+}
+$qtdEmp = (is_array($new_msg) ? count($new_msg) : 0);
