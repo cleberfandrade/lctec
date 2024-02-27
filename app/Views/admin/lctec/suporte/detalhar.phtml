@@ -4,6 +4,7 @@ use App\Models\Suporte;
 
 include_once 'app/Views/admin/inc/cabecalho.phtml'; 
 $qtd = (is_array($suporte_cliente) ? count($suporte_cliente) : 0);
+
 $qtdE = (is_array($empresa_cliente) ? count($empresa_cliente) : 0);
 
 $Sp = new Suporte;
@@ -104,7 +105,7 @@ input::placeholder {
                                         for ($i=0; $i < $qtd; $i++) { 
                                             $data = new DateTime($suporte_cliente[$i]['SUP_DT_CADASTRO']);  
                                                 if ($suporte_cliente[$i]['USU_COD_DESTINATARIO'] == 0) {  ?>
-                                                    <!-- Reciever Message-->
+                                                    <!-- Sender Message-->
                                                     <?php 
                                                     if ($suporte_cliente[$i]['SUP_STATUS'] == 1) {
                                                         $dados = array(
@@ -112,9 +113,10 @@ input::placeholder {
                                                             'SUP_STATUS'=> 2
                                                         );
                                                         $Sp->setCodEmpresa($suporte_cliente[$i]['EMP_COD'])->setCodigo($suporte_cliente[$i]['SUP_COD'])->alterar($dados,0); 
-                                                        $status = '';
+                                                        
                                                     }else {
-                                                        $status = 'opacity-50';
+                                                        $status = '';
+                                                        //$status = 'opacity-50';
                                                         $checar = '<i class="bi bi-check-all"></i>';
                                                     }
                                                     ?>
@@ -129,7 +131,8 @@ input::placeholder {
                                                    
                                                     
                                             <?php } else {  ?>
-                                                    <!-- Sender Message-->
+                                                    <!-- Reciever Message-->
+                                                    
                                                     <?php 
                                                     if ($suporte_cliente[$i]['SUP_STATUS'] == 2) { 
                                                         $status = 'opacity-50';
