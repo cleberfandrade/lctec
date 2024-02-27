@@ -202,7 +202,7 @@ input::placeholder {
                             $('#retorno').html(resposta['MENSAGEM']);
                             $('#SUP_MENSAGEM').val('');
                             document.getElementById("fim").focus();
-                            //setTimeout( () => { window.location.href="<?php //= DIRPAGE ?>estoques/produtos/"+EMP_COD+"/"+EST_COD}, 100);
+                            setTimeout( () => { window.location.href="<?= DIRPAGE ?>suporte/detalhar/"+EMP_COD}, 1400);
                         });
                     }
                     
