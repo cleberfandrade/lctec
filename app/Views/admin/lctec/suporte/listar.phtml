@@ -62,20 +62,13 @@ $qtdEmp = (is_array($new_msg) ? count($new_msg) : 0);
                         <ul class="list-group">
                             <li class="list-group-item bg-success text-white" aria-current="true">MENSAGENS PARA O SUPORTE</li>
                             <?php for ($m=0; $m < $qtdE; $i++) {  
-                            $vtM = $Sp->setCodEmpresa($empresas[$m]['EMP_COD'])->setStatus(1)->listarTodasMensagensEmpresa(0);
-                            $qtdMsgEmpresa = (is_array($vtM) ? count($vtM) : 0);
-                                if ($qtdMsgEmpresa >= 1) {
-                                    for ($i=0; $i < 1; $i++) { 
-                                        $codigo = $vtM[0]['EMP_COD'];
-                                        $nome = $vtM[0]['EMP_NOME_FANTASIA'];
-                                    }
-                                    //dump($vtM);
-                                    ///for ($s=0; $s < $qtd; $s++) {  <i class="bi bi-check-all"></i> <i class="bi bi-check"></i>
-                                    //$data = new DateTime($suporte[$i]['SUP_DT_CADASTRO']); ?>
+                                $vtM = $Sp->setCodEmpresa($empresas[$m]['EMP_COD'])->setStatus(1)->listarTodasMensagensEmpresa(0);
+                                $qtdMsgEmpresa = (is_array($vtM) ? count($vtM) : 0);
+                                if ($qtdMsgEmpresa >= 1) { ?>
                                     <li>
-                                        <a href="<?= DIRPAGE ?>suporte/detalhar/<?= $codigo; ?>" title="Visualizar Mensagens da Empresa" class="list-group-item list-group-item-action">
+                                        <a href="<?= DIRPAGE ?>suporte/detalhar/<?= $vtM[0]['EMP_COD']; ?>" title="Visualizar Mensagens da Empresa" class="list-group-item list-group-item-action">
                                             <div class="d-flex w-100 text-center justify-content-between">
-                                                <h5 class=" text-center "><b><?= isset($nome) ? 'EMPRESA: '.$nome : ''; ?></b></h5>
+                                                <h5 class=" text-center "><b><?= isset($vtM[0]['EMP_NOME_FANTASIA']) ? 'EMPRESA: '.$vtM[0]['EMP_NOME_FANTASIA']: ''; ?></b></h5>
                                                 <p class="mb-1 text-uppercase"><span class=" badge text-bg-danger"><?= $qtdMsgEmpresa; ?></span>
                                                     <small class="piscar text-body-secondary">Nova(s) mensagen(s)<? //= ($suporte[$i]['SUP_STATUS'] == 1)? 'AGUARDANDO RESPOSTA' : 'DESATIVADA'; ?></small>
                                                 </p>
