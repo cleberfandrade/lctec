@@ -6,7 +6,6 @@ include_once 'app/Views/admin/inc/cabecalho.phtml';
 
 $qtd = (is_array($suporte) ? count($suporte) : 0);
 $qtdE = (is_array($empresas) ? count($empresas) : 0);
-$new_msg = array();
 $Sp = new Suporte;
 
 ?>
@@ -48,13 +47,18 @@ $Sp = new Suporte;
                     <div class="row col-10 mx-auto m-1">
                         <ul class="list-group">
                             <li class="list-group-item bg-success text-white" aria-current="true">MENSAGENS PARA O SUPORTE</li>
-                            <?php for ($i=0; $i < $qtdE; $i++) {  ?>
+                            <?php
+                            
+                            for ($i=0; $i < $qtdE; $i++) {  
+                                $vtM = $Sp->setCodEmpresa($empresas[$m]['EMP_COD'])->setStatus(1)->listarTodasMensagensEmpresa(0);
+                                $qtdMsgEmpresa = (is_array($vtM) ? count($vtM) : 0);
+                            ?>
                             <li>
                                 <a href="<?= DIRPAGE ?>suporte/detalhar/<?= $empresas[$i]['EMP_COD']; ?>" title="Visualizar Mensagens da Empresa" class="list-group-item list-group-item-action">
                                     <div class="d-flex w-100 text-center justify-content-between">
                                         <h5 class=" text-center "><b><?= isset($empresas[$i]['EMP_NOME_FANTASIA']) ? 'EMPRESA: '.$empresas[$i]['EMP_NOME_FANTASIA']: ''; ?></b></h5>
-                                        <p class="mb-1 text-uppercase"><span class=" badge text-bg-danger"><? //= $qtdMsgEmpresa; ?></span>
-                                            <small class="piscar text-body-secondary">Nova(s) mensagen(s)<? //= ($suporte[$i]['SUP_STATUS'] == 1)? 'AGUARDANDO RESPOSTA' : 'DESATIVADA'; ?></small>
+                                        <p class="mb-1 text-uppercase"><span class=" badge text-bg-danger"><?= $qtdMsgEmpresa; ?></span>
+                                            <small class="piscar text-body-secondary"><?= ($qtdMsgEmpresa >= 1)? 'AGUARDANDO RESPOSTA' : 'RESOLVIDO'; ?></small>
                                         </p>
                                     </div>
                                 </a>

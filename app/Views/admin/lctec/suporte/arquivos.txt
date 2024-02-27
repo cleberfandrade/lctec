@@ -1,9 +1,9 @@
 for ($m=0; $m < $qtdE; $i++) {  
                                 
                                 
-                                //$vtM = $Sp->setCodEmpresa($empresas[$m]['EMP_COD'])->setStatus(1)->listarTodasMensagensEmpresa(0);
+                                //
                                 $qtdMsgEmpresa = 0;
-                               // $qtdMsgEmpresa = (is_array($vtM) ? count($vtM) : 0);
+                               // 
                                 if ($qtdMsgEmpresa >= 1) { ?>
                                     
                                 <?php  }else { ?>
