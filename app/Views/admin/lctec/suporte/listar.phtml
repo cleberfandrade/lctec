@@ -51,7 +51,7 @@ $Sp = new Suporte;
                             
                             for ($i=0; $i < $qtdE; $i++) {  
                                 //$vtM = $Sp->setCodEmpresa($empresas[$i]['EMP_COD'])->setStatus(1)->listarTodasMensagensEmpresa(0);
-                                $vtM = $Sp->setCodEmpresa($empresas[$i]['EMP_COD'])->setStatus(1)->listarTodasMensagensRecebidasDaEmpresa(0);
+                                $vtM = $Sp->setCodEmpresa($empresas[$i]['EMP_COD'])->setStatus(1)->setCodDestinatario(0)->listarTodasMensagensRecebidasDaEmpresa(0);
                                 $qtdMsgEmpresa = (is_array($vtM) ? count($vtM) : 0);
                             ?>
                             <li>

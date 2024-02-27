@@ -34,11 +34,17 @@ class Suporte extends Model
         $this->codUsuario = $codUsuario;
         return $this;
     }
+    public function setCodDestinatario($codDestinatario)
+    {
+        $this->codDestinatario = $codDestinatario;
+        return $this;
+    }
     public function setStatus($status)
     {
         $this->status = $status;
         return $this;
     }
+    
     public function listar($ver = 0)
     {
         $parametros = "S INNER JOIN tb_empresas E ON S.EMP_COD=E.EMP_COD WHERE S.EMP_COD={$this->codEmpresa} AND S.SUP_COD={$this->codigo}";
@@ -131,7 +137,7 @@ class Suporte extends Model
     }
     public function listarTodasMensagensRecebidasDaEmpresa($ver = 0)
     {
-        $parametros = "S INNER JOIN tb_empresas E ON E.EMP_COD=S.EMP_COD LEFT OUTER JOIN tb_usuarios US ON US.USU_COD = S.USU_COD WHERE S.EMP_COD={$this->codEmpresa} AND S.SUP_STATUS={$this->status}";
+        $parametros = "S INNER JOIN tb_empresas E ON E.EMP_COD=S.EMP_COD LEFT OUTER JOIN tb_usuarios US ON US.USU_COD = S.USU_COD WHERE S.EMP_COD={$this->codEmpresa} AND S.SUP_STATUS={$this->status} AND S.SUP_COD_DESTINATARIO={$this->codDestinatario} ORDER BY S.SUP_DT_CADASTRO";
         $campos = "*";
         $resultado = $this->Model->exibir($parametros, $campos, $ver, $id = false);
         if ($resultado) {
