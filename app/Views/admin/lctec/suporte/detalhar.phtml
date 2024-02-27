@@ -9,8 +9,8 @@ $qtdE = (is_array($empresa_cliente) ? count($empresa_cliente) : 0);
 $Sp = new Suporte;
 
 dump($empresa_cliente);
-dump($qtdE);
-//dump($suporte_cliente);
+//dump($qtdE);
+dump($suporte_cliente);
 ?>
 <style>
     .text-small {
@@ -88,7 +88,7 @@ input::placeholder {
     
                                                 <div class="media-body ml-4">
                                                     <div class="d-flex align-items-center justify-content-between mb-1">
-                                                        <h6 class="mb-0"><?= $empresa_cliente[0]['USU_NOME'] ?></h6><small class="small font-weight-bold">EMPRESA: <?= $empresa_cliente[0]['EMP_NOME_FANTASIA'] ?></small>
+                                                        <h6 class="mb-0"><?= $empresa_cliente[0]['EMP_NOME_FANTASIA'] ?></h6><small class="small font-weight-bold">EMPRESA: <?= $empresa_cliente[0]['EMP_NOME_FANTASIA'] ?></small>
                                                     </div>
                                                     <p class="font-italic mb-0 text-small"></p>
                                                 </div>
