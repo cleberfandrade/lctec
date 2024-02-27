@@ -61,9 +61,12 @@ $qtdEmp = (is_array($new_msg) ? count($new_msg) : 0);
                     <div class="row col-10 mx-auto m-1">
                         <ul class="list-group">
                             <li class="list-group-item bg-success text-white" aria-current="true">MENSAGENS PARA O SUPORTE</li>
-                            <?php for ($m=0; $m < $qtdE; $i++) {  
-                                $vtM = $Sp->setCodEmpresa($empresas[$m]['EMP_COD'])->setStatus(1)->listarTodasMensagensEmpresa(0);
-                                $qtdMsgEmpresa = (is_array($vtM) ? count($vtM) : 0);
+                            <?php 
+                                dump($qtdE);
+                            for ($m=0; $m < $qtdE; $i++) {  
+                                //$vtM = $Sp->setCodEmpresa($empresas[$m]['EMP_COD'])->setStatus(1)->listarTodasMensagensEmpresa(0);
+                                $qtdMsgEmpresa = 0;
+                               // $qtdMsgEmpresa = (is_array($vtM) ? count($vtM) : 0);
                                 if ($qtdMsgEmpresa >= 1) { ?>
                                     <li>
                                         <a href="<?= DIRPAGE ?>suporte/detalhar/<?= $vtM[0]['EMP_COD']; ?>" title="Visualizar Mensagens da Empresa" class="list-group-item list-group-item-action">
