@@ -112,6 +112,7 @@ input::placeholder {
                                                             'SUP_STATUS'=> 2
                                                         );
                                                         $Sp->setCodEmpresa($suporte_cliente[$i]['EMP_COD'])->setCodigo($suporte_cliente[$i]['SUP_COD'])->alterar($dados,0); 
+                                                        $status = '';
                                                     }else {
                                                         $status = 'opacity-50';
                                                         $checar = '<i class="bi bi-check-all"></i>';
