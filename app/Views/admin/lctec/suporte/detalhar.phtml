@@ -150,7 +150,7 @@ input::placeholder {
                                                             </div>
                                                             <?php if ($suporte_cliente[$i]['SUP_STATUS'] == 1) {  ?>
                                                                 <div class="col-2">
-                                                                    <button type="button" class="btn btn-outline-danger btn-sm" data-bs-toggle='modal'  data-bs-target="#status" title="Excluir" data-codigo="<?= $suporte_cliente[$i]['SUP_COD']; ?>" data-status="<?= $suporte_cliente[$i]['SUP_STATUS']; ?>"><i class="fa fa-trash"></i></button>
+                                                                    <button type="button" class="btn btn-outline-danger btn-sm" data-bs-toggle='modal'  data-bs-target="#statusMsg" title="Excluir" data-codigo="<?= $suporte_cliente[$i]['SUP_COD']; ?>" data-status="<?= $suporte_cliente[$i]['SUP_STATUS']; ?>"><i class="fa fa-trash"></i></button>
                                                                 </div>
                                                             <?php } ?>
                                                             <p class="small text-muted"><?= (date('Y-m-d') == $data->format('Y-m-d')) ? '<b>Hoje</b> às '. $data->format('H:i') : ((date('Y-m-d', strtotime("-1 days")) == $data->format('Y-m-d')) ? 'Ontem às '. $data->format('H:i') : $data->format('d/m/Y H:i')); ?></p>
@@ -177,6 +177,25 @@ input::placeholder {
                     </div>
                 </section>
                 <?php include_once 'app/Views/admin/inc/rodape.phtml';?>
+                <div class="modal" id="statusMsg" tabindex="-1" role="dialog" data-bs-backdrop="true" aria-labelledby="statusMsg" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div id="title" class="modal-header text-center text-uppercase">
+                                Excluir
+                            </div>
+                            <div class="modal-body text-center">
+                                <p class="text-center text-uppercase mx-auto">Excluir mensagem?</p>
+                            </div>
+                            <div class="modal-footer">
+                                <input type="hidden" id="SUP_STATUS" name="SUP_STATUS" value="" />
+                                <input type="hidden" id="SUP_COD" name="SUP_COD" value="" />
+                                <input type="hidden" id="EMP_COD" name="EMP_COD" value="<?= isset($suporte_cliente[0]['EMP_COD']) ? $suporte_cliente[0]['EMP_COD'] : 0; ?>" />
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">CANCELAR</button>
+                                <button id="sts" type="button" class="btn btn-dark" value=""></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <script type="text/javascript">
                      $("#MSG").submit(function(e){
                     e.preventDefault();
@@ -223,25 +242,7 @@ input::placeholder {
                     });
                     setInterval(() =>  $("#SUP_MENSAGEM").focus(), 3000);
                 </script>
-                <div class="modal" id="statusMsg" tabindex="-1" role="dialog" data-bs-backdrop="true" aria-labelledby="statusMsg" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered" role="document">
-                        <div class="modal-content">
-                            <div id="title" class="modal-header text-center text-uppercase">
-                                Excluir
-                            </div>
-                            <div class="modal-body text-center">
-                                <p class="text-center text-uppercase mx-auto">Excluir mensagem?</p>
-                            </div>
-                            <div class="modal-footer">
-                                <input type="hidden" id="SUP_STATUS" name="SUP_STATUS" value="" />
-                                <input type="hidden" id="SUP_COD" name="SUP_COD" value="" />
-                                <input type="hidden" id="EMP_COD" name="EMP_COD" value="<?= isset($suporte_cliente[0]['EMP_COD']) ? $suporte_cliente[0]['EMP_COD'] : 0; ?>" />
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">CANCELAR</button>
-                                <button id="sts" type="button" class="btn btn-dark" value=""></button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+               
                 <script type="text/javascript">
                     $(document).ready(function() {
                         $('#statusMsg').on('show.bs.modal', function(event) {
