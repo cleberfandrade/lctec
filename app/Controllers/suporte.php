@@ -140,4 +140,48 @@ class suporte extends View
         }
 
     }
+    public function excluir()
+    { 
+        $ok = false;
+        $dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);
+
+        if (isset($_POST) && isset($dados['EXCLUIR_MENSAGEM'])) {
+            unset($dados['EXCLUIR_MENSAGEM']);
+            if($dados['SUP_COD'] != 0 && $dados['SUP_STATUS'] != 0){
+                //Verifica se tem algum valor proibido
+                $ms = $this->Suporte->setCodigo($dados['SUP_COD'])->setCodEmpresa($dados['EMP_COD'])->listar(0);
+
+                if ($ms['SUP_STATUS'] != 1) {
+                    if($this->Suporte->excluir(0)){
+                        $ok = true;
+                        $respota = array(
+                            'COD'=>'OK',
+                            'MENSAGEM' => 'MENSAGEM EXCLUÍDA!'
+                        );
+                    }else{
+                        $respota = array(
+                            'COD'=>'ERRO',
+                            'MENSAGEM'=> 'ERRO 3- ERRO AO EXCLUIR MENSAGEM!'
+                        );
+                    }
+                } else {
+                    $respota = array(
+                        'COD'=>'ERRO',
+                        'MENSAGEM'=> 'ERRO 3- MENSAGEM JÁ FOI VISUALIZADA!'
+                    );
+                }
+            }else {
+                 $respota = array(
+                    'COD'=>'ERRO',
+                    'MENSAGEM'=> 'ERRO 2- DADOS INVÁLIDOS!'
+                );
+            }
+        }else {
+            $respota = array(
+                'COD'=>'ERRO',
+                'MENSAGEM'=> 'ERRO 1- ACESSO INVÁLIDO!'
+            );
+        }
+        echo json_encode($respota);
+    }
 }

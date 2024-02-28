@@ -272,7 +272,7 @@ input::placeholder {
                         setTimeout(function () {
                                 $('#statusMsg').modal('hide');
                         }, 100);
-                        $.post('<?= DIRPAGE; ?>suporte/excluir_msg', {SUP_COD: SUP_COD,STATUS_MENS: true,EMP_COD: EMP_COD,SUP_STATUS: SUP_STATUS}, function(retorno) {
+                        $.post('<?= DIRPAGE; ?>suporte/excluir', {SUP_COD: SUP_COD,EXCLUIR_MENSAGEM: true,EMP_COD: EMP_COD,SUP_STATUS: SUP_STATUS}, function(retorno) {
                             var resposta = JSON.parse(retorno);
                             if (resposta['COD'] !== 'ERRO') {
                                 $('#retorno').addClass('alert alert-success');
