@@ -1,0 +1,29 @@
+for ($m=0; $m < $qtdE; $i++) {  
+                                
+                                
+                                //
+                                $qtdMsgEmpresa = 0;
+                               // 
+                                if ($qtdMsgEmpresa >= 1) { ?>
+                                    
+                                <?php  }else { ?>
+                                    <li>NENHUMA MENSAGEM CADASTRADA</li>
+                                <?php } ?>
+                            <?php }  ?>
+                            
+
+
+                            
+$qt = 0;
+for ($i=0; $i < $qtdE; $i++) {  
+    $new_msg[$i][0] = 0;
+    for ($s=0; $s < $qtd; $s++) {  
+       
+        if($empresas[$i]['EMP_COD'] == $suporte[$s]['EMP_COD']){
+            $new_msg[$i][0] += 1;
+            $new_msg[$i][1] = $suporte[$s]['EMP_NOME_FANTASIA'];
+            $new_msg[$i][2] = $suporte[$s]['EMP_COD'];
+        }
+    } 
+}
+$qtdEmp = (is_array($new_msg) ? count($new_msg) : 0);

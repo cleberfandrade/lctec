@@ -7,7 +7,7 @@ class Suporte extends Model
 { 
     private $tabela = 'tb_suporte';
     private $Model = '';
-    private $codigo, $descricao, $tipo, $codEmpresa, $data,$codUsuario;
+    private $codigo, $descricao, $tipo, $codEmpresa, $data,$codUsuario,$status;
 
     public function __construct()
     {
@@ -34,6 +34,17 @@ class Suporte extends Model
         $this->codUsuario = $codUsuario;
         return $this;
     }
+    public function setCodDestinatario($codDestinatario)
+    {
+        $this->codDestinatario = $codDestinatario;
+        return $this;
+    }
+    public function setStatus($status)
+    {
+        $this->status = $status;
+        return $this;
+    }
+    
     public function listar($ver = 0)
     {
         $parametros = "S INNER JOIN tb_empresas E ON S.EMP_COD=E.EMP_COD WHERE S.EMP_COD={$this->codEmpresa} AND S.SUP_COD={$this->codigo}";
@@ -91,7 +102,8 @@ class Suporte extends Model
     }
     public function listarTodasMensagensEnviadasRecebidasSuporte($ver = 0)
     {
-        $parametros = "S INNER JOIN tb_empresas E ON E.EMP_COD=S.EMP_COD INNER JOIN tb_usuarios U ON U.USU_COD=S.USU_COD_DESTINATARIO OR U.USU_COD=S.USU_COD WHERE S.EMP_COD={$this->codEmpresa} AND S.SUP_STATUS=1 OR S.SUP_STATUS=2 ORDER BY S.SUP_DT_CADASTRO";
+        $parametros = "S INNER JOIN tb_empresas E ON E.EMP_COD=S.EMP_COD LEFT OUTER JOIN tb_usuarios_empresa U ON U.USU_COD=S.USU_COD OR U.USU_COD=S.USU_COD_DESTINATARIO LEFT OUTER JOIN tb_usuarios US ON US.USU_COD=U.USU_COD WHERE S.EMP_COD={$this->codEmpresa} ORDER BY S.SUP_DT_CADASTRO;";
+        //$parametros = "S INNER JOIN tb_empresas E ON E.EMP_COD=S.EMP_COD INNER JOIN tb_usuarios U ON U.USU_COD=S.USU_COD_DESTINATARIO OR U.USU_COD=S.USU_COD WHERE S.EMP_COD={$this->codEmpresa} AND S.SUP_STATUS=1 OR S.SUP_STATUS=2 ORDER BY S.SUP_DT_CADASTRO";
         //$parametros = "S INNER JOIN tb_usuarios_empresa U ON U.USU_COD=S.USU_COD INNER JOIN tb_usuarios US ON US.USU_COD = U.USU_COD INNER JOIN tb_empresas E ON E.EMP_COD=U.EMP_COD WHERE S.EMP_COD={$this->codEmpresa} AND S.USU_COD={$this->codUsuario} or S.USU_COD_DESTINATARIO={$this->codUsuario} AND S.SUP_STATUS=1 ORDER BY S.SUP_DT_CADASTRO";
         $campos = "*";
         $resultado = $this->Model->exibir($parametros, $campos, $ver, $id = false);
@@ -114,7 +126,18 @@ class Suporte extends Model
     }
     public function listarTodasMensagensEmpresa($ver = 0)
     {
-        $parametros = "S INNER JOIN tb_empresas E ON E.EMP_COD=S.EMP_COD INNER JOIN tb_usuarios US ON US.USU_COD = S.USU_COD  WHERE S.EMP_COD={$this->codEmpresa}";
+        $parametros = "S INNER JOIN tb_empresas E ON E.EMP_COD=S.EMP_COD LEFT OUTER JOIN tb_usuarios US ON US.USU_COD = S.USU_COD WHERE S.EMP_COD={$this->codEmpresa} AND S.SUP_STATUS={$this->status}";
+        $campos = "*";
+        $resultado = $this->Model->exibir($parametros, $campos, $ver, $id = false);
+        if ($resultado) {
+            return $resultado;
+        } else {
+            return false;
+        }
+    }
+    public function listarTodasMensagensRecebidasDaEmpresa($ver = 0)
+    {
+        $parametros = "S INNER JOIN tb_empresas E ON E.EMP_COD=S.EMP_COD LEFT OUTER JOIN tb_usuarios US ON US.USU_COD = S.USU_COD WHERE S.EMP_COD={$this->codEmpresa} AND S.SUP_STATUS={$this->status} AND S.SUP_COD_DESTINATARIO={$this->codDestinatario} ORDER BY S.SUP_DT_CADASTRO";
         $campos = "*";
         $resultado = $this->Model->exibir($parametros, $campos, $ver, $id = false);
         if ($resultado) {

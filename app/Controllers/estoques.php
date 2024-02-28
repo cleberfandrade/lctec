@@ -16,11 +16,14 @@ use App\Models\ModulosEmpresa;
 use App\Models\Movimentacoes;
 use App\Models\Produtos;
 use App\Models\Setores;
-use Libraries\Util;
-use Core\View;
+use App\Models\Transacoes;
 use App\Models\Usuarios;
 use App\Models\UsuariosEmpresa;
+use Libraries\Util;
+
+use Core\View;
 use Core\Controller;
+
 use Libraries\Check;
 use Libraries\Sessao;
 
@@ -30,7 +33,8 @@ class estoques extends View
     private $link,$Enderecos,$Clientes,
     $Usuarios,$Produtos,$Empresa,$UsuariosEmpresa,
     $Check,$CargosSalarios,$ModulosEmpresa,$Financas,
-    $Estoques,$Setores,$Categorias,$Classificacoes,$Movimentacoes;
+    $Estoques,$Setores,$Categorias,$Classificacoes,
+    $Movimentacoes,$Transacoes;
     public function __construct()
     {
         Sessao::naoLogado();
@@ -49,6 +53,7 @@ class estoques extends View
         $this->Produtos = new Produtos;
         $this->Classificacoes = new Classificacoes;
         $this->Movimentacoes = new Movimentacoes;
+        $this->Transacoes = new Transacoes;
 
         $this->dados['empresa'] = $this->UsuariosEmpresa->setCodEmpresa($_SESSION['EMP_COD'])->setCodUsuario($_SESSION['USU_COD'])->listar(0);
         $this->dados['usuario'] = $this->Usuarios->setCodUsuario($_SESSION['USU_COD'])->listar(0);
@@ -58,6 +63,8 @@ class estoques extends View
         
         $this->dados['setores'] = $this->Setores->setCodEmpresa($_SESSION['EMP_COD'])->setTipo(4)->listarTodosPorTipo(0); 
         $this->dados['classificacoes'] = $this->Classificacoes->setCodEmpresa($_SESSION['EMP_COD'])->setTipo(4)->listarTodosPorTipo(0);
+        
+        $this->dados['clientes'] = $this->Clientes->setCodEmpresa($_SESSION['EMP_COD'])->listarTodosAtivos(0);
 
         $this->dados['movimentacoes'] = $this->Movimentacoes->setCodEmpresa($_SESSION['EMP_COD'])->listarTodas(0); 
 

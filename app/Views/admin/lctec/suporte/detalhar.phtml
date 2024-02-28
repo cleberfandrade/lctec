@@ -4,13 +4,11 @@ use App\Models\Suporte;
 
 include_once 'app/Views/admin/inc/cabecalho.phtml'; 
 $qtd = (is_array($suporte_cliente) ? count($suporte_cliente) : 0);
-$qtdE = (is_array($empresa) ? count($empresa) : 0);
+
+$qtdE = (is_array($empresa_cliente) ? count($empresa_cliente) : 0);
 
 $Sp = new Suporte;
 
-//dump($new_msg);
-//dump($qtd);
-//dump($suporte_cliente);
 ?>
 <style>
     .text-small {
@@ -74,7 +72,7 @@ input::placeholder {
                                 <div class="bg-white">
 
                                     <div class="bg-gray px-4 py-2 bg-light">
-                                        <a class="text-decoration-none" title="Atualizar" href="<?= DIRPAGE; ?>suporte/detalhar/<?= $suporte_cliente[0]['EMP_COD'] ?>">
+                                        <a class="text-decoration-none" title="Atualizar" href="<?= DIRPAGE; ?>suporte/detalhar/<?= $empresa_cliente['EMP_COD'] ?>">
                                             <h5 class="fs-3 fw-bolder text-uppercase text-dark mb-1">
                                                 <i class="bi bi-arrow-clockwise"></i> Atualizar <span class="text-success">mensagens</span>
                                             </h5>
@@ -103,7 +101,6 @@ input::placeholder {
                                     <?php if ($qtd != 0) { 
                                         for ($i=0; $i < $qtd; $i++) { 
                                             $data = new DateTime($suporte_cliente[$i]['SUP_DT_CADASTRO']);  
-                                        
                                                 if ($suporte_cliente[$i]['USU_COD_DESTINATARIO'] == 0) {  ?>
                                                     <!-- Sender Message-->
                                                     <?php 
@@ -113,35 +110,46 @@ input::placeholder {
                                                             'SUP_STATUS'=> 2
                                                         );
                                                         $Sp->setCodEmpresa($suporte_cliente[$i]['EMP_COD'])->setCodigo($suporte_cliente[$i]['SUP_COD'])->alterar($dados,0); 
+                                                        
                                                     }else {
-                                                        $status = 'opacity-50';
+                                                        $status = '';
                                                     }
                                                     ?>
-                                                    <div class="media w-75 mb-3 <?= $status ?>"><img src="https://bootstrapious.com/i/snippets/sn-chat/avatar.svg" alt="user" width="50" class="rounded-circle">
+                                                    <div class="media w-75 mb-3 <?= $status ?>">
                                                         <div class="media-body ms-3">
                                                             <div class="bg-light rounded py-2 px-3 mb-2">
                                                                 <p class="text-small mb-0 text-muted"><?= $suporte_cliente[$i]['SUP_MENSAGEM'] ?>
-                                                                <?php if ($suporte_cliente[$i]['SUP_STATUS'] == 1) {  ?>
-                                                                    <button type="button" class="btn btn-outline-danger btn-sm d-print-none" data-bs-toggle='modal'  data-bs-target="#status" title="Excluir" data-codigo="<?= $suporte_cliente[$i]['SUP_COD']; ?>" data-empresa="<?= $suporte_cliente[$i]['EMP_COD']; ?>"><i class="fa fa-trash"></i></button>
-                                                                <?php } ?>
+                                                               
                                                                 </p>
                                                             </div>
                                                             <p class="small text-muted"><?= (date('Y-m-d') == $data->format('Y-m-d')) ? '<b>Hoje</b> às '. $data->format('H:i') : ((date('Y-m-d', strtotime("-1 days")) == $data->format('Y-m-d')) ? 'Ontem às '. $data->format('H:i') : $data->format('d/m/Y H:i')); ?></p>
                                                         </div>
                                                     </div>
+                                                    
                                             <?php } else {  ?>
                                                     <!-- Reciever Message-->
-                                                    <?php if ($suporte_cliente[$i]['SUP_STATUS'] == 2) { 
-                                                         $status = 'opacity-50';
+                                                    
+                                                    <?php 
+                                                    if ($suporte_cliente[$i]['SUP_STATUS'] == 2) { 
+                                                        $status = 'opacity-50';
+                                                        $checar = '<i class="bi bi-check"></i>';
                                                     }else {
                                                         $status = '';
+                                                        $checar = '<i class="bi bi-check-all"></i>';
                                                     }
                                                     ?>
-                                                    <div class="media w-50 ms-auto mb-3 <?= $status ?>">
-                                                        <div class="media-body">
-                                                            <div class="bg-success rounded py-2 px-3 mb-2">
-                                                                <p class="text-small mb-0 text-white"><?= $suporte_cliente[$i]['SUP_MENSAGEM'] ?></p>
+                                                     <div class="media w-50 ms-auto mb-3 <?= $status ?>">
+                                                        <div class="media-body row">
+                                                            <div class="bg-success rounded py-2 px-3 mb-2 <?=($suporte_cliente[$i]['SUP_STATUS'] == 1) ? 'col-10' : ''; ?>">
+                                                                <p class="text-small mb-0 text-white">
+                                                                    <?= $suporte_cliente[$i]['SUP_MENSAGEM'] ?> <?= $checar ?>
+                                                                </p>
                                                             </div>
+                                                            <?php if ($suporte_cliente[$i]['SUP_STATUS'] == 1) {  ?>
+                                                                <div class="col-2">
+                                                                    <button type="button" class="btn btn-outline-danger btn-sm" data-bs-toggle='modal'  data-bs-target="#status" title="Excluir" data-codigo="<?= $suporte_cliente[$i]['SUP_COD']; ?>" data-empresa="<?= $suporte_cliente[$i]['EMP_COD']; ?>"><i class="fa fa-trash"></i></button>
+                                                                </div>
+                                                            <?php } ?>
                                                             <p class="small text-muted"><?= (date('Y-m-d') == $data->format('Y-m-d')) ? '<b>Hoje</b> às '. $data->format('H:i') : ((date('Y-m-d', strtotime("-1 days")) == $data->format('Y-m-d')) ? 'Ontem às '. $data->format('H:i') : $data->format('d/m/Y H:i')); ?></p>
                                                         </div>
                                                     </div>
@@ -195,7 +203,7 @@ input::placeholder {
                             $('#retorno').html(resposta['MENSAGEM']);
                             $('#SUP_MENSAGEM').val('');
                             document.getElementById("fim").focus();
-                            //setTimeout( () => { window.location.href="<?php //= DIRPAGE ?>estoques/produtos/"+EMP_COD+"/"+EST_COD}, 100);
+                            setTimeout( () => { window.location.href="<?= DIRPAGE ?>suporte/detalhar/"+EMP_COD}, 1400);
                         });
                     }
                     

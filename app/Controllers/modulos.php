@@ -5,6 +5,7 @@ use Core\View;
 
 use Libraries\Util;
 use Libraries\Sessao;
+use App\Models\Empresas;
 use App\Models\Usuarios;
 use App\Models\Modulos as ModelsModulos;
 use App\Models\ModulosEmpresa;
