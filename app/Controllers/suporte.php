@@ -151,7 +151,7 @@ class suporte extends View
                 //Verifica se tem algum valor proibido
                 $ms = $this->Suporte->setCodigo($dados['SUP_COD'])->setCodEmpresa($dados['EMP_COD'])->listar(0);
 
-                if ($ms['SUP_STATUS'] != 1) {
+                if ($ms['SUP_STATUS'] == 1) {
                     if($this->Suporte->excluir(0)){
                         $ok = true;
                         $respota = array(
