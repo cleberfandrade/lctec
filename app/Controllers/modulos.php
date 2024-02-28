@@ -46,6 +46,13 @@ class modulos extends View
         $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
         $this->render('admin/lctec/modulos/modulos', $this->dados);
     }
+    public function listar()
+    {
+        Sessao::logadoSistema();
+        $this->dados['title'] .= ' LC/TEC >> MÓDULOS DO SISTEMA';   
+        $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
+        $this->render('admin/lctec/modulos/listar', $this->dados);
+    }
     public function cadastro():void
     {
         $this->dados['title'] .= ' CADASTRAR MÓDULOS';
