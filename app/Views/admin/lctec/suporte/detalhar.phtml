@@ -92,6 +92,7 @@ input::placeholder {
                                                 </div>
                                             </div>
                                             </a>
+                                            <a class="col-4 btn btn-sm text-uppercase btn-secondary" href="<?= DIRPAGE; ?>lctec/suporte"><i class="bi bi-arrow-left"></i> VOLTAR</a>
                                         </div>
                                     </div>
                                 </div>
@@ -115,7 +116,8 @@ input::placeholder {
                                                         $status = '';
                                                     }
                                                     ?>
-                                                    <div class="media w-75 mb-3 <?= $status ?>">
+                                                    <div class="media w-50 mb-3 <?= $status ?>">
+                                                        <?= $suporte_cliente[$i]['USU_NOME'] ?>
                                                         <div class="media-body ms-3">
                                                             <div class="bg-light rounded py-2 px-3 mb-2">
                                                                 <p class="text-small mb-0 text-muted"><?= $suporte_cliente[$i]['SUP_MENSAGEM'] ?>
@@ -132,22 +134,23 @@ input::placeholder {
                                                     <?php 
                                                     if ($suporte_cliente[$i]['SUP_STATUS'] == 2) { 
                                                         $status = 'opacity-50';
-                                                        $checar = '<i class="bi bi-check"></i>';
+                                                        $checar = '<i class="bi bi-check-all"></i>';
                                                     }else {
                                                         $status = '';
-                                                        $checar = '<i class="bi bi-check-all"></i>';
+                                                        $checar = '<i class="bi bi-check"></i>';
                                                     }
                                                     ?>
                                                      <div class="media w-50 ms-auto mb-3 <?= $status ?>">
-                                                        <div class="media-body row">
-                                                            <div class="bg-success rounded py-2 px-3 mb-2 <?=($suporte_cliente[$i]['SUP_STATUS'] == 1) ? 'col-10' : ''; ?>">
+                                                        Você
+                                                        <div class="media-body row">    
+                                                            <div class="bg-success rounded py-1 px-1 mb-1 <?=($suporte_cliente[$i]['SUP_STATUS'] == 1) ? 'col-10' : ''; ?>">
                                                                 <p class="text-small mb-0 text-white">
                                                                     <?= $suporte_cliente[$i]['SUP_MENSAGEM'] ?> <?= $checar ?>
                                                                 </p>
                                                             </div>
                                                             <?php if ($suporte_cliente[$i]['SUP_STATUS'] == 1) {  ?>
                                                                 <div class="col-2">
-                                                                    <button type="button" class="btn btn-outline-danger btn-sm" data-bs-toggle='modal'  data-bs-target="#status" title="Excluir" data-codigo="<?= $suporte_cliente[$i]['SUP_COD']; ?>" data-empresa="<?= $suporte_cliente[$i]['EMP_COD']; ?>"><i class="fa fa-trash"></i></button>
+                                                                    <button type="button" class="btn btn-outline-danger btn-sm" data-bs-toggle='modal'  data-bs-target="#status" title="Excluir" data-codigo="<?= $suporte_cliente[$i]['SUP_COD']; ?>" data-status="<?= $suporte_cliente[$i]['SUP_STATUS']; ?>"><i class="fa fa-trash"></i></button>
                                                                 </div>
                                                             <?php } ?>
                                                             <p class="small text-muted"><?= (date('Y-m-d') == $data->format('Y-m-d')) ? '<b>Hoje</b> às '. $data->format('H:i') : ((date('Y-m-d', strtotime("-1 days")) == $data->format('Y-m-d')) ? 'Ontem às '. $data->format('H:i') : $data->format('d/m/Y H:i')); ?></p>
@@ -203,7 +206,7 @@ input::placeholder {
                             $('#retorno').html(resposta['MENSAGEM']);
                             $('#SUP_MENSAGEM').val('');
                             document.getElementById("fim").focus();
-                            setTimeout( () => { window.location.href="<?= DIRPAGE ?>suporte/detalhar/"+EMP_COD}, 1400);
+                            setTimeout( () => { window.location.href="<?= DIRPAGE ?>suporte/detalhar/"+EMP_COD}, 1800);
                         });
                     }
                     
@@ -219,6 +222,67 @@ input::placeholder {
                     // getMessages();
                     });
                     setInterval(() =>  $("#SUP_MENSAGEM").focus(), 3000);
+                </script>
+                <div class="modal" id="statusMsg" tabindex="-1" role="dialog" data-bs-backdrop="true" aria-labelledby="statusMsg" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div id="title" class="modal-header text-center text-uppercase">
+                                Excluir
+                            </div>
+                            <div class="modal-body text-center">
+                                <p class="text-center text-uppercase mx-auto">Excluir mensagem?</p>
+                            </div>
+                            <div class="modal-footer">
+                                <input type="hidden" id="SUP_STATUS" name="SUP_STATUS" value="" />
+                                <input type="hidden" id="SUP_COD" name="SUP_COD" value="" />
+                                <input type="hidden" id="EMP_COD" name="EMP_COD" value="<?= isset($suporte_cliente[0]['EMP_COD']) ? $suporte_cliente[0]['EMP_COD'] : 0; ?>" />
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">CANCELAR</button>
+                                <button id="sts" type="button" class="btn btn-dark" value=""></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <script type="text/javascript">
+                    $(document).ready(function() {
+                        $('#statusMsg').on('show.bs.modal', function(event) {
+                            var button = null;
+                            var button = $(event.relatedTarget); // Button that triggered the modal
+                            var codigo = null;
+                            var codigo = button.data('codigo'); // Extract info from data-* attributes
+                            var status = button.data('status');
+                            var modal = $(this);
+                            modal.find('#SUP_COD').val(codigo);
+                            modal.find('#SUP_STATUS').val(status);
+                            modal.find('#sts').val(codigo);
+
+                            if (status === 1) {
+                                modal.find('#sts').html('<i class="fa fa-ban"></i> CONFIRMAR');
+                                modal.find('#title').html('Deseja Excluir?');
+                            }else{
+                                //modal.find('#sts').html('<i class="fa fa-circle-check"></i> CONFIRMAR');
+                                //modal.find('#title').html('Deseja reativar o Produto?');
+                            }
+                        });
+                    });
+                    $("#sts").click(function(){
+                        var SUP_COD = $('#sts').val();
+                        var EMP_COD = $('#EMP_COD').val();
+                        var SUP_STATUS = $('#SUP_STATUS').val();
+                        setTimeout(function () {
+                                $('#statusMsg').modal('hide');
+                        }, 100);
+                        $.post('<?= DIRPAGE; ?>suporte/excluir_msg', {SUP_COD: SUP_COD,STATUS_MENS: true,EMP_COD: EMP_COD,SUP_STATUS: SUP_STATUS}, function(retorno) {
+                            var resposta = JSON.parse(retorno);
+                            if (resposta['COD'] !== 'ERRO') {
+                                $('#retorno').addClass('alert alert-success');
+                            }else{
+                                $('#retorno').addClass('alert alert-warning');
+                            }
+                            $('#retorno').html(resposta['MENSAGEM']);
+                            setTimeout( () => { window.location.href="<?= DIRPAGE ?>suporte/detalhar/"+EMP_COD}, 300);
+                        });
+
+                    });
                 </script>
             </div>
         </div>
