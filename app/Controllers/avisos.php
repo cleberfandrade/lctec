@@ -145,7 +145,7 @@ class avisos extends View
                                 
                             }else {
                                 //NAO AVISOU
-                                $aviso = ($this->dados['produtos'][$i]['PRO_QTD_MIN']>= $this->dados['produtos'][$i]['PRO_QUANTIDADE'])? 'É NECESSÁRIO COMPRAR MAIS DESTE PRODUTO' : '';
+                                $aviso = ($this->dados['produtos'][$i]['PRO_QTD_MIN']>= $this->dados['produtos'][$i]['PRO_QUANTIDADE'])? 'É NECESSÁRIO COMPRAR MAIS DO PRODUTO: '.$this->dados['produtos'][$i]['PRO_NOME'] : '';
                                //checar se o produto está com estoque abaixo do mínimo definido
                                 if (!empty($aviso)) {
                                     $dados = array(
@@ -179,7 +179,7 @@ class avisos extends View
                 }else {
                     //NOVO AVISO
                     if (isset($this->dados['produtos'][$i]['PRO_QTD_MIN'])) {
-                        $aviso = ($this->dados['produtos'][$i]['PRO_QTD_MIN'] >= $this->dados['produtos'][$i]['PRO_QUANTIDADE'])? 'É NECESSÁRIO COMPRAR MAIS '.$this->dados['produtos'][$i]['PRO_NOME'] : '';
+                        $aviso = ($this->dados['produtos'][$i]['PRO_QTD_MIN'] >= $this->dados['produtos'][$i]['PRO_QUANTIDADE'])? 'É NECESSÁRIO COMPRAR MAIS DO PRODUTO: '.$this->dados['produtos'][$i]['PRO_NOME'] : '';
                         if (!empty($aviso)) {
                             $dados = array(
                                 'EMP_COD' => $this->dados['produtos'][$i]['EMP_COD'],
