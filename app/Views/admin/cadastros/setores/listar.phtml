@@ -15,8 +15,7 @@ $st = array(
     7 => 'OUTROS'
 );
 $qtdSt = (is_array($st) ? count($st) : 0);
-dump($qtdSt);
-dump($st);
+
 ?>
 <body class="">
     <div class="d-flex" id="wrapper">
@@ -77,6 +76,8 @@ dump($st);
                                         <td class="text-center align-middle">
                                         <?php for ($s= 0; $s < $qtdSt; $s++) { 
                                             if($st[$s] == $setores[$i]['SET_TIPO']){ 
+                                                dump($qtdSt);
+                                                dump($st);
                                             echo $st[$s];
                                           } } ?>
                                          </td>
