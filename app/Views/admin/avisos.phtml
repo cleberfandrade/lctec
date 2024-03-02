@@ -53,8 +53,8 @@ $qtd = (is_array($avisos) ? count($avisos) : 0);
                                 <td class="text-center align-middle"><?= $avisos[$i]['AVS_TIPO']; ?></td>
                                 <td class="text-center align-middle"><?= $avisos[$i]['AVS_DESCRICAO']; ?></td>
                                 <td class="text-center align-middle"><?= ($avisos[$i]['AVS_STATUS'] == 1)? 'ATIVO' : 'DESATIVADO'; ?></td>
-                                <td class="text-center align-middle">
-                                    <div class="form-check">
+                                <td class="text-center mx-auto align-middle">
+                                    <div class="form-check ">
                                         <input class="form-check-input" type="checkbox" id="AVS_COD" value="<?= $avisos[$i]['AVS_COD']; ?>" data-status="<?= $avisos[$i]['AVS_STATUS']; ?>" title="Marcar como lido?">
                                     </div>
                                     
