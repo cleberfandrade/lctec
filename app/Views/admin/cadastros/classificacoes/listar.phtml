@@ -4,17 +4,17 @@ use Libraries\Sessao;
 include_once 'app/Views/admin/inc/cabecalho.phtml'; 
 $qtd = (is_array($classificacoes) ? count($classificacoes) : 0);
 $cl = array(
-    0 => 'A DEFINIR',
-    1 => 'CATEGORIAS',
-    2 => 'COLABORADORES',
-    3 => 'CLIENTES',
-    4 => 'ESTOQUES',
-    5 => 'FORNECEDORES',
-    6 => 'LANÇAMENTOS',
-    7 => 'OUTROS'
-    8 => 'PRODUTOS',
-    9 => 'SERVIÇOS',
-    10 => 'TAREFAS'
+    0 => [0=>0,'TXT'=>'A DEFINIR'],
+    1 => [1=>1,'TXT'=>'CATEGORIAS'],
+    2 => [2=>2,'TXT'=>'COLABORADORES'],
+    3 => [3=>3,'TXT'=>'CLIENTES'],
+    4 => [4=>4,'TXT'=>'ESTOQUES'],
+    5 => [5=>5,'TXT'=>'FORNECEDORES'],
+    6 => [6=>6,'TXT'=>'LANÇAMENTOS'],
+    7 => [7=>7,'TXT'=>'OUTROS'],
+    8 => [8=>8,'TXT'=>'PRODUTOS'],
+    9 => [9=>9,'TXT'=>'SERVIÇOS'],
+    10 => [10=>10,'TXT'=>'TAREFAS']
 );
 
 $qtdCl = (is_array($cl) ? count($cl) : 0);
@@ -72,8 +72,8 @@ $qtdCl = (is_array($cl) ? count($cl) : 0);
                                         <td class="text-center align-middle"><?= $b; ?></td>
                                         <td class="text-center align-middle">
                                         <?php for ($c= 0; $c < $qtdCl; $c++) { 
-                                            if($cl[$c] == $classificacoes[$i]['CLA_TIPO']){ 
-                                            echo $cl[$c];
+                                            if($cl[$c][$c] == $classificacoes[$i]['CLA_TIPO']){ 
+                                            echo $cl[$c]['TXT'];
                                           } } ?>
                                         </td>
                                         <td class="text-center align-middle"><?= $classificacoes[$i]['CLA_DESCRICAO']; ?></td>
