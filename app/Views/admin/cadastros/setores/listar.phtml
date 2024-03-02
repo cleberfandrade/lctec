@@ -5,7 +5,7 @@ include_once 'app/Views/admin/inc/cabecalho.phtml';
 $qtd = (is_array($setores) ? count($setores) : 0);
 
 $st = array(
-    0 => 'A DEFINIR',
+    0 => 0,'TXT'=>'A DEFINIR',
     1 => 'CATEGORIAS',
     2 => 'CLIENTES',
     3 => 'ESTOQUES',
@@ -15,7 +15,7 @@ $st = array(
     7 => 'OUTROS'
 );
 $qtdSt = (is_array($st) ? count($st) : 0);
-
+dump($st);
 ?>
 <body class="">
     <div class="d-flex" id="wrapper">
@@ -76,7 +76,7 @@ $qtdSt = (is_array($st) ? count($st) : 0);
                                         <td class="text-center align-middle">
                                         <?php for ($s= 0; $s < $qtdSt; $s++) { 
                                             if($st[$s] == $setores[$i]['SET_TIPO']){ 
-                                                dump($qtdSt);
+                                                
                                                 dump($st);
                                             echo $st[$s];
                                           } } ?>
