@@ -75,10 +75,10 @@ $qtdSt = (is_array($st) ? count($st) : 0);
                                         <td class="text-center align-middle"><?= $b; ?></td>
                                         <td class="text-center align-middle">
                                         <?php for ($s= 0; $s < $qtdSt; $s++) { 
-                                            if($st[$s] == $setores[$i]['SET_TIPO']){ 
-                                                dump($qtdSt);
-                                                dump($st);
-                                            echo $st[$s];
+                                            if($st[] == $setores[$i]['SET_TIPO']){ 
+                                                //dump($qtdSt);
+                                                //dump($st);
+                                            echo $st[];
                                           } } ?>
                                          </td>
                                         <td class="text-center align-middle"><?= $setores[$i]['SET_DESCRICAO']; ?></td>
