@@ -3,6 +3,19 @@ use Libraries\Sessao;
 
 include_once 'app/Views/admin/inc/cabecalho.phtml'; 
 $qtd = (is_array($classificacoes) ? count($classificacoes) : 0);
+$cl = array(
+    0 => 'A DEFINIR',
+    1 => 'CATEGORIAS',
+    2 => 'COLABORADORES',
+    3 => 'CLIENTES',
+    4 => 'ESTOQUES',
+    5 => 'FORNECEDORES',
+    6 => 'LANÇAMENTOS',
+    7 => 'OUTROS'
+    8 => 'PRODUTOS',
+    9 => 'SERVIÇOS',
+    10 => 'TAREFAS'
+);
 ?>
 <body class="">
     <div class="d-flex" id="wrapper">

@@ -3,6 +3,17 @@ use Libraries\Sessao;
 
 include_once 'app/Views/admin/inc/cabecalho.phtml'; 
 $qtd = (is_array($setores) ? count($setores) : 0);
+
+$st = array(
+    0 => 'A DEFINIR',
+    1 => 'CATEGORIAS',
+    2 => 'CLIENTES',
+    3 => 'ESTOQUES',
+    4 => 'PRODUTOS',
+    5 => 'SERVIÇOS',
+    6 => 'COLABORADORES',
+    7 => 'OUTROS'
+);
 ?>
 <body class="">
     <div class="d-flex" id="wrapper">
