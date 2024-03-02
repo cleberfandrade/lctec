@@ -81,8 +81,7 @@ class categorias extends View
                         'CAT_DT_ATUALIZACAO'=> date('0000-00-00 00:00:00'),          
                         'CAT_STATUS'=> 1
                     );
-                    dump($dados);
-                    if($this->Categorias->cadastrar($dados,1)){
+                    if($this->Categorias->cadastrar($dados,0)){
                         $ok = true;
                         Sessao::alert('OK','Cadastro efetuado com sucesso!','fs-4 alert alert-success');
                     }else{
