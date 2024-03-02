@@ -145,7 +145,8 @@ class avisos extends View
                                 
                             }else {
                                 //NAO AVISOU
-                                $aviso = ($this->dados['produtos'][$i]['PRO_QTD_MIN']>= $this->dados['produtos'][$i]['PRO_QUANTIDADE'])? 'É NECESSÁRIO COMPRAR MAIS DO PRODUTO: '.$this->dados['produtos'][$i]['PRO_NOME'] : '';
+                                $aviso = ($this->dados['produtos'][$i]['PRO_QTD_MIN'] >= $this->dados['produtos'][$i]['PRO_QUANTIDADE'])? 'É NECESSÁRIO COMPRAR MAIS DO PRODUTO: <a href="<?= DIRPAGE; ?>produtos/detalhar/'.$this->dados['produtos'][$i]['EMP_COD'].'/'.$this->dados['produtos'][$i]['EST_COD'].''.$this->dados['produtos'][$i]['PRO_COD'].'" type="button" class="btn btn-outline-secondary btn-sm d-print-none" title="Detalhar produto"><i class="bi bi-eye"></i> <b>'.$this->dados['produtos'][$i]['PRO_NOME'].'</b></a>' : '';
+                                //ANTERIOR: $aviso = ($this->dados['produtos'][$i]['PRO_QTD_MIN']>= $this->dados['produtos'][$i]['PRO_QUANTIDADE'])? 'É NECESSÁRIO COMPRAR MAIS DO PRODUTO: '.$this->dados['produtos'][$i]['PRO_NOME'] : '';
                                //checar se o produto está com estoque abaixo do mínimo definido
                                 if (!empty($aviso)) {
                                     $dados = array(
@@ -179,7 +180,7 @@ class avisos extends View
                 }else {
                     //NOVO AVISO
                     if (isset($this->dados['produtos'][$i]['PRO_QTD_MIN'])) {
-                        $aviso = ($this->dados['produtos'][$i]['PRO_QTD_MIN'] >= $this->dados['produtos'][$i]['PRO_QUANTIDADE'])? 'É NECESSÁRIO COMPRAR MAIS DO PRODUTO: '.$this->dados['produtos'][$i]['PRO_NOME'] : '';
+                        $aviso = ($this->dados['produtos'][$i]['PRO_QTD_MIN'] >= $this->dados['produtos'][$i]['PRO_QUANTIDADE'])? 'É NECESSÁRIO COMPRAR MAIS DO PRODUTO: <a href="<?= DIRPAGE; ?>produtos/detalhar/'.$this->dados['produtos'][$i]['EMP_COD'].'/'.$this->dados['produtos'][$i]['EST_COD'].''.$this->dados['produtos'][$i]['PRO_COD'].'" type="button" class="btn btn-outline-secondary btn-sm d-print-none" title="Detalhar produto"><i class="bi bi-eye"></i> <b>'.$this->dados['produtos'][$i]['PRO_NOME'].'</b></a>' : '';
                         if (!empty($aviso)) {
                             $dados = array(
                                 'EMP_COD' => $this->dados['produtos'][$i]['EMP_COD'],
