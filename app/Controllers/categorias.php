@@ -37,7 +37,8 @@ class categorias extends View
         $this->dados['setores'] = $this->Setores->setCodEmpresa($_SESSION['EMP_COD'])->listarTodosPorTipo(1);
         $this->dados['classificacoes'] = $this->Classificacoes->setCodEmpresa($_SESSION['EMP_COD'])->listarTodosPorTipo(1);
 
-        
+dump($this->dados['setores']);
+
         $this->link[0] = ['link'=> 'admin','nome' => 'PAINEL ADMINISTRATIVO'];
         $this->link[1] = ['link'=> 'cadastros','nome' => 'MÓDULO DE CADASTROS'];
         $this->link[2] = ['link'=> 'categorias','nome' => 'GERENCIAR SUAS CATEGORIAS'];
