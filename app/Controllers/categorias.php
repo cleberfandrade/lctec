@@ -27,6 +27,10 @@ class categorias extends View
         $this->Setores = new Setores;
         $this->Classificacoes = new Classificacoes;
 
+        /**
+         * SETORES = > 1
+         * CLASSIFICACOES =>
+         */
         $this->dados['empresa'] = $this->UsuariosEmpresa->setCodEmpresa($_SESSION['EMP_COD'])->setCodUsuario($_SESSION['USU_COD'])->listar(0);
         $this->dados['usuario'] = $this->Usuarios->setCodUsuario($_SESSION['USU_COD'])->listar(0);
         $this->dados['categorias'] = $this->Categorias->setCodEmpresa($_SESSION['EMP_COD'])->listarTodos(0);
