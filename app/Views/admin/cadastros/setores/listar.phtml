@@ -14,6 +14,7 @@ $st = array(
     6 => 'COLABORADORES',
     7 => 'OUTROS'
 );
+$qtdSt = (is_array($st) ? count($st) : 0);
 ?>
 <body class="">
     <div class="d-flex" id="wrapper">
@@ -71,7 +72,12 @@ $st = array(
                                     for ($i= 0; $i < $qtd; $i++) { ?>
                                     <tr class="<?= ($setores[$i]['SET_STATUS'] == 0 && $_SESSION['USU_NIVEL'] >= 8)? 'bg-secondary' : '';?>">
                                         <td class="text-center align-middle"><?= $b; ?></td>
-                                        <td class="text-center align-middle"><?= $setores[$i]['SET_TIPO']; ?></td>
+                                        <td class="text-center align-middle">
+                                        <?php for ($s= 0; $s < $qtdSt; $s++) { 
+                                            if($st[$s] == $setores[$i]['SET_TIPO']){ 
+                                            echo $st[$s];
+                                          } } ?>
+                                         </td>
                                         <td class="text-center align-middle"><?= $setores[$i]['SET_DESCRICAO']; ?></td>
                                         <td class="text-center align-middle"><?= $setores[$i]['SET_NIVEL']; ?></td>
                                         <td class="text-center align-middle"><?= ($setores[$i]['SET_STATUS'] == 1)? 'ATIVO' : 'DESATIVADO'; ?></td>

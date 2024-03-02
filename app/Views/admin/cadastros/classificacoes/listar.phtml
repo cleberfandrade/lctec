@@ -16,6 +16,8 @@ $cl = array(
     9 => 'SERVIÇOS',
     10 => 'TAREFAS'
 );
+
+$qtdCl = (is_array($cl) ? count($cl) : 0);
 ?>
 <body class="">
     <div class="d-flex" id="wrapper">
@@ -68,7 +70,12 @@ $cl = array(
                                     for ($i= 0; $i < $qtd; $i++) { ?>
                                     <tr class="<?= ($classificacoes[$i]['CLA_STATUS'] == 0 && $_SESSION['USU_NIVEL'] >= 8)? 'bg-secondary' : ''; ?>">
                                         <td class="text-center align-middle"><?= $b; ?></td>
-                                        <td class="text-center align-middle"><?= $classificacoes[$i]['CLA_TIPO']; ?></td>
+                                        <td class="text-center align-middle">
+                                        <?php for ($c= 0; $c < $qtdCl; $c++) { 
+                                            if($cl[$c] == $classificacoes[$i]['CLA_TIPO']){ 
+                                            echo $cl[$c];
+                                          } } ?>
+                                        </td>
                                         <td class="text-center align-middle"><?= $classificacoes[$i]['CLA_DESCRICAO']; ?></td>
                                         <td class="text-center align-middle"><?= ($classificacoes[$i]['CLA_STATUS'] == 1)? 'ATIVO' : 'DESATIVADO'; ?></td>
                                         <?php if($_SESSION['USU_NIVEL'] >= 8){ ?>
