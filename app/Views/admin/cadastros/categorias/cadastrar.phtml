@@ -36,7 +36,7 @@ $qtdCL = (is_array($classificacoes) ? count($classificacoes) : 0);
                     <div class="container col-10 px-2 py-2 mx-auto row">
                         <form class="p-4 p-md-6 border text-uppercase rounded-3 " action="<?= DIRPAGE ?>categorias/cadastrar" method="POST">
                             <div class="row ">    
-                                <div class="col-4 mb-2 text-center">
+                                <div class="col-2 mb-2 text-center">
                                     <label class="form-label">NÍVEL</label>
                                     <div class="form-floating mb-3">
                                         <select class="form-select " name="CAT_NIVEL">                                        
@@ -47,7 +47,22 @@ $qtdCL = (is_array($classificacoes) ? count($classificacoes) : 0);
                                         <label class="form-floating ">NÍVEL DA CATEGORIA</label>
                                     </div>
                                 </div>
-                                <div class="col-4 text-center mb-3">
+                                <div class="col-3 mb-2 text-center">
+                                    <label class="form-label">TIPO</label>
+                                    <div class="form-floating mb-3">
+                                        <select class="form-select" name="CAT_TIPO">                                        
+                                            <option value="0" <?= (isset($_POST['CAT_TIPO']) &&  $_POST['CAT_TIPO']  == 0)? 'selected' : ''; ?>>----</option>   
+                                            <option value="1" <?= (isset($_POST['CAT_TIPO']) &&  $_POST['CAT_TIPO']  == 1)? 'selected' : ''; ?>>CLIENTES</option> 
+                                            <option value="2" <?= (isset($_POST['CAT_TIPO']) &&  $_POST['CAT_TIPO']  == 2)? 'selected' : ''; ?>>ESTOQUES</option> 
+                                            <option value="3" <?= (isset($_POST['CAT_TIPO']) &&  $_POST['CAT_TIPO']  == 3)? 'selected' : ''; ?>>PRODUTOS</option> 
+                                            <option value="4" <?= (isset($_POST['CAT_TIPO']) &&  $_POST['CAT_TIPO']  == 4)? 'selected' : ''; ?>>SERVIÇOS</option> 
+                                            <option value="5" <?= (isset($_POST['CAT_TIPO']) &&  $_POST['CAT_TIPO']  == 5)? 'selected' : ''; ?>>COLABORADORES</option> 
+                                            <option value="6" <?= (isset($_POST['CAT_TIPO']) &&  $_POST['CAT_TIPO']  == 6)? 'selected' : ''; ?>>OUTROS</option> 
+                                        </select>
+                                        <label class="form-floating ">TIPO DO SETOR</label>
+                                    </div>
+                                </div>
+                                <div class="col-3 text-center mb-3">
                                     <label class="form-label">SETOR</label>
                                     <div class="form-floating mb-3">
                                         <select class="form-select text-uppercase mb-3 form-floating" name="SET_COD">
@@ -59,6 +74,7 @@ $qtdCL = (is_array($classificacoes) ? count($classificacoes) : 0);
                                         <label class="form-floating mb-3">SETOR DA CATEGORIA</label>
                                     </div>
                                 </div>
+                                
                                 <div class="col-4 text-center mb-3">
                                     <label class="form-label">CLASSIFICAÇÃO</label>
                                     <div class="form-floating mb-3">
