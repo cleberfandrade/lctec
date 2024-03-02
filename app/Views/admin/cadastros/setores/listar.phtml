@@ -5,17 +5,17 @@ include_once 'app/Views/admin/inc/cabecalho.phtml';
 $qtd = (is_array($setores) ? count($setores) : 0);
 
 $st = array(
-    0 => ['TXT'=>'A DEFINIR'],
-    1 => ['TXT'=>'CATEGORIAS'],
-    2 => ['TXT'=>'CLIENTES'],
-    3 => ['TXT'=>'ESTOQUES'],
-    4 => ['TXT'=>'PRODUTOS'],
-    5 => ['TXT'=>'SERVIÇOS'],
-    6 => ['TXT'=>'COLABORADORES'],
-    7 => ['TXT'=>'OUTROS']
+    0 => [0,'TXT'=>'A DEFINIR'],
+    1 => [1,'TXT'=>'CATEGORIAS'],
+    2 => [2,'TXT'=>'CLIENTES'],
+    3 => [3,'TXT'=>'ESTOQUES'],
+    4 => [4,'TXT'=>'PRODUTOS'],
+    5 => [5,'TXT'=>'SERVIÇOS'],
+    6 => [6,'TXT'=>'COLABORADORES'],
+    7 => [7,'TXT'=>'OUTROS']
 );
 $qtdSt = (is_array($st) ? count($st) : 0);
-
+dump($st);
 ?>
 <body class="">
     <div class="d-flex" id="wrapper">
@@ -75,8 +75,7 @@ $qtdSt = (is_array($st) ? count($st) : 0);
                                         <td class="text-center align-middle"><?= $b; ?></td>
                                         <td class="text-center align-middle">
                                         <?php for ($s= 0; $s < $qtdSt; $s++) { 
-                                            if($st[$s] == $setores[$i]['SET_TIPO']){ 
-                                                dump($st);
+                                            if($st[$s][$s] == $setores[$i]['SET_TIPO']){ 
                                             echo $st[$s]['TXT'];
                                           } } ?>
                                          </td>
