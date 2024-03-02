@@ -75,8 +75,8 @@ dump($st);
                                         <td class="text-center align-middle"><?= $b; ?></td>
                                         <td class="text-center align-middle">
                                         <?php for ($s= 0; $s < $qtdSt; $s++) { 
-                                            if($st[$s][$s] == $setores[$i]['SET_TIPO']){ 
-                                            echo $st[$s]['TXT'];
+                                            if($st[$s][$i] == $setores[$i]['SET_TIPO']){ 
+                                            echo $st[$i]['TXT'];
                                           } } ?>
                                          </td>
                                         <td class="text-center align-middle"><?= $setores[$i]['SET_DESCRICAO']; ?></td>
