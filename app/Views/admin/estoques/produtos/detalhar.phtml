@@ -102,18 +102,23 @@ $qtdMP = (is_array($movimentacoes_produto) ? count($movimentacoes_produto) : 0);
                                             </button>
                                         </td>
                                     </tr>
+                                    <?php if($qtdMP != 0) { ?>
                                     <tr>
                                         <td class="text-center align-middle" colspan="5">
                                             <h4><b>VENDAS EFETUADAS:</b></h4>
                                         </td>
                                     </tr>
+                                    <?php
+                                        $b = 1;
+                                        for ($i= 0; $i < $qtdMP; $i++) {  ?>
                                     </tr>
-                                        <td class="text-center align-middle"></td>
+                                        <td class="text-center align-middle"><?= $b; ?></td>
                                         <td class="text-center align-middle"></td>
                                         <td class="text-center align-middle"></td>
                                         <td class="text-center align-middle"></td>
                                         <td class="text-center align-middle"></td>
                                     </tr>
+                                    <?php $b++; } } ?>
                                 </tbody>
                             </table>
                         </div>
