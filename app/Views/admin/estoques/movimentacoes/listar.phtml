@@ -302,7 +302,7 @@ $qtdMotivos = (is_array($motivos) ? count($motivos) : 0);
                     $('#resposta2').addClass('alert alert-warning');
                 }
                 $('#resposta2').html(resposta['MENSAGEM']);
-                setTimeout( () => { window.location.href="<?= DIRPAGE ?>movimentacoes/"+EMP_COD+"/"+EST_COD}, 500);
+                setTimeout( () => { window.location.href="<?= DIRPAGE ?>movimentacoes/"}, 1000);
             });
 
         });
