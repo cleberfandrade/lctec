@@ -87,6 +87,7 @@ class avisos extends View
         $this->dados['avisos'] = $this->Avisos->setCodEmpresa($_SESSION['EMP_COD'])->listarTodos(0);
         //dump($this->dados['avisos']);
         $this->dados['produtos'] = $this->Produtos->setCodEmpresa($_SESSION['EMP_COD'])->setStatus(1)->listarTodosGeral(0);
+        
         $qtdA = (is_array($this->dados['avisos']) ? count($this->dados['avisos']) : 0);
         $qtdP = (is_array($this->dados['produtos']) ? count($this->dados['produtos']) : 0);
         $resposta = array(
