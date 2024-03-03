@@ -134,7 +134,7 @@ $qtdMotivos = (is_array($motivos) ? count($motivos) : 0);
                                     <b class="text-dark"><br><span id="PRO_QUANTIDADE">0</span></b>
                                 </div>
                                 <div class="col-8 mb-2">
-                                <?php if($_SESSION['USU_NIVEL'] >= 12){ ?>
+                                <?php if($_SESSION['USU_NIVEL'] == 32){ ?>
                                     <div class="col-12 mx-auto form-floating mb-3">
                                         <select class="form-select " name="CLI_COD"> 
                                             <option value="0" <?= (isset($_POST['CLI_COD']) &&  $_POST['CLI_COD']  == 0)? 'selected' : '' ?>>---</option>
