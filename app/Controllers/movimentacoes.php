@@ -250,7 +250,7 @@ class movimentacoes extends View
             //$this->render('admin/estoques/movimentacao', $this->dados);
         }else {
             $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
-            $this->render('admin/movimentacoes', $this->dados);
+            $this->render('admin/estoques/movimentacoes/movimentacoes', $this->dados);
         }
     }
     public function reverter_movimentacao():void
