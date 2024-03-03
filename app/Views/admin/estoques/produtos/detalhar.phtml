@@ -118,7 +118,7 @@ $qtdMP = (is_array($movimentacoes_produto) ? count($movimentacoes_produto) : 0);
                                         <th></th>
                                     </tr>
                                     <?php
-                                        $b = 1;
+                                        $b = $qtdMP;
                                         for ($i= 0; $i < $qtdMP; $i++) { 
                                             $data = new DateTime($movimentacoes_produto[$i]['MOV_DT_MOVIMENTACAO']);
                                             ?>
@@ -129,7 +129,7 @@ $qtdMP = (is_array($movimentacoes_produto) ? count($movimentacoes_produto) : 0);
                                         <td class="text-center align-middle"></td>
                                         <td class="text-center align-middle"></td>
                                     </tr>
-                                    <?php $b++; } } ?>
+                                    <?php $b--; } } ?>
                                 </tbody>
                             </table>
                         </div>
