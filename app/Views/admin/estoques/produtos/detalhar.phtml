@@ -40,7 +40,27 @@ $qtd = (is_array($produto) ? count($produto) : 0);
                     </div>
                     <div class="container col-10 px-2 py-2 mx-auto row">
                         <div class="container-fluid py-5">
-                            <h1 class="display-5 fw-bold"><?= $produto['PRO_NOME'] ?></h1>
+                            <table class="table table-striped">
+                            <tbody>
+                                <tr>
+                                    <td><h1><b>NOME:</b></h1></td>
+                                    <td>
+                                        <h1 class="display-4 fw-bold"><?= $produto['PRO_NOME'] ?></h1>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><h1><b>:</b></h1></td>
+                                    <td>
+                                        <h1 class="display-4 fw-bold"><?= $produto['PRO_NOME'] ?></h1>
+                                    </td>
+                                    <td><h1><b>:</b></h1></td>
+                                    <td>
+                                        <h1 class="display-4 fw-bold"><?= $produto['PRO_NOME'] ?></h1>
+                                    </td>
+                                </tr>
+                            </tbody>
+                            </table>
+                            
                             <p class="col-md-8 fs-4">PREÇO DE VENDA: <?= $produto['PRO_PRECO_VENDA'] ?></p>
                             <p class="col-md-8 fs-4">QUANTIDADE ATUAL: <?= $produto['PRO_QUANTIDADE'] ?></p>
                             <p class="col-md-8 fs-4">QUANTIDADE MIN:  <?= $produto['PRO_QTD_MIN'] ?></p>
