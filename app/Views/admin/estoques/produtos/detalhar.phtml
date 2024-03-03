@@ -38,78 +38,74 @@ $qtd = (is_array($produto) ? count($produto) : 0);
                     <div class="col-12 mx-auto text-center m-1">
                         <a class="col-4 btn btn-sm text-uppercase btn-secondary" href="<?= DIRPAGE; ?>estoques"><i class="bi bi-arrow-left"></i> VOLTAR AOS ESTOQUES</a>
                     </div>
-                    <div class="container col-10 px-2 py-2 mx-auto row">
-                        <div class="container-fluid py-5">
-                            <table class="table table-striped">
-                            <tbody>
-                                <tr>
-                                    <td>
-                                        <h3><b>NOME:</b></h3>
-                                    </td>
-                                    <td colspan="2">
-                                        <h2 class="display-4 fw-bold"><?= $produto['PRO_NOME'] ?></h2>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td>
-                                        <h3><b>PREÇO DE CUSTO:</b></h3>
-                                    </td>
-                                    <td>
-                                        <h2 class="display-4 fw-bold"><?= $produto['PRO_PRECO_UNITARIO'] ?></h2>
-                                    </td>
-                                    <td>
-                                        <h3><b>PREÇO DE VENDA:</b></h3>
-                                    </td>
-                                    <td>
-                                        <h2 class="display-4 fw-bold"><?= $produto['PRO_PRECO_VENDA'] ?></h2>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td>
-                                        <h3><b>QUANTIDADE ATUAL:</b></h3></td>
-                                    <td>
-                                        <h2 class="display-4 fw-bold"><?= $produto['PRO_QUANTIDADE'] ?></h2>
-                                    </td>
-                                    <td><h3><b>QUANTIDADE MIN:</b></h3></td>
-                                    <td>
-                                        <h2 class="display-4 fw-bold"><?= $produto['PRO_QTD_MIN'] ?></h2>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td colspan="3">
-                                        DESCRIÇÃO: <?= $produto['PRO_DESCRICAO'] ?>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td colspan="3">
-                                        <button class="btn btn-success btn-sm" type="button">
-                                            <?php for ($c = 0; $c < $qtdC; $c++) { 
-                                                if ($categorias[$c]['CAT_COD'] == $produto['CAT_COD']) { ?>
-                                                <?= $categorias[$c]['CAT_DESCRICAO']; ?>   
-                                            <?php } } ?>
-                                        </button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td><h1><b>VENDAS EFETUADAS:</b></h1></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                            </tbody>
+                    <div class="container col-12 mx-auto row">
+                        <div class="py-3">
+                            <table class="table">
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <h3><b>NOME:</b></h3>
+                                        </td>
+                                        <td colspan="4">
+                                            <h2 class="display-4 fw-bold"><?= $produto['PRO_NOME'] ?></h2>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>
+                                            <h3><b>PREÇO DE CUSTO:</b></h3>
+                                        </td>
+                                        <td>
+                                            <h2 class="display-4 fw-bold"><?= $produto['PRO_PRECO_UNITARIO'] ?></h2>
+                                        </td>
+                                        <td>
+                                            <h3><b>PREÇO DE VENDA:</b></h3>
+                                        </td>
+                                        <td>
+                                            <h2 class="display-4 fw-bold"><?= $produto['PRO_PRECO_VENDA'] ?></h2>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>
+                                            <h3><b>QUANTIDADE ATUAL:</b></h3></td>
+                                        <td>
+                                            <h2 class="display-4 fw-bold"><?= $produto['PRO_QUANTIDADE'] ?></h2>
+                                        </td>
+                                        <td>
+                                            <h3><b>QUANTIDADE MIN:</b></h3>
+                                        </td>
+                                        <td>
+                                            <h2 class="display-4 fw-bold"><?= $produto['PRO_QTD_MIN'] ?></h2>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <h3><b>DESCRIÇÃO:</b></h3>
+                                        </td>
+                                        <td colspan="4">
+                                             <?= $produto['PRO_DESCRICAO'] ?>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="5">
+                                            <button class="btn btn-success btn-sm" type="button">
+                                                <?php for ($c = 0; $c < $qtdC; $c++) { 
+                                                    if ($categorias[$c]['CAT_COD'] == $produto['CAT_COD']) { ?>
+                                                    <?= $categorias[$c]['CAT_DESCRICAO']; ?>   
+                                                <?php } } ?>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><h3><b>VENDAS EFETUADAS:</b></h3></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                </tbody>
                             </table>
-                            
-                            <p class="col-md-8 fs-4"> <?= $produto['PRO_PRECO_VENDA'] ?></p>
-                            <p class="col-md-8 fs-4">QUANTIDADE ATUAL: <?= $produto['PRO_QUANTIDADE'] ?></p>
-                            <p class="col-md-8 fs-4">QUANTIDADE MIN:  <?= $produto['PRO_QTD_MIN'] ?></p>
-                            <p class="col-md-8 fs-4"></p>
-                            <button class="btn btn-primary btn-sm" type="button">
-                                <?php for ($c = 0; $c < $qtdC; $c++) { 
-                                     if ($categorias[$c]['CAT_COD'] == $produto['CAT_COD']) { ?>
-                                    <?= $categorias[$c]['CAT_DESCRICAO']; ?>   
-                                <?php } } ?>
-                            </button>
                         </div>
                     </div>
                 </section>
