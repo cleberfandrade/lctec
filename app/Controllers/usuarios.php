@@ -29,6 +29,7 @@ class usuarios extends View
             $this->link[0] = ['link'=> 'admin','nome' => 'PAINEL ADMINISTRATIVO'];
             $this->link[1] = ['link'=> 'cadastros','nome' => 'MÓDULO DE CADASTROS'];
             $this->link[2] = ['link'=> 'usuarios','nome' => 'GERENCIAR USUÁRIOS'];
+            $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
         }else {
             header("Location:".DIRPAGE."admin/painel");
         }
@@ -191,7 +192,7 @@ class usuarios extends View
         
         if (isset($_POST) && isset($dados['ALTERAR_USUARIO'])) {
             unset($dados['ALTERAR_USUARIO']);
-            
+          
             if($_SESSION['USU_COD'] <> $dados['USU_COD'] && $_SESSION['EMP_COD'] == $dados['EMP_COD']){
 
                 $this->Usuarios->setCodigo($dados['USU_COD']);
@@ -201,7 +202,8 @@ class usuarios extends View
                 );
                 if($dados['USU_RESET_SENHA']== "SIM") {
                     $dados['USU_SENHA'] = $this->Check->codificarSenha('123456');
-                }
+                }  
+                unset($dados['EMP_COD']);
                 unset($dados['USU_RESET_SENHA']);
                 if($this->Usuarios->alterar($dados,0)){
                     $ok = true;
@@ -216,6 +218,7 @@ class usuarios extends View
         }else {
             Sessao::alert('ERRO',' 1- Dados inválido(s)!','fs-4 alert alert-danger');   
         }
+        $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
         if($ok){
             $this->dados['usuarios'] = $this->UsuariosEmpresa->setCodEmpresa($_SESSION['EMP_COD'])->setCodUsuario($_SESSION['USU_COD'])->listarTodos(0);
             $this->render('admin/cadastros/usuarios/listar', $this->dados);

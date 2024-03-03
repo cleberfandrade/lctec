@@ -8,7 +8,7 @@ $qtd = (is_array($estoques) ? count($estoques) : 0);
 $qtdE = (is_array($empresa) ? count($empresa) : 0);
 $qtdM = (is_array($movimentacoes) ? count($movimentacoes) : 0);
 
-$qtdC = (is_array($clientes) ? count($clientes) : 0);
+$qtdClientes = (is_array($clientes) ? count($clientes) : 0);
 
 $motivos = array(
     0 => '---',
@@ -71,7 +71,7 @@ $qtdMotivos = (is_array($motivos) ? count($motivos) : 0);
                     <h5 class="card-title text-center"><i class="bi bi-box2-fill"></i> MOVIMENTAÇÃO DO PRODUTO</h5>
                     <div class="container col-11 px-2 py-2 mx-auto row">
                         <form class="p-4 p-md-6 border text-uppercase rounded-3" action="<?= DIRPAGE ?>movimentacoes/cadastrar" method="POST">
-                            <div class="col-10 mx-auto text-bg-success text-center">
+                            <div class="col-12 mx-auto text-bg-success text-center">
                                 <div class="card-body">
                                     <h5 class="card-title">SELECIONE O ESTOQUE</h5>
                                     <p class="card-text">
@@ -85,16 +85,16 @@ $qtdMotivos = (is_array($motivos) ? count($motivos) : 0);
                                     </p>
                                 </div>
                             </div>
-                            <div class="row">   
-                                <div class="col-8" id="retorno">
-                                    <label class="form-label">SELECIONE O PRODUTO</label>
-                                    <select class="form-select" id="produtos" name="PRO_COD">   
+                            <div class="col-12 row mt-3">   
+                                <div class="col-8 form-floating mb-2" id="retorno">
+                                    <select class="form-select form-control-lg" id="produtos" name="PRO_COD">   
                                         <option value="0">SELECIONE UM ESTOQUE</option>
                                     </select>
+                                    <label class="form-label">SELECIONE O PRODUTO</label>
                                 </div>
-                                <div class="col-4 mb-2">
+                                <div class="col-4 form-floating mb-2">
+                                    <input type="date" name="MOV_DT_MOVIMENTACAO" class="form-control form-control-lg" value="<?= isset($_POST['MOV_DT_MOVIMENTACAO']) ? $_POST['MOV_DT_MOVIMENTACAO'] : date('Y-m-d') ?>">
                                     <label class="form-label">DATA</label>
-                                    <input type="date" name="MOV_DT_MOVIMENTACAO" class="form-control" value="<?= isset($_POST['MOV_DT_MOVIMENTACAO']) ? $_POST['MOV_DT_MOVIMENTACAO'] : date('Y-m-d') ?>">
                                 </div>
                                 <div class="col-4 form-floating mb-2">
                                     <select class="form-select" name="MOV_TIPO">
@@ -110,36 +110,77 @@ $qtdMotivos = (is_array($motivos) ? count($motivos) : 0);
                                             <option value="<?= $i ?>" <?= (isset($_POST['MOV_MOTIVO']) &&  $_POST['MOV_MOTIVO']  == $i)? 'selected' : '' ?>><?= $motivos[$i] ?></option>
                                         <?php } ?>
                                     </select>
-                                    <!--<select class="form-select" name="MOV_MOTIVO">
-                                    
-                                        <option value="0" <?php //(isset($_POST['MOV_MOTIVO']) &&  $_POST['MOV_MOTIVO']  == 0)? 'selected' : '' ?>>---</option>
-                                        <option value="1" <?php //(isset($_POST['MOV_MOTIVO']) &&  $_POST['MOV_MOTIVO']  == 1)? 'selected' : '' ?>>COMPRA</option>
-                                        <option value="2" <?php //(isset($_POST['MOV_MOTIVO']) &&  $_POST['MOV_MOTIVO']  == 2)? 'selected' : '' ?>>VENDA</option>
-                                        <option value="3" <?php //(isset($_POST['MOV_MOTIVO']) &&  $_POST['MOV_MOTIVO']  == 3)? 'selected' : '' ?>>AJUSTE</option>
-                                        <option value="4" <?php //(isset($_POST['MOV_MOTIVO']) &&  $_POST['MOV_MOTIVO']  == 4)? 'selected' : '' ?>>DEVOLUÇÃO CLIENTE</option>
-                                        <option value="5" <?php //(isset($_POST['MOV_MOTIVO']) &&  $_POST['MOV_MOTIVO']  == 5)? 'selected' : '' ?>>DEVOLUÇÃO FORNECEDOR</option>
-                                        <option value="6" <?php //(isset($_POST['MOV_MOTIVO']) &&  $_POST['MOV_MOTIVO']  == 6)? 'selected' : '' ?>>PERDA</option>
-                                        <option value="7" <?php // (isset($_POST['MOV_MOTIVO']) &&  $_POST['MOV_MOTIVO']  == 7)? 'selected' : '' ?>>OUTROS</option>
-                                    </select>-->
                                     <label class="form-label">MOTIVO</label>
                                 </div>
+                               
                                 <div class="col-4 form-floating mb-3">
-                                    <input type="text" class="form-control maiusculo" id="2" name="MOV_QUANTIDADE" placeholder="0" value="<?= isset($_POST['MOV_QUANTIDADE']) ? $_POST['MOV_QUANTIDADE'] : ''; ?>">
-                                    <label class="px-3" for="2">QUANTIDADE</label>
+                                     <?php if($_SESSION['USU_NIVEL'] >= 12){ ?>
+                                    <div class="input-group input-group-lg">
+                                        <div class="form-floating">
+                                            <input type="text" class="form-control maiusculo" id="MOV_QUANTIDADE" name="MOV_QUANTIDADE" placeholder="0" value="<?= isset($_POST['MOV_QUANTIDADE']) ? $_POST['MOV_QUANTIDADE'] : ''; ?>">
+                                            <label class="px-2" for="MOV_QUANTIDADE">QUANTIDADE</label>
+                                        </div>
+                                        <button type="button" class="btn text-uppercase btn-success" id="adicionar"><i class="fa fa-plus"></i></button>
+                                    </div>
+                                    <?php }else { ?>
+                                        <div class="form-floating">
+                                            <input type="text" class="form-control maiusculo" id="MOV_QUANTIDADE" name="MOV_QUANTIDADE" placeholder="0" value="<?= isset($_POST['MOV_QUANTIDADE']) ? $_POST['MOV_QUANTIDADE'] : ''; ?>">
+                                            <label class="px-2" for="MOV_QUANTIDADE">QUANTIDADE</label>
+                                        </div>
+                                    <?php } ?>
                                 </div>
                                 <div class="col-4 mx-auto fs-4 text-center">
                                     <label class="px-2" for="2">QUANTIDADE ATUAL</label>
                                     <b class="text-dark"><br><span id="PRO_QUANTIDADE">0</span></b>
                                 </div>
-                                <div class="col-8 mb-2 " style="height:100px">
-                                    <label for="address2" class="form-label">DESCRIÇÃO</label>
-                                    <textarea type="text" class="form-control  maiusculo" name="MOV_DESCRICAO"><?= isset($_POST['MOV_DESCRICAO'])? $_POST['MOV_DESCRICAO']  : '' ?></textarea>
+                                <div class="col-8 mb-2">
+                                <?php if($_SESSION['USU_NIVEL'] >= 12){ ?>
+                                    <div class="col-12 mx-auto form-floating mb-3">
+                                        <select class="form-select " name="CLI_COD"> 
+                                            <option value="0" <?= (isset($_POST['CLI_COD']) &&  $_POST['CLI_COD']  == 0)? 'selected' : '' ?>>---</option>
+                                        <?php for ($i=0; $i < $qtdClientes; $i++) { ?>
+                                            <option value="<?= $i ?>" <?= (isset($_POST['CLI_COD']) &&  $_POST['CLI_COD']  == $i)? 'selected' : '' ?>><?= $clientes[$i]['CLI_NOME'] ?></option>
+                                        <?php } ?>
+                                        </select>
+                                        <label class="form-label">CLIENTE</label>
+                                    </div>
+                                    <div class="col-12 mx-auto form-floating mb-3">
+                                        <table  class="table table-bordered">
+                                            <thead>
+                                                <tr class="text-center"><th colspan="6">ITÉNS</th></tr>
+                                                <tr class="text-center">
+                                                    <th>#</th>
+                                                    <th>DESCRIÇÃO</th>
+                                                    <th>QTD</th>
+                                                    <th>VALOR UNIT.</th>
+                                                    <th>SUB TOTAL</th>
+                                                    <th></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="itens" class="text-center"></tbody>
+                                            <tfooter id="total" class="text-center">
+                                                <tr>
+                                                    <td colspan="4"></td>
+                                                    <td colspan="2" class="text-center">
+                                                        <input type="text" id="total" class="form-control" name='ITS_VL_TOTAL' value="0">
+                                                    </td>
+                                                </tr>
+                                            </tfooter>
+                                        </table>
+                                    </div>
+                                <?php } ?>
+                                    <div class="col-12 mx-auto form-floating mb-4">
+                                        <label for="address2" class="form-label">DESCRIÇÃO/OBS.</label>
+                                        <textarea type="text" style="height:100px;" class="form-control  maiusculo" name="MOV_DESCRICAO"><?= isset($_POST['MOV_DESCRICAO'])? $_POST['MOV_DESCRICAO']  : '' ?></textarea>
+                                    </div>
                                 </div>
-                                <input type="hidden" class="form-control" id="EST_COD" name="EST_COD" value="">
-                                <input type="hidden" class="form-control" name="EMP_COD" value="<?= isset($_SESSION['EMP_COD']) ? $_SESSION['EMP_COD'] : 0; ?>">
-                                <input type="hidden" class="form-control" name="USU_COD" value="<?= isset($_SESSION['USU_COD']) ? $_SESSION['USU_COD'] : 0; ?>">
-                                <a class="col-4 btn btn-lg text-uppercase btn-secondary" href="<?= DIRPAGE; ?>estoques"><i class="bi bi-ban"></i> Cancelar</a>
-                                <button class="col-8 btn btn-lg text-uppercase btn-success" name="CADASTRAR_NOVA_MOVIMENTACAO_ESTOQUE" type="submit"><i class="fa fa-save"></i> Cadastrar</button>
+                                <div class="col-12 row mx-auto mt-1">
+                                    <input type="hidden" class="form-control" id="EST_COD" name="EST_COD" value="">
+                                    <input type="hidden" class="form-control" name="EMP_COD" value="<?= isset($_SESSION['EMP_COD']) ? $_SESSION['EMP_COD'] : 0; ?>">
+                                    <input type="hidden" class="form-control" name="USU_COD" value="<?= isset($_SESSION['USU_COD']) ? $_SESSION['USU_COD'] : 0; ?>">
+                                    <a class="col-6 btn btn-lg text-uppercase btn-secondary" href="<?= DIRPAGE; ?>estoques"><i class="bi bi-ban"></i> Cancelar</a>
+                                    <button class="col-6 btn btn-lg text-uppercase btn-success" name="CADASTRAR_NOVA_MOVIMENTACAO_ESTOQUE" type="submit"><i class="fa fa-save"></i> Cadastrar</button>
+                                </div>
                             </div>
                         </form>
                     </div>
@@ -216,10 +257,43 @@ $qtdMotivos = (is_array($motivos) ? count($motivos) : 0);
             var PRO_COD = $(this).find('option:selected').val();
             var EST_COD = $('#EST_COD').val();
             var EMP_COD = <?php echo $_SESSION['EMP_COD']; ?>;
-
+            
             $.post('<?= DIRPAGE; ?>movimentacoes/listar_produto', {PRODUTOS: true,EMP_COD: EMP_COD,EST_COD:EST_COD,PRO_COD: PRO_COD}, function(retorno) {
-                db = JSON.parse(retorno);
+                var db = JSON.parse(retorno);
                 $('#PRO_QUANTIDADE').html(db.PRO_QUANTIDADE);
+            });
+        });
+
+        $("#adicionar").click(function(e){
+            e.preventDefault();
+            var PRO_COD2 = $("#produtos").find('option:selected').val();
+            var EMP_COD2 = <?php echo $_SESSION['EMP_COD']; ?>;
+            var EST_COD2 = $('#EST_COD').val();
+            var MOV_QUANTIDADE = $('#MOV_QUANTIDADE').val();
+            $("#itens").hide();
+            $.post('<?= DIRPAGE; ?>movimentacoes/listar_produto', {PRODUTOS: true,EMP_COD: EMP_COD2,EST_COD:EST_COD2,PRO_COD: PRO_COD2}, function(retorno2) {
+                resposta = JSON.parse(retorno2);
+                //$("#total").val(0);
+                subtotal = 0
+                soma = $("#total").val();
+                console.log(soma);
+                subtotal = (resposta.PRO_PRECO_VENDA*MOV_QUANTIDADE).toFixed(2);
+                soma = parseFloat(soma + subtotal)
+                soma = soma.toFixed(2);
+                //console.log(total);
+                $("#itens").show();
+                $("#itens").append("<tr>"+
+                "<td><input class='form-control' type='hidden' value='"+resposta.PRO_COD+"'name='ITS_COD[]'></td>"+
+                "<td>"+resposta.PRO_NOME+"</td>"+
+                "<td>"+MOV_QUANTIDADE+"</td>"+
+                "<td>"+resposta.PRO_PRECO_VENDA+"</td>"+
+                "<td>"+subtotal+"</td>"+
+                "<td><button type='button'id='deletar' value='"+resposta.PRO_COD+"' class='btn btn-danger btn-sm d-print-none' data-bs-toggle='modal' data-bs-target='#status' title='Deseja excluir?' ><i class='fa fa-trash'></i></button></td>"+
+                "</tr>");
+                
+                //$("#total").html('');
+                $("#total").val(soma);
+                //$("#total").html(soma);
             });
         });
     </script>
