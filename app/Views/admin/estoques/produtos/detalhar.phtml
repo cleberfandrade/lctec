@@ -70,7 +70,7 @@ $qtd = (is_array($produto) ? count($produto) : 0);
                                         <td>
                                             <h3><b>QUANTIDADE ATUAL:</b></h3></td>
                                         <td>
-                                            <h2 class="display-4 fw-bold"><?= $produto['PRO_QUANTIDADE'] ?></h2>
+                                            <h2 class="display-4 fw-bold"><?= isset(($produto['PRO_QTD_MIN']) && ($produto['PRO_QUANTIDADE'] < $produto['PRO_QTD_MIN'])? '<span class="bagde bg-warning">'.$produto['PRO_QUANTIDADE'].'</span>' : $produto['PRO_QUANTIDADE'] ?></h2>
                                         </td>
                                         <td>
                                             <h3><b>QUANTIDADE MIN:</b></h3>
