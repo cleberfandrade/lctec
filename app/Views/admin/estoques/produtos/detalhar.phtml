@@ -38,8 +38,8 @@ $qtd = (is_array($produto) ? count($produto) : 0);
                     <div class="col-12 mx-auto text-center m-1">
                         <a class="col-4 btn btn-sm text-uppercase btn-secondary" href="<?= DIRPAGE; ?>estoques"><i class="bi bi-arrow-left"></i> VOLTAR AOS ESTOQUES</a>
                     </div>
-                    <div class="container col-12 mx-auto row">
-                        <div class="py-3">
+                    <div class="container col-11 mx-auto row">
+                        <div class="py-1">
                             <table class="table">
                                 <tbody>
                                     <tr>
@@ -88,7 +88,10 @@ $qtd = (is_array($produto) ? count($produto) : 0);
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td colspan="5">
+                                        <td>
+                                            <h4><b>CATEORIAS:</b></h4>
+                                        </td>
+                                        <td colspan="4">
                                             <button class="btn btn-success btn-sm" type="button">
                                                 <?php for ($c = 0; $c < $qtdC; $c++) { 
                                                     if ($categorias[$c]['CAT_COD'] == $produto['CAT_COD']) { ?>
@@ -98,7 +101,12 @@ $qtd = (is_array($produto) ? count($produto) : 0);
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td><h3><b>VENDAS EFETUADAS:</b></h3></td>
+                                        <td colspan="5">
+                                            <h3><b>VENDAS EFETUADAS:</b></h3>
+                                        </td>
+                                    </tr>
+                                    </tr>
+                                        <td></td>
                                         <td></td>
                                         <td></td>
                                         <td></td>
