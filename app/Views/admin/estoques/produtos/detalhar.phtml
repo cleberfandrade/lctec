@@ -43,31 +43,38 @@ $qtd = (is_array($produto) ? count($produto) : 0);
                             <table class="table table-striped">
                             <tbody>
                                 <tr>
-                                    <td><h1><b>NOME:</b></h1></td>
-                                    <td colspan="3">
-                                        <h1 class="display-4 fw-bold"><?= $produto['PRO_NOME'] ?></h1>
+                                    <td>
+                                        <h3><b>NOME:</b></h3>
+                                    </td>
+                                    <td colspan="2">
+                                        <h2 class="display-4 fw-bold"><?= $produto['PRO_NOME'] ?></h2>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td></td>
-                                    <td><h1><b>PREÇO DE CUSTO:</b></h1></td>
                                     <td>
-                                        <h1 class="display-4 fw-bold"><?= $produto['PRO_PRECO_UNITARIO'] ?></h1>
+                                        <h3><b>PREÇO DE CUSTO:</b></h3>
                                     </td>
-                                    <td><h1><b>PREÇO DE VENDA:</b></h1></td>
                                     <td>
-                                        <h1 class="display-4 fw-bold"><?= $produto['PRO_PRECO_VENDA'] ?></h1>
+                                        <h2 class="display-4 fw-bold"><?= $produto['PRO_PRECO_UNITARIO'] ?></h2>
+                                    </td>
+                                    <td>
+                                        <h3><b>PREÇO DE VENDA:</b></h3>
+                                    </td>
+                                    <td>
+                                        <h2 class="display-4 fw-bold"><?= $produto['PRO_PRECO_VENDA'] ?></h2>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td></td>
-                                    <td><h1><b>QUANTIDADE ATUAL:</b></h1></td>
                                     <td>
-                                        <h1 class="display-4 fw-bold"><?= $produto['PRO_QUANTIDADE'] ?></h1>
+                                        <h3><b>QUANTIDADE ATUAL:</b></h3></td>
+                                    <td>
+                                        <h2 class="display-4 fw-bold"><?= $produto['PRO_QUANTIDADE'] ?></h2>
                                     </td>
-                                    <td><h1><b>QUANTIDADE MIN:</b></h1></td>
+                                    <td><h3><b>QUANTIDADE MIN:</b></h3></td>
                                     <td>
-                                        <h1 class="display-4 fw-bold"><?= $produto['PRO_QTD_MIN'] ?></h1>
+                                        <h2 class="display-4 fw-bold"><?= $produto['PRO_QTD_MIN'] ?></h2>
                                     </td>
                                 </tr>
                                 <tr>
