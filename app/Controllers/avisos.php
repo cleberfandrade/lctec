@@ -86,6 +86,7 @@ class avisos extends View
         //CHECAR PRODUTOS COM ESTOQUE ABAIXO DO MINIMO
         $this->dados['avisos'] = $this->Avisos->setCodEmpresa($_SESSION['EMP_COD'])->listarTodos(0);
         $this->dados['produtos'] = $this->Produtos->setCodEmpresa($_SESSION['EMP_COD'])->setStatus(1)->listarTodosGeral(0);
+        
         $qtdA = (is_array($this->dados['avisos']) ? count($this->dados['avisos']) : 0);
         $qtdP = (is_array($this->dados['produtos']) ? count($this->dados['produtos']) : 0);
         $resposta = array(
@@ -124,7 +125,7 @@ class avisos extends View
                                 //ANTERIOR: $aviso = ($this->dados['produtos'][$i]['PRO_QTD_MIN']>= $this->dados['produtos'][$i]['PRO_QUANTIDADE'])? 'É NECESSÁRIO COMPRAR MAIS DO PRODUTO: '.$this->dados['produtos'][$i]['PRO_NOME'] : '';
                                //checar se o produto está com estoque abaixo do mínimo definido
                                 if (!empty($aviso)) {
-                                    
+
                                     $dados = array(
                                         'EMP_COD' => $this->dados['produtos'][$i]['EMP_COD'],
                                         'USU_COD' => $_SESSION['USU_COD'],
