@@ -114,20 +114,20 @@ $qtdMotivos = (is_array($motivos) ? count($motivos) : 0);
                                 </div>
                                
                                 <div class="col-4 form-floating mb-3">
-                                     <?php if($_SESSION['USU_NIVEL'] >= 12){ ?>
-                                    <div class="input-group input-group-lg">
+                                     <?php // if($_SESSION['USU_NIVEL'] >= 12){ ?>
+                                    <!--<div class="input-group input-group-lg">
                                         <div class="form-floating">
-                                            <input type="text" class="form-control maiusculo" id="MOV_QUANTIDADE" name="MOV_QUANTIDADE" placeholder="0" value="<?= isset($_POST['MOV_QUANTIDADE']) ? $_POST['MOV_QUANTIDADE'] : ''; ?>">
+                                            <input type="text" class="form-control maiusculo" id="MOV_QUANTIDADE" name="MOV_QUANTIDADE" placeholder="0" value="<?// isset($_POST['MOV_QUANTIDADE']) ? $_POST['MOV_QUANTIDADE'] : ''; ?>">
                                             <label class="px-2" for="MOV_QUANTIDADE">QUANTIDADE</label>
                                         </div>
                                         <button type="button" class="btn text-uppercase btn-success" id="adicionar"><i class="fa fa-plus"></i></button>
-                                    </div>
-                                    <?php }else { ?>
+                                    </div>-->
+                                    <?php //}else { ?>
                                         <div class="form-floating">
                                             <input type="text" class="form-control maiusculo" id="MOV_QUANTIDADE" name="MOV_QUANTIDADE" placeholder="0" value="<?= isset($_POST['MOV_QUANTIDADE']) ? $_POST['MOV_QUANTIDADE'] : ''; ?>">
                                             <label class="px-2" for="MOV_QUANTIDADE">QUANTIDADE</label>
                                         </div>
-                                    <?php } ?>
+                                    <?php //} ?>
                                 </div>
                                 <div class="col-4 mx-auto fs-4 text-center">
                                     <label class="px-2" for="2">QUANTIDADE ATUAL</label>
