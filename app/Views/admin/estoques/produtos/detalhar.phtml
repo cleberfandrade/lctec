@@ -112,11 +112,13 @@ $qtdMP = (is_array($movimentacoes_produto) ? count($movimentacoes_produto) : 0);
                                     </tr>
                                     <?php
                                         $b = 1;
-                                        for ($i= 0; $i < $qtdMP; $i++) {  ?>
+                                        for ($i= 0; $i < $qtdMP; $i++) { 
+                                            $data = new DateTime($movimentacoes_produto[$i]['MOV_DT_MOVIMENTACAO']);
+                                            ?>
                                     </tr>
                                         <td class="text-center align-middle"><?= $b; ?></td>
-                                        <td class="text-center align-middle"></td>
-                                        <td class="text-center align-middle"></td>
+                                        <td class="text-center align-middle"><?= $data->formaty('d/m/Y'); ?></td>
+                                        <td class="text-center align-middle"><?= $movimentacoes_produto[$i]['MOV_QUANTIDADE']; ?></td>
                                         <td class="text-center align-middle"></td>
                                         <td class="text-center align-middle"></td>
                                     </tr>
