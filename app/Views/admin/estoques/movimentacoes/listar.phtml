@@ -56,18 +56,11 @@ $qtdMotivos = (is_array($motivos) ? count($motivos) : 0);
                             <a href="<?= DIRPAGE ?>estoques/produtos_atual" class="btn btn-dark">ACESSAR</a>
                         </div>
                     </div>    
-                    <div class="col-8 mx-auto text-bg-success text-center">
+                    <div class="col-4 text-bg-success text-center">
                         <div class="card-body">
-                            <h5 class="card-title">SELECIONE O ESTOQUE</h5>
-                            <p class="card-text">
-                                <select class="form-select" id="buscar_produtos" name="EST_COD">     
-                                    <option value="0" <?= (isset($_POST['EST_COD']) &&  $_POST['EST_COD']  == 0)? 'selected' : '' ?>>---</option>                     
-                                    <?php 
-                                    for ($i=0; $i < $qtd; $i++) { if ($estoques[$i]['EST_STATUS'] == 1) { ?>
-                                        <option value="<?= $estoques[$i]['EST_COD'] ?>" <?= (isset($_POST['EST_COD']) &&  $_POST['EST_COD']  == $estoques[$i]['EST_COD'])? 'selected' : '' ?>><?= $estoques[$i]['EST_DESCRICAO'] ?></option>
-                                    <?php } } ?>
-                                </select>
-                            </p>
+                            <h5 class="card-title">MOVIMENTAÇÃO DE ESTOQUES</h5>
+                            <p class="card-text">Cadastre/Altere as suas entradas e saídas de produtos</p>
+                            <a href="<?= DIRPAGE ?>movimentacoes" class="btn btn-dark">ACESSAR</a>
                         </div>
                     </div>
                     <hr class="my-4 text-dark">
@@ -83,12 +76,7 @@ $qtdMotivos = (is_array($motivos) ? count($motivos) : 0);
                     <?= Sessao::alert('OK'); ?>
                     <?= Sessao::alert('ERRO'); ?>
                 </section>
-           
                 <div class="container mx-auto col-12 px-2 py-2 row ">
-                    
-                    <div class="col-12 mx-auto text-center m-1">
-                        <a class="col-4 btn btn-sm text-uppercase btn-secondary" href="<?= DIRPAGE; ?>estoques"><i class="bi bi-arrow-left"></i> VOLTAR AOS ESTOQUES</a>
-                    </div>
                 <?php if($qtdM != 0) { ?>
                     <table class="table table-striped table-bordered">
                         <thead class="text-center text-uppercase">
