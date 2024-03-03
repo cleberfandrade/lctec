@@ -124,6 +124,7 @@ class avisos extends View
                                 //ANTERIOR: $aviso = ($this->dados['produtos'][$i]['PRO_QTD_MIN']>= $this->dados['produtos'][$i]['PRO_QUANTIDADE'])? 'É NECESSÁRIO COMPRAR MAIS DO PRODUTO: '.$this->dados['produtos'][$i]['PRO_NOME'] : '';
                                //checar se o produto está com estoque abaixo do mínimo definido
                                 if (!empty($aviso)) {
+                                    
                                     $dados = array(
                                         'EMP_COD' => $this->dados['produtos'][$i]['EMP_COD'],
                                         'USU_COD' => $_SESSION['USU_COD'],
