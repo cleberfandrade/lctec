@@ -112,40 +112,15 @@ class avisos extends View
                                         'MENSAGEM' => 'Aviso excluído com sucesso!'
                                     );
                                 } else {
-                                   //VERIFICAR SE A DATA É DIFERENTE DÁ DO AVISO
-                                   // Comparando as Datas
-                                   if (strtotime($this->dados['avisos'][$a]['AVS_DATA']) < strtotime(date('Y-m-d'))) {
-                                        $dados = array(
-                                            'EMP_COD' => $this->dados['produtos'][$i]['EMP_COD'],
-                                            'USU_COD' => $_SESSION['USU_COD'],
-                                            'PRO_COD' => $this->dados['produtos'][$i]['PRO_COD'],
-                                            'AVS_DT_CADASTRO'=> date('Y-m-d H:i:s'),
-                                            'AVS_DT_VISUALIZACAO'=> date('0000-00-00 00:00:00'),  
-                                            'AVS_DATA' => date('Y-m-d'),
-                                            'AVS_TIPO' => 2,  
-                                            'AVS_REFERENCIA' => 2,  
-                                            'AVS_DESCRICAO' => $this->dados['avisos'][$a]['AVS_DESCRICAO'],        
-                                            'AVS_STATUS'=> 1
-                                        );
-                                        //realizar o cadastro do aviso ao usuário
-                                        //if($this->Avisos->cadastrar($dados,0)){
-                                         //   $resposta = array(
-                                             //   'COD'=>'OK',
-                                             //   'MENSAGEM' => 'Status de aviso Recadastrado com sucesso!'
-                                          //  );
-                                      //  }
-                                   } else {
                                     //JÁ AVISADO
                                     $resposta = array(
                                         'COD'=>'OK',
                                         'MENSAGEM' => 'Status de aviso já realizado com sucesso!'
                                     );
-                                   }
                                 }
-                                
                             }else {
                                 //NAO AVISOU
-                                $aviso = ($this->dados['produtos'][$i]['PRO_QTD_MIN'] >= $this->dados['produtos'][$i]['PRO_QUANTIDADE'])? 'É NECESSÁRIO COMPRAR MAIS DO PRODUTO: <a href="<?= DIRPAGE; ?>produtos/detalhar/'.$this->dados['produtos'][$i]['EMP_COD'].'/'.$this->dados['produtos'][$i]['EST_COD'].''.$this->dados['produtos'][$i]['PRO_COD'].'" type="button" class="btn btn-outline-secondary btn-sm d-print-none" title="Detalhar produto"><i class="bi bi-eye"></i> <b>'.$this->dados['produtos'][$i]['PRO_NOME'].'</b></a>' : '';
+                                $aviso = ($this->dados['produtos'][$i]['PRO_QTD_MIN'] >= $this->dados['produtos'][$i]['PRO_QUANTIDADE'])? 'É NECESSÁRIO COMPRAR MAIS DO PRODUTO: <a href="'.DIRPAGE.'produtos/detalhar/'.$this->dados['produtos'][$i]['EMP_COD'].'/'.$this->dados['produtos'][$i]['EST_COD'].'/'.$this->dados['produtos'][$i]['PRO_COD'].'" type="button" class="btn btn-outline-secondary btn-sm d-print-none" title="Detalhar produto"><i class="bi bi-eye"></i> <b>'.$this->dados['produtos'][$i]['PRO_NOME'].'</b></a>' : '';
                                 //ANTERIOR: $aviso = ($this->dados['produtos'][$i]['PRO_QTD_MIN']>= $this->dados['produtos'][$i]['PRO_QUANTIDADE'])? 'É NECESSÁRIO COMPRAR MAIS DO PRODUTO: '.$this->dados['produtos'][$i]['PRO_NOME'] : '';
                                //checar se o produto está com estoque abaixo do mínimo definido
                                 if (!empty($aviso)) {
@@ -162,12 +137,12 @@ class avisos extends View
                                         'AVS_STATUS'=> 1
                                     );
                                     //realizar o cadastro do aviso ao usuário
-                                    //if($this->Avisos->cadastrar($dados,0)){
+                                    if($this->Avisos->cadastrar($dados,0)){
                                         $resposta = array(
                                             'COD'=>'OK',
                                             'MENSAGEM' => 'Status de aviso checado com sucesso!'
                                         );
-                                    //}
+                                    }
                                 }else {
                                     $resposta = array(
                                         'COD'=>'OK',
@@ -180,7 +155,7 @@ class avisos extends View
                 }else {
                     //NOVO AVISO
                     if (isset($this->dados['produtos'][$i]['PRO_QTD_MIN'])) {
-                        $aviso = ($this->dados['produtos'][$i]['PRO_QTD_MIN'] >= $this->dados['produtos'][$i]['PRO_QUANTIDADE'])? 'É NECESSÁRIO COMPRAR MAIS DO PRODUTO: <a href="<?= DIRPAGE; ?>produtos/detalhar/'.$this->dados['produtos'][$i]['EMP_COD'].'/'.$this->dados['produtos'][$i]['EST_COD'].''.$this->dados['produtos'][$i]['PRO_COD'].'" type="button" class="btn btn-outline-secondary btn-sm d-print-none" title="Detalhar produto"><i class="bi bi-eye"></i> <b>'.$this->dados['produtos'][$i]['PRO_NOME'].'</b></a>' : '';
+                        $aviso = ($this->dados['produtos'][$i]['PRO_QTD_MIN'] >= $this->dados['produtos'][$i]['PRO_QUANTIDADE'])? 'É NECESSÁRIO COMPRAR MAIS DO PRODUTO: <a href="'.DIRPAGE.'produtos/detalhar/'.$this->dados['produtos'][$i]['EMP_COD'].'/'.$this->dados['produtos'][$i]['EST_COD'].'/'.$this->dados['produtos'][$i]['PRO_COD'].'" type="button" class="btn btn-outline-secondary btn-sm d-print-none" title="Detalhar produto"><i class="bi bi-eye"></i> <b>'.$this->dados['produtos'][$i]['PRO_NOME'].'</b></a>' : '';
                         if (!empty($aviso)) {
                             $dados = array(
                                 'EMP_COD' => $this->dados['produtos'][$i]['EMP_COD'],
@@ -194,17 +169,17 @@ class avisos extends View
                                 'AVS_DESCRICAO' => $aviso,        
                                 'AVS_STATUS'=> 1
                             );
-                            //if($this->Avisos->cadastrar($dados,0)){
+                            if($this->Avisos->cadastrar($dados,0)){
                                 $resposta = array(
                                     'COD'=>'OK',
                                     'MENSAGEM' => 'Status de avisso checado com sucesso!'
                                 );
-                            //}else {
-                               // $resposta = array(
-                                 //   'COD'=>'ERRO',
-                                   // 'MENSAGEM' => 'ERRO NO CADASTRO DO AVISO!'
-                               // );
-                            //}
+                            }else {
+                               $resposta = array(
+                                    'COD'=>'ERRO',
+                                    'MENSAGEM' => 'ERRO NO CADASTRO DO AVISO!'
+                               );
+                            }
                         }
                     }
                 }
@@ -218,3 +193,29 @@ class avisos extends View
         echo json_encode($resposta);
     }
 }
+
+
+//VERIFICAR SE A DATA É DIFERENTE DÁ DO AVISO
+                                   // Comparando as Datas
+                                   /*if (strtotime($this->dados['avisos'][$a]['AVS_DATA']) < strtotime(date('Y-m-d'))) {
+                                        $dados = array(
+                                            'EMP_COD' => $this->dados['produtos'][$i]['EMP_COD'],
+                                            'USU_COD' => $_SESSION['USU_COD'],
+                                            'PRO_COD' => $this->dados['produtos'][$i]['PRO_COD'],
+                                            'AVS_DT_CADASTRO'=> date('Y-m-d H:i:s'),
+                                            'AVS_DT_VISUALIZACAO'=> date('0000-00-00 00:00:00'),  
+                                            'AVS_DATA' => date('Y-m-d'),
+                                            'AVS_TIPO' => 2,  
+                                            'AVS_REFERENCIA' => 2,  
+                                            'AVS_DESCRICAO' => $this->dados['avisos'][$a]['AVS_DESCRICAO'],        
+                                            'AVS_STATUS'=> 1
+                                        );
+                                        
+                                        //realizar o cadastro do aviso ao usuário
+                                        //if($this->Avisos->cadastrar($dados,0)){
+                                         //   $resposta = array(
+                                             //   'COD'=>'OK',
+                                             //   'MENSAGEM' => 'Status de aviso Recadastrado com sucesso!'
+                                          //  );
+                                      //  }
+                                   } else {*/
