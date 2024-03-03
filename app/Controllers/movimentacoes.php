@@ -13,7 +13,7 @@ use App\Models\Estoques as ModelsEstoques;
 use App\Models\Financas;
 use App\Models\Fornecedores;
 use App\Models\ModulosEmpresa;
-use App\Models\Movimentacoes;
+use App\Models\Movimentacoes as MovimentacoesModels;
 use App\Models\Produtos;
 use App\Models\Setores;
 use App\Models\Transacoes;
@@ -52,7 +52,7 @@ class movimentacoes extends View
         $this->Categorias = new Categorias;
         $this->Produtos = new Produtos;
         $this->Classificacoes = new Classificacoes;
-        $this->Movimentacoes = new Movimentacoes;
+        $this->Movimentacoes = new MovimentacoesModels;
         $this->Transacoes = new Transacoes;
 
         $this->dados['empresa'] = $this->UsuariosEmpresa->setCodEmpresa($_SESSION['EMP_COD'])->setCodUsuario($_SESSION['USU_COD'])->listar(0);
