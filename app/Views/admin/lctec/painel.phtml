@@ -57,7 +57,7 @@ $qtdEmpresas = (is_array($empresas) ? count($empresas) : 0);
                                                 <small class="text-body-secondary"><?= $data->format('d/m/Y'); ?></small>
                                             </div>
                                             <p class="mb-1"><?= $empresas[$i]['EMP_REGULAMENTACAO'] ?></p>
-                                            <small class="text-body-secondary"><?= ($empresas[$i]['EMP_STATUS'] == 1)? 'ATIVADA' : 'DESATIVADA'; ?></small>
+                                            <small class="text-body-secondary"><?= ($empresas[$i]['EMP_STATUS'] == 1)? '<span class="bagde bg-success">ATIVADA</span>' : 'DESATIVADA'; ?></small>
                                         </a>
                                     <?php } ?>
                                 </ul>
