@@ -301,7 +301,7 @@ class produtos extends View
              
                 $this->dados['produto'] = $this->Produtos->setCodEmpresa($dados[2])->setCodEstoque($dados[3])->setCodigo($dados[4])->listar(0);
                 if ($this->dados['produto'] != 0) {
-                    $this->dados['movimentacoes_produto'] = $this->Movimentacoes->setCodEmpresa($dados[2])->setCodEstoque($dados[3])->setCodProduto($dados[4])->setTipo(1)->setStatus(1)->listarTodasMovimentacoesProdutos(1);
+                    $this->dados['movimentacoes_produto'] = $this->Movimentacoes->setCodEmpresa($dados[2])->setCodEstoque($dados[3])->setCodProduto($dados[4])->setTipo(1)->setStatus(1)->listarTodasMovimentacoesProdutos(0);
                     $this->link[2] = ['link'=> 'estoques/','nome' => 'GERENCIAR ESTOQUES'];
                     $this->link[3] = ['link'=> 'estoques/produtos/'.$_SESSION['EMP_COD'].'/'.$dados[3],'nome' => 'GERENCIAR PRODUTOS'];
                     $this->link[4] = ['link'=> 'estoques/produtos/detalhar/'.$_SESSION['EMP_COD'].'/'.$dados[3].'/'.$dados[4],'nome' => 'DETALHAR PRODUTO'];   

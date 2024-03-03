@@ -89,6 +89,7 @@ $qtdMP = (is_array($movimentacoes_produto) ? count($movimentacoes_produto) : 0);
                                              <?= $produto['PRO_DESCRICAO'] ?>
                                         </td>
                                     </tr>
+                                    <?php if($qtdC != 0) { ?>
                                     <tr>
                                         <td class="text-center align-middle">
                                             <h4><b>CATEGORIA:</b></h4>
@@ -102,6 +103,7 @@ $qtdMP = (is_array($movimentacoes_produto) ? count($movimentacoes_produto) : 0);
                                             </button>
                                         </td>
                                     </tr>
+                                    <?php } ?>
                                     <?php if($qtdMP != 0) { ?>
                                     <tr>
                                         <td class="text-center align-middle" colspan="5">
