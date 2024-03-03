@@ -4,7 +4,7 @@ use Libraries\Sessao;
 include_once 'app/Views/admin/inc/cabecalho.phtml'; 
 $qtd = (is_array($setores) ? count($setores) : 0);
 
-$st = array(
+$st2 = array(
     0 => [0=>0,'TXT'=>'A DEFINIR'],
     1 => [1=>1,'TXT'=>'CATEGORIAS'],
     2 => [2=>2,'TXT'=>'CLIENTES'],
@@ -13,6 +13,16 @@ $st = array(
     5 => [5=>5,'TXT'=>'SERVIÇOS'],
     6 => [6=>6,'TXT'=>'COLABORADORES'],
     7 => [7=>7,'TXT'=>'OUTROS']
+);
+$st = array(
+    0 => 'A DEFINIR',
+    1 => 'CATEGORIAS',
+    2 => 'CLIENTES',
+    3 => 'ESTOQUES',
+    4 => 'PRODUTOS',
+    5 => 'SERVIÇOS',
+    6 => 'COLABORADORES',
+    7 => 'OUTROS'
 );
 $qtdSt = (is_array($st) ? count($st) : 0);
 ?>
@@ -74,8 +84,8 @@ $qtdSt = (is_array($st) ? count($st) : 0);
                                         <td class="text-center align-middle"><?= $b; ?></td>
                                         <td class="text-center align-middle">
                                         <?php for ($s= 0; $s < $qtdSt; $s++) { 
-                                            if($st[$s][$s] == $setores[$i]['SET_TIPO']){ 
-                                            echo $st[$s]['TXT'];
+                                            if($s == $setores[$i]['SET_TIPO']){ 
+                                             echo $st[$s];
                                           } } ?>
                                          </td>
                                         <td class="text-center align-middle"><?= $setores[$i]['SET_DESCRICAO']; ?></td>
