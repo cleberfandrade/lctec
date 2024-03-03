@@ -37,6 +37,7 @@ $qtd = (is_array($produto) ? count($produto) : 0);
                 <section class="bg-light py-2">
                     <div class="col-12 mx-auto text-center m-1">
                         <a class="col-4 btn btn-sm text-uppercase btn-secondary" href="<?= DIRPAGE; ?>estoques"><i class="bi bi-arrow-left"></i> VOLTAR AOS ESTOQUES</a>
+                        <a class="col-4 btn btn-sm text-uppercase btn-secondary" href="<?= DIRPAGE; ?>estoques/produtos/<?= $produto['EMP_COD']?>/<?= $produto['EST_COD']?>"><i class="bi bi-arrow-left"></i> VOLTAR AOS PRODUTOS</a>
                     </div>
                     <div class="container col-11 mx-auto row">
                         <div class="py-1">
