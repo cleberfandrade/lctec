@@ -1,7 +1,7 @@
 <?php
 namespace App\Controllers;
 
-use App\Models\classificacoes as ModelsClassificacoes;
+use App\Models\Classificacoes as ModelsClassificacoes;
 use App\Models\Empresas;
 use App\Models\Enderecos;
 use App\Models\Usuarios;

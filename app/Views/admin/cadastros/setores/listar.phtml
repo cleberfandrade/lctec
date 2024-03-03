@@ -3,6 +3,18 @@ use Libraries\Sessao;
 
 include_once 'app/Views/admin/inc/cabecalho.phtml'; 
 $qtd = (is_array($setores) ? count($setores) : 0);
+
+$st = array(
+    0 => [0=>0,'TXT'=>'A DEFINIR'],
+    1 => [1=>1,'TXT'=>'CATEGORIAS'],
+    2 => [2=>2,'TXT'=>'CLIENTES'],
+    3 => [3=>3,'TXT'=>'ESTOQUES'],
+    4 => [4=>4,'TXT'=>'PRODUTOS'],
+    5 => [5=>5,'TXT'=>'SERVIÇOS'],
+    6 => [6=>6,'TXT'=>'COLABORADORES'],
+    7 => [7=>7,'TXT'=>'OUTROS']
+);
+$qtdSt = (is_array($st) ? count($st) : 0);
 ?>
 <body class="">
     <div class="d-flex" id="wrapper">
@@ -60,7 +72,12 @@ $qtd = (is_array($setores) ? count($setores) : 0);
                                     for ($i= 0; $i < $qtd; $i++) { ?>
                                     <tr class="<?= ($setores[$i]['SET_STATUS'] == 0 && $_SESSION['USU_NIVEL'] >= 8)? 'bg-secondary' : '';?>">
                                         <td class="text-center align-middle"><?= $b; ?></td>
-                                        <td class="text-center align-middle"><?= $setores[$i]['SET_TIPO']; ?></td>
+                                        <td class="text-center align-middle">
+                                        <?php for ($s= 0; $s < $qtdSt; $s++) { 
+                                            if($st[$s][$s] == $setores[$i]['SET_TIPO']){ 
+                                            echo $st[$s]['TXT'];
+                                          } } ?>
+                                         </td>
                                         <td class="text-center align-middle"><?= $setores[$i]['SET_DESCRICAO']; ?></td>
                                         <td class="text-center align-middle"><?= $setores[$i]['SET_NIVEL']; ?></td>
                                         <td class="text-center align-middle"><?= ($setores[$i]['SET_STATUS'] == 1)? 'ATIVO' : 'DESATIVADO'; ?></td>

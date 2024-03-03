@@ -1,0 +1,228 @@
+<?php 
+use App\Models\Produtos;
+use Libraries\Sessao;
+
+$Produtos = new Produtos;
+include_once 'app/Views/admin/inc/cabecalho.phtml'; 
+$qtd = (is_array($estoques) ? count($estoques) : 0);
+$qtdE = (is_array($empresa) ? count($empresa) : 0);
+$qtdM = (is_array($movimentacoes) ? count($movimentacoes) : 0);
+
+$qtdC = (is_array($clientes) ? count($clientes) : 0);
+
+$motivos = array(
+    0 => '---',
+    1 =>'COMPRA',
+    2 =>'VENDA',
+    3 =>'AJUSTE',
+    4 =>'DEVOLUÇÃO CLIENTE',
+    5=>'DEVOLUÇÃO FORNECEDOR',
+    6=>'PERDA',
+    7=>'OUTROS'
+);
+$qtdMotivos = (is_array($motivos) ? count($motivos) : 0);
+?>
+
+<body class="">
+    <div class="d-flex" id="wrapper">
+        <?php include_once 'app/Views/admin/inc/menu_lateral.phtml'; ?>
+        <div id="page-content-wrapper">
+        <!-- Top navigation-->
+        <?php include_once 'app/Views/admin/inc/menu_topo.phtml'; ?>
+        <div class="container-fluid bg-light p-0">
+            <header class="py-3">
+                <section class="container px-3">
+                    <div class="row gx-5 align-items-center justify-content-center">
+                        <div class="col-lg-9 col-xl-9 col-xxl-9">
+                            <div class="my-1 px-4 mx-auto">
+                                <a class="text-decoration-none" href="<?= DIRPAGE; ?>movimentacoes">
+                                <h3 class="fs-2 fw-bolder text-uppercase text-dark"><i class="bi bi-box"></i> Movimentação De <span class="text-success">Estoque</span></h3></a>
+                            </div>
+                        </div>
+                        <?php include_once 'app/Views/admin/inc/saudacao.phtml'; ?> 
+                    </div>
+                </section>
+                <section class="container col-12 mx-auto px-5">
+                    <?= $breadcrumb ?>
+                </section>
+            </header>
+            <?php include_once 'app/Views/admin/inc/alertas.phtml'; ?>  
+            <section class="container bg-light mx-auto py-2 mb-5">
+                <div class="col-12 row">
+                    <div class="col-6 mx-auto  text-center text-bg-success">
+                        <div class="card-body">
+                            <h5 class="card-title">ESTOQUE ATUAL</h5>
+                            <p class="card-text">Verifique o estoque atual dos seus produtos</p>
+                            <a href="<?= DIRPAGE ?>estoques/produtos_atual" class="btn btn-dark">ACESSAR</a>
+                        </div>
+                    </div>    
+                    <div class="col-6 mx-auto  text-center">
+                        <div class="card-body">
+                            <h5 class="card-title">LISTAR MOVIMENTAÇÃO DE ESTOQUES</h5>
+                            <p class="card-text">Veja as entradas e saídas de produtos</p>
+                            <a href="<?= DIRPAGE ?>movimentacoes/listar" class="btn btn-dark">ACESSAR</a>
+                        </div>
+                    </div>
+                    
+                    <div class="col-12 mx-auto text-center m-1">
+                        <a class="col-4 btn btn-sm text-uppercase btn-secondary" href="<?= DIRPAGE; ?>estoques"><i class="bi bi-arrow-left"></i> VOLTAR AOS ESTOQUES</a>
+                    </div>
+                    <hr class="my-4 text-dark">
+                    <h5 class="card-title text-center"><i class="bi bi-box2-fill"></i> MOVIMENTAÇÃO DO PRODUTO</h5>
+                    <div class="container col-11 px-2 py-2 mx-auto row">
+                        <form class="p-4 p-md-6 border text-uppercase rounded-3" action="<?= DIRPAGE ?>movimentacoes/cadastrar" method="POST">
+                            <div class="col-10 mx-auto text-bg-success text-center">
+                                <div class="card-body">
+                                    <h5 class="card-title">SELECIONE O ESTOQUE</h5>
+                                    <p class="card-text">
+                                        <select class="form-select" id="buscar_produtos" name="EST_COD">     
+                                            <option value="0" <?= (isset($_POST['EST_COD']) &&  $_POST['EST_COD']  == 0)? 'selected' : '' ?>>---</option>                     
+                                            <?php 
+                                            for ($i=0; $i < $qtd; $i++) { if ($estoques[$i]['EST_STATUS'] == 1) { ?>
+                                                <option value="<?= $estoques[$i]['EST_COD'] ?>" <?= (isset($_POST['EST_COD']) &&  $_POST['EST_COD']  == $estoques[$i]['EST_COD'])? 'selected' : '' ?>><?= $estoques[$i]['EST_DESCRICAO'] ?></option>
+                                            <?php } } ?>
+                                        </select>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="row">   
+                                <div class="col-8" id="retorno">
+                                    <label class="form-label">SELECIONE O PRODUTO</label>
+                                    <select class="form-select" id="produtos" name="PRO_COD">   
+                                        <option value="0">SELECIONE UM ESTOQUE</option>
+                                    </select>
+                                </div>
+                                <div class="col-4 mb-2">
+                                    <label class="form-label">DATA</label>
+                                    <input type="date" name="MOV_DT_MOVIMENTACAO" class="form-control" value="<?= isset($_POST['MOV_DT_MOVIMENTACAO']) ? $_POST['MOV_DT_MOVIMENTACAO'] : date('Y-m-d') ?>">
+                                </div>
+                                <div class="col-4 form-floating mb-2">
+                                    <select class="form-select" name="MOV_TIPO">
+                                        <option value="0" <?= (isset($_POST['MOV_TIPO']) &&  $_POST['MOV_TIPO']  == 0)? 'selected' : '' ?>>---</option>
+                                        <option value="1" <?= (isset($_POST['MOV_TIPO']) &&  $_POST['MOV_TIPO']  == 1)? 'selected' : '' ?>>ENTRADA</option>
+                                        <option value="2" <?= (isset($_POST['MOV_TIPO']) &&  $_POST['MOV_TIPO']  == 2)? 'selected' : '' ?>>SAÍDA</option>
+                                    </select>
+                                    <label class="form-label">TIPO</label>
+                                </div>
+                                <div class="col-4 form-floating mb-2">
+                                    <select class="form-select " name="MOV_MOTIVO">     
+                                        <?php for ($i=0; $i < $qtdMotivos; $i++) { ?>
+                                            <option value="<?= $i ?>" <?= (isset($_POST['MOV_MOTIVO']) &&  $_POST['MOV_MOTIVO']  == $i)? 'selected' : '' ?>><?= $motivos[$i] ?></option>
+                                        <?php } ?>
+                                    </select>
+                                    <!--<select class="form-select" name="MOV_MOTIVO">
+                                    
+                                        <option value="0" <?php //(isset($_POST['MOV_MOTIVO']) &&  $_POST['MOV_MOTIVO']  == 0)? 'selected' : '' ?>>---</option>
+                                        <option value="1" <?php //(isset($_POST['MOV_MOTIVO']) &&  $_POST['MOV_MOTIVO']  == 1)? 'selected' : '' ?>>COMPRA</option>
+                                        <option value="2" <?php //(isset($_POST['MOV_MOTIVO']) &&  $_POST['MOV_MOTIVO']  == 2)? 'selected' : '' ?>>VENDA</option>
+                                        <option value="3" <?php //(isset($_POST['MOV_MOTIVO']) &&  $_POST['MOV_MOTIVO']  == 3)? 'selected' : '' ?>>AJUSTE</option>
+                                        <option value="4" <?php //(isset($_POST['MOV_MOTIVO']) &&  $_POST['MOV_MOTIVO']  == 4)? 'selected' : '' ?>>DEVOLUÇÃO CLIENTE</option>
+                                        <option value="5" <?php //(isset($_POST['MOV_MOTIVO']) &&  $_POST['MOV_MOTIVO']  == 5)? 'selected' : '' ?>>DEVOLUÇÃO FORNECEDOR</option>
+                                        <option value="6" <?php //(isset($_POST['MOV_MOTIVO']) &&  $_POST['MOV_MOTIVO']  == 6)? 'selected' : '' ?>>PERDA</option>
+                                        <option value="7" <?php // (isset($_POST['MOV_MOTIVO']) &&  $_POST['MOV_MOTIVO']  == 7)? 'selected' : '' ?>>OUTROS</option>
+                                    </select>-->
+                                    <label class="form-label">MOTIVO</label>
+                                </div>
+                                <div class="col-4 form-floating mb-3">
+                                    <input type="text" class="form-control maiusculo" id="2" name="MOV_QUANTIDADE" placeholder="0" value="<?= isset($_POST['MOV_QUANTIDADE']) ? $_POST['MOV_QUANTIDADE'] : ''; ?>">
+                                    <label class="px-3" for="2">QUANTIDADE</label>
+                                </div>
+                                <div class="col-4 mx-auto fs-4 text-center">
+                                    <label class="px-2" for="2">QUANTIDADE ATUAL</label>
+                                    <b class="text-dark"><br><span id="PRO_QUANTIDADE">0</span></b>
+                                </div>
+                                <div class="col-8 mb-2 " style="height:100px">
+                                    <label for="address2" class="form-label">DESCRIÇÃO</label>
+                                    <textarea type="text" class="form-control  maiusculo" name="MOV_DESCRICAO"><?= isset($_POST['MOV_DESCRICAO'])? $_POST['MOV_DESCRICAO']  : '' ?></textarea>
+                                </div>
+                                <input type="hidden" class="form-control" id="EST_COD" name="EST_COD" value="">
+                                <input type="hidden" class="form-control" name="EMP_COD" value="<?= isset($_SESSION['EMP_COD']) ? $_SESSION['EMP_COD'] : 0; ?>">
+                                <input type="hidden" class="form-control" name="USU_COD" value="<?= isset($_SESSION['USU_COD']) ? $_SESSION['USU_COD'] : 0; ?>">
+                                <a class="col-4 btn btn-lg text-uppercase btn-secondary" href="<?= DIRPAGE; ?>estoques"><i class="bi bi-ban"></i> Cancelar</a>
+                                <button class="col-8 btn btn-lg text-uppercase btn-success" name="CADASTRAR_NOVA_MOVIMENTACAO_ESTOQUE" type="submit"><i class="fa fa-save"></i> Cadastrar</button>
+                            </div>
+                        </form>
+                    </div>
+            </section>
+            <?php include_once 'app/Views/admin/inc/rodape.phtml';?>
+        </div>
+    </div>
+    <script type="text/javascript">
+        
+        $("#buscar_produtos").change(function(){
+            var EST_COD = $(this).find('option:selected').val();
+            var EMP_COD = <?php echo $_SESSION['EMP_COD']; ?>;
+            carregarProdutos(EST_COD, EMP_COD,"#produtos");
+        });
+        
+        function carregarProdutos(EST_COD, EMP_COD,selecionado="#produtos"){
+            $.post('<?= DIRPAGE; ?>movimentacoes/listar_produtos', {PRODUTOS_ESTOQUE: true,EMP_COD: EMP_COD,EST_COD:EST_COD,cache: false}, function(retorno) {
+                
+                dados = JSON.parse(retorno);
+                
+                $(selecionado).find('option').remove().end();
+                $(selecionado).append($('<option>', {
+                    value: 0,
+                    text: '---'
+                }));
+                //console.log(dados);
+                document.getElementById("EST_COD").value ='';
+                document.getElementById("EST_COD").value = EST_COD;
+
+                for(var i=0;dados.length>i;i++){
+                    if(dados[i].PRO_STATUS == 1){
+                        $(selecionado).append($('<option>', {
+                            value: dados[i].PRO_COD,
+                            text: dados[i].PRO_NOME
+                        }));
+                    }
+                    //console.log(dados[i].PRO_NOME);
+                    //console.log(codificarHtml(dados[i].PRO_NOME));
+                }
+                function codificarHtml(texto){
+                    var htmlCodigo = { 
+                                '&aacute;' : {'code' : 'á'},
+                                '&Aacute;' : {'code' : 'Á'},
+                                '&atilde;' : {'code' : 'ã'},
+                                '&Atilde;' : {'code' : 'Ã'},
+                                '&agrave;' : {'code' : 'à'},
+                                '&Agrave;' : {'code' : 'À'},                       
+                                '&eacute;' : {'code' : 'é'},
+                                '&Eacute;' : {'code' : 'É'},
+                                '&iacute;' : {'code' : 'í'},
+                                '&Iacute;' : {'code' : 'Í'},
+                                '&oacute;' : {'code' : 'ó'},
+                                '&Oacute;' : {'code ': 'Ó'}, 
+                                '&otilde;' : {'code' : 'õ'},
+                                '&Otilde;' : {'code' : 'Õ'},
+                                '&uacute;' : {'code' : 'ú'},
+                                '&Uacute;' : {'code' : 'Ú'},
+                                '&ccedil;' : {'code' : 'ç'},
+                                '&Ccedil;' : {'code' : 'Ç'}                      };
+                    var acentos = ['á', 'Á', 'ã', 'Ã', 'à', 'À', 'é', 'É', 'í', 'Í', 'ó', 'Ó', 'õ', 'Õ', 'ú', 'Ú', 'ç', 'Ç'];
+                    
+                    for(var i=0; i<acentos.length; i++){
+                        if(htmlCodigo [acentos[i]] != undefined){
+                            texto = texto.replaceAll(acentos[i], htmlCodigo[acentos[i]].code );
+                        }
+                    }
+                    return texto;
+                }
+    
+            });
+        }
+        $("#produtos").change(function(){
+
+            var PRO_COD = $(this).find('option:selected').val();
+            var EST_COD = $('#EST_COD').val();
+            var EMP_COD = <?php echo $_SESSION['EMP_COD']; ?>;
+
+            $.post('<?= DIRPAGE; ?>movimentacoes/listar_produto', {PRODUTOS: true,EMP_COD: EMP_COD,EST_COD:EST_COD,PRO_COD: PRO_COD}, function(retorno) {
+                db = JSON.parse(retorno);
+                $('#PRO_QUANTIDADE').html(db.PRO_QUANTIDADE);
+            });
+        });
+    </script>
+</body>
+
+</html>    

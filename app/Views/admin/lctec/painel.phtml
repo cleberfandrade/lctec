@@ -49,15 +49,17 @@ $qtdEmpresas = (is_array($empresas) ? count($empresas) : 0);
                             </div>
                             <div class="col-12 row mx-auto">
                                 <ul class="list-group">
-                                    <li class="list-group-item bg-success text-white" aria-current="true">EMPRESAS ATIVAS</li>
+                                    <li class="list-group-item bg-success  text-center text-white" aria-current="true">EMPRESAS ATIVAS</li>
                                     <?php for ($i=0; $i < $qtdEmpresas; $i++) {  $data = new DateTime($empresas[$i]['EMP_DT_FUNDACAO']); ?>
                                         <a href="<?= DIRPAGE ?>lctec/empresas/<?= $empresas[$i]['EMP_COD'] ?>" class="list-group-item list-group-item-action">
                                             <div class="d-flex w-100 text-center justify-content-between">
                                                 <h5 class="mb-1 text-center "><?= $empresas[$i]['EMP_NOME_FANTASIA'] ?></h5>
                                                 <small class="text-body-secondary"><?= $data->format('d/m/Y'); ?></small>
                                             </div>
-                                            <p class="mb-1"><?= $empresas[$i]['EMP_REGULAMENTACAO'] ?></p>
-                                            <small class="text-body-secondary"><?= ($empresas[$i]['EMP_STATUS'] == 1)? 'ATIVADA' : 'DESATIVADA'; ?></small>
+                                            <p class="mb-1">
+                                                <?= $empresas[$i]['EMP_REGULAMENTACAO'] ?>
+                                                <small class="text-body-secondary"><?= ($empresas[$i]['EMP_STATUS'] == 1)? '<span class="badge bg-success">ATIVADA</span>' : 'DESATIVADA'; ?></small>
+                                            </p>
                                         </a>
                                     <?php } ?>
                                 </ul>

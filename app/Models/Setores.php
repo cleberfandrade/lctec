@@ -49,7 +49,7 @@ class Setores extends Model
     {
         $parametros = "S INNER JOIN tb_empresas E ON S.EMP_COD=E.EMP_COD WHERE S.EMP_COD={$this->codEmpresa} AND S.SET_TIPO='{$this->tipo}' ORDER BY S.SET_DESCRICAO";
         $campos = "*";
-        $resultado = $this->Model->exibir($parametros, $campos, $ver = 0, $id = false);
+        $resultado = $this->Model->exibir($parametros, $campos, $ver, $id = false);
         if ($resultado) {
             return $resultado;
         } else {
@@ -60,7 +60,7 @@ class Setores extends Model
     {
         $parametros = "WHERE EMP_COD={$this->codEmpresa} ORDER BY SET_DESCRICAO";
         $campos = "*";
-        $resultado = $this->Model->exibir($parametros, $campos, $ver = 0, $id = false);
+        $resultado = $this->Model->exibir($parametros, $campos, $ver, $id = false);
         if ($resultado) {
             return $resultado;
         } else {
