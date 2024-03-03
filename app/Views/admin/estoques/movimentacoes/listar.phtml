@@ -97,7 +97,7 @@ $qtdMotivos = (is_array($motivos) ? count($motivos) : 0);
                                 
                             if($movimentacoes[$i]['MOV_STATUS'] != 0){ 
                             ?>
-                            <tr class="<?= ($movimentacoes[$i]['MOV_STATUS'] == 0 && $_SESSION['USU_NIVEL'] >= 8)? 'bg-secondary' : '';?>">
+                            <tr class="<?= ($movimentacoes[$i]['MOV_STATUS'] == 0 && $_SESSION['USU_NIVEL'] >= 8)? 'bg-secondary' : '';?>" <?= ($movimentacoes[$i]['MOV_STATUS'] != 1)? 'title="Movimentação cancelada e Revertida"' : 'Movimentação Ativa'; ?>>
                                 <td class="text-center align-middle"><?= $b; ?></td>
                                 <td class="text-center align-middle"><?= $movimentacoes[$i]['EST_DESCRICAO']; ?></td>
                                 <td class="text-center align-middle"><?= $movimentacoes[$i]['PRO_COD']; ?></td>
