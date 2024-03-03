@@ -75,12 +75,14 @@ $qtdMotivos = (is_array($motivos) ? count($motivos) : 0);
                                 <div class="card-body">
                                     <h5 class="card-title">SELECIONE O ESTOQUE</h5>
                                     <p class="card-text">
-                                        <select class="form-select" id="buscar_produtos" name="EST_COD">     
-                                            <option value="0" <?= (isset($_POST['EST_COD']) &&  $_POST['EST_COD']  == 0)? 'selected' : '' ?>>---</option>                     
-                                            <?php 
+                                        <select class="form-select" id="buscar_produtos" name="EST_COD">    
+                                        <?php if ($qtd >= 2) {  ?>
+                                            <option value="0" <?= (isset($_POST['EST_COD']) &&  $_POST['EST_COD']  == 0)? 'selected' : '' ?>>---</option>                  
+                                        <?php } ?>
+                                        <?php 
                                             for ($i=0; $i < $qtd; $i++) { if ($estoques[$i]['EST_STATUS'] == 1) { ?>
                                                 <option value="<?= $estoques[$i]['EST_COD'] ?>" <?= (isset($_POST['EST_COD']) &&  $_POST['EST_COD']  == $estoques[$i]['EST_COD'])? 'selected' : '' ?>><?= $estoques[$i]['EST_DESCRICAO'] ?></option>
-                                            <?php } } ?>
+                                        <?php } } ?>
                                         </select>
                                     </p>
                                 </div>
@@ -114,27 +116,27 @@ $qtdMotivos = (is_array($motivos) ? count($motivos) : 0);
                                 </div>
                                
                                 <div class="col-4 form-floating mb-3">
-                                     <?php // if($_SESSION['USU_NIVEL'] >= 12){ ?>
-                                    <!--<div class="input-group input-group-lg">
-                                        <div class="form-floating">
-                                            <input type="text" class="form-control maiusculo" id="MOV_QUANTIDADE" name="MOV_QUANTIDADE" placeholder="0" value="<?// isset($_POST['MOV_QUANTIDADE']) ? $_POST['MOV_QUANTIDADE'] : ''; ?>">
-                                            <label class="px-2" for="MOV_QUANTIDADE">QUANTIDADE</label>
-                                        </div>
-                                        <button type="button" class="btn text-uppercase btn-success" id="adicionar"><i class="fa fa-plus"></i></button>
-                                    </div>-->
-                                    <?php //}else { ?>
+                                    <?php if($_SESSION['USU_NIVEL'] == 30){ ?>
+                                    <div class="input-group input-group-lg">
                                         <div class="form-floating">
                                             <input type="text" class="form-control maiusculo" id="MOV_QUANTIDADE" name="MOV_QUANTIDADE" placeholder="0" value="<?= isset($_POST['MOV_QUANTIDADE']) ? $_POST['MOV_QUANTIDADE'] : ''; ?>">
                                             <label class="px-2" for="MOV_QUANTIDADE">QUANTIDADE</label>
                                         </div>
-                                    <?php //} ?>
+                                        <button type="button" class="btn text-uppercase btn-success" id="adicionar"><i class="fa fa-plus"></i></button>
+                                    </div>
+                                    <?php }else { ?>
+                                        <div class="form-floating">
+                                            <input type="text" class="form-control maiusculo" id="MOV_QUANTIDADE" name="MOV_QUANTIDADE" placeholder="0" value="<?= isset($_POST['MOV_QUANTIDADE']) ? $_POST['MOV_QUANTIDADE'] : ''; ?>">
+                                            <label class="px-2" for="MOV_QUANTIDADE">QUANTIDADE</label>
+                                        </div>
+                                    <?php } ?>
                                 </div>
                                 <div class="col-4 mx-auto fs-4 text-center">
                                     <label class="px-2" for="2">QUANTIDADE ATUAL</label>
                                     <b class="text-dark"><br><span id="PRO_QUANTIDADE">0</span></b>
                                 </div>
                                 <div class="col-8 mb-2">
-                                <?php if($_SESSION['USU_NIVEL'] == 32){ ?>
+                                <?php if($_SESSION['USU_NIVEL'] == 30){ ?>
                                     <div class="col-12 mx-auto form-floating mb-3">
                                         <select class="form-select " name="CLI_COD"> 
                                             <option value="0" <?= (isset($_POST['CLI_COD']) &&  $_POST['CLI_COD']  == 0)? 'selected' : '' ?>>---</option>
@@ -145,7 +147,7 @@ $qtdMotivos = (is_array($motivos) ? count($motivos) : 0);
                                         <label class="form-label">CLIENTE</label>
                                     </div>
                                     <div class="col-12 mx-auto form-floating mb-3">
-                                        <table  class="table table-bordered">
+                                        <table id="table"  class="table table-bordered">
                                             <thead>
                                                 <tr class="text-center"><th colspan="6">ITÉNS</th></tr>
                                                 <tr class="text-center">
@@ -162,7 +164,7 @@ $qtdMotivos = (is_array($motivos) ? count($motivos) : 0);
                                                 <tr>
                                                     <td colspan="4"></td>
                                                     <td colspan="2" class="text-center">
-                                                        <input type="text" id="total" class="form-control" name='ITS_VL_TOTAL' value="0">
+                                                        <input type="text" id="total" class="form-control" name='ITS_VL_TOTAL' value="">
                                                     </td>
                                                 </tr>
                                             </tfooter>
@@ -252,6 +254,8 @@ $qtdMotivos = (is_array($motivos) ? count($motivos) : 0);
     
             });
         }
+
+
         $("#produtos").change(function(){
 
             var PRO_COD = $(this).find('option:selected').val();
@@ -263,6 +267,7 @@ $qtdMotivos = (is_array($motivos) ? count($motivos) : 0);
                 $('#PRO_QUANTIDADE').html(db.PRO_QUANTIDADE);
             });
         });
+        
 
         $("#adicionar").click(function(e){
             e.preventDefault();
@@ -271,30 +276,39 @@ $qtdMotivos = (is_array($motivos) ? count($motivos) : 0);
             var EST_COD2 = $('#EST_COD').val();
             var MOV_QUANTIDADE = $('#MOV_QUANTIDADE').val();
             $("#itens").hide();
+            var i = 1;
             $.post('<?= DIRPAGE; ?>movimentacoes/listar_produto', {PRODUTOS: true,EMP_COD: EMP_COD2,EST_COD:EST_COD2,PRO_COD: PRO_COD2}, function(retorno2) {
                 resposta = JSON.parse(retorno2);
                 //$("#total").val(0);
                 subtotal = 0
                 soma = $("#total").val();
-                console.log(soma);
+                $("#MOV_QUANTIDADE").val('');
                 subtotal = (resposta.PRO_PRECO_VENDA*MOV_QUANTIDADE).toFixed(2);
                 soma = parseFloat(soma + subtotal)
                 soma = soma.toFixed(2);
                 //console.log(total);
                 $("#itens").show();
-                $("#itens").append("<tr>"+
-                "<td><input class='form-control' type='hidden' value='"+resposta.PRO_COD+"'name='ITS_COD[]'></td>"+
+                $("#itens").append("<tr id='"+i+"'>"+
+                "<td><input class='form-control' type='hidden' value='"+resposta.PRO_COD+"'name='ITS_COD[]'>"+i+"</td>"+
                 "<td>"+resposta.PRO_NOME+"</td>"+
                 "<td>"+MOV_QUANTIDADE+"</td>"+
                 "<td>"+resposta.PRO_PRECO_VENDA+"</td>"+
                 "<td>"+subtotal+"</td>"+
-                "<td><button type='button'id='deletar' value='"+resposta.PRO_COD+"' class='btn btn-danger btn-sm d-print-none' data-bs-toggle='modal' data-bs-target='#status' title='Deseja excluir?' ><i class='fa fa-trash'></i></button></td>"+
+                "<td><button type='button' class='btn btn-danger remover btn-sm' title='Deseja excluir?'><i class='fa fa-trash'></i></button></td>"+
                 "</tr>");
+                i++;
                 
                 //$("#total").html('');
                 $("#total").val(soma);
                 //$("#total").html(soma);
             });
+        });
+        $(".remover").click(function(e){
+            e.preventDefault();
+            //console.log(e);
+            $("#itens").hide();
+            $(this).closest('tr').remove();
+            $("#itens").show();
         });
     </script>
 </body>
