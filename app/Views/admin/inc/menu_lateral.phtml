@@ -18,7 +18,7 @@ $qtdMK = (is_array($mk) ? count($mk) : 0);
         <div class="list-group list-group-flush text-uppercase" >
             <?= $qtdAvisos >= 1 ? '<div class="py-2 bg-warning col-12">
                 <div class="toast" role="alert" id="myToast" aria-live="polite" aria-atomic="true" data-bs-delay="10000">
-                    <div role="alert" aria-live="assertive" aria-atomic="true">...</div>
+                    <div role="alert" aria-live="assertive" aria-atomic="true"><i class="bi bi-bell piscar text-warning"></i></div>
                 </div>
             </div>' : ''?>
             <a class="list-group-item list-group-item-action list-group-item-dark p-3 px-3" title="Painel Administrativo" href="<?= DIRPAGE?>admin"><i class="bi bi-house"></i>  PAINEL ADM</a>
