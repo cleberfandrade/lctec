@@ -3,6 +3,19 @@ use Libraries\Sessao;
 
 include_once 'app/Views/admin/inc/cabecalho.phtml'; 
 $qtd = (is_array($avisos) ? count($avisos) : 0);
+$av = array(
+    1 => 'SUPORTE',
+    2 => 'PRODUTO',
+    3 => 'SERVICO',
+    4 => 'ESTOQUE',
+    5 => 'FINANCEIRO',
+    6 => 'RECURSOS HUMANOS',
+    7 => 'ATUALIZACOES',
+    8 => 'MENSALIDADE',
+    9 => 'MANUTENCAO',
+    10 => 'CADASTROS',
+    11 => 'GERAL'
+);
 ?>
 <body class="">
     <div class="d-flex" id="wrapper">

@@ -85,6 +85,7 @@ class avisos extends View
         $this->Avisos = new ModelsAviso;
         //CHECAR PRODUTOS COM ESTOQUE ABAIXO DO MINIMO
         $this->dados['avisos'] = $this->Avisos->setCodEmpresa($_SESSION['EMP_COD'])->listarTodos(0);
+        //dump($this->dados['avisos']);
         $this->dados['produtos'] = $this->Produtos->setCodEmpresa($_SESSION['EMP_COD'])->setStatus(1)->listarTodosGeral(0);
         $qtdA = (is_array($this->dados['avisos']) ? count($this->dados['avisos']) : 0);
         $qtdP = (is_array($this->dados['produtos']) ? count($this->dados['produtos']) : 0);
@@ -96,12 +97,20 @@ class avisos extends View
             for ($i=0; $i < $qtdP; $i++) { 
                     //checar se existe algum aviso cadastrado
                 if ($qtdA) {
-                    for ($a=0; $a < $qtdA; $a++) { 
-                        //checar se foi definido quantidade mínima para o produto a ser verificado
-                        if (isset($this->dados['produtos'][$i]['PRO_QTD_MIN'])) {
-                            //checar se já foi realizado o aviso sobre o produto a ser verificado
-                            if ($this->dados['avisos'][$a]['AVS_STATUS'] == 1 && $this->dados['avisos'][$a]['PRO_COD'] == $this->dados['produtos'][$i]['PRO_COD']) {
-                                //JA AVISOU
+                    //checar se foi definido quantidade mínima para o produto a ser verificado
+                    if (isset($this->dados['produtos'][$i]['PRO_QTD_MIN']) && $this->dados['produtos'][$i]['PRO_QTD_MIN'] >= $this->dados['produtos'][$i]['PRO_QUANTIDADE']) {
+                        //Percorrer os avisos para checar se é do produto pesquisado
+                        $pd = false;
+                        for ($a=0; $a < $qtdA; $a++) { 
+                            //Checar se o status do aviso esta ativado
+                            if ($this->dados['avisos'][$a]['AVS_STATUS'] == 1){
+                                // Checar se o aviso é do produto pesquisado
+                                if($this->dados['avisos'][$a]['PRO_COD'] == $this->dados['produtos'][$i]['PRO_COD']) {
+                                    $pd = true;
+                                }
+                            }
+                            //Verificar se o produto foi avisado sobre seu estoque minimo
+                            if (!$pd) {
                                 //checar se já foi corrigido o problema 
                                 if ($this->dados['produtos'][$i]['PRO_QUANTIDADE'] >= $this->dados['produtos'][$i]['PRO_QTD_MIN']) {
                                     $this->Avisos->setCodEmpresa($this->dados['avisos'][$a]['EMP_COD']);
@@ -119,43 +128,50 @@ class avisos extends View
                                     );
                                 }
                             }else {
-                                //NAO AVISOU
-                                $aviso = ($this->dados['produtos'][$i]['PRO_QTD_MIN'] >= $this->dados['produtos'][$i]['PRO_QUANTIDADE'])? 'É NECESSÁRIO COMPRAR MAIS DO PRODUTO: <a href="'.DIRPAGE.'produtos/detalhar/'.$this->dados['produtos'][$i]['EMP_COD'].'/'.$this->dados['produtos'][$i]['EST_COD'].'/'.$this->dados['produtos'][$i]['PRO_COD'].'" type="button" class="btn btn-outline-secondary btn-sm d-print-none" title="Detalhar produto"><i class="bi bi-eye"></i> <b>'.$this->dados['produtos'][$i]['PRO_NOME'].'</b></a>' : '';
-                                //ANTERIOR: $aviso = ($this->dados['produtos'][$i]['PRO_QTD_MIN']>= $this->dados['produtos'][$i]['PRO_QUANTIDADE'])? 'É NECESSÁRIO COMPRAR MAIS DO PRODUTO: '.$this->dados['produtos'][$i]['PRO_NOME'] : '';
-                               //checar se o produto está com estoque abaixo do mínimo definido
-                                if (!empty($aviso)) {
-                                    
-                                    $dados = array(
-                                        'EMP_COD' => $this->dados['produtos'][$i]['EMP_COD'],
-                                        'USU_COD' => $_SESSION['USU_COD'],
-                                        'PRO_COD' => $this->dados['produtos'][$i]['PRO_COD'],
-                                        'AVS_DT_CADASTRO'=> date('Y-m-d H:i:s'),
-                                        'AVS_DT_VISUALIZACAO'=> date('0000-00-00 00:00:00'),  
-                                        'AVS_DATA' => date('Y-m-d'),
-                                        'AVS_TIPO' => 2,  
-                                        'AVS_REFERENCIA' => 2,  
-                                        'AVS_DESCRICAO' => $aviso,        
-                                        'AVS_STATUS'=> 1
-                                    );
-                                    //realizar o cadastro do aviso ao usuário
-                                    //if($this->Avisos->cadastrar($dados,0)){
-                                        $resposta = array(
-                                            'COD'=>'OK',
-                                            'MENSAGEM' => 'Status de aviso checado com sucesso!'
-                                        );
-                                    //}
-                                }else {
+                                $resposta = array(
+                                    'COD'=>'OK',
+                                    'MENSAGEM' => 'Produto: '.$this->dados['produtos'][$i]['PRO_COD'].' aviso ja realizado com sucesso!'
+                                );
+                            }
+                        }
+                    }else {
+                        //Produto está com estoque maior que o minimo
+                        $pd = false;
+                        for ($a=0; $a < $qtdA; $a++) { 
+                            //Checar se o status do aviso esta ativado
+                            if ($this->dados['avisos'][$a]['AVS_STATUS'] == 1){
+                                // Checar se o aviso é do produto pesquisado
+                                if($this->dados['avisos'][$a]['PRO_COD'] == $this->dados['produtos'][$i]['PRO_COD']) {
+                                    $pd = true;
+                                }
+                            }
+                            //Verificar se o produto foi avisado sobre seu estoque minimo
+                            if ($pd) {
+                            //checar se já foi corrigido o problema 
+                                if ($this->dados['produtos'][$i]['PRO_QUANTIDADE'] >= $this->dados['produtos'][$i]['PRO_QTD_MIN']) {
+                                    //dump($this->dados['avisos'][$a]['EMP_COD']);
+                                    //exit;
+                                    $this->Avisos->setCodEmpresa($this->dados['avisos'][$a]['EMP_COD']);
+                                    $this->Avisos->setCodigo($this->dados['avisos'][$a]['AVS_COD']);
+                                    $this->Avisos->excluir(0);
                                     $resposta = array(
                                         'COD'=>'OK',
-                                        'MENSAGEM' => 'Status de aviso checado com sucesso!'
+                                        'MENSAGEM' => 'Aviso excluído com sucesso!'
+                                    );
+                                } else {
+                                    //JÁ AVISADO
+                                    $resposta = array(
+                                        'COD'=>'OK',
+                                        'MENSAGEM' => 'Status de aviso já realizado com sucesso!'
                                     );
                                 }
-                            } 
+                            }
                         }
                     }
+                    
                 }else {
                     //NOVO AVISO
-                    if (isset($this->dados['produtos'][$i]['PRO_QTD_MIN'])) {
+                    if (isset($this->dados['produtos'][$i]['PRO_QTD_MIN']) && $this->dados['produtos'][$i]['PRO_QTD_MIN'] >=1 && $this->dados['produtos'][$i]['PRO_QTD_MIN'] >= $this->dados['produtos'][$i]['PRO_QUANTIDADE']) {
                         $aviso = ($this->dados['produtos'][$i]['PRO_QTD_MIN'] >= $this->dados['produtos'][$i]['PRO_QUANTIDADE'])? 'É NECESSÁRIO COMPRAR MAIS DO PRODUTO: <a href="'.DIRPAGE.'produtos/detalhar/'.$this->dados['produtos'][$i]['EMP_COD'].'/'.$this->dados['produtos'][$i]['EST_COD'].'/'.$this->dados['produtos'][$i]['PRO_COD'].'" type="button" class="btn btn-outline-secondary btn-sm d-print-none" title="Detalhar produto"><i class="bi bi-eye"></i> <b>'.$this->dados['produtos'][$i]['PRO_NOME'].'</b></a>' : '';
                         if (!empty($aviso)) {
                             $dados = array(
@@ -170,7 +186,7 @@ class avisos extends View
                                 'AVS_DESCRICAO' => $aviso,        
                                 'AVS_STATUS'=> 1
                             );
-                            //if($this->Avisos->cadastrar($dados,0)){
+                            if($this->Avisos->cadastrar($dados,0)){
                                 $resposta = array(
                                     'COD'=>'OK',
                                     'MENSAGEM' => 'Status de avisso checado com sucesso!'
@@ -180,8 +196,13 @@ class avisos extends View
                                     //'COD'=>'ERRO',
                                     //'MENSAGEM' => 'ERRO NO CADASTRO DO AVISO!'
                              //  );
-                           // }
+                            }
                         }
+                    }else {
+                        $resposta = array(
+                            'COD'=>'ERRO',
+                            'MENSAGEM' => 'Qtd sem o mínimo informado para comparar!'
+                        );
                     }
                 }
             }
