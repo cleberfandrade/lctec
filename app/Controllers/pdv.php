@@ -24,11 +24,11 @@ class pdv extends View
         $this->link[0] = ['link'=> 'admin/financeiro','nome' => 'FINANCEIRO'];
         $this->link[1] = ['link'=> 'pdv','nome' => 'PDV'];
     }
-    public function acesso()
+    public function index()
     {
-        $this->dados['title'] = 'ACESSO | LC/TEC';
+        $this->dados['title'] = 'VENDAS | LC/TEC';
         $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
-        $this->render('site/acesso', $this->dados);
+        $this->render('admin/pdv/vendas', $this->dados);
     }
     /*public function auth()
     {

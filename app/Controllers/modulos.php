@@ -30,8 +30,10 @@ class modulos extends View
         
         $this->Modulos = new ModelsModulos;
         $this->dados['modulos'] = $this->Modulos->listarTodos();
+        
 
         $this->ModulosEmpresa = new ModulosEmpresa;
+        $this->dados['mod_emp'] = $this->ModulosEmpresa->listarTodos(0);
 
         $this->dados['title'] = 'MÓDULOS LC/TEC >> ';
 

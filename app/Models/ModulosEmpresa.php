@@ -46,6 +46,17 @@ class ModulosEmpresa extends Model
             return false;
         }
     }
+    public function listarTodos($ver = 0)
+    {
+        $parametros = " ME INNER JOIN tb_modulos M ON M.MOD_COD=ME.MOD_COD WHERE ORDER BY M.MOD_NOME";
+        $campos = "*";
+        $resultado = $this->Model->exibir($parametros, $campos, $ver = 0, $id = false);
+        if ($resultado) {
+            return $resultado;
+        } else {
+            return false;
+        }
+    }
     public function cadastrar(array $dados, $ver = 0)
     {
         $ok = $this->Model->cadastrar($dados, $ver);
