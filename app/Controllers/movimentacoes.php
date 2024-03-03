@@ -166,7 +166,7 @@ class movimentacoes extends View
     public function cadastrar()
     {
         $this->dados['title'] .= ' MOVIMENTAÇÃO DO ESTOQUE';
-        $this->link[2] = ['link'=> 'estoques/movimentacao','nome' => 'MOVIMENTAÇÃO DO ESTOQUE'];
+        $this->link[2] = ['link'=> 'movimentacoes','nome' => 'MOVIMENTAÇÃO DO ESTOQUE'];
 
         $ok = false;      
         //Recupera os dados enviados
@@ -244,13 +244,13 @@ class movimentacoes extends View
         }
 
         if ($ok) {
-            header("Location:".DIRPAGE."estoques/movimentacao");
+            header("Location:".DIRPAGE."movimentacoes");
             //$this->dados['movimentacoes'] = $this->Movimentacoes->setCodEmpresa($_SESSION['EMP_COD'])->listarTodas(0);
             //$this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
             //$this->render('admin/estoques/movimentacao', $this->dados);
         }else {
             $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
-            $this->render('admin/estoques/movimentacao', $this->dados);
+            $this->render('admin/movimentacoes', $this->dados);
         }
     }
     public function reverter_movimentacao():void
