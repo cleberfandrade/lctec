@@ -49,14 +49,21 @@ $qtdMotivos = (is_array($motivos) ? count($motivos) : 0);
             <?php include_once 'app/Views/admin/inc/alertas.phtml'; ?>  
             <section class="container bg-light mx-auto py-2 mb-5">
                 <div class="col-12 row">
-                    <div class="col-4 text-center">
+                    <div class="col-4 mx-auto  text-center text-bg-success">
                         <div class="card-body">
                             <h5 class="card-title">ESTOQUE ATUAL</h5>
                             <p class="card-text">Verifique o estoque atual dos seus produtos</p>
                             <a href="<?= DIRPAGE ?>estoques/produtos_atual" class="btn btn-dark">ACESSAR</a>
                         </div>
                     </div>    
-                    <div class="col-8 mx-auto text-bg-success text-center">
+                    <div class="col-4 mx-auto  text-center">
+                        <div class="card-body">
+                            <h5 class="card-title">LISTAR MOVIMENTAÇÃO DE ESTOQUES</h5>
+                            <p class="card-text">Veja as entradas e saídas de produtos</p>
+                            <a href="<?= DIRPAGE ?>movimentacoes/listar" class="btn btn-dark">ACESSAR</a>
+                        </div>
+                    </div>
+                    <div class="col-4 mx-auto text-bg-success text-center">
                         <div class="card-body">
                             <h5 class="card-title">SELECIONE O ESTOQUE</h5>
                             <p class="card-text">
