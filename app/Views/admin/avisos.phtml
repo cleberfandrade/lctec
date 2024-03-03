@@ -55,7 +55,7 @@ $qtd = (is_array($avisos) ? count($avisos) : 0);
                                 <td class="text-center align-middle"><?= ($avisos[$i]['AVS_STATUS'] == 1)? 'ATIVO' : 'DESATIVADO'; ?></td>
                                 <td class="text-center text-center mx-auto align-middle">
                                     <div class="form-check form-switch">
-                                        <input class="form-check-input" type="checkbox" value="<?= $avisos[$i]['AVS_COD']; ?>" role="switch" id="flexSwitchCheckChecked" data-status="<?= $avisos[$i]['AVS_STATUS']; ?>">
+                                        <input class="form-check-input" type="checkbox" value="<?= $avisos[$i]['AVS_COD']; ?>" role="switch" id="aviso" data-status="<?= $avisos[$i]['AVS_STATUS']; ?>">
                                         <label class="form-check-label" for="flexSwitchCheckChecked">MARCAR COMO VISTO</label>
                                     </div>
                                 </td>
