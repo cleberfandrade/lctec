@@ -70,7 +70,7 @@ $qtd = (is_array($produto) ? count($produto) : 0);
                                         <td class="text-center align-middle">
                                             <h4><b>QUANTIDADE ATUAL:</b></h4></td>
                                         <td>
-                                            <h3 class="display-4 fw-bold"><?= ($produto['PRO_QUANTIDADE'] < $produto['PRO_QTD_MIN'])? '<span title="Produto abaixo do estoque mínimo definido" class="btn btn-warning">'.$produto['PRO_QUANTIDADE'].'</span>' : $produto['PRO_QUANTIDADE']; ?></h3>
+                                            <h3 class="display-4 fw-bold"><?= ($produto['PRO_QUANTIDADE'] < $produto['PRO_QTD_MIN'])? '<span title="Produto abaixo do estoque mínimo definido" class="btn btn-lg btn-warning">'.$produto['PRO_QUANTIDADE'].'</span>' : $produto['PRO_QUANTIDADE']; ?></h3>
                                         </td>
                                         <td class="text-center align-middle">
                                             <h4><b>QUANTIDADE MIN:</b></h4>
