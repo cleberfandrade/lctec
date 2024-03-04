@@ -254,13 +254,62 @@ class usuarios extends View
                 if(!empty($dados['USU_RESET_SENHA']) && $dados['USU_RESET_SENHA'] == "SIM") {
                     $dados['USU_SENHA'] = $this->Check->codificarSenha('123456');
                 }  
+                $dados_endereco = array(
+                    'END_LOGRADOURO' =>  $dados['END_LOGRADOURO'],
+                    'END_NUMERO' =>  $dados['END_NUMERO'],
+                    'END_BAIRRO' =>  $dados['END_BAIRRO'],
+                    'END_CIDADE' =>  $dados['END_CIDADE'],
+                    'END_ESTADO' =>  $dados['END_ESTADO']
+                );
+                unset($dados['END_LOGRADOURO']);
+                unset($dados['END_NUMERO']);
+                unset($dados['END_BAIRRO']);
+                unset($dados['END_CIDADE']);
+                unset($dados['END_ESTADO']);
+
                 unset($dados['EMP_COD']);
                 unset($dados['USU_COD']);
                 unset($dados['USU_RESET_SENHA']);
 
                 if($this->Usuarios->alterar($dados,0)){
-                    $ok = true;
-                    Sessao::alert('OK','Cadastro alterado com sucesso!','fs-4 alert alert-success');
+
+                    $db_endereco = array(
+                        'USU_COD' => $codUsuario,
+                        'END_DT_ATUALIZACAO' => date('Y-m-d H:i:s'),
+                        'END_STATUS' => 1
+                    );
+                    $db_endereco .= $dados_endereco;
+                    $endr = $this->Enderecos->setCodUsuario($codUsuario)->checarEnderecoUsuario();
+                    if($endr){
+                        $this->Enderecos->setCodigo($endr[0]['END_COD'])->setCodUsuario($dados['USU_COD']);
+                        if ($this->Enderecos->alterar($db_endereco,0)) {
+                            $ok = true;
+                            Sessao::alert('OK','Cadastro alterado com sucesso!','fs-4 alert alert-success');
+                        } else {
+                            Sessao::alert('OK','Cadastro alterado com sucesso, erro ao alterar seu endereço, entre em contato com o suporte','fs-4 alert alert-warning'); 
+                        }
+                    }else{
+                        //Endereço Não Encontrado
+                        //Cadastrar endereço de usuário
+                        $db_endereco2 = array(
+                            'USU_COD' => $codUsuario,
+                            'EMP_COD' => 0,
+                            'END_DT_CADASTRO' => date('Y-m-d H:i:s'),
+                            'END_DT_ATUALIZACAO' => date('0000-00-00 00:00:00'),
+                            'END_LOGRADOURO' =>  $dados_endereco['END_LOGRADOURO'],
+                            'END_NUMERO' =>  $dados_endereco['END_NUMERO'],
+                            'END_BAIRRO' =>  $dados_endereco['END_BAIRRO'],
+                            'END_CIDADE' =>  $dados_endereco['END_CIDADE'],
+                            'END_ESTADO' =>  $dados_endereco['END_ESTADO'],
+                            'END_STATUS' => 1
+                        );
+                        if ($this->Enderecos->cadastrar($db_endereco2,0)) {
+                            $ok = true;
+                            Sessao::alert('OK','Cadastro de endereço efetuado com sucesso, Usuário alterado!','fs-4 alert alert-success');
+                        }else {
+                            Sessao::alert('OK','Cadastro alterado com sucesso, erro ao cadastrar seu endereço, entre em contato com o suporte','fs-4 alert alert-warning');
+                        }
+                    }
                 }else{
                     Sessao::alert('ERRO',' 3- Erro ao alterar o usuário da empresa, entre em contato com o suporte!','fs-4 alert alert-danger');
                 }
