@@ -189,7 +189,8 @@ class usuarios extends View
         $this->dados['title'] .= 'ALTERAR DADOS DE USUÁRIO';
         $ok = false;
         $dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);
-        
+        $codUsuario = $dados['USU_COD'];
+        $codEmpresa = $dados['EMP_COD'];
         if (isset($_POST) && isset($dados['ALTERAR_USUARIO'])) {
             unset($dados['ALTERAR_USUARIO']);
           
@@ -203,8 +204,7 @@ class usuarios extends View
                 if($dados['USU_RESET_SENHA']== "SIM") {
                     $dados['USU_SENHA'] = $this->Check->codificarSenha('123456');
                 }  
-                $codUsuario = $dados['USU_COD'];
-                $codEmpresa = $dados['EMP_COD'];
+                
                 unset($dados['EMP_COD']);
                 unset($dados['USU_COD']);
                 unset($dados['USU_RESET_SENHA']);
@@ -223,6 +223,7 @@ class usuarios extends View
             Sessao::alert('ERRO',' 1- Dados inválido(s)!','fs-4 alert alert-danger');   
         }
         $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
+
         if($ok){
 
             $this->dados['usuarios'] = $this->UsuariosEmpresa->setCodEmpresa($codEmpresa)->setCodUsuario($_SESSION['USU_COD'])->listarTodos(0);
@@ -230,6 +231,54 @@ class usuarios extends View
         }else{
             $this->dados['usuario'] = $this->UsuariosEmpresa->setCodEmpresa($codEmpresa)->setCodigo($codUsuario)->listar(0);
             $this->render('admin/cadastros/usuarios/alterar', $this->dados);
+        }
+    }
+    public function alterar_meus_dados()
+    {   
+        $this->dados['title'] .= 'ALTERAR DADOS DE USUÁRIO';
+        $ok = false;
+        $dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);
+        $codUsuario = $dados['USU_COD'];
+        $codEmpresa = $dados['EMP_COD'];
+        if (isset($_POST) && isset($dados['ALTERAR_USUARIO'])) {
+            unset($dados['ALTERAR_USUARIO']);
+          
+            if($_SESSION['USU_COD'] <> $dados['USU_COD'] && $_SESSION['EMP_COD'] == $dados['EMP_COD']){
+
+                $this->Usuarios->setCodigo($dados['USU_COD']);
+
+                $dados += array(
+                    'USU_DT_ATUALIZACAO'=> date('Y-m-d H:i:s')             
+                );
+                if($dados['USU_RESET_SENHA']== "SIM") {
+                    $dados['USU_SENHA'] = $this->Check->codificarSenha('123456');
+                }  
+                
+                unset($dados['EMP_COD']);
+                unset($dados['USU_COD']);
+                unset($dados['USU_RESET_SENHA']);
+
+                if($this->Usuarios->alterar($dados,0)){
+                    $ok = true;
+                    Sessao::alert('OK','Cadastro alterado com sucesso!','fs-4 alert alert-success');
+                }else{
+                    Sessao::alert('ERRO',' 3- Erro ao alterar o usuário da empresa, entre em contato com o suporte!','fs-4 alert alert-danger');
+                }
+
+            }else{
+                Sessao::alert('ERRO',' 2- Acesso inválido!','fs-4 alert alert-danger');
+             }
+        }else {
+            Sessao::alert('ERRO',' 1- Dados inválido(s)!','fs-4 alert alert-danger');   
+        }
+        $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
+
+        if($ok){
+            $this->dados['usuarios'] = $this->UsuariosEmpresa->setCodEmpresa($_SESSION['EMP_COD'])->setCodUsuario($_SESSION['USU_COD'])->listarTodos(0);
+            $this->render('admin/cadastros/usuarios/listar', $this->dados);
+        }else{
+            $this->dados['usuario'] = $this->UsuariosEmpresa->setCodEmpresa($_SESSION['EMP_COD'])->setCodigo($codUsuario)->listar(0);
+            $this->render('admin/cadastros/usuarios/meus_dados', $this->dados);
         }
     }
     public function status()
