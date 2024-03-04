@@ -203,8 +203,10 @@ class usuarios extends View
                 if($dados['USU_RESET_SENHA']== "SIM") {
                     $dados['USU_SENHA'] = $this->Check->codificarSenha('123456');
                 }  
+                $codUsuario = $dados['USU_COD'];
                 $codEmpresa = $dados['EMP_COD'];
                 unset($dados['EMP_COD']);
+                unset($dados['USU_COD']);
                 unset($dados['USU_RESET_SENHA']);
 
                 if($this->Usuarios->alterar($dados,0)){
@@ -226,7 +228,7 @@ class usuarios extends View
             $this->dados['usuarios'] = $this->UsuariosEmpresa->setCodEmpresa($codEmpresa)->setCodUsuario($_SESSION['USU_COD'])->listarTodos(0);
             $this->render('admin/cadastros/usuarios/listar', $this->dados);
         }else{
-            $this->dados['usuario'] = $this->UsuariosEmpresa->setCodEmpresa($dados['EMP_COD'])->setCodigo($dados['USU_COD'])->listar(0);
+            $this->dados['usuario'] = $this->UsuariosEmpresa->setCodEmpresa($codEmpresa)->setCodigo($codUsuario)->listar(0);
             $this->render('admin/cadastros/usuarios/alterar', $this->dados);
         }
     }
