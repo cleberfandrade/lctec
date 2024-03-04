@@ -190,35 +190,42 @@ class movimentacoes extends View
                 );
                 $this->dados['produto'] = $this->Produtos->setCodEmpresa($dados['EMP_COD'])->setCodEstoque($dados['EST_COD'])->setCodigo($dados['PRO_COD'])->listar(0);
                 $liberado = false;
-               
-                if ($dados['MOV_TIPO'] == 1) {
-                    $liberado = true;
-                   
-                    $this->dados['produto']['PRO_QUANTIDADE']+= $dados['MOV_QUANTIDADE'];  
-                }else {
-                   
-                    if ($this->dados['produto']['PRO_QUANTIDADE'] >=0 && ($this->dados['produto']['PRO_QUANTIDADE']-$dados['MOV_QUANTIDADE'])>=0) {
-                        
-                        $this->dados['produto']['PRO_QUANTIDADE']-= $dados['MOV_QUANTIDADE'];
-                        
-                        //REGISTRAR VENDA - MOTIVO 2 => VENDA
-                        /* if($dados['MOV_MOTIVO']  == 2){
-                            $db_transacao = array(
-                                'TRS_DT_CADASTRO'=> date('Y-m-d H:i:s'),
-                                'TRS_DT_ATUALIZACAO'=> date('0000-00-00 00:00:00'),   
-                                'TRS_TIPO' => 2,
-                                'ITS_COD' => $this->dados['produto']['PRO_COD'],
-                                'ITS_QUANTIDADE'=> $dados['MOV_QUANTIDADE'],
-                                'TRS_TOKEN' => $this->Check->token(10,'',true),          
-                                'TRS_STATUS'=> 1
-                            );
-                        }else {
-                            # code...
-                        }*/
+                $motivo = false;
+                if (!empty($dados['MOV_TIPO'])) {
 
+                    if ($dados['MOV_TIPO'] == 1) {
                         $liberado = true;
+                       
+                        $this->dados['produto']['PRO_QUANTIDADE']+= $dados['MOV_QUANTIDADE'];  
+                    }else {
+                       
+                        if ($this->dados['produto']['PRO_QUANTIDADE'] >=0 && ($this->dados['produto']['PRO_QUANTIDADE']-$dados['MOV_QUANTIDADE'])>=0) {
+                            
+                            $this->dados['produto']['PRO_QUANTIDADE']-= $dados['MOV_QUANTIDADE'];
+                            
+                            //REGISTRAR VENDA - MOTIVO 2 => VENDA
+                            /* if($dados['MOV_MOTIVO']  == 2){
+                                $db_transacao = array(
+                                    'VEN_DT_CADASTRO'=> date('Y-m-d H:i:s'),
+                                    'VEN_DT_ATUALIZACAO'=> date('0000-00-00 00:00:00'),   
+                                    'TRS_TIPO' => 2,
+                                    'ITS_COD' => $this->dados['produto']['PRO_COD'],
+                                    'ITS_QUANTIDADE'=> $dados['MOV_QUANTIDADE'],
+                                    'VEN_TOKEN' => $this->Check->token(10,'',true),  
+                                    'VEN_ORDEM' => $this->Check->token(10,'',true),          
+                                    'VEN_STATUS'=> 1
+                                );
+                            }else {
+                                # code...
+                            }*/
+    
+                            $liberado = true;
+                        }
                     }
+                } else {
+                   $motivo = true;
                 }
+               
                 if ($liberado) {
                     if($this->Movimentacoes->cadastrar($dados,0)){
                         $db = array(
@@ -231,10 +238,14 @@ class movimentacoes extends View
                             Sessao::alert('OK','Cadastro efetuado com sucesso!','fs-4 alert alert-success');
                         }
                     }else{
-                        Sessao::alert('ERRO',' MOV14- Erro ao cadastrar nova movimentação, entre em contato com o suporte!','fs-4 alert alert-danger');
+                        Sessao::alert('ERRO',' MOV15- Erro ao cadastrar nova movimentação, entre em contato com o suporte!','fs-4 alert alert-danger');
                     }
                 }else {
-                    Sessao::alert('ERRO',' MOVI13 - A movimentação foi recusada porque o  estoque do produto ficará negativo!','alert alert-danger');
+                    if($motivo){
+                        Sessao::alert('ERRO',' MOVI14 - Informe o motivo da movimentação do produto!','alert alert-danger');
+                    }else{
+                        Sessao::alert('ERRO',' MOVI13 - A movimentação foi recusada porque o estoque do produto ficará negativo!','alert alert-danger');
+                    }
                 }
             }else{
                 Sessao::alert('ERRO',' MOV12 - Acesso inválido(s)!','alert alert-danger');
