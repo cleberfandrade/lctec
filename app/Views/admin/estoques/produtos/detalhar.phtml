@@ -37,6 +37,20 @@ $qtdMP = (is_array($movimentacoes_produto) ? count($movimentacoes_produto) : 0);
                 </header>
                 <section class="bg-light py-2">
                     <div class="col-12 mx-auto row text-center m-1">
+                        <div class="col-6 mx-auto  text-center text-bg-success">
+                            <div class="card-body">
+                                <h5 class="card-title">ESTOQUE ATUAL</h5>
+                                <p class="card-text">Verifique o estoque atual dos seus produtos</p>
+                                <a href="<?= DIRPAGE ?>estoques/produtos_atual" class="btn btn-dark">ACESSAR</a>
+                            </div>
+                        </div>    
+                        <div class="col-6 mx-auto  text-center">
+                            <div class="card-body">
+                                <h5 class="card-title">LISTAR MOVIMENTAÇÃO DE ESTOQUES</h5>
+                                <p class="card-text">Veja as entradas e saídas de produtos</p>
+                                <a href="<?= DIRPAGE ?>movimentacoes/listar" class="btn btn-dark">ACESSAR</a>
+                            </div>
+                        </div>
                         <a class="col-4 btn btn-sm text-uppercase btn-secondary" href="<?= DIRPAGE; ?>movimentacoes"><i class="bi bi-arrow-left"></i> VOLTAR AS MOVIMENTAÇÕES</a>
                         <a class="col-4 btn btn-sm text-uppercase btn-secondary" href="<?= DIRPAGE; ?>estoques"><i class="bi bi-arrow-left"></i> VOLTAR AOS ESTOQUES</a>
                         <a class="col-4 btn btn-sm text-uppercase btn-secondary" href="<?= DIRPAGE; ?>estoques/produtos/<?= $produto['EMP_COD']?>/<?= $produto['EST_COD']?>"><i class="bi bi-arrow-left"></i> VOLTAR AOS PRODUTOS</a>
