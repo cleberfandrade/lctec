@@ -243,7 +243,7 @@ class usuarios extends View
         if (isset($_POST) && isset($dados['ALTERAR_USUARIO'])) {
             unset($dados['ALTERAR_USUARIO']);
           
-            if($_SESSION['USU_COD'] <> $dados['USU_COD'] && $_SESSION['EMP_COD'] == $dados['EMP_COD']){
+            if($_SESSION['USU_COD'] == $dados['USU_COD'] && $_SESSION['EMP_COD'] == $dados['EMP_COD']){
 
                 $this->Usuarios->setCodigo($dados['USU_COD']);
 
