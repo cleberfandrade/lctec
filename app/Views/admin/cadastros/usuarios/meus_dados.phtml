@@ -136,6 +136,7 @@ include_once 'app/Views/admin/inc/cabecalho.phtml';
                                     <label for="floating2">Confirme a Senha</label>
                                 </div>
                             </div>
+                            <input type="hidden" class="form-control" name="EMP_COD" value="<?= isset($_SESSION['EMP_COD']) ? $_SESSION['EMP_COD'] : 0; ?>">
                             <input type="hidden" class="form-control" name="USU_COD" value="<?= isset($_SESSION['USU_COD']) ? $_SESSION['USU_COD'] : 0; ?>">
                             <button class="w-100 btn btn-lg text-uppercase btn-warning" name="ALTERAR_USUARIO" type="submit"><i class="fa fa-save"></i> Alterar</button>
                             <hr class="my-4 text-dark">
