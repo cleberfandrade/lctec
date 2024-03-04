@@ -250,10 +250,10 @@ class usuarios extends View
                 $dados += array(
                     'USU_DT_ATUALIZACAO'=> date('Y-m-d H:i:s')             
                 );
-                if($dados['USU_RESET_SENHA']== "SIM") {
+
+                if(!empty($dados['USU_RESET_SENHA']) && $dados['USU_RESET_SENHA'] == "SIM") {
                     $dados['USU_SENHA'] = $this->Check->codificarSenha('123456');
                 }  
-                
                 unset($dados['EMP_COD']);
                 unset($dados['USU_COD']);
                 unset($dados['USU_RESET_SENHA']);
