@@ -80,7 +80,7 @@ $contagem = 1;
                     </section>
                     <hr class="my-4 text-dark">
                     <h5 class="card-title text-center"><i class="bi bi-box2-fill"></i> MOVIMENTAÇÃO DO PRODUTO</h5>
-                    <div class="container col-11 px-2 py-2 mx-auto row">
+                    <div class="container col-12 px-1 mx-auto row">
                         <form class="p-4 p-md-6 border text-uppercase rounded-3" action="<?= DIRPAGE ?>movimentacoes/cadastrar" method="POST">
                             <div class="col-12 mx-auto text-bg-success text-center">
                                 <div class="card-body">
@@ -130,19 +130,19 @@ $contagem = 1;
                                     <?php if($_SESSION['USU_NIVEL'] == 30){ ?>
                                     <div class="input-group input-group-lg">
                                         <div class="form-floating">
-                                            <input type="number" class="form-control maiusculo" id="MOV_QUANTIDADE" name="MOV_QUANTIDADE" placeholder="0" value="<?= isset($_POST['MOV_QUANTIDADE']) ? $_POST['MOV_QUANTIDADE'] : ''; ?>">
+                                            <input type="number" class="form-control maiusculo" id="MOV_QUANTIDADE" name="MOV_QUANTIDADE" min="0" value="<?= isset($_POST['MOV_QUANTIDADE']) ? $_POST['MOV_QUANTIDADE'] : ''; ?>">
                                             <label class="px-2" for="MOV_QUANTIDADE">QUANTIDADE</label>
                                         </div>
                                         <button type="button" class="btn text-uppercase btn-success" id="adicionar"><i class="fa fa-plus"></i></button>
                                     </div>
                                     <?php }else { ?>
                                         <div class="form-floating">
-                                            <input type="number" class="form-control maiusculo" id="MOV_QUANTIDADE" name="MOV_QUANTIDADE" placeholder="0" value="<?= isset($_POST['MOV_QUANTIDADE']) ? $_POST['MOV_QUANTIDADE'] : ''; ?>">
+                                            <input type="number" class="form-control maiusculo" id="MOV_QUANTIDADE" name="MOV_QUANTIDADE" min="0" value="<?= isset($_POST['MOV_QUANTIDADE']) ? $_POST['MOV_QUANTIDADE'] : ''; ?>">
                                             <label class="px-2" for="MOV_QUANTIDADE">QUANTIDADE</label>
                                         </div>
                                     <?php } ?>
                                 </div>
-                                <div class="col-12 mx-auto fs-4 text-center">
+                                <div class="col-12 mx-auto fs-4 mb-2 text-center">
                                     <label class="px-2" for="2">QUANTIDADE ATUAL</label>
                                     <b class="text-dark"><br><span id="PRO_QUANTIDADE">0</span></b>
                                 </div>
@@ -169,7 +169,7 @@ $contagem = 1;
                                     <div class="col-12 mx-auto form-floating mb-2">
                                         <table id="table"  class="table table-bordered">
                                             <thead>
-                                                <tr class="text-center"><th colspan="7">ITÉNS</th></tr>
+                                                <tr class="text-center bg-1 "><th colspan="7" class="text-white">ITENS</th></tr>
                                                 <tr class="text-center">
                                                     <th>#</th>
                                                     <th>DESCRIÇÃO</th>
@@ -184,7 +184,7 @@ $contagem = 1;
                                                 <tr>
                                                     <td></td>
                                                     <td class="text-center">
-                                                        <label class="form-label">QTD ITÉNS</label>
+                                                        <label class="form-label">QTD ITENS</label>
                                                         <input type="text" id="QTD" class="form-control text-center" name='QTD' value="0">
                                                     </td>
                                                     <td colspan="2" class="text-center">
@@ -193,11 +193,11 @@ $contagem = 1;
                                                     </td>
                                                     <td class="text-center">
                                                         <label class="form-label">DESCONTO %</label>
-                                                        <input type="text" id="VEN_VL_DESCONTO" class="form-control" name='VEN_VL_DESCONTO' value="">
+                                                        <input type="number" id="PRO_DESCONTO" class="form-control text-center" min="0" maxn="100"  name='PRO_DESCONTO' value="0">
                                                     </td>
-                                                    <td colspan="2" class="text-center">
-                                                        <label class="form-label">TOTAL</label>
-                                                        <input type="text" id="VEN_VL_TOTAL" class="form-control" name='VEN_VL_TOTAL' value="">
+                                                    <td colspan="2" class="text-center bg-1">
+                                                        <label class="form-label fw-bold">TOTAL</label>
+                                                        <input type="text" id="VEN_VL_TOTAL" class="form-control text-center" name='VEN_VL_TOTAL' value="0">
                                                     </td>
                                                 </tr>
                                             </tfooter>
@@ -247,6 +247,12 @@ $contagem = 1;
                 
             }
         });*/
+        function desconto(){
+            $("#PRO_DESCONTO").on("change", function(){
+               
+            });
+        }
+
         <?php $op = ($qtdEstoque == 1)? 'ready' : 'change'; ?> 
         $("#buscar_produtos").<?= $op ?>(function(){
             var EST_COD = $(this).find('option:selected').val();
@@ -349,38 +355,53 @@ $contagem = 1;
             var objFilho = document.createElement("tr");
             //Definindo atributos ao objFilho:
             objFilho.setAttribute("id", "filho" + qtdeCampos);
-           
+          
             //Inserindo o elemento no pai:
             objPai.appendChild(objFilho);
             //Escrevendo algo no filho recém-criado:
             var quantidade = Number(document.getElementById('QTD').value);
             document.getElementById('QTD').value = '';
-            //console.log(quantidade);
             
             var MOV_QUANTIDADE = Number(document.getElementById('MOV_QUANTIDADE').value);
-            
-            //console.log(MOV_QUANTIDADE);
+            objFilho.setAttribute("data-quantidade",MOV_QUANTIDADE);
 
-            if (MOV_QUANTIDADE) {
+            if (MOV_QUANTIDADE >= 1) {
+
                 var subtotal = 0;
                 subtotal = (resposta.PRO_PRECO_VENDA*MOV_QUANTIDADE).toFixed(2);
                 document.getElementById('QTD').value = Number(quantidade + MOV_QUANTIDADE);
-               
+                objFilho.setAttribute("data-subtotal",subtotal);
+
                 var n1 = Number(document.getElementById('VEN_VL_SUBTOTAL').value);
                 var n2 = Number(subtotal);
-                document.getElementById('VEN_VL_SUBTOTAL').value = (n1 + n2).toFixed(2);
+                document.getElementById('VEN_VL_SUBTOTAL').value = (n1 + n2).toFixed(2);   
 
                 document.getElementById("filho" + qtdeCampos).innerHTML = "<td class='align-middle mx-auto'>" + qtdeCampos + "</td>"+
                 "<td class='align-middle mx-auto'>"+resposta.PRO_NOME+"</td>"+
-                "<td class='align-middle mx-auto'>"+MOV_QUANTIDADE+"</td>"+
+                "<td value='"+MOV_QUANTIDADE+"' class='align-middle mx-auto'>"+MOV_QUANTIDADE+"</td>"+
                 "<td class='align-middle mx-auto'>"+resposta.PRO_PRECO_VENDA+"</td>"+
                 "<td class='align-middle mx-auto'>"+subtotal+"</td>"+
                 "<td class='align-middle mx-auto'><input type='hidden' id='campo" + qtdeCampos + "' name='ITENS[]' value='" + resposta.PRO_COD + "'></input></td>"+
                 "<td class='align-middle mx-auto'><button type='button' class='col btn btn-danger' title='APAGAR DA LISTA' onClick='removerCampo(" + qtdeCampos + ")' value=''><i class='fa fa-trash'></i></button></td>";
-                //soma = $("#total").val('');
+                
+                var PRO_DESCONTO =  $("#PRO_DESCONTO").val();
+                if(PRO_DESCONTO !=="" || PRO_DESCONTO !== null){
+                    
+                    PRO_DESCONTO = parseFloat(PRO_DESCONTO/100);
+                    var VEN_VL_SUBTOTAL = $("#VEN_VL_SUBTOTAL").val();
+                    VEN_VL_SUBTOTAL = parseFloat(VEN_VL_SUBTOTAL);
+                    var novo = parseFloat(VEN_VL_SUBTOTAL - (VEN_VL_SUBTOTAL * PRO_DESCONTO)).toFixed(2);
+                    $("#VEN_VL_TOTAL").val('');
+                    $("#VEN_VL_TOTAL").val(novo); 
+                }else{
+                    var VEN_VL_SUBTOTAL = $("#VEN_VL_SUBTOTAL").val();
+                    $("#VEN_VL_TOTAL").val(VEN_VL_SUBTOTAL); 
+                }
+
                 $("#total").show();
                 $("#MOV_QUANTIDADE").val('');
                 qtdeCampos++;
+
             } else {
                 $('#resposta').html('INFORME A QUANTIDADE DO PRODUTO');
                 $('#resposta2').addClass('alert alert-warning');
@@ -391,21 +412,52 @@ $contagem = 1;
         function removerCampo(id, qtdeCampos) {
             var objPai = document.getElementById("itens");
             var objFilho = document.getElementById("filho" + id);
+            
+            $("#total").hide();
+            
+            var qtd = objFilho.getAttribute('data-quantidade');
+            var sb = objFilho.getAttribute('data-subtotal');
+
+            var quantidade = Number(document.getElementById('QTD').value);
+            document.getElementById('QTD').value = (quantidade - qtd);
+
+            var subtotal = document.getElementById('VEN_VL_SUBTOTAL').value;
+            document.getElementById('VEN_VL_SUBTOTAL').value = (subtotal - sb).toFixed(2);
+            
+            var PRO_DESCONTO =  $("#PRO_DESCONTO").val();
+            if(PRO_DESCONTO !=="" || PRO_DESCONTO !== null){
+                PRO_DESCONTO = parseFloat(PRO_DESCONTO/100);
+                var VEN_VL_SUBTOTAL = $("#VEN_VL_SUBTOTAL").val();
+                VEN_VL_SUBTOTAL = parseFloat(VEN_VL_SUBTOTAL);
+                var novo = parseFloat(VEN_VL_SUBTOTAL - (VEN_VL_SUBTOTAL * PRO_DESCONTO)).toFixed(2);
+                $("#VEN_VL_TOTAL").val('');
+                $("#VEN_VL_TOTAL").val(novo); 
+            }else{
+                var VEN_VL_SUBTOTAL = $("#VEN_VL_SUBTOTAL").val();
+                $("#VEN_VL_TOTAL").val(VEN_VL_SUBTOTAL); 
+            }
+            $("#total").show();
+
             var qtdeCampos = qtdeCampos;
             qtdeCampos--;
             //Removendo o DIV com id específico do nó-pai:
             var removido = objPai.removeChild(objFilho);
         }
 
-        /*
-        $(".remover").click(function(e){
-            e.preventDefault();
-            //console.log(e);
-            $("#itens").hide();
-            $(this).closest('tr').remove();
-            $("#itens").show();
+        $("#PRO_DESCONTO").change(function(){
+            var PRO_DESCONTO =  $(this).val();
+            if(PRO_DESCONTO !=="" || PRO_DESCONTO !== null){
+                PRO_DESCONTO = parseFloat(PRO_DESCONTO/100);
+                var VEN_VL_SUBTOTAL = $("#VEN_VL_SUBTOTAL").val();
+                VEN_VL_SUBTOTAL = parseFloat(VEN_VL_SUBTOTAL);
+                var novo = parseFloat(VEN_VL_SUBTOTAL - (VEN_VL_SUBTOTAL * PRO_DESCONTO)).toFixed(2);
+                $("#VEN_VL_TOTAL").val('');
+                $("#VEN_VL_TOTAL").val(novo); 
+            }else{
+                var VEN_VL_SUBTOTAL = $("#VEN_VL_SUBTOTAL").val();
+                $("#VEN_VL_TOTAL").val(VEN_VL_SUBTOTAL); 
+            }
         });
-        */
     </script>
 </body>
 

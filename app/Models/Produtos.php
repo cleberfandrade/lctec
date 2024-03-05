@@ -58,7 +58,7 @@ class Produtos extends Model
     }
     public function listarTodos($ver = 0)
     {
-        $parametros = "P INNER JOIN tb_empresas E ON P.EMP_COD=E.EMP_COD INNER JOIN tb_estoques ET ON P.EST_COD=ET.EST_COD WHERE P.EMP_COD={$this->codEmpresa} AND P.EST_COD={$this->codEstoque} ORDER BY P.PRO_COD";
+        $parametros = "P INNER JOIN tb_empresas E ON P.EMP_COD=E.EMP_COD INNER JOIN tb_estoques ET ON P.EST_COD=ET.EST_COD WHERE P.EMP_COD={$this->codEmpresa} AND P.EST_COD={$this->codEstoque} ORDER BY P.PRO_NOME";
         $campos = "*";
         $resultado = $this->Model->exibir($parametros, $campos, $ver = 0, $id = false);
         if ($resultado) {
@@ -69,7 +69,7 @@ class Produtos extends Model
     }
     public function listarTodosGeral($ver = 0)
     {
-        $parametros = "P INNER JOIN tb_empresas E ON P.EMP_COD=E.EMP_COD INNER JOIN tb_estoques ET ON P.EST_COD=ET.EST_COD WHERE P.EMP_COD={$this->codEmpresa} AND P.PRO_STATUS={$this->status} ORDER BY P.PRO_COD";
+        $parametros = "P INNER JOIN tb_empresas E ON P.EMP_COD=E.EMP_COD INNER JOIN tb_estoques ET ON P.EST_COD=ET.EST_COD WHERE P.EMP_COD={$this->codEmpresa} AND P.PRO_STATUS={$this->status} ORDER BY P.PRO_NOME";
         $campos = "*";
         $resultado = $this->Model->exibir($parametros, $campos, $ver = 0, $id = false);
         if ($resultado) {
@@ -81,9 +81,9 @@ class Produtos extends Model
     public function listarTodosTipo($ver = 0)
     {
         if ($this->status) {
-            $parametros = "P INNER JOIN tb_empresas E ON P.EMP_COD=E.EMP_COD INNER JOIN tb_estoques ET ON P.EST_COD=ET.EST_COD WHERE P.EMP_COD={$this->codEmpresa} AND P.EST_COD={$this->codEstoque} AND P.PRO_TIPO={$this->tipo} AND P.PRO_STATUS={$this->status} ORDER BY P.PRO_COD";    
+            $parametros = "P INNER JOIN tb_empresas E ON P.EMP_COD=E.EMP_COD INNER JOIN tb_estoques ET ON P.EST_COD=ET.EST_COD WHERE P.EMP_COD={$this->codEmpresa} AND P.EST_COD={$this->codEstoque} AND P.PRO_TIPO={$this->tipo} AND P.PRO_STATUS={$this->status} ORDER BY P.PRO_NOME";    
         }else {
-            $parametros = "P INNER JOIN tb_empresas E ON P.EMP_COD=E.EMP_COD INNER JOIN tb_estoques ET ON P.EST_COD=ET.EST_COD WHERE P.EMP_COD={$this->codEmpresa} AND P.EST_COD={$this->codEstoque} AND P.PRO_TIPO={$this->tipo} ORDER BY P.PRO_COD";
+            $parametros = "P INNER JOIN tb_empresas E ON P.EMP_COD=E.EMP_COD INNER JOIN tb_estoques ET ON P.EST_COD=ET.EST_COD WHERE P.EMP_COD={$this->codEmpresa} AND P.EST_COD={$this->codEstoque} AND P.PRO_TIPO={$this->tipo} ORDER BY P.PRO_NOME";
         }
         $campos = "*";
         $resultado = $this->Model->exibir($parametros, $campos, $ver = 0, $id = false);
