@@ -156,7 +156,7 @@ class movimentacoes extends View
         $dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);
 
         if (isset($_POST) && isset($dados['PRODUTOS'])) {
-            //dump($dados);
+           
             if($this->dados['empresa']['USU_COD'] == $_SESSION['USU_COD'] && $this->dados['empresa']['EMP_COD'] == $dados['EMP_COD']){
                 
                 $this->dados['produto'] = $this->Produtos->setCodEmpresa($dados['EMP_COD'])->setCodEstoque($dados['EST_COD'])->setCodigo($dados['PRO_COD'])->listar(0);
@@ -265,6 +265,32 @@ class movimentacoes extends View
             $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
             $this->render('admin/estoques/movimentacoes/movimentacoes', $this->dados);
         }
+    }
+    public function registrar(){
+        $this->dados['title'] .= ' MOVIMENTAÇÃO DO ESTOQUE';
+        $this->link[2] = ['link'=> 'movimentacoes','nome' => 'MOVIMENTAÇÃO DO ESTOQUE'];
+
+        $ok = false;      
+        //Recupera os dados enviados
+        $dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);
+        dump($dados);
+        //REGISTRAR VENDA - MOTIVO 2 => VENDA
+        /* if($dados['MOV_MOTIVO']  == 2){
+            $db_transacao = array(
+                'VEN_DT_CADASTRO'=> date('Y-m-d H:i:s'),
+                'VEN_DT_ATUALIZACAO'=> date('0000-00-00 00:00:00'),   
+                'TRS_TIPO' => 2,
+                'ITS_COD' => $this->dados['produto']['PRO_COD'],
+                'ITS_QUANTIDADE'=> $dados['MOV_QUANTIDADE'],
+                'VEN_TOKEN' => $this->Check->token(10,'',true),  
+                'VEN_ORDEM' => $this->Check->token(10,'',true),          
+                'VEN_STATUS'=> 1
+            );
+        }else {
+            # code...
+        }*/
+        $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
+        $this->render('admin/estoques/movimentacoes/movimentacoes', $this->dados);
     }
     public function reverter_movimentacao():void
     {

@@ -81,7 +81,7 @@ $contagem = 1;
                     <hr class="my-4 text-dark">
                     <h5 class="card-title text-center"><i class="bi bi-box2-fill"></i> MOVIMENTAÇÃO DO PRODUTO</h5>
                     <div class="container col-12 px-1 mx-auto row">
-                        <form class="p-4 p-md-6 border text-uppercase rounded-3" action="<?= DIRPAGE ?>movimentacoes/cadastrar" method="POST">
+                        <form class="p-4 p-md-6 border text-uppercase rounded-3" action="<?= DIRPAGE ?>movimentacoes/<?= ($_SESSION['USU_NIVEL'] == 30)? 'registrar': 'cadastrar'; ?>" method="POST">
                             <div class="col-12 mx-auto text-bg-success text-center">
                                 <div class="card-body">
                                     <h5 class="card-title">SELECIONE O ESTOQUE</h5>
