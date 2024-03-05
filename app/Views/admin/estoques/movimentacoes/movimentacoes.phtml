@@ -50,7 +50,7 @@ $contagem = 1;
                     <?= $breadcrumb ?>
                 </section>
             </header>
-            <?php include_once 'app/Views/admin/inc/alertas.phtml'; ?>  
+            
             <section class="container bg-light mx-auto py-2 mb-5">
                 <div class="col-12 row">
                     <div class="col-6 mx-auto  text-center text-bg-success">
@@ -71,6 +71,13 @@ $contagem = 1;
                     <div class="col-12 mx-auto text-center m-1">
                         <a class="col-4 btn btn-sm text-uppercase btn-secondary" href="<?= DIRPAGE; ?>estoques"><i class="bi bi-arrow-left"></i> VOLTAR AOS ESTOQUES</a>
                     </div>
+                    <?php include_once 'app/Views/admin/inc/alertas.phtml'; ?>  
+                    <section class="container py-1">
+                        <hr>
+                        <div id="resposta2" class="fs-4 text-center"></div>
+                        <?= Sessao::alert('OK'); ?>
+                        <?= Sessao::alert('ERRO'); ?>
+                    </section>
                     <hr class="my-4 text-dark">
                     <h5 class="card-title text-center"><i class="bi bi-box2-fill"></i> MOVIMENTAÇÃO DO PRODUTO</h5>
                     <div class="container col-11 px-2 py-2 mx-auto row">
@@ -359,7 +366,7 @@ $contagem = 1;
         var qtdItens = 0;
         var subtotal = 0;
         var qtdeCampos = <?= $contagem; ?>
-
+        var soma = 0;
         function addCampos2(resposta) {
             var objPai = document.getElementById("itens");
             //Criando o elemento DIV;
@@ -377,14 +384,18 @@ $contagem = 1;
             //var procedencia = utf8_encode(obj['procedencia']);
             //var procedencia;
             //procedencia = decodeURIComponent(escape(obj['procedencia']));
-            soma = 0;
-            subtotal = 0;
+            var soma = $("VEN_VL_SUBTOTAL").val();
+           
+            var subtotal = 0;
             var MOV_QUANTIDADE = $('#MOV_QUANTIDADE').val();
             if (MOV_QUANTIDADE) {
 
                 subtotal = (resposta.PRO_PRECO_VENDA*MOV_QUANTIDADE).toFixed(2);
                 soma = parseFloat(soma + subtotal)
                 soma = soma.toFixed(2);
+                console.log(soma);
+                console.log(subtotal);
+                $("VEN_VL_SUBTOTAL").val(soma);
 
                 document.getElementById("filho" + qtdeCampos).innerHTML = "<td class='align-middle mx-auto'>" + qtdeCampos + "</td>"+
                 "<td class='align-middle mx-auto'>"+resposta.PRO_NOME+"</td>"+
@@ -397,7 +408,7 @@ $contagem = 1;
                 $("#MOV_QUANTIDADE").val('');
                 qtdeCampos++;
             } else {
-                
+                $('#resposta2').addClass('alert alert-warning');
             }
             
         }
