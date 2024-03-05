@@ -289,3 +289,39 @@ class avisos extends View
         echo json_encode($resposta);
     }
 }
+
+
+
+                /*
+               
+                subtotal = 0
+                soma = $("#total").val();
+                $("#MOV_QUANTIDADE").val('');
+                subtotal = (resposta.PRO_PRECO_VENDA*MOV_QUANTIDADE).toFixed(2);
+                soma = parseFloat(soma + subtotal)
+                soma = soma.toFixed(2);
+                //
+               
+                $("#itens").append("<tr id='"+i+"'>"+
+                "<td><input class='form-control' type='hidden' value='"+resposta.PRO_COD+"'name='ITS_COD[]'>"+i+"</td>"+
+                "<td>"+resposta.PRO_NOME+"</td>"+
+                "<td>"+MOV_QUANTIDADE+"</td>"+
+                "<td>"+resposta.PRO_PRECO_VENDA+"</td>"+
+                "<td>"+subtotal+"</td>"+
+                "<td><button type='button' class='btn btn-danger remover btn-sm' title='Deseja excluir?'><i class='fa fa-trash'></i></button></td>"+
+                "</tr>");
+                i++;
+               
+                //$("#total").html('');
+                $("#total").val(soma);
+                //$("#total").html(soma);
+                */
+
+                 //console.log(resposta);
+            //var obj = jQuery.parseJSON(detento);
+            //var obj = JSON.parse(detento);
+            //obj = obj[0];
+            //console.log(obj);
+                        //var procedencia = utf8_encode(obj['procedencia']);
+            //var procedencia;
+            //procedencia = decodeURIComponent(escape(obj['procedencia']));
