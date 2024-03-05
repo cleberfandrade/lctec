@@ -61,6 +61,17 @@ class FormasPagamentos extends Model
             return false;
         }
     }
+    public function listarTodasAtivas($ver = 0)
+    {
+        $parametros = "FP INNER JOIN tb_empresas E ON E.EMP_COD=FP.EMP_COD WHERE FP.EMP_COD={$this->codEmpresa} AND FP.FPG_STATUS=1 ORDER BY FP.FPG_DESCRICAO";
+        $campos = "*";
+        $resultado = $this->Model->exibir($parametros, $campos, $ver, $id = false);
+        if ($resultado) {
+            return $resultado;
+        } else {
+            return false;
+        }
+    }
     public function listarTodasSistema($ver = 0)
     {
         $parametros = " WHERE EMP_COD=0 AND FPG_STATUS=1";

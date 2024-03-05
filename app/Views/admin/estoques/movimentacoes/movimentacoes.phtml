@@ -7,7 +7,9 @@ include_once 'app/Views/admin/inc/cabecalho.phtml';
 $qtd = (is_array($estoques) ? count($estoques) : 0);
 $qtdE = (is_array($empresa) ? count($empresa) : 0);
 $qtdM = (is_array($movimentacoes) ? count($movimentacoes) : 0);
-
+$qtdF = (is_array($formas_pagamentos) ? count($formas_pagamentos) : 0);
+$qtdEstoque = 0;
+for ($i=0; $i < $qtd; $i++) { if ($estoques[$i]['EST_STATUS'] == 1) {$qtdEstoque++; }}
 $qtdClientes = (is_array($clientes) ? count($clientes) : 0);
 
 $motivos = array(
@@ -21,6 +23,8 @@ $motivos = array(
     7=>'OUTROS'
 );
 $qtdMotivos = (is_array($motivos) ? count($motivos) : 0);
+
+$contagem = 1;
 ?>
 
 <body class="">
@@ -76,11 +80,11 @@ $qtdMotivos = (is_array($motivos) ? count($motivos) : 0);
                                     <h5 class="card-title">SELECIONE O ESTOQUE</h5>
                                     <p class="card-text">
                                         <select class="form-select" id="buscar_produtos" name="EST_COD">    
-                                        <?php if ($qtd >= 2) {  ?>
+                                        <?php if ($qtdEstoque >= 2) {  ?>
                                             <option value="0" <?= (isset($_POST['EST_COD']) &&  $_POST['EST_COD']  == 0)? 'selected' : '' ?>>---</option>                  
                                         <?php } ?>
                                         <?php 
-                                            for ($i=0; $i < $qtd; $i++) { if ($estoques[$i]['EST_STATUS'] == 1) { ?>
+                                            for ($i=0; $i < $qtdEstoque; $i++) { if ($estoques[$i]['EST_STATUS'] == 1) { ?>
                                                 <option value="<?= $estoques[$i]['EST_COD'] ?>" <?= (isset($_POST['EST_COD']) &&  $_POST['EST_COD']  == $estoques[$i]['EST_COD'])? 'selected' : '' ?>><?= $estoques[$i]['EST_DESCRICAO'] ?></option>
                                         <?php } } ?>
                                         </select>
@@ -98,7 +102,7 @@ $qtdMotivos = (is_array($motivos) ? count($motivos) : 0);
                                     <input type="date" name="MOV_DT_MOVIMENTACAO" class="form-control form-control-lg" value="<?= isset($_POST['MOV_DT_MOVIMENTACAO']) ? $_POST['MOV_DT_MOVIMENTACAO'] : date('Y-m-d') ?>">
                                     <label class="form-label">DATA</label>
                                 </div>
-                                <div class="col-4 form-floating mb-2">
+                                <div class="col-3 form-floating mb-2">
                                     <select class="form-select" name="MOV_TIPO">
                                         <option value="0" <?= (isset($_POST['MOV_TIPO']) &&  $_POST['MOV_TIPO']  == 0)? 'selected' : '' ?>>---</option>
                                         <option value="1" <?= (isset($_POST['MOV_TIPO']) &&  $_POST['MOV_TIPO']  == 1)? 'selected' : '' ?>>ENTRADA</option>
@@ -106,7 +110,7 @@ $qtdMotivos = (is_array($motivos) ? count($motivos) : 0);
                                     </select>
                                     <label class="form-label">TIPO</label>
                                 </div>
-                                <div class="col-4 form-floating mb-2">
+                                <div class="col-5 form-floating mb-2">
                                     <select class="form-select " name="MOV_MOTIVO">     
                                         <?php for ($i=0; $i < $qtdMotivos; $i++) { ?>
                                             <option value="<?= $i ?>" <?= (isset($_POST['MOV_MOTIVO']) &&  $_POST['MOV_MOTIVO']  == $i)? 'selected' : '' ?>><?= $motivos[$i] ?></option>
@@ -115,7 +119,7 @@ $qtdMotivos = (is_array($motivos) ? count($motivos) : 0);
                                     <label class="form-label">MOTIVO</label>
                                 </div>
                                
-                                <div class="col-4 form-floating mb-3">
+                                <div class="col-4 mx-auto form-floating mb-3" @keydown.enter.stop>
                                     <?php if($_SESSION['USU_NIVEL'] == 30){ ?>
                                     <div class="input-group input-group-lg">
                                         <div class="form-floating">
@@ -131,13 +135,13 @@ $qtdMotivos = (is_array($motivos) ? count($motivos) : 0);
                                         </div>
                                     <?php } ?>
                                 </div>
-                                <div class="col-4 mx-auto fs-4 text-center">
+                                <div class="col-12 mx-auto fs-4 text-center">
                                     <label class="px-2" for="2">QUANTIDADE ATUAL</label>
                                     <b class="text-dark"><br><span id="PRO_QUANTIDADE">0</span></b>
                                 </div>
-                                <div class="col-8 mb-2">
+                                <div class="col-12 mx-auto row mb-2">
                                 <?php if($_SESSION['USU_NIVEL'] == 30){ ?>
-                                    <div class="col-12 mx-auto form-floating mb-3">
+                                    <div class="col-6 mx-auto form-floating mb-3">
                                         <select class="form-select " name="CLI_COD"> 
                                             <option value="0" <?= (isset($_POST['CLI_COD']) &&  $_POST['CLI_COD']  == 0)? 'selected' : '' ?>>---</option>
                                         <?php for ($i=0; $i < $qtdClientes; $i++) { ?>
@@ -146,25 +150,46 @@ $qtdMotivos = (is_array($motivos) ? count($motivos) : 0);
                                         </select>
                                         <label class="form-label">CLIENTE</label>
                                     </div>
-                                    <div class="col-12 mx-auto form-floating mb-3">
+                                    <div class="col-6 mx-auto form-floating mb-3">
+                                        <select class="form-select " name="CLI_COD"> 
+                                            <option value="0" <?= (isset($_POST['FPG_COD']) &&  $_POST['FPG_COD']  == 0)? 'selected' : '' ?>>---</option>
+                                        <?php for ($i=0; $i < $qtdF; $i++) { if ($formas_pagamentos[$i]['FPG_STATUS'] == 1) { ?>
+                                            <option value="<?= $i ?>" <?= (isset($_POST['FPG_COD']) &&  $_POST['FPG_COD']  == $i)? 'selected' : '' ?>><?= ($formas_pagamentos[$i]['FPG_TIPO'] == 1)? 'À VISTA' : 'À PRAZO'; ?> - <?= $formas_pagamentos[$i]['FPG_DESCRICAO'] ?></option>
+                                        <?php } } ?>
+                                        </select>
+                                        <label class="form-label">FORMA DE PAGAMENTO</label>
+                                    </div>
+                                    <div class="col-12 mx-auto form-floating mb-2">
                                         <table id="table"  class="table table-bordered">
                                             <thead>
-                                                <tr class="text-center"><th colspan="6">ITÉNS</th></tr>
+                                                <tr class="text-center"><th colspan="7">ITÉNS</th></tr>
                                                 <tr class="text-center">
                                                     <th>#</th>
                                                     <th>DESCRIÇÃO</th>
                                                     <th>QTD</th>
                                                     <th>VALOR UNIT.</th>
                                                     <th>SUB TOTAL</th>
-                                                    <th></th>
+                                                    <th colspan="2"></th>
                                                 </tr>
                                             </thead>
                                             <tbody id="itens" class="text-center"></tbody>
                                             <tfooter id="total" class="text-center">
                                                 <tr>
-                                                    <td colspan="4"></td>
+                                                    <td>
+                                                        <label class="form-label">QTD ITÉNS</label>
+                                                        <input type="text" id="QTD" class="form-control" name='QTD' value="">
+                                                    </td>
                                                     <td colspan="2" class="text-center">
-                                                        <input type="text" id="total" class="form-control" name='ITS_VL_TOTAL' value="">
+                                                        <label class="form-label">SUBTOTAL</label>
+                                                        <input type="text" id="VEN_VL_SUBTOTAL" class="form-control" name='VEN_VL_SUBTOTAL' value="">
+                                                    </td>
+                                                    <td colspan="2" class="text-center">
+                                                        <label class="form-label">DESCONTO %</label>
+                                                        <input type="text" id="VEN_VL_DESCONTO" class="form-control" name='VEN_VL_DESCONTO' value="">
+                                                    </td>
+                                                    <td colspan="2" class="text-center">
+                                                        <label class="form-label">TOTAL</label>
+                                                        <input type="text" id="VEN_VL_TOTAL" class="form-control" name='VEN_VL_TOTAL' value="">
                                                     </td>
                                                 </tr>
                                             </tfooter>
@@ -191,8 +216,31 @@ $qtdMotivos = (is_array($motivos) ? count($motivos) : 0);
         </div>
     </div>
     <script type="text/javascript">
-        
-        $("#buscar_produtos").change(function(){
+        $(function(){
+        var keyStop = {
+                8: ":not(input:text, textarea, input:file, input:password)", // stop backspace = back
+                13: "input:text, input:password", // stop enter = submit 
+
+                end: null
+            };
+            $(document).bind("keydown", function(event){
+                var selector = keyStop[event.which];
+
+                if(selector !== undefined && $(event.target).is(selector)) {
+                    event.preventDefault(); //stop event
+                }
+                return true;
+            });
+        });
+        /*document.addEventListener("keydown", function(e) {
+            if(e.keyCode === 13) {
+                    
+                e.preventDefault();
+                
+            }
+        });*/
+        <?php $op = ($qtdEstoque == 1)? 'ready' : 'change'; ?> 
+        $("#buscar_produtos").<?= $op ?>(function(){
             var EST_COD = $(this).find('option:selected').val();
             var EMP_COD = <?php echo $_SESSION['EMP_COD']; ?>;
             carregarProdutos(EST_COD, EMP_COD,"#produtos");
@@ -254,7 +302,7 @@ $qtdMotivos = (is_array($motivos) ? count($motivos) : 0);
     
             });
         }
-
+        
 
         $("#produtos").change(function(){
 
@@ -274,20 +322,24 @@ $qtdMotivos = (is_array($motivos) ? count($motivos) : 0);
             var PRO_COD2 = $("#produtos").find('option:selected').val();
             var EMP_COD2 = <?php echo $_SESSION['EMP_COD']; ?>;
             var EST_COD2 = $('#EST_COD').val();
-            var MOV_QUANTIDADE = $('#MOV_QUANTIDADE').val();
+           
             $("#itens").hide();
-            var i = 1;
             $.post('<?= DIRPAGE; ?>movimentacoes/listar_produto', {PRODUTOS: true,EMP_COD: EMP_COD2,EST_COD:EST_COD2,PRO_COD: PRO_COD2}, function(retorno2) {
                 resposta = JSON.parse(retorno2);
                 //$("#total").val(0);
+                $("#itens").show();
+                addCampos2(resposta);
+
+                /*
+               
                 subtotal = 0
                 soma = $("#total").val();
                 $("#MOV_QUANTIDADE").val('');
                 subtotal = (resposta.PRO_PRECO_VENDA*MOV_QUANTIDADE).toFixed(2);
                 soma = parseFloat(soma + subtotal)
                 soma = soma.toFixed(2);
-                //console.log(total);
-                $("#itens").show();
+                //
+               
                 $("#itens").append("<tr id='"+i+"'>"+
                 "<td><input class='form-control' type='hidden' value='"+resposta.PRO_COD+"'name='ITS_COD[]'>"+i+"</td>"+
                 "<td>"+resposta.PRO_NOME+"</td>"+
@@ -297,12 +349,69 @@ $qtdMotivos = (is_array($motivos) ? count($motivos) : 0);
                 "<td><button type='button' class='btn btn-danger remover btn-sm' title='Deseja excluir?'><i class='fa fa-trash'></i></button></td>"+
                 "</tr>");
                 i++;
-                
+               
                 //$("#total").html('');
                 $("#total").val(soma);
                 //$("#total").html(soma);
+                */
             });
         });
+        var qtdItens = 0;
+        var subtotal = 0;
+        var qtdeCampos = <?= $contagem; ?>
+
+        function addCampos2(resposta) {
+            var objPai = document.getElementById("itens");
+            //Criando o elemento DIV;
+            var objFilho = document.createElement("tr");
+            //Definindo atributos ao objFilho:
+            objFilho.setAttribute("id", "filho" + qtdeCampos);
+            console.log(resposta);
+            //var obj = jQuery.parseJSON(detento);
+            //var obj = JSON.parse(detento);
+            //obj = obj[0];
+            //console.log(obj);
+            //Inserindo o elemento no pai:
+            objPai.appendChild(objFilho);
+            //Escrevendo algo no filho recém-criado:
+            //var procedencia = utf8_encode(obj['procedencia']);
+            //var procedencia;
+            //procedencia = decodeURIComponent(escape(obj['procedencia']));
+            soma = 0;
+            subtotal = 0;
+            var MOV_QUANTIDADE = $('#MOV_QUANTIDADE').val();
+            if (MOV_QUANTIDADE) {
+
+                subtotal = (resposta.PRO_PRECO_VENDA*MOV_QUANTIDADE).toFixed(2);
+                soma = parseFloat(soma + subtotal)
+                soma = soma.toFixed(2);
+
+                document.getElementById("filho" + qtdeCampos).innerHTML = "<td class='align-middle mx-auto'>" + qtdeCampos + "</td>"+
+                "<td class='align-middle mx-auto'>"+resposta.PRO_NOME+"</td>"+
+                "<td class='align-middle mx-auto'>"+MOV_QUANTIDADE+"</td>"+
+                "<td class='align-middle mx-auto'>"+resposta.PRO_PRECO_VENDA+"</td>"+
+                "<td class='align-middle mx-auto'>"+subtotal+"</td>"+
+                "<td class='align-middle mx-auto'><input type='hidden' id='campo" + qtdeCampos + "' name='ITENS[]' value='" + resposta.PRO_COD + "'></input></td>"+
+                "<td class='align-middle mx-auto'><button type='button' class='col btn btn-danger' title='APAGAR DA LISTA' onClick='removerCampo(" + qtdeCampos + ")' value=''><i class='fa fa-trash'></i></button></td>";
+                //soma = $("#total").val('');
+                $("#MOV_QUANTIDADE").val('');
+                qtdeCampos++;
+            } else {
+                
+            }
+            
+        }
+
+        function removerCampo(id, qtdeCampos) {
+            var objPai = document.getElementById("itens");
+            var objFilho = document.getElementById("filho" + id);
+            var qtdeCampos = qtdeCampos;
+            qtdeCampos--;
+            //Removendo o DIV com id específico do nó-pai:
+            var removido = objPai.removeChild(objFilho);
+        }
+
+        /*
         $(".remover").click(function(e){
             e.preventDefault();
             //console.log(e);
@@ -310,6 +419,7 @@ $qtdMotivos = (is_array($motivos) ? count($motivos) : 0);
             $(this).closest('tr').remove();
             $("#itens").show();
         });
+        */
     </script>
 </body>
 

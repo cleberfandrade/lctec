@@ -36,7 +36,7 @@ $qtdMP = (is_array($movimentacoes_produto) ? count($movimentacoes_produto) : 0);
                     </section>
                 </header>
                 <section class="bg-light py-2">
-                    <div class="col-12 mx-auto row text-center m-1">
+                    <div class="col-12 mx-auto row text-center p-3">
                         <div class="col-4 mx-auto text-center text-bg-success">
                             <div class="card-body">
                                 <h5 class="card-title">ESTOQUE ATUAL</h5>
@@ -58,8 +58,10 @@ $qtdMP = (is_array($movimentacoes_produto) ? count($movimentacoes_produto) : 0);
                                 <a href="<?= DIRPAGE ?>movimentacoes" class="btn btn-dark">ACESSAR</a>
                             </div>
                         </div>
-                        <a class="col-6 btn btn-sm m-3 text-uppercase btn-secondary" href="<?= DIRPAGE; ?>estoques"><i class="bi bi-arrow-left"></i> VOLTAR AOS ESTOQUES</a>
-                        <a class="col-6 btn btn-sm m-3 text-uppercase btn-secondary" href="<?= DIRPAGE; ?>estoques/produtos/<?= $produto['EMP_COD']?>/<?= $produto['EST_COD']?>"><i class="bi bi-arrow-left"></i> VOLTAR AOS PRODUTOS</a>
+                        <div class="mx-auto text-center">
+                            <a class="col-5 btn btn-sm m-3 text-uppercase btn-secondary" href="<?= DIRPAGE; ?>estoques"><i class="bi bi-arrow-left"></i> VOLTAR AOS ESTOQUES</a>
+                            <a class="col-5 btn btn-sm m-3 text-uppercase btn-secondary" href="<?= DIRPAGE; ?>estoques/produtos/<?= $produto['EMP_COD']?>/<?= $produto['EST_COD']?>"><i class="bi bi-arrow-left"></i> VOLTAR AOS PRODUTOS</a>
+                        </div>
                     </div>
                     <div class="container col-11 mx-auto row">
                         <div class="py-1">

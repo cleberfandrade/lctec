@@ -11,6 +11,7 @@ use App\Models\Empresas;
 use App\Models\Enderecos;
 use App\Models\Estoques as ModelsEstoques;
 use App\Models\Financas;
+use App\Models\FormasPagamentos;
 use App\Models\Fornecedores;
 use App\Models\ModulosEmpresa;
 use App\Models\Movimentacoes as MovimentacoesModels;
@@ -34,7 +35,7 @@ class movimentacoes extends View
     $Usuarios,$Produtos,$Empresa,$UsuariosEmpresa,
     $Check,$CargosSalarios,$ModulosEmpresa,$Financas,
     $Estoques,$Setores,$Categorias,$Classificacoes,
-    $Movimentacoes,$Transacoes;
+    $Movimentacoes,$Transacoes,$FormasPagamentos;
     public function __construct()
     {
         Sessao::naoLogado();
@@ -52,6 +53,7 @@ class movimentacoes extends View
         $this->Categorias = new Categorias;
         $this->Produtos = new Produtos;
         $this->Classificacoes = new Classificacoes;
+        $this->FormasPagamentos = new FormasPagamentos;
         $this->Movimentacoes = new MovimentacoesModels;
         $this->Transacoes = new Transacoes;
 
@@ -65,7 +67,7 @@ class movimentacoes extends View
         $this->dados['classificacoes'] = $this->Classificacoes->setCodEmpresa($_SESSION['EMP_COD'])->setTipo(4)->listarTodosPorTipo(0);
         
         $this->dados['clientes'] = $this->Clientes->setCodEmpresa($_SESSION['EMP_COD'])->listarTodosAtivos(0);
-
+        $this->dados['formas_pagamentos'] = $this->FormasPagamentos->setCodEmpresa($_SESSION['EMP_COD'])->listarTodasAtivas(0);
         $this->dados['movimentacoes'] = $this->Movimentacoes->setCodEmpresa($_SESSION['EMP_COD'])->listarTodas(0); 
 
         $this->link[0] = ['link'=> 'admin','nome' => 'PAINEL ADMINISTRATIVO'];
