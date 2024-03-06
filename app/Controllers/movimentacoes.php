@@ -293,6 +293,8 @@ class movimentacoes extends View
                         'MOV_DT_MOVIMENTACAO'=>  $dados['MOV_DT_MOVIMENTACAO'],     
                         'MOV_TIPO' => $dados['MOV_TIPO'],
                         'MOV_MOTIVO' => $dados['MOV_MOTIVO'],
+                        'MOV_QUANTIDADE' => $dados['MOV_QUANTIDADE'][$i],
+                        'MOV_DESCRICAO' => $dados['MOV_DESCRICAO'],
                         'MOV_STATUS'=> 1
                     );
                 }
