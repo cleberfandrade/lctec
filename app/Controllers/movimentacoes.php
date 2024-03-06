@@ -281,59 +281,60 @@ class movimentacoes extends View
            
             if($this->dados['empresa']['USU_COD'] == $dados['USU_COD'] && $this->dados['empresa']['EMP_COD'] == $dados['EMP_COD']){
                
-                $qtd = (is_array($dados['PRO_COD'])? count($dados['PRO_COD']) : 0);
-                for ($i=0; $i < $qtd; $i++) { 
-                    $dados_movimentacao = array(
-                        'EMP_COD' => $_SESSION['EMP_COD'],
-                        'USU_COD' => $_SESSION['USU_COD'],
-                        'EST_COD' => $dados['EST_COD'],
-                        'PRO_COD' => $dados['PRO_COD'][$i],
-                        'MOV_DT_CADASTRO'=> date('Y-m-d H:i:s'),
-                        'MOV_DT_ATUALIZACAO'=> date('0000-00-00 00:00:00'),        
-                        'MOV_DT_MOVIMENTACAO'=>  $dados['MOV_DT_MOVIMENTACAO'],     
-                        'MOV_TIPO' => $dados['MOV_TIPO'],
-                        'MOV_MOTIVO' => $dados['MOV_MOTIVO'],
-                        'MOV_QUANTIDADE' => $dados['MOV_QUANTIDADE'][$i],
-                        'MOV_DESCRICAO' => $dados['MOV_DESCRICAO'],
-                        'MOV_STATUS'=> 1
-                    );
-                }
-                dump($dados_movimentacao);
-                /*REGISTRAR VENDA - MOTIVO 2 => VENDA
                 if($dados['MOV_MOTIVO']  == 2){
-                    $dados_venda = array(
-                        'EMP_COD' => $_SESSION['EMP_COD'],
-                        'USU_COD' => $_SESSION['USU_COD'],
-                        'CLI_COD' => $dados['CLI_COD'],
-                        'ITS_COD' => $id,
-                        'CXA_COD' => $dados['CXA_COD'],
-                        'FPG_COD' => $dados['FPG_COD'],
-                        'VEN_ORDEM' => '',
-                        'VEN_TOKEN' => $this->Check->token(5,'',true),
-                        'VEN_CODE' => '',
-                        'VEN_DT_CADASTRO'=> date('Y-m-d H:i:s'),
-                        'VEN_DT_ATUALIZACAO'=> date('0000-00-00 00:00:00'),  
-                        'VEN_VL_SUBTOTAL' => $dados['VEN_VL_SUBTOTAL'],
-                        'VEN_VL_DESCONTO' => $dados['VEN_VL_TOTAL'],
-                        'VEN_VL_TOTAL' => $dados['VEN_VL_TOTAL'],
-                        'VEN_STATUS'=> 1
-                    );
+                    $qtd = (is_array($dados['PRO_COD'])? count($dados['PRO_COD']) : 0);
+                    for ($i=0; $i < $qtd; $i++) { 
+                        $dados_movimentacao = array(
+                            'EMP_COD' => $_SESSION['EMP_COD'],
+                            'USU_COD' => $_SESSION['USU_COD'],
+                            'EST_COD' => $dados['EST_COD'],
+                            'PRO_COD' => $dados['PRO_COD'][$i],
+                            'MOV_DT_CADASTRO'=> date('Y-m-d H:i:s'),
+                            'MOV_DT_ATUALIZACAO'=> date('0000-00-00 00:00:00'),        
+                            'MOV_DT_MOVIMENTACAO'=>  $dados['MOV_DT_MOVIMENTACAO'],     
+                            'MOV_TIPO' => $dados['MOV_TIPO'],
+                            'MOV_MOTIVO' => $dados['MOV_MOTIVO'],
+                            'MOV_QUANTIDADE' => $dados['MOV_QUANTIDADE'][$i],
+                            'MOV_DESCRICAO' => $dados['MOV_DESCRICAO'],
+                            'MOV_STATUS'=> 1
+                        );
+                    }
+                    dump($dados_movimentacao);
+                    /*REGISTRAR VENDA - MOTIVO 2 => VENDA
+                    
+                        $dados_venda = array(
+                            'EMP_COD' => $_SESSION['EMP_COD'],
+                            'USU_COD' => $_SESSION['USU_COD'],
+                            'CLI_COD' => $dados['CLI_COD'],
+                            'ITS_COD' => $id,
+                            'CXA_COD' => $dados['CXA_COD'],
+                            'FPG_COD' => $dados['FPG_COD'],
+                            'VEN_ORDEM' => '',
+                            'VEN_TOKEN' => $this->Check->token(5,'',true),
+                            'VEN_CODE' => '',
+                            'VEN_DT_CADASTRO'=> date('Y-m-d H:i:s'),
+                            'VEN_DT_ATUALIZACAO'=> date('0000-00-00 00:00:00'),  
+                            'VEN_VL_SUBTOTAL' => $dados['VEN_VL_SUBTOTAL'],
+                            'VEN_VL_DESCONTO' => $dados['VEN_VL_TOTAL'],
+                            'VEN_VL_TOTAL' => $dados['VEN_VL_TOTAL'],
+                            'VEN_STATUS'=> 1
+                        );
 
-                    $dados_itens = array(
-                        'EMP_COD' => $_SESSION['EMP_COD'],
-                        'USU_COD' => $_SESSION['USU_COD'],
-                        'VEN_COD' => $id,
-                        'PRO_COD' => $dados['PRO_COD'][$i],
-                        'ITS_DT_CADASTRO'=> date('Y-m-d H:i:s'),
-                        'ITS_DT_ATUALIZACAO'=> date('0000-00-00 00:00:00'), 
-                        'ITS_QUANTIDADE' => $dados['MOV_QUANTIDADE'][$i],
-                        'ITS_VL_DESCONTO' => '0.00',
-                        'ITS_VL_TOTAL' => $dados['PRO_PRECO_VENDA'][$i],
-                        'ITS_STATUS'=> 1
-                    );
+                        $dados_itens = array(
+                            'EMP_COD' => $_SESSION['EMP_COD'],
+                            'USU_COD' => $_SESSION['USU_COD'],
+                            'VEN_COD' => $id,
+                            'PRO_COD' => $dados['PRO_COD'][$i],
+                            'ITS_DT_CADASTRO'=> date('Y-m-d H:i:s'),
+                            'ITS_DT_ATUALIZACAO'=> date('0000-00-00 00:00:00'), 
+                            'ITS_QUANTIDADE' => $dados['MOV_QUANTIDADE'][$i],
+                            'ITS_VL_DESCONTO' => '0.00',
+                            'ITS_VL_TOTAL' => $dados['PRO_PRECO_VENDA'][$i],
+                            'ITS_STATUS'=> 1
+                        );*/
                 }else {
                    
-                }*/
+                }
             }else{
                 Sessao::alert('ERRO',' MOV12 - Acesso inválido(s)!','alert alert-danger');
             }
