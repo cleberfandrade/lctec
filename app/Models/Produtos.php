@@ -47,7 +47,7 @@ class Produtos extends Model
 
     public function listar($ver)
     {
-        $parametros = "WHERE EMP_COD={$this->codEmpresa} AND EST_COD={$this->codEstoque} AND PRO_COD={$this->codigo}";
+        $parametros = "P INNER JOIN tb_empresas E ON P.EMP_COD=E.EMP_COD INNER JOIN tb_estoques ET ON P.EST_COD=ET.EST_COD WHERE P.EMP_COD={$this->codEmpresa} AND P.EST_COD={$this->codEstoque} AND P.PRO_COD={$this->codigo}";
         $campos = "*";
         $resultado = $this->Model->exibir($parametros, $campos, $ver = 0, $id = false);
         if ($resultado) {

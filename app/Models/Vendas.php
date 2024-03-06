@@ -3,7 +3,7 @@ namespace App\Models;
 
 use Core\Model;
 
-class vendas extends Model
+class Vendas extends Model
 { 
     private $tabela = 'tb_vendas';
     private $Model = '';

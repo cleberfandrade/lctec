@@ -20,6 +20,7 @@ use App\Models\Setores;
 use App\Models\Transacoes;
 use App\Models\Usuarios;
 use App\Models\UsuariosEmpresa;
+use App\Models\Vendas;
 use Libraries\Util;
 
 use Core\View;
@@ -35,7 +36,7 @@ class movimentacoes extends View
     $Usuarios,$Produtos,$Empresa,$UsuariosEmpresa,
     $Check,$CargosSalarios,$ModulosEmpresa,$Financas,
     $Estoques,$Setores,$Categorias,$Classificacoes,
-    $Movimentacoes,$Transacoes,$FormasPagamentos;
+    $Movimentacoes,$Transacoes,$FormasPagamentos,$Vendas;
     public function __construct()
     {
         Sessao::naoLogado();
@@ -56,6 +57,7 @@ class movimentacoes extends View
         $this->FormasPagamentos = new FormasPagamentos;
         $this->Movimentacoes = new MovimentacoesModels;
         $this->Transacoes = new Transacoes;
+        $this->Vendas = new Vendas;
 
         $this->dados['empresa'] = $this->UsuariosEmpresa->setCodEmpresa($_SESSION['EMP_COD'])->setCodUsuario($_SESSION['USU_COD'])->listar(0);
         $this->dados['usuario'] = $this->Usuarios->setCodUsuario($_SESSION['USU_COD'])->listar(0);
@@ -281,13 +283,16 @@ class movimentacoes extends View
            
             if($this->dados['empresa']['USU_COD'] == $dados['USU_COD'] && $this->dados['empresa']['EMP_COD'] == $dados['EMP_COD']){
                
-                $this->dados['produto'] = $this->Produtos->setCodEmpresa($dados['EMP_COD'])->setCodEstoque($dados['EST_COD'])->setCodigo($dados['PRO_COD'])->listar(0);
+                
+
                 $liberado = false;
                 $motivo = false;
                 if (!empty($dados['MOV_TIPO'])) {
                     if($dados['MOV_MOTIVO'] == 2){
                         $qtd = (is_array($dados['PRO_COD'])? count($dados['PRO_COD']) : 0);
                         for ($i=0; $i < $qtd; $i++) { 
+                            
+                            $this->dados['produto'] = $this->Produtos->setCodEmpresa($dados['EMP_COD'])->setCodEstoque($dados['EST_COD'])->setCodigo($dados['PRO_COD'])->listar(0);
                             $dados_movimentacao = array(
                                 'EMP_COD' => $_SESSION['EMP_COD'],
                                 'USU_COD' => $_SESSION['USU_COD'],
@@ -305,7 +310,7 @@ class movimentacoes extends View
                         }
                         dump($dados_movimentacao);
                         /*REGISTRAR VENDA - MOTIVO 2 => VENDA
-                    
+                        
                         $dados_venda = array(
                             'EMP_COD' => $_SESSION['EMP_COD'],
                             'USU_COD' => $_SESSION['USU_COD'],
@@ -323,7 +328,7 @@ class movimentacoes extends View
                             'VEN_VL_TOTAL' => $dados['VEN_VL_TOTAL'],
                             'VEN_STATUS'=> 1
                         );
-
+                        $this->Vendas->cadastrar($dados_venda,0);
                         $dados_itens = array(
                             'EMP_COD' => $_SESSION['EMP_COD'],
                             'USU_COD' => $_SESSION['USU_COD'],
