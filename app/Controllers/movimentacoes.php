@@ -280,17 +280,23 @@ class movimentacoes extends View
             $this->dados['empresa'] = $this->UsuariosEmpresa->setCodEmpresa($_SESSION['EMP_COD'])->setCodUsuario($_SESSION['USU_COD'])->listar(0);
            
             if($this->dados['empresa']['USU_COD'] == $dados['USU_COD'] && $this->dados['empresa']['EMP_COD'] == $dados['EMP_COD']){
-                dump($dados);
-                
-                //Verifica se tem algum valor proibido
-                foreach ($dados as $key => $value) {
-                    $dados[$key] = $this->Check->checarString($value);
+               
+                $qtd = (is_array($dados['ITENS'])? count($dados['ITENS']) : 0);
+                for ($i=0; $i < $qtd; $i++) { 
+                    $dados_movimentacao = array(
+                        'EMP_COD' => $_SESSION['EMP_COD'],
+                        'USU_COD' => $_SESSION['USU_COD'],
+                        'EST_COD' => $dados['EST_COD'],
+                        'PRO_COD' => $dados['ITENS'][$i],
+                        'MOV_DT_CADASTRO'=> date('Y-m-d H:i:s'),
+                        'MOV_DT_ATUALIZACAO'=> date('0000-00-00 00:00:00'),        
+                        'MOV_DT_MOVIMENTACAO'=>  $dados['MOV_DT_MOVIMENTACAO'],     
+                        'MOV_TIPO' => $dados['MOV_TIPO'],
+                        'MOV_MOTIVO' => $dados['MOV_MOTIVO'],
+                        'MOV_STATUS'=> 1
+                    );
                 }
-                $dados += array(
-                    'MOV_DT_CADASTRO'=> date('Y-m-d H:i:s'),
-                    'MOV_DT_ATUALIZACAO'=> date('0000-00-00 00:00:00'),             
-                    'MOV_STATUS'=> 1
-                );
+                dump($dados_movimentacao);
                 //REGISTRAR VENDA - MOTIVO 2 => VENDA
                 /* if($dados['MOV_MOTIVO']  == 2){
                     $db_transacao = array(
