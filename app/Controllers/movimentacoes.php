@@ -281,13 +281,13 @@ class movimentacoes extends View
            
             if($this->dados['empresa']['USU_COD'] == $dados['USU_COD'] && $this->dados['empresa']['EMP_COD'] == $dados['EMP_COD']){
                
-                $qtd = (is_array($dados['ITENS'])? count($dados['ITENS']) : 0);
+                $qtd = (is_array($dados['PRO_COD'])? count($dados['PRO_COD']) : 0);
                 for ($i=0; $i < $qtd; $i++) { 
                     $dados_movimentacao = array(
                         'EMP_COD' => $_SESSION['EMP_COD'],
                         'USU_COD' => $_SESSION['USU_COD'],
                         'EST_COD' => $dados['EST_COD'],
-                        'PRO_COD' => $dados['ITENS'][$i],
+                        'PRO_COD' => $dados['PRO_COD'][$i],
                         'MOV_DT_CADASTRO'=> date('Y-m-d H:i:s'),
                         'MOV_DT_ATUALIZACAO'=> date('0000-00-00 00:00:00'),        
                         'MOV_DT_MOVIMENTACAO'=>  $dados['MOV_DT_MOVIMENTACAO'],     
