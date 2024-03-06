@@ -281,26 +281,30 @@ class movimentacoes extends View
            
             if($this->dados['empresa']['USU_COD'] == $dados['USU_COD'] && $this->dados['empresa']['EMP_COD'] == $dados['EMP_COD']){
                
-                if($dados['MOV_MOTIVO']  == 2){
-                    $qtd = (is_array($dados['PRO_COD'])? count($dados['PRO_COD']) : 0);
-                    for ($i=0; $i < $qtd; $i++) { 
-                        $dados_movimentacao = array(
-                            'EMP_COD' => $_SESSION['EMP_COD'],
-                            'USU_COD' => $_SESSION['USU_COD'],
-                            'EST_COD' => $dados['EST_COD'],
-                            'PRO_COD' => $dados['PRO_COD'][$i],
-                            'MOV_DT_CADASTRO'=> date('Y-m-d H:i:s'),
-                            'MOV_DT_ATUALIZACAO'=> date('0000-00-00 00:00:00'),        
-                            'MOV_DT_MOVIMENTACAO'=>  $dados['MOV_DT_MOVIMENTACAO'],     
-                            'MOV_TIPO' => $dados['MOV_TIPO'],
-                            'MOV_MOTIVO' => $dados['MOV_MOTIVO'],
-                            'MOV_QUANTIDADE' => $dados['MOV_QUANTIDADE'][$i],
-                            'MOV_DESCRICAO' => $dados['MOV_DESCRICAO'],
-                            'MOV_STATUS'=> 1
-                        );
-                    }
-                    dump($dados_movimentacao);
-                    /*REGISTRAR VENDA - MOTIVO 2 => VENDA
+                $this->dados['produto'] = $this->Produtos->setCodEmpresa($dados['EMP_COD'])->setCodEstoque($dados['EST_COD'])->setCodigo($dados['PRO_COD'])->listar(0);
+                $liberado = false;
+                $motivo = false;
+                if (!empty($dados['MOV_TIPO'])) {
+                    if($dados['MOV_MOTIVO'] == 2){
+                        $qtd = (is_array($dados['PRO_COD'])? count($dados['PRO_COD']) : 0);
+                        for ($i=0; $i < $qtd; $i++) { 
+                            $dados_movimentacao = array(
+                                'EMP_COD' => $_SESSION['EMP_COD'],
+                                'USU_COD' => $_SESSION['USU_COD'],
+                                'EST_COD' => $dados['EST_COD'],
+                                'PRO_COD' => $dados['PRO_COD'][$i],
+                                'MOV_DT_CADASTRO'=> date('Y-m-d H:i:s'),
+                                'MOV_DT_ATUALIZACAO'=> date('0000-00-00 00:00:00'),        
+                                'MOV_DT_MOVIMENTACAO'=>  $dados['MOV_DT_MOVIMENTACAO'],     
+                                'MOV_TIPO' => $dados['MOV_TIPO'],
+                                'MOV_MOTIVO' => $dados['MOV_MOTIVO'],
+                                'MOV_QUANTIDADE' => $dados['MOV_QUANTIDADE'][$i],
+                                'MOV_DESCRICAO' => $dados['MOV_DESCRICAO'],
+                                'MOV_STATUS'=> 1
+                            );
+                        }
+                        dump($dados_movimentacao);
+                        /*REGISTRAR VENDA - MOTIVO 2 => VENDA
                     
                         $dados_venda = array(
                             'EMP_COD' => $_SESSION['EMP_COD'],
@@ -332,8 +336,11 @@ class movimentacoes extends View
                             'ITS_VL_TOTAL' => $dados['PRO_PRECO_VENDA'][$i],
                             'ITS_STATUS'=> 1
                         );*/
+                    }else {
+                    
+                    }
                 }else {
-                   
+                    $motivo = true;
                 }
             }else{
                 Sessao::alert('ERRO',' MOV12 - Acesso inválido(s)!','alert alert-danger');
