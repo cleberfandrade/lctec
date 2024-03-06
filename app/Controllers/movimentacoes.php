@@ -292,7 +292,7 @@ class movimentacoes extends View
                         $qtd = (is_array($dados['PRO_COD'])? count($dados['PRO_COD']) : 0);
                         for ($i=0; $i < $qtd; $i++) { 
                             
-                            $this->dados['produto'] = $this->Produtos->setCodEmpresa($dados['EMP_COD'])->setCodEstoque($dados['EST_COD'])->setCodigo($dados['PRO_COD'])->listar(0);
+                            $this->dados['produto'] = $this->Produtos->setCodEmpresa($dados['EMP_COD'])->setCodEstoque($dados['EST_COD'])->setCodigo($dados['PRO_COD'][$i])->listar(0);
                             $dados_movimentacao = array(
                                 'EMP_COD' => $_SESSION['EMP_COD'],
                                 'USU_COD' => $_SESSION['USU_COD'],
