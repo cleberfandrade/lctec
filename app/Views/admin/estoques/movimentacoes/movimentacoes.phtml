@@ -193,7 +193,7 @@ $contagem = 1;
                                                     </td>
                                                     <td class="text-center">
                                                         <label class="form-label">DESCONTO %</label>
-                                                        <input type="number" id="PRO_DESCONTO" class="form-control text-center" min="0" maxn="100"  name='PRO_DESCONTO' value="0">
+                                                        <input type="number" id="PRO_DESCONTO" class="form-control text-center" min="0" maxn="100"  name='VEN_VL_DESCONTO' value="0">
                                                     </td>
                                                     <td colspan="2" class="text-center bg-1">
                                                         <label class="form-label fw-bold">TOTAL</label>
@@ -383,6 +383,7 @@ $contagem = 1;
                 "<td class='align-middle mx-auto'>"+subtotal+"</td>"+
                 "<td class='align-middle mx-auto'><input type='hidden' id='mov" + qtdeCampos + "' name='MOV_QUANTIDADE[]' value='" + resposta.MOV_QUANTIDADE + "'></input></td>"+
                 "<td class='align-middle mx-auto'><input type='hidden' id='campo" + qtdeCampos + "' name='PRO_COD[]' value='" + resposta.PRO_COD + "'></input></td>"+
+                "<td class='align-middle mx-auto'><input type='hidden' id='preco" + qtdeCampos + "' name='PRO_PRECO_VENDA[]' value='" + resposta.PRO_PRECO_VENDA + "'></input></td>"+
                 "<td class='align-middle mx-auto'><button type='button' class='col btn btn-danger' title='APAGAR DA LISTA' onClick='removerCampo(" + qtdeCampos + ")' value=''><i class='fa fa-trash'></i></button></td>";
                 
                 var PRO_DESCONTO =  $("#PRO_DESCONTO").val();
