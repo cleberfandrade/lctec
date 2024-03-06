@@ -130,7 +130,7 @@ $contagem = 1;
                                     <?php if($_SESSION['USU_NIVEL'] == 30){ ?>
                                     <div class="input-group input-group-lg">
                                         <div class="form-floating">
-                                            <input type="number" class="form-control maiusculo" id="MOV_QUANTIDADE" min="0" value="<?= isset($_POST['MOV_QUANTIDADE']) ? $_POST['MOV_QUANTIDADE'] : ''; ?>">
+                                            <input type="number" class="form-control maiusculo" id="MOV_QUANTIDADE" name="MOV_QUANTIDADE" min="0" value="<?= isset($_POST['MOV_QUANTIDADE']) ? $_POST['MOV_QUANTIDADE'] : ''; ?>">
                                             <label class="px-2" for="MOV_QUANTIDADE">QUANTIDADE</label>
                                         </div>
                                         <button type="button" class="btn text-uppercase btn-success" id="adicionar"><i class="fa fa-plus"></i></button>
@@ -378,9 +378,10 @@ $contagem = 1;
 
                 document.getElementById("filho" + qtdeCampos).innerHTML = "<td class='align-middle mx-auto'>" + qtdeCampos + "</td>"+
                 "<td class='align-middle mx-auto'>"+resposta.PRO_NOME+"</td>"+
-                "<td name='MOV_QUANTIDADE[]' value='"+MOV_QUANTIDADE+"' class='align-middle mx-auto'>"+MOV_QUANTIDADE+"</td>"+
+                "<td class='align-middle mx-auto'>"+MOV_QUANTIDADE+"</td>"+
                 "<td class='align-middle mx-auto'>"+resposta.PRO_PRECO_VENDA+"</td>"+
                 "<td class='align-middle mx-auto'>"+subtotal+"</td>"+
+                "<td class='align-middle mx-auto'><input type='hidden' id='mov" + qtdeCampos + "' name='MOV_QUANTIDADE[]' value='" + resposta.MOV_QUANTIDADE + "'></input></td>"+
                 "<td class='align-middle mx-auto'><input type='hidden' id='campo" + qtdeCampos + "' name='PRO_COD[]' value='" + resposta.PRO_COD + "'></input></td>"+
                 "<td class='align-middle mx-auto'><button type='button' class='col btn btn-danger' title='APAGAR DA LISTA' onClick='removerCampo(" + qtdeCampos + ")' value=''><i class='fa fa-trash'></i></button></td>";
                 
