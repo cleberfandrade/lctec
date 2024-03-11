@@ -236,8 +236,8 @@ $contagem = 1;
                             <h1 class="modal-title text-center mx-auto fs-5" id="novo_cliente">NOVO CLIENTE</h1>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                        <div class="modal-body">
-                            <form id="cadastrar_novo_cliente">
+                        <form class="p-1 border text-uppercase rounded-3 " id="formulario_novo_cliente">
+                            <div class="modal-body">
                                 <div class="row">
                                     <div class="col-5 form-floating mb-2">
                                         <select class="form-select" name="CLI_TIPO">
@@ -249,11 +249,11 @@ $contagem = 1;
                                     </div>
                                     <div class="col-7 form-floating mb-3">
                                         <input type="text" class="form-control maiusculo" id="1" name="CLI_NOME" placeholder="Informe seu nome" value="<?= isset($_POST['CLI_NOME']) ? $_POST['CLI_NOME'] :''; ?>">
-                                        <label class="form-label" for="1">NOME</label>
+                                        <label class="form-label" for="1">NOME(*)</label>
                                     </div>    
                                     <div class="col-12 form-floating mb-3">
                                         <input type="text" class="form-control maiusculo" id="2" name="CLI_SOBRENOME" placeholder="Informe seu nome" value="<?= isset($_POST['CLI_SOBRENOME']) ? $_POST['CLI_SOBRENOME'] : ''; ?>">
-                                        <label class="form-label" for="2">SOBRENOME</label>
+                                        <label class="form-label" for="2">SOBRENOME(*)</label>
                                     </div> 
                                     <div class="col-12 mb-2">
                                         <div class="form-floating mb-3">
@@ -265,19 +265,18 @@ $contagem = 1;
                                     <div class="col-12 mb-3">
                                         <div class="form-floating mb-3">
                                             <input type="text" name="CLI_REGISTRO" onfocus="javascript: retirarFormatacao(this);" onblur="javascript: formatarCampo(this);" maxlength="14" class="form-control" value="<?= isset($_POST['CLI_REGISTRO']) ? $_POST['CLI_REGISTRO'] : '' ?>">
-                                            <label for="registro">CPF/CNPJ*</label>
+                                            <label for="registro">CPF/CNPJ(*)</label>
                                         </div>
                                     </div>
-                                    <hr class="my-2">
                                 </div>
-                            </form>
-                        </div>
-                        <div class="modal-footer mx-auto">
-                            <button type="button" class="btn btn-lg text-uppercase  btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                            <input type="hidden" class="form-control" name="EMP_COD" value="<?= isset($_SESSION['EMP_COD']) ? $_SESSION['EMP_COD'] : 0; ?>">
-                            <input type="hidden" class="form-control" name="USU_COD" value="<?= isset($_SESSION['USU_COD']) ? $_SESSION['USU_COD'] : 0; ?>">
-                            <button class="btn btn-lg text-uppercase btn-success" id="cadastrar_cliente" name="CADASTRAR_NOVO_CLIENTE" type="submit"><i class="fa fa-save"></i> Cadastrar</button>
-                        </div>
+                            </div>
+                            <div class="modal-footer mx-auto">
+                                <button type="button" class="btn btn-lg text-uppercase  btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                <input type="hidden" class="form-control" name="EMP_COD" value="<?= isset($_SESSION['EMP_COD']) ? $_SESSION['EMP_COD'] : 0; ?>">
+                                <input type="hidden" class="form-control" name="USU_COD" value="<?= isset($_SESSION['USU_COD']) ? $_SESSION['USU_COD'] : 0; ?>">
+                                <button class="btn btn-lg text-uppercase btn-success" id="btn_cadastrar_cliente" name="CADASTRAR_NOVO_CLIENTE" type="submit"><i class="fa fa-save"></i> Cadastrar</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -520,6 +519,19 @@ $contagem = 1;
                 $("#VEN_VL_TOTAL").val(VEN_VL_SUBTOTAL); 
             }
         });
+
+
+
+    </script>
+    <script type="text/javascript">
+        const novo_cliente = new bootstrap.Modal(document.getElementById("novo_cliente"));
+        const formulario_novo_cliente = document.getElementById("formulario_novo_cliente");
+        const btn_cadastrar_cliente = document.getElementById("btn_cadastrar_cliente");
+        if (formulario_novo_cliente) {
+            formulario_novo_cliente.addEventListener("submit", async (e)=> {
+                e.preventDefault();
+            });
+        }
     </script>
 </body>
 
