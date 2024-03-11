@@ -530,6 +530,12 @@ $contagem = 1;
         if (formulario_novo_cliente) {
             formulario_novo_cliente.addEventListener("submit", async (e)=> {
                 e.preventDefault();
+                
+                const dadosForm = new FormData(formulario_novo_cliente);
+
+                console.log(dadosForm);
+
+                btn_cadastrar_cliente.value="Salvando...";
             });
         }
     </script>
