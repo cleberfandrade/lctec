@@ -63,31 +63,73 @@ class clientes extends View
                 
                 if (!empty($dados['CLI_REGISTRO'])) {
                     $this->Clientes->setcodRegistro($dados['CLI_REGISTRO'])->setCodEmpresa($dados['EMP_COD']);
-                    dump($dados);
-                    exit;
+                   
                     //Verificar se já existe cadastro da empresa pelo REGISTRO: CPF ou CNPJ informado
                     $cli = $this->Clientes->checarRegistroCliente();
-                    if(!$cli){
 
+                    if(!$cli){
+                       
+                        $dados += array(
+                            'CLI_DT_CADASTRO'=> date('Y-m-d H:i:s'),
+                            'CLI_DT_ATUALIZACAO'=> date('0000-00-00 00:00:00'),          
+                            'CLI_STATUS'=> 1
+                        );
+
+                        $id = $this->Clientes->cadastrar($dados,0);
+                        if($id){ 
+                            $endr = $this->Enderecos->setCodCliente($id)->checarEnderecoCliente();
+                            if(!$endr){
+                                $db_endereco = array(
+                                    'CLI_COD' => $id,
+                                    'END_DT_CADASTRO' => date('Y-m-d H:i:s'),
+                                    'END_DT_ATUALIZACAO' => date('0000-00-00 00:00:00'),
+                                    'END_STATUS' => 1
+                                );
+                                if ($this->Enderecos->cadastrar($db_endereco,0)) {
+                                    $respota = array(
+                                        'COD'=>'OK',
+                                        'MENSAGEM'=> 'ERRO COD6- CADASTRO EFETUADO COM SUCESSO!'
+                                    );
+                                }else {
+                                    $respota = array(
+                                        'COD'=>'OK',
+                                        'MENSAGEM'=> 'ERRO COD6- CADASTRO EFETUADO COM SUCESSO, ENDERECO NAO CADASTRADO!'
+                                    );
+                                }
+                            }else {
+                                $respota = array(
+                                    'COD'=>'OK',
+                                    'MENSAGEM'=> 'ERRO COD6- CADASTRO EFETUADO COM SUCESSO, ENDERECO NAO CADASTRADO!'
+                                );
+                            }
+                        }else{
+                            $respota = array(
+                                'COD'=>'ERRO',
+                                'MENSAGEM'=> 'ERRO COD 5- ERRO AO CADASTRAR NOVO CLIENTE, CONTATE O SUPORTE!'
+                            );
+                        }
                     }else{
-                        Sessao::alert('ERRO',' CLI2 - Dados inválido(s)!','alert alert-danger');
+                        $respota = array(
+                            'COD'=>'ERRO',
+                            'MENSAGEM'=> 'ERRO COD 4- CLIENTE JÁ ESTÁ CADASTRADO!'
+                        );
                     }
-                } else {
+                }else{
                     $respota = array(
                         'COD'=>'ERRO',
-                        'MENSAGEM'=> 'ERRO 3- Informe o CPF/CNPJ válido(s)!'
+                        'MENSAGEM'=> 'ERRO COD 3- Informe o CPF/CNPJ válido(s)!'
                     );
                 }                
-            }else {
+            }else{
                 $respota = array(
                     'COD'=>'ERRO',
-                    'MENSAGEM'=> 'ERRO 2- Dados inválido(s)!'
+                    'MENSAGEM'=> 'ERRO COD 2- Dados inválido(s)!'
                 );
             }
-        }else {
+        }else{
             $respota = array(
                 'COD'=>'ERRO',
-                'MENSAGEM'=> 'ERRO 1- Acesso inválido!'
+                'MENSAGEM'=> 'ERRO COD 1- Acesso inválido!'
             );
         }
         echo json_encode($respota);
