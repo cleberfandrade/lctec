@@ -156,7 +156,7 @@ $contagem = 1;
                                     <div class="col-6 mx-auto form-floating mb-3">
                                         <div class="input-group input-group-lg">
                                             <div class="form-floating">
-                                                <select class="form-select " name="CLI_COD"> 
+                                                <select id="cliente" class="form-select" name="CLI_COD"> 
                                                     <option value="0" <?= (isset($_POST['CLI_COD']) &&  $_POST['CLI_COD']  == 0)? 'selected' : '' ?>>---</option>
                                                 <?php for ($i=0; $i < $qtdClientes; $i++) { ?>
                                                     <option value="<?= $i ?>" <?= (isset($_POST['CLI_COD']) &&  $_POST['CLI_COD']  == $i)? 'selected' : '' ?>><?= $clientes[$i]['CLI_NOME'] ?></option>
@@ -525,9 +525,6 @@ $contagem = 1;
                 $("#VEN_VL_TOTAL").val(VEN_VL_SUBTOTAL); 
             }
         });
-
-
-
     </script>
     <script type="text/javascript">
         const novo_cliente = new bootstrap.Modal(document.getElementById("novo_cliente"));
@@ -556,7 +553,11 @@ $contagem = 1;
                         $('#resposta3').hide();
                     }, 800);
 
+                    const pai = document.getElementById("cliente");
+                    //Criando o elemento DIV;
+                    const teste = document.createElement("option");
 
+                    pai.appendChild(teste);
 
                 }else{
                     $('#resposta3').addClass('alert alert-warning');

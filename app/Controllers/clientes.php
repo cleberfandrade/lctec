@@ -88,7 +88,8 @@ class clientes extends View
                                 if ($this->Enderecos->cadastrar($db_endereco,0)) {
                                     $respota = array(
                                         'COD'=>'OK',
-                                        'MENSAGEM'=> 'ERRO COD6- CADASTRO EFETUADO COM SUCESSO!'
+                                        'MENSAGEM'=> 'ERRO COD6- CADASTRO EFETUADO COM SUCESSO!',
+                                        'DADOS' => $dados
                                     );
                                 }else {
                                     $respota = array(
