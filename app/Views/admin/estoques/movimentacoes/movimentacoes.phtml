@@ -149,15 +149,23 @@ $contagem = 1;
                                 <div class="col-12 mx-auto row mb-2">
                                 <?php if($_SESSION['USU_NIVEL'] == 30){ ?>
                                     <div class="col-6 mx-auto form-floating mb-3">
-                                        <select class="form-select " name="CLI_COD"> 
-                                            <option value="0" <?= (isset($_POST['CLI_COD']) &&  $_POST['CLI_COD']  == 0)? 'selected' : '' ?>>---</option>
-                                        <?php for ($i=0; $i < $qtdClientes; $i++) { ?>
-                                            <option value="<?= $i ?>" <?= (isset($_POST['CLI_COD']) &&  $_POST['CLI_COD']  == $i)? 'selected' : '' ?>><?= $clientes[$i]['CLI_NOME'] ?></option>
-                                        <?php } ?>
-                                        </select>
-                                        <label class="form-label">CLIENTE</label>
+                                        <div class="input-group input-group-lg">
+                                            <div class="form-floating">
+                                                <select class="form-select " name="CLI_COD"> 
+                                                    <option value="0" <?= (isset($_POST['CLI_COD']) &&  $_POST['CLI_COD']  == 0)? 'selected' : '' ?>>---</option>
+                                                <?php for ($i=0; $i < $qtdClientes; $i++) { ?>
+                                                    <option value="<?= $i ?>" <?= (isset($_POST['CLI_COD']) &&  $_POST['CLI_COD']  == $i)? 'selected' : '' ?>><?= $clientes[$i]['CLI_NOME'] ?></option>
+                                                <?php } ?>
+                                                </select>
+                                                <label class="form-label">CLIENTE</label>
+                                            </div>
+                                            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#novo_cliente" ><i class="fa fa-plus"></i></button>
+                                        </div>
+                                        
+                                        
                                     </div>
                                     <div class="col-6 mx-auto form-floating mb-3">
+                                        
                                         <select class="form-select " name="CLI_COD"> 
                                             <option value="0" <?= (isset($_POST['FPG_COD']) &&  $_POST['FPG_COD']  == 0)? 'selected' : '' ?>>---</option>
                                         <?php for ($i=0; $i < $qtdF; $i++) { if ($formas_pagamentos[$i]['FPG_STATUS'] == 1) { ?>
@@ -169,14 +177,14 @@ $contagem = 1;
                                     <div class="col-12 mx-auto form-floating mb-2">
                                         <table id="table"  class="table table-bordered">
                                             <thead>
-                                                <tr class="text-center bg-1 "><th colspan="7" class="text-white">ITENS</th></tr>
+                                                <tr class="text-center bg-1 "><th colspan="6" class="text-white">ITENS</th></tr>
                                                 <tr class="text-center">
                                                     <th>#</th>
                                                     <th>DESCRIÇÃO</th>
                                                     <th>QTD</th>
                                                     <th>VALOR UNIT.</th>
                                                     <th>SUB TOTAL</th>
-                                                    <th colspan="2"></th>
+                                                    <th>AÇÃO</th>
                                                 </tr>
                                             </thead>
                                             <tbody id="itens" class="text-center"></tbody>
@@ -221,6 +229,58 @@ $contagem = 1;
                     </div>
             </section>
             <?php include_once 'app/Views/admin/inc/rodape.phtml';?>
+            <div class="modal fade" id="novo_cliente" tabindex="-1" aria-labelledby="novo_cliente" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title text-center mx-auto fs-5" id="novo_cliente">NOVO CLIENTE</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form id="cadastrar_novo_cliente">
+                                <div class="row">
+                                    <div class="col-5 form-floating mb-2">
+                                        <select class="form-select" name="CLI_TIPO">
+                                            <option value="0" <?= (isset($_POST['CLI_TIPO']) &&  $_POST['CLI_TIPO']  == "0")? 'selected' : '' ?>>---</option>
+                                            <option value="PF"<?= (isset($_POST['CLI_TIPO']) &&  $_POST['CLI_TIPO']  == "PF")? 'selected' : '' ?>>PESSOA FÍSICA</option>
+                                            <option value="PJ" <?= (isset($_POST['CLI_TIPO']) &&  $_POST['CLI_TIPO']  == "PJ")? 'selected' : '' ?>>PESSOA JURÍDICA</option>
+                                        </select>
+                                        <label class="form-label">TIPO</label>
+                                    </div>
+                                    <div class="col-7 form-floating mb-3">
+                                        <input type="text" class="form-control maiusculo" id="1" name="CLI_NOME" placeholder="Informe seu nome" value="<?= isset($_POST['CLI_NOME']) ? $_POST['CLI_NOME'] :''; ?>">
+                                        <label class="form-label" for="1">NOME</label>
+                                    </div>    
+                                    <div class="col-12 form-floating mb-3">
+                                        <input type="text" class="form-control maiusculo" id="2" name="CLI_SOBRENOME" placeholder="Informe seu nome" value="<?= isset($_POST['CLI_SOBRENOME']) ? $_POST['CLI_SOBRENOME'] : ''; ?>">
+                                        <label class="form-label" for="2">SOBRENOME</label>
+                                    </div> 
+                                    <div class="col-12 mb-2">
+                                        <div class="form-floating mb-3">
+                                            <input type="text" id="FOR_TEL_1" name="CLI_TEL_1" onkeyup="handlePhone(event)" class="form-control form-control-lg" value="<?= isset($_POST['CLI_TEL_1']) ? $_POST['CLI_TEL_1'] : '' ?>">
+                                            <label class="form-label">TEL./CEL. 1 (WHATSAPP) (opcional)</label>
+                                        </div>
+                                    </div>
+                                   
+                                    <div class="col-12 mb-3">
+                                        <div class="form-floating mb-3">
+                                            <input type="text" name="CLI_REGISTRO" onfocus="javascript: retirarFormatacao(this);" onblur="javascript: formatarCampo(this);" maxlength="14" class="form-control" value="<?= isset($_POST['CLI_REGISTRO']) ? $_POST['CLI_REGISTRO'] : '' ?>">
+                                            <label for="registro">CPF/CNPJ*</label>
+                                        </div>
+                                    </div>
+                                    <hr class="my-2">
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer mx-auto">
+                            <button type="button" class="btn btn-lg text-uppercase  btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            <input type="hidden" class="form-control" name="EMP_COD" value="<?= isset($_SESSION['EMP_COD']) ? $_SESSION['EMP_COD'] : 0; ?>">
+                            <input type="hidden" class="form-control" name="USU_COD" value="<?= isset($_SESSION['USU_COD']) ? $_SESSION['USU_COD'] : 0; ?>">
+                            <button class="btn btn-lg text-uppercase btn-success" id="cadastrar_cliente" name="CADASTRAR_NOVO_CLIENTE" type="submit"><i class="fa fa-save"></i> Cadastrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <script type="text/javascript">
@@ -381,10 +441,10 @@ $contagem = 1;
                 "<td class='align-middle mx-auto'>"+MOV_QUANTIDADE+"</td>"+
                 "<td class='align-middle mx-auto'>"+resposta.PRO_PRECO_VENDA+"</td>"+
                 "<td class='align-middle mx-auto'>"+subtotal+"</td>"+
-                "<td class='align-middle mx-auto'><input type='hidden' id='mov" + qtdeCampos + "' name='MOV_QUANTIDADE[]' value='" + resposta.MOV_QUANTIDADE + "'></input></td>"+
-                "<td class='align-middle mx-auto'><input type='hidden' id='campo" + qtdeCampos + "' name='PRO_COD[]' value='" + resposta.PRO_COD + "'></input></td>"+
-                "<td class='align-middle mx-auto'><input type='hidden' id='preco" + qtdeCampos + "' name='PRO_PRECO_VENDA[]' value='" + resposta.PRO_PRECO_VENDA + "'></input></td>"+
-                "<td class='align-middle mx-auto'><button type='button' class='col btn btn-danger' title='APAGAR DA LISTA' onClick='removerCampo(" + qtdeCampos + ")' value=''><i class='fa fa-trash'></i></button></td>";
+                "<td class='align-middle mx-auto'><input type='hidden' id='mov" + qtdeCampos + "' name='MOV_QUANTIDADE[]' value='" + resposta.MOV_QUANTIDADE + "'></input>"+
+                "<input type='hidden' id='campo" + qtdeCampos + "' name='PRO_COD[]' value='" + resposta.PRO_COD + "'></input>"+
+                "<input type='hidden' id='preco" + qtdeCampos + "' name='PRO_PRECO_VENDA[]' value='" + resposta.PRO_PRECO_VENDA + "'></input>"+
+                "<button type='button' class='col btn btn-danger' title='APAGAR DA LISTA' onClick='removerCampo(" + qtdeCampos + ")' value=''><i class='fa fa-trash'></i></button></td>";
                 
                 var PRO_DESCONTO =  $("#PRO_DESCONTO").val();
                 if(PRO_DESCONTO !=="" || PRO_DESCONTO !== null){

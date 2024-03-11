@@ -70,11 +70,11 @@ $qtdS = (is_array($setores) ? count($setores) : 0);
                                 </div>
                                 <div class="col-6 form-floating mb-3">
                                     <input type="text" class="form-control maiusculo" id="1" name="CLI_NOME" placeholder="Informe seu nome" value="<?= isset($_POST['CLI_NOME']) ? $_POST['CLI_NOME'] :''; ?>">
-                                    <label class="px-3" for="1">Seu nome</label>
+                                    <label class="px-3" for="1">NOME</label>
                                 </div>    
                                 <div class="col-6 form-floating mb-3">
                                     <input type="text" class="form-control maiusculo" id="2" name="CLI_SOBRENOME" placeholder="Informe seu nome" value="<?= isset($_POST['CLI_SOBRENOME']) ? $_POST['CLI_SOBRENOME'] : ''; ?>">
-                                    <label class="px-3" for="2">Seu sobrenome</label>
+                                    <label class="px-3" for="2">SOBRENOME</label>
                                 </div> 
                             </div> 
                             <div class="row">
@@ -85,13 +85,13 @@ $qtdS = (is_array($setores) ? count($setores) : 0);
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input" type="radio" name="CLI_SEXO" id="flexRadioDefault2" value="1" <?= (isset($_POST['CLI_SEXO']) && $_POST['CLI_SEXO'] == 1) ? "checked" : ''; ?>>
                                             <label class="form-check-label" for="flexRadioDefault2">
-                                                Masculino
+                                                MASCULINO
                                             </label>
                                         </div>
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input" type="radio" name="CLI_SEXO" value="2" <?= (isset($_POST['CLI_SEXO']) && $_POST['CLI_SEXO'] == 2) ? "checked" : ''; ?> id="flexRadioDefault1">
                                             <label class="form-check-label" for="flexRadioDefault1">
-                                                Feminino
+                                                FEMININO
                                             </label>
                                         </div>
                                     </div>
@@ -172,7 +172,7 @@ $qtdS = (is_array($setores) ? count($setores) : 0);
                                 <div class="col-5 text-center mb-3">
                                     <div class="form-floating mb-3">
                                         <input type="email" class="form-control" id="email" name="CLI_EMAIL" placeholder="Informe seu email nome@examplo.com" value="<?= isset($_POST['CLI_EMAIL']) ? $_POST['CLI_EMAIL'] : ''; ?>">
-                                        <label for="email">Seu Email</label>
+                                        <label for="email">EMAIL</label>
                                     </div>
                                 </div>
                                 <hr class="my-4 text-dark">

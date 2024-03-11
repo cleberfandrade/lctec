@@ -1,6 +1,7 @@
 <?php
 namespace App\Controllers;
 
+use App\Models\Caixas;
 use App\Models\Clientes as ModelsCliente;
 use App\Models\Empresas as ModelsEmpresa;
 use App\Models\Enderecos;
@@ -15,7 +16,7 @@ use Libraries\Sessao;
 class empresas extends View
 {
     private $dados = [];
-    private $link,$Enderecos,$Clientes,$Usuarios,$Empresa,$UsuariosEmpresa,$Check,$CargosSalarios,$ModulosEmpresa,$Financas;
+    private $link,$Enderecos,$Clientes,$Usuarios,$Empresa,$UsuariosEmpresa,$Check,$CargosSalarios,$ModulosEmpresa,$Financas,$Caixas;
     public function __construct()
     {
         Sessao::naoLogado();
@@ -28,6 +29,8 @@ class empresas extends View
         $this->Check = new Check;
         $this->ModulosEmpresa = new ModulosEmpresa;
         $this->Financas = new Financas;
+        $this->Caixas = new Caixas;
+
         $this->dados['empresa'] = $this->UsuariosEmpresa->setCodEmpresa($_SESSION['EMP_COD'])->setCodUsuario($_SESSION['USU_COD'])->listar(0);
         $this->dados['empresas'] = $this->UsuariosEmpresa->listarTodasEmpresasUsuario(0);
         $this->dados['usuario'] = $this->Usuarios->setCodUsuario($_SESSION['USU_COD'])->listar(0);
@@ -220,7 +223,22 @@ class empresas extends View
                         
                         $this->Financas->setCodEmpresa($id);
                         if(!$this->Financas->checarRegistroContaEmpresa()){
-                            if ($this->Financas->cadastrar($db_conta_empresa,0)) {
+                            $id_conta = $this->Financas->cadastrar($db_conta_empresa,0);
+                            if ($id_conta) {
+
+                                //CADASTRAR CAIXA PARA OPERACOES
+
+                                $db_caixa_empresa = array(
+                                    'EMP_COD'  => $id,
+                                    'CTA_COD' => $id_conta,
+                                    'USU_COD' => '',
+                                    'CXA_DT_CADASTRO'    => date('Y-m-d H:i:s'),
+                                    'CXA_DT_ATUALIZACAO' => date('0000-00-00 00:00:00'),
+                                    'CXA_DESCRICAO'=> 'CAIXA 1',   
+                                    'CXA_SALDO'  => 0,
+                                    'CXA_STATUS' => 1
+                                );
+
                                 Sessao::alert('OK','Cadastro efetuado com sucesso!','fs-4 alert alert-success');
 
                             }else {
