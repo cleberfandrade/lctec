@@ -52,6 +52,46 @@ class clientes extends View
         $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
         $this->render('admin/cadastros/clientes/cadastrar', $this->dados);
     }
+    public function cadastro_simples():void
+    {
+        $ok = false;
+        $dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);
+        if (isset($_POST) && isset($dados['CADASTRAR_NOVO_CLIENTE'])) {
+            unset($dados['CADASTRAR_NOVO_CLIENTE']);
+            
+            if( $this->dados['empresa']['USU_COD'] == $dados['USU_COD'] && $this->dados['empresa']['EMP_COD'] == $dados['EMP_COD']){
+                
+                if (!empty($dados['CLI_REGISTRO'])) {
+                    $this->Clientes->setcodRegistro($dados['CLI_REGISTRO'])->setCodEmpresa($dados['EMP_COD']);
+                    dump($dados);
+                    exit;
+                    //Verificar se já existe cadastro da empresa pelo REGISTRO: CPF ou CNPJ informado
+                    $cli = $this->Clientes->checarRegistroCliente();
+                    if(!$cli){
+
+                    }else{
+                        Sessao::alert('ERRO',' CLI2 - Dados inválido(s)!','alert alert-danger');
+                    }
+                } else {
+                    $respota = array(
+                        'COD'=>'ERRO',
+                        'MENSAGEM'=> 'ERRO 3- Informe o CPF/CNPJ válido(s)!'
+                    );
+                }                
+            }else {
+                $respota = array(
+                    'COD'=>'ERRO',
+                    'MENSAGEM'=> 'ERRO 2- Dados inválido(s)!'
+                );
+            }
+        }else {
+            $respota = array(
+                'COD'=>'ERRO',
+                'MENSAGEM'=> 'ERRO 1- Acesso inválido!'
+            );
+        }
+        echo json_encode($respota);
+    }
     public function cadastrar():void
     {
         $this->dados['title'] .= ' CADASTRAR SEUS CLIENTES';

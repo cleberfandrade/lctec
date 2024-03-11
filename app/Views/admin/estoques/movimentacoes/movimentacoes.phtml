@@ -146,6 +146,11 @@ $contagem = 1;
                                     <label class="px-2" for="2">QUANTIDADE ATUAL</label>
                                     <b class="text-dark"><br><span id="PRO_QUANTIDADE">0</span></b>
                                 </div>
+                                <section class="container py-1">
+                                    <div id="resposta3" class="fs-4 text-center"></div>
+                                    <?= Sessao::alert('OK'); ?>
+                                    <?= Sessao::alert('ERRO'); ?>
+                                </section>
                                 <div class="col-12 mx-auto row mb-2">
                                 <?php if($_SESSION['USU_NIVEL'] == 30){ ?>
                                     <div class="col-6 mx-auto form-floating mb-3">
@@ -274,7 +279,8 @@ $contagem = 1;
                                 <button type="button" class="btn btn-lg text-uppercase  btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                                 <input type="hidden" class="form-control" name="EMP_COD" value="<?= isset($_SESSION['EMP_COD']) ? $_SESSION['EMP_COD'] : 0; ?>">
                                 <input type="hidden" class="form-control" name="USU_COD" value="<?= isset($_SESSION['USU_COD']) ? $_SESSION['USU_COD'] : 0; ?>">
-                                <button class="btn btn-lg text-uppercase btn-success" id="btn_cadastrar_cliente" name="CADASTRAR_NOVO_CLIENTE" type="submit"><i class="fa fa-save"></i> Cadastrar</button>
+                                <input type="hidden" class="form-control" name="CADASTRAR_NOVO_CLIENTE" value="<?= isset($_SESSION['USU_COD']) ? $_SESSION['USU_COD'] : 0; ?>">
+                                <button class="btn btn-lg text-uppercase btn-success" id="btn_cadastrar_cliente"  type="submit" name=""><i class="fa fa-save"></i> Cadastrar</button>
                             </div>
                         </form>
                     </div>
@@ -533,10 +539,46 @@ $contagem = 1;
                 
                 const dadosForm = new FormData(formulario_novo_cliente);
 
-                console.log(dadosForm);
+               
+                btn_cadastrar_cliente.innerText="Salvando...";
 
-                btn_cadastrar_cliente.value="Salvando...";
+                const dados = await fetch("<?= DIRPAGE; ?>clientes/cadastro_simples",{
+                    method:"POST",
+                    body: dadosForm
+                });
+                const resp = await dados.json();
+                console.log(resp);
+
+                if (resp['COD'] !== 'ERRO') {
+                    
+                    $('#resposta3').addClass('alert alert-success');
+                }else{
+                    $('#resposta3').addClass('alert alert-warning');
+                }
+                setTimeout(function () {
+                     $('#novo_cliente').modal('hide');
+                }, 1100);
+                $('#resposta3').html(resp['MENSAGEM']);
+              
             });
+        }
+    </script>
+     <script>
+        function formatarCampo(campoTexto) {
+        if (campoTexto.value.length <= 11) {
+            campoTexto.value = mascaraCpf(campoTexto.value);
+        } else {
+            campoTexto.value = mascaraCnpj(campoTexto.value);
+        }
+        }
+        function retirarFormatacao(campoTexto) {
+            campoTexto.value = campoTexto.value.replace(/(\.|\/|\-)/g,"");
+        }
+        function mascaraCpf(valor) {
+            return valor.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/g,"\$1.\$2.\$3\-\$4");
+        }
+        function mascaraCnpj(valor) {
+            return valor.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/g,"\$1.\$2.\$3\/\$4\-\$5");
         }
     </script>
 </body>
