@@ -231,7 +231,7 @@ class empresas extends View
                                 $db_caixa_empresa = array(
                                     'EMP_COD'  => $id,
                                     'CTA_COD' => $id_conta,
-                                    'USU_COD' => '',
+                                    'USU_COD' => $dados['USU_COD'],
                                     'CXA_DT_CADASTRO'    => date('Y-m-d H:i:s'),
                                     'CXA_DT_ATUALIZACAO' => date('0000-00-00 00:00:00'),
                                     'CXA_DESCRICAO'=> 'CAIXA 1',   
@@ -239,10 +239,14 @@ class empresas extends View
                                     'CXA_STATUS' => 1
                                 );
 
-                                Sessao::alert('OK','Cadastro efetuado com sucesso!','fs-4 alert alert-success');
-
+                                $this->Caixas->cadastrar($db_caixa_empresa,0);
+                                if ($id_conta) {
+                                 Sessao::alert('OK','Cadastro efetuado com sucesso!','fs-4 alert alert-success');
+                                }else {
+                                    Sessao::alert('OK','Cadastro efetuado com sucesso, crie UM CAIXA para efetuar suas vendas','fs-4 alert alert-success');
+                                }
                             }else {
-                                Sessao::alert('OK','Cadastro efetuado com sucesso, crie uma conta para gerenciar sua movimentação','fs-4 alert alert-success');
+                                Sessao::alert('OK','Cadastro efetuado com sucesso, crie (UMA CONTA E UM CAIXA) para gerenciar sua movimentação','fs-4 alert alert-success');
                             }
                         }else {
                             Sessao::alert('OK','Cadastro efetuado com sucesso!','fs-4 alert alert-success');
