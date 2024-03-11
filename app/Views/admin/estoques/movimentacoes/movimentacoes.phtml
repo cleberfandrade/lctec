@@ -157,7 +157,6 @@ $contagem = 1;
                                         <div class="input-group input-group-lg">
                                             <div class="form-floating">
                                                 <select id="cliente" class="form-select" name="CLI_COD"> 
-                                                    <option value="0" <?= (isset($_POST['CLI_COD']) &&  $_POST['CLI_COD']  == 0)? 'selected' : '' ?>>---</option>
                                                 <?php for ($i=0; $i < $qtdClientes; $i++) { ?>
                                                     <option value="<?= $i ?>" <?= (isset($_POST['CLI_COD']) &&  $_POST['CLI_COD']  == $i)? 'selected' : '' ?>><?= $clientes[$i]['CLI_NOME'] ?></option>
                                                 <?php } ?>
@@ -544,29 +543,37 @@ $contagem = 1;
                     body: dadosForm
                 });
                 const resp = await dados.json();
-                console.log(resp);
+               // console.log(resp);
 
                 if (resp['COD'] !== 'ERRO') {
                     
                     $('#resposta3').addClass('alert alert-success');
-                    setTimeout(function () {
-                        $('#resposta3').hide();
-                    }, 800);
+
+                    btn_cadastrar_cliente.innerText="Cadastrar";
 
                     const pai = document.getElementById("cliente");
                     //Criando o elemento DIV;
-                    const teste = document.createElement("option");
+                    const cliente = document.createElement("option");
 
-                    pai.appendChild(teste);
+                    cliente.text = resp['CLI_NOME'];
+                    cliente.value = resp['CLI_COD'];
+                    cliente.setAttribute("selected","select");
+                    pai.appendChild(cliente);
 
+                    formulario_novo_cliente.reset();
                 }else{
                     $('#resposta3').addClass('alert alert-warning');
                 }
-                btn_cadastrar_cliente.innerText="Cadastrar";
+
                 setTimeout(function () {
                      $('#novo_cliente').modal('hide');
                 }, 1100);
+
                 $('#resposta3').html(resp['MENSAGEM']);
+
+                setTimeout(function () {
+                        $('#resposta3').hide();
+                }, 900);
               
             });
         }

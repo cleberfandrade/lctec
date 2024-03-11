@@ -89,7 +89,8 @@ class clientes extends View
                                     $respota = array(
                                         'COD'=>'OK',
                                         'MENSAGEM'=> 'ERRO COD6- CADASTRO EFETUADO COM SUCESSO!',
-                                        'DADOS' => $dados
+                                        'CLI_NOME' => $dados['CLI_NOME'],
+                                        'CLI_COD' => $id
                                     );
                                 }else {
                                     $respota = array(
