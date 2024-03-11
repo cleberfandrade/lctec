@@ -157,8 +157,9 @@ $contagem = 1;
                                         <div class="input-group input-group-lg">
                                             <div class="form-floating">
                                                 <select id="cliente" class="form-select" name="CLI_COD"> 
+                                                <option value="0" <?= (isset($_POST['CLI_COD']) &&  $_POST['CLI_COD']  == 0)? 'selected' : '' ?>>---</option>
                                                 <?php for ($i=0; $i < $qtdClientes; $i++) { ?>
-                                                    <option value="<?= $i ?>" <?= (isset($_POST['CLI_COD']) &&  $_POST['CLI_COD']  == $i)? 'selected' : '' ?>><?= $clientes[$i]['CLI_NOME'] ?></option>
+                                                    <option value="<?= $clientes[$i]['CLI_COD'] ?>" <?= (isset($_POST['CLI_COD']) &&  $_POST['CLI_COD']  == $i)? 'selected' : '' ?>><?= $clientes[$i]['CLI_NOME'] ?></option>
                                                 <?php } ?>
                                                 </select>
                                                 <label class="form-label">CLIENTE</label>
