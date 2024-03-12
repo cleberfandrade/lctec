@@ -80,105 +80,10 @@ $qtdMP = (is_array($movimentacoes_produto) ? count($movimentacoes_produto) : 0);
                         </ul>
                         <div class="tab-content" id="myTabContent">
                             <div class="tab-pane fade show active" id="PRO_COD" role="tabpanel" aria-labelledby="PRO_COD" tabindex="0">
-                            <table class="table">
-                                <tbody>
-                                    <tr>
-                                        <td class="text-center align-middle">
-                                            <h4><b>NOME:</b></h4>
-                                        </td>
-                                        <td class="text-center align-middle" colspan="4">
-                                            <h3 class="display-4 fw-bold"><?= $produto['PRO_NOME'] ?></h3>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-center align-middle"></td>
-                                        <td class="text-center align-middle">
-                                            <h4><b>PREÇO DE CUSTO:</b></h4>
-                                        </td>
-                                        <td class="text-center align-middle">
-                                            <h3 class="display-5 fw-bold"><?= $produto['PRO_PRECO_UNITARIO'] ?></h3>
-                                        </td>
-                                        <td class="text-center align-middle">
-                                            <h4><b>PREÇO DE VENDA:</b></h4>
-                                        </td>
-                                        <td class="text-center align-middle">
-                                            <h3 class="display-5 fw-bold"><?= $produto['PRO_PRECO_VENDA'] ?></h3>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td class="text-center align-middle">
-                                            <h4><b>QUANTIDADE ATUAL:</b></h4></td>
-                                        <td>
-                                            <h3 class="display-4 fw-bold"><?= ($produto['PRO_QUANTIDADE'] < $produto['PRO_QTD_MIN'])? '<span title="Produto abaixo do estoque mínimo definido" class="btn btn-lg btn-warning">'.$produto['PRO_QUANTIDADE'].'</span>' : $produto['PRO_QUANTIDADE']; ?></h3>
-                                        </td>
-                                        <td class="text-center align-middle">
-                                            <h4><b>QUANTIDADE MIN:</b></h4>
-                                        </td>
-                                        <td class="text-center align-middle">
-                                            <h3 class="display-5 fw-bold"><?= $produto['PRO_QTD_MIN'] ?></h3>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-center align-middle">
-                                            <h4><b>DESCRIÇÃO:</b></h4>
-                                        </td>
-                                        <td class="text-center align-middle" colspan="4">
-                                             <?= $produto['PRO_DESCRICAO'] ?>
-                                        </td>
-                                    </tr>
-                                    <?php if($qtdC != 0) { ?>
-                                    <tr>
-                                        <td class="text-center align-middle">
-                                            <h4><b>CATEGORIA:</b></h4>
-                                        </td>
-                                        <td class="text-center align-middle" colspan="4">
-                                            <button class="btn btn-success btn-sm" type="button">
-                                                <?php for ($c = 0; $c < $qtdC; $c++) { 
-                                                    if ($categorias[$c]['CAT_COD'] == $produto['CAT_COD']) { ?>
-                                                    <?= $categorias[$c]['CAT_DESCRICAO']; ?>   
-                                                <?php } } ?>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <?php } ?>
-                                    
-                                </tbody>
-                            </table>
+                           
                             </div>
                             <div class="tab-pane fade" id="VEN_COD" role="tabpanel" aria-labelledby="VEN_COD" tabindex="0">
-                            <?php if($qtdMP != 0) { ?>
-                                <table class="table">
-                                    <thead>
-                                        <tr>
-                                            <th class="text-center align-middle" colspan="5">
-                                                <h4><b>VENDAS EFETUADAS:</b></h4>
-                                            </th>
-                                        </tr>
-                                        <tr class="text-center align-middle">
-                                            <th>#</th>
-                                            <th>DATA</th>
-                                            <th>QUANTIDADE</th>
-                                            <th></th>
-                                            <th></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                    <?php
-                                    $b = $qtdMP;
-                                    for ($i= 0; $i < $qtdMP; $i++) { 
-                                        $data = new DateTime($movimentacoes_produto[$i]['MOV_DT_MOVIMENTACAO']);
-                                    ?>
-                                        <tr>
-                                            <td class="text-center align-middle"><?= $b; ?></td>
-                                            <td class="text-center align-middle"><?= $data->format('d/m/Y'); ?></td>
-                                            <td class="text-center align-middle"><?= $movimentacoes_produto[$i]['MOV_QUANTIDADE']; ?></td>
-                                            <td class="text-center align-middle"></td>
-                                            <td class="text-center align-middle"></td>
-                                        </tr>
-                                    <?php $b--; } } ?>
-                                    </tbody>
-                            </table>
+                            
                             </div>
                             <div class="tab-pane fade" id="contact-tab-pane" role="tabpanel" aria-labelledby="contact-tab" tabindex="0">...</div>
                             <div class="tab-pane fade" id="disabled-tab-pane" role="tabpanel" aria-labelledby="disabled-tab" tabindex="0">...</div>
