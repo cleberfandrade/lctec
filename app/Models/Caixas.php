@@ -66,7 +66,7 @@ class Caixas extends Model
     }
     public function listarTodos($ver = 0)
     {
-        $parametros = "WHERE EMP_COD={$this->codEmpresa} ORDER BY CXA_DESCRICAO";
+        $parametros = "C INNER JOIN tb_empresas E ON C.EMP_COD=E.EMP_COD INNER JOIN tb_contas CT ON CT.CTA_COD=C.CTA_COD WHERE C.EMP_COD={$this->codEmpresa} ORDER BY C.CXA_DESCRICAO";
         $campos = "*";
         $resultado = $this->Model->exibir($parametros, $campos, $ver = 0, $id = false);
         if ($resultado) {

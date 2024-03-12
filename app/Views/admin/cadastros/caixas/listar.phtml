@@ -45,6 +45,7 @@ $qtd = (is_array($caixas) ? count($caixas) : 0);
                             <thead class="text-center text-uppercase">
                                 <th class="text-dark">#</th>
                                 <th class="text-dark">Descrição</th>
+                                <th class="text-dark">Conta</th>
                                 <th class="text-dark">Saldo</th>
                                 <th class="text-dark">Status</th>
                                 <?php if($_SESSION['USU_NIVEL'] >= 8){ ?><th class="text-dark">Ações</th><?php } ?> 
@@ -56,6 +57,7 @@ $qtd = (is_array($caixas) ? count($caixas) : 0);
                                     <tr class="<?= ($caixas[$i]['CXA_STATUS'] == 0 && $_SESSION['USU_NIVEL'] >= 8)? 'bg-secondary' : ''; ?>">
                                         <td class="text-center align-middle"><?= $b; ?></td>
                                         <td class="text-center align-middle"><?= $caixas[$i]['CXA_DESCRICAO']; ?></td>
+                                        <td class="text-center align-middle"><?= $caixas[$i]['CTA_DESCRICAO']; ?></td>
                                         <td class="text-center align-middle"><?= $caixas[$i]['CXA_SALDO']; ?></td>
                                         <td class="text-center align-middle"><?= ($caixas[$i]['CXA_STATUS'] == 1)? 'ATIVO' : 'DESATIVADO'; ?></td>
                                         <?php if($_SESSION['USU_NIVEL'] >= 8){ ?>
