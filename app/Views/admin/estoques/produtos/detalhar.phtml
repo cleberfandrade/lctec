@@ -87,71 +87,34 @@ $qtdMP = (is_array($movimentacoes_produto) ? count($movimentacoes_produto) : 0);
                                     </div>
                                 </div>
                                 <div class="bg-body-tertiary p-5 rounded">
-                                    <table class="table">
-                                        <tbody>
-                                            <tr>
-                                                <td class="text-center align-middle">
-                                                    <h4><b>NOME:</b></h4>
-                                                </td>
-                                                <td class="text-center align-middle" colspan="4">
-                                                    <h3 class="display-4 fw-bold"><?= $produto['PRO_NOME'] ?></h3>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="text-center align-middle"></td>
-                                                <td class="text-center align-middle">
-                                                    <h4><b>PREÇO DE CUSTO:</b></h4>
-                                                </td>
-                                                <td class="text-center align-middle">
-                                                    <h3 class="display-5 fw-bold"><?= $produto['PRO_PRECO_UNITARIO'] ?></h3>
-                                                </td>
-                                                <td class="text-center align-middle">
-                                                    <h4><b>PREÇO DE VENDA:</b></h4>
-                                                </td>
-                                                <td class="text-center align-middle">
-                                                    <h3 class="display-5 fw-bold"><?= $produto['PRO_PRECO_VENDA'] ?></h3>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td></td>
-                                                <td class="text-center align-middle">
-                                                    <h4><b>QUANTIDADE ATUAL:</b></h4></td>
-                                                <td>
-                                                    <h3 class="display-4 fw-bold"><?= ($produto['PRO_QUANTIDADE'] < $produto['PRO_QTD_MIN'])? '<span title="Produto abaixo do estoque mínimo definido" class="btn btn-lg btn-warning">'.$produto['PRO_QUANTIDADE'].'</span>' : $produto['PRO_QUANTIDADE']; ?></h3>
-                                                </td>
-                                                <td class="text-center align-middle">
-                                                    <h4><b>QUANTIDADE MIN:</b></h4>
-                                                </td>
-                                                <td class="text-center align-middle">
-                                                    <h3 class="display-5 fw-bold"><?= $produto['PRO_QTD_MIN'] ?></h3>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="text-center align-middle">
-                                                    <h4><b>DESCRIÇÃO:</b></h4>
-                                                </td>
-                                                <td class="text-center align-middle" colspan="4">
-                                                    <?= $produto['PRO_DESCRICAO'] ?>
-                                                </td>
-                                            </tr>
-                                            <?php if($qtdC != 0) { ?>
-                                            <tr>
-                                                <td class="text-center align-middle">
-                                                    <h4><b>CATEGORIA:</b></h4>
-                                                </td>
-                                                <td class="text-center align-middle" colspan="4">
-                                                    <button class="btn btn-success btn-sm" type="button">
-                                                        <?php for ($c = 0; $c < $qtdC; $c++) { 
-                                                            if ($categorias[$c]['CAT_COD'] == $produto['CAT_COD']) { ?>
-                                                            <?= $categorias[$c]['CAT_DESCRICAO']; ?>   
-                                                        <?php } } ?>
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                            <?php } ?>
-                                            
-                                        </tbody>
-                                    </table>
+                                    <div class="my-3 p-3 bg-body row rounded shadow-sm">
+                                        <h6 class="border-bottom pb-2 mb-0">INFO</h6>
+                                        <div class="col-6 text-body-secondary pt-3">
+                                           
+                                            <p class="pb-3 mb-0 small lh-sm border-bottom">
+                                                <strong class="d-block text-gray-dark">PREÇO DE CUSTO</strong>
+                                                <?= $produto['PRO_PRECO_UNITARIO'] ?>
+                                            </p>
+                                        </div>
+                                        <div class="col-6 text-body-secondary pt-3">
+                                        
+                                        <p class="pb-3 mb-0 small lh-sm border-bottom">
+                                            <strong class="d-block text-gray-dark">PREÇO DE VENDA</strong>
+                                            <?= $produto['PRO_PRECO_VENDA'] ?>
+                                        </p>
+                                        </div>
+                                        <div class="d-flex text-body-secondary pt-3">
+                                        <svg class="bd-placeholder-img flex-shrink-0 me-2 rounded" width="32" height="32" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 32x32" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#6f42c1"></rect><text x="50%" y="50%" fill="#6f42c1" dy=".3em">32x32</text></svg>
+                                        <p class="pb-3 mb-0 small lh-sm border-bottom">
+                                            <strong class="d-block text-gray-dark">QUANTIDADE ATUAL</strong>
+                                            <?= ($produto['PRO_QUANTIDADE'] < $produto['PRO_QTD_MIN'])? '<span title="Produto abaixo do estoque mínimo definido" class="btn btn-lg btn-warning">'.$produto['PRO_QUANTIDADE'].'</span>' : $produto['PRO_QUANTIDADE']; ?>
+                                        </p>
+                                        </div>
+                                        <small class="d-block text-end mt-3">
+                                        <a href="#">All updates</a>
+                                        </small>
+                                    </div>
+                                  
                                 </div>
                             </div>
                             <div class="tab-pane fade" id="vendas-tab-pane" role="tabpanel" aria-labelledby="vendas-tab" tabindex="0">
