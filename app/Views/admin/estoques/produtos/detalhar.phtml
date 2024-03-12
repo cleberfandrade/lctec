@@ -66,10 +66,10 @@ $qtdMP = (is_array($movimentacoes_produto) ? count($movimentacoes_produto) : 0);
                     <div class="container col-11 mx-auto row">
                         <ul class="nav nav-tabs" id="produtos" role="tablist">
                             <li class="nav-item" role="presentation">
-                                <button class="nav-link active" id="PRO_COD" data-bs-toggle="tab" data-bs-target="#PRO_COD" type="button" role="tab" aria-controls="PRO_COD" aria-selected="true">DAODS</button>
+                                <button class="nav-link active" id="produto-tab" data-bs-toggle="tab" data-bs-target="#produto-tab-pane" type="button" role="tab" aria-controls="produto-tab-pane" aria-selected="true">DAODS</button>
                             </li>
                             <li class="nav-item" role="presentation">
-                                <button class="nav-link" id="VEN_COD" data-bs-toggle="tab" data-bs-target="#VEN_COD" type="button" role="tab" aria-controls="VEN_COD" aria-selected="false">VENDAS</button>
+                                <button class="nav-link" id="vendas-tab" data-bs-toggle="tab" data-bs-target="#vendas-tab-pane" type="button" role="tab" aria-controls="vendas-tab-pane" aria-selected="false">VENDAS</button>
                             </li>
                             <li class="nav-item" role="presentation">
                                 <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact-tab-pane" type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false">COMPRAS</button>
@@ -79,14 +79,20 @@ $qtdMP = (is_array($movimentacoes_produto) ? count($movimentacoes_produto) : 0);
                             </li>
                         </ul>
                         <div class="tab-content" id="myTabContent">
-                            <div class="tab-pane fade show active" id="PRO_COD" role="tabpanel" aria-labelledby="PRO_COD" tabindex="0">
+                            <div class="tab-pane fade show active" id="produto-tab-pane" role="tabpanel" aria-labelledby="produto-tab" tabindex="0">
+                                 <div class="d-flex align-items-center p-3 my-3 text-white bg-purple rounded shadow-sm">
+                                    <div class="lh-1">
+                                    <h1 class="h6 mb-0 text-white lh-1"><?= $produto['PRO_NOME'] ?></h1>
+                                    <small><?= $produto['PRO_DESCRICAO'] ?></small>
+                                    </div>
+                                </div>
                                 <div class="bg-body-tertiary p-5 rounded">
-                                    <h3><?= $produto['PRO_NOME'] ?></h3>
-                                    <p class="lead"><?= $produto['PRO_DESCRICAO'] ?></p>
+                                    <h3></h3>
+                                    <p class="lead"></p>
                                     <a class="btn btn-lg btn-primary" href="/docs/5.3/components/navbar/" role="button">View navbar docs »</a>
                                 </div>
                             </div>
-                            <div class="tab-pane fade" id="VEN_COD" role="tabpanel" aria-labelledby="VEN_COD" tabindex="0">
+                            <div class="tab-pane fade" id="vendas-tab-pane" role="tabpanel" aria-labelledby="vendas-tab" tabindex="0">
                             
                             </div>
                             <div class="tab-pane fade" id="contact-tab-pane" role="tabpanel" aria-labelledby="contact-tab" tabindex="0">...</div>
