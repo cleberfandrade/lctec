@@ -36,8 +36,8 @@ class caixas extends View
         $this->dados['caixas'] = $this->Caixas->setCodEmpresa($_SESSION['EMP_COD'])->listarTodos(0);
 
         $this->link[0] = ['link'=> 'admin','nome' => 'PAINEL ADMINISTRATIVO'];
-        $this->link[1] = ['link'=> 'cadastros','nome' => 'MÓDULO DE CADASTROS'];
-        $this->link[2] = ['link'=> 'clientes','nome' => 'GERENCIAR SEUS CAIXAS'];
+        $this->link[1] = ['link'=> 'financeiro','nome' => 'MÓDULO DE FINANÇAS'];
+        $this->link[2] = ['link'=> 'caixas','nome' => 'GERENCIAR SEUS CAIXAS'];
 
     }
     public function index()
@@ -45,5 +45,12 @@ class caixas extends View
         $this->dados['title'] .= ' GERENCIAR CAIXAS';   
         $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
         $this->render('admin/financeiro/caixas/listar', $this->dados);
+    }
+    public function cadastro()
+    {
+        $this->dados['title'] .= ' CADASTRAR CAIXA DA EMPRESA/NEGÓCIO';   
+        $this->link[3] = ['link'=> 'caixas/cadastro','nome' => 'CADASTRO DE CAIXAS'];
+        $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
+        $this->render('admin/financeiro/caixas/cadastrar', $this->dados);
     }
 }
