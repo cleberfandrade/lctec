@@ -70,10 +70,10 @@ $qtdMPS = (is_array($movimentacoes_produto_saidas) ? count($movimentacoes_produt
                                 <button class="nav-link active" id="produto-tab" data-bs-toggle="tab" data-bs-target="#produto-tab-pane" type="button" role="tab" aria-controls="produto-tab-pane" aria-selected="true">DADOS DO PRODUTO</button>
                             </li>
                             <li class="nav-item" role="presentation">
-                                <button class="nav-link" id="vendas-tab" data-bs-toggle="tab" data-bs-target="#vendas-tab-pane" type="button" role="tab" aria-controls="vendas-tab-pane" aria-selected="false">SAÍDAS DO PRODUTO</button>
+                                <button class="nav-link" id="compras-tab" data-bs-toggle="tab" data-bs-target="#compras-tab-pane" type="button" role="tab" aria-controls="compras-tab-pane" aria-selected="false">ENTRADAS DO PRODUTO</button>
                             </li>
                             <li class="nav-item" role="presentation">
-                                <button class="nav-link" id="compras-tab" data-bs-toggle="tab" data-bs-target="#compras-tab-pane" type="button" role="tab" aria-controls="compras-tab-pane" aria-selected="false">ENTRADAS DO PRODUTO</button>
+                                <button class="nav-link" id="vendas-tab" data-bs-toggle="tab" data-bs-target="#vendas-tab-pane" type="button" role="tab" aria-controls="vendas-tab-pane" aria-selected="false">SAÍDAS DO PRODUTO</button>
                             </li>
                         </ul>
                         <div class="tab-content" id="myTabContent">
@@ -127,6 +127,50 @@ $qtdMPS = (is_array($movimentacoes_produto_saidas) ? count($movimentacoes_produt
                                     </div>
                                 </div>
                             </div>
+                            <div class="tab-pane fade" id="compras-tab-pane" role="tabpanel" aria-labelledby="compras-tab" tabindex="0">
+                                <div class="d-flex align-items-center p-3 my-3 text-white bg-2 rounded shadow-sm">
+                                    <div class="lh-1">
+                                        <h1 class="h6 mb-0 text-white lh-1"><?= $produto['PRO_NOME'] ?></h1>
+                                        <small><?= $produto['PRO_DESCRICAO'] ?></small>
+                                    </div>
+                                </div>
+                                <div class="bg-body-tertiary p-3 rounded">
+                                    <div class="my-3 p-3 bg-body row rounded shadow-sm">
+                                        <?php if($qtdMPE != 0) { ?>
+                                            <table class="table">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="text-center align-middle" colspan="5">
+                                                            <h4><b>VENDAS EFETUADAS:</b></h4>
+                                                        </th>
+                                                    </tr>
+                                                    <tr class="text-center align-middle">
+                                                        <th>#</th>
+                                                        <th>DATA</th>
+                                                        <th>QUANTIDADE</th>
+                                                        <th></th>
+                                                        <th></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                <?php $b = $qtdMPE;
+                                                    for ($i= 0; $i < $qtdMPE; $i++) { 
+                                                        $data = new DateTime($movimentacoes_produto_entradas[$i]['MOV_DT_CADASTRO']);
+                                                    ?>
+                                                        <tr>
+                                                            <td class="text-center align-middle"><?= $b; ?></td>
+                                                            <td class="text-center align-middle"><?= $data->format('d/m/Y H:i'); ?></td>
+                                                            <td class="text-center align-middle"><?= $movimentacoes_produto_entradas[$i]['MOV_QUANTIDADE']; ?></td>
+                                                            <td class="text-center align-middle"></td>
+                                                            <td class="text-center align-middle"></td>
+                                                        </tr>
+                                                    <?php $b--; } ?>
+                                                </tbody>
+                                            </table>
+                                        <?php } ?>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="tab-pane fade" id="vendas-tab-pane" role="tabpanel" aria-labelledby="vendas-tab" tabindex="0">
                                  <div class="d-flex align-items-center p-3 my-3 text-white bg-2 rounded shadow-sm">
                                     <div class="lh-1">
@@ -153,14 +197,14 @@ $qtdMPS = (is_array($movimentacoes_produto_saidas) ? count($movimentacoes_produt
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                            <?php $b = $qtdMP;
-                                                for ($i= 0; $i < $qtdMP; $i++) { 
-                                                    $data = new DateTime($movimentacoes_produto[$i]['MOV_DT_CADASTRO']);
+                                            <?php $b = $qtdMPS;
+                                                for ($i= 0; $i < $qtdMPS; $i++) { 
+                                                    $data = new DateTime($movimentacoes_produto_saidas[$i]['MOV_DT_CADASTRO']);
                                                 ?>
                                                     <tr>
                                                         <td class="text-center align-middle"><?= $b; ?></td>
                                                         <td class="text-center align-middle"><?= $data->format('d/m/Y H:i'); ?></td>
-                                                        <td class="text-center align-middle"><?= $movimentacoes_produto[$i]['MOV_QUANTIDADE']; ?></td>
+                                                        <td class="text-center align-middle"><?= $movimentacoes_produto_saidas[$i]['MOV_QUANTIDADE']; ?></td>
                                                         <td class="text-center align-middle"></td>
                                                         <td class="text-center align-middle"></td>
                                                     </tr>
@@ -171,50 +215,7 @@ $qtdMPS = (is_array($movimentacoes_produto_saidas) ? count($movimentacoes_produt
                                     </div>
                                 </div>
                             </div>
-                            <div class="tab-pane fade" id="compras-tab-pane" role="tabpanel" aria-labelledby="compras-tab" tabindex="0">
-                                <div class="d-flex align-items-center p-3 my-3 text-white bg-2 rounded shadow-sm">
-                                    <div class="lh-1">
-                                        <h1 class="h6 mb-0 text-white lh-1"><?= $produto['PRO_NOME'] ?></h1>
-                                        <small><?= $produto['PRO_DESCRICAO'] ?></small>
-                                    </div>
-                                </div>
-                                <div class="bg-body-tertiary p-3 rounded">
-                                    <div class="my-3 p-3 bg-body row rounded shadow-sm">
-                                        <?php if($qtdMPS != 0) { ?>
-                                            <table class="table">
-                                                <thead>
-                                                    <tr>
-                                                        <th class="text-center align-middle" colspan="5">
-                                                            <h4><b>VENDAS EFETUADAS:</b></h4>
-                                                        </th>
-                                                    </tr>
-                                                    <tr class="text-center align-middle">
-                                                        <th>#</th>
-                                                        <th>DATA</th>
-                                                        <th>QUANTIDADE</th>
-                                                        <th></th>
-                                                        <th></th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                <?php $b = $qtdMP;
-                                                    for ($i= 0; $i < $qtdMP; $i++) { 
-                                                        $data = new DateTime($movimentacoes_produto[$i]['MOV_DT_CADASTRO']);
-                                                    ?>
-                                                        <tr>
-                                                            <td class="text-center align-middle"><?= $b; ?></td>
-                                                            <td class="text-center align-middle"><?= $data->format('d/m/Y H:i'); ?></td>
-                                                            <td class="text-center align-middle"><?= $movimentacoes_produto[$i]['MOV_QUANTIDADE']; ?></td>
-                                                            <td class="text-center align-middle"></td>
-                                                            <td class="text-center align-middle"></td>
-                                                        </tr>
-                                                    <?php $b--; } ?>
-                                                </tbody>
-                                            </table>
-                                        <?php } ?>
-                                    </div>
-                                </div>
-                            </div>
+                            
                         </div>
                     </div>
                 </section>
