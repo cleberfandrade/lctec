@@ -33,7 +33,7 @@ class caixas extends View
         $this->dados['usuario'] = $this->Usuarios->setCodUsuario($_SESSION['USU_COD'])->listar(0);
         $this->dados['contas'] = $this->Contas->setCodEmpresa($_SESSION['EMP_COD'])->listarTodas();
 
-        $this->dados['caixas'] = $this->Caixas->setCodEmpresa($_SESSION['EMP_COD'])->listarTodas(0);
+        $this->dados['caixas'] = $this->Caixas->setCodEmpresa($_SESSION['EMP_COD'])->listarTodos(0);
 
         $this->link[0] = ['link'=> 'admin','nome' => 'PAINEL ADMINISTRATIVO'];
         $this->link[1] = ['link'=> 'cadastros','nome' => 'MÓDULO DE CADASTROS'];
