@@ -37,7 +37,7 @@ class movimentacoes extends View
     $Usuarios,$Produtos,$Empresa,$UsuariosEmpresa,
     $Check,$CargosSalarios,$ModulosEmpresa,$Financas,
     $Estoques,$Setores,$Categorias,$Classificacoes,
-    $Movimentacoes,$Transacoes,$FormasPagamentos,$Vendas $Caixas;
+    $Movimentacoes,$Transacoes,$FormasPagamentos,$Vendas,$Caixas;
     public function __construct()
     {
         Sessao::naoLogado();
