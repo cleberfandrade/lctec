@@ -399,35 +399,5 @@ class avisos extends View
 
 
 
-                            <?php if($qtdMP != 0) { ?>
-                                <table class="table">
-                                    <thead>
-                                        <tr>
-                                            <th class="text-center align-middle" colspan="5">
-                                                <h4><b>VENDAS EFETUADAS:</b></h4>
-                                            </th>
-                                        </tr>
-                                        <tr class="text-center align-middle">
-                                            <th>#</th>
-                                            <th>DATA</th>
-                                            <th>QUANTIDADE</th>
-                                            <th></th>
-                                            <th></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                    <?php
-                                    $b = $qtdMP;
-                                    for ($i= 0; $i < $qtdMP; $i++) { 
-                                        $data = new DateTime($movimentacoes_produto[$i]['MOV_DT_MOVIMENTACAO']);
-                                    ?>
-                                        <tr>
-                                            <td class="text-center align-middle"><?= $b; ?></td>
-                                            <td class="text-center align-middle"><?= $data->format('d/m/Y'); ?></td>
-                                            <td class="text-center align-middle"><?= $movimentacoes_produto[$i]['MOV_QUANTIDADE']; ?></td>
-                                            <td class="text-center align-middle"></td>
-                                            <td class="text-center align-middle"></td>
-                                        </tr>
-                                    <?php $b--; } } ?>
-                                    </tbody>
-                            </table>
+                            
+                                    
