@@ -9,7 +9,17 @@ $qtdCL = (is_array($classificacoes) ? count($classificacoes) : 0);
 $qtd = (is_array($produto) ? count($produto) : 0);
 $qtdMPE = (is_array($movimentacoes_produto_entradas) ? count($movimentacoes_produto_entradas) : 0);
 $qtdMPS = (is_array($movimentacoes_produto_saidas) ? count($movimentacoes_produto_saidas) : 0);
-
+$motivos = array(
+    0 => '---',
+    1 =>'COMPRA',
+    2 =>'VENDA',
+    3 =>'AJUSTE',
+    4 =>'DEVOLUÇÃO CLIENTE',
+    5=>'DEVOLUÇÃO FORNECEDOR',
+    6=>'PERDA',
+    7=>'OUTROS'
+);
+$qtdMotivos = (is_array($motivos) ? count($motivos) : 0);
 ?>
 <body class="">
     <div class="d-flex" id="wrapper">
@@ -141,14 +151,14 @@ $qtdMPS = (is_array($movimentacoes_produto_saidas) ? count($movimentacoes_produt
                                                 <thead>
                                                     <tr>
                                                         <th class="text-center align-middle" colspan="5">
-                                                            <h4><b>VENDAS EFETUADAS:</b></h4>
+                                                            <h4><b>ENTRADAS DO PRODUTO - EFETUADAS:</b></h4>
                                                         </th>
                                                     </tr>
                                                     <tr class="text-center align-middle">
                                                         <th>#</th>
                                                         <th>DATA</th>
                                                         <th>QUANTIDADE</th>
-                                                        <th></th>
+                                                        <th>MOTIVO</th>
                                                         <th></th>
                                                     </tr>
                                                 </thead>
@@ -161,7 +171,11 @@ $qtdMPS = (is_array($movimentacoes_produto_saidas) ? count($movimentacoes_produt
                                                             <td class="text-center align-middle"><?= $b; ?></td>
                                                             <td class="text-center align-middle"><?= $data->format('d/m/Y H:i'); ?></td>
                                                             <td class="text-center align-middle"><?= $movimentacoes_produto_entradas[$i]['MOV_QUANTIDADE']; ?></td>
-                                                            <td class="text-center align-middle"></td>
+                                                            <td class="text-center align-middle">
+                                                            <?php for ($m=0; $m < $qtdMotivos; $m++) { ?>
+                                                                <?= (isset($movimentacoes_produto_entradas[$i]['MOV_MOTIVO']) && $movimentacoes_produto_entradas[$i]['MOV_MOTIVO'] == $m)? $motivos[$m]: '' ?>
+                                                            <?php } ?>
+                                                            </td>
                                                             <td class="text-center align-middle"></td>
                                                         </tr>
                                                     <?php $b--; } ?>
@@ -185,14 +199,14 @@ $qtdMPS = (is_array($movimentacoes_produto_saidas) ? count($movimentacoes_produt
                                             <thead>
                                                 <tr>
                                                     <th class="text-center align-middle" colspan="5">
-                                                        <h4><b>VENDAS EFETUADAS:</b></h4>
+                                                        <h4><b>SAÍDAS DO PRODUTO - EFETUADAS:</b></h4>
                                                     </th>
                                                 </tr>
                                                 <tr class="text-center align-middle">
                                                     <th>#</th>
                                                     <th>DATA</th>
                                                     <th>QUANTIDADE</th>
-                                                    <th></th>
+                                                    <th>MOTIVO</th>
                                                     <th></th>
                                                 </tr>
                                             </thead>
@@ -205,7 +219,11 @@ $qtdMPS = (is_array($movimentacoes_produto_saidas) ? count($movimentacoes_produt
                                                         <td class="text-center align-middle"><?= $b; ?></td>
                                                         <td class="text-center align-middle"><?= $data->format('d/m/Y H:i'); ?></td>
                                                         <td class="text-center align-middle"><?= $movimentacoes_produto_saidas[$i]['MOV_QUANTIDADE']; ?></td>
-                                                        <td class="text-center align-middle"></td>
+                                                        <td class="text-center align-middle">
+                                                            <?php for ($m=0; $m < $qtdMotivos; $m++) { ?>
+                                                                <?= (isset($movimentacoes_produto_saidas[$i]['MOV_MOTIVO']) &&  $movimentacoes_produto_saidas[$i]['MOV_MOTIVO']  == $m)? $motivos[$m]: '' ?>
+                                                            <?php } ?>
+                                                        </td>
                                                         <td class="text-center align-middle"></td>
                                                     </tr>
                                                 <?php $b--; } ?>
