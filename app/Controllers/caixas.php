@@ -44,6 +44,6 @@ class caixas extends View
     {
         $this->dados['title'] .= ' GERENCIAR CAIXAS';   
         $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
-        $this->render('admin/cadastros/caixas/listar', $this->dados);
+        $this->render('admin/financeiro/caixas/listar', $this->dados);
     }
 }
