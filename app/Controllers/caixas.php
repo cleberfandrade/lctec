@@ -22,7 +22,7 @@ class caixas extends View
 
         Sessao::naoLogado();
         $this->dados['title'] = 'MÓDULO | FINANCEIRO >>'; 
-        $this->Contas = new ModelsContas;  
+        $this->Contas = new Contas;  
         $this->Check = new Check;
         $this->Usuarios = new Usuarios;
         $this->UsuariosEmpresa = new UsuariosEmpresa;
