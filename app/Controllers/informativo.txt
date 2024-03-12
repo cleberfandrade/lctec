@@ -366,7 +366,7 @@ class avisos extends View
                                                     <h4><b>QUANTIDADE MIN:</b></h4>
                                                 </td>
                                                 <td class="text-center align-middle">
-                                                    <h3 class="display-5 fw-bold"><?= $produto['PRO_QTD_MIN'] ?></h3>
+                                                    <h3 class="display-5 fw-bold"></h3>
                                                 </td>
                                             </tr>
                                             <tr>
@@ -374,7 +374,7 @@ class avisos extends View
                                                     <h4><b>DESCRIÇÃO:</b></h4>
                                                 </td>
                                                 <td class="text-center align-middle" colspan="4">
-                                                    <?= $produto['PRO_DESCRICAO'] ?>
+                                                    
                                                 </td>
                                             </tr>
                                             <?php if($qtdC != 0) { ?>
