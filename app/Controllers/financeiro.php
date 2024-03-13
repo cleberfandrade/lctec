@@ -31,7 +31,7 @@ class financeiro extends View
         $this->dados['usuario'] = $this->Usuarios->setCodUsuario($_SESSION['USU_COD'])->listar(0);
         $this->dados['contas'] = $this->Financas->setCodEmpresa($_SESSION['EMP_COD'])->listarTodas();
 
-        $this->dados['modulos_empresa'] = $this->ModulosEmpresa->setCodEmpresa($_SESSION['EMP_COD'])->setCodigo(2)->checarRegistroModuloEmpresa(0);
+        $this->dados['modulos_empresa'] = $this->ModulosEmpresa->setCodEmpresa($_SESSION['EMP_COD'])->setCodigo(3)->checarRegistroModuloEmpresa(0);
 
         if ($this->dados['modulos_empresa'] == 0) {
             Url::redirecionar('painel');
