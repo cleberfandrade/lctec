@@ -86,7 +86,7 @@ class contas extends View
         $this->dados['title'] .= ' CADASTRAR CONTA DA EMPRESA/NEGÓCIO';   
         $this->link[3] = ['link'=> 'contas/cadastro','nome' => 'CADASTRO DE CONTAS'];
         $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
-        $this->render('admin/financeiro/contas/cadastrar', $this->dados);
+        $this->render('admin/cadastros/contas/cadastrar', $this->dados);
     }
     public function saques()
     {

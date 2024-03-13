@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 header("Content-Type: text/html; charset=UTF-8",true);
 
+use App\Models\Caixas;
 use App\Models\Categorias;
 use App\Models\Classificacoes;
 use App\Models\Clientes;
@@ -36,7 +37,7 @@ class movimentacoes extends View
     $Usuarios,$Produtos,$Empresa,$UsuariosEmpresa,
     $Check,$CargosSalarios,$ModulosEmpresa,$Financas,
     $Estoques,$Setores,$Categorias,$Classificacoes,
-    $Movimentacoes,$Transacoes,$FormasPagamentos,$Vendas;
+    $Movimentacoes,$Transacoes,$FormasPagamentos,$Vendas,$Caixas;
     public function __construct()
     {
         Sessao::naoLogado();
@@ -58,6 +59,7 @@ class movimentacoes extends View
         $this->Movimentacoes = new MovimentacoesModels;
         $this->Transacoes = new Transacoes;
         $this->Vendas = new Vendas;
+        $this->Caixas = new Caixas;
 
         $this->dados['empresa'] = $this->UsuariosEmpresa->setCodEmpresa($_SESSION['EMP_COD'])->setCodUsuario($_SESSION['USU_COD'])->listar(0);
         $this->dados['usuario'] = $this->Usuarios->setCodUsuario($_SESSION['USU_COD'])->listar(0);
@@ -71,6 +73,8 @@ class movimentacoes extends View
         $this->dados['clientes'] = $this->Clientes->setCodEmpresa($_SESSION['EMP_COD'])->listarTodosAtivos(0);
         $this->dados['formas_pagamentos'] = $this->FormasPagamentos->setCodEmpresa($_SESSION['EMP_COD'])->listarTodasAtivas(0);
         $this->dados['movimentacoes'] = $this->Movimentacoes->setCodEmpresa($_SESSION['EMP_COD'])->listarTodas(0); 
+
+        $this->dados['caixas'] = $this->Caixas->setCodEmpresa($_SESSION['EMP_COD'])->listarTodos(0);
 
         $this->link[0] = ['link'=> 'admin','nome' => 'PAINEL ADMINISTRATIVO'];
         $this->link[1] = ['link'=> 'estoques','nome' => 'MÓDULO DE ESTOQUES'];
