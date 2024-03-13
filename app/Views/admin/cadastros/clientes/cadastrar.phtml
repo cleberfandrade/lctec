@@ -37,12 +37,13 @@ $qtdS = (is_array($setores) ? count($setores) : 0);
                         <form class="p-4 p-md-6 border text-uppercase rounded-3 " action="<?= DIRPAGE ?>clientes/cadastrar" method="POST">
                             <div class="row ">    
                                 <div class="col-4 form-floating mb-2">
+                                    <label class="form-label">TIPO</label>
                                     <select class="form-select" name="CLI_TIPO">
                                         <option value="0" <?= (isset($_POST['CLI_TIPO']) &&  $_POST['CLI_TIPO']  == "0")? 'selected' : '' ?>>---</option>
                                         <option value="PF"<?= (isset($_POST['CLI_TIPO']) &&  $_POST['CLI_TIPO']  == "PF")? 'selected' : '' ?>>PESSOA FÍSICA</option>
                                         <option value="PJ" <?= (isset($_POST['CLI_TIPO']) &&  $_POST['CLI_TIPO']  == "PJ")? 'selected' : '' ?>>PESSOA JURÍDICA</option>
                                     </select>
-                                    <label class="form-label">TIPO</label>
+                                    <label class="form-label">TIPO DE CLIENTE</label>
                                 </div>
                                 <div class="col-4 text-center mb-3">
                                     <label class="form-label">SETOR</label>
