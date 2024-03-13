@@ -284,7 +284,7 @@ $qtdMotivos = (is_array($motivos) ? count($motivos) : 0);
                             data: [<?php 
                                 for ($m=1; $m <= 12; $m++) { 
                                     $soma = 0;
-                                    for ($i=0; $i < $qtdMPE; $i++) {  
+                                    for ($i=0; $i < $qtdMPS; $i++) {  
                                         $data = new DateTime($movimentacoes_produto_saidas[$i]['MOV_DT_MOVIMENTACAO']);
                                         if($m <= 9){
                                             $teste = '0'.$m.'-'.date('Y');
