@@ -34,6 +34,7 @@ class financeiro extends View
         $this->dados['modulos_empresa'] = $this->ModulosEmpresa->setCodEmpresa($_SESSION['EMP_COD'])->setCodigo(3)->checarRegistroModuloEmpresa(0);
 
         if ($this->dados['modulos_empresa'] == 0) {
+            Sessao::alert('ERRO',' MÓDULO NÃO DISPONÍVEL!','alert alert-danger');
             Url::redirecionar('admin/painel');
         }
         $this->link[0] = ['link'=> 'admin','nome' => 'PAINEL ADMINISTRATIVO'];
