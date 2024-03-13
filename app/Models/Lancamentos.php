@@ -60,7 +60,7 @@ class Lancamentos extends Model
         
         (isset($dados['LAN_TIPO']) && $dados['LAN_TIPO'] != 0) ? $tipo = " AND L.LAN_TIPO=".$dados['LAN_TIPO'].""  : $tipo = '';
         (isset($dados['LAN_RESULTADOS']) && $dados['LAN_RESULTADOS'] != 2)? $resultados = " AND L.LAN_RESULTADOS=".$dados['LAN_RESULTADOS']."" : $resultados = '';
-        (isset($dados['DATA']) ?  $data = ' AND L.LAN_DT_VENCIMENTO BETWEEN "'.$dados['LAN_DT_INICIAL'].'" AND "'.$dados['LAN_DT_FINAL'].'"' : ''); 
+        (isset($dados['DATA']) ?  $data = ' AND L.LAN_DT_VENCIMENTO BETWEEN "'.$dados['LAN_DT_INICIAL'].'" AND "'.$dados['LAN_DT_FINAL'].'"' : $data = ''); 
         
         (isset($dados['LAN_PAGINA']) && $dados['LAN_PAGINA'] != 0)? $pagina = $dados['LAN_PAGINA'] : $pagina = 1;
         (isset($dados['LAN_QTD']) && $dados['LAN_QTD'] != 10)? $limit = $dados['LAN_QTD'] : $limit = 10;
