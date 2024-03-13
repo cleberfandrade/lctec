@@ -196,6 +196,7 @@ class movimentacoes extends View
                     'MOV_DT_ATUALIZACAO'=> date('0000-00-00 00:00:00'),             
                     'MOV_STATUS'=> 1
                 );
+                $dados['MOV_DT_MOVIMENTACAO'] = $dados['MOV_DT_MOVIMENTACAO'].' '.date('H:i:s');   
                 $this->dados['produto'] = $this->Produtos->setCodEmpresa($dados['EMP_COD'])->setCodEstoque($dados['EST_COD'])->setCodigo($dados['PRO_COD'])->listar(0);
                 $liberado = false;
                 $motivo = false;
@@ -304,7 +305,7 @@ class movimentacoes extends View
                                 'PRO_COD' => $dados['PRO_COD'][$i],
                                 'MOV_DT_CADASTRO'=> date('Y-m-d H:i:s'),
                                 'MOV_DT_ATUALIZACAO'=> date('0000-00-00 00:00:00'),        
-                                'MOV_DT_MOVIMENTACAO'=>  $dados['MOV_DT_MOVIMENTACAO'],     
+                                'MOV_DT_MOVIMENTACAO'=>  $dados['MOV_DT_MOVIMENTACAO'].' '.date('H:i:s'),     
                                 'MOV_TIPO' => $dados['MOV_TIPO'],
                                 'MOV_MOTIVO' => $dados['MOV_MOTIVO'],
                                 'MOV_QUANTIDADE' => $dados['MOV_QUANTIDADE'][$i],

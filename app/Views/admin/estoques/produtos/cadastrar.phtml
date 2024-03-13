@@ -35,6 +35,7 @@ $qtdCL = (is_array($classificacoes) ? count($classificacoes) : 0);
                 <?php include_once 'app/Views/admin/inc/alertas.phtml'; ?>  
                 <section class="bg-light py-2">
                     <div class="col-12 mx-auto text-center m-1">
+                        <a class="col-4 btn btn-sm text-uppercase btn-secondary" href="<?= DIRPAGE; ?>estoques/produtos/<?= $estoque['EMP_COD']?>/<?= $estoque['EST_COD']?>"><i class="bi bi-arrow-left"></i> VOLTAR AOS PRODUTOS</a>
                         <a class="col-4 btn btn-sm text-uppercase btn-secondary" href="<?= DIRPAGE; ?>estoques"><i class="bi bi-arrow-left"></i> VOLTAR AOS ESTOQUES</a>
                     </div>
                     <div class="container col-10 px-2 py-2 mx-auto row">
@@ -150,8 +151,20 @@ $qtdCL = (is_array($classificacoes) ? count($classificacoes) : 0);
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-8 mb-2">
-                                    <div class="col-12">
+                                <div class="col-8 row mb-2">
+                                    <div class="col-6 form-floating mb-3">
+                                        <input type="text" class="form-control maiusculo" id="PRO_LOTE" name="PRO_LOTE" value="<?= isset($_POST['PRO_LOTE']) ? $_POST['PRO_LOTE'] : ''; ?>">
+                                        <label class="px-3" for="2">LOTE (opcional)</label>
+                                    </div> 
+                                    <div class="col-6 form-floating mb-3">
+                                        <input type="date" class="form-control maiusculo" id="PRO_PRAZO_VALIDADE" name="PRO_PRAZO_VALIDADE" value="<?= isset($_POST['PRO_PRAZO_VALIDADE']) ? $_POST['PRO_PRAZO_VALIDADE'] : ''; ?>">
+                                        <label class="px-3" for="2">PRAZO DE VALIDADE (opcional)</label>
+                                    </div>
+                                    <div class="col-12 form-floating mb-3">
+                                        <input type="text" class="form-control maiusculo" id="PRO_MARCA" name="PRO_MARCA" value="<?= isset($_POST['PRO_MARCA']) ? $_POST['PRO_MARCA'] : ''; ?>">
+                                        <label class="px-3" for="PRO_MARCA">MARCA (opcional)</label>
+                                    </div> 
+                                    <div class="col-6">
                                         <div class=" mb-3">
                                             <label class="px-5" for="2">CATEGORIA</label>
                                             <div class="form-floating mb-3">
@@ -165,7 +178,7 @@ $qtdCL = (is_array($classificacoes) ? count($classificacoes) : 0);
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-12">
+                                    <div class="col-6">
                                         <div class=" mb-3">
                                             <label class="px-5" for="2">SETOR</label>
                                             <div class="form-floating mb-3">
@@ -191,10 +204,11 @@ $qtdCL = (is_array($classificacoes) ? count($classificacoes) : 0);
                                             <label class="form-floating mb-3">CLASSIFICAÇÃO (opcional)</label>
                                         </div>
                                     </div>
-                                    <div class="col-12 mb-3 " style="height:300px">
-                                        <label for="address2" class="form-label">DESCRIÇÃO</label>
-                                        <textarea type="text" class="form-control  maiusculo" name="PRO_DESCRICAO"><?= isset($_POST['PRO_DESCRICAO'])? $_POST['PRO_DESCRICAO']  : '' ?></textarea>
-                                    </div>
+                                    
+                                </div>
+                                <div class="col-12 mb-3 " style="height:80px">
+                                    <label for="address2" class="form-label">DESCRIÇÃO</label>
+                                    <textarea type="text" class="form-control  maiusculo" name="PRO_DESCRICAO"><?= isset($_POST['PRO_DESCRICAO'])? $_POST['PRO_DESCRICAO']  : '' ?></textarea>
                                 </div>
                                 <hr class="my-4 text-dark">
                                 <input type="hidden" class="form-control" name="EST_COD" value="<?= isset($estoque['EST_COD']) ? $estoque['EST_COD'] : 0; ?>">

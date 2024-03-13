@@ -93,20 +93,24 @@ $qtdMotivos = (is_array($motivos) ? count($motivos) : 0);
                                         <h1 class="h6 mb-0 text-white lh-1"><?= $produto['PRO_NOME'] ?></h1>
                                         <small><?= $produto['PRO_DESCRICAO'] ?></small>
                                     </div>
+                                    
+                                </div>
+                                <div class="col-12 p-3 mx-auto">
+                                    <canvas id="produto"></canvas>
                                 </div>
                                 <div class="bg-body-tertiary p-3 rounded">
                                     <div class="my-3 p-3 bg-body row rounded shadow-sm">
                                         <h6 class="border-bottom pb-2 mb-0">INFO</h6>
                                         <div class="col-6 text-body-secondary pt-3">
-                                            <p class="pb-3 mb-0 small lh-sm border-bottom">
+                                            <p class="pb-3 mb-0 small lh-sm border-bottom text-center">
                                                 <strong class="d-block text-gray-dark">PREÇO DE CUSTO</strong>
-                                                <?= $produto['PRO_PRECO_UNITARIO'] ?>
+                                                R$ <?= $produto['PRO_PRECO_UNITARIO'] ?>
                                             </p>
                                         </div>
                                         <div class="col-6 text-body-secondary pt-3">
-                                            <p class="pb-3 mb-0 lh-sm border-bottom">
+                                            <p class="pb-3 mb-0 lh-sm border-bottom text-center">
                                                 <strong class="d-block text-gray-dark">PREÇO DE VENDA</strong>
-                                                <?= $produto['PRO_PRECO_VENDA'] ?>
+                                                R$ <?= $produto['PRO_PRECO_VENDA'] ?>
                                             </p>
                                         </div>
                                         <div class="col-6 text-body-secondary pt-3">
@@ -165,7 +169,7 @@ $qtdMotivos = (is_array($motivos) ? count($motivos) : 0);
                                                 <tbody>
                                                 <?php $b = $qtdMPE;
                                                     for ($i= 0; $i < $qtdMPE; $i++) { 
-                                                        $data = new DateTime($movimentacoes_produto_entradas[$i]['MOV_DT_CADASTRO']);
+                                                        $data = new DateTime($movimentacoes_produto_entradas[$i]['MOV_DT_MOVIMENTACAO']);
                                                     ?>
                                                         <tr>
                                                             <td class="text-center align-middle"><?= $b; ?></td>
@@ -213,7 +217,7 @@ $qtdMotivos = (is_array($motivos) ? count($motivos) : 0);
                                             <tbody>
                                             <?php $b = $qtdMPS;
                                                 for ($i= 0; $i < $qtdMPS; $i++) { 
-                                                    $data = new DateTime($movimentacoes_produto_saidas[$i]['MOV_DT_CADASTRO']);
+                                                    $data = new DateTime($movimentacoes_produto_saidas[$i]['MOV_DT_MOVIMENTACAO']);
                                                 ?>
                                                     <tr>
                                                         <td class="text-center align-middle"><?= $b; ?></td>
@@ -241,6 +245,75 @@ $qtdMotivos = (is_array($motivos) ? count($motivos) : 0);
             <?php include_once 'app/Views/admin/inc/rodape.phtml';?>
             <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
             <script src="<?= DIRJS ?>jquery.maskMoney.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+            <script>
+                const ctx = document.getElementById('produto');
+
+                new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                    labels: ['JANEIRO', 'FEVEREIRO', 'MARÇO', 'ABRIL', 'MAIO', 'JUNHO','JULHO','AGOSTO','SETEMBRO','OUTUBRO','NOVEMBRO','DEZEMBRO'],
+                    datasets: [
+                        {
+                            label: 'ENTRADAS',
+                            
+                            data: [<?php 
+                                for ($m=1; $m <= 12; $m++) { 
+                                    $soma = 0;
+                                    for ($i=0; $i < $qtdMPE; $i++) {  
+                                        $data = new DateTime($movimentacoes_produto_entradas[$i]['MOV_DT_MOVIMENTACAO']);
+                                        if($m <= 9){
+                                            $teste = '0'.$m.'-'.date('Y');
+                                        }else {
+                                            $teste = $m.'-'.date('Y');
+                                        }
+                                        if($data->format('m-Y') == $teste){
+                                            $soma += $movimentacoes_produto_entradas[$i]['MOV_QUANTIDADE'];
+                                        }
+                                    }
+                                    if ($m <= 12) {
+                                        echo $soma.',';
+                                    }else {
+                                        echo $soma;
+                                    }
+                                } ?>],
+                            borderWidth: 1
+                        },
+                        {
+                            label: 'SAÍDAS',
+                            data: [<?php 
+                                for ($m=1; $m <= 12; $m++) { 
+                                    $soma = 0;
+                                    for ($i=0; $i < $qtdMPE; $i++) {  
+                                        $data = new DateTime($movimentacoes_produto_saidas[$i]['MOV_DT_MOVIMENTACAO']);
+                                        if($m <= 9){
+                                            $teste = '0'.$m.'-'.date('Y');
+                                        }else {
+                                            $teste = $m.'-'.date('Y');
+                                        }
+                                        if($data->format('m-Y') == $teste){
+                                            $soma += $movimentacoes_produto_saidas[$i]['MOV_QUANTIDADE'];
+                                        }
+                                    }
+                                    if ($m <= 12) {
+                                        echo $soma.',';
+                                    }else {
+                                        echo $soma;
+                                    }
+                                } ?>],
+                            borderWidth: 1
+                        }
+                    ]
+                    },
+                    options: {
+                    scales: {
+                        y: {
+                        beginAtZero: true
+                        }
+                    }
+                    }
+                });
+            </script>
         </div>
     </div>
    
