@@ -3,6 +3,7 @@ namespace App\Controllers;
 
 use App\Models\Empresas;
 use App\Models\Financas;
+use App\Models\ModulosEmpresa;
 use App\Models\Usuarios;
 use App\Models\UsuariosEmpresa;
 use App\Models\Vendedores;
@@ -14,7 +15,7 @@ use Libraries\Url;
 class financeiro extends View
 {
     private $dados = [];
-    private $link,$Financas,$Check,$Usuarios,$UsuariosEmpresa;
+    private $link,$Financas,$Check,$Usuarios,$UsuariosEmpresa,$ModulosEmpresa;
     public function __construct()
     {
         Sessao::naoLogado();
@@ -23,10 +24,14 @@ class financeiro extends View
         $this->Check = new Check;
         $this->Usuarios = new Usuarios;
         $this->UsuariosEmpresa = new UsuariosEmpresa;
+        $this->ModulosEmpresa = new ModulosEmpresa;
+
 
         $this->dados['empresa'] = $this->UsuariosEmpresa->setCodEmpresa($_SESSION['EMP_COD'])->setCodUsuario($_SESSION['USU_COD'])->listar(0);
         $this->dados['usuario'] = $this->Usuarios->setCodUsuario($_SESSION['USU_COD'])->listar(0);
         $this->dados['contas'] = $this->Financas->setCodEmpresa($_SESSION['EMP_COD'])->listarTodas();
+
+        $this->dados['modulos_empresa'] = $this->ModulosEmpresa->setCodEmpresa($_SESSION['EMP_COD'])->setCodigo(2)->checarRegistroModuloEmpresa(0);
 
         $this->link[0] = ['link'=> 'admin','nome' => 'PAINEL ADMINISTRATIVO'];
         $this->link[1] = ['link'=> 'financeiro','nome' => 'MÓDULO DE FINANÇAS >>'];

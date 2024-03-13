@@ -101,7 +101,7 @@ class modulo_empresa extends View
           if($this->dados['empresa']['USU_COD'] == $_SESSION['USU_COD'] && $this->dados['empresa']['EMP_COD'] == $dados['EMP_COD']){
               //Verifica se os campos foram todos preenchidos
               unset($dados['STATUS_MODULO']);
-              $this->ModulosEmpresa->setCodEmpresa($dados['EMP_COD'])->setCodigo($dados['FOR_COD']);
+              $this->ModulosEmpresa->setCodEmpresa($dados['EMP_COD'])->setCodigo($dados['MOD_COD']);
               ($dados['MOD_STATUS'] == 1)? $dados['MOD_STATUS'] = 0 : $dados['MOD_STATUS'] = 1;
               
               $db = array(

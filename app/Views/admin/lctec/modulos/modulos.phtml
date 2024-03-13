@@ -65,7 +65,7 @@ $qtdME = (is_array($modulos) ? count($modulos) : 0);
                                 <div class="col-12 col-sm-6 col-md-4 rounded-2 text-center mb-2">
                                     <div class="card text-center mx-auto text-uppercase <?= $modulos[$i]['MOD_COR']; ?>">
                                         <a href="<?= DIRPAGE.$modulos[$i]['MOD_LINK']?>" title="Acessar Módulo" class="col-auto link-light text-decoration-none">
-                                            <div class="card-header"><?= $modulos[$i]['MOD_ICON']; ?> <?= $modulos[$i]['MOD_NOME']; ?></div>
+                                            <div class="card-header">COD: <?= $modulos[$i]['MOD_COD']; ?> <?= $modulos[$i]['MOD_ICON']; ?> <?= $modulos[$i]['MOD_NOME']; ?></div>
                                             <div class="card-body">
                                                 <h5 class="card-title">Módulo de <?= $modulos[$i]['MOD_NOME']; ?></h5>
                                                 <p class="card-text"><?= $modulos[$i]['MOD_DESCRICAO']; ?></p>
