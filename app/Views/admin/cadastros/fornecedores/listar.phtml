@@ -62,7 +62,7 @@ $qtd = (is_array($fornecedores) ? count($fornecedores) : 0);
                                     <tr class="<?= ($fornecedores[$i]['FOR_STATUS'] == 0 && $_SESSION['USU_NIVEL'] >= 8)? 'bg-secondary' : '';?>">
                                         <td class="text-center align-middle"><?= $b; ?></td>
                                         <td class="text-center align-middle"><?= ($fornecedores[$i]['FOR_TIPO'] != '0')? (($fornecedores[$i]['FOR_TIPO'] == "PF")? 'PESSOA FÍSICA' : 'PESSOA JURÍDICA') : 'NÃO INFORMADO'; ?></td>
-                                        <td class="text-center align-middle"><?= $fornecedores[$i]['FOR_NOME_FANTASIA'].' '.$fornecedores[$i]['USU_SOBRENOME']; ?></td>
+                                        <td class="text-center align-middle"><?= $fornecedores[$i]['FOR_NOME_FANTASIA'] ?></td>
                                         <td class="text-center align-middle"><?= $fornecedores[$i]['FOR_EMAIL_1']; ?></td>
                                         <td class="text-center align-middle"><?= $fornecedores[$i]['FOR_TEL_1']; ?></td>
                                         <td class="text-center align-middle"><?= $fornecedores[$i]['FOR_RESPONSAVEL']; ?></td>
