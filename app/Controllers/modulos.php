@@ -53,6 +53,9 @@ class modulos extends View
     {
         Sessao::logadoSistema();
         $this->dados['title'] .= ' LC/TEC >> MÓDULOS DO SISTEMA';   
+
+        $this->dados['modulos_empresas'] = $this->Modulos->listarTodos(0);
+        
         $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
         $this->render('admin/lctec/modulos/listar', $this->dados);
     }
