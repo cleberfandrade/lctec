@@ -30,14 +30,16 @@ $qtdMV = (is_array($movimentacoes) ? count($movimentacoes) : 0);
                     <section class="container px-3">
                         <div class="row gx-5">
                             <div class="row col-lg-9 col-xl-9 col-xxl-9">
-                                <div class="col-8 my-1 px-4 mx-auto">
-                                    <img src="<?= DIRIMG ?>lctec2.png" class="img-fluid" style="width: 70px; height: 70px;" alt="..."> 
-                                    <a class="text-decoration-none" href="<?= DIRPAGE; ?>admin/painel">
-                                        <h5 class="fs-3 fw-bolder text-uppercase text-dark mb-1">
-                                            <i class="bi bi-house"></i> Painel <span class="text-white">Administrativo</span>
-                                        </h5>
-                                    </a>
-                                    <a class="text-decoration-none mt-3 h5 py-3" href="<?= DIRPAGE; ?>empresas" title="Acesse sua empresa"><span class="text-success"><?= ($_SESSION['EMP_COD'] != 0)? $empresa['EMP_NOME_FANTASIA'] : 'LC-<span class="text-success">TEC</span>'?></span></a>
+                                <div class="col-8 row my-1 px-4 mx-auto">
+                                    <img src="<?= DIRIMG ?>lctec2.png" class="col-4 img-fluid" style="width: 125px; height: auto;" alt="..."> 
+                                    <div class="col-8">
+                                        <a class="text-decoration-none" href="<?= DIRPAGE; ?>admin/painel">
+                                            <h5 class="fs-3 fw-bolder text-uppercase text-dark mb-1">
+                                                <i class="bi bi-house"></i> Painel <span class="text-white">Administrativo</span>
+                                            </h5>
+                                        </a>
+                                        <a class="text-decoration-none mt-3 h5 py-3" href="<?= DIRPAGE; ?>empresas" title="Acesse sua empresa"><span class="text-success"><?= ($_SESSION['EMP_COD'] != 0)? $empresa['EMP_NOME_FANTASIA'] : 'LC-<span class="text-success">TEC</span>'?></span></a>
+                                    </div>
                                 </div>
                                 <div class="col-4 mx-auto text-white">
                                     <div class="col-12 text-center text-lg-start opacity-100">
