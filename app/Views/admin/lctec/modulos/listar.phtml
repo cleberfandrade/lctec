@@ -107,11 +107,12 @@ $qtdEmpresas = (is_array($empresas) ? count($empresas) : 0);
                     
                     const btnChecar = document.querySelector(".checar");
                     window.addEventListener("click", function (){
+
                         empresa = btnChecar.getAttribute("data-empresa");
                         modulo = btnChecar.getAttribute("data-modulo");
                        // var empresa = $(".checar").target("data-empresa");
-                       console.log(empresa);
-                       console.log(modulo);
+                       //console.log(empresa);
+                       console.log(btnChecar);
                     });
                 </script>
             </div>
