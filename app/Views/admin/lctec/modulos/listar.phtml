@@ -79,11 +79,10 @@ $qtdEmpresas = (is_array($empresas) ? count($empresas) : 0);
                                 <tr class="">
                                     <td class="text-center align-middle"><?= $d; ?></td>
                                     <td class="text-center align-middle"><?= $empresas[$a]['EMP_NOME_FANTASIA']; ?></td>
-                                    <?php for ($b= 0; $b < $qtd; $b++) { ?>
+                                    <?php for ($b= 0; $b < $qtd; $b++) { $ok = false;  ?>
                                     <td class="text-center align-middle">
-                                        <?php for ($c= 0; $c < $qtdMEmp; $c++) {?>
-                                        <?php $ok = false;
-                                            if ($empresas[$a]['EMP_COD'] == $mod_emp[$c]['EMP_COD'] && $mod_emp[$c]['MOD_COD'] == $modulos[$b]['MOD_COD']) { $ok = true; } else { $ok = false; } ?>
+                                        <?php for ($c= 0; $c < $qtdMEmp; $c++) {
+                                        if ($empresas[$a]['EMP_COD'] == $mod_emp[$c]['EMP_COD'] && $mod_emp[$c]['MOD_COD'] == $modulos[$b]['MOD_COD']) { $ok = true; } ?>
                                         <?php } ?>   
                                         <?php if ($ok) { ?>
                                             <div class="form-check">
@@ -91,7 +90,10 @@ $qtdEmpresas = (is_array($empresas) ? count($empresas) : 0);
                                                 <label class="form-check-label" for="flexCheckChecked">DESATIVAR</label>
                                             </div>
                                             <?php  } else {  ?>
-                                                2
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" value="<?= $empresas[$a]['EMP_COD'] ?>" id="flexCheckChecked">
+                                                <label class="form-check-label" for="flexCheckChecked">ATIVAR</label>
+                                            </div>
                                             <?php } ?>          
                                     </td>    
                                     <?php  } ?>
