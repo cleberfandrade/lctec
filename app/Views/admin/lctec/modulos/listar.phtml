@@ -76,12 +76,26 @@ $qtdEmpresas = (is_array($empresas) ? count($empresas) : 0);
                             <th class="text-dark">Status</th>
                         </thead>
                         <tbody>
-                            <?php $c = 1;for ($l = 0; $l < $qtdEmpresas; $l++) { ?>
+                            <?php $d = 1;for ($a = 0; $a < $qtdEmpresas; $a++) { ?>
                                 <tr class="">
-                                    <td class="text-center align-middle"><?= $c; ?></td>
-                                    <td class="text-center align-middle"><?= $empresas[$l]['EMP_NOME_FANTASIA']; ?></td>
-                                    <?php for ($i= 0; $i < $qtd; $i++) { ?>
-                                        <td class="text-center align-middle"></td>    
+                                    <td class="text-center align-middle"><?= $d; ?></td>
+                                    <td class="text-center align-middle"><?= $empresas[$a]['EMP_NOME_FANTASIA']; ?></td>
+                                    <?php for ($b= 0; $b < $qtd; $b++) { ?>
+                                        <td class="text-center align-middle">
+                                        <?php for ($c= 0; $c < $qtdMEmp; $c++) {
+                                            if ($mod_emp[$c]['EMP_COD'] == $empresas[$a]['EMP_COD']) { ?>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" value="<?= $mod_emp[$c]['MLE_COD'] ?>" id="flexCheckChecked" checked>
+                                                    <label class="form-check-label" for="flexCheckChecked">DESATIVAR</label>
+                                                </div>
+                                            <?php } else { ?>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" value="<?= $empresas[$a]['EMP_COD'] ?>" id="flexCheckChecked">
+                                                    <label class="form-check-label" for="flexCheckChecked">ATIVAR</label>
+                                                </div>
+                                            <?php } ?>
+                                        <?php } ?>
+                                        </td>    
                                     <?php } ?>
                                 </tr>
                             <?php $c++;  } ?>                                 
