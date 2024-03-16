@@ -88,8 +88,8 @@ $qtdEmpresas = (is_array($empresas) ? count($empresas) : 0);
                                                 <input class="form-check-input" type="checkbox" value="<?= $mod_emp[$c]['MLE_COD'] ?>" id="flexCheckChecked" checked>
                                                 <label class="form-check-label" for="flexCheckChecked">DESATIVAR</label>
                                             </div>
-                                            <?php $c++; } else { ?>
-                                            2
+                                            <?php  } else { echo $c; ?>
+                                            
                                             <?php } ?>
                                         <?php } ?>           
                                     </td>    
