@@ -404,6 +404,9 @@ teste
                                        
                                         
                                            
-                                            
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" value="<?= $empresas[$a]['EMP_COD'] ?>" id="flexCheckChecked">
+                                                <label class="form-check-label" for="flexCheckChecked">ATIVAR</label>
+                                            </div>
                                         
                                        
