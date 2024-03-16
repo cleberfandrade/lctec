@@ -86,7 +86,7 @@ $qtdEmpresas = (is_array($empresas) ? count($empresas) : 0);
                                         <?php } ?>   
                                         <?php if ($ok) { ?>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" title="Desativar módulo nesta Empresa?" value="<?= $mod_emp[$c]['MLE_COD'] ?>" id="flexCheckChecked" checked>
+                                                <input class="form-check-input" id="checar" type="checkbox" title="Desativar módulo nesta Empresa?" value="<?= $mod_emp[$c]['MLE_COD'] ?>" id="flexCheckChecked" checked>
                                                 <label class="form-check-label" for="flexCheckChecked"></label>
                                             </div>
                                             <?php  } else {  ?>
@@ -105,7 +105,11 @@ $qtdEmpresas = (is_array($empresas) ? count($empresas) : 0);
                 </section>
                 <?php include_once 'app/Views/admin/inc/rodape.phtml';?>
                 <script type="text/javascript">
-                    
+
+                    const btnChecar = document.querySelector("#checar");
+                    btnChecar.addEventListener('click', ()=>{
+                       console.log(btnChecar.value);
+                    })
                 </script>
             </div>
         </div>
