@@ -112,7 +112,7 @@ $qtdEmpresas = (is_array($empresas) ? count($empresas) : 0);
                     //});
                     //const checkbox = document.querySelector(".checar");
                     $(".checar").on("click", function() {
-                        var dado = $('.checar :selected').data('empresa');
+                        var dado = $('.checar').data('empresa');
                         console.log(dado);
                     });
                    // checkbox.addEventListener("click", function (){
