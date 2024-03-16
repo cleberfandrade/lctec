@@ -78,7 +78,16 @@ $qtdEmpresas = (is_array($empresas) ? count($empresas) : 0);
                             for ($i= 0; $i < $qtd; $i++) { ?>
                                 <tr class="<?= ($modulos[$i]['MOD_STATUS'] == 0 && $_SESSION['USU_NIVEL'] >= 8)? 'bg-secondary' : ''; ?>">
                                     <td class="text-center align-middle"><?= $b; ?></td>
-                                    <td class="text-center align-middle"><?= $modulos[$i]['MOD_DESCRICAO']; ?></td>
+                                    <td>
+                                        <?php $c = 1;for ($l = 0; $l < $qtdEmpresas; $l++) { ?>
+                                            <tr>
+                                                <td class="text-center align-middle"><?= $c; ?></td>
+                                                <td class="text-center align-middle"><?= $empresas[$i]['EMP_NOME_FANTASIA']; ?></td>
+                                                <td class="text-center align-middle"></td>
+                                            </tr>
+                                        <?php $c++;  } ?>
+                                    </td>
+                                    <td class="text-center align-middle"><?= $modulos[$i]['MOD_NOME']; ?></td>
                                     <td class="text-center align-middle"><?= ($modulos[$i]['MOD_STATUS'] == 1)? 'ATIVO' : 'DESATIVADO'; ?></td>
                                     <?php if($_SESSION['USU_NIVEL'] >= 8){ ?>
                                         <td class="text-center align-middle"></td>
