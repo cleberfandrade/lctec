@@ -64,16 +64,13 @@ $qtdEmpresas = (is_array($empresas) ? count($empresas) : 0);
                         </div>  
                 </section>
                 <section class="container row mx-auto col-12 py-2 mb-5">
-                    <?php dump($mod_emp); ?>
                     <table class="table table-striped table-bordered">
                         <thead class="text-center text-uppercase">
                             <th class="text-dark">#</th>       
-                            <th class="text-dark">EMPRESA/MÓDULO</th>
+                            <th class="text-dark">EMPRESA/MÓDULOS</th>
                             <?php for ($i= 0; $i < $qtd; $i++) { ?>
                                 <th class="text-dark text-center align-middle"><?= $modulos[$i]['MOD_COD'].' - '; ?><?= $modulos[$i]['MOD_NOME']; ?></th>
                             <?php } ?>
-                            <?php if($_SESSION['USU_NIVEL'] >= 8){ ?><th class="text-dark">Ações</th><?php } ?> 
-                            <th class="text-dark">Status</th>
                         </thead>
                         <tbody>
                             <?php $d = 1;for ($a = 0; $a < $qtdEmpresas; $a++) { ?>
