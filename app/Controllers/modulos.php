@@ -22,9 +22,13 @@ class modulos extends View
         $this->Empresas = new Empresas;
         $this->Check = new Check;
         $this->Util = new Util;
+        
+        $this->Empresas = new Empresas;
+        $this->dados['empresas'] = $this->Empresas->listarTodos();
 
         $this->Usuarios = new Usuarios;
         $this->dados['usuario'] = $this->Usuarios->setCodUsuario($_SESSION['USU_COD'])->listar(0);
+        
         $this->UsuariosEmpresa = new UsuariosEmpresa;
         $this->dados['empresa'] = $this->UsuariosEmpresa->setCodEmpresa($_SESSION['EMP_COD'])->setCodUsuario($_SESSION['USU_COD'])->listar(0);
         

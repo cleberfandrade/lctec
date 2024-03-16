@@ -6,6 +6,7 @@ $Util = new Util;
 
 include_once 'app/Views/admin/inc/cabecalho.phtml'; 
 $qtdMEmp = (is_array($mod_emp) ? count($mod_emp) : 0);
+$qtdEmpresas = (is_array($empresas) ? count($empresas) : 0);
 ?>
 <body class="max-width:100%;max-height:100%;">
     <div class="d-flex" id="wrapper">
@@ -60,6 +61,9 @@ $qtdMEmp = (is_array($mod_emp) ? count($mod_emp) : 0);
                     <hr class="my-4 text-dark">
                         <div class="row col-12 mt-2">
                         </div>  
+                </section>
+                <section class="container row mx-auto col-12 py-2 mb-5">
+
                 </section>
                 <?php include_once 'app/Views/admin/inc/rodape.phtml';?>
                 <script type="text/javascript">
