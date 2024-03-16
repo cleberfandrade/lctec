@@ -112,7 +112,7 @@ $qtdEmpresas = (is_array($empresas) ? count($empresas) : 0);
                            var modulo = jQuery(this).attr("data-modulo");
                            var status = jQuery(this).attr("data-status");
                            $.get('<?= DIRPAGE; ?>modulo_empresa/alterar/'+empresa+'/'+modulo+'/'+status, function(retorno) {
-                                console.log(resposta)
+                                console.log(retorno);
                                /*resposta = JSON.parse(retorno);
                                 if (resposta['COD'] !== 'ERRO') {
                                     $('#resposta').addClass('alert alert-success');
