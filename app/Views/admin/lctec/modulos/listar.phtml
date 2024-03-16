@@ -80,7 +80,7 @@ $qtdEmpresas = (is_array($empresas) ? count($empresas) : 0);
                                     <td class="text-center align-middle"><?= $d; ?></td>
                                     <td class="text-center align-middle"><?= $empresas[$a]['EMP_NOME_FANTASIA']; ?></td>
                                     <?php for ($b= 0; $b < $qtd; $b++) { $ok = false;  ?>
-                                    <td class="text-center align-middle">
+                                    <td class="text-center align-middle mx-auto text-center">
                                         <?php for ($c= 0; $c < $qtdMEmp; $c++) {
                                         if ($empresas[$a]['EMP_COD'] == $mod_emp[$c]['EMP_COD'] && $mod_emp[$c]['MOD_COD'] == $modulos[$b]['MOD_COD']) { $ok = true; } ?>
                                         <?php } ?>   
@@ -104,9 +104,9 @@ $qtdEmpresas = (is_array($empresas) ? count($empresas) : 0);
                 </section>
                 <?php include_once 'app/Views/admin/inc/rodape.phtml';?>
                 <script type="text/javascript">
-                    const btnChecar = document.querySelector(".checar");
-                    btnChecar.addEventListener('click', (e)=>{
-                        var empresa = e.getAttribute('data-empresa');
+                    //const btnChecar = document.querySelector(".checar");
+                    element.addEventListener('click', (e)=>{
+                        var empresa = element.getAttribute('data-empresa');
                        console.log(empresa);
                     })
                 </script>
