@@ -100,6 +100,66 @@ class modulo_empresa extends View
         $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
         $this->render('admin/cadastros/modulos/listar', $this->dados);
     }
+    public function alterar_modulo_empresa()
+    {
+        $dados = filter_input_array(INPUT_GET, FILTER_SANITIZE_URL);
+        $dados = explode("/",$dados['url']);
+        $ok = false;
+        if (isset($dados[1]) && $dados[1] == 'alterar' && isset($dados[2]) && isset($dados[3]) && isset($dados[4])) {
+            /* [2] = EMP_COD [3] = MOD_COD [4] = MLE_STATUS */
+            if ($_SESSION['EMP_COD'] == $dados[2]) {
+
+                $ck = $this->ModulosEmpresa->setCodEmpresa($dados[2])->setCodModulo($dados[3])->checarRegistroModuloEmpresa(0);
+           
+                if ($ck) {
+                    //EXCLUIR MÓDULO
+                    $this->ModulosEmpresa->setCodigo($ck['MLE_COD']);
+                    if($this->ModulosEmpresa->excluir(0)){
+                        $respota = array(
+                            'COD'=>'OK',
+                            'MENSAGEM' => 'Exclusão efetuada com sucesso!'
+                        );
+                    }else {
+                        $respota = array(
+                            'COD'=>'ERRO',
+                            'MENSAGEM' => 'Erro ao excluir cadastro, entre em contato com o suporte!'
+                        );
+                    }
+                } else {
+                   //CADASTRAR MÓDULO
+                   $db = array(
+                    'EMP_COD' => $dados[2],
+                    'MOD_COD' => $dados[3],
+                    'MLE_DT_CADASTRO'=> date('Y-m-d H:i:s'),
+                    'MLE_STATUS' => 1
+                );
+                    if ($this->ModulosEmpresa->cadastrar($db,0)) {
+                        $respota = array(
+                            'COD'=>'OK',
+                            'MENSAGEM' => 'Cadastro efetuado com sucesso!'
+                        );
+                    } else {
+                        $respota = array(
+                            'COD'=>'ERRO',
+                            'MENSAGEM' => 'Erro ao cadastrar módulo, entre em contato com o suporte!'
+                        );
+                    }
+                }
+            } else {
+                $respota = array(
+                    'COD'=>'ERRO',
+                    'MENSAGEM'=> 'ERRO 1- Acesso inválido!'
+                );
+            }
+
+        }else{
+            $respota = array(
+                'COD'=>'ERRO',
+                'MENSAGEM'=> 'ERRO 2- Dados inválido(s)!'
+            );
+        }
+        echo json_encode($respota);
+    }
     public function status():void
     {
        //Recupera os dados enviados
