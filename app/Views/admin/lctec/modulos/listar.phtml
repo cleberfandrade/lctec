@@ -86,12 +86,12 @@ $qtdEmpresas = (is_array($empresas) ? count($empresas) : 0);
                                         <?php } ?>   
                                         <?php if ($ok) { ?>
                                             <div class="form-check">
-                                                <input class="form-check-input" id="checar" type="checkbox" title="Desativar módulo nesta Empresa?" value="<?= $mod_emp[$c]['MLE_COD'] ?>" id="flexCheckChecked" checked>
+                                                <input class="form-check-input" id="checar" type="checkbox" title="Desativar módulo nesta Empresa?" data-empresa="<?= $empresas[$a]['EMP_COD'] ?>" value="<?= $modulos[$b]['MOD_COD'] ?>" id="flexCheckChecked" checked>
                                                 <label class="form-check-label" for="flexCheckChecked"></label>
                                             </div>
                                             <?php  } else {  ?>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" title="Ativar módulo nesta Empresa?"  value="<?= $empresas[$a]['EMP_COD'] ?>" id="flexCheckChecked">
+                                                <input class="form-check-input" id="checar" type="checkbox" title="Ativar módulo nesta Empresa?" data-empresa="<?= $empresas[$a]['EMP_COD'] ?>" value="<?= $modulos[$a]['MOD_COD'] ?>" id="flexCheckChecked">
                                                 <label class="form-check-label" for="flexCheckChecked"></label>
                                             </div>
                                             <?php } ?>          
