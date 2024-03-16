@@ -76,22 +76,22 @@ $qtdEmpresas = (is_array($empresas) ? count($empresas) : 0);
                         </thead>
                         <tbody>
                             <?php $d = 1;for ($a = 0; $a < $qtdEmpresas; $a++) { ?>
-                                <tr class="">
+                                <tr class="mx-auto text-center">
                                     <td class="text-center align-middle"><?= $d; ?></td>
                                     <td class="text-center align-middle"><?= $empresas[$a]['EMP_NOME_FANTASIA']; ?></td>
                                     <?php for ($b= 0; $b < $qtd; $b++) { $ok = false;  ?>
-                                    <td class="text-center align-middle mx-auto text-center">
+                                    <td class="text-center align-middle mx-auto">
                                         <?php for ($c= 0; $c < $qtdMEmp; $c++) {
                                         if ($empresas[$a]['EMP_COD'] == $mod_emp[$c]['EMP_COD'] && $mod_emp[$c]['MOD_COD'] == $modulos[$b]['MOD_COD']) { $ok = true; } ?>
                                         <?php } ?>   
                                         <?php if ($ok) { ?>
                                             <div class="form-check mx-auto">
-                                                <input class="form-check-input checar" type="checkbox" title="Desativar módulo nesta Empresa?" data-empresa="<?= $empresas[$a]['EMP_COD'] ?>" value="<?= $modulos[$b]['MOD_COD'] ?>" id="flexCheckChecked" checked>
+                                                <input class="form-check-input text-center mx-auto checar" type="checkbox" title="Desativar módulo nesta Empresa?" data-empresa="<?= $empresas[$a]['EMP_COD'] ?>" value="<?= $modulos[$b]['MOD_COD'] ?>" id="flexCheckChecked" checked>
                                 
                                             </div>
                                             <?php  } else {  ?>
                                             <div class="form-check mx-auto">
-                                                <input class="form-check-input checar" type="checkbox" title="Ativar módulo nesta Empresa?" data-empresa="<?= $empresas[$a]['EMP_COD'] ?>" value="<?= $modulos[$b]['MOD_COD'] ?>" id="flexCheckChecked">
+                                                <input class="form-check-input  text-center mx-auto checar" type="checkbox" title="Ativar módulo nesta Empresa?" data-empresa="<?= $empresas[$a]['EMP_COD'] ?>" value="<?= $modulos[$b]['MOD_COD'] ?>" id="flexCheckChecked">
                                             </div>
                                             <?php } ?>          
                                     </td>    
@@ -105,10 +105,10 @@ $qtdEmpresas = (is_array($empresas) ? count($empresas) : 0);
                 <?php include_once 'app/Views/admin/inc/rodape.phtml';?>
                 <script type="text/javascript">
                     //const btnChecar = document.querySelector(".checar");
-                    element.addEventListener('click', (e)=>{
-                        var empresa = element.getAttribute('data-empresa');
+                    $(".checar").click(function(e){
+                        var empresa = e.getAttribute('data-empresa');
                        console.log(empresa);
-                    })
+                    });
                 </script>
             </div>
         </div>
