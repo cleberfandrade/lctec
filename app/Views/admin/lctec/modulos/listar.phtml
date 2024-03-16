@@ -107,7 +107,7 @@ $qtdEmpresas = (is_array($empresas) ? count($empresas) : 0);
                     //const btnChecar = document.querySelector(".checar");
                     $(".checar").click(function(e){
 
-                        var empresa = $(".checar").getElementsByTagName("data-empresa").val();
+                        var empresa = $(".checar").getElementsByTagName("data-empresa");
                         
                        console.log(empresa);
                     });
