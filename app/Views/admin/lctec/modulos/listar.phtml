@@ -104,8 +104,14 @@ $qtdEmpresas = (is_array($empresas) ? count($empresas) : 0);
                 </section>
                 <?php include_once 'app/Views/admin/inc/rodape.phtml';?>
                 <script type="text/javascript">
+                    //jQuery( document ).ready(function() {
+                        //jQuery(".checar").click(function(){
+                           // window.location = jQuery(this).attr("data-empresa");
+                            //return false;
+                       // });
+                    //});
                     //const checkbox = document.querySelector(".checar");
-                    $("#botaoexemplo").on("click", function() {
+                    $(".checar").on("click", function() {
                         var dado = $('.checar :selected').data('empresa');
                         console.log(dado);
                     });
