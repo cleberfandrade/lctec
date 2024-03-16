@@ -85,12 +85,12 @@ $qtdEmpresas = (is_array($empresas) ? count($empresas) : 0);
                                         if ($empresas[$a]['EMP_COD'] == $mod_emp[$c]['EMP_COD'] && $mod_emp[$c]['MOD_COD'] == $modulos[$b]['MOD_COD']) { $ok = true; } ?>
                                         <?php } ?>   
                                         <?php if ($ok) { ?>
-                                            <div class="form-check mx-auto">
+                                            <div class="mx-auto">
                                                 <input class="form-check-input text-center mx-auto checar" type="checkbox" title="Desativar módulo nesta Empresa?" data-empresa="<?= $empresas[$a]['EMP_COD'] ?>" value="<?= $modulos[$b]['MOD_COD'] ?>" id="flexCheckChecked" checked>
                                 
                                             </div>
                                             <?php  } else {  ?>
-                                            <div class="form-check mx-auto">
+                                            <div class="mx-auto">
                                                 <input class="form-check-input  text-center mx-auto checar" type="checkbox" title="Ativar módulo nesta Empresa?" data-empresa="<?= $empresas[$a]['EMP_COD'] ?>" value="<?= $modulos[$b]['MOD_COD'] ?>" id="flexCheckChecked">
                                             </div>
                                             <?php } ?>          
@@ -106,7 +106,7 @@ $qtdEmpresas = (is_array($empresas) ? count($empresas) : 0);
                 <script type="text/javascript">
                     //const btnChecar = document.querySelector(".checar");
                     $(".checar").click(function(e){
-                        var empresa = $(".checar").querySelector("data-empresa");
+                        var empresa = document.querySelector("data-empresa");
                         
                        console.log(empresa);
                     });
