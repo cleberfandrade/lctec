@@ -106,7 +106,7 @@ $qtdEmpresas = (is_array($empresas) ? count($empresas) : 0);
                 <script type="text/javascript">
                     //const btnChecar = document.querySelector(".checar");
                     $(".checar").click(function(e){
-                        var empresa = this.querySelector("data-empresa");
+                        var empresa = $(".checar").querySelector("data-empresa");
                         
                        console.log(empresa);
                     });
