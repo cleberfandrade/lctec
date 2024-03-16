@@ -74,6 +74,10 @@ class modulo_empresa extends View
                 );
                     if ($this->ModulosEmpresa->cadastrar($db,0)) {
                         $ok = true;
+                        $respota = array(
+                            'COD'=>'OK',
+                            'MENSAGEM' => 'Status alterado com sucesso!'
+                        );
                         Sessao::alert('OK','Cadastro efetuado com sucesso!','fs-4 alert alert-success');
                     } else {
                         Sessao::alert('ERRO',' MLE3- Erro ao cadastrar módulo, entre em contato com o suporte!','fs-4 alert alert-danger');
