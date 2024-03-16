@@ -21,11 +21,12 @@ $qtd = (is_array($empresas) ? count($empresas) : 0);
                 <header class="py-3">
                     <section class="container px-3">
                         <div class="row gx-5">
-                            <div class="col-lg-9 col-xl-9 col-xxl-9">
-                                <div class="my-1 px-4 mx-auto">
+                            <div class="col-lg-9 row col-xl-9 col-xxl-9">
+                                <img src="<?= DIRIMG ?>lctec_fundo_branco2.png" class="col-4 img-fluid" style="width: 150px; height: auto;" alt="..."> 
+                                <div class="col-8 my-1 px-4 mx-auto">
                                     <a class="text-decoration-none" href="<?= DIRPAGE; ?>lctec">
                                         <h5 class="fs-2 fw-bolder text-uppercase text-dark mb-1">
-                                            <i class="bi bi-house"></i> GERENCIAR <span class="text-success">MÓDULOS DO SISTEMA</span>
+                                            <i class="bi bi-house"></i> GERENCIAR <span class="text-success">EMPRESAS E NEGÓCIOS</span>
                                         </h5>
                                     </a>
                                 </div>
@@ -41,7 +42,7 @@ $qtd = (is_array($empresas) ? count($empresas) : 0);
                 <section class="container row mx-auto col-12 py-2 mb-5">
                     <div class="row col-12 mt-2">
                         <?php $b = 1; for ($i=0; $i < $qtd; $i++) { ?>
-                        <?php $d++; } ?>   
+                        <?php $b++; } ?>   
                     </div>  
                 </section>
                 <?php include_once 'app/Views/admin/inc/rodape.phtml';?>
