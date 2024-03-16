@@ -83,14 +83,17 @@ $qtdEmpresas = (is_array($empresas) ? count($empresas) : 0);
                                     <td class="text-center align-middle">
                                         <?php for ($c= 0; $c < $qtdMEmp; $c++) {?>
                                         <?php $ok = false;
-                                            if ($empresas[$a]['EMP_COD'] == $mod_emp[$c]['EMP_COD'] && $mod_emp[$c]['MOD_COD'] == $modulos[$b]['MOD_COD']) { ?>
+                                            if ($empresas[$a]['EMP_COD'] == $mod_emp[$c]['EMP_COD'] && $mod_emp[$c]['MOD_COD'] == $modulos[$b]['MOD_COD']) { $ok = true; ?>
+                                            <?php  } else { $ok = false; ?>
+                                            <?php } ?>
+                                        <?php } ?>   
+                                        <?php if ($ok) { ?>
                                             <div class="form-check">
                                                 <input class="form-check-input" type="checkbox" value="<?= $mod_emp[$c]['MLE_COD'] ?>" id="flexCheckChecked" checked>
                                                 <label class="form-check-label" for="flexCheckChecked">DESATIVAR</label>
                                             </div>
-                                            <?php  } else { echo $c; ?>
-                                            
-                                            <?php } ?>
+                                            <?php  } else {  ?>
+                                        <?php } ?>    
                                         <?php } ?>           
                                     </td>    
                                     <?php  } ?>
