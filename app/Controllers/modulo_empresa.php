@@ -104,7 +104,8 @@ class modulo_empresa extends View
     {
         $dados = filter_input_array(INPUT_GET, FILTER_SANITIZE_URL);
         $dados = explode("/",$dados['url']);
-        $ok = false;
+        dump($dados);
+        exit;
         if (isset($dados[1]) && $dados[1] == 'alterar' && isset($dados[2]) && isset($dados[3]) && isset($dados[4])) {
             /* [2] = EMP_COD [3] = MOD_COD [4] = MLE_STATUS */
             if ($_SESSION['EMP_COD'] == $dados[2]) {
