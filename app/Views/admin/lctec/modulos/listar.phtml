@@ -85,14 +85,13 @@ $qtdEmpresas = (is_array($empresas) ? count($empresas) : 0);
                                         if ($empresas[$a]['EMP_COD'] == $mod_emp[$c]['EMP_COD'] && $mod_emp[$c]['MOD_COD'] == $modulos[$b]['MOD_COD']) { $ok = true; } ?>
                                         <?php } ?>   
                                         <?php if ($ok) { ?>
-                                            <div class="form-check text-center">
+                                            <div class="form-check mx-auto">
                                                 <input class="form-check-input checar" type="checkbox" title="Desativar módulo nesta Empresa?" data-empresa="<?= $empresas[$a]['EMP_COD'] ?>" value="<?= $modulos[$b]['MOD_COD'] ?>" id="flexCheckChecked" checked>
-                                                <label class="form-check-label" for="flexCheckChecked"></label>
+                                
                                             </div>
                                             <?php  } else {  ?>
-                                            <div class="form-check text-center">
-                                                <input class="form-check-input checar" type="checkbox" title="Ativar módulo nesta Empresa?" data-empresa="<?= $empresas[$a]['EMP_COD'] ?>" value="<?= $modulos[$a]['MOD_COD'] ?>" id="flexCheckChecked">
-                                                <label class="form-check-label" for="flexCheckChecked"></label>
+                                            <div class="form-check mx-auto">
+                                                <input class="form-check-input checar" type="checkbox" title="Ativar módulo nesta Empresa?" data-empresa="<?= $empresas[$a]['EMP_COD'] ?>" value="<?= $modulos[$b]['MOD_COD'] ?>" id="flexCheckChecked">
                                             </div>
                                             <?php } ?>          
                                     </td>    
@@ -106,8 +105,8 @@ $qtdEmpresas = (is_array($empresas) ? count($empresas) : 0);
                 <?php include_once 'app/Views/admin/inc/rodape.phtml';?>
                 <script type="text/javascript">
                     const btnChecar = document.querySelector(".checar");
-                    btnChecar.addEventListener('click', ()=>{
-                        var empresa = btnChecar.getAttribute('data-empresa');
+                    btnChecar.addEventListener('click', (e)=>{
+                        var empresa = e.getAttribute('data-empresa');
                        console.log(empresa);
                     })
                 </script>
