@@ -88,12 +88,12 @@ $qtdEmpresas = (is_array($empresas) ? count($empresas) : 0);
                                         <?php if ($ok) { ?>
                                             <div class="mx-auto">
                                                 <form id="CHECAR" method="post">
-                                                    <input class="form-check-input text-center mx-auto checar" type="checkbox" title="Desativar módulo nesta Empresa?" data-empresa="<?= $empresas[$a]['EMP_COD'] ?>" data-modulo="<?= $modulos[$b]['MOD_COD'] ?>" data-status="1" id="flexCheckChecked" checked><i class="bi bi-ban"></i>
+                                                    <input class="form-check-input text-success text-center mx-auto checar" type="checkbox" title="Desativar módulo nesta Empresa?" data-empresa="<?= $empresas[$a]['EMP_COD'] ?>" data-modulo="<?= $modulos[$b]['MOD_COD'] ?>" data-status="1" id="flexCheckChecked" checked><i class="bi bi-ban"></i>
                                                 </form>
                                             </div>
                                             <?php  } else {  ?>
                                             <div class="mx-auto">
-                                                <input class="form-check-input  text-center mx-auto checar" type="checkbox" title="Ativar módulo nesta Empresa?" data-empresa="<?= $empresas[$a]['EMP_COD'] ?>" data-modulo="<?= $modulos[$b]['MOD_COD'] ?>" data-status="1" id="flexCheckChecked"><i class="bi bi-check2"></i>
+                                                <input class="form-check-input text-danger text-center mx-auto checar" type="checkbox" title="Ativar módulo nesta Empresa?" data-empresa="<?= $empresas[$a]['EMP_COD'] ?>" data-modulo="<?= $modulos[$b]['MOD_COD'] ?>" data-status="1" id="flexCheckChecked"><i class="bi bi-check2"></i>
                                             </div>
                                             <?php } ?>          
                                     </td>    
