@@ -88,7 +88,7 @@ $qtdEmpresas = (is_array($empresas) ? count($empresas) : 0);
                                         <?php if ($ok) { ?>
                                             <div class="mx-auto">
                                                 <form id="CHECAR" method="post">
-                                                    <input class="form-check-input text-center mx-auto checar" type="checkbox" title="Desativar módulo nesta Empresa?" data-empresa="<?= $empresas[$a]['EMP_COD'] ?>" data-modulo="<?= $modulos[$b]['MOD_COD'] ?>" id="flexCheckChecked" checked><i class="bi bi-ban"></i>
+                                                    <input class="form-check-input text-center mx-auto checar" type="checkbox" title="Desativar módulo nesta Empresa?" data-empresa="<?= $empresas[$a]['EMP_COD'] ?>" data-modulo="<?= $modulos[$b]['MOD_COD'] ?>" data-status="1" id="flexCheckChecked" checked><i class="bi bi-ban"></i>
                                                 </form>
                                             </div>
                                             <?php  } else {  ?>
@@ -110,15 +110,18 @@ $qtdEmpresas = (is_array($empresas) ? count($empresas) : 0);
                         jQuery(".checar").click(function(){
                            var empresa = jQuery(this).attr("data-empresa");
                            var modulo = jQuery(this).attr("data-modulo");
-                           $.get('<?= DIRPAGE; ?>modulo_empresa/alterar/'+empresa+'/'+modulo, function(retorno) {
-                                resposta = JSON.parse(retorno);
+                           var status = jQuery(this).attr("data-status");
+                           $.get('<?= DIRPAGE; ?>modulo_empresa/alterar/'+empresa+'/'+modulo+'/'+status, function(retorno) {
+                                console.log(resposta)
+                               /*resposta = JSON.parse(retorno);
                                 if (resposta['COD'] !== 'ERRO') {
                                     $('#resposta').addClass('alert alert-success');
                                 }else{
                                     $('#resposta').addClass('alert alert-warning');
                                 }
                                 $('#resposta').html(resposta['MENSAGEM']);
-                                setTimeout( () => { window.location.href="<?= DIRPAGE ?>modulos/listar"}, 700);
+                                setTimeout( () => { window.location.href="<?//= DIRPAGE ?>modulos/listar"}, 700);
+                                */
                             });
                            
                         });
