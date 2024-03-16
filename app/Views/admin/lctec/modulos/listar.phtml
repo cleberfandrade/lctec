@@ -86,12 +86,12 @@ $qtdEmpresas = (is_array($empresas) ? count($empresas) : 0);
                                         <?php } ?>   
                                         <?php if ($ok) { ?>
                                             <div class="mx-auto">
-                                                <input class="form-check-input text-center mx-auto checar" type="checkbox" title="Desativar módulo nesta Empresa?" data-empresa="<?= $empresas[$a]['EMP_COD'] ?>" value="<?= $modulos[$b]['MOD_COD'] ?>" id="flexCheckChecked" checked>
+                                                <input class="form-check-input text-center mx-auto checar" type="checkbox" title="Desativar módulo nesta Empresa?" data-empresa="<?= $empresas[$a]['EMP_COD'] ?>" data-modulo="<?= $modulos[$b]['MOD_COD'] ?>" id="flexCheckChecked" checked>
                                 
                                             </div>
                                             <?php  } else {  ?>
                                             <div class="mx-auto">
-                                                <input class="form-check-input  text-center mx-auto checar" type="checkbox" title="Ativar módulo nesta Empresa?" data-empresa="<?= $empresas[$a]['EMP_COD'] ?>" value="<?= $modulos[$b]['MOD_COD'] ?>" id="flexCheckChecked">
+                                                <input class="form-check-input  text-center mx-auto checar" type="checkbox" title="Ativar módulo nesta Empresa?" data-empresa="<?= $empresas[$a]['EMP_COD'] ?>" data-modulo="<?= $modulos[$b]['MOD_COD'] ?>" id="flexCheckChecked">
                                             </div>
                                             <?php } ?>          
                                     </td>    
@@ -108,9 +108,11 @@ $qtdEmpresas = (is_array($empresas) ? count($empresas) : 0);
 
                     $(".checar").click(function(e){
                         let btnChecar = document.querySelector(".checar");
+                        empresa = btnChecar.getAttribute("data-empresa");
+                        modulo = btnChecar.getAttribute("data-modulo");
                        // var empresa = $(".checar").target("data-empresa");
-                        
-                       console.log(btnChecar);
+                       console.log(empresa);
+                       console.log(modulo);
                     });
                 </script>
             </div>
