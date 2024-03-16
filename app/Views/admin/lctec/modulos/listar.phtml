@@ -84,6 +84,8 @@ $qtdEmpresas = (is_array($empresas) ? count($empresas) : 0);
                                     <?php for ($b= 0; $b < $qtd; $b++) { ?>
                                     <td class="text-center align-middle">
                                         <?php for ($c= 0; $c < $qtdMEmp; $c++) {?>
+                                        <?php $achou = false;
+                                            if ($empresas[$a]['EMP_COD'] == $mod_emp[$c]['EMP_COD'] && $mod_emp[$c]['MOD_COD'] == $modulos[$b]['MOD_COD']) { echo true; } ?>
                                         <?php } ?>
                                     </td>    
                                     <?php  } ?>
