@@ -73,10 +73,11 @@ $qtdEmpresas = (is_array($empresas) ? count($empresas) : 0);
                             <?php if($_SESSION['USU_NIVEL'] >= 8){ ?><th class="text-dark">Ações</th><?php } ?> 
                         </thead>
                         <tbody>
+                            <tr class="">
                             <?php
                             $b = 1;
                             for ($i= 0; $i < $qtd; $i++) { ?>
-                                <tr class="<?= ($modulos[$i]['MOD_STATUS'] == 0 && $_SESSION['USU_NIVEL'] >= 8)? 'bg-secondary' : ''; ?>">
+                                
                                     <td class="text-center align-middle"><?= $b; ?></td>
                                     <td>
                                         <?php $c = 1;for ($l = 0; $l < $qtdEmpresas; $l++) { ?>
@@ -92,8 +93,9 @@ $qtdEmpresas = (is_array($empresas) ? count($empresas) : 0);
                                     <?php if($_SESSION['USU_NIVEL'] >= 8){ ?>
                                         <td class="text-center align-middle"></td>
                                     <?php } ?> 
-                                </tr>
+                                
                             <?php $b++;  } ?>
+                            </tr>
                         </tbody>
                     </table>
                 </section>
