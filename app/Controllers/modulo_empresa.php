@@ -60,6 +60,10 @@ class modulo_empresa extends View
                     $this->ModulosEmpresa->setCodigo($ck['MLE_COD']);
                     if($this->ModulosEmpresa->excluir(0)){
                         $ok = true;
+                        $respota = array(
+                            'COD'=>'OK',
+                            'MENSAGEM' => 'Status alterado com sucesso!'
+                        );
                         Sessao::alert('OK','Exclusão efetuada com sucesso!','fs-4 alert alert-success');
                     }else {
                         Sessao::alert('ERRO',' MLE4- Erro ao excluir cadastro, entre em contato com o suporte!','fs-4 alert alert-danger');
