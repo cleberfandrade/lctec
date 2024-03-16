@@ -104,13 +104,13 @@ $qtdEmpresas = (is_array($empresas) ? count($empresas) : 0);
                 </section>
                 <?php include_once 'app/Views/admin/inc/rodape.phtml';?>
                 <script type="text/javascript">
-                    const checkbox = document.querySelector("input[type=checkbox]");
+                    const checkbox = document.querySelector(".checar");
                     checkbox.addEventListener("click", function (){
                         var btnChecar = checkbox.getAttribute("data-empresa");
                        // modulo = btnChecar.getAttribute("data-modulo");
                        // var empresa = $(".checar").target("data-empresa");
                        //console.log(empresa);
-                       console.log(btnChecar);
+                       console.log(checkbox);
                     });
                 </script>
             </div>
