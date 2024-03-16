@@ -104,9 +104,8 @@ class modulo_empresa extends View
     {
         $dados = filter_input_array(INPUT_GET, FILTER_SANITIZE_URL);
         $dados = explode("/",$dados['url']);
-        dump($dados);
-        exit;
-        if (isset($dados[1]) && $dados[1] == 'alterar' && isset($dados[2]) && isset($dados[3]) && isset($dados[4])) {
+
+        if (isset($dados[1]) && $dados[1] == 'alterar_modulo_empresa' && isset($dados[2]) && isset($dados[3]) && isset($dados[4])) {
             /* [2] = EMP_COD [3] = MOD_COD [4] = MLE_STATUS */
             if ($_SESSION['EMP_COD'] == $dados[2]) {
 
@@ -149,14 +148,13 @@ class modulo_empresa extends View
             } else {
                 $respota = array(
                     'COD'=>'ERRO',
-                    'MENSAGEM'=> 'ERRO 1- Acesso inválido!'
+                    'MENSAGEM'=> 'ERRO 2- Dados inválido(s)!'
                 );
             }
-
         }else{
             $respota = array(
                 'COD'=>'ERRO',
-                'MENSAGEM'=> 'ERRO 2- Dados inválido(s)!'
+                'MENSAGEM'=> 'ERRO 1- Acesso inválido!'
             );
         }
         echo json_encode($respota);
