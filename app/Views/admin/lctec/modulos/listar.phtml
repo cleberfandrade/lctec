@@ -68,9 +68,12 @@ $qtdEmpresas = (is_array($empresas) ? count($empresas) : 0);
                         <thead class="text-center text-uppercase">
                             <th class="text-dark">#</th>       
                             <th class="text-dark">EMPRESA/MÓDULO</th>
-                            <th class="text-dark">DESCRIÇÃO</th>
-                            <th class="text-dark">Status</th>
+                            <?php for ($i= 0; $i < $qtd; $i++) { ?>
+                                <th class="text-dark text-center align-middle"><?= $modulos[$i]['MOD_NOME']; ?></th>
+                                <th class="text-dark text-center align-middle"><?= ($modulos[$i]['MOD_STATUS'] == 1)? 'ATIVO' : 'DESATIVADO'; ?></th>
+                            <?php } ?>
                             <?php if($_SESSION['USU_NIVEL'] >= 8){ ?><th class="text-dark">Ações</th><?php } ?> 
+                            <th class="text-dark">Status</th>
                         </thead>
                         <tbody>
                             <?php $c = 1;for ($l = 0; $l < $qtdEmpresas; $l++) { ?>
@@ -78,8 +81,7 @@ $qtdEmpresas = (is_array($empresas) ? count($empresas) : 0);
                                     <td class="text-center align-middle"><?= $c; ?></td>
                                     <td class="text-center align-middle"><?= $empresas[$l]['EMP_NOME_FANTASIA']; ?></td>
                                     <?php for ($i= 0; $i < $qtd; $i++) { ?>
-                                        <td class="text-center align-middle"><?= $modulos[$i]['MOD_NOME']; ?></td>
-                                        <td class="text-center align-middle"><?= ($modulos[$i]['MOD_STATUS'] == 1)? 'ATIVO' : 'DESATIVADO'; ?></td>
+                                        <td class="text-center align-middle"></td>    
                                     <?php } ?>
                                 </tr>
                             <?php $c++;  } ?>                                 
