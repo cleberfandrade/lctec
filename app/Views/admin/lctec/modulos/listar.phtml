@@ -78,23 +78,10 @@ $qtdEmpresas = (is_array($empresas) ? count($empresas) : 0);
                                     <td class="text-center align-middle"><?= $d; ?></td>
                                     <td class="text-center align-middle"><?= $empresas[$a]['EMP_NOME_FANTASIA']; ?></td>
                                     <?php for ($b= 0; $b < $qtd; $b++) { ?>
-                                        <td class="text-center align-middle">
-                                        <?php for ($c= 0; $c < $qtdMEmp; $c++) {
-                                            $achou = false;
-                                            if ($empresas[$a]['EMP_COD'] == $mod_emp[$c]['MOD_COD']) {  $achou = true; }
-                                            if($achou){ ?>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" value="<?= $mod_emp[$c]['MLE_COD'] ?>" id="flexCheckChecked" checked>
-                                                <label class="form-check-label" for="flexCheckChecked">DESATIVAR</label>
-                                            </div>
-                                        <?php } else { ?>
-                                            <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" value="<?= $empresas[$a]['EMP_COD'] ?>" id="flexCheckChecked">
-                                                <label class="form-check-label" for="flexCheckChecked">ATIVAR</label>
-                                            </div>
-                                            <?php } ?>
+                                    <td class="text-center align-middle">
+                                        <?php for ($c= 0; $c < $qtdMEmp; $c++) {?>
                                         <?php } ?>
-                                        </td>    
+                                    </td>    
                                     <?php  } ?>
                                 </tr>
                             <?php $d++; } ?>                                 
@@ -111,3 +98,9 @@ $qtdEmpresas = (is_array($empresas) ? count($empresas) : 0);
     </div>
 </body>
 </html>
+<!----
+
+
+
+
+                                        -->
