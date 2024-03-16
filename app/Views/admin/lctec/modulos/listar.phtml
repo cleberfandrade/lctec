@@ -81,7 +81,7 @@ $qtdEmpresas = (is_array($empresas) ? count($empresas) : 0);
                                         <td class="text-center align-middle">
                                         <?php for ($c= 0; $c < $qtdMEmp; $c++) {
                                             $achou = false;
-                                            if ($empresas[$a]['MOD_COD'] == $modulos[$b]['MOD_COD']) {  $achou = true; }
+                                            if ($empresas[$a]['EMP_COD'] == $mod_emp[$c]['MOD_COD']) {  $achou = true; }
                                             if($achou){ ?>
                                             <div class="form-check">
                                                 <input class="form-check-input" type="checkbox" value="<?= $mod_emp[$c]['MLE_COD'] ?>" id="flexCheckChecked" checked>
