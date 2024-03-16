@@ -86,12 +86,12 @@ $qtdEmpresas = (is_array($empresas) ? count($empresas) : 0);
                                         <?php } ?>   
                                         <?php if ($ok) { ?>
                                             <div class="form-check">
-                                                <input class="form-check-input" id="checar" type="checkbox" title="Desativar módulo nesta Empresa?" data-empresa="<?= $empresas[$a]['EMP_COD'] ?>" value="<?= $modulos[$b]['MOD_COD'] ?>" id="flexCheckChecked" checked>
+                                                <input class="form-check-input checar" type="checkbox" title="Desativar módulo nesta Empresa?" data-empresa="<?= $empresas[$a]['EMP_COD'] ?>" value="<?= $modulos[$b]['MOD_COD'] ?>" id="flexCheckChecked" checked>
                                                 <label class="form-check-label" for="flexCheckChecked"></label>
                                             </div>
                                             <?php  } else {  ?>
                                             <div class="form-check">
-                                                <input class="form-check-input" id="checar" type="checkbox" title="Ativar módulo nesta Empresa?" data-empresa="<?= $empresas[$a]['EMP_COD'] ?>" value="<?= $modulos[$a]['MOD_COD'] ?>" id="flexCheckChecked">
+                                                <input class="form-check-input checar" type="checkbox" title="Ativar módulo nesta Empresa?" data-empresa="<?= $empresas[$a]['EMP_COD'] ?>" value="<?= $modulos[$a]['MOD_COD'] ?>" id="flexCheckChecked">
                                                 <label class="form-check-label" for="flexCheckChecked"></label>
                                             </div>
                                             <?php } ?>          
@@ -105,10 +105,10 @@ $qtdEmpresas = (is_array($empresas) ? count($empresas) : 0);
                 </section>
                 <?php include_once 'app/Views/admin/inc/rodape.phtml';?>
                 <script type="text/javascript">
-
-                    const btnChecar = document.querySelector("#checar");
+                    const btnChecar = document.querySelector(".checar");
                     btnChecar.addEventListener('click', ()=>{
-                       console.log(btnChecar.value);
+                        var empresa = btnChecar.getAttribute('data-empresa');
+                       console.log(empresa);
                     })
                 </script>
             </div>
