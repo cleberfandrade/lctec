@@ -86,8 +86,9 @@ $qtdEmpresas = (is_array($empresas) ? count($empresas) : 0);
                                         <?php } ?>   
                                         <?php if ($ok) { ?>
                                             <div class="mx-auto">
-                                                <input class="form-check-input text-center mx-auto checar" type="checkbox" title="Desativar módulo nesta Empresa?" data-empresa="<?= $empresas[$a]['EMP_COD'] ?>" data-modulo="<?= $modulos[$b]['MOD_COD'] ?>" id="flexCheckChecked" checked>
-                                
+                                                <form id="CHECAR" method="post">
+                                                    <input class="form-check-input text-center mx-auto checar" type="checkbox" title="Desativar módulo nesta Empresa?" data-empresa="<?= $empresas[$a]['EMP_COD'] ?>" data-modulo="<?= $modulos[$b]['MOD_COD'] ?>" id="flexCheckChecked" checked>
+                                                </form>
                                             </div>
                                             <?php  } else {  ?>
                                             <div class="mx-auto">
@@ -105,18 +106,20 @@ $qtdEmpresas = (is_array($empresas) ? count($empresas) : 0);
                 <?php include_once 'app/Views/admin/inc/rodape.phtml';?>
                 <script type="text/javascript">
                     //jQuery( document ).ready(function() {
-                        //jQuery(".checar").click(function(){
-                           // window.location = jQuery(this).attr("data-empresa");
+                        jQuery(".checar").click(function(){
+                           var empresa = jQuery(this).attr("data-empresa");
+                           var modulo = jQuery(this).attr("data-modulo");
                             //return false;
-                       // });
-                    //});
-                    //const checkbox = document.querySelector(".checar");
-                    $(".checar").on("click", function() {
-                        var empresa = $(this).data('empresa');
-                        var modulo = $(this).data('modulo');
+                        });
                         console.log(empresa);
                         console.log(modulo);
-                    });
+                    //});
+                    //const checkbox = document.querySelector(".checar");
+                    //$(".checar").on("click", function() {
+                        //var empresa = $(this).data('empresa');
+                        //var modulo = $(this).data('modulo');
+                       
+                   // });
                    // checkbox.addEventListener("click", function (){
                        // var btnChecar = checkbox.getAttribute("data-empresa");
                        // modulo = btnChecar.getAttribute("data-modulo");
