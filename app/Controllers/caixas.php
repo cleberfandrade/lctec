@@ -67,11 +67,32 @@ class caixas extends View
                 foreach ($dados as $key => $value) {
                     $dados[$key] = $this->Check->checarString($value);
                 }
+
+
+                //Verificar se já existe cadastro
+                $cxa = $this->Caixas->setCodEmpresa($dados['EMP_COD'])->setDescricao($dados['CXA_DESCRICAO'])->checarDescricao();
+                if(!$cxa){
+
+                    $dados += array(
+                        'CXA_DT_CADASTRO'=> date('Y-m-d H:i:s'),
+                        'CXA_DT_ATUALIZACAO'=> date('0000-00-00 00:00:00'),          
+                        'CXA_STATUS'=> 1
+                    );
+                    //unset($dados['SET_TIPO']);
+                    if($this->Caixas->cadastrar($dados,0)){
+                        $ok = true;
+                        Sessao::alert('OK','Cadastro efetuado com sucesso!','fs-4 alert alert-success');
+                    }else{
+                        Sessao::alert('ERRO',' CXA4- Erro ao cadastrar novo caixa, entre em contato com o suporte!','fs-4 alert alert-danger');
+                    }
+                }else {
+                    Sessao::alert('ERRO',' CXA3- Cadastro já realizado!','fs-4 alert alert-warning');
+                }
             }else{
-                Sessao::alert('ERRO',' CAT2 - Dados inválido(s)!','alert alert-danger');
+                Sessao::alert('ERRO',' CXA2 - Dados inválido(s)!','alert alert-danger');
             }
         }else{
-            Sessao::alert('ERRO',' CAT1 - Acesso inválido(s)!','alert alert-danger');
+            Sessao::alert('ERRO',' CXA1 - Acesso inválido(s)!','alert alert-danger');
         }
         if ($ok) {
             $this->dados['caixas'] = $this->Caixas->setCodEmpresa($_SESSION['EMP_COD'])->listarTodos(0);
@@ -80,5 +101,35 @@ class caixas extends View
             $this->render('admin/cadastros/caixas/cadastrar', $this->dados);
         }
     }
+    public function alteracao():void
+    {
+        $this->dados['title'] .= ' ALTERAR CAIXAS';
+       
+        $dados = filter_input_array(INPUT_GET, FILTER_SANITIZE_URL);
+        $dados = explode("/",$dados['url']);
+        $ok = false;
+        if (isset($dados[1]) && $dados[1] == 'alteracao' && isset($dados[2]) && isset($dados[3])) {
 
+            $this->link[3] = ['link'=> 'caixas/alteracao/'.$_SESSION['EMP_COD'].'/'.$dados[3],'nome' => 'ALTERAR CAIXAS'];
+            $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
+            //verificar se o usuario que vai efetuar a acao é da empresa e se está correto(pertence) a empresa para os dados a serem alterados
+            if($this->dados['empresa']['USU_COD'] == $_SESSION['USU_COD'] && $this->dados['empresa']['EMP_COD'] == $dados[2]){
+             
+                $this->dados['caixas'] = $this->Caixas->setCodEmpresa($dados[2])->setCodigo($dados[3])->listar(0);
+                if ($this->dados['caixas'] != 0) {
+                    $ok = true;
+                }
+            }else{
+                Sessao::alert('ERRO',' ERRO: CAT22 - Acesso inválido(s)!','alert alert-danger');
+            }
+        }else{
+            Sessao::alert('ERRO',' ERRO: CAT11 - Acesso inválido(s)!','alert alert-danger');
+        }      
+        if($ok){
+            $this->render('admin/cadastros/caixas/alterar', $this->dados);
+        }else{
+            $this->dados['caixas'] = $this->Categorias->setCodEmpresa($_SESSION['EMP_COD'])->listarTodos(0);
+            $this->render('admin/cadastros/caixas/listar', $this->dados);
+        }
+    }
 }
