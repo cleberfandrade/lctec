@@ -96,9 +96,9 @@ class caixas extends View
         }
         if ($ok) {
             $this->dados['caixas'] = $this->Caixas->setCodEmpresa($_SESSION['EMP_COD'])->listarTodos(0);
-            $this->render('admin/cadastros/caixas/listar', $this->dados);
+            $this->render('admin/financeiro/caixas/listar', $this->dados);
         }else {
-            $this->render('admin/cadastros/caixas/cadastrar', $this->dados);
+            $this->render('admin/financeiro/caixas/cadastrar', $this->dados);
         }
     }
     public function alteracao():void
@@ -126,10 +126,10 @@ class caixas extends View
             Sessao::alert('ERRO',' ERRO: CAT11 - Acesso inválido(s)!','alert alert-danger');
         }      
         if($ok){
-            $this->render('admin/cadastros/caixas/alterar', $this->dados);
+            $this->render('admin/financeiro/caixas/alterar', $this->dados);
         }else{
             $this->dados['caixas'] = $this->Categorias->setCodEmpresa($_SESSION['EMP_COD'])->listarTodos(0);
-            $this->render('admin/cadastros/caixas/listar', $this->dados);
+            $this->render('admin/financeiro/caixas/listar', $this->dados);
         }
     }
 }
