@@ -154,7 +154,8 @@ class caixas extends View
                 $this->Caixas->setCodEmpresa($dados['EMP_COD'])->setCodigo($dados['CXA_COD']);
 
                 unset($dados['CXA_COD']);
-                
+                dump($dados);
+                exit;
                 $dados += array(
                     'CXA_DT_ATUALIZACAO'=> date('Y-m-d H:i:s'),
                     'CXA_STATUS'=> 1
