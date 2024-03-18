@@ -33,9 +33,9 @@ $qtdC = (is_array($contas) ? count($contas) : 0);
             <?php include_once 'app/Views/admin/inc/alertas.phtml'; ?> 
             <section class="bg-light  text-dark  py-2">
                 <div class="container mx-auto col-12 px-2 py-2 row">
-                    <form class="p-4 border text-uppercase rounded-3 " action="<?= DIRPAGE ?>caixas/cadastrar" method="POST">
-                        <div class="row ">
-                            <div class="col-6 mb-2">
+                    <form class="p-4 p-md-6 border text-uppercase rounded-3 " action="<?= DIRPAGE ?>caixas/cadastrar" method="POST">
+                        <div class="row col-10">
+                            <div class="col-8 mb-2">
                                 <label class="form-label">CONTA</label>
                                 <select class="form-select" name="CTA_COD">
                                     <option value="0" <?= (isset($_POST['CTA_COD']) &&  $_POST['CTA_COD']  == "0")? 'selected' : '' ?>>---</option>
