@@ -161,7 +161,7 @@ class caixas extends View
                     'CXA_DT_ATUALIZACAO'=> date('Y-m-d H:i:s'),
                     'CXA_STATUS'=> 1
                 );
-                if($this->Categorias->alterar($dados,0)){
+                if($this->Caixas->alterar($dados,0)){
                     $ok = true;
                     Sessao::alert('OK','Cadastro alterado com sucesso!','fs-4 alert alert-success');
                 }else{
@@ -175,10 +175,10 @@ class caixas extends View
         }
         $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
         if ($ok) {
-            $this->dados['caixas'] = $this->Categorias->setCodEmpresa($_SESSION['EMP_COD'])->listarTodos(0);
+            $this->dados['caixas'] = $this->Caixas->setCodEmpresa($_SESSION['EMP_COD'])->listarTodos(0);
             $this->render('admin/cadastros/caixas/listar', $this->dados);
         }else {
-            $this->dados['caixa'] = $this->Categorias->setCodEmpresa($dados['EMP_COD'])->setCodigo($cod)->listar(0);
+            $this->dados['caixa'] = $this->Caixas->setCodEmpresa($dados['EMP_COD'])->setCodigo($cod)->listar(0);
             $this->render('admin/cadastros/caixas/alterar', $this->dados);
         }
     }
