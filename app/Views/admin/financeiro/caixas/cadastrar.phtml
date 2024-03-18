@@ -37,7 +37,7 @@ $qtdC = (is_array($contas) ? count($contas) : 0);
                         <div class="row mx-auto text-center">
                             <div class="col-8 mb-2">
                                 <label class="form-label">CONTA</label>
-                                <select class="form-select" name="CTA_COD">
+                                <select class="form-select form-select-lg" name="CTA_COD">
                                     <option value="0" <?= (isset($_POST['CTA_COD']) &&  $_POST['CTA_COD']  == "0")? 'selected' : '' ?>>---</option>
                                     <?php for ($i= 0; $i < $qtdC; $i++) { ?> 
                                         <option value="<?= $contas[$i]['CTA_COD']; ?>" <?= (isset($_POST['CTA_COD']) &&  $_POST['CTA_COD']  == $contas[$i]['CTA_COD'] )? 'selected' : '' ?>><?= $contas[$i]['CTA_DESCRICAO'] ?></option>
