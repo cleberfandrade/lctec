@@ -138,13 +138,13 @@ class caixas extends View
         
         $ok = false;
         $dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);       
-
+        $cod = 0;
         if (isset($_POST) && isset($dados['ALTERAR_CAIXAS'])) {
 
             if($this->dados['empresa']['USU_COD'] == $dados['USU_COD'] && $this->dados['empresa']['EMP_COD'] == $dados['EMP_COD']){
 
                 $this->link[3] = ['link'=> 'caixas/alteracao/'.$_SESSION['EMP_COD'].'/'.$dados['CXA_COD'],'nome' => 'ALTERAR CAIXAS'];
-
+                $cod = $dados['CXA_COD'];
                 unset($dados['ALTERAR_CATEGORIA']);
                 //Verifica se tem algum valor proibido
                 foreach ($dados as $key => $value) {
@@ -153,8 +153,6 @@ class caixas extends View
                 
                 $this->Caixas->setCodEmpresa($dados['EMP_COD'])->setCodigo($dados['CXA_COD']);
 
-                $cod = $dados['CXA_COD'];
-                
                 unset($dados['CXA_COD']);
                 
                 $dados += array(
@@ -176,10 +174,10 @@ class caixas extends View
         $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
         if ($ok) {
             $this->dados['caixas'] = $this->Caixas->setCodEmpresa($_SESSION['EMP_COD'])->listarTodos(0);
-            $this->render('admin/cadastros/caixas/listar', $this->dados);
+            $this->render('admin/financeiro/caixas/listar', $this->dados);
         }else {
             $this->dados['caixa'] = $this->Caixas->setCodEmpresa($dados['EMP_COD'])->setCodigo($cod)->listar(0);
-            $this->render('admin/cadastros/caixas/alterar', $this->dados);
+            $this->render('admin/financeiro/caixas/alterar', $this->dados);
         }
     }
     public function status()
