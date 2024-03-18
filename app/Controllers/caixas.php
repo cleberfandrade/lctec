@@ -145,7 +145,7 @@ class caixas extends View
 
                 $this->link[3] = ['link'=> 'caixas/alteracao/'.$_SESSION['EMP_COD'].'/'.$dados['CXA_COD'],'nome' => 'ALTERAR CAIXAS'];
                 $cod = $dados['CXA_COD'];
-                unset($dados['ALTERAR_CATEGORIA']);
+                unset($dados['ALTERAR_CAIXA']);
                 //Verifica se tem algum valor proibido
                 foreach ($dados as $key => $value) {
                     $dados[$key] = $this->Check->checarString($value);
@@ -154,8 +154,7 @@ class caixas extends View
                 $this->Caixas->setCodEmpresa($dados['EMP_COD'])->setCodigo($dados['CXA_COD']);
 
                 unset($dados['CXA_COD']);
-                dump($dados);
-                exit;
+
                 $dados += array(
                     'CXA_DT_ATUALIZACAO'=> date('Y-m-d H:i:s'),
                     'CXA_STATUS'=> 1
