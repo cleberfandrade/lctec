@@ -48,6 +48,17 @@ class ModulosEmpresa extends Model
             return false;
         }
     }
+    public function listarModuloEmpresa($ver = 0)
+    {
+        $parametros = " ME INNER JOIN tb_modulos M ON M.MOD_COD=ME.MOD_COD WHERE ME.EMP_COD={$this->codEmpresa} AND ME.MOD_COD={$this->codigo} ORDER BY M.MOD_NOME";
+        $campos = "*";
+        $resultado = $this->Model->exibir($parametros, $campos, $ver = 0, $id = false);
+        if ($resultado) {
+            return $resultado;
+        } else {
+            return false;
+        }
+    }
     public function listarTodos($ver = 0)
     {
         $parametros = " ME INNER JOIN tb_modulos M ON M.MOD_COD=ME.MOD_COD ORDER BY ME.EMP_COD";
