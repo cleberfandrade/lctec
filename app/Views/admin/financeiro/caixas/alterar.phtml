@@ -48,19 +48,19 @@ $qtdC = (is_array($contas) ? count($contas) : 0);
                                 <label class="form-label" for="2">SALDO INICIAL(ATUAL)</label>  
                                 <div class="input-group">    
                                     <span class="input-group-text">R$</span>  
-                                    <input type="text" class="form-control form-control-lg real" id="" name="CXA_SALDO" placeholder="" value="<?= isset($_POST['CXA_SALDO']) ? $_POST['CXA_SALDO'] : (isset($caixa['CXA_SALDO'])? $caixa[$i]['CXA_SALDO'] : '0.00'); ?>">
+                                    <input type="text" class="form-control form-control-lg real" id="" name="CXA_SALDO" placeholder="" value="<?= isset($_POST['CXA_SALDO']) ? $_POST['CXA_SALDO'] : (isset($caixa['CXA_SALDO'])? $caixa['CXA_SALDO'] : '0.00'); ?>">
                                 </div>
                             </div>
                             <div class="col-12 mb-3">
                                 <label class="form-label" for="1">DESCRIÇÃO</label>
                                 <div class="form-floating mb-3">
-                                    <input type="text" class="form-control maiusculo" id="1" name="CXA_DESCRICAO" placeholder="" value="<?= isset($_POST['CXA_DESCRICAO']) ? $_POST['CXA_DESCRICAO'] :(isset($caixa['CXA_DESCRICAO'])? $caixa[$i]['CXA_DESCRICAO'] : ''); ?>">
+                                    <input type="text" class="form-control maiusculo" id="1" name="CXA_DESCRICAO" placeholder="" value="<?= isset($_POST['CXA_DESCRICAO']) ? $_POST['CXA_DESCRICAO'] :(isset($caixa['CXA_DESCRICAO'])? $caixa['CXA_DESCRICAO'] : ''); ?>">
                                     <label class="form-floating px-3" for="1">DESCRIÇÃO DO CAIXA</label>
                                 </div>
                             </div>
                             <hr class="my-4 text-dark">
-                            <input type="hidden" class="form-control" name="EMP_COD" value="<?= isset($_SESSION['EMP_COD']) ? $_SESSION['EMP_COD'] : 0; ?>">
-                            <input type="hidden" class="form-control" name="CXA_COD" value="<?= isset($_SESSION['CXA_COD']) ? $_SESSION['CXA_COD'] : 0; ?>">
+                            <input type="hidden" class="form-control" name="EMP_COD" value="<?= isset($caixa['EMP_COD']) ? $caixa['EMP_COD'] : 0; ?>">
+                            <input type="hidden" class="form-control" name="CXA_COD" value="<?= isset($caixa['CXA_COD']) ? $caixa['CXA_COD'] : 0; ?>">
                             <input type="hidden" class="form-control" name="USU_COD" value="<?= isset($_SESSION['USU_COD']) ? $_SESSION['USU_COD'] : 0; ?>">
                             <button class="w-100 btn btn-lg text-uppercase btn-warning" name="ALTERAR_CAIXA" type="submit"><i class="fa fa-edit"></i> Alterar</button>
                         </div>
