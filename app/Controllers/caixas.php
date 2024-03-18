@@ -115,8 +115,8 @@ class caixas extends View
             //verificar se o usuario que vai efetuar a acao é da empresa e se está correto(pertence) a empresa para os dados a serem alterados
             if($this->dados['empresa']['USU_COD'] == $_SESSION['USU_COD'] && $this->dados['empresa']['EMP_COD'] == $dados[2]){
              
-                $this->dados['caixas'] = $this->Caixas->setCodEmpresa($dados[2])->setCodigo($dados[3])->listar(0);
-                if ($this->dados['caixas'] != 0) {
+                $this->dados['caixa'] = $this->Caixas->setCodEmpresa($dados[2])->setCodigo($dados[3])->listar(0);
+                if ($this->dados['caixa'] != 0) {
                     $ok = true;
                 }
             }else{
@@ -130,6 +130,56 @@ class caixas extends View
         }else{
             $this->dados['caixas'] = $this->Categorias->setCodEmpresa($_SESSION['EMP_COD'])->listarTodos(0);
             $this->render('admin/financeiro/caixas/listar', $this->dados);
+        }
+    }
+    public function alterar()
+    {
+        $this->dados['title'] .= ' ALTERAR CAIXAS';
+        
+        $ok = false;
+        $dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);       
+
+        if (isset($_POST) && isset($dados['ALTERAR_CAIXAS'])) {
+
+            if($this->dados['empresa']['USU_COD'] == $dados['USU_COD'] && $this->dados['empresa']['EMP_COD'] == $dados['EMP_COD']){
+
+                $this->link[3] = ['link'=> 'caixas/alteracao/'.$_SESSION['EMP_COD'].'/'.$dados['CXA_COD'],'nome' => 'ALTERAR CAIXAS'];
+
+                unset($dados['ALTERAR_CATEGORIA']);
+                //Verifica se tem algum valor proibido
+                foreach ($dados as $key => $value) {
+                    $dados[$key] = $this->Check->checarString($value);
+                }
+                
+                $this->Caixas->setCodEmpresa($dados['EMP_COD'])->setCodigo($dados['CXA_COD']);
+
+                $cod = $dados['CXA_COD'];
+                
+                unset($dados['CXA_COD']);
+                
+                $dados += array(
+                    'CXA_DT_ATUALIZACAO'=> date('Y-m-d H:i:s'),
+                    'CXA_STATUS'=> 1
+                );
+                if($this->Categorias->alterar($dados,0)){
+                    $ok = true;
+                    Sessao::alert('OK','Cadastro alterado com sucesso!','fs-4 alert alert-success');
+                }else{
+                    Sessao::alert('ERRO',' ERRO: CXA33- Erro ao alterar o caixa, entre em contato com o suporte!','fs-4 alert alert-danger');
+                }
+            }else{
+                Sessao::alert('ERRO',' ERRO: CXA22 - Dados inválido(s)!','alert alert-danger');
+            }
+        }else{
+            Sessao::alert('ERRO',' ERRO: CXA21 - Acesso inválido(s)!','alert alert-danger');
+        }
+        $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
+        if ($ok) {
+            $this->dados['caixas'] = $this->Categorias->setCodEmpresa($_SESSION['EMP_COD'])->listarTodos(0);
+            $this->render('admin/cadastros/caixas/listar', $this->dados);
+        }else {
+            $this->dados['caixa'] = $this->Categorias->setCodEmpresa($dados['EMP_COD'])->setCodigo($cod)->listar(0);
+            $this->render('admin/cadastros/caixas/alterar', $this->dados);
         }
     }
 }
