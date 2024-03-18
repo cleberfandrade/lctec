@@ -139,7 +139,7 @@ class caixas extends View
         $ok = false;
         $dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);       
         $cod = 0;
-        if (isset($_POST) && isset($dados['ALTERAR_CAIXAS'])) {
+        if (isset($_POST) && isset($dados['ALTERAR_CAIXA'])) {
 
             if($this->dados['empresa']['USU_COD'] == $dados['USU_COD'] && $this->dados['empresa']['EMP_COD'] == $dados['EMP_COD']){
 
