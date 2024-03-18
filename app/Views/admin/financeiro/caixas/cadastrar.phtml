@@ -67,5 +67,18 @@ $qtdC = (is_array($contas) ? count($contas) : 0);
                 </div>
             </section>
             <?php include_once 'app/Views/admin/inc/rodape.phtml';?>
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+            <script src="<?= DIRJS ?>jquery.maskMoney.js"></script>
+            <script>
+                $(document).ready(function(){
+
+                    $('.real').maskMoney({
+                        prefix:'',
+                        allowNegative: true,
+                        thousands:'.', decimal:',',
+                        affixesStay: true
+                    });
+                })
+            </script>
         </div>
     </div>
