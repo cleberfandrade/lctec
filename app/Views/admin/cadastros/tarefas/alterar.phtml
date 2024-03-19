@@ -1,0 +1,98 @@
+<?php 
+use Libraries\Sessao;
+
+include_once 'app/Views/admin/inc/cabecalho.phtml'; 
+$qtdCLA = (is_array($classificacoes) ? count($classificacoes) : 0);
+$qtdCLN = (is_array($colunas) ? count($colunas) : 0);
+$qtd = (is_array($tarefa) ? count($tarefa) : 0);
+?>
+<body class="">
+    <div class="d-flex" id="wrapper">
+        <?php include_once 'app/Views/admin/inc/menu_lateral.phtml'; ?>
+        <div id="page-content-wrapper">
+        <!-- Top navigation-->
+            <?php include_once 'app/Views/admin/inc/menu_topo.phtml'; ?>
+            <div class="container-fluid bg-light p-0">
+                <header class="py-3">
+                    <section class="container px-3">
+                        <div class="row gx-5 align-items-center justify-content-center">
+                            <div class="col-lg-9 col-xl-9 col-xxl-9">
+                                <div class="my-1 px-4 mx-auto">
+                                    <a class="text-decoration-none" href="<?= DIRPAGE; ?>tarefas/alteracao">
+                                        <h5 class="fs-2 fw-bolder text-uppercase text-dark">
+                                            <i class="fa fa-handshake"></i> Alterar <span class="text-success"> Tarefas</span>
+                                        </h5>
+                                    </a>
+                                </div>
+                            </div>
+                            <?php include_once 'app/Views/admin/inc/saudacao.phtml'; ?> 
+                        </div>
+                    </section>
+                    <section class="container col-12 mx-auto px-5">
+                        <?= $breadcrumb ?>
+                    </section>
+                </header>
+                <?php include_once 'app/Views/admin/inc/alertas.phtml'; ?>
+                <section class="bg-light py-2">
+                    <div class="container col-10 px-2 py-2 mx-auto row">
+                        <form class="p-4 p-md-6 border text-uppercase rounded-3 " action="<?= DIRPAGE ?>tarefas/alterar" method="POST">
+                            <div class="row ">
+                                <div class="col-4 form-floating mb-3">
+                                    <select class="form-select text-uppercase mb-3 form-floating" name="CLA_COD">
+                                        <option value="0" <?= (isset($_POST['CLA_COD']) &&  $_POST['CLA_COD']  == "0")? 'selected' : ((isset($tarefa['CLA_COD']) && $tarefa['CLA_COD'] == 0)? 'selected' : '') ?>>---</option>
+                                        <?php for ($i= 0; $i < $qtdCLA; $i++) { if ($classificacoes[$i]['CLA_STATUS'] == 1) { ?> 
+                                            <option value="<?= $classificacoes[$i]['CLA_COD']; ?>" <?= (isset($_POST['CLA_COD']) &&  $_POST['CLA_COD']  == $classificacoes[$i]['CLA_COD'] )? 'selected' : ((isset($tarefa['CLA_COD']) && $tarefa['CLA_COD'] == $classificacoes[$i]['CLA_COD'])? 'selected' : '') ?>><?= $classificacoes[$i]['CLA_DESCRICAO'] ?></option>
+                                            <?php } } ?> 
+                                    </select>
+                                    <label class="form-floating mb-3">CLASSIFICAÇÃO</label>
+                                </div>
+                                <div class="col-4 form-floating mb-3">
+                                    <input type="date" class="form-control form-control-lg" name="TRF_DATA" placeholder="" value="<?= isset($_POST['TRF_DATA']) ? $_POST['TRF_DATA'] : ((isset($tarefa['TRF_DATA']))? $tarefa['TRF_DATA'] : ''); ?>">
+                                    <label class="px-3" for="2">DATA</label>
+                                </div> 
+                                <div class="col-4 form-floating mb-3">
+                                    <input type="time" class="form-control form-control-lg" name="TRF_HORARIO" placeholder="" value="<?= isset($_POST['TRF_HORARIO']) ? $_POST['TRF_HORARIO'] : ((isset($tarefa['TRF_HORARIO']))? $tarefa['TRF_HORARIO'] : ''); ?>">
+                                    <label class="px-3" for="2">HORÁRIO</label>
+                                </div> 
+                                <div class="col-4 mb-2 form-floating ">
+                                    <select class="form-select " name="TRF_NIVEL">                                        
+                                        <?php for ($i=1; $i <= 50; $i++) { ?>
+                                            <option value="<?= $i?>" <?= (isset($_POST['TRF_NIVEL']) &&  $_POST['TRF_NIVEL']  == $i)? 'selected' : ((isset($tarefa['TRF_NIVEL']) && $tarefa['TRF_NIVEL'] == $i)? 'selected' : '') ?>><?= $i ?></option>
+                                        <?php } ?>
+                                    </select>
+                                    <label class="form-label">NÍVEL DA TAREFA</label>
+                                </div>
+                                <div class="col-8 mb-3">
+                                    <div class="form-floating mb-3">
+                                        <input type="text" class="form-control maiusculo" id="1" name="TRF_DESCRICAO" placeholder="" value="<?= isset($_POST['TRF_DESCRICAO']) ? $_POST['TRF_DESCRICAO'] : ((isset($tarefa['TRF_DESCRICAO']))? $tarefa['TRF_DESCRICAO'] : ''); ?>">
+                                        <label class="form-floating px-3" for="1">DESCRIÇÃO DA TAREFA</label>
+                                    </div>
+                                </div>
+                                <div class="col-4 form-floating mb-3">
+                                    <select class="form-select text-uppercase mb-3 form-floating" name="CLN_COD">
+                                        <option value="0" <?= (isset($_POST['CLN_COD']) &&  $_POST['CLN_COD']  == 0)? 'selected' : ((isset($tarefa['CLN_COD']) && $tarefa['CLN_COD'] == 0)? 'selected' : '')  ?>>---</option>
+                                        <?php for ($i= 0; $i < $qtdCLN; $i++) { if ($colunas[$i]['CLN_STATUS'] == 1) { ?> 
+                                            <option value="<?= $colunas[$i]['CLN_COD']; ?>" <?= (isset($_POST['CLN_COD']) &&  $_POST['CLN_COD']  == $colunas[$i]['CLN_COD'] )? 'selected' : ((isset($tarefa['CLN_COD']) && $tarefa['CLN_COD'] == $colunas[$i]['CLN_COD'])? 'selected' : '')  ?>><?= $colunas[$i]['CLN_DESCRICAO'] ?></option>
+                                            <?php } } ?> 
+                                    </select>
+                                    <label class="form-floating mb-3">COLUNA</label>
+                                </div>
+                                <div class="col-8 form-floating mb-3">
+                                    <textarea type="text" rows="10" class="form-control  maiusculo" name="TRF_OBSERVACAO"><?= isset($_POST['TRF_OBSERVACAO'])? $_POST['TRF_OBSERVACAO']  : ((isset($tarefa['TRF_OBSERVACAO']))? $tarefa['TRF_OBSERVACAO'] : '') ?></textarea>
+                                    <label for="4" class="form-label">OBSERVAÇÃO</label>
+                                </div>
+                                <hr class="my-4 text-dark">
+                                <input type="hidden" class="form-control" name="TRF_COD" value="<?= isset($_SESSION['TRF_COD']) ? $_SESSION['TRF_COD'] : 0; ?>">
+                                <input type="hidden" class="form-control" name="EMP_COD" value="<?= isset($_SESSION['EMP_COD']) ? $_SESSION['EMP_COD'] : 0; ?>">
+                                <input type="hidden" class="form-control" name="USU_COD" value="<?= isset($_SESSION['USU_COD']) ? $_SESSION['USU_COD'] : 0; ?>">
+                                <button class="w-100 btn btn-lg text-uppercase btn-warning" name="ALTERAR_TAREFA" type="submit"><i class="fa fa-edit"></i> Alterar</button>
+                            </div> 
+                        </form>
+                    </div>
+                </section>
+            </div>
+            <?php include_once 'app/Views/admin/inc/rodape.phtml';?>
+        </div>
+    </div>
+</body>
+</html>

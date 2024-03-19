@@ -36,7 +36,7 @@ class Financas extends Model
     }
     public function listar($ver = 0)
     {
-        $parametros = "F INNER JOIN tb_empresas E ON E.EMP_COD=F.EMP_COD WHERE F.CTA_COD={$this->codigo} AND F.EMP_COD={$this->codEmpresa} ";
+        $parametros = "F INNER JOIN tb_empresas E ON E.EMP_COD=F.EMP_COD WHERE F.EMP_COD={$this->codEmpresa} AND F.CTA_COD={$this->codigo}";
         $campos = "*";
         $resultado = $this->Model->exibir($parametros, $campos, $ver = 0, $id = false);
         if ($resultado) {

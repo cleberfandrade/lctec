@@ -37,7 +37,20 @@ class ModulosEmpresa extends Model
     }
     public function listar($ver = 0)
     {
-        $parametros = " ME INNER JOIN tb_modulos M ON M.MOD_COD=ME.MOD_COD WHERE ME.EMP_COD={$this->codEmpresa} AND M.MOD_STATUS=1 ORDER BY M.MOD_NOME";
+        $parametros = " ME INNER JOIN tb_modulos M ON M.MOD_COD=ME.MOD_COD WHERE ME.EMP_COD={$this->codEmpresa} ORDER BY M.MOD_NOME";
+        //ativar quando não quiser que apareça até mesmo no menu lateral SOMENTE com o módulo desativado, não irá aparecer
+        //$parametros = " ME INNER JOIN tb_modulos M ON M.MOD_COD=ME.MOD_COD WHERE ME.EMP_COD={$this->codEmpresa} AND M.MOD_STATUS=1 ORDER BY M.MOD_NOME";
+        $campos = "*";
+        $resultado = $this->Model->exibir($parametros, $campos, $ver = 0, $id = false);
+        if ($resultado) {
+            return $resultado;
+        } else {
+            return false;
+        }
+    }
+    public function listarModuloEmpresa($ver = 0)
+    {
+        $parametros = " ME INNER JOIN tb_modulos M ON M.MOD_COD=ME.MOD_COD WHERE ME.EMP_COD={$this->codEmpresa} AND ME.MOD_COD={$this->codigo} ORDER BY M.MOD_NOME";
         $campos = "*";
         $resultado = $this->Model->exibir($parametros, $campos, $ver = 0, $id = false);
         if ($resultado) {

@@ -21,7 +21,7 @@ if (!empty($_SERVER['HTTPS'])) {
 
 
 #Diretorios Publicos
-define('DIRIMG', DIRPAGE . "public/images/");
+define('DIRIMG', DIRPAGE . "public/img/");
 define('DIRICON', DIRPAGE . "public/images/icones/");
 define('DIRMOVIES', DIRPAGE . "public/movies/");
 define('DIRSOUNDS', DIRPAGE . "public/sounds/");
