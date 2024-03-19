@@ -234,15 +234,16 @@ $contagem = 1;
                                                     </td>
                                                     <td colspan="2" class="text-center">
                                                         <label class="form-label">SUBTOTAL</label>
-                                                        <input type="text" id="VEN_VL_SUBTOTAL" class="form-control text-center" name='VEN_VL_SUBTOTAL' value="0.00">
+                                                        <input type="text" id="VEN_VALOR_SUBTOTAL" class="form-control text-center" name='VEN_VALOR_SUBTOTAL' value="0.00">
                                                     </td>
                                                     <td class="text-center">
                                                         <label class="form-label">DESCONTO %</label>
-                                                        <input type="number" id="PRO_DESCONTO" class="form-control text-center" min="0" maxn="100"  name='VEN_VL_DESCONTO' value="0">
+                                                        <input type="number" id="PRO_DESCONTO" class="form-control text-center" min="0" maxn="100" value="0">
+                                                        <input type="text" id="VEN_VALOR_DESCONTO" class="form-control text-center hidden" min="0" maxn="100"  name='VEN_VALOR_DESCONTO' value="0">
                                                     </td>
                                                     <td colspan="2" class="text-center bg-1">
                                                         <label class="form-label fw-bold">TOTAL</label>
-                                                        <input type="text" id="VEN_VL_TOTAL" class="form-control text-center" name='VEN_VL_TOTAL' value="0">
+                                                        <input type="text" id="VEN_VALOR_TOTAL" class="form-control text-center" name='VEN_VALOR_TOTAL' value="0">
                                                     </td>
                                                 </tr>
                                             </tfooter>
@@ -482,7 +483,7 @@ $contagem = 1;
             document.getElementById('QTD').value = '';
             
             var MOV_QUANTIDADE = Number(document.getElementById('MOV_QUANTIDADE').value);
-            console.log(MOV_QUANTIDADE);
+            //console.log(MOV_QUANTIDADE);
             objFilho.setAttribute("data-quantidade",MOV_QUANTIDADE);
 
             if (MOV_QUANTIDADE >= 1) {
@@ -492,9 +493,9 @@ $contagem = 1;
                 document.getElementById('QTD').value = Number(quantidade + MOV_QUANTIDADE);
                 objFilho.setAttribute("data-subtotal",subtotal);
 
-                var n1 = Number(document.getElementById('VEN_VL_SUBTOTAL').value);
+                var n1 = Number(document.getElementById('VEN_VALOR_SUBTOTAL').value);
                 var n2 = Number(subtotal);
-                document.getElementById('VEN_VL_SUBTOTAL').value = (n1 + n2).toFixed(2);   
+                document.getElementById('VEN_VALOR_SUBTOTAL').value = (n1 + n2).toFixed(2);   
 
                 document.getElementById("filho" + qtdeCampos).innerHTML = "<td class='align-middle mx-auto'>" + qtdeCampos + "</td>"+
                 "<td class='align-middle mx-auto'>"+resposta.PRO_NOME+"</td>"+
@@ -510,14 +511,16 @@ $contagem = 1;
                 if(PRO_DESCONTO !=="" || PRO_DESCONTO !== null){
                     
                     PRO_DESCONTO = parseFloat(PRO_DESCONTO/100);
-                    var VEN_VL_SUBTOTAL = $("#VEN_VL_SUBTOTAL").val();
+                    var VEN_VL_SUBTOTAL = $("#VEN_VALOR_SUBTOTAL").val();
                     VEN_VL_SUBTOTAL = parseFloat(VEN_VL_SUBTOTAL);
                     var novo = parseFloat(VEN_VL_SUBTOTAL - (VEN_VL_SUBTOTAL * PRO_DESCONTO)).toFixed(2);
-                    $("#VEN_VL_TOTAL").val('');
-                    $("#VEN_VL_TOTAL").val(novo); 
+                    $("#VEN_VALOR_TOTAL").val('');
+                    $("#VEN_VALOR_TOTAL").val(novo); 
+                    $("#VEN_VALOR_DESCONTO").val((VEN_VL_SUBTOTAL * PRO_DESCONTO)); 
                 }else{
-                    var VEN_VL_SUBTOTAL = $("#VEN_VL_SUBTOTAL").val();
-                    $("#VEN_VL_TOTAL").val(VEN_VL_SUBTOTAL); 
+                    var VEN_VL_SUBTOTAL = $("#VEN_VALOR_SUBTOTAL").val();
+                    $("#VEN_VALOR_TOTAL").val(VEN_VL_SUBTOTAL); 
+                    $("#VEN_VALOR_DESCONTO").val(0);
                 }
 
                 $("#total").show();
@@ -543,20 +546,20 @@ $contagem = 1;
             var quantidade = Number(document.getElementById('QTD').value);
             document.getElementById('QTD').value = (quantidade - qtd);
 
-            var subtotal = document.getElementById('VEN_VL_SUBTOTAL').value;
-            document.getElementById('VEN_VL_SUBTOTAL').value = (subtotal - sb).toFixed(2);
+            var subtotal = document.getElementById('VEN_VALOR_SUBTOTAL').value;
+            document.getElementById('VEN_VALOR_SUBTOTAL').value = (subtotal - sb).toFixed(2);
             
             var PRO_DESCONTO =  $("#PRO_DESCONTO").val();
             if(PRO_DESCONTO !=="" || PRO_DESCONTO !== null){
                 PRO_DESCONTO = parseFloat(PRO_DESCONTO/100);
-                var VEN_VL_SUBTOTAL = $("#VEN_VL_SUBTOTAL").val();
+                var VEN_VL_SUBTOTAL = $("#VEN_VALOR_SUBTOTAL").val();
                 VEN_VL_SUBTOTAL = parseFloat(VEN_VL_SUBTOTAL);
                 var novo = parseFloat(VEN_VL_SUBTOTAL - (VEN_VL_SUBTOTAL * PRO_DESCONTO)).toFixed(2);
-                $("#VEN_VL_TOTAL").val('');
-                $("#VEN_VL_TOTAL").val(novo); 
+                $("#VEN_VALOR_TOTAL").val('');
+                $("#VEN_VALOR_TOTAL").val(novo); 
             }else{
-                var VEN_VL_SUBTOTAL = $("#VEN_VL_SUBTOTAL").val();
-                $("#VEN_VL_TOTAL").val(VEN_VL_SUBTOTAL); 
+                var VEN_VL_SUBTOTAL = $("#VEN_VALOR_SUBTOTAL").val();
+                $("#VEN_VALOR_TOTAL").val(VEN_VL_SUBTOTAL); 
             }
             $("#total").show();
 
@@ -570,14 +573,14 @@ $contagem = 1;
             var PRO_DESCONTO =  $(this).val();
             if(PRO_DESCONTO !=="" || PRO_DESCONTO !== null){
                 PRO_DESCONTO = parseFloat(PRO_DESCONTO/100);
-                var VEN_VL_SUBTOTAL = $("#VEN_VL_SUBTOTAL").val();
+                var VEN_VL_SUBTOTAL = $("#VEN_VALOR_SUBTOTAL").val();
                 VEN_VL_SUBTOTAL = parseFloat(VEN_VL_SUBTOTAL);
                 var novo = parseFloat(VEN_VL_SUBTOTAL - (VEN_VL_SUBTOTAL * PRO_DESCONTO)).toFixed(2);
-                $("#VEN_VL_TOTAL").val('');
-                $("#VEN_VL_TOTAL").val(novo); 
+                $("#VEN_VALOR_TOTAL").val('');
+                $("#VEN_VALOR_TOTAL").val(novo); 
             }else{
-                var VEN_VL_SUBTOTAL = $("#VEN_VL_SUBTOTAL").val();
-                $("#VEN_VL_TOTAL").val(VEN_VL_SUBTOTAL); 
+                var VEN_VL_SUBTOTAL = $("#VEN_VALOR_SUBTOTAL").val();
+                $("#VEN_VALOR_TOTAL").val(VEN_VL_SUBTOTAL); 
             }
         });
     </script>

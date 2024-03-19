@@ -399,9 +399,9 @@ class movimentacoes extends View
                                 'VEN_CODE' => '',
                                 'VEN_DT_CADASTRO'=> date('Y-m-d H:i:s'),
                                 'VEN_DT_ATUALIZACAO'=> date('0000-00-00 00:00:00'),  
-                                'VEN_VL_SUBTOTAL' => $dados['VEN_VL_SUBTOTAL'],
-                                'VEN_VL_DESCONTO' => $dados['VEN_VL_TOTAL'],
-                                'VEN_VL_TOTAL' => $dados['VEN_VL_TOTAL'],
+                                'VEN_VALOR_SUBTOTAL' => $dados['VEN_VL_SUBTOTAL'],
+                                'VEN_VALOR_DESCONTO' => $dados['VEN_VL_TOTAL'],
+                                'VEN_VALOR_TOTAL' => $dados['VEN_VL_TOTAL'],
                                 'VEN_STATUS'=> 1
                             );
                             $idVenda = $this->Vendas->cadastrar($dados_venda,0);

@@ -137,7 +137,7 @@ $qtdMotivos = (is_array($motivos) ? count($motivos) : 0);
                                 </td>
                                 <td class="text-center align-middle"><?= ($movimentacoes[$i]['MOV_STATUS'] == 1)? 'ATIVO' : 'DESATIVADO'; ?></td>
                                 <td class="text-center align-middle">
-        
+                                    <button type="button" class="btn btn-danger btn-sm d-print-none" data-bs-toggle='modal' data-bs-target="#deletar" title="Deletar" data-codigo="<?= $movimentacoes[$i]['MOV_COD']; ?>" data-status="<?= $movimentacoes[$i]['MOV_STATUS']; ?>"><i class="fa fa-ban"></i></button>
                                 </td>
                             </tr>
                             <?php } ?>
