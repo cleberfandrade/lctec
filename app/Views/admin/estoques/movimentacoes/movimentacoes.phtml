@@ -239,7 +239,7 @@ $contagem = 1;
                                                     <td class="text-center">
                                                         <label class="form-label">DESCONTO %</label>
                                                         <input type="number" id="PRO_DESCONTO" class="form-control text-center" min="0" maxn="100" value="0">
-                                                        <input type="text" id="VEN_VALOR_DESCONTO" class="form-control text-center hidden" min="0" maxn="100"  name='VEN_VALOR_DESCONTO' value="0">
+                                                        <input type="text" id="VEN_VALOR_DESCONTO" class="form-control text-center hidden" name='VEN_VALOR_DESCONTO' value="0">
                                                     </td>
                                                     <td colspan="2" class="text-center bg-1">
                                                         <label class="form-label fw-bold">TOTAL</label>
@@ -367,11 +367,7 @@ $contagem = 1;
                // $("#SAIDA").show();
             }
         });
-        function desconto(){
-            $("#PRO_DESCONTO").on("change", function(){
-               
-            });
-        }
+       
 
         <?php $op = ($qtdEstoque == 1)? 'ready' : 'change'; ?> 
         $("#buscar_produtos").<?= $op ?>(function(){
@@ -516,7 +512,8 @@ $contagem = 1;
                     var novo = parseFloat(VEN_VL_SUBTOTAL - (VEN_VL_SUBTOTAL * PRO_DESCONTO)).toFixed(2);
                     $("#VEN_VALOR_TOTAL").val('');
                     $("#VEN_VALOR_TOTAL").val(novo); 
-                    $("#VEN_VALOR_DESCONTO").val((VEN_VL_SUBTOTAL * PRO_DESCONTO)); 
+                    var desconto = (VEN_VL_SUBTOTAL * PRO_DESCONTO);
+                    $("#VEN_VALOR_DESCONTO").val(desconto); 
                 }else{
                     var VEN_VL_SUBTOTAL = $("#VEN_VALOR_SUBTOTAL").val();
                     $("#VEN_VALOR_TOTAL").val(VEN_VL_SUBTOTAL); 
@@ -557,9 +554,11 @@ $contagem = 1;
                 var novo = parseFloat(VEN_VL_SUBTOTAL - (VEN_VL_SUBTOTAL * PRO_DESCONTO)).toFixed(2);
                 $("#VEN_VALOR_TOTAL").val('');
                 $("#VEN_VALOR_TOTAL").val(novo); 
+                $("#VEN_VALOR_DESCONTO").val(VEN_VL_SUBTOTAL * PRO_DESCONTO);
             }else{
                 var VEN_VL_SUBTOTAL = $("#VEN_VALOR_SUBTOTAL").val();
                 $("#VEN_VALOR_TOTAL").val(VEN_VL_SUBTOTAL); 
+                $("#VEN_VALOR_DESCONTO").val(0);
             }
             $("#total").show();
 
@@ -578,9 +577,12 @@ $contagem = 1;
                 var novo = parseFloat(VEN_VL_SUBTOTAL - (VEN_VL_SUBTOTAL * PRO_DESCONTO)).toFixed(2);
                 $("#VEN_VALOR_TOTAL").val('');
                 $("#VEN_VALOR_TOTAL").val(novo); 
+                var desconto = (VEN_VL_SUBTOTAL * PRO_DESCONTO);
+                $("#VEN_VALOR_DESCONTO").val(desconto); 
             }else{
                 var VEN_VL_SUBTOTAL = $("#VEN_VALOR_SUBTOTAL").val();
                 $("#VEN_VALOR_TOTAL").val(VEN_VL_SUBTOTAL); 
+                $("#VEN_VALOR_DESCONTO").val(0);
             }
         });
     </script>
