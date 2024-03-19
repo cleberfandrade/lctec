@@ -13,23 +13,38 @@ $qtdEstoque = 0;
 for ($i=0; $i < $qtd; $i++) { if ($estoques[$i]['EST_STATUS'] == 1) {$qtdEstoque++; }}
 $qtdClientes = (is_array($clientes) ? count($clientes) : 0);
 
-
-
+$motivos_entrada = array(
+    0 => '---',
+    1 =>'COMPRA',
+    2 =>'DEVOLUÇÃO DO CLIENTE',
+    3 =>'OUTROS'
+);
+$motivos_saida = array(
+    0 => '---',
+    1 =>'VENDA',
+    2 =>'DEVOLUÇÃO AO FORNECEDOR',
+    3 =>'PERDA',
+    4 =>'OUTROS'
+);
 $motivos = array(
     0 => '---',
     1 =>'COMPRA',
     2 =>'VENDA',
-    3 =>'AJUSTE',
-    4 =>'DEVOLUÇÃO CLIENTE',
-    5=>'DEVOLUÇÃO FORNECEDOR',
-    6=>'PERDA',
-    7=>'OUTROS'
+    3 =>'DEVOLUÇÃO DO CLIENTE',
+    4 =>'DEVOLUÇÃO AO FORNECEDOR',
+    5 =>'PERDA',
+    6 =>'OUTROS'
 );
 $qtdMotivos = (is_array($motivos) ? count($motivos) : 0);
-
+$qtdMotEntrada = (is_array($motivos_entrada) ? count($motivos_entrada) : 0);
+$qtdMotSaida = (is_array($motivos_saida) ? count($motivos_saida) : 0);
 $contagem = 1;
 ?>
+<style>
 
+.hidden {
+  display: none; }
+</style>
 <body class="">
     <div class="d-flex" id="wrapper">
         <?php include_once 'app/Views/admin/inc/menu_lateral.phtml'; ?>
@@ -113,38 +128,53 @@ $contagem = 1;
                                     <label class="form-label">DATA</label>
                                 </div>
                                 <div class="col-3 form-floating mb-2">
-                                    <select class="form-select" name="MOV_TIPO">
+                                    <select class="form-select" id="tipo" name="MOV_TIPO">
                                         <option value="0" <?= (isset($_POST['MOV_TIPO']) &&  $_POST['MOV_TIPO']  == 0)? 'selected' : '' ?>>---</option>
                                         <option value="1" <?= (isset($_POST['MOV_TIPO']) &&  $_POST['MOV_TIPO']  == 1)? 'selected' : '' ?>>ENTRADA</option>
                                         <option value="2" <?= (isset($_POST['MOV_TIPO']) &&  $_POST['MOV_TIPO']  == 2)? 'selected' : '' ?>>SAÍDA</option>
                                     </select>
                                     <label class="form-label">TIPO</label>
                                 </div>
-                                <div class="col-5 form-floating mb-2">
-                                    <select class="form-select " name="MOV_MOTIVO">     
-                                        <?php for ($i=0; $i < $qtdMotivos; $i++) { ?>
-                                            <option value="<?= $i ?>" <?= (isset($_POST['MOV_MOTIVO']) &&  $_POST['MOV_MOTIVO']  == $i)? 'selected' : '' ?>><?= $motivos[$i] ?></option>
-                                        <?php } ?>
-                                    </select>
-                                    <label class="form-label">MOTIVO</label>
-                                </div>
-                               
-                                <div class="col-4 mx-auto form-floating mb-3" @keydown.enter.stop>
-                                    <?php if($_SESSION['USU_NIVEL'] == 30){ ?>
-                                    <div class="input-group input-group-lg">
-                                        <div class="form-floating">
-                                            <input type="number" class="form-control maiusculo" id="MOV_QUANTIDADE" name="MOV_QUANTIDADE" min="0" value="<?= isset($_POST['MOV_QUANTIDADE']) ? $_POST['MOV_QUANTIDADE'] : ''; ?>">
-                                            <label class="px-2" for="MOV_QUANTIDADE">QUANTIDADE</label>
-                                        </div>
-                                        <button type="button" class="btn text-uppercase btn-success" id="adicionar"><i class="fa fa-plus"></i></button>
+                                <?php if($_SESSION['USU_NIVEL'] == 30){ ?>
+                                    <div class="col-5 form-floating mb-2 hidden">
+                                        <select id="ENTRADA" class="form-select " name="MOV_MOTIVO">
+                                            <?php for ($i=0; $i < $qtdMotEntrada; $i++) { ?>
+                                                <option value="<?= $i ?>" <?= (isset($_POST['MOV_MOTIVO']) &&  $_POST['MOV_MOTIVO']  == $i)? 'selected' : '' ?>><?= $motivos_entrada[$i] ?></option>
+                                            <?php } ?>
+                                        </select>
+                                        <select id="SAIDA" class="form-select "  name="MOV_MOTIVO">
+                                            <?php for ($i=0; $i < $qtdMotSaida; $i++) { ?>
+                                                <option value="<?= $i ?>" <?= (isset($_POST['MOV_MOTIVO']) &&  $_POST['MOV_MOTIVO']  == $i)? 'selected' : '' ?>><?= $motivos_saida[$i] ?></option>
+                                            <?php } ?>
+                                        </select>
+                                        <label class="form-label">MOTIVO</label>
                                     </div>
-                                    <?php }else { ?>
+                                    <div class="col-4 mx-auto form-floating mb-3" @keydown.enter.stop>
+                                        <div class="input-group input-group-lg">
+                                            <div class="form-floating">
+                                                <input type="number" class="form-control maiusculo" id="MOV_QUANTIDADE" name="MOV_QUANTIDADE" min="0" value="<?= isset($_POST['MOV_QUANTIDADE']) ? $_POST['MOV_QUANTIDADE'] : ''; ?>">
+                                                <label class="px-2" for="MOV_QUANTIDADE">QUANTIDADE</label>
+                                            </div>
+                                            <button type="button" class="btn text-uppercase btn-success" id="adicionar"><i class="fa fa-plus"></i></button>
+                                        </div>
+                                    </div>
+                                <?php }else { ?>
+                                    <div class="col-5 form-floating mb-2">
+                                        <select class="form-select " name="MOV_MOTIVO">     
+                                            <?php for ($i=0; $i < $qtdMotivos; $i++) { ?>
+                                                <option value="<?= $i ?>" <?= (isset($_POST['MOV_MOTIVO']) &&  $_POST['MOV_MOTIVO']  == $i)? 'selected' : '' ?>><?= $motivos[$i] ?></option>
+                                            <?php } ?>
+                                        </select>
+                                        <label class="form-label">MOTIVO</label>
+                                    </div>
+                                    <div class="col-4 mx-auto form-floating mb-3" @keydown.enter.stop>
                                         <div class="form-floating">
                                             <input type="number" class="form-control maiusculo" id="MOV_QUANTIDADE" name="MOV_QUANTIDADE" min="0" value="<?= isset($_POST['MOV_QUANTIDADE']) ? $_POST['MOV_QUANTIDADE'] : ''; ?>">
                                             <label class="px-2" for="MOV_QUANTIDADE">QUANTIDADE</label>
                                         </div>
-                                    <?php } ?>
-                                </div>
+                                    </div>                                        
+                                <?php } ?>
+                                
                                 <div class="col-12 mx-auto fs-4 mb-2 text-center">
                                     <label class="px-2" for="2">QUANTIDADE ATUAL</label>
                                     <b class="text-dark"><br><span id="PRO_QUANTIDADE">0</span></b>
@@ -156,7 +186,7 @@ $contagem = 1;
                                 </section>
                                 <div class="col-12 mx-auto row mb-2">
                                 <?php if($_SESSION['USU_NIVEL'] == 30){ ?>
-                                    <div class="col-5 mx-auto form-floating mb-3">
+                                    <div id="CLI" class="col-5 mx-auto form-floating mb-3">
                                         <div class="input-group input-group-lg">
                                             <div class="form-floating">
                                                 <select id="cliente" class="form-select" name="CLI_COD"> 
@@ -169,10 +199,8 @@ $contagem = 1;
                                             </div>
                                             <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#novo_cliente" ><i class="fa fa-plus"></i></button>
                                         </div>
-                                        
-                                        
                                     </div>
-                                    <div class="col-3 mx-auto form-floating mb-3">
+                                    <div id="CXA" class="col-3 mx-auto form-floating mb-3">
                                         <select id="cliente" class="form-select" name="CXA_COD">
                                             <?php for ($i=0; $i < $qtdCA; $i++) { ?>
                                                 <option value="<?= $caixas[$i]['CXA_COD'] ?>" <?= (isset($_POST['CXA_COD']) &&  $_POST['CXA_COD']  == $i)? 'selected' : '' ?>><?= $caixas[$i]['CXA_DESCRICAO'] ?></option>
@@ -180,8 +208,8 @@ $contagem = 1;
                                         </select>
                                         <label class="form-label">CAIXA</label>
                                     </div>
-                                    <div class="col-4 mx-auto form-floating mb-3">
-                                        <select id="cliente" class="form-select" name="CLI_COD"> 
+                                    <div id="FPG" class="col-4 mx-auto form-floating mb-3">
+                                        <select  class="form-select" name="CLI_COD"> 
                                             <option value="0" <?= (isset($_POST['FPG_COD']) &&  $_POST['FPG_COD']  == 0)? 'selected' : '' ?>>---</option>
                                         <?php for ($i=0; $i < $qtdF; $i++) { if ($formas_pagamentos[$i]['FPG_STATUS'] == 1) { ?>
                                             <option value="<?= $i ?>" <?= (isset($_POST['FPG_COD']) &&  $_POST['FPG_COD']  == $i)? 'selected' : '' ?>><?= ($formas_pagamentos[$i]['FPG_TIPO'] == 1)? 'À VISTA' : 'À PRAZO'; ?> - <?= $formas_pagamentos[$i]['FPG_DESCRICAO'] ?></option>
@@ -189,7 +217,7 @@ $contagem = 1;
                                         </select>
                                         <label class="form-label">FORMA DE PAGAMENTO</label>
                                     </div>
-                                    <div class="col-12 mx-auto form-floating mb-2">
+                                    <div id="INFO" class="col-12 mx-auto form-floating mb-2">
                                         <table id="table"  class="table table-bordered">
                                             <thead>
                                                 <tr class="text-center bg-1 "><th colspan="6" class="text-white">ITENS</th></tr>
@@ -315,13 +343,31 @@ $contagem = 1;
                 return true;
             });
         });
-        /*document.addEventListener("keydown", function(e) {
-            if(e.keyCode === 13) {
-                    
-                e.preventDefault();
-                
+
+        const tipo = document.querySelector("#tipo");
+        
+        tipo.addEventListener("change", function() {
+        
+            var checar = tipo.value;
+            
+            if (checar == 1) {
+                $('#SAIDA').addClass('hidden');
+                $('#ENTRADA').removeClass('hidden');
+                $('#CLI').addClass('hidden');
+                $('#CXA').addClass('hidden');
+                $('#INFO').addClass('hidden');
+                //$('#saida').hide();
+                //$("#entrada").show();
+            } else {
+                $('#SAIDA').removeClass('hidden');
+                $('#ENTRADA').addClass('hidden');
+                $('#CLI').removeClass('hidden');
+                $('#CXA').removeClass('hidden');
+                $('#INFO').removeClass('hidden');
+               // $('#entrada').hide();
+                //$("#saida").show();
             }
-        });*/
+        });
         function desconto(){
             $("#PRO_DESCONTO").on("change", function(){
                

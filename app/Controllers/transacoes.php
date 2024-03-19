@@ -111,7 +111,7 @@ class transacoes extends View
             Sessao::alert('ERRO',' TRAS1 - Acesso inválido(s)!','alert alert-danger');
         }
         if ($ok) {
-            $this->dados['transacoes'] = $this->Transacoes->setCodEmpresa($_SESSION['EMP_COD'])->listarTodas(0);
+            $this->dados['transacoes'] = $this->Transacoes->setCodEmpresa($_SESSION['EMP_COD'])->listarTodasTransacoes(0);
             $this->render('admin/financeiro/transacoes/listar', $this->dados);
         }else {
             $this->render('admin/financeiro/transacoes/cadastrar', $this->dados);
