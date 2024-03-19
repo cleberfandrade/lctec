@@ -7,7 +7,7 @@ class Transacoes extends Model
 { 
     private $tabela = 'tb_transacoes';
     private $Model = '';
-    private $codigo,$codUsuario,$codProduto, $codEstoque,$codEmpresa,$tipo,$status;
+    private $codigo,$codUsuario,$codProduto, $codEstoque,$codEmpresa,$tipo,$status,$codConta,$data;
 
     public function __construct()
     {
@@ -17,6 +17,16 @@ class Transacoes extends Model
     public function setCodigo($codigo)
     {
         $this->codigo = $codigo;
+        return $this;
+    }
+    public function setData($data)
+    {
+        $this->data = $data;
+        return $this;
+    }
+    public function setCodConta($codConta)
+    {
+        $this->codConta = $codConta;
         return $this;
     }
     public function setTipo($tipo)
@@ -49,9 +59,9 @@ class Transacoes extends Model
         $this->codProduto = $codProduto;
         return $this;
     }
-    public function listar($ver = 0)
+    public function listarTodasTransacoes($ver = 0)
     {
-        $parametros = "M INNER JOIN tb_empresas E ON E.EMP_COD=M.EMP_COD INNER JOIN tb_estoques ES ON ES.EST_COD=M.EST_COD WHERE M.EMP_COD={$this->codEmpresa} ORDER BY M.MOV_COD DESC";
+        $parametros = "T INNER JOIN tb_empresas E ON E.EMP_COD=T.EMP_COD WHERE T.EMP_COD={$this->codEmpresa} ORDER BY T.TRS_COD DESC";
         $campos = "*";
         $resultado = $this->Model->exibir($parametros, $campos, $ver = 0, $id = false);
         if ($resultado) {
@@ -60,9 +70,9 @@ class Transacoes extends Model
             return false;
         }
     }
-    public function listarTodas($ver = 0)
+    public function listarTodasTransacoesConta($ver = 0)
     {
-        $parametros = "M INNER JOIN tb_empresas E ON E.EMP_COD=M.EMP_COD INNER JOIN tb_estoques ES ON ES.EST_COD=M.EST_COD INNER JOIN tb_produtos P ON P.PRO_COD=M.PRO_COD WHERE M.MOV_COD={$this->codigo} AND M.EMP_COD={$this->codEmpresa} ";
+        $parametros = "T INNER JOIN tb_empresas E ON E.EMP_COD=T.EMP_COD INNER JOIN tb_contas C ON C.CTA_COD=T.CTA_COD WHERE T.CTA_COD={$this->codConta} AND T.EMP_COD={$this->codEmpresa} ";
         $campos = "*";
         $resultado = $this->Model->exibir($parametros, $campos, $ver = 0, $id = false);
         if ($resultado) {
@@ -98,7 +108,7 @@ class Transacoes extends Model
     }
     public function alterar(array $dados, $ver = 0)
     {
-        $parametros = "WHERE EMP_COD={$this->codEmpresa} AND EST_COD={$this->codEstoque} AND MOV_COD=";
+        $parametros = "WHERE EMP_COD={$this->codEmpresa} AND CTA_COD={$this->codConta} AND TRS_COD=";
         $this->Model->setParametros($parametros);
         $this->Model->setCodigo($this->codigo);
         $ok = false;
@@ -111,7 +121,7 @@ class Transacoes extends Model
     }
     public function checarRegistro($ver = 0)
     {
-        $parametros = "WHERE EMP_COD={$this->codEmpresa} AND EST_COD={$this->codEstoque} AND  MOV_COD='{$this->codigo}'";
+        $parametros = "WHERE EMP_COD={$this->codEmpresa} AND CTA_COD={$this->codConta} AND TRS_DATA='{$this->data}'";
         $campos = "*";
         $resultado = $this->Model->exibir($parametros, $campos, $ver, $id = false);
         if ($resultado) {

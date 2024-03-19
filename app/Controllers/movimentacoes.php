@@ -288,7 +288,7 @@ class movimentacoes extends View
            
             if($this->dados['empresa']['USU_COD'] == $dados['USU_COD'] && $this->dados['empresa']['EMP_COD'] == $dados['EMP_COD']){
                
-                
+                dump($dados);
 
                 $liberado = false;
                 $motivo = false;
