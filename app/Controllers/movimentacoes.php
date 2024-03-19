@@ -344,42 +344,6 @@ class movimentacoes extends View
                         //CHECAR MOTIVO DA MOVIMENTAÇÃO
                         if($dados['MOV_MOTIVO'] == 2){
                             //2 = VENDA
-                            for ($i=0; $i < $qtd; $i++) { 
-                                
-                                $this->dados['produto'] = $this->Produtos->setCodEmpresa($dados['EMP_COD'])->setCodEstoque($dados['EST_COD'])->setCodigo($dados['PRO_COD'][$i])->listar(0);
-                                $dados_movimentacao = array(
-                                    'EMP_COD' => $_SESSION['EMP_COD'],
-                                    'USU_COD' => $_SESSION['USU_COD'],
-                                    'EST_COD' => $dados['EST_COD'],
-                                    'PRO_COD' => $dados['PRO_COD'][$i],
-                                    'MOV_DT_CADASTRO'=> date('Y-m-d H:i:s'),
-                                    'MOV_DT_ATUALIZACAO'=> date('0000-00-00 00:00:00'),        
-                                    'MOV_DT_MOVIMENTACAO'=>  $dados['MOV_DT_MOVIMENTACAO'].' '.date('H:i:s'),     
-                                    'MOV_TIPO' => $dados['MOV_TIPO'],
-                                    'MOV_MOTIVO' => $dados['MOV_MOTIVO'],
-                                    'MOV_QUANTIDADE' => $dados['MOV_QUANTIDADE'][$i],
-                                    'MOV_DESCRICAO' => $dados['MOV_DESCRICAO'],
-                                    'MOV_STATUS'=> 1
-                                );
-
-                                //CADASTRAR MOVIMENTAÇÃO
-                                if($this->Movimentacoes->cadastrar($dados_movimentacao,0)){
-                                    if ($this->dados['produto']['PRO_QUANTIDADE'] >=0 && ($this->dados['produto']['PRO_QUANTIDADE']-$dados['MOV_QUANTIDADE'][$i])>=0) {
-                                        $this->dados['produto']['PRO_QUANTIDADE']-= $dados['MOV_QUANTIDADE'][$i];
-                                        $db = array(
-                                            'PRO_DT_ATUALIZACAO'=> date('Y-m-d H:i:s'),
-                                            'PRO_QUANTIDADE' => $this->dados['produto']['PRO_QUANTIDADE']
-                                        );
-                                        //ALTERAR A QUANTIDADE DO PRODUTO
-                                        $this->Produtos->setCodEmpresa($dados['EMP_COD'])->setCodEstoque($dados['EST_COD'])->setCodigo($dados['PRO_COD'][$i]);
-                                        if($this->Produtos->alterar($db,0)){
-                                            $ok = true;
-                                           
-                                        }
-                                    }
-                                }
-                            }
-
                             //REGISTRAR VENDA - MOTIVO 2 => VENDA
                             $ordem = 0;
                             $dados['ultima_venda'] = $this->Vendas->setCodEmpresa($dados['EMP_COD'])->setData(date('Y-m-d'))->ultimaVenda(0);
@@ -404,26 +368,68 @@ class movimentacoes extends View
                                 'VEN_VALOR_TOTAL' => $dados['VEN_VALOR_TOTAL'],
                                 'VEN_STATUS'=> 1
                             );
+
                             $idVenda = $this->Vendas->cadastrar($dados_venda,0);
 
                             for ($i=0; $i < $qtd; $i++) { 
-                                $dados_itens = array(
-                                    'EMP_COD' => $_SESSION['EMP_COD'],
-                                    'USU_COD' => $_SESSION['USU_COD'],
-                                    'VEN_COD' => $idVenda,
-                                    'PRO_COD' => $dados['PRO_COD'][$i],
-                                    'ITS_DT_CADASTRO'=> date('Y-m-d H:i:s'),
-                                    'ITS_DT_ATUALIZACAO'=> date('0000-00-00 00:00:00'), 
-                                    'ITS_QUANTIDADE' => $dados['MOV_QUANTIDADE'][$i],
-                                    'ITS_VALOR_DESCONTO' => '0.00',
-                                    'ITS_VALOR_TOTAL' => $dados['PRO_PRECO_VENDA'][$i],
-                                    'ITS_STATUS'=> 1
-                                );
-                                //CADASTRAR ITENS
-                                if($this->ItensVendas->cadastrar($dados_itens,0)){    
-                                    $ok = true;
-                                    $its++;
+                                
+                                $this->dados['produto'] = $this->Produtos->setCodEmpresa($dados['EMP_COD'])->setCodEstoque($dados['EST_COD'])->setCodigo($dados['PRO_COD'][$i])->listar(0);
+                                
+                                if ($this->dados['produto']['PRO_QUANTIDADE'] >=0 && ($this->dados['produto']['PRO_QUANTIDADE']-$dados['MOV_QUANTIDADE'][$i])>=0) {
+                                    //CADASTRAR MOVIMENTAÇÃO
+                                    $dados_movimentacao = array(
+                                        'EMP_COD' => $_SESSION['EMP_COD'],
+                                        'USU_COD' => $_SESSION['USU_COD'],
+                                        'EST_COD' => $dados['EST_COD'],
+                                        'PRO_COD' => $dados['PRO_COD'][$i],
+                                        'MOV_DT_CADASTRO'=> date('Y-m-d H:i:s'),
+                                        'MOV_DT_ATUALIZACAO'=> date('0000-00-00 00:00:00'),        
+                                        'MOV_DT_MOVIMENTACAO'=>  $dados['MOV_DT_MOVIMENTACAO'].' '.date('H:i:s'),     
+                                        'MOV_TIPO' => $dados['MOV_TIPO'],
+                                        'MOV_MOTIVO' => $dados['MOV_MOTIVO'],
+                                        'MOV_QUANTIDADE' => $dados['MOV_QUANTIDADE'][$i],
+                                        'MOV_DESCRICAO' => $dados['MOV_DESCRICAO'],
+                                        'MOV_STATUS'=> 1
+                                    );
+                                    $idMovimentacao = $this->Movimentacoes->cadastrar($dados_movimentacao,0);
+                                    if($idMovimentacao){
+                                        $this->dados['produto']['PRO_QUANTIDADE']-= $dados['MOV_QUANTIDADE'][$i];
+                                        $db = array(
+                                            'PRO_DT_ATUALIZACAO'=> date('Y-m-d H:i:s'),
+                                            'PRO_QUANTIDADE' => $this->dados['produto']['PRO_QUANTIDADE']
+                                        );
+                                        //ALTERAR A QUANTIDADE DO PRODUTO
+                                        $this->Produtos->setCodEmpresa($dados['EMP_COD'])->setCodEstoque($dados['EST_COD'])->setCodigo($dados['PRO_COD'][$i]);
+                                        if($this->Produtos->alterar($db,0)){
+                                            $ok = true;
+                                        }
+
+                                        $dados_itens = array(
+                                            'EMP_COD' => $_SESSION['EMP_COD'],
+                                            'USU_COD' => $_SESSION['USU_COD'],
+                                            'VEN_COD' => $idVenda,
+                                            'PRO_COD' => $dados['PRO_COD'][$i],
+                                            'MOV_COD' => $idMovimentacao,
+                                            'ITS_DT_CADASTRO'=> date('Y-m-d H:i:s'),
+                                            'ITS_DT_ATUALIZACAO'=> date('0000-00-00 00:00:00'), 
+                                            'ITS_QUANTIDADE' => $dados['MOV_QUANTIDADE'][$i],
+                                            'ITS_VALOR_DESCONTO' => '0.00',
+                                            'ITS_VALOR_TOTAL' => $dados['PRO_PRECO_VENDA'][$i],
+                                            'ITS_STATUS'=> 1
+                                        );
+                                        //CADASTRAR ITENS
+                                        if($this->ItensVendas->cadastrar($dados_itens,0)){    
+                                            $ok = true;
+                                            $its++;
+                                        }
+                                   
+                                   
+                                    }
+                                   
+                                }else {
+                                    //ESTOQUE FICARÁ NEGATIVO
                                 }
+
                             }
                         }elseif($dados['MOV_MOTIVO'] >= 4) {
                             //5 = DEVOLUÇÃO AO FORNECEDOR
@@ -486,6 +492,7 @@ class movimentacoes extends View
             Sessao::alert('OK','Cadastro efetuado com sucesso!','fs-4 alert alert-success');
             header("Location:".DIRPAGE."movimentacoes/listar");
         }else {
+
             $this->render('admin/estoques/movimentacoes/movimentacoes', $this->dados);
         }  
         
