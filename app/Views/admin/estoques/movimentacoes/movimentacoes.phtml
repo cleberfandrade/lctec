@@ -512,11 +512,13 @@ $contagem = 1;
                     var novo = parseFloat(VEN_VL_SUBTOTAL - (VEN_VL_SUBTOTAL * PRO_DESCONTO)).toFixed(2);
                     $("#VEN_VALOR_TOTAL").val('');
                     $("#VEN_VALOR_TOTAL").val(novo); 
+                    $("#VEN_VALOR_DESCONTO").val('');
                     var desconto = (VEN_VL_SUBTOTAL * PRO_DESCONTO);
                     $("#VEN_VALOR_DESCONTO").val(desconto); 
                 }else{
                     var VEN_VL_SUBTOTAL = $("#VEN_VALOR_SUBTOTAL").val();
                     $("#VEN_VALOR_TOTAL").val(VEN_VL_SUBTOTAL); 
+                    $("#VEN_VALOR_DESCONTO").val('');
                     $("#VEN_VALOR_DESCONTO").val(0);
                 }
 
@@ -554,10 +556,13 @@ $contagem = 1;
                 var novo = parseFloat(VEN_VL_SUBTOTAL - (VEN_VL_SUBTOTAL * PRO_DESCONTO)).toFixed(2);
                 $("#VEN_VALOR_TOTAL").val('');
                 $("#VEN_VALOR_TOTAL").val(novo); 
-                $("#VEN_VALOR_DESCONTO").val(VEN_VL_SUBTOTAL * PRO_DESCONTO);
+                $("#VEN_VALOR_DESCONTO").val('');
+                var desconto = (VEN_VL_SUBTOTAL * PRO_DESCONTO);
+                $("#VEN_VALOR_DESCONTO").val(desconto); 
             }else{
                 var VEN_VL_SUBTOTAL = $("#VEN_VALOR_SUBTOTAL").val();
                 $("#VEN_VALOR_TOTAL").val(VEN_VL_SUBTOTAL); 
+                $("#VEN_VALOR_DESCONTO").val('');
                 $("#VEN_VALOR_DESCONTO").val(0);
             }
             $("#total").show();
@@ -577,11 +582,13 @@ $contagem = 1;
                 var novo = parseFloat(VEN_VL_SUBTOTAL - (VEN_VL_SUBTOTAL * PRO_DESCONTO)).toFixed(2);
                 $("#VEN_VALOR_TOTAL").val('');
                 $("#VEN_VALOR_TOTAL").val(novo); 
+                $("#VEN_VALOR_DESCONTO").val('');
                 var desconto = (VEN_VL_SUBTOTAL * PRO_DESCONTO);
                 $("#VEN_VALOR_DESCONTO").val(desconto); 
             }else{
                 var VEN_VL_SUBTOTAL = $("#VEN_VALOR_SUBTOTAL").val();
                 $("#VEN_VALOR_TOTAL").val(VEN_VL_SUBTOTAL); 
+                $("#VEN_VALOR_DESCONTO").val('');
                 $("#VEN_VALOR_DESCONTO").val(0);
             }
         });
