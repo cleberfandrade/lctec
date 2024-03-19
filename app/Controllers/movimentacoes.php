@@ -298,6 +298,8 @@ class movimentacoes extends View
                     //CHECANDO TIPO DE MOVIMENTACAO
                     if ($dados['MOV_TIPO'] == 1) {
                         //1 = ENTRADA
+                            dump($dados);
+                            exit;
 
                         //CRIAR A MOVIMENTAÇÃO
                         for ($i=0; $i < $qtd; $i++) { 

@@ -14,13 +14,11 @@ for ($i=0; $i < $qtd; $i++) { if ($estoques[$i]['EST_STATUS'] == 1) {$qtdEstoque
 $qtdClientes = (is_array($clientes) ? count($clientes) : 0);
 
 $motivos_entrada = array(
-    0 => '---',
     1 =>'COMPRA',
     2 =>'DEVOLUÇÃO DO CLIENTE',
     3 =>'OUTROS'
 );
 $motivos_saida = array(
-    0 => '---',
     1 =>'VENDA',
     2 =>'DEVOLUÇÃO AO FORNECEDOR',
     3 =>'PERDA',
@@ -28,12 +26,12 @@ $motivos_saida = array(
 );
 $motivos = array(
     0 => '---',
-    1 =>'COMPRA',
-    2 =>'VENDA',
-    3 =>'DEVOLUÇÃO DO CLIENTE',
-    4 =>'DEVOLUÇÃO AO FORNECEDOR',
-    5 =>'PERDA',
-    6 =>'OUTROS'
+    1 =>'ENTRADA-COMPRA',
+    2 =>'SAÍDA-VENDA',
+    3 =>'ENTRADA-DEVOLUÇÃO DO CLIENTE',
+    4 =>'SAÍDA-DEVOLUÇÃO AO FORNECEDOR',
+    5 =>'SAÍDA-PERDA',
+    6 =>'ENTRADA.SAÍDA-OUTROS'
 );
 $qtdMotivos = (is_array($motivos) ? count($motivos) : 0);
 $qtdMotEntrada = (is_array($motivos_entrada) ? count($motivos_entrada) : 0);
@@ -137,16 +135,12 @@ $contagem = 1;
                                 </div>
                                 <?php if($_SESSION['USU_NIVEL'] == 30){ ?>
                                     <div class="col-5 form-floating mb-2 ">
-                                        <select id="ENTRADA" class="form-select hidden" name="MOV_MOTIVO">
-                                            <?php for ($i=0; $i < $qtdMotEntrada; $i++) { ?>
-                                                <option value="<?= $i ?>" <?= (isset($_POST['MOV_MOTIVO']) &&  $_POST['MOV_MOTIVO']  == $i)? 'selected' : '' ?>><?= $motivos_entrada[$i] ?></option>
+                                        <select class="form-select" name="MOV_MOTIVO">
+                                            <?php for ($e=0; $e < $qtdMotivos; $e++) { ?>
+                                                <option value="<?= $e ?>" <?= (isset($_POST['MOV_MOTIVO']) &&  $_POST['MOV_MOTIVO']  == $e)? 'selected' : '' ?>><?= $motivos[$e] ?></option>
                                             <?php } ?>
                                         </select>
-                                        <select id="SAIDA" class="form-select hidden" name="MOV_MOTIVO">
-                                            <?php for ($i=0; $i < $qtdMotSaida; $i++) { ?>
-                                                <option value="<?= $i ?>" <?= (isset($_POST['MOV_MOTIVO']) &&  $_POST['MOV_MOTIVO']  == $i)? 'selected' : '' ?>><?= $motivos_saida[$i] ?></option>
-                                            <?php } ?>
-                                        </select>
+                                        
                                         <label class="form-label">MOTIVO</label>
                                     </div>
                                     <div class="col-4 mx-auto form-floating mb-3" @keydown.enter.stop>
@@ -160,7 +154,7 @@ $contagem = 1;
                                     </div>
                                 <?php }else { ?>
                                     <div class="col-5 form-floating mb-2">
-                                        <select class="form-select " name="MOV_MOTIVO">     
+                                        <select class="form-select " name="MOV_MOTIVO2">     
                                             <?php for ($i=0; $i < $qtdMotivos; $i++) { ?>
                                                 <option value="<?= $i ?>" <?= (isset($_POST['MOV_MOTIVO']) &&  $_POST['MOV_MOTIVO']  == $i)? 'selected' : '' ?>><?= $motivos[$i] ?></option>
                                             <?php } ?>
@@ -351,23 +345,25 @@ $contagem = 1;
             var checar = tipo.value;
             
             if (checar == 1) {
-                $('#SAIDA').addClass('hidden');
-                $('#ENTRADA').removeClass('hidden');
+               // $('#SAIDA').addClass('hidden');
+                //$('#SAIDA').addClass('disable');
+                //$('#ENTRADA').removeClass('hidden');
                 $('#CLI').addClass('hidden');
                 $('#CXA').addClass('hidden');
                 $('#FPG').addClass('hidden');
                 $('#INFO').addClass('hidden');
-                //$('#saida').hide();
-                //$("#entrada").show();
+               // $('#SAIDA').hide();
+                //$("#ENTRADA").show();
             } else {
-                $('#SAIDA').removeClass('hidden');
-                $('#ENTRADA').addClass('hidden');
+                //$('#SAIDA').removeClass('hidden');
+                //$('#ENTRADA').addClass('hidden');
+                //$('#ENTRADA').addClass('disable');
                 $('#CLI').removeClass('hidden');
                 $('#CXA').removeClass('hidden');
                 $('#FPG').removeClass('hidden');
                 $('#INFO').removeClass('hidden');
-               // $('#entrada').hide();
-                //$("#saida").show();
+               // $('#ENTRADA').hide();
+               // $("#SAIDA").show();
             }
         });
         function desconto(){
