@@ -17,11 +17,12 @@ use App\Models\Usuarios;
 use App\Models\UsuariosEmpresa;
 use App\Models\Lancamentos;
 use App\Models\Movimentacoes as ModelsMovimentacoes;
+use App\Models\Transacoes as ModelsTransacoes;
 
 class transacoes extends View
 {
     private $dados = [];
-    private $link,$Financas,$Check,$Usuarios,$UsuariosEmpresa,$Lancamentos,$Categorias,$Contas,$Classificacoes,$Clientes,$Fornecedores, $Movimentacoes, $FormasPagamentos;
+    private $link,$Financas,$Check,$Usuarios,$UsuariosEmpresa,$Lancamentos,$Categorias,$Contas,$Classificacoes,$Clientes,$Fornecedores, $Movimentacoes, $FormasPagamentos,$Transacoes;
     public function __construct()
     {
         Sessao::naoLogado();
@@ -38,6 +39,7 @@ class transacoes extends View
         $this->Clientes= new Clientes;
         $this->Movimentacoes = new ModelsMovimentacoes;
         $this->FormasPagamentos = new FormasPagamentos;
+        $this->Transacoes = new ModelsTransacoes;
 
         $this->dados['empresa'] = $this->UsuariosEmpresa->setCodEmpresa($_SESSION['EMP_COD'])->setCodUsuario($_SESSION['USU_COD'])->listar(0);
         $this->dados['usuario'] = $this->Usuarios->setCodUsuario($_SESSION['USU_COD'])->listar(0);
@@ -93,26 +95,26 @@ class transacoes extends View
                         'TRS_STATUS'=> 1
                     );
 
-                    if($this->Movimentacoes->cadastrar($dados,0)){
+                    if($this->Transacoes->cadastrar($dados,0)){
                         $ok = true;
                         Sessao::alert('OK','Cadastro efetuado com sucesso!','fs-4 alert alert-success');
                     }else{
-                        Sessao::alert('ERRO',' CTA3 - Erro ao cadastrar nova conta, entre em contato com o suporte!','fs-4 alert alert-danger');
+                        Sessao::alert('ERRO',' CTA3 - Erro ao cadastrar nova transação, entre em contato com o suporte!','fs-4 alert alert-danger');
                     }
                 }else{
                     Sessao::alert('ERRO',' CTA2 - Dados inválido(s)!','alert alert-danger');
                 } 
             }else{
-                Sessao::alert('ERRO',' CTA2 - Dados inválido(s)!','alert alert-danger');
+                Sessao::alert('ERRO',' TRAS2 - Dados inválido(s)!','alert alert-danger');
             }
         }else{
-            Sessao::alert('ERRO',' CTA1 - Acesso inválido(s)!','alert alert-danger');
+            Sessao::alert('ERRO',' TRAS1 - Acesso inválido(s)!','alert alert-danger');
         }
         if ($ok) {
-            $this->dados['movimentacoes'] = $this->Movimentacoes->setCodEmpresa($_SESSION['EMP_COD'])->listarTodas(0);
-            $this->render('admin/financeiro/movimentacoes/listar', $this->dados);
+            $this->dados['transacoes'] = $this->Transacoes->setCodEmpresa($_SESSION['EMP_COD'])->listarTodas(0);
+            $this->render('admin/financeiro/transacoes/listar', $this->dados);
         }else {
-            $this->render('admin/financeiro/movimentacoes/cadastrar', $this->dados);
+            $this->render('admin/financeiro/transacoes/cadastrar', $this->dados);
         }
     }
 }
