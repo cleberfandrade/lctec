@@ -298,8 +298,6 @@ class movimentacoes extends View
                     //CHECANDO TIPO DE MOVIMENTACAO
                     if ($dados['MOV_TIPO'] == 1) {
                         //1 = ENTRADA
-                            dump($dados);
-                            exit;
 
                         //CRIAR A MOVIMENTAÇÃO
                         for ($i=0; $i < $qtd; $i++) { 
@@ -403,7 +401,7 @@ class movimentacoes extends View
                                 'ITS_VL_TOTAL' => $dados['PRO_PRECO_VENDA'][$i],
                                 'ITS_STATUS'=> 1
                             );*/
-                        }elseif($dados['MOV_MOTIVO'] == 5) {
+                        }elseif($dados['MOV_MOTIVO'] >= 4) {
                             //5 = DEVOLUÇÃO AO FORNECEDOR
                             for ($i=0; $i < $qtd; $i++) { 
                                 
@@ -423,27 +421,28 @@ class movimentacoes extends View
                                     'MOV_STATUS'=> 1
                                 );
                                 //CADASTRAR MOVIMENTAÇÃO
-
-                            }
-                            
-                            if($this->Movimentacoes->cadastrar($dados_movimentacao,0)){
-                                if ($this->dados['produto']['PRO_QUANTIDADE'] >=0 && ($this->dados['produto']['PRO_QUANTIDADE']-$dados['MOV_QUANTIDADE'][$i])>=0) {
-                                    $this->dados['produto']['PRO_QUANTIDADE']-= $dados['MOV_QUANTIDADE'][$i];
-                                    $db = array(
-                                        'PRO_DT_ATUALIZACAO'=> date('Y-m-d H:i:s'),
-                                        'PRO_QUANTIDADE' => $this->dados['produto']['PRO_QUANTIDADE']
-                                    );
-                                    //ALTERAR A QUANTIDADE DO PRODUTO
-                                    $this->Produtos->setCodEmpresa($dados['EMP_COD'])->setCodEstoque($dados['EST_COD'])->setCodigo($dados['PRO_COD'][$i]);
-                                    if($this->Produtos->alterar($db,0)){
-                                        $ok = true;
-                                        $its++;
+                                if($this->Movimentacoes->cadastrar($dados_movimentacao,0)){
+                                    if ($this->dados['produto']['PRO_QUANTIDADE'] >=0 && ($this->dados['produto']['PRO_QUANTIDADE']-$dados['MOV_QUANTIDADE'][$i])>=0) {
+                                        $this->dados['produto']['PRO_QUANTIDADE']-= $dados['MOV_QUANTIDADE'][$i];
+                                        $db = array(
+                                            'PRO_DT_ATUALIZACAO'=> date('Y-m-d H:i:s'),
+                                            'PRO_QUANTIDADE' => $this->dados['produto']['PRO_QUANTIDADE']
+                                        );
+                                        //ALTERAR A QUANTIDADE DO PRODUTO
+                                        $this->Produtos->setCodEmpresa($dados['EMP_COD'])->setCodEstoque($dados['EST_COD'])->setCodigo($dados['PRO_COD'][$i]);
+                                        if($this->Produtos->alterar($db,0)){
+                                            $ok = true;
+                                            $its++;
+                                        }
                                     }
                                 }
                             }
                             
+                           
+                            
                         }else {
                               // OUTRO MOTIVO
+                              Sessao::alert('ERRO',' MOV3 - Informe um motivo para a movimentação!','alert alert-danger');
                         }
 
                     }     
