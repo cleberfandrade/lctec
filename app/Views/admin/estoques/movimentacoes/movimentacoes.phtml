@@ -136,13 +136,13 @@ $contagem = 1;
                                     <label class="form-label">TIPO</label>
                                 </div>
                                 <?php if($_SESSION['USU_NIVEL'] == 30){ ?>
-                                    <div class="col-5 form-floating mb-2 hidden">
-                                        <select id="ENTRADA" class="form-select " name="MOV_MOTIVO">
+                                    <div class="col-5 form-floating mb-2 ">
+                                        <select id="ENTRADA" class="form-select hidden" name="MOV_MOTIVO">
                                             <?php for ($i=0; $i < $qtdMotEntrada; $i++) { ?>
                                                 <option value="<?= $i ?>" <?= (isset($_POST['MOV_MOTIVO']) &&  $_POST['MOV_MOTIVO']  == $i)? 'selected' : '' ?>><?= $motivos_entrada[$i] ?></option>
                                             <?php } ?>
                                         </select>
-                                        <select id="SAIDA" class="form-select "  name="MOV_MOTIVO">
+                                        <select id="SAIDA" class="form-select hidden" name="MOV_MOTIVO">
                                             <?php for ($i=0; $i < $qtdMotSaida; $i++) { ?>
                                                 <option value="<?= $i ?>" <?= (isset($_POST['MOV_MOTIVO']) &&  $_POST['MOV_MOTIVO']  == $i)? 'selected' : '' ?>><?= $motivos_saida[$i] ?></option>
                                             <?php } ?>
@@ -217,7 +217,7 @@ $contagem = 1;
                                         </select>
                                         <label class="form-label">FORMA DE PAGAMENTO</label>
                                     </div>
-                                    <div id="INFO" class="col-12 mx-auto form-floating mb-2">
+                                    <div class="col-12 mx-auto form-floating mb-2">
                                         <table id="table"  class="table table-bordered">
                                             <thead>
                                                 <tr class="text-center bg-1 "><th colspan="6" class="text-white">ITENS</th></tr>
@@ -232,7 +232,7 @@ $contagem = 1;
                                             </thead>
                                             <tbody id="itens" class="text-center"></tbody>
                                             <tfooter id="total" class="text-center">
-                                                <tr class="">
+                                                <tr id="INFO" class="">
                                                     <td></td>
                                                     <td class="text-center">
                                                         <label class="form-label">QTD ITENS</label>
@@ -355,6 +355,7 @@ $contagem = 1;
                 $('#ENTRADA').removeClass('hidden');
                 $('#CLI').addClass('hidden');
                 $('#CXA').addClass('hidden');
+                $('#FPG').addClass('hidden');
                 $('#INFO').addClass('hidden');
                 //$('#saida').hide();
                 //$("#entrada").show();
@@ -363,6 +364,7 @@ $contagem = 1;
                 $('#ENTRADA').addClass('hidden');
                 $('#CLI').removeClass('hidden');
                 $('#CXA').removeClass('hidden');
+                $('#FPG').removeClass('hidden');
                 $('#INFO').removeClass('hidden');
                // $('#entrada').hide();
                 //$("#saida").show();
