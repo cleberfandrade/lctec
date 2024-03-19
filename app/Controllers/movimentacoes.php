@@ -415,15 +415,14 @@ class movimentacoes extends View
                                     'ITS_DT_CADASTRO'=> date('Y-m-d H:i:s'),
                                     'ITS_DT_ATUALIZACAO'=> date('0000-00-00 00:00:00'), 
                                     'ITS_QUANTIDADE' => $dados['MOV_QUANTIDADE'][$i],
-                                    'ITS_VL_DESCONTO' => '0.00',
-                                    'ITS_VL_TOTAL' => $dados['PRO_PRECO_VENDA'][$i],
+                                    'ITS_VALOR_DESCONTO' => '0.00',
+                                    'ITS_VALOR_TOTAL' => $dados['PRO_PRECO_VENDA'][$i],
                                     'ITS_STATUS'=> 1
                                 );
                                 //CADASTRAR ITENS
                                 if($this->ItensVendas->cadastrar($dados_itens,0)){    
                                     $ok = true;
                                     $its++;
-
                                 }
                             }
                         }elseif($dados['MOV_MOTIVO'] >= 4) {
