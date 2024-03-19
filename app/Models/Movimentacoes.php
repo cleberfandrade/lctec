@@ -119,6 +119,19 @@ class Movimentacoes extends Model
             return false;
         }
     }
+    public function excluir($ver = 0)
+    {
+        $parametros = "WHERE EMP_COD='{$this->codEmpresa}' AND MOV_COD=";
+        $this->Model->setParametros($parametros);
+        $this->Model->setCodigo($this->codigo);
+        $ok = false;
+        $ok = $this->Model->deletar($ver);
+        if ($ok) {
+            return true;
+        } else {
+            return false;
+        }
+    }
     public function checarRegistro($ver = 0)
     {
         $parametros = "WHERE EMP_COD={$this->codEmpresa} AND EST_COD={$this->codEstoque} AND  MOV_COD='{$this->codigo}'";

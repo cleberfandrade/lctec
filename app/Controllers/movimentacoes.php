@@ -275,7 +275,8 @@ class movimentacoes extends View
             $this->render('admin/estoques/movimentacoes/movimentacoes', $this->dados);
         }
     }
-    public function registrar(){
+    public function registrar()
+    {
         $this->dados['title'] .= ' MOVIMENTAÇÃO DO ESTOQUE';
         $this->link[2] = ['link'=> 'movimentacoes','nome' => 'MOVIMENTAÇÃO DO ESTOQUE'];
 
@@ -581,6 +582,48 @@ class movimentacoes extends View
                 );
             }
       
+        }else{
+            $respota = array(
+                'COD'=>'ERRO',
+                'MENSAGEM'=> 'ERRO 1- Acesso inválido!'
+            );
+        }
+        echo json_encode($respota);
+    }
+    public function excluir()
+    {
+        $this->dados['title'] .= ' MOVIMENTAÇÃO DO ESTOQUE';
+        $this->link[2] = ['link'=> 'movimentacoes','nome' => 'MOVIMENTAÇÃO DO ESTOQUE'];
+
+        $ok = false;      
+        //Recupera os dados enviados
+        $dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);
+        if (isset($_POST) && isset($dados['EXCLUIR_MOVIMENTACAO_PRODUTO'])) {
+
+            unset($dados['EXCLUIR_MOVIMENTACAO_PRODUTO']);
+    
+            $this->dados['empresa'] = $this->UsuariosEmpresa->setCodEmpresa($_SESSION['EMP_COD'])->setCodUsuario($_SESSION['USU_COD'])->listar(0);
+            
+            $this->dados['movimentacao'] = $this->Movimentacoes->setCodEmpresa($_SESSION['EMP_COD'])->setCodigo($dados['MOV_COD'])->listar(0);
+            if($this->dados['movimentacao'] != 0){
+                if($this->Movimentacoes->excluir(0)){
+                    $ok = true;
+                    $respota = array(
+                        'COD'=>'OK',
+                        'MENSAGEM' => 'Exclusão efetuada com sucesso!'
+                    );
+                }else{
+                    $respota = array(
+                        'COD'=>'ERRO',
+                        'MENSAGEM'=> 'ERRO 5- Erro ao excluir sua movimentação de estoque, entre em contato com o suporte!'
+                    );
+                }
+            }else{
+                $respota = array(
+                    'COD'=>'ERRO',
+                    'MENSAGEM'=> 'ERRO 2- Dados inválido(s)!'
+                );
+            }
         }else{
             $respota = array(
                 'COD'=>'ERRO',
