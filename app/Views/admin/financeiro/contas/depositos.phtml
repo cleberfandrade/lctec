@@ -41,7 +41,7 @@ $qtdCL = (is_array($classificacoes) ? count($classificacoes) : 0);
                     </div>
 
                     <div class="container col-10 px-2 py-2 mx-auto row">
-                        <form class="p-4 p-md-6 border text-uppercase rounded-3 " action="<?= DIRPAGE ?>movimentacoes/cadastrar" method="POST">
+                        <form class="p-4 p-md-6 border text-uppercase rounded-3 " action="<?= DIRPAGE ?>transacoes/cadastrar" method="POST">
                             <div class="row">    
                                 <div class="col-4 form-floating mb-3">
                                     <div class="form-floating">
@@ -54,19 +54,19 @@ $qtdCL = (is_array($classificacoes) ? count($classificacoes) : 0);
                                     <div class="input-group form-floating">    
                                         
                                         <span class="input-group-text">R$</span>  
-                                        <input type="text" class="form-control form-control-lg real" id="" name="MOV_VALOR" placeholder="" value="<?= isset($_POST['MOV_VALOR']) ? $_POST['MOV_VALOR'] : '0,00'; ?>">
+                                        <input type="text" class="form-control form-control-lg real" id="" name="TRS_VALOR" placeholder="" value="<?= isset($_POST['TRS_VALOR']) ? $_POST['TRS_VALOR'] : '0,00'; ?>">
                                     </div>
                                 </div>
                                 <div class="col-4 form-floating mb-3">
                                     
                                     <div class="form-floating">
-                                        <input type="date" class="form-control form-control-lg" name="MOV_DATA" placeholder="" value="<?= isset($_POST['MOV_DATA']) ? $_POST['MOV_DATA'] : ''; ?>">
+                                        <input type="date" class="form-control form-control-lg" name="TRS_DATA" placeholder="" value="<?= isset($_POST['TRS_DATA']) ? $_POST['TRS_DATA'] : ''; ?>">
                                         <label class="px-3" for="2">DATA</label>
                                     </div> 
                                 </div> 
                                 <div class="col-6">
                                         <div class=" mb-3">
-                                            <label class="px-5" for="2">FORMA DE PAGAMENTO</label>
+                                            <label class="form-label">FORMA DE PAGAMENTO</label>
                                             <div class="form-floating mb-3">
                                                 <select class="form-select text-uppercase mb-3 form-floating" name="FPG_COD">
                                                     <option value="0" <?= (isset($_POST['FPG_COD']) &&  $_POST['FPG_COD']  == "0")? 'selected' : '' ?>>---</option>
@@ -93,16 +93,16 @@ $qtdCL = (is_array($classificacoes) ? count($classificacoes) : 0);
                                 <div class="col-12 mb-3">
                                    
                                     <div class="form-floating">
-                                        <input type="text" class="form-control maiusculo" id="1" name="MOV_DESCRICAO" placeholder="" value="<?= isset($_POST['MOV_DESCRICAO']) ? $_POST['MOV_DESCRICAO'] :''; ?>">
+                                        <input type="text" class="form-control maiusculo" id="1" name="TRS_DESCRICAO" placeholder="" value="<?= isset($_POST['TRS_DESCRICAO']) ? $_POST['TRS_DESCRICAO'] :''; ?>">
                                         <label class="form-floating" for="1">DESCRIÇÃO</label>
                                     </div>
                                 </div>
                                 <hr class="my-4 text-dark">
-                                <input type="hidden" class="form-control" name="MOV_TIPO" value="1">
+                                <input type="hidden" class="form-control" name="TRS_TIPO" value="1">
                                 <input type="hidden" class="form-control" name="EMP_COD" value="<?= isset($_SESSION['EMP_COD']) ? $_SESSION['EMP_COD'] : 0; ?>">
                                 <input type="hidden" class="form-control" name="CTA_COD" value="<?= isset($conta['CTA_COD']) ? $conta['CTA_COD'] : 0; ?>">
                                 <input type="hidden" class="form-control" name="USU_COD" value="<?= isset($_SESSION['USU_COD']) ? $_SESSION['USU_COD'] : 0; ?>">
-                                <button class="w-100 btn btn-lg text-uppercase btn-success" name="CADASTRAR_NOVA_MOVIMENTACAO" type="submit"><i class="fa fa-save"></i> Cadastrar</button>
+                                <button class="w-100 btn btn-lg text-uppercase btn-success" name="CADASTRAR_NOVA_TRANSACAO" type="submit"><i class="fa fa-save"></i> Cadastrar</button>
                             </div> 
                         </form>
                     <?php } else { ?>
@@ -121,7 +121,7 @@ $qtdCL = (is_array($classificacoes) ? count($classificacoes) : 0);
             $('.real').maskMoney({
                 prefix:'',
                 allowNegative: true,
-                thousands:'.', decimal:',',
+                thousands:'', decimal:'.',
                 affixesStay: true
             });
         })

@@ -21,6 +21,8 @@ SETORES
 ="6"    6?     6?    COLABORADORES 
 ="7"    7?     7?    OUTROS 
 
+ALTER TABLE `tb_transacoes`
+	CHANGE COLUMN `TRS_VALOR_TOTAL` `TRS_VALOR_TOTAL` DECIMAL(20,2) NULL DEFAULT NULL AFTER `TRS_ACRESCIMO`;
 
      
                         

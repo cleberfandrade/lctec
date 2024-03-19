@@ -438,6 +438,7 @@ $contagem = 1;
             document.getElementById('QTD').value = '';
             
             var MOV_QUANTIDADE = Number(document.getElementById('MOV_QUANTIDADE').value);
+            console.log(MOV_QUANTIDADE);
             objFilho.setAttribute("data-quantidade",MOV_QUANTIDADE);
 
             if (MOV_QUANTIDADE >= 1) {
@@ -456,7 +457,7 @@ $contagem = 1;
                 "<td class='align-middle mx-auto'>"+MOV_QUANTIDADE+"</td>"+
                 "<td class='align-middle mx-auto'>"+resposta.PRO_PRECO_VENDA+"</td>"+
                 "<td class='align-middle mx-auto'>"+subtotal+"</td>"+
-                "<td class='align-middle mx-auto'><input type='hidden' id='mov" + qtdeCampos + "' name='MOV_QUANTIDADE[]' value='" + resposta.MOV_QUANTIDADE + "'></input>"+
+                "<td class='align-middle mx-auto'><input type='hidden' id='mov" + qtdeCampos + "' name='MOV_QUANTIDADE[]' value='" + MOV_QUANTIDADE + "'></input>"+
                 "<input type='hidden' id='campo" + qtdeCampos + "' name='PRO_COD[]' value='" + resposta.PRO_COD + "'></input>"+
                 "<input type='hidden' id='preco" + qtdeCampos + "' name='PRO_PRECO_VENDA[]' value='" + resposta.PRO_PRECO_VENDA + "'></input>"+
                 "<button type='button' class='col btn btn-danger' title='APAGAR DA LISTA' onClick='removerCampo(" + qtdeCampos + ")' value=''><i class='fa fa-trash'></i></button></td>";

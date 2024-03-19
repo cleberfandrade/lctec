@@ -102,54 +102,46 @@ class modulo_empresa extends View
     }
     public function alterar_modulo_empresa()
     {
-        $dados = filter_input_array(INPUT_GET, FILTER_SANITIZE_URL);
-        $dados = explode("/",$dados['url']);
+        $dados = filter_input_array(INPUT_POST, FILTER_SANITIZE_URL);
+        //$dados = explode("/",$dados['url']);
 
-        if (isset($dados[1]) && $dados[1] == 'alterar_modulo_empresa' && isset($dados[2]) && isset($dados[3]) && isset($dados[4])) {
+        if (isset($dados['ALTERAR_MODULO_EMPRESA']) && isset($dados['EMP_COD']) && isset($dados['MOD_COD']) && isset($dados['MOD_STATUS'])) {
             /* [2] = EMP_COD [3] = MOD_COD [4] = MLE_STATUS */
-            if ($_SESSION['EMP_COD'] == $dados[2]) {
-
-                $ck = $this->ModulosEmpresa->setCodEmpresa($dados[2])->setCodModulo($dados[3])->checarRegistroModuloEmpresa(0);
-           
-                if ($ck) {
-                    //EXCLUIR MÓDULO
-                    $this->ModulosEmpresa->setCodigo($ck['MLE_COD']);
-                    if($this->ModulosEmpresa->excluir(0)){
-                        $respota = array(
-                            'COD'=>'OK',
-                            'MENSAGEM' => 'Exclusão efetuada com sucesso!'
-                        );
-                    }else {
-                        $respota = array(
-                            'COD'=>'ERRO',
-                            'MENSAGEM' => 'Erro ao excluir cadastro, entre em contato com o suporte!'
-                        );
-                    }
-                } else {
-                   //CADASTRAR MÓDULO
-                   $db = array(
-                    'EMP_COD' => $dados[2],
-                    'MOD_COD' => $dados[3],
+            unset($dados['ALTERAR_MODULO_EMPRESA']);
+            $ck = $this->ModulosEmpresa->setCodEmpresa($dados['EMP_COD'])->setCodModulo($dados['MOD_COD'])->checarRegistroModuloEmpresa(0);
+            if ($ck) {
+                //EXCLUIR MÓDULO
+                $this->ModulosEmpresa->setCodigo($ck['MLE_COD']);
+                if($this->ModulosEmpresa->excluir(0)){
+                    $respota = array(
+                        'COD'=>'OK',
+                        'MENSAGEM' => 'Exclusão efetuada com sucesso!'
+                    );
+                }else {
+                    $respota = array(
+                        'COD'=>'ERRO',
+                        'MENSAGEM' => 'Erro ao excluir cadastro, entre em contato com o suporte!'
+                    );
+                }
+            } else {
+            //CADASTRAR MÓDULO
+                $db = array(
+                    'EMP_COD' => $dados['EMP_COD'],
+                    'MOD_COD' => $dados['MOD_COD'],
                     'MLE_DT_CADASTRO'=> date('Y-m-d H:i:s'),
                     'MLE_STATUS' => 1
                 );
-                    if ($this->ModulosEmpresa->cadastrar($db,0)) {
-                        $respota = array(
-                            'COD'=>'OK',
-                            'MENSAGEM' => 'Cadastro efetuado com sucesso!'
-                        );
-                    } else {
-                        $respota = array(
-                            'COD'=>'ERRO',
-                            'MENSAGEM' => 'Erro ao cadastrar módulo, entre em contato com o suporte!'
-                        );
-                    }
+                if ($this->ModulosEmpresa->cadastrar($db,0)) {
+                    $respota = array(
+                        'COD'=>'OK',
+                        'MENSAGEM' => 'Cadastro efetuado com sucesso!'
+                    );
+                } else {
+                    $respota = array(
+                        'COD'=>'ERRO',
+                        'MENSAGEM' => 'Erro ao cadastrar módulo, entre em contato com o suporte!'
+                    );
                 }
-            } else {
-                $respota = array(
-                    'COD'=>'ERRO',
-                    'MENSAGEM'=> 'ERRO 2- Dados inválido(s)!'
-                );
             }
         }else{
             $respota = array(

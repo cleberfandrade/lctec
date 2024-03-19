@@ -111,16 +111,24 @@ $qtdEmpresas = (is_array($empresas) ? count($empresas) : 0);
                            var empresa = jQuery(this).attr("data-empresa");
                            var modulo = jQuery(this).attr("data-modulo");
                            var status = jQuery(this).attr("data-status");
-                           $.get('<?= DIRPAGE; ?>modulo_empresa/alterar_modulo_empresa/'+empresa+'/'+modulo+'/'+status, function(retorno) {
+                           $.post('<?= DIRPAGE; ?>modulo_empresa/alterar_modulo_empresa', {ALTERAR_MODULO_EMPRESA: true,EMP_COD: empresa,MOD_COD:modulo,MOD_STATUS: status}, function(retorno) {
                                 //console.log(retorno);
                                resposta = JSON.parse(retorno);
                                 if (resposta['COD'] !== 'ERRO') {
                                     $('#resposta').addClass('alert alert-success');
+                                    
                                 }else{
                                     $('#resposta').addClass('alert alert-warning');
                                 }
+
                                 $('#resposta').html(resposta['MENSAGEM']);
-                                setTimeout( () => { window.location.href="<?= DIRPAGE ?>modulos/listar"}, 3000);
+
+                                setTimeout(function () {
+                                        $('#resposta').hide();
+                                }, 2900);
+                                if (resposta['COD'] !== 'ERRO') {
+                                    setTimeout( () => { window.location.href="<?= DIRPAGE ?>modulos/listar"}, 5000);
+                                }
                                 
                             });
                            

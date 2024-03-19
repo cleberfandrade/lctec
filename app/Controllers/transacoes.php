@@ -66,7 +66,7 @@ class transacoes extends View
     public function cadastrar()
     {
         $this->dados['title'] .= ' CADASTRAR TRANSAÇÃO DA EMPRESA/NEGÓCIO';   
-        $this->link[3] = ['link'=> 'transacoes/cadastro','nome' => 'CADASTRO DE MOVIMENTAÇÕES'];
+        $this->link[3] = ['link'=> 'transacoes/cadastro','nome' => 'CADASTRO DE TRANSAÇÕES'];
         $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
         $ok = false;
         $dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);
@@ -84,13 +84,13 @@ class transacoes extends View
                     }
                     //$dados['MOV_VALOR'] = number_format($dados['MOV_VALOR'],2, '.', ',');
                     //$dados['MOV_VALOR'] = str_replace(',', '.', str_replace('.', '', $dados['MOV_VALOR']));
-                    $dados['MOV_VALOR'] = $this->Check->onlyNumbers($dados['MOV_VALOR']);
-                    $dados['MOV_VALOR'] = $this->Check->formatMoneyDb($dados['MOV_VALOR']);
+                    //$dados['MOV_VALOR'] = $this->Check->onlyNumbers($dados['MOV_VALOR']);
+                    //$dados['MOV_VALOR'] = $this->Check->formatMoneyDb($dados['MOV_VALOR']);
                     $dados += array(
-                        'MOV_DT_CADASTRO'=> date('Y-m-d H:i:s'),
-                        'MOV_DT_ATUALIZACAO'=> date('0000-00-00 00:00:00'),   
-                        'MOV_TOKEN' => $this->Check->token(10,'',true),          
-                        'MOV_STATUS'=> 1
+                        'TRS_DT_CADASTRO'=> date('Y-m-d H:i:s'),
+                        'TRS_DT_ATUALIZACAO'=> date('0000-00-00 00:00:00'),   
+                        'TRS_TOKEN' => $this->Check->token(10,'',true),          
+                        'TRS_STATUS'=> 1
                     );
 
                     if($this->Movimentacoes->cadastrar($dados,0)){
