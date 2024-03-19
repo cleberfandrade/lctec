@@ -154,7 +154,7 @@ $contagem = 1;
                                     </div>
                                 <?php }else { ?>
                                     <div class="col-5 form-floating mb-2">
-                                        <select class="form-select " name="MOV_MOTIVO2">     
+                                        <select class="form-select " name="MOV_MOTIVO">     
                                             <?php for ($i=0; $i < $qtdMotivos; $i++) { ?>
                                                 <option value="<?= $i ?>" <?= (isset($_POST['MOV_MOTIVO']) &&  $_POST['MOV_MOTIVO']  == $i)? 'selected' : '' ?>><?= $motivos[$i] ?></option>
                                             <?php } ?>
@@ -203,8 +203,7 @@ $contagem = 1;
                                         <label class="form-label">CAIXA</label>
                                     </div>
                                     <div id="FPG" class="col-4 mx-auto form-floating mb-3">
-                                        <select  class="form-select" name="CLI_COD"> 
-                                            <option value="0" <?= (isset($_POST['FPG_COD']) &&  $_POST['FPG_COD']  == 0)? 'selected' : '' ?>>---</option>
+                                        <select  class="form-select" name="FPG_COD"> 
                                         <?php for ($i=0; $i < $qtdF; $i++) { if ($formas_pagamentos[$i]['FPG_STATUS'] == 1) { ?>
                                             <option value="<?= $i ?>" <?= (isset($_POST['FPG_COD']) &&  $_POST['FPG_COD']  == $i)? 'selected' : '' ?>><?= ($formas_pagamentos[$i]['FPG_TIPO'] == 1)? 'À VISTA' : 'À PRAZO'; ?> - <?= $formas_pagamentos[$i]['FPG_DESCRICAO'] ?></option>
                                         <?php } } ?>
