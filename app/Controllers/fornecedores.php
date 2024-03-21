@@ -54,6 +54,7 @@ class fornecedores extends View
         $ok = false;
         $dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);
         if (isset($_POST) && isset($dados['CADASTRAR_NOVO_FORNECEDOR'])) {
+            unset($dados["CADASTRAR_NOVO_FORNECEDOR"]);
             if( $this->dados['empresa']['USU_COD'] == $dados['USU_COD'] && $this->dados['empresa']['EMP_COD'] == $dados['EMP_COD']){
 
                 foreach ($dados as $key => $value) {
