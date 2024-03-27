@@ -133,7 +133,7 @@ $contagem = 1;
                                     </select>
                                     <label class="form-label">TIPO</label>
                                 </div>
-                                <?php if($_SESSION['USU_NIVEL'] == 30){ ?>
+                                <?php if($_SESSION['USU_NIVEL'] != 30){ ?>
                                     <div class="col-5 form-floating mb-2 ">
                                         <select class="form-select" name="MOV_MOTIVO">
                                             <?php for ($e=0; $e < $qtdMotivos; $e++) { ?>
@@ -179,7 +179,7 @@ $contagem = 1;
                                     <?= Sessao::alert('ERRO'); ?>
                                 </section>
                                 <div class="col-12 mx-auto row mb-2">
-                                <?php if($_SESSION['USU_NIVEL'] == 30){ ?>
+                                <?php if($_SESSION['USU_NIVEL'] != 30){ ?>
                                     <div id="CLI" class="col-5 mx-auto form-floating mb-3">
                                         <div class="input-group input-group-lg">
                                             <div class="form-floating">

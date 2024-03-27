@@ -11,6 +11,7 @@ use App\Models\Tarefas;
 use Core\View;
 use App\Models\Usuarios;
 use App\Models\UsuariosEmpresa;
+use App\Models\Vendas;
 use Libraries\Check;
 use Libraries\Sessao;
 use Libraries\Util;
@@ -18,7 +19,7 @@ use Libraries\Util;
 class admin extends View
 {
     private $dados = [];
-    private $link,$Util,$Check,$Empresa,$Usuarios,$Estoques,$UsuariosEmpresa,$ModulosEmpresa, $Tarefas,$Produtos,$Movimentacoes,$Avisos;
+    private $link,$Util,$Check,$Empresa,$Usuarios,$Estoques,$UsuariosEmpresa,$ModulosEmpresa, $Tarefas,$Produtos,$Movimentacoes,$Avisos,$Vendas;
     public function __construct()
     {
         Sessao::naoLogado();
@@ -34,6 +35,7 @@ class admin extends View
         $this->Produtos = new Produtos;
         $this->Movimentacoes = new Movimentacoes;
         $this->Avisos = new Avisos;
+        $this->Vendas = new Vendas;
 
        
         /*
@@ -58,6 +60,7 @@ class admin extends View
         $this->dados['estoques'] = $this->Estoques->setCodEmpresa($_SESSION['EMP_COD'])->listarTodos(0);
         $this->dados['produtos'] = $this->Produtos->setCodEmpresa($_SESSION['EMP_COD'])->setStatus(1)->listarTodosGeral(0);
 
+        $this->dados['vendas'] = $this->Vendas->setCodEmpresa($_SESSION['EMP_COD'])->listarTodas(0);
         
         $this->dados['usuarios'] = $this->UsuariosEmpresa->setCodEmpresa($_SESSION['EMP_COD'])->setStatus(1)->listarUsuariosEmpresa(0);
         

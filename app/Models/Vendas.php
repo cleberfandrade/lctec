@@ -7,7 +7,7 @@ class Vendas extends Model
 { 
     private $tabela = 'tb_vendas';
     private $Model = '';
-    private $codigo,$codEmpresa,$codProduto,$data;
+    private $codigo,$codEmpresa,$codProduto,$data,$tdInicial,$dtFinal,$mes,$ano;
 
     public function __construct()
     {
@@ -62,7 +62,18 @@ class Vendas extends Model
         $campos = "*";
         $resultado = $this->Model->exibir($parametros, $campos, $ver = 0, $id = false);
         if ($resultado) {
-            return $resultado[0];
+            return $resultado;
+        } else {
+            return false;
+        }
+    }
+    public function qtdValorTotalVendas($ver = 0)
+    {
+        $parametros = "V INNER JOIN tb_empresas E ON E.EMP_COD=V.EMP_COD WHERE V.EMP_COD={$this->codEmpresa} ORDER BY V.VEN_COD";
+        $campos = "*";
+        $resultado = $this->Model->exibir($parametros, $campos, $ver = 0, $id = false);
+        if ($resultado) {
+            return $resultado;
         } else {
             return false;
         }

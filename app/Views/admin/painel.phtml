@@ -8,9 +8,12 @@ $qtdE = (is_array($estoques) ? count($estoques) : 0);
 $qtdME = (is_array($modulos_empresa) ? count($modulos_empresa) : 0);
 $qtdU = (is_array($usuarios) ? count($usuarios) : 0);
 $qtdP = (is_array($produtos) ? count($produtos) : 0);
+$qtdV = (is_array($vendas)? count($vendas) : 0 );
+
 $qtdMV = (is_array($movimentacoes) ? count($movimentacoes) : 0);
 !isset($m)? $m = $Util->getMesAtual():''; 
 ?>
+<link rel="stylesheet" type="text/css" href="https://pixinvent.com/stack-responsive-bootstrap-4-admin-template/app-assets/fonts/simple-line-icons/style.min.css">
 <body>
     <style>
         #chart {
@@ -86,8 +89,8 @@ $qtdMV = (is_array($movimentacoes) ? count($movimentacoes) : 0);
                             <span class="text-uppercase"><?= Util::mesLowercase(date('n',$m))?>/<?= date('Y') ?></span>
                             <hr>
                             <div class="col-12 text-uppercase display-6 row text-center mx-auto mb-3">    
-                    
-                                <div class="col-12 col-sm-6 col-md-4 rounded-2  bg-3 border border-1">
+                                
+                                <div class="col-12 col-sm-6 col-md-3 bg-2 rounded-2 border border-1">
                                     <div class="d-flex justify-content-center align-items-center p-4 bg-opacity-10 rounded-3">
                                         <span class="display-6 lh-1 text-blue mb-0"><i class="fas fa-user-tie"></i></span>
                                         <div class="ms-4 h6 fw-normal mb-0">
@@ -99,7 +102,7 @@ $qtdMV = (is_array($movimentacoes) ? count($movimentacoes) : 0);
                                         </div>
                                     </div>
 			                    </div>
-                                <div class="col-12 col-sm-6 col-md-4 rounded-2 bg-2 border border-1">
+                                <div class="col-12 col-sm-6 col-md-3 rounded-2 border border-1">
                                     <div class="d-flex justify-content-center align-items-center p-4 bg-opacity-10 rounded-3">
                                         <span class="display-6 lh-1 text-blue mb-0"><i class="bi bi-bag-check"></i></span>
                                         <div class="ms-4 h6 fw-normal mb-0">
@@ -111,12 +114,12 @@ $qtdMV = (is_array($movimentacoes) ? count($movimentacoes) : 0);
                                         </div>
                                     </div>
 			                    </div>
-                                <div class="col-12 col-sm-6 col-md-4 rounded-2 border bg-1 border-1">
+                                <div class="col-12 col-sm-6 col-md-3 rounded-2 border bg-1 border-1">
                                     <div class="d-flex justify-content-center align-items-center p-4 bg-opacity-10 rounded-3">
                                         <span class="display-6 lh-1 text-blue mb-0"><i class="fa-solid fa-cart-shopping"></i></span>
                                         <div class="ms-4 h6 fw-normal mb-0">
                                             <div class="d-flex">
-                                                <h5 class="purecounter mb-0 fw-bold" data-purecounter-start="0" data-purecounter-end="200" data-purecounter-delay="200" data-purecounter-duration="0"><?= $qtdMV ?></h5>
+                                                <h5 class="purecounter mb-0 fw-bold" data-purecounter-start="0" data-purecounter-end="200" data-purecounter-delay="200" data-purecounter-duration="0"><?= ($qtdV)? $qtdV: $qtdMV ?></h5>
                                                 <span class="mb-0 h5"></span>
                                             </div>
                                             <p class="mb-0">VENDAS</p>
