@@ -9,6 +9,7 @@ $qtdME = (is_array($modulos_empresa) ? count($modulos_empresa) : 0);
 $qtdU = (is_array($usuarios) ? count($usuarios) : 0);
 $qtdP = (is_array($produtos) ? count($produtos) : 0);
 $qtdV = (is_array($vendas)? count($vendas) : 0 );
+$qtdCP = (is_array($custo_produtos)? count($custo_produtos) : 0 );
 
 $qtdMV = (is_array($movimentacoes) ? count($movimentacoes) : 0);
 !isset($m)? $m = $Util->getMesAtual():''; 
@@ -88,41 +89,56 @@ $qtdMV = (is_array($movimentacoes) ? count($movimentacoes) : 0);
                             <?php } ?>
                             <span class="text-uppercase"><?= Util::mesLowercase(date('n',$m))?>/<?= date('Y') ?></span>
                             <hr>
-                            <div class="col-12 text-uppercase display-6 row text-center mx-auto mb-3">    
+                            <div class="col-12 text-uppercase display-4 row text-center mx-auto mb-3">    
                                 
-                                <div class="col-12 col-sm-6 col-md-3 bg-2 rounded-2 border border-1">
-                                    <div class="d-flex justify-content-center align-items-center p-4 bg-opacity-10 rounded-3">
+                                <div class="col-12 col-sm-6 col-md-3 bg-success text-white p-3 m-2 rounded-2 border border-1">
+                                    <div class="p-2 d-flex justify-content-center align-items-center m-4 bg-opacity-10 rounded-3">
                                         <span class="display-6 lh-1 text-blue mb-0"><i class="fas fa-user-tie"></i></span>
                                         <div class="ms-4 h6 fw-normal mb-0">
                                             <div class="d-flex">
                                                 <h5 class="purecounter mb-0 fw-bold" data-purecounter-start="0" data-purecounter-end="200" data-purecounter-delay="200" data-purecounter-duration="0"><?= $qtdU ?></h5>
-                                                <span class="mb-0 h5"></span>
+                                                
                                             </div>
                                             <p class="mb-0">USUÁRIOS</p>
                                         </div>
                                     </div>
 			                    </div>
-                                <div class="col-12 col-sm-6 col-md-3 rounded-2 border border-1">
-                                    <div class="d-flex justify-content-center align-items-center p-4 bg-opacity-10 rounded-3">
+                                <div class="col-12 col-sm-6 col-md-3 bg-success text-white p-3 m-2 rounded-2 border border-1">
+                                    <div class="p-2 d-flex justify-content-center align-items-center p-4 bg-opacity-10 rounded-3">
                                         <span class="display-6 lh-1 text-blue mb-0"><i class="bi bi-bag-check"></i></span>
                                         <div class="ms-4 h6 fw-normal mb-0">
                                             <div class="d-flex">
                                                 <h5 class="purecounter mb-0 fw-bold" data-purecounter-start="0" data-purecounter-end="200" data-purecounter-delay="200" data-purecounter-duration="0"><?= $qtdP ?></h5>
-                                                <span class="mb-0 h5"></span>
+                                                
                                             </div>
                                             <p class="mb-0">PRODUTOS</p>
                                         </div>
                                     </div>
 			                    </div>
-                                <div class="col-12 col-sm-6 col-md-3 rounded-2 border bg-1 border-1">
-                                    <div class="d-flex justify-content-center align-items-center p-4 bg-opacity-10 rounded-3">
+                                <?php if ($custo_produtos >=1) { ?>
+                                
+                                <div class="col-12 col-sm-6 col-md-4 rounded-2 border bg-success text-white p-3 m-2  border-1">
+                                    <div class="p-2 d-flex justify-content-center align-items-center p-4 bg-opacity-10 rounded-3">
+                                        <span class="display-6 lh-1 text-blue mb-0"><i class="fa-solid fa-tag"></i></span>
+                                        <div class="ms-4 h6 fw-normal mb-0">
+                                            <div class="d-flex">
+                                                <h5 class="purecounter mb-0 fw-bold" data-purecounter-start="0" data-purecounter-end="200" data-purecounter-delay="200" data-purecounter-duration="0"><?= ($custo_produtos)? 'R$ '.$custo_produtos: 'R$ 0.00' ?></h5>
+                                               
+                                            </div>
+                                            <p class="mb-0">VALOR EM ESTOQUE</p>
+                                        </div>
+                                    </div>
+			                    </div>
+                                <?php } ?>
+                                <div class="col-12 col-sm-6 rounded-2 border bg-success text-white p-3 m-2 border-1">
+                                    <div class="p-2 d-flex justify-content-center align-items-center p-4 bg-opacity-10 rounded-3">
                                         <span class="display-6 lh-1 text-blue mb-0"><i class="fa-solid fa-cart-shopping"></i></span>
                                         <div class="ms-4 h6 fw-normal mb-0">
                                             <div class="d-flex">
                                                 <h5 class="purecounter mb-0 fw-bold" data-purecounter-start="0" data-purecounter-end="200" data-purecounter-delay="200" data-purecounter-duration="0"><?= ($qtdV)? $qtdV: $qtdMV ?></h5>
-                                                <span class="mb-0 h5"></span>
+                                               
                                             </div>
-                                            <p class="mb-0">VENDAS</p>
+                                            <p class="mb-0">TOTAL DE VENDAS</p>
                                         </div>
                                     </div>
 			                    </div>

@@ -190,9 +190,9 @@ class movimentacoes extends View
             if($this->dados['empresa']['USU_COD'] == $dados['USU_COD'] && $this->dados['empresa']['EMP_COD'] == $dados['EMP_COD']){
 
                 //Verifica se tem algum valor proibido
-                foreach ($dados as $key => $value) {
-                    $dados[$key] = $this->Check->checarString($value);
-                }
+                //foreach ($dados as $key => $value) {
+                   // $dados[$key] = $this->Check->checarString($value);
+               // }
                 $dados += array(
                     'MOV_DT_CADASTRO'=> date('Y-m-d H:i:s'),
                     'MOV_DT_ATUALIZACAO'=> date('0000-00-00 00:00:00'),             

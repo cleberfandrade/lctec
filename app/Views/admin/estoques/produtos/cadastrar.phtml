@@ -126,7 +126,7 @@ $qtdCL = (is_array($classificacoes) ? count($classificacoes) : 0);
                                         <label class="px-3" for="2">PREÇO CUSTO</label>  
                                         <div class="input-group">    
                                             <span class="input-group-text">R$</span>  
-                                            <input type="text" class="form-control form-control-lg real" id="PRO_PRECO_UNITARIO" name="PRO_PRECO_UNITARIO" placeholder="" value="<?= isset($_POST['PRO_PRECO_UNITARIO']) ? $_POST['PRO_PRECO_UNITARIO'] : ''; ?>">
+                                            <input type="text" class="form-control form-control-lg real" id="PRO_PRECO_CUSTO" name="PRO_PRECO_CUSTO" placeholder="" value="<?= isset($_POST['PRO_PRECO_CUSTO']) ? $_POST['PRO_PRECO_CUSTO'] : ''; ?>">
                                         </div>
                                     </div> 
                                     <div class="col-10 mb-3">
@@ -227,28 +227,22 @@ $qtdCL = (is_array($classificacoes) ? count($classificacoes) : 0);
             <script>
             $(document).ready(function(){
 
-                /*$('.real').maskMoney({
-                    prefix:'',
-                    allowNegative: true,
-                    thousands:'', decimal:'.',
-                    affixesStay: true
-                });*/
-                $('#PRO_PRECO_UNITARIO').maskMoney({
+                $('#PRO_PRECO_CUSTO').maskMoney({
                     prefix:'',
                     allowNegative: true,
                     thousands:'', decimal:'.',
                     affixesStay: true
                 });
 
-                $("#PRO_PRECO_UNITARIO").on("change", function(){
+                $("#PRO_PRECO_CUSTO").on("change", function(){
                     var PRO_MARGEM =  $(this).val();
-                    console.log(PRO_PRECO_UNITARIO);
+                    //console.log(PRO_PRECO_CUSTO);
                     if(PRO_MARGEM !=="" || PRO_MARGEM !== null){
-                        console.log(PRO_MARGEM);
+                        //console.log(PRO_MARGEM);
                         PRO_MARGEM = parseFloat(PRO_MARGEM/100);
-                        var PRO_PRECO_UNITARIO = $("#PRO_PRECO_UNITARIO").val();
-                        PRO_PRECO_UNITARIO = parseFloat(PRO_PRECO_UNITARIO);
-                        var novo = parseFloat(PRO_PRECO_UNITARIO + (PRO_PRECO_UNITARIO * PRO_MARGEM)).toFixed(2);
+                        var PRO_PRECO_CUSTO = $("#PRO_PRECO_CUSTO").val();
+                        PRO_PRECO_CUSTO = parseFloat(PRO_PRECO_CUSTO);
+                        var novo = parseFloat(PRO_PRECO_CUSTO + (PRO_PRECO_CUSTO * PRO_MARGEM)).toFixed(2);
                         $("#PRO_PRECO_VENDA").val('');
                         $("#PRO_PRECO_VENDA").val(novo);
                         $('#PRO_PRECO_VENDA').maskMoney({
@@ -268,10 +262,10 @@ $qtdCL = (is_array($classificacoes) ? count($classificacoes) : 0);
                     if(PRO_MARGEM !=="" || PRO_MARGEM !== null){
                         
                         PRO_MARGEM = parseFloat(PRO_MARGEM/100);
-                        var PRO_PRECO_UNITARIO = $("#PRO_PRECO_UNITARIO").val();
-                        //console.log(PRO_PRECO_UNITARIO);
-                        PRO_PRECO_UNITARIO = parseFloat(PRO_PRECO_UNITARIO);
-                        var novo = parseFloat(PRO_PRECO_UNITARIO+(PRO_PRECO_UNITARIO*PRO_MARGEM)).toFixed(2);
+                        var PRO_PRECO_CUSTO = $("#PRO_PRECO_CUSTO").val();
+                        //console.log(PRO_PRECO_CUSTO);
+                        PRO_PRECO_CUSTO = parseFloat(PRO_PRECO_CUSTO);
+                        var novo = parseFloat(PRO_PRECO_CUSTO+(PRO_PRECO_CUSTO*PRO_MARGEM)).toFixed(2);
                         $("#PRO_PRECO_VENDA").val('');
                         $("#PRO_PRECO_VENDA").val(novo);
                         $('#PRO_PRECO_VENDA').maskMoney({
@@ -280,7 +274,7 @@ $qtdCL = (is_array($classificacoes) ? count($classificacoes) : 0);
                             thousands:'', decimal:'.',
                             affixesStay: true
                         });
-                        $('#PRO_PRECO_UNITARIO').maskMoney({
+                        $('#PRO_PRECO_CUSTO').maskMoney({
                             prefix:'',
                             allowNegative: true,
                             thousands:'', decimal:'.',
@@ -288,14 +282,6 @@ $qtdCL = (is_array($classificacoes) ? count($classificacoes) : 0);
                         });
                     }
                 });
-
-                
-                /*$('#PRO_PRECO_VENDA').maskMoney({
-                    prefix:'',
-                    allowNegative: true,
-                    thousands:'', decimal:'.',
-                    affixesStay: true
-                });*/
             })
             </script>
         </div>

@@ -89,7 +89,7 @@ $qtdCL = (is_array($classificacoes) ? count($classificacoes) : 0);
                                 <td class="text-center align-middle"><?= $produtos[$i]['PRO_QUANTIDADE']; ?></td>
                                 <!--<td class="text-center align-middle"><?php //= number_format($produtos[$i]['PRO_PRECO_UNITARIO'],2,',','.'); ?></td>
                                 <td class="text-center align-middle"><?php //= number_format($produtos[$i]['PRO_PRECO_VENDA'],2,',','.'); ?></td>-->
-                                <td class="text-center align-middle">R$ <?= $produtos[$i]['PRO_PRECO_UNITARIO']; ?></td>
+                                <td class="text-center align-middle">R$ <?= $produtos[$i]['PRO_PRECO_CUSTO']; ?></td>
                                 <td class="text-center align-middle">R$ <?= $produtos[$i]['PRO_PRECO_VENDA']; ?></td>
                                 <td class="text-center align-middle"><?= ($produtos[$i]['PRO_STATUS'] == 1)? 'ATIVO' : 'DESATIVADO'; ?></td>
                                 <td class="text-center align-middle">
