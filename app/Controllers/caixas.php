@@ -246,4 +246,46 @@ class caixas extends View
         }
         echo json_encode($respota);
     }
+    public function status_abertura_fechamento()
+    {
+         //Recupera os dados enviados
+         $dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);
+         if (isset($_POST) && isset($dados['STATUS_CAIXA'])) {
+            //Verifica se os campos foram todos preenchidos
+            if($this->dados['empresa']['USU_COD'] == $_SESSION['USU_COD'] && $this->dados['empresa']['EMP_COD'] == $dados['EMP_COD']){
+                
+                unset($dados['STATUS_CAIXA']);
+                $this->Caixas->setCodEmpresa($dados['EMP_COD'])->setCodigo($dados['CXA_COD']);
+                ($dados['CXA_STATUS'] == 1)? $dados['CXA_STATUS'] = 0: $dados['CXA_STATUS'] = 1;
+                
+                $db = array(
+                    'USU_COD' => $_SESSION['USU_COD'],
+                    'CXA_DT_ATUALIZACAO'=> date('Y-m-d H:i:s'),
+                    'CXA_STATUS' => $dados['CXA_STATUS']
+                );
+                if($this->Caixas->alterar($db,0)){
+                    $respota = array(
+                        'COD'=>'OK',
+                        'MENSAGEM' => 'Status alterado com sucesso!'
+                    );
+                }else{
+                    $respota = array(
+                        'COD'=>'ERRO',
+                        'MENSAGEM'=> 'ERRO 2- Erro ao mudar status do caixa, entre em contato com o suporte!'
+                    );
+                }
+            }else {
+                $respota = array(
+                    'COD'=>'ERRO',
+                    'MENSAGEM'=> 'ERRO 2- Dados inválido(s)!'
+                );
+            }
+        }else {
+            $respota = array(
+                'COD'=>'ERRO',
+                'MENSAGEM'=> 'ERRO 1- Acesso inválido!'
+            );
+        }
+        echo json_encode($respota);
+    }
 }

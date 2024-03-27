@@ -44,6 +44,7 @@ $qtd = (is_array($caixas) ? count($caixas) : 0);
                         <table class="table table-striped table-bordered">
                             <thead class="text-center text-uppercase">
                                 <th class="text-dark">#</th>
+                                <th class="text-dark">Aber.Fech.</th>
                                 <th class="text-dark">Descrição</th>
                                 <th class="text-dark">Conta</th>
                                 <th class="text-dark">Saldo</th>
@@ -56,6 +57,7 @@ $qtd = (is_array($caixas) ? count($caixas) : 0);
                                     for ($i= 0; $i < $qtd; $i++) { ?>
                                     <tr class="<?= ($caixas[$i]['CXA_STATUS'] == 0 && $_SESSION['USU_NIVEL'] >= 8)? 'bg-secondary' : ''; ?>">
                                         <td class="text-center align-middle"><?= $b; ?></td>
+                                        <td class="text-center align-middle"><button type="button" class="btn btn-success btn-sm d-print-none" data-bs-toggle='modal'  data-bs-target="#ab_fc" title="Abrir ou Fechar caixa" data-codigo="<?= $caixas[$i]['CXA_COD']; ?>" title="Deseja ativar?" ><i class="fa fa-circle-check"></i></button></td>
                                         <td class="text-center align-middle"><?= $caixas[$i]['CXA_DESCRICAO']; ?></td>
                                         <td class="text-center align-middle"><?= $caixas[$i]['CTA_DESCRICAO']; ?></td>
                                         <td class="text-center align-middle"><?= $caixas[$i]['CXA_SALDO']; ?></td>
