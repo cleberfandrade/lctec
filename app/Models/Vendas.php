@@ -7,7 +7,7 @@ class Vendas extends Model
 { 
     private $tabela = 'tb_vendas';
     private $Model = '';
-    private $codigo,$codEmpresa,$codProduto,$data,$tdInicial,$dtFinal,$mes,$ano;
+    private $codigo,$codEmpresa,$codProduto,$data,$dtInicial,$dtFinal,$mes,$ano;
 
     public function __construct()
     {
