@@ -104,7 +104,7 @@ $qtdMotivos = (is_array($motivos) ? count($motivos) : 0);
                                         <div class="col-6 text-body-secondary pt-3">
                                             <p class="pb-3 mb-0 small lh-sm border-bottom text-center">
                                                 <strong class="d-block text-gray-dark">PREÇO DE CUSTO</strong>
-                                                R$ <?= $produto['PRO_PRECO_UNITARIO'] ?>
+                                                R$ <?= $produto['PRO_PRECO_CUSTO'] ?>
                                             </p>
                                         </div>
                                         <div class="col-6 text-body-secondary pt-3">
@@ -114,24 +114,24 @@ $qtdMotivos = (is_array($motivos) ? count($motivos) : 0);
                                             </p>
                                         </div>
                                         <div class="col-6 text-body-secondary pt-3">
-                                            <p class="pb-3 mb-0 lh-sm border-bottom">
+                                            <p class="pb-3 mb-0 lh-sm border-bottom text-center">
                                                 <strong class="d-block text-gray-dark">QUANTIDADE ATUAL</strong>
                                                 <?= ($produto['PRO_QUANTIDADE'] < $produto['PRO_QTD_MIN'])? '<span title="Produto abaixo do estoque mínimo definido" class="btn btn-warning">'.$produto['PRO_QUANTIDADE'].'</span>' : $produto['PRO_QUANTIDADE']; ?>
                                             </p>
                                         </div>
                                         <div class="col-6 text-body-secondary pt-3">
-                                            <p class="pb-3 mb-0 lh-sm border-bottom">
+                                            <p class="pb-3 mb-0 lh-sm border-bottom text-center">
                                                 <strong class="d-block text-gray-dark">QUANTIDADE MINIMA</strong>
                                                 <?= $produto['PRO_QTD_MIN'] ?>
                                             </p>
                                         </div>
                                         <div class="col-12 text-body-secondary pt-3">
-                                            <p class="pb-3 mb-0 lh-sm border-bottom">
+                                            <p class="pb-3 mb-0 lh-sm border-bottom text-center">
                                                 <?= $produto['PRO_DESCRICAO'] ?>
                                             </p>
                                         </div>
-                                        <small class="d-block text-end mt-3">
-                                            <button class="btn btn-success btn-sm" type="button">
+                                        <small class="d-block text-end mt-3 text-center">
+                                            <button class="btn btn-success btn-sm text-center" type="button">
                                                 <?php for ($c = 0; $c < $qtdC; $c++) { 
                                                     if ($categorias[$c]['CAT_COD'] == $produto['CAT_COD']) { ?>
                                                     <?= $categorias[$c]['CAT_DESCRICAO']; ?>   
