@@ -47,7 +47,7 @@ class Produtos extends Model
     public function qtdTotalCustoProdutos($ver = 0)
     {
         $parametros = "P INNER JOIN tb_empresas E ON P.EMP_COD=E.EMP_COD INNER JOIN tb_estoques ET ON P.EST_COD=ET.EST_COD WHERE P.EMP_COD={$this->codEmpresa} AND P.PRO_STATUS=1";
-        $campos = "SUM(P.PRO_PRECO_CUSTO) AS CUSTO";
+        $campos = "(SUM(P.PRO_PRECO_CUSTO) * SUM(PRO_QUANTIDADE)) AS CUSTO";
         $resultado = $this->Model->exibir($parametros, $campos, $ver, $id = false);
         if ($resultado) {
             return $resultado[0]['CUSTO'];
