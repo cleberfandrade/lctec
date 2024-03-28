@@ -14,7 +14,7 @@ $qtdCP = (is_array($custo_produtos)? count($custo_produtos) : 0 );
 $qtdMV = (is_array($movimentacoes) ? count($movimentacoes) : 0);
 !isset($m)? $m = $Util->getMesAtual():''; 
 
-setlocale(LC_MONETARY, 'pt_BR');
+setlocale(LC_MONETARY, 'en_US');
 
 dump($ultimos_sete_dias);
 
