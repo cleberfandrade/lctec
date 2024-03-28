@@ -361,8 +361,9 @@ class movimentacoes extends View
                                 'CXA_COD' => $dados['CXA_COD'],
                                 'FPG_COD' => $dados['FPG_COD'],
                                 'VEN_ORDEM' => $ordem,
-                                'VEN_TOKEN' => $this->Check->token(5,'',true),
+                                'VEN_TOKEN' => $this->Check->token(10,'',true),
                                 'VEN_CODE' => '',
+                                'VEN_DATA' => $dados['VEN_DATA'],
                                 'VEN_DT_CADASTRO'=> date('Y-m-d H:i:s'),
                                 'VEN_DT_ATUALIZACAO'=> date('0000-00-00 00:00:00'),  
                                 'VEN_VALOR_SUBTOTAL' => $dados['VEN_VALOR_SUBTOTAL'],
@@ -370,7 +371,7 @@ class movimentacoes extends View
                                 'VEN_VALOR_TOTAL' => $dados['VEN_VALOR_TOTAL'],
                                 'VEN_STATUS'=> 1
                             );
-                            dump($dados_venda);
+                            dump($dados);
                             exit;
                             $idVenda = $this->Vendas->cadastrar($dados_venda,0);
 
