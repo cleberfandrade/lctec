@@ -376,6 +376,7 @@ class movimentacoes extends View
                            
                             $idVenda = $this->Vendas->cadastrar($dados_venda,0);
                             dump($idVenda);
+                            exit;
                             if(isset($idVenda) && !empty($idVenda)){
                                 // VENDA RESGISTRADA COM SUCESSO
                                 for ($i=0; $i < $qtd; $i++) { 
