@@ -348,7 +348,7 @@ class movimentacoes extends View
                             //REGISTRAR VENDA - MOTIVO 2 => VENDA
                             $ordem = 0;
                             $ultima_venda = 0;
-                            $ultima_venda = $this->Vendas->setCodEmpresa($dados['EMP_COD'])->setData(date('Y-m-d'))->ultimaVenda(0);
+                            $ultima_venda = $this->Vendas->setCodEmpresa($dados['EMP_COD'])->setData(date('Y-m-d'))->setQtd(1)->ultimaVenda(0);
                             $qtdVenda = (is_array($ultima_venda) ? count($ultima_venda) : 0);
                             if ($qtdVenda !=0) {
                                $ordem = $ultima_venda['VEN_ORDEM']+1;

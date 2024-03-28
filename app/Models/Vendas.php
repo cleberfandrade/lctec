@@ -7,7 +7,7 @@ class Vendas extends Model
 { 
     private $tabela = 'tb_vendas';
     private $Model = '';
-    private $codigo,$codEmpresa,$codProduto,$data,$dtInicial,$dtFinal,$mes,$ano;
+    private $codigo,$codEmpresa,$codProduto,$data,$dtInicial,$dtFinal,$mes,$ano,$qtd;
 
     public function __construct()
     {
@@ -22,6 +22,11 @@ class Vendas extends Model
     public function setData($data)
     {
         $this->data = $data;
+        return $this;
+    }
+    public function setQtd($qtd)
+    {
+        $this->qtd = $qtd;
         return $this;
     }
     public function setCodEmpresa($codEmpresa)
@@ -47,7 +52,7 @@ class Vendas extends Model
     }
     public function ultimaVenda($ver = 0)
     {
-        $parametros = "V INNER JOIN tb_empresas E ON E.EMP_COD=V.EMP_COD WHERE V.EMP_COD={$this->codEmpresa} AND V.VEN_DATA={$this->data} ORDER BY V.VEN_COD DESC LIMIT 1";
+        $parametros = "V INNER JOIN tb_empresas E ON E.EMP_COD=V.EMP_COD WHERE V.EMP_COD={$this->codEmpresa} AND V.VEN_DATA={$this->data} ORDER BY V.VEN_COD DESC LIMIT {$this->qtd}";
         $campos = "*";
         $resultado = $this->Model->exibir($parametros, $campos, $ver, $id = false);
         if ($resultado) {
