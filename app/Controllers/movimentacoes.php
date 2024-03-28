@@ -359,7 +359,7 @@ class movimentacoes extends View
                             $dados_venda = array(
                                 'EMP_COD' => $_SESSION['EMP_COD'],
                                 'USU_COD' => $_SESSION['USU_COD'],
-                                'CLI_COD' => $dados['CLI_COD'],
+                                'CLI_COD' => ($dados['CLI_COD'] != "")? $dados['CLI_COD'] : 0,
                                 'CXA_COD' => $dados['CXA_COD'],
                                 'FPG_COD' => $dados['FPG_COD'],
                                 'VEN_ORDEM' => $ordem,
