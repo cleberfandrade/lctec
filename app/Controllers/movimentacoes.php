@@ -347,9 +347,10 @@ class movimentacoes extends View
                             //2 = VENDA
                             //REGISTRAR VENDA - MOTIVO 2 => VENDA
                             $ordem = 0;
-                            $dados['ultima_venda'] = $this->Vendas->setCodEmpresa($dados['EMP_COD'])->setData(date('Y-m-d'))->ultimaVenda(0);
-                            if ($dados['ultima_venda'] !=0) {
-                               $ordem = $dados['ultima_venda']['VEN_ORDEM']+1;
+                            $ultima_venda = 0;
+                            $ultima_venda = $this->Vendas->setCodEmpresa($dados['EMP_COD'])->setData(date('Y-m-d'))->ultimaVenda(0);
+                            if ($ultima_venda !=0) {
+                               $ordem = $ultima_venda['VEN_ORDEM']+1;
                             }else {
                                 $ordem = 1;
                             }
@@ -360,10 +361,10 @@ class movimentacoes extends View
                                 'CLI_COD' => $dados['CLI_COD'],
                                 'CXA_COD' => $dados['CXA_COD'],
                                 'FPG_COD' => $dados['FPG_COD'],
+                                'VEN_DATA' => $dados['MOV_DT_MOVIMENTACAO'],
                                 'VEN_ORDEM' => $ordem,
                                 'VEN_TOKEN' => $this->Check->token(10,'',true),
                                 'VEN_CODE' => '',
-                                'VEN_DATA' => $dados['MOV_DT_MOVIMENTACAO'],
                                 'VEN_DT_CADASTRO'=> date('Y-m-d H:i:s'),
                                 'VEN_DT_ATUALIZACAO'=> date('0000-00-00 00:00:00'),  
                                 'VEN_VALOR_SUBTOTAL' => $dados['VEN_VALOR_SUBTOTAL'],
