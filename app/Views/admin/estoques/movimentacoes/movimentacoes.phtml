@@ -134,7 +134,15 @@ $contagem = 1;
                                         
                                         <label class="form-label">MOTIVO</label>
                                     </div>
-                                   
+                                    <div class="col-4 mx-auto form-floating mb-3" @keydown.enter.stop>
+                                        <div class="input-group input-group-lg">
+                                            <div class="form-floating">
+                                                <input type="number" class="form-control maiusculo" id="MOV_QUANTIDADE" name="MOV_QUANTIDADE" min="0" value="<?= isset($_POST['MOV_QUANTIDADE']) ? $_POST['MOV_QUANTIDADE'] : ''; ?>">
+                                                <label class="px-2" for="MOV_QUANTIDADE">QUANTIDADE</label>
+                                            </div>
+                                            <button type="button" class="btn text-uppercase btn-success" id="adicionar"><i class="fa fa-plus"></i></button>
+                                        </div>
+                                    </div>
                                 <?php }else { ?>
                                     <div class="col-5 form-floating mb-2">
                                         <select class="form-select " name="MOV_MOTIVO">     
@@ -144,10 +152,12 @@ $contagem = 1;
                                         </select>
                                         <label class="form-label">MOTIVO</label>
                                     </div>
-                                    <div class="col-4 form-floating mb-2">
-                                        <input type="date" name="MOV_DT_MOVIMENTACAO" class="form-control form-control-lg" value="<?= isset($_POST['MOV_DT_MOVIMENTACAO']) ? $_POST['MOV_DT_MOVIMENTACAO'] : date('Y-m-d') ?>">
-                                        <label class="form-label">DATA</label>
-                                    </div>                
+                                    <div class="col-4 mx-auto form-floating mb-3" @keydown.enter.stop>
+                                        <div class="form-floating">
+                                            <input type="number" class="form-control maiusculo" id="MOV_QUANTIDADE" name="MOV_QUANTIDADE" min="0" value="<?= isset($_POST['MOV_QUANTIDADE']) ? $_POST['MOV_QUANTIDADE'] : ''; ?>">
+                                            <label class="px-2" for="MOV_QUANTIDADE">QUANTIDADE</label>
+                                        </div>
+                                    </div>                                        
                                 <?php } ?>
                                 <div class="col-8 form-floating mb-2" id="retorno">
                                     <select class="form-select form-control-lg" id="produtos" name="PRO_COD">   
@@ -155,13 +165,10 @@ $contagem = 1;
                                     </select>
                                     <label class="form-label">SELECIONE O PRODUTO</label>
                                 </div>
-                                <div class="col-4 mx-auto form-floating mb-3" @keydown.enter.stop>
-                                        <div class="form-floating">
-                                            <input type="number" class="form-control maiusculo" id="MOV_QUANTIDADE" name="MOV_QUANTIDADE" min="0" value="<?= isset($_POST['MOV_QUANTIDADE']) ? $_POST['MOV_QUANTIDADE'] : ''; ?>">
-                                            <label class="px-2" for="MOV_QUANTIDADE">QUANTIDADE</label>
-                                        </div>
-                                    </div>        
-                               
+                                <div class="col-4 form-floating mb-2">
+                                    <input type="date" name="MOV_DT_MOVIMENTACAO" class="form-control form-control-lg" value="<?= isset($_POST['MOV_DT_MOVIMENTACAO']) ? $_POST['MOV_DT_MOVIMENTACAO'] : date('Y-m-d') ?>">
+                                    <label class="form-label">DATA</label>
+                                </div>
                                 <div class="col-12 mx-auto fs-4 mb-2 text-center">
                                     <label class="px-2" for="2">QUANTIDADE ATUAL</label>
                                     <b class="text-dark"><br><span id="PRO_QUANTIDADE">0</span></b>
