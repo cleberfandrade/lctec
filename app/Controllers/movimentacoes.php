@@ -363,7 +363,7 @@ class movimentacoes extends View
                                 'VEN_ORDEM' => $ordem,
                                 'VEN_TOKEN' => $this->Check->token(10,'',true),
                                 'VEN_CODE' => '',
-                                'VEN_DATA' => $dados['VEN_DATA'],
+                                'VEN_DATA' => $dados['MOV_DT_MOVIMENTACAO'],
                                 'VEN_DT_CADASTRO'=> date('Y-m-d H:i:s'),
                                 'VEN_DT_ATUALIZACAO'=> date('0000-00-00 00:00:00'),  
                                 'VEN_VALOR_SUBTOTAL' => $dados['VEN_VALOR_SUBTOTAL'],
@@ -371,8 +371,7 @@ class movimentacoes extends View
                                 'VEN_VALOR_TOTAL' => $dados['VEN_VALOR_TOTAL'],
                                 'VEN_STATUS'=> 1
                             );
-                            dump($dados);
-                            exit;
+                           
                             $idVenda = $this->Vendas->cadastrar($dados_venda,0);
 
                             for ($i=0; $i < $qtd; $i++) { 
