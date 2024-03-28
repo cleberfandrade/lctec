@@ -62,7 +62,7 @@ class admin extends View
 
         $this->dados['vendas'] = $this->Vendas->setCodEmpresa($_SESSION['EMP_COD'])->listarTodas(0);
         
-        $this->dados['ultimos_sete_dias'] = $this->Vendas->setCodEmpresa($_SESSION['EMP_COD'])->setData(date('Y-m-d'))->vendasUltimosSeteDias(1);
+        $this->dados['ultimos_sete_dias'] = $this->Vendas->setCodEmpresa($_SESSION['EMP_COD'])->vendasUltimosSeteDias(1);
 
         $this->dados['custo_produtos'] = $this->Produtos->setCodEmpresa($_SESSION['EMP_COD'])->qtdTotalCustoProdutos(0);
         

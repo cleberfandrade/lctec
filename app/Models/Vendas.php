@@ -38,29 +38,29 @@ class Vendas extends Model
     {
         $parametros = "V INNER JOIN tb_empresas E ON E.EMP_COD=V.EMP_COD WHERE V.EMP_COD={$this->codEmpresa} AND V.VEN_COD={$this->codigo} ORDER BY V.VEN_COD";
         $campos = "*";
-        $resultado = $this->Model->exibir($parametros, $campos, $ver = 0, $id = false);
+        $resultado = $this->Model->exibir($parametros, $campos, $ver, $id = false);
         if ($resultado) {
             return $resultado[0];
         } else {
             return false;
         }
     }
-    public function ultimaVenda()
+    public function ultimaVenda($ver = 0)
     {
         $parametros = "V INNER JOIN tb_empresas E ON E.EMP_COD=V.EMP_COD WHERE V.EMP_COD={$this->codEmpresa} AND V.VEN_DATA={$this->data} ORDER BY V.VEN_COD DESC LIMIT 1";
         $campos = "*";
-        $resultado = $this->Model->exibir($parametros, $campos, $ver = 0, $id = false);
+        $resultado = $this->Model->exibir($parametros, $campos, $ver, $id = false);
         if ($resultado) {
             return $resultado[0];
         } else {
             return false;
         }
     }
-    public function vendasUltimosSeteDias()
+    public function vendasUltimosSeteDias($ver = 0)
     {
         $parametros = "V INNER JOIN tb_empresas E ON E.EMP_COD=V.EMP_COD WHERE V.EMP_COD={$this->codEmpresa} AND V.VEN_DATA >= CURRENT_DATE - INTERVAL 7 DAY ORDER BY V.VEN_DATA DESC";
         $campos = "*";
-        $resultado = $this->Model->exibir($parametros, $campos, $ver = 0, $id = false);
+        $resultado = $this->Model->exibir($parametros, $campos, $ver, $id = false);
         if ($resultado) {
             return $resultado;
         } else {
@@ -71,7 +71,7 @@ class Vendas extends Model
     {
         $parametros = "V INNER JOIN tb_empresas E ON E.EMP_COD=V.EMP_COD WHERE V.EMP_COD={$this->codEmpresa} ORDER BY V.VEN_COD";
         $campos = "*";
-        $resultado = $this->Model->exibir($parametros, $campos, $ver = 0, $id = false);
+        $resultado = $this->Model->exibir($parametros, $campos, $ver, $id = false);
         if ($resultado) {
             return $resultado;
         } else {
@@ -82,7 +82,7 @@ class Vendas extends Model
     {
         $parametros = "V INNER JOIN tb_empresas E ON E.EMP_COD=V.EMP_COD WHERE V.EMP_COD={$this->codEmpresa} ORDER BY V.VEN_COD";
         $campos = "*";
-        $resultado = $this->Model->exibir($parametros, $campos, $ver = 0, $id = false);
+        $resultado = $this->Model->exibir($parametros, $campos, $ver, $id = false);
         if ($resultado) {
             return $resultado;
         } else {
