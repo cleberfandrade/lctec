@@ -408,4 +408,11 @@ teste2
                                            
                                             
                                         
-                                       
+                                        <div class="col-5 form-floating mb-2">
+                                        <select class="form-select " name="MOV_MOTIVO">     
+                                            <?php for ($i=0; $i < $qtdMotivos; $i++) { ?>
+                                                <option value="<?= $i ?>" <?= (isset($_POST['MOV_MOTIVO']) &&  $_POST['MOV_MOTIVO']  == $i)? 'selected' : '' ?>><?= $motivos[$i] ?></option>
+                                            <?php } ?>
+                                        </select>
+                                        <label class="form-label">MOTIVO</label>
+                                    </div>
