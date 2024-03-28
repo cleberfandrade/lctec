@@ -362,8 +362,8 @@ class movimentacoes extends View
                                 'CLI_COD' => $dados['CLI_COD'],
                                 'CXA_COD' => $dados['CXA_COD'],
                                 'FPG_COD' => $dados['FPG_COD'],
-                                'VEN_DATA' => $dados['MOV_DT_MOVIMENTACAO'],
                                 'VEN_ORDEM' => $ordem,
+                                'VEN_DATA' => $dados['MOV_DT_MOVIMENTACAO'],
                                 'VEN_TOKEN' => $this->Check->token(10,'',true),
                                 'VEN_CODE' => '',
                                 'VEN_DT_CADASTRO'=> date('Y-m-d H:i:s'),
@@ -375,8 +375,6 @@ class movimentacoes extends View
                             );
                            
                             $idVenda = $this->Vendas->cadastrar($dados_venda,0);
-                            dump($dados_venda);
-                            exit;
                             if(isset($idVenda) && !empty($idVenda)){
                                 // VENDA RESGISTRADA COM SUCESSO
                                 for ($i=0; $i < $qtd; $i++) { 
