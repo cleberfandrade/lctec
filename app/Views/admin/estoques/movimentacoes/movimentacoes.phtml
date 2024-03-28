@@ -115,7 +115,10 @@ $contagem = 1;
                                 </div>
                             </div>
                             <div class="col-12 row mt-3">   
-                                
+                                <div class="col-4 form-floating mb-2">
+                                    <input type="date" name="MOV_DT_MOVIMENTACAO" class="form-control form-control-lg" value="<?= isset($_POST['MOV_DT_MOVIMENTACAO']) ? $_POST['MOV_DT_MOVIMENTACAO'] : date('Y-m-d') ?>">
+                                    <label class="form-label">DATA</label>
+                                </div>
                                 <div class="col-3 form-floating mb-2">
                                     <select class="form-select" id="tipo" name="MOV_TIPO">
                                         <option value="0" <?= (isset($_POST['MOV_TIPO']) &&  $_POST['MOV_TIPO']  == 0)? 'selected' : '' ?>>---</option>
@@ -165,10 +168,7 @@ $contagem = 1;
                                     </select>
                                     <label class="form-label">SELECIONE O PRODUTO</label>
                                 </div>
-                                <div class="col-4 form-floating mb-2">
-                                    <input type="date" name="MOV_DT_MOVIMENTACAO" class="form-control form-control-lg" value="<?= isset($_POST['MOV_DT_MOVIMENTACAO']) ? $_POST['MOV_DT_MOVIMENTACAO'] : date('Y-m-d') ?>">
-                                    <label class="form-label">DATA</label>
-                                </div>
+                                
                                 <div class="col-12 mx-auto fs-4 mb-2 text-center">
                                     <label class="px-2" for="2">QUANTIDADE ATUAL</label>
                                     <b class="text-dark"><br><span id="PRO_QUANTIDADE">0</span></b>
