@@ -353,6 +353,7 @@ class movimentacoes extends View
                             }else {
                                 $ordem = 1;
                             }
+                            
                             $dados_venda = array(
                                 'EMP_COD' => $_SESSION['EMP_COD'],
                                 'USU_COD' => $_SESSION['USU_COD'],
@@ -369,7 +370,8 @@ class movimentacoes extends View
                                 'VEN_VALOR_TOTAL' => $dados['VEN_VALOR_TOTAL'],
                                 'VEN_STATUS'=> 1
                             );
-
+                            dump($dados_venda);
+                            exit;
                             $idVenda = $this->Vendas->cadastrar($dados_venda,0);
 
                             for ($i=0; $i < $qtd; $i++) { 
