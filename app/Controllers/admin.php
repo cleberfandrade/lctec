@@ -61,6 +61,8 @@ class admin extends View
         $this->dados['produtos'] = $this->Produtos->setCodEmpresa($_SESSION['EMP_COD'])->setStatus(1)->listarTodosGeral(0);
 
         $this->dados['vendas'] = $this->Vendas->setCodEmpresa($_SESSION['EMP_COD'])->listarTodas(0);
+        
+        $this->dados['ultimos_sete_dias'] = $this->Vendas->setCodEmpresa($_SESSION['EMP_COD'])->vendasUltimosSeteDias(0);
 
         $this->dados['custo_produtos'] = $this->Produtos->setCodEmpresa($_SESSION['EMP_COD'])->qtdTotalCustoProdutos(0);
         

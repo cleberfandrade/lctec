@@ -56,6 +56,17 @@ class Vendas extends Model
             return false;
         }
     }
+    public function vendasUltimosSeteDias()
+    {
+        $parametros = "V INNER JOIN tb_empresas E ON E.EMP_COD=V.EMP_COD WHERE V.EMP_COD={$this->codEmpresa} AND V.VEN_DATA={$this->data} >= CURRENT_DATE - INTERVAL 7 DAY ORDER BY V.VEN_DATA DESC";
+        $campos = "*";
+        $resultado = $this->Model->exibir($parametros, $campos, $ver = 0, $id = false);
+        if ($resultado) {
+            return $resultado;
+        } else {
+            return false;
+        }
+    }
     public function listarTodas($ver = 0)
     {
         $parametros = "V INNER JOIN tb_empresas E ON E.EMP_COD=V.EMP_COD WHERE V.EMP_COD={$this->codEmpresa} ORDER BY V.VEN_COD";

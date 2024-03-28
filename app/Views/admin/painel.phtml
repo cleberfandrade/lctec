@@ -13,6 +13,11 @@ $qtdCP = (is_array($custo_produtos)? count($custo_produtos) : 0 );
 
 $qtdMV = (is_array($movimentacoes) ? count($movimentacoes) : 0);
 !isset($m)? $m = $Util->getMesAtual():''; 
+
+setlocale(LC_MONETARY, 'pt_BR');
+
+dump($ultimos_sete_dias);
+
 ?>
 <link rel="stylesheet" type="text/css" href="https://pixinvent.com/stack-responsive-bootstrap-4-admin-template/app-assets/fonts/simple-line-icons/style.min.css">
 <body>
@@ -122,7 +127,7 @@ $qtdMV = (is_array($movimentacoes) ? count($movimentacoes) : 0);
                                         <span class="display-6 lh-1 text-blue mb-0"><i class="fa-solid fa-tag"></i></span>
                                         <div class="ms-4 h6 fw-normal mb-0">
                                             <div class="d-flex">
-                                                <h5 class="purecounter mb-0 fw-bold" data-purecounter-start="0" data-purecounter-end="200" data-purecounter-delay="200" data-purecounter-duration="0"><?= ($custo_produtos)? 'R$ '.$custo_produtos: 'R$ 0.00' ?></h5>
+                                                <h5 class="purecounter mb-0 fw-bold" data-purecounter-start="0" data-purecounter-end="200" data-purecounter-delay="200" data-purecounter-duration="0"><?= 'R$ '.money_format('%(#10n', $custo_produtos)? 'R$ '.$custo_produtos: 'R$ 0.00' ?></h5>
                                                
                                             </div>
                                             <p class="mb-0">VALOR EM ESTOQUE</p>
