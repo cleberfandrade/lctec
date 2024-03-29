@@ -13,6 +13,8 @@ use Libraries\Check;
 use Libraries\Sessao;
 use Libraries\Url;
 
+
+
 class caixas extends View
 {
     private $dados = [];
@@ -288,17 +290,16 @@ class caixas extends View
                     'CXA_DT_ATUALIZACAO'=> date('Y-m-d H:i:s'),
                     'CXA_STATUS' => $dados['CXA_STATUS']
                 );
-                if($this->Caixas->alterar($db,0)){
-                    $respota = array(
-                        'COD'=>'OK',
-                        'MENSAGEM' => 'Status alterado com sucesso!'
-                    );
-                }else{
-                    $respota = array(
-                        'COD'=>'ERRO',
-                        'MENSAGEM'=> 'ERRO 2- Erro ao mudar status do caixa, entre em contato com o suporte!'
-                    );
-                }
+                //if($this->Caixas->alterar($db,0)){
+                  //  $respota = array(
+                      //  'COD'=>'OK',
+                    //);
+              //  }else{
+                  //  $respota = array(
+                    ///    'COD'=>'ERRO',
+                    //    'MENSAGEM'=> 'ERRO 2- Erro ao mudar status do caixa, entre em contato com o suporte!'
+                   // );
+              //  }
             }else {
                 $respota = array(
                     'COD'=>'ERRO',

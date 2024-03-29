@@ -2,6 +2,23 @@
 use Libraries\Sessao;
 
 include_once 'app/Views/admin/inc/cabecalho.phtml'; 
+
+$cl = array(
+    0 => 'A DEFINIR',
+    1 => 'CATEGORIAS',
+    2 => 'COLABORADORES',
+    3 => 'CLIENTES',
+    4 => 'ESTOQUES',
+    5 => 'FORNECEDORES',
+    6 => 'LANÇAMENTOS',
+    7 => 'OUTROS',
+    8 => 'PRODUTOS',
+    9 => 'SERVIÇOS',
+    10 =>'TAREFAS',
+    11 => 'CONTAS'
+);
+
+$qtdCl = (is_array($cl) ? count($cl) : 0);
 ?>
 <body class="">
     <div class="d-flex" id="wrapper">
@@ -37,19 +54,10 @@ include_once 'app/Views/admin/inc/cabecalho.phtml';
                                 <div class="col-4 mb-2 text-center">
                                     <label class="form-label">TIPO</label>
                                     <div class="form-floating mb-3">
-                                        <select class="form-select" name="CLA_TIPO">                                        
-                                            <option value="0" <?= (isset($_POST['CLA_TIPO']) &&  $_POST['CLA_TIPO']  == 0)? 'selected' : ''; ?>>----</option>   
-                                            <option value="1" <?= (isset($_POST['CLA_TIPO']) &&  $_POST['CLA_TIPO']  == 1)? 'selected' : ''; ?>>CATEGORIAS</option> 
-                                            <option value="2" <?= (isset($_POST['CLA_TIPO']) &&  $_POST['CLA_TIPO']  == 2)? 'selected' : ''; ?>>COLABORADORES</option> 
-                                            <option value="3" <?= (isset($_POST['CLA_TIPO']) &&  $_POST['CLA_TIPO']  == 3)? 'selected' : ''; ?>>CLIENTES</option>
-                                            <option value="4" <?= (isset($_POST['CLA_TIPO']) &&  $_POST['CLA_TIPO']  == 4)? 'selected' : ''; ?>>ESTOQUES</option> 
-                                            <option value="5" <?= (isset($_POST['CLA_TIPO']) &&  $_POST['CLA_TIPO']  == 5)? 'selected' : ''; ?>>FORNECEDORES</option> 
-                                            <option value="6" <?= (isset($_POST['CLA_TIPO']) &&  $_POST['CLA_TIPO']  == 6)? 'selected' : ''; ?>>LANÇAMENTOS</option> 
-                                            <option value="7" <?= (isset($_POST['CLA_TIPO']) &&  $_POST['CLA_TIPO']  == 7)? 'selected' : ''; ?>>OUTROS</option> 
-                                            <option value="8" <?= (isset($_POST['CLA_TIPO']) &&  $_POST['CLA_TIPO']  == 8)? 'selected' : ''; ?>>PRODUTOS</option> 
-                                            <option value="9" <?= (isset($_POST['CLA_TIPO']) &&  $_POST['CLA_TIPO']  == 9)? 'selected' : ''; ?>>SERVIÇOS</option> 
-                                            <option value="10" <?= (isset($_POST['CLA_TIPO']) &&  $_POST['CLA_TIPO']  == 10)? 'selected' : ''; ?>>TAREFAS</option> 
-                                            <option value="11" <?= (isset($_POST['CLA_TIPO']) &&  $_POST['CLA_TIPO']  == 11)? 'selected' : ''; ?>>CONTAS</option> 
+                                        <select class="form-select" name="CLA_TIPO">                                         
+                                        <?php for ($i=0; $i < $qtdCl; $i++) { ?> 
+                                            <option value="<?= $i ?>" <?= (isset($_POST['CLA_TIPO']) &&  $_POST['CLA_TIPO']  == $i)? 'selected' : '' ?>><?= $cl[$i] ?></option>
+                                        <?php } ?> 
                                         </select>
                                         <label class="form-floating ">TIPO DA CLASSIFICAÇÃO</label>
                                     </div>

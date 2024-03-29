@@ -32,7 +32,40 @@ $qtd = (is_array($caixa) ? count($caixa) : 0);
             </header>
             <?php include_once 'app/Views/admin/inc/alertas.phtml'; ?> 
             <section class="bg-light  text-dark  py-2">
-                
+                <div class="card text-white mx-auto bg-10 m-1 py-3" style="max-width: 35rem;">
+                        <div class="card-header">
+                            <div class="row">
+                                <div class="col-10 fs-5 align-middle">
+                                    <i class="bi bi-box"></i> SALDO <?= ($caixa['CXA_SALDO'] != '0')? "R$ ".number_format($caixa['CXA_SALDO'],2,',','.')  : 'R$ 0,00'; ?>
+                                </div>  
+                                <div class="col-1 mr-1">
+                                    <a type="button" class="btn btn-outline-warning btn-sm d-print-none" href="<?= DIRPAGE.'caixas/alteracao/'.$caixa['EMP_COD'].'/'.$caixa['CXA_COD']; ?>" title="Alterar Caixa"><i class="fa fa-edit"></i></a>
+                                </div>
+                            </div>  
+                        </div>
+                        <div class="card-body">
+                            <a href="<?= DIRPAGE.'caixa/detalhar/'.$caixa['EMP_COD'].'/'.$caixa['CXA_COD']; ?>" title="Acessar Caixa" class="col-auto link-light text-decoration-none">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <h5 class="card-title">Descrição: <?= $caixa['CXA_DESCRICAO']; ?></h5>
+                                        <p class="card-text">Empresa/Negócio: <?= $caixa['EMP_NOME_FANTASIA']; ?></p>
+                                    </div>
+                                    <div class="col-12 mx-auto text-center">
+                                        <h2 class="card-title">
+                                            
+                                        </h2>
+                                        <p class="card-text ">ACESSAR</p>
+                                    </div>
+                                </div>
+                            </a>  
+                           
+                        </div>
+                        <div class="card-footer">
+                        <div class="col-12 mx-auto text-center">
+                                <a href="<?= DIRPAGE.'caixa/detalhar/'.$caixa['EMP_COD'].'/'.$caixa['CXA_COD']; ?>" title="Abrir Caixa" class="col-12 mx-auto btn btn-success text-decoration-none">ABRIR CAIXA</a>
+                            </div>  
+                        </div>
+                    </div>
             </section>
             <?php include_once 'app/Views/admin/inc/rodape.phtml';?>
         </div>
