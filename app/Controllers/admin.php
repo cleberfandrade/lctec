@@ -2,6 +2,7 @@
 namespace App\Controllers;
 
 use App\Models\Avisos;
+use App\Models\Clientes;
 use App\Models\Empresas;
 use App\Models\Estoques;
 use App\Models\ModulosEmpresa;
@@ -19,7 +20,7 @@ use Libraries\Util;
 class admin extends View
 {
     private $dados = [];
-    private $link,$Util,$Check,$Empresa,$Usuarios,$Estoques,$UsuariosEmpresa,$ModulosEmpresa, $Tarefas,$Produtos,$Movimentacoes,$Avisos,$Vendas;
+    private $link,$Util,$Check,$Empresa,$Usuarios,$Estoques,$UsuariosEmpresa,$ModulosEmpresa,$Clientes, $Tarefas,$Produtos,$Movimentacoes,$Avisos,$Vendas;
     public function __construct()
     {
         Sessao::naoLogado();
@@ -36,7 +37,7 @@ class admin extends View
         $this->Movimentacoes = new Movimentacoes;
         $this->Avisos = new Avisos;
         $this->Vendas = new Vendas;
-
+        $this->Clientes = new Clientes;
        
         /*
         $motivos = array(
@@ -61,8 +62,11 @@ class admin extends View
         $this->dados['produtos'] = $this->Produtos->setCodEmpresa($_SESSION['EMP_COD'])->setStatus(1)->listarTodosGeral(0);
 
         $this->dados['vendas'] = $this->Vendas->setCodEmpresa($_SESSION['EMP_COD'])->listarTodas(0);
+        $this->dados['vendas_hoje'] = $this->Vendas->setCodEmpresa($_SESSION['EMP_COD'])->setData(date('Y-m-d'))->vendasData(0);
         $this->dados['ultimas_vendas'] = $this->Vendas->setCodEmpresa($_SESSION['EMP_COD'])->setData(date('Y-m-d'))->setQtd(8)->ultimaVenda(0);
         $this->dados['ultimos_sete_dias'] = $this->Vendas->setCodEmpresa($_SESSION['EMP_COD'])->vendasUltimosSeteDias(0);
+
+        $this->dados['clientes'] = $this->Clientes->setCodEmpresa($_SESSION['EMP_COD'])->listarTodosAtivos(0);
 
         $this->dados['custo_produtos'] = $this->Produtos->setCodEmpresa($_SESSION['EMP_COD'])->qtdTotalCustoProdutos(0);
         
