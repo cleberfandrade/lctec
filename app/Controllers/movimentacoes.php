@@ -410,7 +410,8 @@ class movimentacoes extends View
                                             if($this->Produtos->alterar($db,0)){
                                                 $ok = true;
                                             }
-                                            $desconto = $dados['VEN_VALOR_DESCONTO']/$qtd;
+                                            $descontoPorItens = $dados['VEN_VALOR_DESCONTO']/$qtd;
+                                            $desconto = $descontoPorItens/$dados['MOV_QUANTIDADE'][$i];
                                             $dados_itens = array(
                                                 'EMP_COD' => $_SESSION['EMP_COD'],
                                                 'USU_COD' => $_SESSION['USU_COD'],

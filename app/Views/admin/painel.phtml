@@ -169,7 +169,7 @@ setlocale(LC_MONETARY, 'pt_BR');
                                                         <li>
                                                             <a target="_blank"  title="Detalhar Produto" href="<?= DIRPAGE.'produtos/detalhar/'.$ultimas_vendas[$i]['EMP_COD'].'/'.$ultimas_vendas[$i]['EST_COD'].'/'.$ultimas_vendas[$i]['PRO_COD']; ?>"></a>
                                                             <p class="text-primary float-right fs-6 small"><?=  (date('Y-m-d') == $data->format('Y-m-d')) ? '<b>hoje</b> às '. $data->format('H:i') : ((date('Y-m-d', strtotime("-1 days")) == $data->format('Y-m-d')) ? 'ontem às '. $data->format('H:i') : $data->format('d/m/Y H:i')); ?></p>
-                                                            <p class="text-dark text-decoration-none small"><?= $ultimas_vendas[$i]['PRO_NOME'].' - '.'R$ '.number_format($ultimas_vendas[$i]['VEN_VALOR_TOTAL'],2,',','.'); ?></p>
+                                                            <p class="text-dark text-decoration-none small"><?= $ultimas_vendas[$i]['PRO_NOME'].' - '.'R$ '.number_format($ultimas_vendas[$i]['ITS_VALOR_TOTAL'],2,',','.'); ?></p>
                                                         </li>
                                                     <?php }  ?>
                                                 </ul>
