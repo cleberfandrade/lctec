@@ -11332,6 +11332,74 @@ body.sb-sidenav-toggled #wrapper #sidebar-wrapper {
   color: #ffffff;
   background-color:#447ebb;
 }
+.bg-5{
+  color: #ffffff;
+  background-color:#4d61a6;
+}
+.bg-6{
+  color: #ffffff;
+  background-color:#6883CA;
+}
+.bg-7{
+  color: #ffffff;
+  background-color:#FF852D;
+}
+.bg-8{
+  color: #ffffff;
+  background-color:#411866;
+}
+.bg-9{
+  color: #ffffff;
+  background-color:#4EBFA1;
+}
+.bg-10{
+  color: #ffffff;
+  background-color:#65C2C3;
+}
+
+
+.bg-11{
+  color: #ffffff;
+  background-color:#65C2C3;
+}
+.bg-12{
+  color: #ffffff;
+  background-color:#65C2C3;
+}
+.bg-13{
+  color: #ffffff;
+  background-color:#65C2C3;
+}
+ul.timeline {
+  list-style-type: none;
+  position: relative;
+}
+ul.timeline:before {
+  content: ' ';
+  background: #d4d9df;
+  display: inline-block;
+  position: absolute;
+  left: 29px;
+  width: 2px;
+  height: 100%;
+  z-index: 400;
+}
+ul.timeline > li {
+  margin: 20px 0;
+  padding-left: 20px;
+}
+ul.timeline > li:before {
+  content: ' ';
+  background: white;
+  display: inline-block;
+  position: absolute;
+  border-radius: 50%;
+  border: 3px solid #22c0e8;
+  left: 20px;
+  width: 20px;
+  height: 20px;
+  z-index: 400;
+}
 .bg-teal{
   background-color: rgba(var(--bs-teal), var(--bs-bg-opacity)) !important;
 }

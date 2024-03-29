@@ -52,7 +52,7 @@ class Vendas extends Model
     }
     public function ultimaVenda($ver = 0)
     {
-        $parametros = "V INNER JOIN tb_empresas E ON E.EMP_COD=V.EMP_COD INNER JOIN tb_itens_vendas IV ON IV.VEN_COD=V.VEN_COD WHERE V.EMP_COD={$this->codEmpresa} AND V.VEN_DATA='{$this->data}' ORDER BY V.VEN_COD DESC LIMIT {$this->qtd}";
+        $parametros = "V INNER JOIN tb_empresas E ON E.EMP_COD=V.EMP_COD INNER JOIN tb_itens_vendas IV ON IV.VEN_COD=V.VEN_COD INNER JOIN tb_produtos P ON P.PRO_COD=IV.PRO_COD WHERE V.EMP_COD={$this->codEmpresa} AND V.VEN_DATA='{$this->data}' ORDER BY V.VEN_COD DESC LIMIT {$this->qtd}";
         $campos = "*";
         $resultado = $this->Model->exibir($parametros, $campos, $ver, $id = false);
         if ($resultado) {
