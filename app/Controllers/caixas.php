@@ -60,12 +60,36 @@ class caixas extends View
         $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
         $this->render('admin/financeiro/caixas/movimentacoes', $this->dados);
     }
-    public function abertutas_fechamentos()
+    public function aberturas_fechamentos()
     {
-        $this->dados['title'] .= ' ABERTUTAS E FECHAMENTOS DO CAIXA DA EMPRESA/NEGÓCIO';   
-        $this->link[3] = ['link'=> 'caixas/cadastro','nome' => 'ABERTUTAS E FECHAMENTOS DE CAIXAS'];
+        $this->dados['title'] .= ' ABERTUTAS E FECHAMENTOS';   
+        $dados = filter_input_array(INPUT_GET, FILTER_SANITIZE_URL);
+        $dados = explode("/",$dados['url']);
+        $ok = false;
+        if (isset($dados[1]) && $dados[1] == 'aberturas_fechamentos' && isset($dados[2]) && isset($dados[3])) {
+
+            $this->link[3] = ['link'=> 'caixas/aberturas_fechamentos/'.$_SESSION['EMP_COD'].'/'.$dados[3],'nome' => 'ABERTUTAS E FECHAMENTOS'];
+            $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
+           
+            if($this->dados['empresa']['USU_COD'] == $_SESSION['USU_COD'] && $this->dados['empresa']['EMP_COD'] == $dados[2]){
+             
+                $this->dados['caixa'] = $this->Caixas->setCodEmpresa($dados[2])->setCodigo($dados[3])->listar(0);
+                if ($this->dados['caixa'] != 0) {
+                    $ok = true;
+                }
+            }else{
+                Sessao::alert('ERRO',' ERRO: CAT22 - Acesso inválido(s)!','alert alert-danger');
+            }
+        }else{
+            Sessao::alert('ERRO',' ERRO: CAT11 - Acesso inválido(s)!','alert alert-danger');
+        }    
         $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
-        $this->render('admin/financeiro/caixas/abertutas_fechamentos', $this->dados);
+        if($ok){
+            $this->render('admin/financeiro/caixas/aberturas_fechamentos', $this->dados);
+        }else{
+            $this->dados['caixas'] = $this->Caixas->setCodEmpresa($_SESSION['EMP_COD'])->listarTodos(0);
+            $this->render('admin/financeiro/caixas/listar', $this->dados);
+        }
     }
     public function cadastrar()
     {
@@ -149,6 +173,7 @@ class caixas extends View
         }else{
             Sessao::alert('ERRO',' ERRO: CAT11 - Acesso inválido(s)!','alert alert-danger');
         }      
+        $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
         if($ok){
             $this->render('admin/financeiro/caixas/alterar', $this->dados);
         }else{

@@ -4,6 +4,21 @@ use Libraries\Sessao;
 include_once 'app/Views/admin/inc/cabecalho.phtml'; 
 $qtd = (is_array($setores) ? count($setores) : 0);
 $qtdCL = (is_array($classificacoes) ? count($classificacoes) : 0);
+$ca = array(
+    0 => 'A DEFINIR',
+    1 => 'CATEGORIAS',
+    2 => 'COLABORADORES',
+    3 => 'CLIENTES',
+    4 => 'ESTOQUES',
+    5 => 'FORNECEDORES',
+    6 => 'LANÇAMENTOS',
+    7 => 'OUTROS',
+    8 => 'PRODUTOS',
+    9 => 'SERVIÇOS',
+    10 =>'TAREFAS'
+);
+
+$qtdCA = (is_array($ca) ? count($ca) : 0);
 ?>
 <body class="">
     <div class="d-flex" id="wrapper">
@@ -50,16 +65,12 @@ $qtdCL = (is_array($classificacoes) ? count($classificacoes) : 0);
                                 <div class="col-3 mb-2 text-center">
                                     <label class="form-label">TIPO</label>
                                     <div class="form-floating mb-3">
-                                        <select class="form-select" name="CAT_TIPO">                                        
-                                            <option value="0" <?= (isset($_POST['CAT_TIPO']) &&  $_POST['CAT_TIPO']  == 0)? 'selected' : ''; ?>>----</option>   
-                                            <option value="1" <?= (isset($_POST['CAT_TIPO']) &&  $_POST['CAT_TIPO']  == 1)? 'selected' : ''; ?>>CLIENTES</option> 
-                                            <option value="2" <?= (isset($_POST['CAT_TIPO']) &&  $_POST['CAT_TIPO']  == 2)? 'selected' : ''; ?>>ESTOQUES</option> 
-                                            <option value="3" <?= (isset($_POST['CAT_TIPO']) &&  $_POST['CAT_TIPO']  == 3)? 'selected' : ''; ?>>PRODUTOS</option> 
-                                            <option value="4" <?= (isset($_POST['CAT_TIPO']) &&  $_POST['CAT_TIPO']  == 4)? 'selected' : ''; ?>>SERVIÇOS</option> 
-                                            <option value="5" <?= (isset($_POST['CAT_TIPO']) &&  $_POST['CAT_TIPO']  == 5)? 'selected' : ''; ?>>COLABORADORES</option> 
-                                            <option value="6" <?= (isset($_POST['CAT_TIPO']) &&  $_POST['CAT_TIPO']  == 6)? 'selected' : ''; ?>>OUTROS</option> 
+                                        <select class="form-select" name="CAT_TIPO">          
+                                        <?php for ($i=0; $i < $qtdCA; $i++) { ?> 
+                                            <option value="<?= $i ?>" <?= (isset($_POST['CAT_TIPO']) &&  $_POST['CAT_TIPO']  == $i)? 'selected' : '' ?>><?= $ca[$i] ?></option>
+                                        <?php } ?>                              
                                         </select>
-                                        <label class="form-floating ">TIPO DO SETOR</label>
+                                        <label class="form-floating ">TIPO DA CATEGORIA</label>
                                     </div>
                                 </div>
                                 <div class="col-3 text-center mb-3">

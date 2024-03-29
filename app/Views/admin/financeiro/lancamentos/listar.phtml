@@ -4,7 +4,8 @@ use Libraries\Sessao;
 include_once 'app/Views/admin/inc/cabecalho.phtml'; 
 $qtd = (is_array($lancamentos) ? count($lancamentos) : 0);
 $qtdL = (is_array($lan_todos) ? count($lan_todos) : 0);
-
+$qtdCA = (is_array($categorias) ? count($categorias) : 0);
+$qtdCL = (is_array($classificacoes) ? count($classificacoes) : 0);
 $qtdC = (is_array($contas) ? count($contas) : 0);
 //$qtdR = (is_array($contas_receber) ? count($contas_receber) : 0);
 //dump($qtdL);

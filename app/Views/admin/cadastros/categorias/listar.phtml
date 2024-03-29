@@ -5,6 +5,21 @@ include_once 'app/Views/admin/inc/cabecalho.phtml';
 $qtd = (is_array($categorias) ? count($categorias) : 0);
 $qtdS = (is_array($setores) ? count($setores) : 0);
 $qtdCL = (is_array($classificacoes) ? count($classificacoes) : 0);
+$ca = array(
+    0 => 'A DEFINIR',
+    1 => 'CATEGORIAS',
+    2 => 'COLABORADORES',
+    3 => 'CLIENTES',
+    4 => 'ESTOQUES',
+    5 => 'FORNECEDORES',
+    6 => 'LANÇAMENTOS',
+    7 => 'OUTROS',
+    8 => 'PRODUTOS',
+    9 => 'SERVIÇOS',
+    10 =>'TAREFAS'
+);
+
+$qtdCA = (is_array($ca) ? count($ca) : 0);
 ?>
 <body class="">
     <div class="d-flex" id="wrapper">
@@ -47,6 +62,7 @@ $qtdCL = (is_array($classificacoes) ? count($classificacoes) : 0);
                             <thead class="text-center text-uppercase">
                                 <th class="text-dark">#</th>
                                 <th class="text-dark">Descrição</th>
+                                <th class="text-dark">Tipo</th>
                                 <th class="text-dark">Setor</th>
                                 <th class="text-dark">CLassificação</th>
                                 <th class="text-dark">Nível</th>
@@ -60,6 +76,11 @@ $qtdCL = (is_array($classificacoes) ? count($classificacoes) : 0);
                                     <tr class="<?= ($categorias[$i]['CAT_STATUS'] == 0 && $_SESSION['USU_NIVEL'] >= 8)? 'bg-secondary' : ''; ?>">
                                         <td class="text-center align-middle"><?= $b; ?></td>
                                         <td class="text-center align-middle"><?= $categorias[$i]['CAT_DESCRICAO']; ?></td>
+                                        <td class="text-center align-middle">
+                                        <?php for ($m=0; $m < $qtdCA; $m++) { ?>
+                                            <?= (isset($categorias[$i]['CAT_TIPO']) &&  $categorias[$i]['CAT_TIPO']  == $m)? $ca[$m]: '' ?>
+                                        <?php } ?>
+                                        </td>
                                         <td class="text-center align-middle">
                                         <?php 
                                             if($categorias[$i]['SET_COD'] != 0) {

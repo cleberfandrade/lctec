@@ -57,7 +57,7 @@ $qtd = (is_array($caixas) ? count($caixas) : 0);
                                     for ($i= 0; $i < $qtd; $i++) { ?>
                                     <tr class="<?= ($caixas[$i]['CXA_STATUS'] == 0 && $_SESSION['USU_NIVEL'] >= 8)? 'bg-secondary' : ''; ?>">
                                         <td class="text-center align-middle"><?= $b; ?></td>
-                                        <td class="text-center align-middle"><button type="button" class="btn btn-success btn-sm d-print-none" data-bs-toggle='modal'  data-bs-target="#ab_fc" title="Abrir ou Fechar caixa" data-codigo="<?= $caixas[$i]['CXA_COD']; ?>" title="Deseja ativar?" ><i class="fa fa-circle-check"></i></button></td>
+                                        <td class="text-center align-middle"><a type="button" href="<?= DIRPAGE ?>caixas/aberturas_fechamentos/<?= $caixas[$i]['EMP_COD'].'/'.$caixas[$i]['CXA_COD']?>" class="btn btn-success btn-sm d-print-none" title="Abrir ou Fechar caixa"  title="Deseja ativar?" ><i class="fa fa-circle-check"></i></a></td>
                                         <td class="text-center align-middle"><?= $caixas[$i]['CXA_DESCRICAO']; ?></td>
                                         <td class="text-center align-middle"><?= $caixas[$i]['CTA_DESCRICAO']; ?></td>
                                         <td class="text-center align-middle"><?= $caixas[$i]['CXA_SALDO']; ?></td>
