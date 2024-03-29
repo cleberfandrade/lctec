@@ -1,8 +1,15 @@
-<?php 
+<?php
+
+use App\Models\AberturaFechamentoCaixa;
 use Libraries\Sessao;
 
+$Abfc = new AberturaFechamentoCaixa;
+
 include_once 'app/Views/admin/inc/cabecalho.phtml'; 
+
 $qtd = (is_array($caixa) ? count($caixa) : 0);
+
+//$af = $Abfc->setCodEmpresa($_SESSION['EMP_COD'])-
 ?>
 <body class="">
     <div class="d-flex" id="wrapper">
@@ -61,8 +68,8 @@ $qtd = (is_array($caixa) ? count($caixa) : 0);
                            
                         </div>
                         <div class="card-footer">
-                        <div class="col-12 mx-auto text-center">
-                                <a href="<?= DIRPAGE.'caixa/detalhar/'.$caixa['EMP_COD'].'/'.$caixa['CXA_COD']; ?>" title="Abrir Caixa" class="col-12 mx-auto btn btn-success text-decoration-none">ABRIR CAIXA</a>
+                            <div class="col-12 mx-auto text-center">
+                                <button type="button" data-bs-toggle='modal' data-bs-target="#af_caixa" data-empresa="<?= $caixa['EMP_COD']?>" data-caixa="<?= $caixa['CXA_COD'] ?>" title="Abrir Caixa" class="col-12 mx-auto btn btn-success text-decoration-none">ABRIR CAIXA</button>
                             </div>  
                         </div>
                     </div>

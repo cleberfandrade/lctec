@@ -64,13 +64,13 @@ class caixas extends View
     }
     public function aberturas_fechamentos()
     {
-        $this->dados['title'] .= ' ABERTUTAS E FECHAMENTOS';   
+        $this->dados['title'] .= ' ABERTURAS E FECHAMENTOS';   
         $dados = filter_input_array(INPUT_GET, FILTER_SANITIZE_URL);
         $dados = explode("/",$dados['url']);
         $ok = false;
         if (isset($dados[1]) && $dados[1] == 'aberturas_fechamentos' && isset($dados[2]) && isset($dados[3])) {
 
-            $this->link[3] = ['link'=> 'caixas/aberturas_fechamentos/'.$_SESSION['EMP_COD'].'/'.$dados[3],'nome' => 'ABERTUTAS E FECHAMENTOS'];
+            $this->link[3] = ['link'=> 'caixas/aberturas_fechamentos/'.$_SESSION['EMP_COD'].'/'.$dados[3],'nome' => 'ABERTURAS E FECHAMENTOS'];
             $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
            
             if($this->dados['empresa']['USU_COD'] == $_SESSION['USU_COD'] && $this->dados['empresa']['EMP_COD'] == $dados[2]){
