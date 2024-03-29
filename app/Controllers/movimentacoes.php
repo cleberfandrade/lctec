@@ -350,6 +350,7 @@ class movimentacoes extends View
                             $ultima_venda = 0;
                             $ultima_venda = $this->Vendas->setCodEmpresa($dados['EMP_COD'])->setData(date('Y-m-d'))->setQtd(1)->ultimaVenda(0);
                             $qtdVenda = (is_array($ultima_venda) ? count($ultima_venda) : 0);
+                           
                             if ($qtdVenda !=0) {
                                $ordem = $ultima_venda['VEN_ORDEM']+1;
                             }else {
@@ -409,7 +410,7 @@ class movimentacoes extends View
                                             if($this->Produtos->alterar($db,0)){
                                                 $ok = true;
                                             }
-    
+                                            $desconto = $dados['VEN_VALOR_DESCONTO']/$qtd;
                                             $dados_itens = array(
                                                 'EMP_COD' => $_SESSION['EMP_COD'],
                                                 'USU_COD' => $_SESSION['USU_COD'],
@@ -419,8 +420,8 @@ class movimentacoes extends View
                                                 'ITS_DT_CADASTRO'=> date('Y-m-d H:i:s'),
                                                 'ITS_DT_ATUALIZACAO'=> date('0000-00-00 00:00:00'), 
                                                 'ITS_QUANTIDADE' => $dados['MOV_QUANTIDADE'][$i],
-                                                'ITS_VALOR_DESCONTO' => '0.00',
-                                                'ITS_VALOR_TOTAL' => $dados['PRO_PRECO_VENDA'][$i],
+                                                'ITS_VALOR_DESCONTO' => $desconto,
+                                                'ITS_VALOR_TOTAL' => ($dados['PRO_PRECO_VENDA'][$i]-$desconto),
                                                 'ITS_STATUS'=> 1
                                             );
                                             //CADASTRAR ITENS
