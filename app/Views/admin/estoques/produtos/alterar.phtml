@@ -129,7 +129,7 @@ $qtd = (is_array($produto) ? count($produto) : 0);
                                         <label class="px-3" for="2">PREÇO CUSTO</label>  
                                         <div class="input-group">    
                                             <span class="input-group-text">R$</span>  
-                                            <input type="text" class="form-control form-control-lg" id="PRO_PRECO_UNITARIO" name="PRO_PRECO_UNITARIO" placeholder="" value="<?= isset($_POST['PRO_PRECO_UNITARIO']) ? $_POST['PRO_PRECO_UNITARIO'] : (isset($produto['PRO_PRECO_UNITARIO'])? $produto['PRO_PRECO_UNITARIO'] : '') ; ?>">
+                                            <input type="text" class="form-control form-control-lg" id="PRO_PRECO_CUSTO" name="PRO_PRECO_CUSTO" placeholder="" value="<?= isset($_POST['PRO_PRECO_CUSTO']) ? $_POST['PRO_PRECO_CUSTO'] : (isset($produto['PRO_PRECO_CUSTO'])? $produto['PRO_PRECO_CUSTO'] : '') ; ?>">
                                         </div>
                                     </div> 
                                     <div class="col-10 mb-3">
@@ -244,9 +244,9 @@ $qtd = (is_array($produto) ? count($produto) : 0);
                 $("#PRO_MARGEM").on("change", function(){
                     var PRO_MARGEM =  $(this).val();
                     PRO_MARGEM = parseFloat(PRO_MARGEM/100);
-                    var PRO_PRECO_UNITARIO = $("#PRO_PRECO_UNITARIO").val();
-                    PRO_PRECO_UNITARIO = parseFloat(PRO_PRECO_UNITARIO);
-                    var novo = parseFloat(PRO_PRECO_UNITARIO + (PRO_PRECO_UNITARIO * PRO_MARGEM)).toFixed(2);
+                    var PRO_PRECO_CUSTO = $("#PRO_PRECO_CUSTO").val();
+                    PRO_PRECO_CUSTO = parseFloat(PRO_PRECO_CUSTO);
+                    var novo = parseFloat(PRO_PRECO_CUSTO + (PRO_PRECO_CUSTO * PRO_MARGEM)).toFixed(2);
                     $("#PRO_PRECO_VENDA").val('');
                     $("#PRO_PRECO_VENDA").val(novo);
                     $('#PRO_PRECO_VENDA').maskMoney({
@@ -257,14 +257,14 @@ $qtd = (is_array($produto) ? count($produto) : 0);
                     });
                 });
 
-                $("#PRO_PRECO_UNITARIO").on("blur", function(){
+                $("#PRO_PRECO_CUSTO").on("blur", function(){
                     var PRO_MARGEM =  $(this).val();
                     
                     PRO_MARGEM = parseFloat(PRO_MARGEM/100);
-                    var PRO_PRECO_UNITARIO = $("#PRO_PRECO_UNITARIO").val();
-                    PRO_PRECO_UNITARIO = parseFloat(PRO_PRECO_UNITARIO);
-                    console.log(PRO_PRECO_UNITARIO)
-                    var novo = parseFloat(PRO_PRECO_UNITARIO + (PRO_PRECO_UNITARIO * PRO_MARGEM)).toFixed(2);
+                    var PRO_PRECO_CUSTO = $("#PRO_PRECO_CUSTO").val();
+                    PRO_PRECO_CUSTO = parseFloat(PRO_PRECO_CUSTO);
+                    //console.log(PRO_PRECO_UNITARIO)
+                    var novo = parseFloat(PRO_PRECO_CUSTO + (PRO_PRECO_CUSTO * PRO_MARGEM)).toFixed(2);
                     $("#PRO_PRECO_VENDA").val('');
                     $("#PRO_PRECO_VENDA").val(novo);
                     $('#PRO_PRECO_VENDA').maskMoney({
@@ -273,7 +273,7 @@ $qtd = (is_array($produto) ? count($produto) : 0);
                         thousands:'', decimal:'.',
                         affixesStay: true
                     });
-                    $('#PRO_PRECO_UNITARIO').maskMoney({
+                    $('#PRO_PRECO_CUSTO').maskMoney({
                         prefix:'',
                         allowNegative: true,
                         thousands:'', decimal:'.',
