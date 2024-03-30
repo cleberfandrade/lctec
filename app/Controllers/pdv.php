@@ -34,6 +34,7 @@ class pdv extends View
 {
     private $dados = [];
     public $link,$Enderecos,$Usuarios,$Empresas,$Vendedores,$Empresa,$UsuariosEmpresa,$Check,$Clientes,$Produtos,$Colaboradores,$Caixas,$Contas,$FormasPagamentos,$Estoques,$Movimentacoes,$ItensVendas,$Vendas;
+    
     public function __construct()
     {
         Sessao::naoLogado();
@@ -61,8 +62,9 @@ class pdv extends View
         $this->dados['movimentacoes'] = $this->Movimentacoes->setCodEmpresa($_SESSION['EMP_COD'])->listarTodas(0); 
         $this->dados['caixas'] = $this->Caixas->setCodEmpresa($_SESSION['EMP_COD'])->listarTodosAtivos(0);
       
-        $this->link[0] = ['link'=> 'admin/financeiro','nome' => 'FINANCEIRO'];
+        $this->link[0] = ['link'=> 'admin','nome' => 'PAINEL ADMINISTRATIVO'];
         $this->link[1] = ['link'=> 'pdv','nome' => 'PDV'];
+
     }
     public function index()
     {
