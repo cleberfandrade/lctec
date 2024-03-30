@@ -41,6 +41,8 @@ class lctec extends View
         $this->Suporte = new Suporte;
         
         $this->dados['suporte'] = $this->Suporte->setCodUsuario(0)->listarTodasMensagensSuporte(0);
+
+        $this->dados['links'] = 0;
         
         $this->link[0] = ['link'=> 'lctec','nome' => 'PAINEL GERENCIAL | LC/TEC'];
         //$this->link[1] = ['link'=> 'lctec','nome' => 'MÓDULO LC/TEC >>'];
