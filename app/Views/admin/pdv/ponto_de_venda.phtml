@@ -1,0 +1,105 @@
+<?php 
+use Libraries\Sessao;
+
+include_once 'app/Views/admin/inc/cabecalho.phtml'; 
+?>
+<body>
+    <div class="bg-light ">
+        <section class="container text-center">
+            <?= Sessao::alert('OK'); ?>
+            <?= Sessao::alert('ERRO'); ?>
+         </section>
+        <section class="mx-0 bg-dark">
+            <div class="row mx-1 text-white">
+                <h3 class="text-center">
+                    CAIXA <b class="text-danger">FECHADO</b>
+                </h3>
+                <div class="col-6 row">
+                    <div class="col-12 border rounded-3 mb-3">
+                        <p>N° VENDA: <?= rand(1,10) ?></p>
+                        <p>DATA: <?= date('d/m/Y h:i:s') ?></p>
+                        <p>OPERADOR: <?= isset($_SESSION['USU_NOME'])?$_SESSION['USU_NOME'] : 'FACA ACESSO!!' ?></p>
+                        
+                    </div>
+                    <div class="row col-12">
+                        <div class="col-8">
+                        <p>
+                            <label for="">CÓDIGO/PRODUTO:</label>
+                            <input type="text" class="form-control form-control-lg" name="PRO_COD" id="PRO_COD"/>
+                        </p>
+                        </div>
+                        <div class="col-4">
+                        <p>
+                            <label for="">PREÇO UNITÁRIO:</label> 
+                            <input type="text" class="form-control form-control-lg" name="PRO_PRECO" placeholder="" id="PRO_COD"/>
+                        </p>
+                        </div>
+                    
+                        <div class="col-6">
+                            <p>  
+                                <label for="">QUANTIDADE:</label> 
+                                <input type="number" class="form-control form-control-lg" name="PRO_COD" id="PRO_COD" value="1"/>
+                            </p>
+                        </div>
+                        <div class="col-6">
+                            <p>  
+                                <label for="">DESC. UNITÁRIO:</label>
+                                <input type="text" class="form-control form-control-lg" name="PRO_COD" id="PRO_COD"  placeholder="DESC. %"  value=""></input>
+                            </p>
+                        </div>
+                        <div class="col-6">
+                            <div class="card-body">
+                                <h5 class="card-title">SUBTOTAL</h5>
+                                <p class="card-text">R$ 0,00</p>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                        <button class=" btn btn-primary btn-lg btn-block">+ ADD. CARRINHO</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6 border rounded-3 mb-3">
+                    <p>ITÉNS:</p>
+                    <p><textarea name="" class="form-control " id="" rows="12"></textarea></p>
+                </div>
+            
+                <div class="row">
+                    <div class="col-6">
+                        <input type="text" class="form-control" name="PRO_COD" id="PRO_COD" value="CONSUMIDOR"></input>
+                    </div>
+                    <div class="col-6">
+                        <input type="text" class="form-control" name="PRO_COD" id="PRO_COD"  placeholder="DESC. %"  value=""></input>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-4">
+                            <div class="card text-center mb-3">
+                                <div class="card-body">
+                                    <h5 class="card-title">DESCONTO</h5>
+                                    <p class="card-text">R$ 0,00</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="card text-center mb-3">
+                                <div class="card-body">
+                                    <h5 class="card-title">TOTAL</h5>
+                                    <p class="card-text">R$ 0,00</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="card text-center bg-success">
+                                <div class="card-body">
+                                   <button class=" btn btn-success btn-lg btn-block">FINALIZAR</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <?php include_once 'app/Views/admin/inc/rodape_pdv.phtml';?>
+    </div>
+</body>
+</html>
+           

@@ -75,6 +75,17 @@ class Caixas extends Model
             return false;
         }
     }
+    public function listarTodosAtivos($ver = 0)
+    {
+        $parametros = "C INNER JOIN tb_empresas E ON E.EMP_COD=C.EMP_COD INNER JOIN tb_contas CT ON CT.CTA_COD=C.CTA_COD WHERE C.EMP_COD={$this->codEmpresa} AND C.CXA_STATUS=1 ORDER BY C.CXA_DESCRICAO";
+        $campos = "*";
+        $resultado = $this->Model->exibir($parametros, $campos, $ver, $id = false);
+        if ($resultado) {
+            return $resultado;
+        } else {
+            return false;
+        }
+    }
     public function cadastrar(array $dados, $ver = 0)
     {
         $ok = $this->Model->cadastrar($dados, $ver);

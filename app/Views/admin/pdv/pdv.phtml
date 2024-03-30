@@ -2,104 +2,73 @@
 use Libraries\Sessao;
 
 include_once 'app/Views/admin/inc/cabecalho.phtml'; 
+$qtd = (is_array($contas) ? count($contas) : 0);
 ?>
-<body>
-    <div class="bg-light ">
-        <section class="container text-center">
-            <?= Sessao::alert('OK'); ?>
-            <?= Sessao::alert('ERRO'); ?>
-         </section>
-        <section class="mx-0 bg-dark">
-            <div class="row mx-1 text-white">
-                <h3 class="text-center">
-                    CAIXA <b class="text-danger">FECHADO</b>
-                </h3>
-                <div class="col-6 row">
-                    <div class="col-12 border rounded-3 mb-3">
-                        <p>N° VENDA: <?= rand(1,10) ?></p>
-                        <p>DATA: <?= date('d/m/Y h:i:s') ?></p>
-                        <p>OPERADOR: <?= isset($_SESSION['USU_NOME'])?$_SESSION['USU_NOME'] : 'FACA ACESSO!!' ?></p>
-                        
-                    </div>
-                    <div class="row col-12">
-                        <div class="col-8">
-                        <p>
-                            <label for="">CÓDIGO/PRODUTO:</label>
-                            <input type="text" class="form-control form-control-lg" name="PRO_COD" id="PRO_COD"/>
-                        </p>
-                        </div>
-                        <div class="col-4">
-                        <p>
-                            <label for="">PREÇO UNITÁRIO:</label> 
-                            <input type="text" class="form-control form-control-lg" name="PRO_PRECO" placeholder="" id="PRO_COD"/>
-                        </p>
-                        </div>
-                    
-                        <div class="col-6">
-                            <p>  
-                                <label for="">QUANTIDADE:</label> 
-                                <input type="number" class="form-control form-control-lg" name="PRO_COD" id="PRO_COD" value="1"/>
-                            </p>
-                        </div>
-                        <div class="col-6">
-                            <p>  
-                                <label for="">DESC. UNITÁRIO:</label>
-                                <input type="text" class="form-control form-control-lg" name="PRO_COD" id="PRO_COD"  placeholder="DESC. %"  value=""></input>
-                            </p>
-                        </div>
-                        <div class="col-6">
-                            <div class="card-body">
-                                <h5 class="card-title">SUBTOTAL</h5>
-                                <p class="card-text">R$ 0,00</p>
+<body class="">
+    <div class="d-flex" id="wrapper">
+        <?php include_once 'app/Views/admin/inc/menu_lateral.phtml'; ?>
+        <div id="page-content-wrapper">
+        <!-- Top navigation-->
+        <?php include_once 'app/Views/admin/inc/menu_topo.phtml'; ?>
+        <div class="container-fluid bg-light p-0">
+            <header class="py-3">
+                <section class="container px-3">
+                    <div class="row gx-3 align-items-center justify-content-center">
+                        <div class="col-lg-9 col-xl-9 col-xxl-9">
+                            <div class="my-1 px-4 mx-auto">
+                                <a class="text-decoration-none" href="<?= DIRPAGE; ?>financeiro">
+                                <h5 class="fs-2 fw-bolder text-uppercase text-dark mb-2">
+                                    <i class="bi bi-coin"></i> Gerenciar  <span class="text-success">Finanças</span></h5></a>
                             </div>
                         </div>
-                        <div class="col-6">
-                        <button class=" btn btn-primary btn-lg btn-block">+ ADD. CARRINHO</button>
-                        </div>
+                        <?php include_once 'app/Views/admin/inc/saudacao.phtml'; ?>
                     </div>
-                </div>
-                <div class="col-6 border rounded-3 mb-3">
-                    <p>ITÉNS:</p>
-                    <p><textarea name="" class="form-control " id="" rows="12"></textarea></p>
-                </div>
-            
-                <div class="row">
-                    <div class="col-6">
-                        <input type="text" class="form-control" name="PRO_COD" id="PRO_COD" value="CONSUMIDOR"></input>
-                    </div>
-                    <div class="col-6">
-                        <input type="text" class="form-control" name="PRO_COD" id="PRO_COD"  placeholder="DESC. %"  value=""></input>
-                    </div>
-                    <div class="row mt-2">
-                        <div class="col-4">
-                            <div class="card text-center mb-3">
+                </section>
+                <section class="container col-12 mx-auto px-5">
+                    <?= $breadcrumb ?>
+                </section>
+            </header>
+            <?php include_once 'app/Views/admin/inc/alertas.phtml'; ?>  
+            <section class="bg-light  text-dark row  py-2">
+                <div class="container mx-auto col-12 row">
+                        <div class="row col-12 text-center mb-2 mx-auto">
+                            <div class="col-4 text-bg-success text-center">
                                 <div class="card-body">
-                                    <h5 class="card-title">DESCONTO</h5>
-                                    <p class="card-text">R$ 0,00</p>
+                                    <h5 class="card-title mt-2">SANGRIAS</h5>
+                                    <p class="card-text">Crie/Altere os dados da sua conta principal</p>
+                                    <a href="<?= DIRPAGE ?>contas" class="btn btn-dark">ACESSAR</a>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-4">
-                            <div class="card text-center mb-3">
+                            <div class="col-4 text-center">
                                 <div class="card-body">
-                                    <h5 class="card-title">TOTAL</h5>
-                                    <p class="card-text">R$ 0,00</p>
+                                    <h5 class="card-title">PDV</h5>
+                                    <p class="card-text">Cadastre/Altere os lançamentos financeiros da sua Empresa/negócio</p>
+                                    <a href="<?= DIRPAGE ?>pdv/ponto_de_venda" class="btn btn-dark">ACESSAR</a>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-4">
-                            <div class="card text-center bg-success">
+                            <div class="col-4 text-bg-success text-center">
                                 <div class="card-body">
-                                   <button class=" btn btn-success btn-lg btn-block">FINALIZAR</button>
+                                    <h5 class="card-title">TRANSAÇÕES</h5>
+                                    <p class="card-text">Acesse todas as movimentações da suas contas do sistema</p>
+                                    <a href="<?= DIRPAGE ?>movimentacoes" class="btn btn-dark">ACESSAR</a>
                                 </div>
                             </div>
+                            <div class="col-4 text-center">
+                                <div class="card-body">
+                                    <h5 class="card-title">CAIXAS</h5>
+                                    <p class="card-text">Cadastre os seus caixas no sistema</p>
+                                    <a href="<?= DIRPAGE ?>caixas" class="btn btn-dark">ACESSAR</a>
+                                </div>
+                            </div>
+
                         </div>
-                    </div>
+                        <hr>
+                        <div class="col-4 row"></div>
+                    <?php } ?>
                 </div>
-            </div>
-        </section>
-        <?php include_once 'app/Views/admin/inc/rodape_pdv.phtml';?>
+            </section>
+            <?php include_once 'app/Views/admin/inc/rodape.phtml';?>
+        </div>
     </div>
 </body>
 </html>
-           

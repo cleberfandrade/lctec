@@ -12,7 +12,7 @@ use Libraries\Url;
 class pdv extends View
 {
     private $dados = [];
-    public $link,$Enderecos,$Usuarios,$Vendedores,$Empresa,$UsuariosEmpresa,$Check,$Clientes,$Produtos,$Colaboradores;
+    public $link,$Enderecos,$Usuarios,$Empresas,$Vendedores,$Empresa,$UsuariosEmpresa,$Check,$Clientes,$Produtos,$Colaboradores,$Caixas,$Contas,$FormasPagamentos,$Estoques,$Movimentacoes,$ItensVendas,$Vendas;
     public function __construct()
     {
         Sessao::naoLogado();
@@ -20,6 +20,25 @@ class pdv extends View
         $this->Check = new Check;
         $this->Clientes= new Clientes;
         $this->Produtos = new Produtos;
+        $this->Usuarios = new Usuarios;
+        $this->Empresa = new Empresas;
+        $this->UsuariosEmpresa = new UsuariosEmpresa;
+        $this->Enderecos = new Enderecos;
+        $this->Estoques = new Estoques;
+        $this->Contas = new Contas;
+        $this->FormasPagamentos = new FormasPagamentos;
+        $this->Movimentacoes = new Movimentacoes;
+        $this->Vendas = new Vendas;
+        $this->Caixas = new Caixas;
+        $this->Colaboradores = new Colaboradores;
+        $this->ItensVendas = new ItensVendas;
+
+        $this->dados['empresa'] = $this->UsuariosEmpresa->setCodEmpresa($_SESSION['EMP_COD'])->setCodUsuario($_SESSION['USU_COD'])->listar(0);
+        $this->dados['usuario'] = $this->Usuarios->setCodUsuario($_SESSION['USU_COD'])->listar(0);
+        $this->dados['clientes'] = $this->Clientes->setCodEmpresa($_SESSION['EMP_COD'])->listarTodosAtivos(0);
+        $this->dados['formas_pagamentos'] = $this->FormasPagamentos->setCodEmpresa($_SESSION['EMP_COD'])->listarTodasAtivas(0);
+        $this->dados['movimentacoes'] = $this->Movimentacoes->setCodEmpresa($_SESSION['EMP_COD'])->listarTodas(0); 
+        $this->dados['caixas'] = $this->Caixas->setCodEmpresa($_SESSION['EMP_COD'])->listarTodosAtivos(0);
       
         $this->link[0] = ['link'=> 'admin/financeiro','nome' => 'FINANCEIRO'];
         $this->link[1] = ['link'=> 'pdv','nome' => 'PDV'];
