@@ -63,6 +63,12 @@ class lctec extends View
         Sessao::logadoSistema();
         $this->render('admin/lctec/painel', $this->dados);
     }
+    public function cadastros()
+    {
+        $this->dados['title'] .= ' CADASTROS LC/TEC';   
+        Sessao::logadoSistema();
+        $this->render('admin/lctec/cadastros', $this->dados);
+    }
     public function empresas()
     {
         $this->dados['title'] .= ' EMPRESAS LC/TEC';   
@@ -74,6 +80,12 @@ class lctec extends View
         $this->dados['title'] .= ' SUPORTE LC/TEC';   
         Sessao::logadoSistema();
         $this->render('admin/lctec/suporte/listar', $this->dados);
+    }
+    public function links()
+    {
+        $this->dados['title'] .= ' CADASTRO DE LINKS LC/TEC';   
+        Sessao::logadoSistema();
+        $this->render('admin/lctec/cadastros/links', $this->dados);
     }
     public function modulos()
     {

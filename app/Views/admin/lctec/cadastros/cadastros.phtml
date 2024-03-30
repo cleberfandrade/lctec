@@ -1,0 +1,52 @@
+<?php 
+use Libraries\Sessao;
+
+include_once 'app/Views/admin/inc/cabecalho.phtml'; 
+?>
+<body class="">
+    <div class="d-flex" id="wrapper">
+        <?php include_once 'app/Views/admin/inc/menu_lateral.phtml'; ?>
+        <div id="page-content-wrapper">
+        <!-- Top navigation-->
+        <?php include_once 'app/Views/admin/inc/menu_topo.phtml'; ?>
+        <div class="container-fluid bg-light p-0">
+            <header class="py-3 bg-1">
+                <section class="container px-3">
+                    <div class="row gx-5 align-items-center justify-content-center">
+                        <div class="col-lg-9 col-xl-9 col-xxl-9">
+                            <div class="my-1 px-4 mx-auto">
+                                <a class="text-decoration-none" href="<?= DIRPAGE; ?>lctec/cadastros">
+                                <h5 class="fs-2 fw-bolder text-uppercase text-dark"><i class="bi bi-plus-square"></i> Gerenciar <span class="text-success">Cadastros</span></h5></a>
+                            </div>
+                        </div>
+                        <?php include_once 'app/Views/admin/inc/saudacao.phtml'; ?>   
+                    </div>
+                </section>
+                <section class="container col-12 mx-auto px-5">
+                    <?= $breadcrumb ?>
+                </section>
+            </header>
+            <?php include_once 'app/Views/admin/inc/alertas.phtml'; ?>  
+            <section class="container bg-light mx-auto py-2 mb-5">
+                <div class="col-12 row">
+                    <div class="col-6 col-sm-4 text-bg-success text-center">
+                        <div class="card-body">
+                            <h5 class="card-title">CADASTROS DIVERSOS</h5>
+                            <p class="card-text"></p>
+                            <a href="<?= DIRPAGE ?>lctec" class="btn btn-dark">ACESSAR</a>
+                        </div>
+                    </div>
+                    <div class="col-6 col-sm-4 text-center">
+                        <div class="card-body">
+                            <h5 class="card-title">CADASTROS DE LINKS</h5>
+                            <p class="card-text">Cadastre/Altere os links de acesso do sistema</p>
+                            <a href="<?= DIRPAGE ?>lctec/links" class="btn btn-dark">ACESSAR</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+        <?php include_once 'app/Views/admin/inc/rodape.phtml';?>
+    </div>
+</body>
+</html>
