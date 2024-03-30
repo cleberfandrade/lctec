@@ -1,13 +1,32 @@
 <?php
 namespace App\Controllers;
 
-use App\Models\Colaboradores;
+use App\Models\Caixas;
+use App\Models\Categorias;
+use App\Models\Classificacoes;
 use App\Models\Clientes;
+use App\Models\Empresas;
+use App\Models\Enderecos;
+use App\Models\Estoques as ModelsEstoques;
+use App\Models\Financas;
+use App\Models\FormasPagamentos;
+use App\Models\Fornecedores;
+use App\Models\ItensVendas;
+use App\Models\ModulosEmpresa;
+use App\Models\Movimentacoes as MovimentacoesModels;
 use App\Models\Produtos;
+use App\Models\Setores;
+use App\Models\Transacoes;
+use App\Models\Usuarios;
+use App\Models\UsuariosEmpresa;
+use App\Models\Vendas;
+use Libraries\Util;
+
 use Core\View;
+use Core\Controller;
+
 use Libraries\Check;
 use Libraries\Sessao;
-use Libraries\Url;
 
 class pdv extends View
 {
