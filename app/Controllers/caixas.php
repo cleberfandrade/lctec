@@ -23,7 +23,7 @@ class caixas extends View
     {
 
         Sessao::naoLogado();
-        $this->dados['title'] = 'MÓDULO | FINANCEIRO >>'; 
+        $this->dados['title'] = 'MÓDULO | PDV >>'; 
         $this->Contas = new Contas;  
         $this->Check = new Check;
         $this->Usuarios = new Usuarios;
@@ -38,7 +38,7 @@ class caixas extends View
         $this->dados['caixas'] = $this->Caixas->setCodEmpresa($_SESSION['EMP_COD'])->listarTodos(0);
 
         $this->link[0] = ['link'=> 'admin','nome' => 'PAINEL ADMINISTRATIVO'];
-        $this->link[1] = ['link'=> 'financeiro','nome' => 'MÓDULO DE FINANÇAS'];
+        $this->link[1] = ['link'=> 'pdv','nome' => 'MÓDULO PDV'];
         $this->link[2] = ['link'=> 'caixas','nome' => 'GERENCIAR SEUS CAIXAS'];
 
     }
@@ -46,21 +46,21 @@ class caixas extends View
     {
         $this->dados['title'] .= ' GERENCIAR CAIXAS';   
         $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
-        $this->render('admin/financeiro/caixas/listar', $this->dados);
+        $this->render('admin/pdv/caixas/listar', $this->dados);
     }
     public function cadastro()
     {
         $this->dados['title'] .= ' CADASTRAR CAIXA DA EMPRESA/NEGÓCIO';   
         $this->link[3] = ['link'=> 'caixas/cadastro','nome' => 'CADASTRO DE CAIXAS'];
         $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
-        $this->render('admin/financeiro/caixas/cadastrar', $this->dados);
+        $this->render('admin/pdv/caixas/cadastrar', $this->dados);
     }
     public function movimentacoes()
     {
         $this->dados['title'] .= ' MOVIMENTAÇÕES DO CAIXA DA EMPRESA/NEGÓCIO';   
         $this->link[3] = ['link'=> 'caixas/cadastro','nome' => 'MOVIMENTAÇÕES DE CAIXAS'];
         $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
-        $this->render('admin/financeiro/caixas/movimentacoes', $this->dados);
+        $this->render('admin/pdv/caixas/movimentacoes', $this->dados);
     }
     public function aberturas_fechamentos()
     {
@@ -87,10 +87,10 @@ class caixas extends View
         }    
         $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
         if($ok){
-            $this->render('admin/financeiro/caixas/aberturas_fechamentos', $this->dados);
+            $this->render('admin/pdv/caixas/aberturas_fechamentos', $this->dados);
         }else{
             $this->dados['caixas'] = $this->Caixas->setCodEmpresa($_SESSION['EMP_COD'])->listarTodos(0);
-            $this->render('admin/financeiro/caixas/listar', $this->dados);
+            $this->render('admin/pdv/caixas/listar', $this->dados);
         }
     }
     public function cadastrar()
@@ -136,9 +136,9 @@ class caixas extends View
         }
         if ($ok) {
             $this->dados['caixas'] = $this->Caixas->setCodEmpresa($_SESSION['EMP_COD'])->listarTodos(0);
-            $this->render('admin/financeiro/caixas/listar', $this->dados);
+            $this->render('admin/pdv/caixas/listar', $this->dados);
         }else {
-            $this->render('admin/financeiro/caixas/cadastrar', $this->dados);
+            $this->render('admin/pdv/caixas/cadastrar', $this->dados);
         }
     }
     public function movimentacao_caixa():void
@@ -177,10 +177,10 @@ class caixas extends View
         }      
         $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
         if($ok){
-            $this->render('admin/financeiro/caixas/alterar', $this->dados);
+            $this->render('admin/pdv/caixas/alterar', $this->dados);
         }else{
             $this->dados['caixas'] = $this->Caixas->setCodEmpresa($_SESSION['EMP_COD'])->listarTodos(0);
-            $this->render('admin/financeiro/caixas/listar', $this->dados);
+            $this->render('admin/pdv/caixas/listar', $this->dados);
         }
     }
     public function alterar()
@@ -225,10 +225,10 @@ class caixas extends View
         $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
         if ($ok) {
             $this->dados['caixas'] = $this->Caixas->setCodEmpresa($_SESSION['EMP_COD'])->listarTodos(0);
-            $this->render('admin/financeiro/caixas/listar', $this->dados);
+            $this->render('admin/pdv/caixas/listar', $this->dados);
         }else {
             $this->dados['caixa'] = $this->Caixas->setCodEmpresa($dados['EMP_COD'])->setCodigo($cod)->listar(0);
-            $this->render('admin/financeiro/caixas/alterar', $this->dados);
+            $this->render('admin/pdv/caixas/alterar', $this->dados);
         }
     }
     public function status()
