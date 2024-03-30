@@ -248,7 +248,7 @@ $qtdMotivos = (is_array($motivos) ? count($motivos) : 0);
                     $('#resposta2').addClass('alert alert-warning');
                 }
                 $('#resposta2').html(resposta['MENSAGEM']);
-                setTimeout( () => { window.location.href="<?= DIRPAGE ?>movimentacoes/"}, 1000);
+                setTimeout( () => { window.location.href="<?= DIRPAGE ?>movimentacoes/listar"}, 3000);
             });
 
         });
@@ -278,7 +278,7 @@ $qtdMotivos = (is_array($motivos) ? count($motivos) : 0);
             var MOV_STATUS = $('#MOV_STATUS').val();
             setTimeout(function () {
                     $('#status').modal('hide');
-            }, 200);
+            }, 100);
             $.post('<?= DIRPAGE; ?>movimentacoes/excluir', {
                 EXCLUIR_MOVIMENTACAO_PRODUTO: true,
                 EMP_COD:EMP_COD,
