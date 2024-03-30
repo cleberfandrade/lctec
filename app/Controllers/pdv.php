@@ -3,6 +3,7 @@ namespace App\Controllers;
 
 use App\Models\Caixas;
 use App\Models\Categorias;
+use App\Models\Contas;
 use App\Models\Classificacoes;
 use App\Models\Clientes;
 use App\Models\Empresas;
