@@ -67,7 +67,7 @@ class lctec extends View
     {
         $this->dados['title'] .= ' CADASTROS LC/TEC';   
         Sessao::logadoSistema();
-        $this->render('admin/lctec/cadastros', $this->dados);
+        $this->render('admin/lctec/cadastros/cadastros', $this->dados);
     }
     public function empresas()
     {
