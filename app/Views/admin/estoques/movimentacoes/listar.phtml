@@ -26,7 +26,7 @@ $qtdMotivos = (is_array($motivos) ? count($motivos) : 0);
 <body class="">
     <div class="d-flex" id="wrapper">
         <?php include_once 'app/Views/admin/inc/menu_lateral.phtml'; ?>
-        <div id="page-content-wrapper">
+        <div id="page-content-wrapper bg-light ">
         <!-- Top navigation-->
         <?php include_once 'app/Views/admin/inc/menu_topo.phtml'; ?>
         <div class="container-fluid bg-11 p-0">
@@ -47,9 +47,9 @@ $qtdMotivos = (is_array($motivos) ? count($motivos) : 0);
                 </section>
             </header>
             <?php include_once 'app/Views/admin/inc/alertas.phtml'; ?>  
-            <section class="container bg-light mx-auto py-2 mb-5">
+            <section class="container bg-light mx-auto py-2 mb-0">
                 <div class="col-12 row">
-                    <div class="col-6 text-center">
+                    <div class="col-6 text-dark text-center">
                         <div class="card-body">
                             <h5 class="card-title">ESTOQUE ATUAL</h5>
                             <p class="card-text">Verifique o estoque atual dos seus produtos</p>
@@ -63,20 +63,20 @@ $qtdMotivos = (is_array($motivos) ? count($motivos) : 0);
                             <a href="<?= DIRPAGE ?>movimentacoes" class="btn btn-dark">ACESSAR</a>
                         </div>
                     </div>
-                    <hr class="my-4 text-dark">
-                    <div class="col-12 mx-auto text-center m-1">
+                    <hr class="my-4 bg-light text-dark">
+                    <div class="col-12 mx-auto bg-light text-center m-1">
                         <a class="col-4 btn btn-sm text-uppercase btn-secondary" href="<?= DIRPAGE; ?>estoques"><i class="bi bi-arrow-left"></i> VOLTAR AOS ESTOQUES</a>
                         <a class="col-4 btn btn-sm text-uppercase btn-secondary" href="<?= DIRPAGE; ?>movimentacoes"><i class="bi bi-arrow-left"></i> VOLTAR AS MOVIMENTAÇÕES</a>
                     </div>
             </section>
             <section class="bg-light text-dark">
-                <section class="container py-1">
+                <section class="container bg-light  py-1">
                     <hr>
                     <div id="resposta2" class="fs-4 text-center"></div>
                     <?= Sessao::alert('OK'); ?>
                     <?= Sessao::alert('ERRO'); ?>
                 </section>
-                <div class="container mx-auto col-12 px-2 py-2 row ">
+                <div class="container bg-light mx-auto col-12 px-2 py-2 row ">
                 <?php if($qtdM != 0) { ?>
                     <table class="table table-striped table-bordered">
                         <thead class="text-center text-uppercase">
