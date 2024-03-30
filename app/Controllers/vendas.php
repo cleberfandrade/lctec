@@ -28,12 +28,12 @@ class vendas extends View
         $this->dados['usuario'] = $this->Usuarios->setCodUsuario($_SESSION['USU_COD'])->listar(0);
         
         $this->link[0] = ['link'=> 'admin','nome' => 'PAINEL ADMINISTRATIVO'];
-        $this->link[1] = ['link'=> 'vendas','nome' => 'MÓDULO DE VENDAS >>'];
+        $this->link[1] = ['link'=> 'pdv','nome' => 'MÓDULO PDV >>'];
     }
     public function index()
     {
         $this->dados['title'] .= ' GERENCIAR VENDAS';   
         $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
-        $this->render('admin/vendas/vendas', $this->dados);
+        $this->render('admin/pdv/vendas', $this->dados);
     }
 }

@@ -30,15 +30,15 @@ class pdv extends View
         $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
         $this->render('admin/pdv/pdv', $this->dados);
     }
-    public function index()
+    public function vendas()
     {
         $this->dados['title'] = 'VENDAS | LC/TEC';
         $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
         $this->render('admin/pdv/vendas', $this->dados);
     }
-    public function index()
+    public function caixas()
     {
-        $this->dados['title'] = 'VENDAS | LC/TEC';
+        $this->dados['title'] = 'GERENCIAR CAIXAS';
         $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
         $this->render('admin/pdv/caixas', $this->dados);
     }
