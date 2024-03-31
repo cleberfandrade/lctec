@@ -14,14 +14,14 @@ $qtdCL = (is_array($classificacoes) ? count($classificacoes) : 0);
         <div id="page-content-wrapper">
         <!-- Top navigation-->
         <?php include_once 'app/Views/admin/inc/menu_topo.phtml'; ?>
-        <div class="container-fluid bg-11 p-0">
+        <div class="container-fluid <?= $modulo[0]['MOD_COR'] ?> p-0">
             <header class="py-3">
                 <section class="container px-3">
                     <div class="row gx-3 align-items-center justify-content-center">
                         <div class="col-lg-9 col-xl-9 col-xxl-9">
                             <div class="my-1 px-4 mx-auto">
                                 <a class="text-decoration-none" href="<?= DIRPAGE; ?>estoques/produtos/<?= $estoque['EMP_COD']?>/<?= $estoque['EST_COD']?>">
-                                    <h3 class="fs-2 fw-bolder text-uppercase text-white"><i class="bi bi-box2-fill"></i> Listagem de <span class="text-dark">Produtos</span></h3>
+                                    <h3 class="fs-2 fw-bolder text-uppercase text-white"><?= $modulo[0]['MOD_ICON'] ?> Listagem de <span class="text-dark">Produtos</span></h3>
                                 </a>
                             </div>
                         </div>
@@ -34,8 +34,8 @@ $qtdCL = (is_array($classificacoes) ? count($classificacoes) : 0);
             </header>
             <?php include_once 'app/Views/admin/inc/alertas.phtml'; ?>  
             <section class="bg-light text-dark">
-                <div class="container mx-auto col-12 px-2 py-2 row ">
-                    <div class="card bg-success mx-auto text-center col-12 py-1 mb-2">
+                <div class="container mx-auto col-12  px-2 py-2 row ">
+                    <div class="card <?= $modulo[0]['MOD_COR'] ?> mx-auto text-center col-offset-3 col-6 py-1 mb-2">
                         <div class="card-body text-white">
                             <h5 class="card-title">PRODUTOS</h5>
                             <p class="card-text">Cadastre seus produtos</p>

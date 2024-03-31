@@ -27,14 +27,14 @@ $qtdMotivos = (is_array($motivos) ? count($motivos) : 0);
         <div id="page-content-wrapper">
         <!-- Top navigation-->
             <?php include_once 'app/Views/admin/inc/menu_topo.phtml'; ?>
-            <div class="container-fluid bg-11 p-0">
+            <div class="container-fluid <?= $modulo[0]['MOD_COR'] ?> p-0">
                 <header class="py-3">
                     <section class="container px-3">
                         <div class="row gx-3 align-items-center justify-content-center">
                             <div class="col-lg-9 col-xl-9 col-xxl-9">
                                 <div class="my-1 px-4 mx-auto">
                                     <a class="text-decoration-none" href="<?= DIRPAGE; ?>produtos/detalhar/<?= $produto['EMP_COD']?>/<?= $produto['EST_COD']?>/<?= $produto['PRO_COD']?>">
-                                        <h5 class="fs-2 fw-bolder text-uppercase text-white"><i class="bi bi-box2-fill"></i> Detalhar <span class="text-dark"> Produto</span>
+                                        <h5 class="fs-2 fw-bolder text-uppercase text-white"><?= $modulo[0]['MOD_ICON'] ?> Detalhar <span class="text-dark"> Produto</span>
                                         </h5>
                                     </a>
                                 </div>
@@ -48,7 +48,7 @@ $qtdMotivos = (is_array($motivos) ? count($motivos) : 0);
                 </header>
                 <section class="bg-light py-2">
                     <div class="col-12 mx-auto row text-center p-3">
-                        <div class="col-4 mx-auto text-center text-bg-success">
+                        <div class="col-4 mx-auto text-center <?= $modulo[0]['MOD_COR'] ?>">
                             <div class="card-body">
                                 <h5 class="card-title">ESTOQUE ATUAL</h5>
                                 <p class="card-text">Verifique o estoque atual dos seus produtos</p>
@@ -62,7 +62,7 @@ $qtdMotivos = (is_array($motivos) ? count($motivos) : 0);
                                 <a href="<?= DIRPAGE ?>movimentacoes/listar" class="btn btn-dark">ACESSAR</a>
                             </div>
                         </div>
-                        <div class="col-4 text-bg-success text-center">
+                        <div class="col-4 <?= $modulo[0]['MOD_COR'] ?> text-center">
                             <div class="card-body">
                                 <h5 class="card-title">MOVIMENTAÇÃO DE ESTOQUES</h5>
                                 <p class="card-text">Cadastre/Altere as suas entradas e saídas de produtos</p>
@@ -277,7 +277,8 @@ $qtdMotivos = (is_array($motivos) ? count($motivos) : 0);
                                         echo $soma;
                                     }
                                 } ?>],
-                            borderWidth: 1
+                            borderWidth: 0,
+                            backgroundColor: '#c68b31'
                         },
                         {
                             label: 'SAÍDAS',
@@ -301,7 +302,8 @@ $qtdMotivos = (is_array($motivos) ? count($motivos) : 0);
                                         echo $soma;
                                     }
                                 } ?>],
-                            borderWidth: 1
+                            borderWidth: 0,
+                            backgroundColor: '#E61919'
                         }
                     ]
                     },

@@ -41,7 +41,7 @@ class ModulosEmpresa extends Model
         //ativar quando não quiser que apareça até mesmo no menu lateral SOMENTE com o módulo desativado, não irá aparecer
         //$parametros = " ME INNER JOIN tb_modulos M ON M.MOD_COD=ME.MOD_COD WHERE ME.EMP_COD={$this->codEmpresa} AND M.MOD_STATUS=1 ORDER BY M.MOD_NOME";
         $campos = "*";
-        $resultado = $this->Model->exibir($parametros, $campos, $ver = 0, $id = false);
+        $resultado = $this->Model->exibir($parametros, $campos, $ver, $id = false);
         if ($resultado) {
             return $resultado;
         } else {
@@ -52,7 +52,7 @@ class ModulosEmpresa extends Model
     {
         $parametros = " ME INNER JOIN tb_modulos M ON M.MOD_COD=ME.MOD_COD WHERE ME.EMP_COD={$this->codEmpresa} AND ME.MOD_COD={$this->codigo} ORDER BY M.MOD_NOME";
         $campos = "*";
-        $resultado = $this->Model->exibir($parametros, $campos, $ver = 0, $id = false);
+        $resultado = $this->Model->exibir($parametros, $campos, $ver, $id = false);
         if ($resultado) {
             return $resultado;
         } else {
@@ -63,7 +63,7 @@ class ModulosEmpresa extends Model
     {
         $parametros = " ME INNER JOIN tb_modulos M ON M.MOD_COD=ME.MOD_COD ORDER BY ME.EMP_COD";
         $campos = "*";
-        $resultado = $this->Model->exibir($parametros, $campos, $ver = 0, $id = false);
+        $resultado = $this->Model->exibir($parametros, $campos, $ver, $id = false);
         if ($resultado) {
             return $resultado;
         } else {
@@ -105,11 +105,11 @@ class ModulosEmpresa extends Model
             return false;
         }
     }
-    public function checarRegistroModuloEmpresa()
+    public function checarRegistroModuloEmpresa($ver = 0)
     {
         $parametros = "WHERE EMP_COD='{$this->codEmpresa}' AND MOD_COD='{$this->codModulo}'";
         $campos = "*";
-        $resultado = $this->Model->exibir($parametros, $campos, $ver = 0, $id = false);
+        $resultado = $this->Model->exibir($parametros, $campos, $ver, $id = false);
         if ($resultado) {
             //Já existe
             return $resultado[0];

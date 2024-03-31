@@ -11345,7 +11345,6 @@ body.sb-sidenav-toggled #wrapper #sidebar-wrapper {
   background-color:#FF852D;
 }
 .bg-8{
-  color: #ffffff;
   background-color:#411866;
 }
 .bg-9{
@@ -11358,16 +11357,25 @@ body.sb-sidenav-toggled #wrapper #sidebar-wrapper {
 .bg-11{
   background-color:#C68B31;
 }
-
-
 .bg-12{
-  color: #ffffff;
-  background-color:#65C2C3;
+  background-color:#e61919;
 }
 .bg-13{
-  color: #ffffff;
-  background-color:#65C2C3;
+  background-color:#DCE619;
 }
+
+
+.bg-14{
+  background-color:#DCE619;
+}
+.bg-15{
+  background-color:#DCE619;
+}
+.bg-16{
+  background-color:#DCE619;
+}
+
+
 ul.timeline {
   list-style-type: none;
   position: relative;

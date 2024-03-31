@@ -16,13 +16,13 @@ $qtdE = (is_array($empresa) ? count($empresa) : 0);
         <!-- Top navigation-->
         <?php include_once 'app/Views/admin/inc/menu_topo.phtml'; ?>
         <div class="container-fluid bg-light p-0">
-            <header class="py-3 bg-11">
+            <header class="py-3 <?= $modulo[0]['MOD_COR'] ?>">
                 <section class="container px-3">
                     <div class="row gx-5 align-items-center justify-content-center">
                         <div class="col-lg-9 col-xl-9 col-xxl-9">
                             <div class="my-1 px-4 mx-auto">
                                 <a class="text-decoration-none text-white" href="<?= DIRPAGE; ?>estoques">
-                                <h5 class="fs-2 fw-bolder text-uppercase"><i class="bi bi-box"></i> Gerenciar <span class="text-dark">Estoques</span></h5></a>
+                                <h5 class="fs-2 fw-bolder text-uppercase"><?= $modulo[0]['MOD_ICON'] ?> Gerenciar <span class="text-dark">Estoques</span></h5></a>
                             </div>
                         </div>
                         <?php include_once 'app/Views/admin/inc/saudacao.phtml'; ?>
@@ -35,7 +35,7 @@ $qtdE = (is_array($empresa) ? count($empresa) : 0);
             <?php include_once 'app/Views/admin/inc/alertas.phtml'; ?>
             <section class="container bg-light mx-auto py-2 mb-5">
                 <div class="col-12 row">
-                    <div class="col-4 text-bg-success text-center">
+                    <div class="col-4 <?= $modulo[0]['MOD_COR'] ?> text-center">
                         <div class="card-body">
                             <h5 class="card-title">MOVIMENTAÇÃO DE ESTOQUES</h5>
                             <p class="card-text">Cadastre/Altere as suas entradas e saídas de produtos</p>
@@ -49,7 +49,7 @@ $qtdE = (is_array($empresa) ? count($empresa) : 0);
                             <a href="<?= DIRPAGE ?>movimentacoes/listar" class="btn btn-dark">ACESSAR</a>
                         </div>
                     </div>
-                    <div class="col-4 text-bg-success text-center">
+                    <div class="col-4 <?= $modulo[0]['MOD_COR'] ?> text-center">
                         <div class="card-body">
                             <h5 class="card-title">ESTOQUE ATUAL</h5>
                             <p class="card-text">Verifique o estoque atual dos seus produtos</p>
@@ -74,7 +74,7 @@ $qtdE = (is_array($empresa) ? count($empresa) : 0);
                         if ($estoques[$i]['EST_STATUS'] == 1) {
                         
                         ?>
-                        <div class="card col-5 m-2 text-white mx-auto text-bg-success m-1 py-3" style="max-width: 45rem;">
+                        <div class="card col-5 m-2 text-white mx-auto <?= $modulo[0]['MOD_COR'] ?> m-1 py-3" style="max-width: 45rem;">
                             <a href="<?= DIRPAGE.'estoques/produtos/'.$estoques[$i]['EMP_COD'].'/'.$estoques[$i]['EST_COD']; ?>" title="Acessar Estoque" class="col-auto link-light text-decoration-none">
                             <div class="card-header"><i class="bi bi-box"></i> <?= $estoques[$i]['EST_TIPO']; ?></div>
                             <div class="card-body">
