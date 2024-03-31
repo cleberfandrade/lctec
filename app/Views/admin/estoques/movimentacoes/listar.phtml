@@ -29,14 +29,14 @@ $qtdMotivos = (is_array($motivos) ? count($motivos) : 0);
         <div id="page-content-wrapper bg-light ">
         <!-- Top navigation-->
         <?php include_once 'app/Views/admin/inc/menu_topo.phtml'; ?>
-        <div class="container-fluid bg-11 p-0">
+        <div class="container-fluid <?= $modulo[0]['MOD_COR'] ?> p-0">
             <header class="py-3">
                 <section class="container px-3">
                     <div class="row gx-5 align-items-center justify-content-center">
                         <div class="col-lg-9 col-xl-9 col-xxl-9">
                             <div class="my-1 px-4 mx-auto">
                                 <a class="text-decoration-none" href="<?= DIRPAGE; ?>movimentacoes/listar">
-                                <h3 class="fs-2 fw-bolder text-uppercase text-white"><i class="bi bi-box"></i> Listagem de <span class="text-dark"> Movimentação De Produtos</span></h3></a>
+                                <h3 class="fs-2 fw-bolder text-uppercase text-white"><?= $modulo[0]['MOD_ICON'] ?><i class="bi bi-box"></i> Listagem de <span class="text-dark"> Movimentação De Produtos</span></h3></a>
                             </div>
                         </div>
                         <?php include_once 'app/Views/admin/inc/saudacao.phtml'; ?> 
@@ -56,9 +56,9 @@ $qtdMotivos = (is_array($motivos) ? count($motivos) : 0);
                             <a href="<?= DIRPAGE ?>estoques/produtos_atual" class="btn btn-dark">ACESSAR</a>
                         </div>
                     </div>    
-                    <div class="col-6 text-bg-success text-center">
+                    <div class="col-6 <?= $modulo[0]['MOD_COR'] ?> text-center">
                         <div class="card-body">
-                            <h5 class="card-title">MOVIMENTAÇÃO DE ESTOQUES</h5>
+                            <h5 class="card-title">MOVIMENTAR PRODUTOS</h5>
                             <p class="card-text">Cadastre/Altere as suas entradas e saídas de produtos</p>
                             <a href="<?= DIRPAGE ?>movimentacoes" class="btn btn-dark">ACESSAR</a>
                         </div>
