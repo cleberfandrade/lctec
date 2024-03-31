@@ -22,7 +22,7 @@ use App\Models\Setores;
 class cadastros extends View
 {
     private $dados = [];
-    private $link,$Enderecos,$Usuarios,$Empresa,$UsuariosEmpresa,$Check,$CargosSalarios,$Estoques, $Setores,$Limites,$Classificacoes;
+    private $link,$Enderecos,$Usuarios,$Empresa,$UsuariosEmpresa,$Check,$CargosSalarios,$Estoques, $Setores,$Limites,$Classificacoes,$ModulosEmpresa;
     public function __construct()
     {
         Sessao::naoLogado();
@@ -37,17 +37,20 @@ class cadastros extends View
         $Empresa = new Empresas;
         $UsuariosEmpresa = new UsuariosEmpresa;
         $ModulosEmpresa = new ModulosEmpresa;
+        
         $this->CargosSalarios = new CargosSalarios;
         $this->Check = new Check;
         $this->Limites = new Check;
         $this->Setores = new Setores;
         $this->Classificacoes = new Classificacoes;
+        $this->ModulosEmpresa = new ModulosEmpresa;
+
         $this->dados['empresa'] = $this->UsuariosEmpresa->setCodEmpresa($_SESSION['EMP_COD'])->setCodUsuario($_SESSION['USU_COD'])->listar(0);
         $this->dados['empresas'] = $this->UsuariosEmpresa->listarTodasEmpresasUsuario(0);
         $this->dados['usuario'] = $this->Usuarios->setCodUsuario($_SESSION['USU_COD'])->listar(0);
         $this->dados['usuarios_empresa'] = $UsuariosEmpresa->setCodUsuario($_SESSION['USU_COD'])->checarUsuario();
         $this->dados['modulos_empresa'] = $ModulosEmpresa->setCodEmpresa($_SESSION['EMP_COD'])->listar();
-
+        $this->dados['modulo'] = $this->ModulosEmpresa->setCodEmpresa($_SESSION['EMP_COD'])->setCodigo(1)->listarModuloEmpresa(0);
         $this->dados['setores'] = $this->Setores->setCodEmpresa($_SESSION['EMP_COD'])->listarTodos(0); 
         $this->dados['classificacoes'] = $this->Classificacoes->setCodEmpresa($_SESSION['EMP_COD'])->listarTodos(0);
 
