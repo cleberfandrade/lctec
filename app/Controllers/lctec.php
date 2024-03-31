@@ -41,6 +41,8 @@ class lctec extends View
         $this->Suporte = new Suporte;
         
         $this->dados['suporte'] = $this->Suporte->setCodUsuario(0)->listarTodasMensagensSuporte(0);
+
+        $this->dados['links'] = 0;
         
         $this->link[0] = ['link'=> 'lctec','nome' => 'PAINEL GERENCIAL | LC/TEC'];
         //$this->link[1] = ['link'=> 'lctec','nome' => 'MÓDULO LC/TEC >>'];
@@ -63,6 +65,12 @@ class lctec extends View
         Sessao::logadoSistema();
         $this->render('admin/lctec/painel', $this->dados);
     }
+    public function cadastros()
+    {
+        $this->dados['title'] .= ' CADASTROS LC/TEC';   
+        Sessao::logadoSistema();
+        $this->render('admin/lctec/cadastros/cadastros', $this->dados);
+    }
     public function empresas()
     {
         $this->dados['title'] .= ' EMPRESAS LC/TEC';   
@@ -74,6 +82,12 @@ class lctec extends View
         $this->dados['title'] .= ' SUPORTE LC/TEC';   
         Sessao::logadoSistema();
         $this->render('admin/lctec/suporte/listar', $this->dados);
+    }
+    public function links()
+    {
+        $this->dados['title'] .= ' CADASTRO DE LINKS LC/TEC';   
+        Sessao::logadoSistema();
+        $this->render('admin/lctec/cadastros/links', $this->dados);
     }
     public function modulos()
     {

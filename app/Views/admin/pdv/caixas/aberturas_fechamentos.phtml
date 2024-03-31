@@ -77,3 +77,78 @@ $qtd = (is_array($caixa) ? count($caixa) : 0);
             <?php include_once 'app/Views/admin/inc/rodape.phtml';?>
         </div>
     </div>
+    <div class="modal fade" id="af_caixa"  tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false"  aria-labelledby="af_caixa" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">ABERTURA/FECHAMENTO</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <h5 class="modal-title">CONFIRMAR ABERTURA/FECHAMENTO</h5>
+                <form>
+                    <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label">USUÁRIO:</label>
+                        <input type="text" class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label for="message-text" class="col-form-label">SENHA:</label>
+                        <input type="password" class="form-control"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <input type="hidden" id="AFC_STATUS" name="AFC_STATUS" value="" />
+                <input type="hidden" id="EMP_COD" name="EMP_COD" value="<?= $empresa['EMP_COD'] ?>" />
+                <input type="hidden" id="USU_COD" name="USU_COD" value="<?= $_SESSION['USU_COD'] ?>" />
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">CANCELAR</button>
+                <button type="button" id="sts" class="btn btn-primary">ABRIR/FECHAR - CAIXA</button>
+            </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        const exampleModal = document.getElementById('af_caixa')
+        if (exampleModal) {
+        exampleModal.addEventListener('show.bs.modal', event => {
+            // Button that triggered the modal
+            const button = event.relatedTarget
+            // Extract info from data-bs-* attributes
+            const caixa = button.getAttribute('data-caixa')
+
+            console.log(caixa);
+        });
+        }
+        $("#sts").click(function(){
+            var CXA_COD = $('#CXA_COD').val();
+            var EMP_COD = $('#EMP_COD').val();
+            var USU_COD = $('#USU_COD').val();
+            var USU_STATUS = $('#USU_STATUS').val();
+            var AFC_STATUS = $('#sts').val();
+            var MOV_STATUS = $('#MOV_STATUS').val();
+            setTimeout(function () {
+                    $('#status').modal('hide');
+            }, 100);
+            $.post('<?= DIRPAGE; ?>movimentacoes/reverter_movimentacao', {
+                PRO_COD: PRO_COD,
+                EXCLUIR_MOVIMENTACAO_PRODUTO: true,
+                EMP_COD:EMP_COD,
+                EST_COD:EST_COD,
+                MOV_COD:MOV_COD, 
+                USU_COD:USU_COD,
+                MOV_STATUS: MOV_STATUS
+            }, function(retorno) {
+                var resposta = JSON.parse(retorno);
+                if (resposta['COD'] !== 'ERRO') {
+                    $('#resposta2').addClass('alert alert-success');
+                }else{
+                    $('#resposta2').addClass('alert alert-warning');
+                }
+                $('#resposta2').html(resposta['MENSAGEM']);
+                setTimeout( () => { window.location.href="<?= DIRPAGE ?>movimentacoes/"}, 1000);
+            });
+
+        });
+    </script>
+</body>
+</html>    

@@ -1,18 +1,40 @@
 <?php
 namespace App\Controllers;
 
+use App\Models\Caixas;
+use App\Models\Categorias;
+use App\Models\Contas;
+use App\Models\Classificacoes;
 use App\Models\Colaboradores;
 use App\Models\Clientes;
+use App\Models\Empresas;
+use App\Models\Enderecos;
+use App\Models\Estoques;
+use App\Models\Financas;
+use App\Models\FormasPagamentos;
+use App\Models\Fornecedores;
+use App\Models\ItensVendas;
+use App\Models\ModulosEmpresa;
+use App\Models\Movimentacoes;
 use App\Models\Produtos;
+use App\Models\Setores;
+use App\Models\Transacoes;
+use App\Models\Usuarios;
+use App\Models\UsuariosEmpresa;
+use App\Models\Vendas;
+use Libraries\Util;
+
 use Core\View;
+use Core\Controller;
+
 use Libraries\Check;
 use Libraries\Sessao;
-use Libraries\Url;
 
 class pdv extends View
 {
     private $dados = [];
-    public $link,$Enderecos,$Usuarios,$Vendedores,$Empresa,$UsuariosEmpresa,$Check,$Clientes,$Produtos,$Colaboradores;
+    public $link,$Enderecos,$Usuarios,$Empresas,$Vendedores,$Empresa,$UsuariosEmpresa,$Check,$Clientes,$Produtos,$Colaboradores,$Caixas,$Contas,$FormasPagamentos,$Estoques,$Movimentacoes,$ItensVendas,$Vendas;
+    
     public function __construct()
     {
         Sessao::naoLogado();
@@ -20,15 +42,48 @@ class pdv extends View
         $this->Check = new Check;
         $this->Clientes= new Clientes;
         $this->Produtos = new Produtos;
+        $this->Usuarios = new Usuarios;
+        $this->Empresa = new Empresas;
+        $this->UsuariosEmpresa = new UsuariosEmpresa;
+        $this->Enderecos = new Enderecos;
+        $this->Estoques = new Estoques;
+        $this->Contas = new Contas;
+        $this->FormasPagamentos = new FormasPagamentos;
+        $this->Movimentacoes = new Movimentacoes;
+        $this->Vendas = new Vendas;
+        $this->Caixas = new Caixas;
+        $this->Colaboradores = new Colaboradores;
+        $this->ItensVendas = new ItensVendas;
+
+        $this->dados['empresa'] = $this->UsuariosEmpresa->setCodEmpresa($_SESSION['EMP_COD'])->setCodUsuario($_SESSION['USU_COD'])->listar(0);
+        $this->dados['usuario'] = $this->Usuarios->setCodUsuario($_SESSION['USU_COD'])->listar(0);
+        $this->dados['clientes'] = $this->Clientes->setCodEmpresa($_SESSION['EMP_COD'])->listarTodosAtivos(0);
+        $this->dados['contas'] = $this->Contas->setCodEmpresa($_SESSION['EMP_COD'])->listarTodas();
+        $this->dados['formas_pagamentos'] = $this->FormasPagamentos->setCodEmpresa($_SESSION['EMP_COD'])->listarTodasAtivas(0);
+        $this->dados['movimentacoes'] = $this->Movimentacoes->setCodEmpresa($_SESSION['EMP_COD'])->listarTodas(0); 
+        $this->dados['caixas'] = $this->Caixas->setCodEmpresa($_SESSION['EMP_COD'])->listarTodosAtivos(0);
       
-        $this->link[0] = ['link'=> 'admin/financeiro','nome' => 'FINANCEIRO'];
+        $this->link[0] = ['link'=> 'admin','nome' => 'PAINEL ADMINISTRATIVO'];
         $this->link[1] = ['link'=> 'pdv','nome' => 'PDV'];
+
     }
     public function index()
     {
         $this->dados['title'] = 'VENDAS | LC/TEC';
         $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
+        $this->render('admin/pdv/pdv', $this->dados);
+    }
+    public function vendas()
+    {
+        $this->dados['title'] = 'VENDAS | LC/TEC';
+        $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
         $this->render('admin/pdv/vendas', $this->dados);
+    }
+    public function caixas()
+    {
+        $this->dados['title'] = 'GERENCIAR CAIXAS';
+        $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
+        $this->render('admin/pdv/caixas', $this->dados);
     }
     /*public function auth()
     {

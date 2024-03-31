@@ -210,6 +210,7 @@ class empresas extends View
                     //VERIFICAR SE FOI LIBERADO NO MINIMO 2 MÓDULOS A EMPRESA DO USUARIO
                     if ($m >= 2) {
 
+                        //CRIAR CONTA BANCÁRIA PARA RECEBER E FAZER TRANSAÇÕES INTERNAS NO SISTEMA
                         $db_conta_empresa = array(
                             'EMP_COD'  => $id,
                             'CTA_TIPO' => 'PJ',
@@ -227,7 +228,6 @@ class empresas extends View
                             if ($id_conta) {
 
                                 //CADASTRAR CAIXA PARA OPERACOES
-
                                 $db_caixa_empresa = array(
                                     'EMP_COD'  => $id,
                                     'USU_COD' => $dados['USU_COD'],
