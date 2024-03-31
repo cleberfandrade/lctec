@@ -49,14 +49,14 @@ $contagem = 1;
         <div id="page-content-wrapper">
         <!-- Top navigation-->
         <?php include_once 'app/Views/admin/inc/menu_topo.phtml'; ?>
-        <div class="container-fluid bg-11 p-0">
+        <div class="container-fluid <?= $modulo[0]['MOD_COR'] ?> p-0">
             <header class="py-3">
                 <section class="container px-3">
                     <div class="row gx-5 align-items-center justify-content-center">
                         <div class="col-lg-9 col-xl-9 col-xxl-9">
                             <div class="my-1 px-4 mx-auto">
                                 <a class="text-decoration-none" href="<?= DIRPAGE; ?>movimentacoes">
-                                <h3 class="fs-2 fw-bolder text-uppercase text-white"><i class="bi bi-box"></i> Movimentação De <span class="text-dark">Estoque</span></h3></a>
+                                <h3 class="fs-2 fw-bolder text-uppercase text-white"><?= $modulo[0]['MOD_ICON'] ?> <i class="bi bi-box"></i> Movimentação De <span class="text-dark">Estoque</span></h3></a>
                             </div>
                         </div>
                         <?php include_once 'app/Views/admin/inc/saudacao.phtml'; ?> 
@@ -69,7 +69,7 @@ $contagem = 1;
             
             <section class="container bg-light mx-auto py-2">
                 <div class="col-12 row">
-                    <div class="col-6 mx-auto  text-center text-bg-success">
+                    <div class="col-6 mx-auto  text-center <?= $modulo[0]['MOD_COR'] ?>">
                         <div class="card-body">
                             <h5 class="card-title">ESTOQUE ATUAL</h5>
                             <p class="card-text">Verifique o estoque atual dos seus produtos</p>
@@ -98,7 +98,7 @@ $contagem = 1;
                     <h5 class="card-title text-center"><i class="bi bi-box2-fill"></i> MOVIMENTAÇÃO DO PRODUTO</h5>
                     <div class="container col-12 px-1 mx-auto row">
                         <form class="p-4 p-md-6 border text-uppercase rounded-3" action="<?= DIRPAGE ?>movimentacoes/<?= ($_SESSION['USU_NIVEL'] >= 1)? 'registrar': 'cadastrar'; ?>" method="POST">
-                            <div class="col-12 mx-auto text-bg-success text-center">
+                            <div class="col-12 mx-auto <?= $modulo[0]['MOD_COR'] ?> text-center">
                                 <div class="card-body">
                                     <h5 class="card-title">SELECIONE O ESTOQUE</h5>
                                     <p class="card-text">
@@ -148,7 +148,7 @@ $contagem = 1;
                                                 <input type="number" class="form-control maiusculo" id="MOV_QUANTIDADE" name="MOV_QUANTIDADE" min="0" value="<?= isset($_POST['MOV_QUANTIDADE']) ? $_POST['MOV_QUANTIDADE'] : ''; ?>">
                                                 <label class="px-2" for="MOV_QUANTIDADE">QUANTIDADE</label>
                                             </div>
-                                            <button type="button" class="btn text-uppercase btn-success" id="adicionar"><i class="fa fa-plus"></i></button>
+                                            <button type="button" class="btn text-uppercase <?= $modulo[0]['MOD_COR'] ?>" id="adicionar"><i class="fa fa-plus"></i></button>
                                         </div>
                                     </div>
                                 <?php }else { ?>
@@ -174,14 +174,14 @@ $contagem = 1;
                                         <div class="input-group input-group-lg">
                                             <div class="form-floating">
                                                 <select id="cliente" class="form-select" name="CLI_COD"> 
-                                                <option value="0" <?= (isset($_POST['CLI_COD']) &&  $_POST['CLI_COD']  == 0)? 'selected' : '' ?>>---</option>
+                                                <option value="0" <?= (isset($_POST['CLI_COD']) &&  $_POST['CLI_COD']  == 0)? 'selected' : '' ?>>CONSUMIDOR FINAL</option>
                                                 <?php for ($i=0; $i < $qtdClientes; $i++) { ?>
                                                     <option value="<?= $clientes[$i]['CLI_COD'] ?>" <?= (isset($_POST['CLI_COD']) &&  $_POST['CLI_COD']  == $i)? 'selected' : '' ?>><?= $clientes[$i]['CLI_NOME'] ?></option>
                                                 <?php } ?>
                                                 </select>
                                                 <label class="form-label">CLIENTE</label>
                                             </div>
-                                            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#novo_cliente" ><i class="fa fa-plus"></i></button>
+                                            <button type="button" class="btn <?= $modulo[0]['MOD_COR'] ?>" data-bs-toggle="modal" data-bs-target="#novo_cliente" ><i class="fa fa-plus"></i></button>
                                         </div>
                                     </div>
                                     <div id="CXA" class="col-3 mx-auto form-floating mb-3">
@@ -203,7 +203,7 @@ $contagem = 1;
                                     <div class="col-12 mx-auto form-floating mb-2">
                                         <table id="table"  class="table table-bordered">
                                             <thead>
-                                                <tr class="text-center bg-1 "><th colspan="6" class="text-white">ITENS</th></tr>
+                                                <tr class="text-center <?= $modulo[0]['MOD_COR'] ?>"><th colspan="6" class="text-white">ITENS</th></tr>
                                                 <tr class="text-center">
                                                     <th>#</th>
                                                     <th>DESCRIÇÃO</th>
@@ -249,7 +249,7 @@ $contagem = 1;
                                     <input type="hidden" class="form-control" name="EMP_COD" value="<?= isset($_SESSION['EMP_COD']) ? $_SESSION['EMP_COD'] : 0; ?>">
                                     <input type="hidden" class="form-control" name="USU_COD" value="<?= isset($_SESSION['USU_COD']) ? $_SESSION['USU_COD'] : 0; ?>">
                                     <a class="col-6 btn btn-lg text-uppercase btn-secondary" href="<?= DIRPAGE; ?>estoques"><i class="bi bi-ban"></i> Cancelar</a>
-                                    <button class="col-6 btn btn-lg text-uppercase btn-success" name="CADASTRAR_NOVA_MOVIMENTACAO_ESTOQUE" type="submit"><i class="fa fa-save"></i> Cadastrar</button>
+                                    <button class="col-6 btn btn-lg text-uppercase <?= $modulo[0]['MOD_COR'] ?>" name="CADASTRAR_NOVA_MOVIMENTACAO_ESTOQUE" type="submit"><i class="fa fa-save"></i> Cadastrar</button>
                                 </div>
                             </div>
                         </form>
@@ -516,8 +516,12 @@ $contagem = 1;
                 qtdeCampos++;
 
             } else {
-                $('#resposta').html('INFORME A QUANTIDADE DO PRODUTO');
                 $('#resposta2').addClass('alert alert-warning');
+                $('#resposta2').html('INFORME A QUANTIDADE DO PRODUTO');
+                setTimeout(function () {
+                        $('#resposta2').hide();
+                }, 3000);
+                
             }
             
         }

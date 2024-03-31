@@ -34,17 +34,18 @@ $qtdCL = (is_array($classificacoes) ? count($classificacoes) : 0);
             </header>
             <?php include_once 'app/Views/admin/inc/alertas.phtml'; ?>  
             <section class="bg-light text-dark">
-                <div class="container mx-auto col-12  px-2 py-2 row ">
-                    <div class="card <?= $modulo[0]['MOD_COR'] ?> mx-auto text-center col-offset-3 col-6 py-1 mb-2">
+                <div class="container mx-auto col-12 align-items-center  px-2 py-2 row ">
+                    <div class="card <?= $modulo[0]['MOD_COR'] ?> mx-auto text-center col-6 py-1 mb-2">
                         <div class="card-body text-white">
                             <h5 class="card-title">PRODUTOS</h5>
                             <p class="card-text">Cadastre seus produtos</p>
                             <a href="<?= DIRPAGE ?>produtos/cadastro/<?= $estoque['EMP_COD']?>/<?= $estoque['EST_COD']?>" class="btn btn-dark">CADASTRAR PRODUTO</a>
                         </div>
                     </div>
-                    <div class="col-12 mx-auto text-center m-1">
-                        <a class="col-4 btn btn-sm text-uppercase btn-secondary" href="<?= DIRPAGE; ?>movimentacoes"><i class="bi bi-arrow-left"></i> VOLTAR AS MOVIMENTAÇÕES</a>   
-                        <a class="col-4 btn btn-sm text-uppercase btn-secondary" href="<?= DIRPAGE; ?>estoques"><i class="bi bi-arrow-left"></i> VOLTAR AOS ESTOQUES</a>
+                    <div class="col-6 mx-auto text-center m-1">
+                        <a class="col-12 btn btn-lg text-uppercase <?= $modulo[0]['MOD_COR'] ?>  text-dark" href="<?= DIRPAGE; ?>movimentacoes"><i class="bi bi-arrow-right"></i> ACESSAR AS MOVIMENTAÇÕES</a>   
+                        <a class="col-12 btn btn-lg text-uppercase mt-1 <?= $modulo[0]['MOD_COR'] ?> text-dark" href="<?= DIRPAGE; ?>estoques"><i class="bi bi-arrow-left"></i> VOLTAR AOS ESTOQUES</a>
+                        <a class="col-12 btn btn-lg text-uppercase mt-1 <?= $modulo[0]['MOD_COR'] ?> text-dark" href="<?= DIRPAGE; ?>estoques/produtos_atual"><i class="bi bi-arrow-right"></i> ACESSAR AO ESTOQUE ATUAL</a>
                     </div>
                 <?php if($qtd != 0) { ?>
                     <table class="table table-striped table-bordered">
