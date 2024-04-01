@@ -2,7 +2,6 @@
 namespace App\Models;
 
 use Core\Model;
-
 /*
 CREATE TABLE `tb_af_caixas` (
 	`AFC_COD` INT NOT NULL AUTO_INCREMENT,
@@ -28,12 +27,11 @@ CREATE TABLE `tb_af_caixas` (
 COLLATE='utf8_general_ci'
 ;
 */
-
 class AberturaFechamentoCaixas extends Model
 { 
-    private $tabela = 'tb_af_caixas';
+    private $tabela = 'tb_ab_caixas';
     private $Model = '';
-    private $codigo,$codEmpresa,$descricao,$tipo;
+    private $codigo,$codEmpresa,$codCaixa,$descricao,$tipo;
 
     public function __construct()
     {
@@ -45,24 +43,37 @@ class AberturaFechamentoCaixas extends Model
         $this->codigo = $codigo;
         return $this;
     }
+    public function setCodCaixa($codCaixa)
+    {
+        $this->codCaixa = $codCaixa;
+        return $this;
+    }
     public function setCodEmpresa($codEmpresa)
     {
         $this->codEmpresa = $codEmpresa;
         return $this;   
-    }
-    public function setDescricao($descricao)
-    {
-        $this->descricao = $descricao;
-        return $this;
     }
     public function setTipo($tipo)
     {
         $this->tipo = $tipo;
         return $this;
     }
+    public function checarStatusCaixa()
+    {
+        $parametros = "AF INNER JOIN tb_empresas E ON AF.EMP_COD=E.EMP_COD INNER JOIN tb_caixas C ON AF.CXA_COD=C.CXA_COD WHERE AF.EMP_COD={$this->codEmpresa} AND AF.CXA_COD={$this->codCaixa} DESC LIMIT 1";
+        $campos = "*";
+        $resultado = $this->Model->exibir($parametros, $campos, $ver = 0, $id = false);
+        if ($resultado) {
+            //Já existe
+            return $resultado[0];
+        } else {
+            //Nao existe
+            return false;
+        }
+    }
     public function listar($ver = 0)
     {
-        $parametros = "C INNER JOIN tb_empresas E ON C.EMP_COD=E.EMP_COD INNER JOIN tb_contas CT ON CT.CTA_COD=C.CTA_COD WHERE C.EMP_COD={$this->codEmpresa} AND C.CXA_COD={$this->codigo}";
+        $parametros = "AF INNER JOIN tb_empresas E ON AF.EMP_COD=E.EMP_COD INNER JOIN tb_caixas C ON AF.CXA_COD=C.CXA_COD WHERE AF.EMP_COD={$this->codEmpresa} AND AF.CXA_COD={$this->codCaixa} AND AF.ABF_COD={$this->codigo}";
         $campos = "*";
         $resultado = $this->Model->exibir($parametros, $campos, $ver, $id = false);
         if ($resultado) {
@@ -73,7 +84,18 @@ class AberturaFechamentoCaixas extends Model
     }
     public function listarTodos($ver = 0)
     {
-        $parametros = "C INNER JOIN tb_empresas E ON C.EMP_COD=E.EMP_COD INNER JOIN tb_contas CT ON CT.CTA_COD=C.CTA_COD WHERE C.EMP_COD={$this->codEmpresa} ORDER BY C.CXA_DESCRICAO";
+        $parametros = "AB INNER JOIN tb_empresas E ON AB.EMP_COD=E.EMP_COD INNER JOIN tb_caixas C ON AB.CXA_COD=C.CXA_COD WHERE AB.EMP_COD={$this->codEmpresa} ORDER BY AB.ABF_DATA DESC";
+        $campos = "*";
+        $resultado = $this->Model->exibir($parametros, $campos, $ver = 0, $id = false);
+        if ($resultado) {
+            return $resultado;
+        } else {
+            return false;
+        }
+    }
+    public function listarTodosPorTipo($ver = 0)
+    {
+        $parametros = "AB INNER JOIN tb_empresas E ON AB.EMP_COD=E.EMP_COD INNER JOIN tb_caixas C ON AB.CXA_COD=C.CXA_COD WHERE AB.EMP_COD={$this->codEmpresa} AND AB.CXA_COD={$this->codCaixa} ORDER BY AB.ABF_DATA DESC";
         $campos = "*";
         $resultado = $this->Model->exibir($parametros, $campos, $ver = 0, $id = false);
         if ($resultado) {
@@ -93,7 +115,7 @@ class AberturaFechamentoCaixas extends Model
     }
     public function alterar(array $dados, $ver = 0)
     {
-        $parametros = " WHERE EMP_COD={$this->codEmpresa} AND CXA_COD=";
+        $parametros = " WHERE EMP_COD={$this->codEmpresa} CXA_COD={$this->codCaixa} AND ABF_COD=";
         $this->Model->setParametros($parametros);
         $this->Model->setCodigo($this->codigo);
         $ok = false;
@@ -101,19 +123,6 @@ class AberturaFechamentoCaixas extends Model
         if ($ok) {
             return true;
         } else {
-            return false;
-        }
-    }
-    public function checarDescricao()
-    {
-        $parametros = "WHERE EMP_COD={$this->codEmpresa} AND CXA_DESCRICAO ='{$this->descricao}' AND CXA_STATUS=1";
-        $campos = "*";
-        $resultado = $this->Model->exibir($parametros, $campos, $ver = 0, $id = false);
-        if ($resultado) {
-            //Já existe
-            return $resultado[0];
-        } else {
-            //Nao existe
             return false;
         }
     }

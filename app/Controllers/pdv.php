@@ -1,6 +1,7 @@
 <?php
 namespace App\Controllers;
 
+use App\Models\AberturaFechamentoCaixas;
 use App\Models\Caixas;
 use App\Models\Categorias;
 use App\Models\Contas;
@@ -33,7 +34,7 @@ use Libraries\Sessao;
 class pdv extends View
 {
     private $dados = [];
-    public $link,$Enderecos,$Usuarios,$Empresas,$Vendedores,$Empresa,$UsuariosEmpresa,$Check,$Clientes,$Produtos,$Colaboradores,$Caixas,$Contas,$FormasPagamentos,$Estoques,$Movimentacoes,$ItensVendas,$Vendas,$ModulosEmpresa;
+    public $link,$Enderecos,$Usuarios,$Empresas,$Vendedores,$Empresa,$UsuariosEmpresa,$Check,$Clientes,$Produtos,$Colaboradores,$Caixas,$AberturaFechamentoCaixas,$Contas,$FormasPagamentos,$Estoques,$Movimentacoes,$ItensVendas,$Vendas,$ModulosEmpresa;
     
     public function __construct()
     {
@@ -55,6 +56,7 @@ class pdv extends View
         $this->Colaboradores = new Colaboradores;
         $this->ItensVendas = new ItensVendas;
         $this->ModulosEmpresa = new ModulosEmpresa;
+        $this->AberturaFechamentoCaixas = new AberturaFechamentoCaixas;
 
         $this->dados['empresa'] = $this->UsuariosEmpresa->setCodEmpresa($_SESSION['EMP_COD'])->setCodUsuario($_SESSION['USU_COD'])->listar(0);
         $this->dados['usuario'] = $this->Usuarios->setCodUsuario($_SESSION['USU_COD'])->listar(0);
@@ -63,6 +65,7 @@ class pdv extends View
         $this->dados['formas_pagamentos'] = $this->FormasPagamentos->setCodEmpresa($_SESSION['EMP_COD'])->listarTodasAtivas(0);
         $this->dados['movimentacoes'] = $this->Movimentacoes->setCodEmpresa($_SESSION['EMP_COD'])->listarTodas(0); 
         $this->dados['caixas'] = $this->Caixas->setCodEmpresa($_SESSION['EMP_COD'])->listarTodosAtivos(0);
+        $this->dados['ab_caixas'] = $this->AberturaFechamentoCaixas->setCodEmpresa($_SESSION['EMP_COD'])->listarTodos(0);
         $this->dados['modulo'] = $this->ModulosEmpresa->setCodEmpresa($_SESSION['EMP_COD'])->setCodigo(5)->listarModuloEmpresa(0);
       
         $this->link[0] = ['link'=> 'admin','nome' => 'PAINEL ADMINISTRATIVO'];

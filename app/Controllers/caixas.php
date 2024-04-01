@@ -1,6 +1,7 @@
 <?php 
 namespace App\Controllers;
 
+use App\Models\AberturaFechamentoCaixas;
 use App\Models\Caixas as ModelsCaixa;
 use App\Models\Empresas;
 use App\Models\Contas;
@@ -19,7 +20,7 @@ use Libraries\Url;
 class caixas extends View
 {
     private $dados = [];
-    private $link,$Financas,$Check,$Usuarios,$UsuariosEmpresa,$Contas,$Movimentacoes,$Caixas,$ModulosEmpresa;
+    private $link,$Financas,$Check,$Usuarios,$UsuariosEmpresa,$Contas,$Movimentacoes,$Caixas,$AberturaFechamentoCaixas, $ModulosEmpresa;
     public function __construct()
     {
 
@@ -32,6 +33,7 @@ class caixas extends View
         $this->Movimentacoes = new Movimentacoes;
         $this->Caixas = new ModelsCaixa;
         $this->ModulosEmpresa = new ModulosEmpresa;
+        $this->AberturaFechamentoCaixas = new AberturaFechamentoCaixas;
 
         $this->dados['empresa'] = $this->UsuariosEmpresa->setCodEmpresa($_SESSION['EMP_COD'])->setCodUsuario($_SESSION['USU_COD'])->listar(0);
         $this->dados['usuario'] = $this->Usuarios->setCodUsuario($_SESSION['USU_COD'])->listar(0);
@@ -79,6 +81,7 @@ class caixas extends View
              
                 $this->dados['caixa'] = $this->Caixas->setCodEmpresa($dados[2])->setCodigo($dados[3])->listar(0);
                 if ($this->dados['caixa'] != 0) {
+                    $this->dados['ab_caixas'] = $this->AberturaFechamentoCaixas->setCodEmpresa($dados[2])->setCodCaixa($dados[3])->checarStatusCaixa(0);
                     $ok = true;
                 }
             }else{
@@ -292,7 +295,7 @@ class caixas extends View
                     'CXA_DT_ATUALIZACAO'=> date('Y-m-d H:i:s'),
                     'CXA_STATUS' => $dados['CXA_STATUS']
                 );
-                //if($this->Caixas->alterar($db,0)){
+                //if($this->AberturaFechamentoCaixas->alterar($db,0)){
                   //  $respota = array(
                       //  'COD'=>'OK',
                     //);
