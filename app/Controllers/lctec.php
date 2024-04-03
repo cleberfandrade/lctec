@@ -50,78 +50,88 @@ class lctec extends View
     }
     public function index()
     {
-        Sessao::logadoSistema();
-        $this->dados['empresas'] = $this->Empresas->listarTodos();
-        $this->dados['usuario'] = $this->Usuarios->setCodUsuario($_SESSION['USU_COD'])->listar(0);
-        $this->dados['empresa'] = $this->UsuariosEmpresa->setCodEmpresa($_SESSION['EMP_COD'])->setCodUsuario($_SESSION['USU_COD'])->listar(0);
-        $this->dados['title'] .= ' PAINEL GERENCIAL | LC/TEC';   
-        
-        $this->render('admin/lctec/painel', $this->dados);
+        if(Sessao::naoLogadoSistema()){
+            $this->dados['empresas'] = $this->Empresas->listarTodos();
+            $this->dados['usuario'] = $this->Usuarios->setCodUsuario($_SESSION['USU_COD'])->listar(0);
+            $this->dados['empresa'] = $this->UsuariosEmpresa->setCodEmpresa($_SESSION['EMP_COD'])->setCodUsuario($_SESSION['USU_COD'])->listar(0);
+            $this->dados['title'] .= ' PAINEL GERENCIAL | LC/TEC';   
+            
+            $this->render('admin/lctec/painel', $this->dados);
+        }
     }
     
     public function avisos()
     {
         $this->dados['title'] .= ' AVISOS LC/TEC';   
-        Sessao::naoLogadoSistema();
-        $this->render('admin/lctec/painel', $this->dados);
+        if(Sessao::naoLogadoSistema()){
+            $this->render('admin/lctec/painel', $this->dados);
+        }
     }
     public function cadastros()
     {
         $this->dados['title'] .= ' CADASTROS LC/TEC';   
-        Sessao::naoLogadoSistema();
-        $this->render('admin/lctec/cadastros/cadastros', $this->dados);
+        if(Sessao::naoLogadoSistema()){
+            $this->render('admin/lctec/cadastros/cadastros', $this->dados);
+        }
     }
     public function empresas()
     {
         $this->dados['title'] .= ' EMPRESAS LC/TEC';   
-        Sessao::naoLogadoSistema();
-        $this->render('admin/lctec/empresas/empresas', $this->dados);
+        if(Sessao::naoLogadoSistema()){
+            $this->render('admin/lctec/empresas/empresas', $this->dados);
+        }
     }
     public function suporte()
     {
         $this->dados['title'] .= ' SUPORTE LC/TEC';   
-        Sessao::naoLogadoSistema();
-        $this->render('admin/lctec/suporte/listar', $this->dados);
+        if(Sessao::naoLogadoSistema()){
+            $this->render('admin/lctec/suporte/listar', $this->dados);
+        }
     }
     public function links()
     {
-        Sessao::naoLogadoSistema();
-        $this->dados['title'] .= ' CADASTRO DE LINKS LC/TEC';   
-       
-        $this->render('admin/lctec/cadastros/links', $this->dados);
+           
+        if(Sessao::naoLogadoSistema()){
+            $this->dados['title'] .= ' CADASTRO DE LINKS LC/TEC';
+            $this->render('admin/lctec/cadastros/links', $this->dados);
+        }
+        
     }
     public function modulos()
     {
-        Sessao::naoLogadoSistema();
-        $this->dados['title'] .= ' LC/TEC >> MÓDULOS DO SISTEMA';   
-        $this->link[1] = ['link'=> 'lctec','nome' => 'MÓDULOS LC/TEC >>'];
-        $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
-        $this->render('admin/lctec/modulos/modulos', $this->dados);
+        if(Sessao::naoLogadoSistema()){
+            $this->dados['title'] .= ' LC/TEC >> MÓDULOS DO SISTEMA';   
+            $this->link[1] = ['link'=> 'lctec','nome' => 'MÓDULOS LC/TEC >>'];
+            $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
+            $this->render('admin/lctec/modulos/modulos', $this->dados);
+        }
     }
     public function modulos_alteracao()
     {
-        Sessao::naoLogadoSistema();
-        $this->dados['title'] .= ' LC/TEC >> MÓDULOS DO SISTEMA';   
-        $this->link[1] = ['link'=> 'lctec','nome' => 'MÓDULOS LC/TEC >>'];
-        $dados = filter_input_array(INPUT_GET, FILTER_SANITIZE_URL);
-        $dados = explode("/",$dados['url']);
         $ok = false;
-        if (isset($dados[1]) && $dados[1] == 'modulos_alteracao' && isset($dados[2])) {
-            
-            if($_SESSION['USU_NIVEL'] >= 15){
+        if(Sessao::naoLogadoSistema()){
+            $this->dados['title'] .= ' LC/TEC >> MÓDULOS DO SISTEMA';   
+            $this->link[1] = ['link'=> 'lctec','nome' => 'MÓDULOS LC/TEC >>'];
+            $dados = filter_input_array(INPUT_GET, FILTER_SANITIZE_URL);
+            $dados = explode("/",$dados['url']);
+        
+            if (isset($dados[1]) && $dados[1] == 'modulos_alteracao' && isset($dados[2])) {
+                
+                if($_SESSION['USU_NIVEL'] >= 15){
 
-                $this->dados['modulo'] = $this->Modulos->setCodigo($dados[2])->listar(0);
-                if ($this->dados['modulo'] != 0) {
-                    $ok = true;
-                }else {
-                    $ok = false;
+                    $this->dados['modulo'] = $this->Modulos->setCodigo($dados[2])->listar(0);
+                    if ($this->dados['modulo'] != 0) {
+                        $ok = true;
+                    }else {
+                        $ok = false;
+                    }
+                }else{
+                    Sessao::alert('ERRO',' ERRO: CLI22 - Acesso nao permitido!','alert alert-danger');
                 }
             }else{
-                Sessao::alert('ERRO',' ERRO: CLI22 - Acesso nao permitido!','alert alert-danger');
-            }
-        }else{
-            Sessao::alert('ERRO',' ERRO: CLI11 - Dados inválido(s)!','alert alert-danger');
-        } 
+                Sessao::alert('ERRO',' ERRO: CLI11 - Dados inválido(s)!','alert alert-danger');
+            } 
+        }
         if($ok){
             $this->render('admin/lctec/modulos/alterar', $this->dados);
         }else{
