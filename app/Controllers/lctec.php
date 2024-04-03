@@ -85,8 +85,9 @@ class lctec extends View
     }
     public function links()
     {
-        $this->dados['title'] .= ' CADASTRO DE LINKS LC/TEC';   
         Sessao::naoLogadoSistema();
+        $this->dados['title'] .= ' CADASTRO DE LINKS LC/TEC';   
+       
         $this->render('admin/lctec/cadastros/links', $this->dados);
     }
     public function modulos()
