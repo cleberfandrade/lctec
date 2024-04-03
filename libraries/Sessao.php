@@ -60,8 +60,11 @@ class Sessao
     }
     public static function naoLogadoSistema()
     {
-        if(!isset($_SESSION['USU_COD']) && !isset($_SESSION['USU_NIVEL']) && $_SESSION['USU_NIVEL'] >= 30){
-            Url::redirecionar('login');
+        if(!isset($_SESSION['USU_COD']) or !isset($_SESSION['USU_NIVEL'])){
+            if($_SESSION['USU_NIVEL'] <= 30){
+                Url::redirecionar('login');
+                return false;
+            }
         }else{
             return true;
         }
