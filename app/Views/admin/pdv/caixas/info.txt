@@ -1,1 +1,4 @@
 <a type="button" href="<?= DIRPAGE ?>caixas/fechar/<?= $caixas[$i]['EMP_COD'].'/'.$caixas[$i]['CXA_COD'].'/'.'/'.date('Y-m-d') ?>" class="btn btn-success btn-sm d-print-none" title="Fechar o caixa"><i class="fa fa-circle-check"></i></a>
+
+
+CREATE TABLE `u693937037_lctec`.`tb_mov_caixas` ( `MVC_COD` INT(11) NOT NULL AUTO_INCREMENT , `EMP_COD` INT(11) NOT NULL , `CXA_COD` INT(11) NOT NULL , `USU_COD` INT NOT NULL , `MVC_DT_CADASTRO` DATETIME NOT NULL , `MVC_DT_ATUALIZACAO` DATETIME NULL , `MVC_DATA` DATE NOT NULL , `MVC_HORARIO` TIME NOT NULL , `MVC_DESCRICAO` VARCHAR(155) NULL , `MVC_TIPO` INT(11) NOT NULL , `MVC_OBSERVACAO` VARCHAR(355) NULL , `MVC_VALOR` DECIMAL(10,2) NULL , `MVC_STATUS` INT(11) NOT NULL , PRIMARY KEY (`MVC_COD`), INDEX `EMP_COD` (`EMP_COD`(11)), INDEX `CXA_COD` (`CXA_COD`(11)), INDEX `USU_COD` (`USU_COD`)) ENGINE = InnoDB;
