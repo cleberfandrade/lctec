@@ -101,6 +101,7 @@ class login extends View
             Sessao::alert('OK','Acesso encerrado!','fs-4 alert alert-success');
         }
         unset($_SESSION['USU_COD']);
+        unset($_SESSION['USU_NIVEL']);
         session_destroy();
         Url::redirecionar('site/index');
     }
