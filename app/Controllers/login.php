@@ -90,6 +90,7 @@ class login extends View
     public function sair()
     {
         $this->dados['title'] = 'LC/TEC | Acesso Administrativo';
+        session_start();
         Sessao::logado();
         $this->Usuarios->setCodUsuario($_SESSION['USU_COD']);
         $dados = array(
