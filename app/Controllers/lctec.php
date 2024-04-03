@@ -83,6 +83,8 @@ class lctec extends View
         if(Sessao::naoLogadoSistema()){
             $this->dados['title'] .= ' EMPRESAS LC/TEC';   
             $this->render('admin/lctec/empresas/empresas', $this->dados);
+        }else{
+            $this->render('admin/login', $this->dados);
         }
     }
     public function suporte()
