@@ -81,7 +81,10 @@ class caixas extends View
              
                 $this->dados['caixa'] = $this->Caixas->setCodEmpresa($dados[2])->setCodigo($dados[3])->listar(0);
                 if ($this->dados['caixa'] != 0) {
-                    $this->dados['ab_caixas'] = $this->AberturaFechamentoCaixas->setCodEmpresa($dados[2])->setCodCaixa($dados[3])->checarStatusCaixa(0);
+                    if(!isset($dados[4])){
+                        $dados[4] = date('Y-m-d');
+                    }
+                    $this->dados['ab_caixas'] = $this->AberturaFechamentoCaixas->setCodEmpresa($dados[2])->setCodCaixa($dados[3])->setData($dados[4])->checarStatusCaixa(0);
                     $ok = true;
                 }
             }else{
@@ -153,7 +156,6 @@ class caixas extends View
         $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
         $ok = false;
         $dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);
-
         
     }
     public function alteracao():void

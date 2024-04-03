@@ -31,7 +31,7 @@ class AberturaFechamentoCaixas extends Model
 { 
     private $tabela = 'tb_ab_caixas';
     private $Model = '';
-    private $codigo,$codEmpresa,$codCaixa,$descricao,$tipo;
+    private $codigo,$codEmpresa,$codCaixa,$descricao,$tipo,$data;
 
     public function __construct()
     {
@@ -58,9 +58,14 @@ class AberturaFechamentoCaixas extends Model
         $this->tipo = $tipo;
         return $this;
     }
+    public function setData($data)
+    {
+        $this->data = $data;
+        return $this;
+    }
     public function checarStatusCaixa()
     {
-        $parametros = "AF INNER JOIN tb_empresas E ON AF.EMP_COD=E.EMP_COD INNER JOIN tb_caixas C ON AF.CXA_COD=C.CXA_COD WHERE AF.EMP_COD={$this->codEmpresa} AND AF.CXA_COD={$this->codCaixa} DESC LIMIT 1";
+        $parametros = "AF INNER JOIN tb_empresas E ON AF.EMP_COD=E.EMP_COD INNER JOIN tb_caixas C ON AF.CXA_COD=C.CXA_COD WHERE AF.EMP_COD={$this->codEmpresa} AND AF.CXA_COD={$this->codCaixa} AND AF.ABF_DATA='{}' DESC LIMIT 1";
         $campos = "*";
         $resultado = $this->Model->exibir($parametros, $campos, $ver = 0, $id = false);
         if ($resultado) {
@@ -86,18 +91,18 @@ class AberturaFechamentoCaixas extends Model
     {
         $parametros = "AB INNER JOIN tb_empresas E ON AB.EMP_COD=E.EMP_COD INNER JOIN tb_caixas C ON AB.CXA_COD=C.CXA_COD WHERE AB.EMP_COD={$this->codEmpresa} ORDER BY AB.ABF_DATA DESC";
         $campos = "*";
-        $resultado = $this->Model->exibir($parametros, $campos, $ver = 0, $id = false);
+        $resultado = $this->Model->exibir($parametros, $campos, $ver, $id = false);
         if ($resultado) {
             return $resultado;
         } else {
             return false;
         }
     }
-    public function listarTodosPorTipo($ver = 0)
+    public function checarAFCaixa($ver = 0)
     {
         $parametros = "AB INNER JOIN tb_empresas E ON AB.EMP_COD=E.EMP_COD INNER JOIN tb_caixas C ON AB.CXA_COD=C.CXA_COD WHERE AB.EMP_COD={$this->codEmpresa} AND AB.CXA_COD={$this->codCaixa} ORDER BY AB.ABF_DATA DESC";
         $campos = "*";
-        $resultado = $this->Model->exibir($parametros, $campos, $ver = 0, $id = false);
+        $resultado = $this->Model->exibir($parametros, $campos, $ver, $id = false);
         if ($resultado) {
             return $resultado;
         } else {
