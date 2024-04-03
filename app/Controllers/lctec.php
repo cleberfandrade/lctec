@@ -51,7 +51,7 @@ class lctec extends View
     public function index()
     {
         if(Sessao::naoLogadoSistema()){
-            dump('ok');
+            dump($_SESSION);
             exit;
             $this->dados['empresas'] = $this->Empresas->listarTodos();
             $this->dados['usuario'] = $this->Usuarios->setCodUsuario($_SESSION['USU_COD'])->listar(0);
