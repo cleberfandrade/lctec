@@ -1,8 +1,13 @@
 <?php 
 use Libraries\Sessao;
+use App\Models\AberturaFechamentoCaixas;
 
 include_once 'app/Views/admin/inc/cabecalho.phtml'; 
+
+$Abfc = new AberturaFechamentoCaixas;
+
 $qtd = (is_array($caixas) ? count($caixas) : 0);
+
 ?>
 <body class="">
     <div class="d-flex" id="wrapper">
@@ -57,7 +62,17 @@ $qtd = (is_array($caixas) ? count($caixas) : 0);
                                     for ($i= 0; $i < $qtd; $i++) { ?>
                                     <tr class="<?= ($caixas[$i]['CXA_STATUS'] == 0 && $_SESSION['USU_NIVEL'] >= 8)? 'bg-secondary' : ''; ?>">
                                         <td class="text-center align-middle"><?= $b; ?></td>
-                                        <td class="text-center align-middle"><a type="button" href="<?= DIRPAGE ?>caixas/aberturas_fechamentos/<?= $caixas[$i]['EMP_COD'].'/'.$caixas[$i]['CXA_COD'].'/'.date('Y-m-d') ?>" class="btn btn-success btn-sm d-print-none" title="Abrir ou Fechar caixa"  title="Deseja ativar?" ><i class="fa fa-circle-check"></i></a></td>
+                                        <td class="text-center align-middle">
+                                        <?php 
+                                        $checar = $Abfc->setCodEmpresa($caixas[$i]['EMP_COD'])->setCodCaixa($caixas[$i]['CXA_COD'])->checarAFCaixa(0);
+                                            if($checar != 0 && $checar['ABF_STATUS'] == 1){?>
+                                                <button type="button" class="btn btn-danger btn-sm d-print-none" data-bs-toggle='modal' data-bs-target="#stsAF" data-codigo="<?= $caixas[$i]['CXA_COD']; ?>" data-nome="<?= $caixas[$i]['CXA_DESCRICAO']; ?>" date-saldo="<?= $Caixas[$i]['CXA_SALDO'] ?>" data-status="<?= $caixas[$i]['CXA_STATUS']; ?>"  title="Deseja Fechar o Caixa?" ><i class="fa fa-ban"></i></button>
+                                        <?php }else{ ?>
+                                            <a type="button" href="<?= DIRPAGE ?>caixas/aberturas_fechamentos/<?= $caixas[$i]['EMP_COD'].'/'.$caixas[$i]['CXA_COD'].'/'.date('Y-m-d') ?>" class="btn btn-success btn-sm d-print-none" title="Fechar o caixa"><i class="fa fa-circle-check"></i></a>
+                                        <?php } ?>
+                                        </td>
+                                        
+                                        
                                         <td class="text-center align-middle"><?= $caixas[$i]['CXA_DESCRICAO']; ?></td>
                                         <td class="text-center align-middle"><?= $caixas[$i]['CTA_DESCRICAO']; ?></td>
                                         <td class="text-center align-middle"><?= $caixas[$i]['CXA_SALDO']; ?></td>
@@ -92,6 +107,26 @@ $qtd = (is_array($caixas) ? count($caixas) : 0);
                 </div>
                 <div class="modal-body text-center">
                     <p class="text-center text-uppercase mx-auto">Confirma mudança de status deste registro?</p>
+                    <span id="NOME" class="mt-3 text-center h5"></span>
+                </div>
+                <div class="modal-footer">
+                    <input type="hidden" id="CXA_STATUS" name="CXA_STATUS" value="" />
+                    <input type="hidden" id="CODIGO" name="CXA_COD" value="" />
+                    <input type="hidden" id="EMP_COD" name="EMP_COD" value="<?= $empresa['EMP_COD'] ?>" />
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">CANCELAR</button>
+                    <button id="sts" type="button" class="btn btn-dark" value=""></button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal" id="stsAF" tabindex="-1" role="dialog" data-bs-backdrop="true" aria-labelledby="status" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div id="title" class="modal-header text-center text-uppercase">
+                    
+                </div>
+                <div class="modal-body text-center">
+                    <p class="text-center text-uppercase mx-auto">Confirma a Abertuta/Fechamento deste Caixa?</p>
                     <span id="NOME" class="mt-3 text-center h5"></span>
                 </div>
                 <div class="modal-footer">

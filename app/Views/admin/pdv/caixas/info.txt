@@ -1,0 +1,1 @@
+<a type="button" href="<?= DIRPAGE ?>caixas/fechar/<?= $caixas[$i]['EMP_COD'].'/'.$caixas[$i]['CXA_COD'].'/'.'/'.date('Y-m-d') ?>" class="btn btn-success btn-sm d-print-none" title="Fechar o caixa"><i class="fa fa-circle-check"></i></a>
