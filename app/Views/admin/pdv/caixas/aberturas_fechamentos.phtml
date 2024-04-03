@@ -89,26 +89,28 @@ if ($qtdAF !=0) {
                             <h5 class="modal-title">ABERTURA/FECHAMENTO</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                        <div class="modal-body">
-                            <h5 class="modal-title">CONFIRMAR ABERTURA/FECHAMENTO</h5>
-                            <form>
-                                <div class="mb-3">
-                                    <label for="recipient-name" class="col-form-label">USUÁRIO:</label>
-                                    <input type="text" class="form-control">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="message-text" class="col-form-label">SENHA:</label>
-                                    <input type="password" class="form-control"></textarea>
-                                </div>
-                            </form>
-                        </div>
-                        <div class="modal-footer">
-                            <input type="hidden" id="AFC_STATUS" name="AFC_STATUS" value="" />
-                            <input type="hidden" id="EMP_COD" name="EMP_COD" value="<?= $empresa['EMP_COD'] ?>" />
-                            <input type="hidden" id="USU_COD" name="USU_COD" value="<?= $_SESSION['USU_COD'] ?>" />
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">CANCELAR</button>
-                            <button type="button" id="sts" class="btn btn-primary">ABRIR/FECHAR - CAIXA</button>
-                        </div>
+                        <form action="<?= DIRPAGE ?>caixas/status_abertura_fechamento" method="post">
+                            <div class="modal-body">
+                                <h5 class="modal-title">CONFIRMAR ABERTURA/FECHAMENTO</h5>
+                                
+                                    <div class="mb-3">
+                                        <label for="recipient-name" class="col-form-label">USUÁRIO:</label>
+                                        <input type="text" name="USU_COD_CAIXA" class="form-control">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="message-text" class="col-form-label">SENHA:</label>
+                                        <input type="password" name="USU_SENHA_CAIXA" class="form-control"></textarea>
+                                    </div>
+                                
+                            </div>
+                            <div class="modal-footer">
+                                <input type="hidden" id="AFC_STATUS" name="AFC_STATUS" value="" />
+                                <input type="hidden" id="EMP_COD" name="EMP_COD" value="<?= $empresa['EMP_COD'] ?>" />
+                                <input type="hidden" id="USU_COD" name="USU_COD" value="<?= $_SESSION['USU_COD'] ?>" />
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">CANCELAR</button>
+                                <button type="button" id="sts" class="btn btn-primary">ABRIR/FECHAR - CAIXA</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
