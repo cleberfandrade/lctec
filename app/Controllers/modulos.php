@@ -18,7 +18,7 @@ class modulos extends View
     private $link,$Modulos,$Usuarios,$Empresas,$UsuariosEmpresa,$Check,$Util,$ModulosEmpresa;
     public function __construct()
     {
-        Sessao::logadoSistema();
+        Sessao::naoLogadoSistema();
         $this->Empresas = new Empresas;
         $this->Check = new Check;
         $this->Util = new Util;
@@ -48,14 +48,14 @@ class modulos extends View
     }
     public function index()
     {
-        Sessao::logadoSistema();
+        Sessao::naoLogadoSistema();
         $this->dados['title'] .= ' LC/TEC >> MÓDULOS DO SISTEMA';   
         $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
         $this->render('admin/lctec/modulos/modulos', $this->dados);
     }
     public function listar()
     {
-        Sessao::logadoSistema();
+        Sessao::naoLogadoSistema();
         $this->dados['title'] .= ' LC/TEC >> MÓDULOS DO SISTEMA';   
 
         $this->dados['modulos_empresas'] = $this->Modulos->listarTodos(0);
@@ -65,6 +65,7 @@ class modulos extends View
     }
     public function cadastro():void
     {
+        Sessao::naoLogadoSistema();
         $this->dados['title'] .= ' CADASTRAR MÓDULOS';
         $this->link[2] = ['link'=> 'modulos/cadastro','nome' => 'CADASTRAR MÓDULOS'];
         
@@ -73,6 +74,7 @@ class modulos extends View
     }
     public function cadastrar()
     {
+        Sessao::naoLogadoSistema();
         $this->dados['title'] .= ' CADASTRAR MÓDULOS';
         $this->link[2] = ['link'=> 'modulos/cadastro','nome' => 'CADASTRAR MÓDULOS'];
         $ok = false;
@@ -116,7 +118,7 @@ class modulos extends View
     }
     public function alteracao()
     {
-        Sessao::logadoSistema();
+        Sessao::naoLogadoSistema();
         $this->dados['title'] .= ' LC/TEC >> ALTERAR MÓDULO DO SISTEMA';   
         $this->link[2] = ['link'=> 'lctec/modulos/alteracao','nome' => 'ALTERAR MÓDULO'];
 
@@ -148,6 +150,7 @@ class modulos extends View
     }
     public function alterar()
     {
+        Sessao::naoLogadoSistema();
         $this->dados['title'] = ' LC/TEC >> ALTERAR MÓDULO DO SISTEMA';   
         $dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);
         $ok = false;

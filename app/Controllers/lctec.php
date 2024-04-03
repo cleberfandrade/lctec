@@ -62,36 +62,36 @@ class lctec extends View
     public function avisos()
     {
         $this->dados['title'] .= ' AVISOS LC/TEC';   
-        Sessao::logadoSistema();
+        Sessao::naoLogadoSistema();
         $this->render('admin/lctec/painel', $this->dados);
     }
     public function cadastros()
     {
         $this->dados['title'] .= ' CADASTROS LC/TEC';   
-        Sessao::logadoSistema();
+        Sessao::naoLogadoSistema();
         $this->render('admin/lctec/cadastros/cadastros', $this->dados);
     }
     public function empresas()
     {
         $this->dados['title'] .= ' EMPRESAS LC/TEC';   
-        Sessao::logadoSistema();
+        Sessao::naoLogadoSistema();
         $this->render('admin/lctec/empresas/empresas', $this->dados);
     }
     public function suporte()
     {
         $this->dados['title'] .= ' SUPORTE LC/TEC';   
-        Sessao::logadoSistema();
+        Sessao::naoLogadoSistema();
         $this->render('admin/lctec/suporte/listar', $this->dados);
     }
     public function links()
     {
         $this->dados['title'] .= ' CADASTRO DE LINKS LC/TEC';   
-        Sessao::logadoSistema();
+        Sessao::naoLogadoSistema();
         $this->render('admin/lctec/cadastros/links', $this->dados);
     }
     public function modulos()
     {
-        Sessao::logadoSistema();
+        Sessao::naoLogadoSistema();
         $this->dados['title'] .= ' LC/TEC >> MÓDULOS DO SISTEMA';   
         $this->link[1] = ['link'=> 'lctec','nome' => 'MÓDULOS LC/TEC >>'];
         $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
@@ -99,7 +99,7 @@ class lctec extends View
     }
     public function modulos_alteracao()
     {
-        Sessao::logadoSistema();
+        Sessao::naoLogadoSistema();
         $this->dados['title'] .= ' LC/TEC >> MÓDULOS DO SISTEMA';   
         $this->link[1] = ['link'=> 'lctec','nome' => 'MÓDULOS LC/TEC >>'];
         $dados = filter_input_array(INPUT_GET, FILTER_SANITIZE_URL);
