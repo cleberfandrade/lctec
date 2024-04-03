@@ -102,6 +102,8 @@ class login extends View
         }
         unset($_SESSION['USU_COD']);
         unset($_SESSION['USU_NIVEL']);
+        unset($_SESSION['acesso']);
+        $_SESSION = array();
         session_destroy();
         Url::redirecionar('site/index');
     }
