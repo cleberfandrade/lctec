@@ -51,6 +51,8 @@ class lctec extends View
     public function index()
     {
         if(Sessao::naoLogadoSistema()){
+            dump('ok');
+            exit;
             $this->dados['empresas'] = $this->Empresas->listarTodos();
             $this->dados['usuario'] = $this->Usuarios->setCodUsuario($_SESSION['USU_COD'])->listar(0);
             $this->dados['empresa'] = $this->UsuariosEmpresa->setCodEmpresa($_SESSION['EMP_COD'])->setCodUsuario($_SESSION['USU_COD'])->listar(0);
@@ -69,22 +71,25 @@ class lctec extends View
     }
     public function cadastros()
     {
-        $this->dados['title'] .= ' CADASTROS LC/TEC';   
+       
         if(Sessao::naoLogadoSistema()){
+            $this->dados['title'] .= ' CADASTROS LC/TEC';   
             $this->render('admin/lctec/cadastros/cadastros', $this->dados);
         }
     }
     public function empresas()
     {
-        $this->dados['title'] .= ' EMPRESAS LC/TEC';   
+        
         if(Sessao::naoLogadoSistema()){
+            $this->dados['title'] .= ' EMPRESAS LC/TEC';   
             $this->render('admin/lctec/empresas/empresas', $this->dados);
         }
     }
     public function suporte()
     {
-        $this->dados['title'] .= ' SUPORTE LC/TEC';   
+       
         if(Sessao::naoLogadoSistema()){
+            $this->dados['title'] .= ' SUPORTE LC/TEC';   
             $this->render('admin/lctec/suporte/listar', $this->dados);
         }
     }
