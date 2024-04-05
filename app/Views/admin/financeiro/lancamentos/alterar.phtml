@@ -14,7 +14,7 @@ $qtdF = (is_array($fornecedores) ? count($fornecedores) : 0);
         <div id="page-content-wrapper">
         <!-- Top navigation-->
         <?php include_once 'app/Views/admin/inc/menu_topo.phtml'; ?>
-        <div class="container-fluid bg-light p-0">
+        <div class="container-fluid <?= $modulo[0]['MOD_COR'] ?> p-0">
             <header class="py-3">
                 <section class="container px-3">
                     <div class="row gx-3 align-items-center justify-content-center">
