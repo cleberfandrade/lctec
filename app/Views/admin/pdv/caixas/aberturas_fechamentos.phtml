@@ -92,15 +92,15 @@ if ($qtdAF !=0) {
                         <form action="<?= DIRPAGE ?>caixas/status_abertura_fechamento" method="post">
                             <div class="modal-body">
                                 <h5 class="modal-title">CONFIRMAR ABERTURA/FECHAMENTO</h5>
-                                <div class="col-12 mx-auto mb-3">
-                                    <div class="col-4 mb-3">
-                                        <label class="form-label" for="2">SALDO INICIAL(ATUAL)</label>  
+                                <div class="col-12 row mx-auto mb-3">
+                                    <div class="col-6 mb-3">
+                                        <label class="form-label" for="2">SALDO (ATUAL)</label>  
                                         <div class="input-group">    
                                             <span class="input-group-text">R$</span>  
                                             <input type="text" class="form-control form-control-lg real" id="CXA_SALDO" name="CXA_SALDO" value="">
                                         </div>
                                     </div>
-                                    <div class="col-4 form-floating mb-2">
+                                    <div class="col-6 form-floating mb-2">
                                         <input type="date" name="AF_DATA" class="form-control form-control-lg" value="<?= date('Y-m-d') ?>">
                                         <label class="form-label">DATA</label>
                                     </div>
@@ -141,13 +141,13 @@ if ($qtdAF !=0) {
         const exampleModal = document.getElementById('af_caixa')
         if (exampleModal) {
             exampleModal.addEventListener('show.bs.modal', event => {
-            // Button that triggered the modal
-            const button = event.relatedTarget
-            // Extract info from data-bs-* attributes
-            const caixa = button.getAttribute('data-caixa')
+                // Button that triggered the modal
+                const button = event.relatedTarget
+                // Extract info from data-bs-* attributes
+                const caixa = button.getAttribute('data-caixa')
 
-            console.log(caixa);
-        });
+                console.log(caixa);
+            });
         }
         $("#sts").click(function(){
             var EMP_COD = $('#EMP_COD').val();
@@ -182,6 +182,12 @@ if ($qtdAF !=0) {
                 //setTimeout( () => { window.location.href="<? //= DIRPAGE ?>caixas"}, 3000);
             });
 
+        });
+        $('.real').maskMoney({
+            prefix:'',
+            allowNegative: true,
+            thousands:'', decimal:'.',
+            affixesStay: true
         });
     </script>
 </body>
