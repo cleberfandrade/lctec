@@ -7,39 +7,22 @@ include_once 'app/Views/admin/inc/cabecalho.phtml';
 $qtd = (is_array($estoques) ? count($estoques) : 0);
 $qtdE = (is_array($empresa) ? count($empresa) : 0);
 $qtdM = (is_array($movimentacoes) ? count($movimentacoes) : 0);
-$qtdF = (is_array($formas_pagamentos) ? count($formas_pagamentos) : 0);
-$qtdCA = (is_array($caixas) ? count($caixas) : 0);
-$qtdEstoque = 0;
-for ($i=0; $i < $qtd; $i++) { if ($estoques[$i]['EST_STATUS'] == 1) {$qtdEstoque++; }}
-$qtdClientes = (is_array($clientes) ? count($clientes) : 0);
 
-$motivos_entrada = array(
-    1 =>'COMPRA',
-    2 =>'DEVOLUÇÃO DO CLIENTE',
-    3 =>'OUTROS'
-);
-$motivos_saida = array(
-    1 =>'VENDA',
-    2 =>'DEVOLUÇÃO AO FORNECEDOR',
-    3 =>'PERDA',
-    4 =>'OUTROS'
-);
+$qtdC = (is_array($clientes) ? count($clientes) : 0);
+
 $motivos = array(
     0 => '---',
-    1 =>'ENTRADA-COMPRA',
-    2 =>'SAÍDA-VENDA',
-    3 =>'ENTRADA-DEVOLUÇÃO DO CLIENTE',
-    4 =>'SAÍDA-DEVOLUÇÃO AO FORNECEDOR',
-    5 =>'SAÍDA-PERDA',
-    6 =>'ENTRADA.SAÍDA-OUTROS'
+    1 =>'COMPRA',
+    2 =>'VENDA',
+    3 =>'AJUSTE',
+    4 =>'DEVOLUÇÃO CLIENTE',
+    5=>'DEVOLUÇÃO FORNECEDOR',
+    6=>'PERDA',
+    7=>'OUTROS'
 );
 $qtdMotivos = (is_array($motivos) ? count($motivos) : 0);
-$qtdMotEntrada = (is_array($motivos_entrada) ? count($motivos_entrada) : 0);
-$qtdMotSaida = (is_array($motivos_saida) ? count($motivos_saida) : 0);
-$contagem = 1;
 ?>
 <style>
-
 .hidden {
   display: none; }
 </style>
@@ -69,8 +52,30 @@ $contagem = 1;
             </header>
             
             <section class="container bg-light mx-auto py-2">
-                
+                <div class="col-12 row">
+                    <div class="col-6 text-dark text-center">
+                        <div class="card-body">
+                            <h5 class="card-title">ESTOQUE ATUAL</h5>
+                            <p class="card-text">Verifique o estoque atual dos seus produtos</p>
+                            <a href="<?= DIRPAGE ?>estoques/produtos_atual" class="btn btn-dark">ACESSAR</a>
+                        </div>
+                    </div>    
+                    <div class="col-6 <?= $modulo[0]['MOD_COR'] ?> text-center">
+                        <div class="card-body">
+                            <h5 class="card-title">MOVIMENTAR PRODUTOS</h5>
+                            <p class="card-text">Cadastre/Altere as suas entradas e saídas de produtos</p>
+                            <a href="<?= DIRPAGE ?>movimentacoes" class="btn btn-dark">ACESSAR</a>
+                        </div>
+                    </div>
+                    <hr class="my-4 bg-light text-dark">
+                    <div class="col-12 mx-auto bg-light text-center m-1">
+                        <a class="col-4 btn btn-sm text-uppercase btn-secondary" href="<?= DIRPAGE; ?>estoques"><i class="bi bi-arrow-left"></i> VOLTAR AOS ESTOQUES</a>
+                        <a class="col-4 btn btn-sm text-uppercase btn-secondary" href="<?= DIRPAGE; ?>movimentacoes"><i class="bi bi-arrow-left"></i> VOLTAR AS MOVIMENTAÇÕES</a>
+                    </div>
+                </div>
             </section>
+
+            
             <?php include_once 'app/Views/admin/inc/rodape.phtml';?>
 
         </div>
