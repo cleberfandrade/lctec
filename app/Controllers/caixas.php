@@ -256,6 +256,7 @@ class caixas extends View
              
                 $this->dados['caixa'] = $this->Caixas->setCodEmpresa($dados[2])->setCodigo($dados[3])->listar(0);
                 if ($this->dados['caixa'] != 0) {
+                    $this->dados['af_caixa'] = $this->AberturaFechamentoCaixas->setCodEmpresa($dados[2])->setCodCaixa($dados[3])->listar(0);
                     $ok = true;
                 }
             }else{

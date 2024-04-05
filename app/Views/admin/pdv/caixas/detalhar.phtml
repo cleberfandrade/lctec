@@ -6,16 +6,9 @@ $Abfc = new AberturaFechamentoCaixas;
 
 include_once 'app/Views/admin/inc/cabecalho.phtml'; 
 
-$qtdAF = (is_array($ab_caixas)? count($ab_caixas): 0);
+$qtdAF = (is_array($af_caixa)? count($af_caixa): 0);
 $qtd = (is_array($caixa) ? count($caixa) : 0);
 
-if ($qtdAF !=0) {
-    # code...
-} else {
-    # code...
-}
-
-//$af = $Abfc->setCodEmpresa($_SESSION['EMP_COD'])-
 ?>
 <body class="">
     <div class="d-flex" id="wrapper">
