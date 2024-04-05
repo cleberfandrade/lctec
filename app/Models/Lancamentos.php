@@ -154,17 +154,4 @@ class Lancamentos extends Model
             return false;
         }
     }
-    public function excluir($ver = 0)
-    {
-        $parametros = "WHERE EMP_COD='{$this->codEmpresa}' AND LAN_COD=";
-        $this->Model->setParametros($parametros);
-        $this->Model->setCodigo($this->codigo);
-        $ok = false;
-        $ok = $this->Model->deletar($ver);
-        if ($ok) {
-            return true;
-        } else {
-            return false;
-        }
-    }
 }
