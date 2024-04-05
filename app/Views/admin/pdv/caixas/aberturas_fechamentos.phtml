@@ -131,23 +131,23 @@ if ($qtdAF !=0) {
         });
         }
         $("#sts").click(function(){
-            var CXA_COD = $('#CXA_COD').val();
             var EMP_COD = $('#EMP_COD').val();
             var USU_COD = $('#USU_COD').val();
-            var USU_STATUS = $('#USU_STATUS').val();
-            var AFC_STATUS = $('#sts').val();
-            var MOV_STATUS = $('#MOV_STATUS').val();
+            var CXA_COD = $('#CXA_COD').val();
+            var USU_COD_CAIXA = $('#USU_COD_CAIXA').val();
+            var USU_SENHA_CAIXA = $('#USU_SENHA_CAIXA').val();
+            var AFC_STATUS = $('#AFC_STATUS').val();
             setTimeout(function () {
-                    $('#status').modal('hide');
-            }, 100);
-            $.post('<?= DIRPAGE; ?>movimentacoes/reverter_movimentacao', {
-                PRO_COD: PRO_COD,
-                EXCLUIR_MOVIMENTACAO_PRODUTO: true,
+                    $('#af_caixa').modal('hide');
+            }, 200);
+            $.post('<?= DIRPAGE; ?>caixas/status_abertura_fechamento', {
+                ABERTURA_FECHAMENTO: true,
                 EMP_COD:EMP_COD,
-                EST_COD:EST_COD,
-                MOV_COD:MOV_COD, 
-                USU_COD:USU_COD,
-                MOV_STATUS: MOV_STATUS
+                USU_COD: USU_COD,
+                CXA_COD: CXA_COD,
+                USU_COD_CAIXA:USU_COD_CAIXA,
+                USU_SENHA_CAIXA:USU_SENHA_CAIXA, 
+                AFC_STATUS: AFC_STATUS
             }, function(retorno) {
                 var resposta = JSON.parse(retorno);
                 if (resposta['COD'] !== 'ERRO') {
@@ -156,7 +156,7 @@ if ($qtdAF !=0) {
                     $('#resposta2').addClass('alert alert-warning');
                 }
                 $('#resposta2').html(resposta['MENSAGEM']);
-                setTimeout( () => { window.location.href="<?= DIRPAGE ?>movimentacoes/"}, 1000);
+                setTimeout( () => { window.location.href="<?= DIRPAGE ?>caixas"}, 3000);
             });
 
         });
