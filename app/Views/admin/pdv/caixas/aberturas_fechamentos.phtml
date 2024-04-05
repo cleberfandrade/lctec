@@ -92,7 +92,26 @@ if ($qtdAF !=0) {
                         <form action="<?= DIRPAGE ?>caixas/status_abertura_fechamento" method="post">
                             <div class="modal-body">
                                 <h5 class="modal-title">CONFIRMAR ABERTURA/FECHAMENTO</h5>
-                                
+                                <div class="col-12 mx-auto mb-3">
+                                    <div class="col-4 mb-3">
+                                        <label class="form-label" for="2">SALDO INICIAL(ATUAL)</label>  
+                                        <div class="input-group">    
+                                            <span class="input-group-text">R$</span>  
+                                            <input type="text" class="form-control form-control-lg real" id="CXA_SALDO" name="CXA_SALDO" value="">
+                                        </div>
+                                    </div>
+                                    <div class="col-4 form-floating mb-2">
+                                        <input type="date" name="AF_DATA" class="form-control form-control-lg" value="<?= date('Y-m-d') ?>">
+                                        <label class="form-label">DATA</label>
+                                    </div>
+                                    <div class="col-12 mb-3">
+                                        <label class="form-label" for="1">OBSERVAÇÃO</label>
+                                        <div class="form-floating mb-3">
+                                            <textarea class="form-control maiusculo" id="AF_OBSERVACAO" name="AF_OBSERVACAO"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 mx-auto mb-3">
                                     <div class="mb-3">
                                         <label for="recipient-name" class="col-form-label">USUÁRIO:</label>
                                         <input type="text" name="USU_COD_CAIXA" class="form-control">
@@ -101,7 +120,7 @@ if ($qtdAF !=0) {
                                         <label for="message-text" class="col-form-label">SENHA:</label>
                                         <input type="password" name="USU_SENHA_CAIXA" class="form-control"></textarea>
                                     </div>
-                                
+                                </div>
                             </div>
                             <div class="modal-footer">
                                 <input type="hidden" id="AFC_STATUS" name="AFC_STATUS" value="" />
@@ -121,7 +140,7 @@ if ($qtdAF !=0) {
     <script type="text/javascript">
         const exampleModal = document.getElementById('af_caixa')
         if (exampleModal) {
-        exampleModal.addEventListener('show.bs.modal', event => {
+            exampleModal.addEventListener('show.bs.modal', event => {
             // Button that triggered the modal
             const button = event.relatedTarget
             // Extract info from data-bs-* attributes
@@ -134,6 +153,8 @@ if ($qtdAF !=0) {
             var EMP_COD = $('#EMP_COD').val();
             var USU_COD = $('#USU_COD').val();
             var CXA_COD = $('#CXA_COD').val();
+            var AFC_DATA = $('#AFC_DATA').val();
+            var AFC_SALDO = $('#AFC_SALDO').val();
             var USU_COD_CAIXA = $('#USU_COD_CAIXA').val();
             var USU_SENHA_CAIXA = $('#USU_SENHA_CAIXA').val();
             var AFC_STATUS = $('#AFC_STATUS').val();
@@ -145,18 +166,20 @@ if ($qtdAF !=0) {
                 EMP_COD:EMP_COD,
                 USU_COD: USU_COD,
                 CXA_COD: CXA_COD,
+                AFC_DATA: AFC_DATA,
+                AFC_SALDO: AFC_SALDO,
                 USU_COD_CAIXA:USU_COD_CAIXA,
                 USU_SENHA_CAIXA:USU_SENHA_CAIXA, 
                 AFC_STATUS: AFC_STATUS
             }, function(retorno) {
                 var resposta = JSON.parse(retorno);
                 if (resposta['COD'] !== 'ERRO') {
-                    $('#resposta2').addClass('alert alert-success');
+                    $('#resposta').addClass('alert alert-success');
                 }else{
-                    $('#resposta2').addClass('alert alert-warning');
+                    $('#resposta').addClass('alert alert-warning');
                 }
-                $('#resposta2').html(resposta['MENSAGEM']);
-                setTimeout( () => { window.location.href="<?= DIRPAGE ?>caixas"}, 3000);
+                $('#resposta').html(resposta['MENSAGEM']);
+                //setTimeout( () => { window.location.href="<? //= DIRPAGE ?>caixas"}, 3000);
             });
 
         });
