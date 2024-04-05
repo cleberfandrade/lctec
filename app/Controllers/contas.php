@@ -6,6 +6,7 @@ use App\Models\Classificacoes;
 use App\Models\Empresas;
 use App\Models\Contas as ModelsContas;
 use App\Models\FormasPagamentos;
+use App\Models\ModulosEmpresa;
 use App\Models\Movimentacoes;
 use App\Models\Usuarios;
 use App\Models\UsuariosEmpresa;
@@ -18,7 +19,7 @@ use Libraries\Url;
 class contas extends View
 {
     private $dados = [];
-    private $link,$Financas,$Check,$Usuarios,$UsuariosEmpresa,$Contas,$Movimentacoes,$FormasPagamentos,$Caixas,$Classificacoes;
+    private $link,$Financas,$Check,$Usuarios,$UsuariosEmpresa,$Contas,$Movimentacoes,$FormasPagamentos,$Caixas,$Classificacoes,$ModulosEmpresa;
     public function __construct()
     {
         Sessao::naoLogado();
@@ -31,6 +32,7 @@ class contas extends View
         $this->Caixas = new Caixas;
         $this->Classificacoes = new Classificacoes;
         $this->FormasPagamentos = new FormasPagamentos;
+        $this->ModulosEmpresa = new ModulosEmpresa;
 
         $this->dados['empresa'] = $this->UsuariosEmpresa->setCodEmpresa($_SESSION['EMP_COD'])->setCodUsuario($_SESSION['USU_COD'])->listar(0);
         $this->dados['usuario'] = $this->Usuarios->setCodUsuario($_SESSION['USU_COD'])->listar(0);
@@ -38,6 +40,12 @@ class contas extends View
         $this->dados['classificacoes'] = $this->Classificacoes->setCodEmpresa($_SESSION['EMP_COD'])->setTipo(11)->listarTodosPorTipo(0);
         $this->dados['formas_pagamentos'] = $this->FormasPagamentos->setCodEmpresa($_SESSION['EMP_COD'])->listarTodasAtivas(0);
         $this->dados['caixas'] = $this->Caixas->setCodEmpresa($_SESSION['EMP_COD'])->listarTodos(0);
+        $this->dados['modulo'] = $this->ModulosEmpresa->setCodEmpresa($_SESSION['EMP_COD'])->setCodigo(3)->listarModuloEmpresa(0);
+        
+        if ($this->dados['modulo'] == 0) {
+            Sessao::alert('OK',' MÓDULO NÃO DISPONÍVEL!','alert alert-danger');
+            Url::redirecionar('admin/painel');
+        }
 
         $this->link[0] = ['link'=> 'admin','nome' => 'PAINEL ADMINISTRATIVO'];
         $this->link[1] = ['link'=> 'financeiro','nome' => 'MÓDULO DE FINANÇAS >>'];

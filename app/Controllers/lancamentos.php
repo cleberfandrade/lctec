@@ -47,6 +47,11 @@ class lancamentos extends View
         $this->dados['clientes'] = $this->Clientes->setCodEmpresa($_SESSION['EMP_COD'])->listarTodos(0);
         $this->dados['modulo'] = $this->ModulosEmpresa->setCodEmpresa($_SESSION['EMP_COD'])->setCodigo(3)->listarModuloEmpresa(0);
         
+        if ($this->dados['modulo'] == 0) {
+            Sessao::alert('OK',' MÓDULO NÃO DISPONÍVEL!','alert alert-danger');
+            Url::redirecionar('admin/painel');
+        }
+
         $this->link[0] = ['link'=> 'admin','nome' => 'PAINEL ADMINISTRATIVO'];
         $this->link[1] = ['link'=> 'financeiro','nome' => 'MÓDULO FINANCEIRO'];
         $this->link[2] = ['link'=> 'lancamentos','nome' => 'GERENCIAR LANÇAMENTOS'];
