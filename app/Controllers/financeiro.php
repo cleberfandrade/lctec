@@ -41,7 +41,10 @@ class financeiro extends View
         if ($this->dados['modulos_empresa'] == 0) {
             Sessao::alert('OK',' MÓDULO NÃO DISPONÍVEL!','alert alert-danger');
             Url::redirecionar('admin/painel');
+        }else {
+            $this->dados['modulo'] = $this->ModulosEmpresa->setCodEmpresa($_SESSION['EMP_COD'])->setCodigo(3)->listarModuloEmpresa(0);
         }
+        
         $this->link[0] = ['link'=> 'admin','nome' => 'PAINEL ADMINISTRATIVO'];
         $this->link[1] = ['link'=> 'financeiro','nome' => 'MÓDULO DE FINANÇAS >>'];
     }
