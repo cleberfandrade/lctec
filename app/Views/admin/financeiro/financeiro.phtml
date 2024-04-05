@@ -10,7 +10,7 @@ $qtd = (is_array($contas) ? count($contas) : 0);
         <div id="page-content-wrapper">
         <!-- Top navigation-->
         <?php include_once 'app/Views/admin/inc/menu_topo.phtml'; ?>
-        <div class="container-fluid bg-light p-0">
+        <div class="container-fluid <?= $modulo[0]['MOD_COR'] ?> p-0">
             <header class="py-3">
                 <section class="container px-3">
                     <div class="row gx-3 align-items-center justify-content-center">
@@ -18,7 +18,7 @@ $qtd = (is_array($contas) ? count($contas) : 0);
                             <div class="my-1 px-4 mx-auto">
                                 <a class="text-decoration-none" href="<?= DIRPAGE; ?>financeiro">
                                 <h5 class="fs-2 fw-bolder text-uppercase text-dark mb-2">
-                                    <i class="bi bi-coin"></i> Gerenciar  <span class="text-success">Finanças</span></h5></a>
+                                 <?= $modulo[0]['MOD_ICON'] ?> Gerenciar  <span class="text-success">Finanças</span></h5></a>
                             </div>
                         </div>
                         <?php include_once 'app/Views/admin/inc/saudacao.phtml'; ?>
@@ -29,10 +29,10 @@ $qtd = (is_array($contas) ? count($contas) : 0);
                 </section>
             </header>
             <?php include_once 'app/Views/admin/inc/alertas.phtml'; ?>  
-            <section class="bg-light  text-dark row  py-2">
+            <section class="bg-light text-dark row  py-2">
                 <div class="container mx-auto col-12 row">
                     <?php if ($qtd == 0) { ?>
-                        <div class="card bg-success text-center py-4 mb-4">
+                        <div class="card <?= $modulo[0]['MOD_COR'] ?> text-center py-4 mb-4">
                             <div class="card-body text-white">
                                 <h5 class="card-title">CONTAS DA EMPRESA/NEGÓCIO</h5>
                                 <p class="card-text">Crie sua conta principal</p>
@@ -41,7 +41,7 @@ $qtd = (is_array($contas) ? count($contas) : 0);
                         </div>
                     <?php }else { ?>
                         <div class="row col-12 text-center mb-2 mx-auto">
-                            <div class="col-4 text-bg-success text-center">
+                            <div class="col-4 <?= $modulo[0]['MOD_COR'] ?> text-center">
                                 <div class="card-body">
                                     <h5 class="card-title mt-2">CONTAS DA EMPRESA/NEGÓCIO</h5>
                                     <p class="card-text">Crie/Altere os dados da sua conta principal</p>
@@ -55,7 +55,7 @@ $qtd = (is_array($contas) ? count($contas) : 0);
                                     <a href="<?= DIRPAGE ?>lancamentos" class="btn btn-dark">ACESSAR</a>
                                 </div>
                             </div>
-                            <div class="col-4 text-bg-success text-center">
+                            <div class="col-4 <?= $modulo[0]['MOD_COR'] ?> text-center">
                                 <div class="card-body">
                                     <h5 class="card-title">MOVIMENTAÇÕES</h5>
                                     <p class="card-text">Acesse todas as movimentações da suas contas do sistema</p>
@@ -69,7 +69,7 @@ $qtd = (is_array($contas) ? count($contas) : 0);
                                     <a href="<?= DIRPAGE ?>caixas" class="btn btn-dark">ACESSAR</a>
                                 </div>
                             </div>
-                            <div class="col-4 text-bg-secondary text-center">
+                            <div class="col-4 <?= $modulo[0]['MOD_COR'] ?> text-center">
                                 <div class="card-body">
                                     <h5 class="card-title">CONTAS A RECEBER</h5>
                                     <p class="card-text"></p>
