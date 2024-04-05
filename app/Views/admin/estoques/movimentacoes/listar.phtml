@@ -277,7 +277,7 @@ $qtdMotivos = (is_array($motivos) ? count($motivos) : 0);
             var MOV_COD = $('#sts2').val();
             var MOV_STATUS = $('#MOV_STATUS').val();
             setTimeout(function () {
-                    $('#status').modal('hide');
+                    $('#deletar').modal('hide');
             }, 100);
             $.post('<?= DIRPAGE; ?>movimentacoes/excluir', {
                 EXCLUIR_MOVIMENTACAO_PRODUTO: true,

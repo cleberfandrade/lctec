@@ -308,4 +308,43 @@ class lancamentos extends View
         }
         echo json_encode($respota);
     }
+    public function excluir()
+    {
+        $ok = false;      
+        //Recupera os dados enviados
+        $dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);
+        if (isset($_POST) && isset($dados['EXCLUIR_LANCAMENTO'])) {
+
+            unset($dados['EXCLUIR_LANCAMENTO']);
+    
+            $this->dados['empresa'] = $this->UsuariosEmpresa->setCodEmpresa($_SESSION['EMP_COD'])->setCodUsuario($_SESSION['USU_COD'])->listar(0);
+            
+            $this->dados['lancamento'] = $this->Lancamentos->setCodEmpresa($_SESSION['EMP_COD'])->setCodigo($dados['LAN_COD'])->listar(0);
+            if($this->dados['lancamento'] != 0){
+                if($this->Lancamentos->excluir(0)){
+                    $ok = true;
+                    $respota = array(
+                        'COD'=>'OK',
+                        'MENSAGEM' => 'Exclusão efetuada com sucesso!'
+                    );
+                }else{
+                    $respota = array(
+                        'COD'=>'ERRO',
+                        'MENSAGEM'=> 'ERRO 5- Erro ao excluir seu lançamento, entre em contato com o suporte!'
+                    );
+                }
+            }else{
+                $respota = array(
+                    'COD'=>'ERRO',
+                    'MENSAGEM'=> 'ERRO 2- Dados inválido(s)!'
+                );
+            }
+        }else{
+            $respota = array(
+                'COD'=>'ERRO',
+                'MENSAGEM'=> 'ERRO 1- Acesso inválido!'
+            );
+        }
+        echo json_encode($respota);
+    }
 }
