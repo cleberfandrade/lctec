@@ -16,7 +16,7 @@ include_once 'app/Views/admin/inc/cabecalho.phtml';
                         <div class="col-lg-9 col-xl-9 col-xxl-9">
                             <div class="my-1 px-4 mx-auto">
                                 <a class="text-decoration-none" href="<?= DIRPAGE; ?>cadastros">
-                                <h5 class="fs-2 fw-bolder text-uppercase text-dark"><?= $modulo[0]['MOD_ICON'] ?> Gerenciar <span class="text-success">Cadastros</span></h5></a>
+                                <h5 class="fs-2 fw-bolder text-uppercase text-white"><?= $modulo[0]['MOD_ICON'] ?> Gerenciar <span class="text-dark">Cadastros</span></h5></a>
                             </div>
                         </div>
                         <?php include_once 'app/Views/admin/inc/saudacao.phtml'; ?>   
@@ -30,7 +30,7 @@ include_once 'app/Views/admin/inc/cabecalho.phtml';
             <section class="container-fluid col-12 bg-light mx-auto py-2 mb-5">
                 <div class="col-10 row mx-auto">
                 <?php if (isset($_SESSION['USU_NIVEL']) && $_SESSION['USU_NIVEL'] >= 8) { ?>
-                    <div class="col-6 col-sm-4 text-bg-success text-center">
+                    <div class="col-6 col-sm-4 <?= $modulo[0]['MOD_COR'] ?> text-center">
                         <div class="card-body">
                             <h5 class="card-title">CARGOS/SALÁRIOS</h5>
                             <p class="card-text">Cadastre/Altere os dados dos cargos/salários da sua Empresa/negócio</p>
@@ -45,7 +45,7 @@ include_once 'app/Views/admin/inc/cabecalho.phtml';
                             <a href="<?= DIRPAGE ?>categorias" class="btn btn-dark">ACESSAR</a>
                         </div>
                     </div>
-                    <div class="col-6 col-sm-4 text-bg-success text-center">
+                    <div class="col-6 col-sm-4 <?= $modulo[0]['MOD_COR'] ?> text-center">
                         <div class="card-body">
                             <h5 class="card-title">CLASSIFICAÇÕES</h5>
                             <p class="card-text">Cadastre/Altere os dados das suas classificações</p>
@@ -59,7 +59,7 @@ include_once 'app/Views/admin/inc/cabecalho.phtml';
                             <a href="<?= DIRPAGE ?>clientes" class="btn btn-dark">ACESSAR</a>
                         </div>
                     </div>
-                    <div class="col-6 col-sm-4 text-bg-success  text-center">
+                    <div class="col-6 col-sm-4 <?= $modulo[0]['MOD_COR'] ?> text-center">
                         <div class="card-body">
                             <h5 class="card-title">COLABORADORES</h5>
                             <p class="card-text">Cadastre/Altere os dados dos seus colaboradores</p>
@@ -74,7 +74,7 @@ include_once 'app/Views/admin/inc/cabecalho.phtml';
                             <a href="<?= DIRPAGE ?>empresas" class="btn btn-dark">ACESSAR</a>
                         </div>
                     </div>
-                    <div class="col-6 col-sm-4 text-bg-success text-center" >
+                    <div class="col-6 col-sm-4 <?= $modulo[0]['MOD_COR'] ?> text-center" >
                         <div class="card-body">
                             <h5 class="card-title">ESTOQUES</h5>
                             <p class="card-text">Cadastre/Altere os dados do seu estoque</p>
@@ -89,7 +89,7 @@ include_once 'app/Views/admin/inc/cabecalho.phtml';
                         </div>
                     </div>
                     <?php } ?>
-                    <div class="col-6 col-sm-4 text-bg-success text-center" >
+                    <div class="col-6 col-sm-4 <?= $modulo[0]['MOD_COR'] ?> text-center" >
                         <div class="card-body">
                             <h5 class="card-title">FORNECEDORES</h5>
                             <p class="card-text">Cadastre/Altere os dados dos seus fornecedores</p>
@@ -104,7 +104,7 @@ include_once 'app/Views/admin/inc/cabecalho.phtml';
                             <a href="<?= DIRPAGE ?>cadastros/limite_acesso" class="btn btn-dark">ACESSAR</a>
                         </div>
                     </div>
-                    <div class="col-6 col-sm-4 text-bg-success text-center" >
+                    <div class="col-6 col-sm-4 <?= $modulo[0]['MOD_COR'] ?> text-center" >
                         <div class="card-body">
                             <h5 class="card-title">MÓDULOS</h5>
                             <p class="card-text">Cadastre/Altere os módulos que utiliza</p>
@@ -120,7 +120,7 @@ include_once 'app/Views/admin/inc/cabecalho.phtml';
                         </div>
                     </div>
                     <?php if (isset($_SESSION['USU_NIVEL']) && $_SESSION['USU_NIVEL'] >= 8) { ?>
-                    <div class="col-6 col-sm-4 text-bg-success text-center">
+                    <div class="col-6 col-sm-4 <?= $modulo[0]['MOD_COR'] ?> text-center">
                         <div class="card-body">
                             <h5 class="card-title">USUÁRIOS</h5>
                             <p class="card-text">Cadastre/Altere os dados dos seus usuários do sistema</p>
