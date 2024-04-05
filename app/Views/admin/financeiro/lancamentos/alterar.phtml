@@ -21,8 +21,8 @@ $qtdF = (is_array($fornecedores) ? count($fornecedores) : 0);
                         <div class="col-lg-9 col-xl-9 col-xxl-9">
                             <div class="my-1 px-4 mx-auto">
                                 <a class="text-decoration-none" href="<?= DIRPAGE; ?>lancamentos/alteracao/<?= $lancamento['EMP_COD'] ?>/<?= $lancamento['LAN_COD']?>">
-                                <h5 class="fs-2 fw-bolder text-uppercase text-dark mb-2">
-                                <?= $modulo[0]['MOD_ICON'] ?> Cadastrar  <span class="text-success">Lançamentos a Pagar e/ou Receber</span></h5></a>
+                                <h5 class="fs-2 fw-bolder text-uppercase text-white mb-2">
+                                <?= $modulo[0]['MOD_ICON'] ?> Cadastrar  <span class="text-dark">Lançamentos a Pagar e/ou Receber</span></h5></a>
                             </div>
                         </div>
                         <?php include_once 'app/Views/admin/inc/saudacao.phtml'; ?>
@@ -105,7 +105,7 @@ $qtdF = (is_array($fornecedores) ? count($fornecedores) : 0);
                                 <div class="input-group form-floating mb-3">
                                     <span class="input-group-text">R$</span>
                                     <div class="form-floating">
-                                        <input type="text" class="form-control form-control-lg real" id="LAN_VALOR" name="LAN_VALOR" placeholder="" value="<?= isset($_POST['LAN_VALOR']) ? $_POST['LAN_VALOR'] : (isset($lancamento['LAN_VALOR']) ? $lancamento['LAN_VALOR'] : '0,00'); ?>">
+                                        <input type="text" class="form-control form-control-lg real" id="LAN_VALOR" name="LAN_VALOR" placeholder="" value="<?= isset($_POST['LAN_VALOR']) ? $_POST['LAN_VALOR'] : (isset($lancamento['LAN_VALOR']) ? $lancamento['LAN_VALOR'] : '0.00'); ?>">
                                         <label class="form-label" for="2">VALOR</label>
                                     </div>
                                 </div>
@@ -156,7 +156,7 @@ $qtdF = (is_array($fornecedores) ? count($fornecedores) : 0);
                 $('.real').maskMoney({
                     prefix:'',
                     allowNegative: true,
-                    thousands:'.', decimal:',',
+                    thousands:'', decimal:'.',
                     affixesStay: true
                 });
             })
