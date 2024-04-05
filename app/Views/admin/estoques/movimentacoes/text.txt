@@ -1,7 +1,77 @@
 
 
+<?php 
+use App\Models\Produtos;
+use Libraries\Sessao;
 
+$Produtos = new Produtos;
+include_once 'app/Views/admin/inc/cabecalho.phtml'; 
+$qtd = (is_array($estoques) ? count($estoques) : 0);
+$qtdE = (is_array($empresa) ? count($empresa) : 0);
+$qtdM = (is_array($movimentacoes) ? count($movimentacoes) : 0);
+
+$qtdC = (is_array($clientes) ? count($clientes) : 0);
+
+$motivos = array(
+    0 => '---',
+    1 =>'COMPRA',
+    2 =>'VENDA',
+    3 =>'AJUSTE',
+    4 =>'DEVOLUÇÃO CLIENTE',
+    5=>'DEVOLUÇÃO FORNECEDOR',
+    6=>'PERDA',
+    7=>'OUTROS'
+);
+$qtdMotivos = (is_array($motivos) ? count($motivos) : 0);
+?>
+<body class="">
+    <div class="d-flex" id="wrapper">
+        <?php include_once 'app/Views/admin/inc/menu_lateral.phtml'; ?>
+        <div id="page-content-wrapper bg-light ">
+        <!-- Top navigation-->
+        <?php include_once 'app/Views/admin/inc/menu_topo.phtml'; ?>
+        <div class="container-fluid bg-light p-0">
+            <header class="py-3 <?= $modulo[0]['MOD_COR'] ?> ">
+                <section class="container px-3">
+                    <div class="row gx-5 align-items-center justify-content-center">
+                        <div class="col-lg-9 col-xl-9 col-xxl-9">
+                            <div class="my-1 px-4 mx-auto">
+                                <a class="text-decoration-none" href="<?= DIRPAGE; ?>movimentacoes/listar">
+                                <h3 class="fs-2 fw-bolder text-uppercase text-white"><?= $modulo[0]['MOD_ICON'] ?> <i class="bi bi-arrow-down-up"></i> Listagem de <span class="text-dark"> Movimentação De Produtos</span></h3></a>
+                            </div>
+                        </div>
+                        <?php include_once 'app/Views/admin/inc/saudacao.phtml'; ?> 
+                    </div>
+                </section>
+                <section class="container col-12 mx-auto px-5">
+                    <?= $breadcrumb ?>
+                </section>
+            </header>
+            <?php include_once 'app/Views/admin/inc/alertas.phtml'; ?>  
+           
             
+             <section class="container bg-light mx-auto py-2 mb-0">
+                <div class="col-12 row">
+                    <div class="col-6 text-dark text-center">
+                        <div class="card-body">
+                            <h5 class="card-title">ESTOQUE ATUAL</h5>
+                            <p class="card-text">Verifique o estoque atual dos seus produtos</p>
+                            <a href="<?= DIRPAGE ?>estoques/produtos_atual" class="btn btn-dark">ACESSAR</a>
+                        </div>
+                    </div>    
+                    <div class="col-6 <?= $modulo[0]['MOD_COR'] ?> text-center">
+                        <div class="card-body">
+                            <h5 class="card-title">MOVIMENTAR PRODUTOS</h5>
+                            <p class="card-text">Cadastre/Altere as suas entradas e saídas de produtos</p>
+                            <a href="<?= DIRPAGE ?>movimentacoes" class="btn btn-dark">ACESSAR</a>
+                        </div>
+                    </div>
+                    <hr class="my-4 bg-light text-dark">
+                    <div class="col-12 mx-auto bg-light text-center m-1">
+                        <a class="col-4 btn btn-sm text-uppercase btn-secondary" href="<?= DIRPAGE; ?>estoques"><i class="bi bi-arrow-left"></i> VOLTAR AOS ESTOQUES</a>
+                        <a class="col-4 btn btn-sm text-uppercase btn-secondary" href="<?= DIRPAGE; ?>movimentacoes"><i class="bi bi-arrow-left"></i> VOLTAR AS MOVIMENTAÇÕES</a>
+                    </div>
+            </section>
             <section class="bg-light text-dark">
                 <section class="container bg-light  py-1">
                     <hr>
