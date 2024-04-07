@@ -97,20 +97,19 @@ if ($qtdAF !=0) {
                                         <label class="form-label" for="2">SALDO (ATUAL)</label>  
                                         <div class="input-group">    
                                             <span class="input-group-text">R$</span>  
-                                            <input type="text" class="form-control form-control-lg real" id="CXA_SALDO" name="CXA_SALDO" value="">
+                                            <input type="text" class="form-control form-control-lg real" id="CXA_SALDO" name="CXA_SALDO" value="<?= $caixa['CXA_SALDO'] ?>">
                                         </div>
                                     </div>
                                     <div class="col-6 mb-2">
                                         <label class="form-label">DATA</label>
                                         <div class="form-floating mb-3">
-                                            <input type="date" name="AF_DATA" class="form-control form-control-lg" value="<?= date('Y-m-d') ?>">
-                                            <label class="form-label">DATA</label>
+                                            <input type="date" name="AFC_DATA" class="form-control form-control-lg" value="<?= date('Y-m-d') ?>">
                                         </div>
                                     </div>
                                     <div class="col-12 mb-3">
                                         <label class="form-label" for="1">OBSERVAÇÃO</label>
                                         <div class="form-floating mb-3">
-                                            <textarea class="form-control maiusculo" id="AF_OBSERVACAO" name="AF_OBSERVACAO"></textarea>
+                                            <textarea class="form-control maiusculo" id="AFC_OBSERVACAO" name="AFC_OBSERVACAO"></textarea>
                                         </div>
                                     </div>
                                 </div>

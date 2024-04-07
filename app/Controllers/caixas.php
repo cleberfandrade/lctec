@@ -386,8 +386,8 @@ class caixas extends View
                         'AFC_DT_ATUALIZACAO'=> date('0000-00-00 00:00:00'),
                         'AFC_DT_ABERTURA'=> $dados['AFC_DATA'],
                         'AFC_DT_FECHAMENTO'=> $dados['AFC_DATA'],
-                        'AFC_SALDO_INICIAL'=> $dados['AFC_SALDO'],
-                        'AFC_SALDO_FINAL'=> $dados['AFC_SALDO'],
+                        'AFC_SALDO_INICIAL'=> $dados['CXA_SALDO'],
+                        'AFC_SALDO_FINAL'=> $dados['CXA_SALDO'],
                         'AFC_STATUS' => $dados['AFC_STATUS']
                     );
                     /*
