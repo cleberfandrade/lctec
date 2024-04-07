@@ -372,43 +372,77 @@ class caixas extends View
             if($this->dados['empresa']['USU_COD'] == $_SESSION['USU_COD'] && $this->dados['empresa']['EMP_COD'] == $dados['EMP_COD']){
                 
                 unset($dados['ABERTURA_FECHAMENTO']);
-                $this->Caixas->setCodEmpresa($dados['EMP_COD'])->setCodigo($dados['CXA_COD']);
-                ($dados['CXA_STATUS'] == 1)? $dados['CXA_STATUS'] = 0: $dados['CXA_STATUS'] = 1;
+                //checar se foi preenchido o usuario e senha para liberação do caixa
                 if(!empty($dados['USU_COD_CAIXA']) && !empty($dados['USU_SENHA_CAIXA'])){
 
-                    $db = array(
-                        'EMP_COD'=> $dados['EMP_COD'],
-                        'CXA_COD'=> $dados['CXA_COD'],
-                        'MVC_COD'=> '',
-                        'USU_COD_ABERTURA' => $dados['USU_COD_CAIXA'],
-                        'USU_COD_FECHAMENTO' => $dados['USU_COD_CAIXA'],
-                        'AFC_DT_CADASTRO'=> date('Y-m-d H:i:s'),
-                        'AFC_DT_ATUALIZACAO'=> date('0000-00-00 00:00:00'),
-                        'AFC_DT_ABERTURA'=> $dados['AFC_DATA'],
-                        'AFC_DT_FECHAMENTO'=> $dados['AFC_DATA'],
-                        'AFC_SALDO_INICIAL'=> $dados['CXA_SALDO'],
-                        'AFC_SALDO_FINAL'=> $dados['CXA_SALDO'],
-                        'AFC_STATUS' => $dados['AFC_STATUS']
-                    );
-                    /*
-                   
-                    `MVC_COD` INT NOT NULL,
-                  */
-                    //if($this->AberturaFechamentoCaixas->alterar($db,0)){
-                        
-                      //  $respota = array(
-                          //  'COD'=>'OK',
-                        //);
-                  //  }else{
-                      //  $respota = array(
-                        ///    'COD'=>'ERRO',
-                        //    'MENSAGEM'=> 'ERRO 2- Erro ao mudar status do caixa, entre em contato com o suporte!'
-                       // );
-                  //  }
+                    //checar se existe esse usuario para essa empresa
+                    if($this->UsuariosEmpresa->setCodEmpresa($dados['EMP_COD'])->setEmail($dados['USU_COD_CAIXA'])->setSenha($dados['USU_SENHA_CAIXA'])->checarAcessoUsuarioEmpresa(0)){
+
+                        //checar os dados de abertura e fechamento de caixa para a data solicitada
+                        $this->dados['abfc_cxa'] = $this->AberturaFechamentoCaixas->setCodEmpresa($dados['EMP_COD'])->setCodCaixa($dados['CXA_COD'])->setData($dados['AFC_DATA'])->checarStatusCaixa(0);
+                        if (empty($this->dados['abfc_cxa']) or $this->dados['abfc_cxa'] == 0) {
+                            //ABRIR CAIXA PARA A DATA ATUAL
+                            
+                            //CRIAR ABERTURA DE CAIXA NO FLUXO DE CAIXA
+                            $this->Caixas->setCodEmpresa($dados['EMP_COD'])->setCodigo($dados['CXA_COD']);
+                            ($dados['CXA_STATUS'] == 1)? $dados['CXA_STATUS'] = 0: $dados['CXA_STATUS'] = 1;
+    
+                            $db = array(
+                                'EMP_COD'=> $dados['EMP_COD'],
+                                'CXA_COD'=> $dados['CXA_COD'],
+                                'MVC_COD'=> '',
+                                'USU_COD_ABERTURA' => $dados['USU_COD_CAIXA'],
+                                'USU_COD_FECHAMENTO' => '',
+                                'AFC_DT_CADASTRO'=> date('Y-m-d H:i:s'),
+                                'AFC_DT_ATUALIZACAO'=> date('0000-00-00 00:00:00'),
+                                'AFC_DT_ABERTURA'=> $dados['AFC_DATA'],
+                                'AFC_DT_FECHAMENTO'=> '',
+                                'AFC_SALDO_INICIAL'=> $dados['CXA_SALDO'],
+                                'AFC_SALDO_FINAL'=> '',
+                                'AFC_STATUS' => $dados['AFC_STATUS']
+                            );
+    
+                            /*
+                           
+                            `MVC_COD` INT NOT NULL,
+                          */
+                           
+                        }else {
+                            //FECHAR CAIXA
+                            //CRIAR FECHAMENTO DE CAIXA NO FLUXO DE CAIXA
+
+                            
+                            $db = array(
+                                'MVC_COD'=> '',
+                                'USU_COD_FECHAMENTO' => $dados['USU_COD_CAIXA'],
+                                'AFC_DT_ATUALIZACAO'=> date('Y-m-d H:i:s'),
+                                'AFC_DT_FECHAMENTO'=> $dados['AFC_DATA'],
+                                'AFC_SALDO_FINAL'=> $dados['CXA_SALDO'],
+                            );
+
+                            //if($this->AberturaFechamentoCaixas->alterar($db,0)){
+                                
+                              //  $respota = array(
+                                  //  'COD'=>'OK',
+                                //);
+                            //  }else{
+                                //  $respota = array(
+                                    ///    'COD'=>'ERRO',
+                                    //    'MENSAGEM'=> 'ERRO 2- Erro ao mudar status do caixa, entre em contato com o suporte!'
+                                // );
+                            //  }
+                        }
+                       
+                    }else {
+                        $respota = array(
+                            'COD'=>'ERRO',
+                            'MENSAGEM'=> 'ERRO 4- Informe o usuário e senha com autorização!'
+                        );
+                    }
                 }else {
                     $respota = array(
                         'COD'=>'ERRO',
-                        'MENSAGEM'=> 'ERRO 3- Informe o usuário e senha de autorização!'
+                        'MENSAGEM'=> 'ERRO 3- Informe o usuário e senha!'
                     );
                 }
             }else {

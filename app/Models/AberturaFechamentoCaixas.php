@@ -63,11 +63,11 @@ class AberturaFechamentoCaixas extends Model
         $this->data = $data;
         return $this;
     }
-    public function checarStatusCaixa()
+    public function checarStatusCaixa($ver = 0)
     {
-        $parametros = "AF INNER JOIN tb_empresas E ON AF.EMP_COD=E.EMP_COD INNER JOIN tb_caixas C ON AF.CXA_COD=C.CXA_COD WHERE AF.EMP_COD={$this->codEmpresa} AND AF.CXA_COD={$this->codCaixa} AND AF.ABF_DATA='{}' DESC LIMIT 1";
+        $parametros = "AF INNER JOIN tb_empresas E ON AF.EMP_COD=E.EMP_COD INNER JOIN tb_caixas C ON AF.CXA_COD=C.CXA_COD WHERE AF.EMP_COD={$this->codEmpresa} AND AF.CXA_COD={$this->codCaixa} AND AF.ABF_DATA='{$this->data}' DESC LIMIT 1";
         $campos = "*";
-        $resultado = $this->Model->exibir($parametros, $campos, $ver = 0, $id = false);
+        $resultado = $this->Model->exibir($parametros, $campos, $ver, $id = false);
         if ($resultado) {
             //Já existe
             return $resultado[0];
