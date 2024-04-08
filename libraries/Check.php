@@ -48,7 +48,7 @@
                 $ac = 'active';
                 $ar ='aria-current="page"';
                 $lk = '';
-                $printar.=''.$ac.'"'.$ar.'><b class="text-success" title="VOCÊ ESTÁ AQUI">'.$link[$i]['nome'].'</b></li>';
+                $printar.=''.$ac.'"'.$ar.'><b class="text-dark fw-bold" title="VOCÊ ESTÁ AQUI">'.$link[$i]['nome'].'</b></li>';
             }
             
             // <li class="breadcrumb-item active" aria-current="page">$dados</li>
