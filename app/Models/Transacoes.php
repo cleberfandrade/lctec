@@ -72,7 +72,7 @@ class Transacoes extends Model
     }
     public function listarTodasTransacoes($ver = 0)
     {
-        $parametros = "T INNER JOIN tb_empresas E ON E.EMP_COD=T.EMP_COD WHERE T.EMP_COD={$this->codEmpresa} ORDER BY T.TRS_DT_CADASTRO DESC";
+        $parametros = "T INNER JOIN tb_empresas E ON E.EMP_COD=T.EMP_COD OUTER LEFT JOIN tb_contas C ON C.CTA_COD=T.CTA_COD WHERE T.EMP_COD={$this->codEmpresa} ORDER BY T.TRS_DT_CADASTRO DESC";
         $campos = "*";
         $resultado = $this->Model->exibir($parametros, $campos, $ver, $id = false);
         if ($resultado) {
