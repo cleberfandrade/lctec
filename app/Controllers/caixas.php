@@ -188,8 +188,8 @@ class caixas extends View
                         'AFC_SALDO_FINAL' =>$this->dados['caixa'][0]['CXA_SALDO'],
                         'AFC_STATUS' => 2
                     );
-                    $AberturaFechamentoCaixas->setCodEmpresa($dados[2])->setCodCaixa($dados[3]);
-                    if($AberturaFechamentoCaixas->alterar($dados,0)){
+                    $this->AberturaFechamentoCaixas->setCodEmpresa($dados[2])->setCodCaixa($dados[3]);
+                    if($this->AberturaFechamentoCaixas->alterar($dados,0)){
                         $ok = true;
                     }
                 }

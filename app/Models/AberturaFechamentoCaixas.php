@@ -65,7 +65,7 @@ class AberturaFechamentoCaixas extends Model
     }
     public function checarStatusCaixa($ver = 0)
     {
-        $parametros = "AF INNER JOIN tb_empresas E ON AF.EMP_COD=E.EMP_COD INNER JOIN tb_caixas C ON AF.CXA_COD=C.CXA_COD WHERE AF.EMP_COD={$this->codEmpresa} AND AF.CXA_COD={$this->codCaixa} AND AF.AFC_DT_ABERTURA='{$this->data}' DESC LIMIT 1";
+        $parametros = "AF INNER JOIN tb_empresas E ON AF.EMP_COD=E.EMP_COD INNER JOIN tb_caixas C ON AF.CXA_COD=C.CXA_COD WHERE AF.EMP_COD={$this->codEmpresa} AND AF.CXA_COD={$this->codCaixa} AND AF.AFC_DT_ABERTURA='{$this->data}' ORDER BY AF.AFC_DT_ABERTURA DESC LIMIT 1";
         $campos = "*";
         $resultado = $this->Model->exibir($parametros, $campos, $ver, $id = false);
         if ($resultado) {
@@ -89,7 +89,7 @@ class AberturaFechamentoCaixas extends Model
     }
     public function listarTodos($ver = 0)
     {
-        $parametros = "AB INNER JOIN tb_empresas E ON AB.EMP_COD=E.EMP_COD INNER JOIN tb_caixas C ON AB.CXA_COD=C.CXA_COD WHERE AB.EMP_COD={$this->codEmpresa} ORDER BY AB.AFC_DT_ABERTURA DESC";
+        $parametros = "AF INNER JOIN tb_empresas E ON AF.EMP_COD=E.EMP_COD INNER JOIN tb_caixas C ON AF.CXA_COD=C.CXA_COD WHERE AF.EMP_COD={$this->codEmpresa} ORDER BY AF.AFC_DT_ABERTURA DESC";
         $campos = "*";
         $resultado = $this->Model->exibir($parametros, $campos, $ver, $id = false);
         if ($resultado) {
@@ -100,7 +100,7 @@ class AberturaFechamentoCaixas extends Model
     }
     public function checarAFCaixa($ver = 0)
     {
-        $parametros = "AB INNER JOIN tb_empresas E ON AB.EMP_COD=E.EMP_COD INNER JOIN tb_caixas C ON AB.CXA_COD=C.CXA_COD WHERE AB.EMP_COD={$this->codEmpresa} AND AB.CXA_COD={$this->codCaixa} ORDER BY AB.AFC_DT_ABERTURA DESC LIMIT 1";
+        $parametros = "AF INNER JOIN tb_empresas E ON AF.EMP_COD=E.EMP_COD INNER JOIN tb_caixas C ON AF.CXA_COD=C.CXA_COD WHERE AF.EMP_COD={$this->codEmpresa} AND AF.CXA_COD={$this->codCaixa} ORDER BY AF.AFC_DT_ABERTURA DESC LIMIT 1";
         $campos = "*";
         $resultado = $this->Model->exibir($parametros, $campos, $ver, $id = false);
         if ($resultado) {
