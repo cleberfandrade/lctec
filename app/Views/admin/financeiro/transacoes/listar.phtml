@@ -2,8 +2,8 @@
 use Libraries\Sessao;
 
 include_once 'app/Views/admin/inc/cabecalho.phtml'; 
-$qtd = (is_array($movimentacoes) ? count($movimentacoes) : 0);
-$qtdFP = (is_array($formas_pgto) ? count($formas_pgto) : 0);
+$qtd = (is_array($transacoes) ? count($transacoes) : 0);
+$qtdFP = (is_array($formas_pagamentos) ? count($formas_pagamentos) : 0);
 $qtdC = (is_array($categorias) ? count($categorias) : 0);
 ?>
 <body class="">
@@ -12,15 +12,15 @@ $qtdC = (is_array($categorias) ? count($categorias) : 0);
         <div id="page-content-wrapper">
         <!-- Top navigation-->
         <?php include_once 'app/Views/admin/inc/menu_topo.phtml'; ?>
-        <div class="container-fluid bg-light p-0">
+        <div class="container-fluid <?= $modulo[0]['MOD_COR'] ?> p-0">
             <header class="py-3">
                 <section class="container px-3">
                     <div class="row gx-3 align-items-center justify-content-center">
                         <div class="col-lg-9 col-xl-9 col-xxl-9">
                             <div class="my-1 px-4 mx-auto">
                                 <a class="text-decoration-none" href="<?= DIRPAGE; ?>financeiro">
-                                <h5 class="fs-2 fw-bolder text-uppercase text-dark mb-2">
-                                    <i class="bi bi-coin"></i> Gerenciar  <span class="text-success">Contas a Pagar e Receber</span></h5></a>
+                                <h5 class="fs-2 fw-bolder text-uppercase text-white mb-2">
+                                    <i class="bi bi-coin"></i> Gerenciar  <span class="text-dark">Contas a Pagar e Receber</span></h5></a>
                             </div>
                         </div>
                         <?php include_once 'app/Views/admin/inc/saudacao.phtml'; ?>
@@ -52,19 +52,19 @@ $qtdC = (is_array($categorias) ? count($categorias) : 0);
                         <tbody>
                         <?php
                             $b = 1;
-                            for ($i= 0; $i < $qtd; $i++) {  $data = new DateTime($empresas[$i]['MOV_DT_CADASTRO']);?>
-                            <tr class="<?= ($movimentacoes[$i]['MOV_STATUS'] == 0 && $_SESSION['USU_NIVEL'] >= 8)? 'bg-secondary' : '';?>">
+                            for ($i= 0; $i < $qtd; $i++) {  $data = new DateTime($transacoes[$i]['TRS_DT_CADASTRO']);?>
+                            <tr class="<?= ($transacoes[$i]['TRS_STATUS'] == 0 && $_SESSION['USU_NIVEL'] >= 8)? 'bg-secondary' : '';?>">
                                 <td class="text-center align-middle"><?= $b; ?></td>
-                                <td class="text-center align-middle"><?= $movimentacoes[$i]['CTA_DESCRICAO']; ?></td>
-                                <td class="text-center align-middle"><?= $movimentacoes[$i]['MOV_DESCRICAO']; ?></td>
+                                <td class="text-center align-middle"><?= $transacoes[$i]['CTA_DESCRICAO']; ?></td>
+                                <td class="text-center align-middle"><?= $transacoes[$i]['TRS_DESCRICAO']; ?></td>
                                 <td class="text-center align-middle"><?= $data->format('d/m/Y'); ?></td>
-                                <td class="text-center align-middle"><?= $movimentacoes[$i]['MOV_TIPO']; ?></td>
-                                <td class="text-center align-middle"><?= $movimentacoes[$i]['MOV_CLASSIFICACAO']; ?></td>
+                                <td class="text-center align-middle"><?= $transacoes[$i]['TRS_TIPO']; ?></td>
+                                <td class="text-center align-middle"><?= $transacoes[$i]['TRS_CLASSIFICACAO']; ?></td>
                                 <td class="text-center align-middle">
                                 <?php 
-                                    if($movimentacoes[$i]['CAT_COD'] != 0 or $movimentacoes[$i]['CAT_COD'] != '') {
+                                    if($transacoes[$i]['CAT_COD'] != 0 or $transacoes[$i]['CAT_COD'] != '') {
                                         for ($c = 0; $c < $qtdC; $c++) { 
-                                            if ($categorias[$c]['CAT_COD'] == $movimentacoes[$i]['CAT_COD']) { ?>
+                                            if ($categorias[$c]['CAT_COD'] == $transacoes[$i]['CAT_COD']) { ?>
                                             <?= $categorias[$c]['CAT_DESCRICAO']; ?>   
                                         <?php } } ?> 
                                     <?php }else { ?>
@@ -73,17 +73,17 @@ $qtdC = (is_array($categorias) ? count($categorias) : 0);
                                 </td>
                                 <td class="text-center align-middle">
                                 <?php 
-                                    if($movimentacoes[$i]['FPG_COD'] != 0 or $movimentacoes[$i]['FPG_COD'] != '') {
+                                    if($transacoes[$i]['FPG_COD'] != 0 or $transacoes[$i]['FPG_COD'] != '') {
                                         for ($c = 0; $c < $qtdFP; $c++) { 
-                                            if ($formas_pgto[$c]['FPG_COD'] == $movimentacoes[$i]['FPG_COD']) { ?>
+                                            if ($formas_pgto[$c]['FPG_COD'] == $transacoes[$i]['FPG_COD']) { ?>
                                             <?= $formas_pgto[$c]['FPG_DESCRICAO']; ?>   
                                         <?php } } ?> 
                                     <?php }else { ?>
                                         À DEFINIR
                                     <?php } ?> 
                                 </td>
-                                <td class="text-center align-middle"><?= number_format($movimentacoes[$i]['PGT_VALOR'],2,',','.'); ?></td>
-                                <td class="text-center align-middle"><?= ($movimentacoes[$i]['MOV_STATUS'] == 1)? 'ATIVO' : 'DESATIVADO'; ?></td>
+                                <td class="text-center align-middle"><?= number_format($transacoes[$i]['PGT_VALOR'],2,',','.'); ?></td>
+                                <td class="text-center align-middle"><?= ($transacoes[$i]['TRS_STATUS'] == 1)? 'ATIVO' : 'DESATIVADO'; ?></td>
                                 <td class="text-center align-middle">
 
                                 </td>
@@ -96,7 +96,7 @@ $qtdC = (is_array($categorias) ? count($categorias) : 0);
                         </tbody>
                     </table>
                 <?php }else { ?>
-                    <h4 class="text-center text-warning fs-4">EMPRESA SEM NENHUMA MOVIMENTAÇÃO CADASTRADA</h4>
+                    <h4 class="text-center text-warning fs-4">EMPRESA SEM NENHUMA TRANSAÇÃO CADASTRADA</h4>
                 <?php } ?>
                 </div>
             </section>

@@ -16,13 +16,14 @@ use App\Models\Fornecedores;
 use App\Models\Usuarios;
 use App\Models\UsuariosEmpresa;
 use App\Models\Lancamentos;
+use App\Models\ModulosEmpresa;
 use App\Models\Movimentacoes as ModelsMovimentacoes;
 use App\Models\Transacoes as ModelsTransacoes;
 
 class transacoes extends View
 {
     private $dados = [];
-    private $link,$Financas,$Check,$Usuarios,$UsuariosEmpresa,$Lancamentos,$Categorias,$Contas,$Classificacoes,$Clientes,$Fornecedores, $Movimentacoes, $FormasPagamentos,$Transacoes;
+    private $link,$Financas,$Check,$Usuarios,$UsuariosEmpresa,$Lancamentos,$Categorias,$Contas,$Classificacoes,$Clientes,$Fornecedores, $Movimentacoes, $FormasPagamentos,$Transacoes,$ModulosEmpresa;
     public function __construct()
     {
         Sessao::naoLogado();
@@ -40,13 +41,18 @@ class transacoes extends View
         $this->Movimentacoes = new ModelsMovimentacoes;
         $this->FormasPagamentos = new FormasPagamentos;
         $this->Transacoes = new ModelsTransacoes;
+        $this->ModulosEmpresa = new ModulosEmpresa; 
 
         $this->dados['empresa'] = $this->UsuariosEmpresa->setCodEmpresa($_SESSION['EMP_COD'])->setCodUsuario($_SESSION['USU_COD'])->listar(0);
         $this->dados['usuario'] = $this->Usuarios->setCodUsuario($_SESSION['USU_COD'])->listar(0);
         $this->dados['lancamentos'] = $this->Lancamentos->setCodEmpresa($_SESSION['EMP_COD'])->listarTodos(0);
         $this->dados['contas'] = $this->Contas->setCodEmpresa($_SESSION['EMP_COD'])->listarTodas(0);
-        $this->dados['classificacoes'] = $this->Classificacoes->setCodEmpresa($_SESSION['EMP_COD'])->setTipo('LAN')->listarTodosPorTipo(0);
+        $this->dados['modulo'] = $this->ModulosEmpresa->setCodEmpresa($_SESSION['EMP_COD'])->setCodigo(5)->listarModuloEmpresa(0);
+        
+        $this->dados['classificacoes'] = $this->Classificacoes->setCodEmpresa($_SESSION['EMP_COD'])->setTipo(6)->listarTodosPorTipo(0);
+        $this->dados['categorias'] = $this->Categorias->setCodEmpresa($_SESSION['EMP_COD'])->setTipo(6)->listarTodosPorTipo(0);
         $this->dados['formas_pagamentos'] = $this->FormasPagamentos->setCodEmpresa($_SESSION['EMP_COD'])->listarTodas(0);
+        $this->dados['transacoes'] = $this->Transacoes->setCodEmpresa($_SESSION['EMP_COD'])->listarTodasTransacoes(0);
 
         $this->link[0] = ['link'=> 'admin','nome' => 'PAINEL ADMINISTRATIVO'];
         $this->link[1] = ['link'=> 'financeiro','nome' => 'MÓDULO FINANCEIRO'];
@@ -56,7 +62,7 @@ class transacoes extends View
     {
         $this->dados['title'] .= ' GERENCIAR TRANSAÇÕES';   
         $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
-        $this->render('admin/financeiro/movimentacoes/listar', $this->dados);
+        $this->render('admin/financeiro/transacoes/listar', $this->dados);
     }
     public function cadastro()
     {

@@ -3,6 +3,7 @@ use Libraries\Sessao;
 
 include_once 'app/Views/admin/inc/cabecalho.phtml'; 
 $qtd = (is_array($conta) ? count($conta) : 0);
+$qtdT = (is_array($transacoes_conta) ? count($transacoes_conta): 0);
 ?>
 <body class="">
     <div class="d-flex" id="wrapper">
@@ -10,7 +11,7 @@ $qtd = (is_array($conta) ? count($conta) : 0);
         <div id="page-content-wrapper">
         <!-- Top navigation-->
         <?php include_once 'app/Views/admin/inc/menu_topo.phtml'; ?>
-        <div class="container-fluid bg-light p-0">
+        <div class="container-fluid <?= $modulo[0]['MOD_COR'] ?> p-0">
             <header class="py-3">
                 <section class="container px-3">
                     <div class="row gx-3 align-items-center justify-content-center">
@@ -18,7 +19,7 @@ $qtd = (is_array($conta) ? count($conta) : 0);
                             <div class="my-1 px-4 mx-auto">
                                 <a class="text-decoration-none" href="<?= DIRPAGE; ?>financeiro">
                                 <h5 class="fs-2 fw-bolder text-uppercase text-white mb-2">
-                                    <i class="bi bi-coin"></i> Conta <span class="text-dark"> <?= $conta['CTA_TIPO'] ?></span></h5></a>
+                                <?= $modulo[0]['MOD_ICON'] ?> Conta <span class="text-dark"> <?= $conta['CTA_TIPO'] ?></span></h5></a>
                             </div>
                         </div>
                         <?php include_once 'app/Views/admin/inc/saudacao.phtml'; ?>

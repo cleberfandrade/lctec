@@ -49,7 +49,7 @@ class Categorias extends Model
     {
         $parametros = "C INNER JOIN tb_empresas E ON C.EMP_COD=E.EMP_COD WHERE C.EMP_COD={$this->codEmpresa} AND C.CAT_TIPO={$this->tipo} ORDER BY C.CAT_DESCRICAO";
         $campos = "*";
-        $resultado = $this->Model->exibir($parametros, $campos, $ver = 0, $id = false);
+        $resultado = $this->Model->exibir($parametros, $campos, $ver, $id = false);
         if ($resultado) {
             return $resultado;
         } else {
@@ -60,7 +60,7 @@ class Categorias extends Model
     {
         $parametros = "WHERE EMP_COD={$this->codEmpresa} ORDER BY CAT_DESCRICAO";
         $campos = "*";
-        $resultado = $this->Model->exibir($parametros, $campos, $ver = 0, $id = false);
+        $resultado = $this->Model->exibir($parametros, $campos, $ver, $id = false);
         if ($resultado) {
             return $resultado;
         } else {
@@ -102,11 +102,11 @@ class Categorias extends Model
             return false;
         }
     }
-    public function checarDescricao()
+    public function checarDescricao($ver = 0)
     {
         $parametros = "WHERE EMP_COD={$this->codEmpresa} AND CAT_DESCRICAO ='{$this->descricao}' AND CAT_STATUS=1";
         $campos = "*";
-        $resultado = $this->Model->exibir($parametros, $campos, $ver = 0, $id = false);
+        $resultado = $this->Model->exibir($parametros, $campos, $ver, $id = false);
         if ($resultado) {
             //Já existe
             return $resultado[0];

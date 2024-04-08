@@ -8,6 +8,7 @@ use App\Models\Contas as ModelsContas;
 use App\Models\FormasPagamentos;
 use App\Models\ModulosEmpresa;
 use App\Models\Movimentacoes;
+use App\Models\Transacoes;
 use App\Models\Usuarios;
 use App\Models\UsuariosEmpresa;
 use App\Models\Vendedores;
@@ -19,7 +20,7 @@ use Libraries\Url;
 class contas extends View
 {
     private $dados = [];
-    private $link,$Financas,$Check,$Usuarios,$UsuariosEmpresa,$Contas,$Movimentacoes,$FormasPagamentos,$Caixas,$Classificacoes,$ModulosEmpresa;
+    private $link,$Financas,$Check,$Usuarios,$UsuariosEmpresa,$Contas,$Movimentacoes,$FormasPagamentos,$Caixas,$Classificacoes,$ModulosEmpresa,$Transacoes;
     public function __construct()
     {
         Sessao::naoLogado();
@@ -33,6 +34,7 @@ class contas extends View
         $this->Classificacoes = new Classificacoes;
         $this->FormasPagamentos = new FormasPagamentos;
         $this->ModulosEmpresa = new ModulosEmpresa;
+        $this->Transacoes = new Transacoes;
 
         $this->dados['empresa'] = $this->UsuariosEmpresa->setCodEmpresa($_SESSION['EMP_COD'])->setCodUsuario($_SESSION['USU_COD'])->listar(0);
         $this->dados['usuario'] = $this->Usuarios->setCodUsuario($_SESSION['USU_COD'])->listar(0);
@@ -41,6 +43,7 @@ class contas extends View
         $this->dados['formas_pagamentos'] = $this->FormasPagamentos->setCodEmpresa($_SESSION['EMP_COD'])->listarTodasAtivas(0);
         $this->dados['caixas'] = $this->Caixas->setCodEmpresa($_SESSION['EMP_COD'])->listarTodos(0);
         $this->dados['modulo'] = $this->ModulosEmpresa->setCodEmpresa($_SESSION['EMP_COD'])->setCodigo(3)->listarModuloEmpresa(0);
+        $this->dados['transacoes'] = $this->Transacoes->setCodEmpresa($_SESSION['EMP_COD'])->listarTodasTransacoes(0);
         
         if ($this->dados['modulo'] == 0) {
             Sessao::alert('OK',' MÓDULO NÃO DISPONÍVEL!','alert alert-danger');
@@ -82,6 +85,7 @@ class contas extends View
                     $this->link[3] = ['link'=> 'financeiro/detalhar_contas/'.$_SESSION['EMP_COD'].'/'.$dados[3],'nome' => 'DETALHAR CONTA >> '.$this->dados['conta']['CTA_DESCRICAO']];
                     $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
                     $ok = true;
+                    $this->dados['transacoes_conta'] = $this->Transacoes->setCodEmpresa($_SESSION['EMP_COD'])->setCodConta($this->dados['conta']['CTA_COD'])->listarTodasTransacoesConta(0);
                 }
                
             }else{
@@ -158,6 +162,70 @@ class contas extends View
             $this->render('admin/financeiro/contas/depositos', $this->dados);
         }else {
             $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
+            $this->render('admin/financeiro/contas', $this->dados);
+        }
+    }
+    public function depositar()
+    {
+        $this->dados['title'] .= ' CADASTRAR TRANSAÇÃO DA CONTA';   
+        $ok = false;
+        $dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);
+
+        if (isset($_POST) && isset($dados['CADASTRAR_NOVA_TRANSACAO'])) {
+            if( $this->dados['empresa']['USU_COD'] == $dados['USU_COD'] && $this->dados['empresa']['EMP_COD'] == $dados['EMP_COD']){
+                //Verifica se os campos foram todos preenchidos
+                unset($dados['CADASTRAR_NOVA_TRANSACAO']);
+
+                $this->dados['conta'] = $this->Contas->setCodEmpresa($dados['EMP_COD'])->setCodigo($dados['CTA_COD'])->listar(0);
+                if ($this->dados['conta'] != 0) {
+
+                    $this->link[3] = ['link'=> 'financeiro/detalhar_contas/'.$_SESSION['EMP_COD'].'/'.$dados['CTA_COD'],'nome' => 'DETALHAR CONTA >> '.$this->dados['conta']['CTA_DESCRICAO']];
+                    $this->link[4] = ['link'=> 'contas/depositos/'.$this->dados['conta']['EMP_COD'].'/'.$this->dados['conta']['CTA_COD'],'nome' => 'DEPÓSITO NA CONTA'];
+                    $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
+                      
+                    
+                    //$dados['MOV_VALOR'] = number_format($dados['MOV_VALOR'],2, '.', ',');
+                    //$dados['MOV_VALOR'] = str_replace(',', '.', str_replace('.', '', $dados['MOV_VALOR']));
+                    //$dados['MOV_VALOR'] = $this->Check->onlyNumbers($dados['MOV_VALOR']);
+                    //$dados['MOV_VALOR'] = $this->Check->formatMoneyDb($dados['MOV_VALOR']);
+                    $dados += array(
+                        'TRS_DT_CADASTRO'=> date('Y-m-d H:i:s'),
+                        'TRS_DT_ATUALIZACAO'=> date('0000-00-00 00:00:00'),   
+                        'TRS_TOKEN' => $this->Check->token(10,'',true),          
+                        'TRS_STATUS'=> 1
+                    );
+
+                    if($this->Transacoes->cadastrar($dados,0)){
+    
+                        $this->Contas->setCodEmpresa($dados['EMP_COD'])->setCodigo($dados['CTA_COD']);
+
+                        $db = array(
+                            'CTA_SALDO'=> $dados['TRS_VALOR_TOTAL'],
+                            'CTA_DT_ATUALIZACAO'=> date('Y-m-d H:i:s')
+                        );
+                    
+                        if($this->Contas->alterar($db,0)){
+                            $ok = true;
+                            Sessao::alert('OK','Cadastro efetuado com sucesso!','fs-4 alert alert-success');
+                        }else{
+                            Sessao::alert('ERRO',' ERRO: CTA24 - Erro ao alterar conta, entre em contato com o suporte!','fs-4 alert alert-danger');
+                        }
+                    }else{
+                        Sessao::alert('ERRO',' CTA3 - Erro ao cadastrar nova transação, entre em contato com o suporte!','fs-4 alert alert-danger');
+                    }
+                }else{
+                    Sessao::alert('ERRO',' CTA2 - Dados inválido(s)!','alert alert-danger');
+                } 
+            }else{
+                Sessao::alert('ERRO',' TRAS2 - Dados inválido(s)!','alert alert-danger');
+            }
+        }else{
+            Sessao::alert('ERRO',' TRAS1 - Acesso inválido(s)!','alert alert-danger');
+        }
+        if ($ok) {
+            $this->dados['transacoes'] = $this->Transacoes->setCodEmpresa($_SESSION['EMP_COD'])->listarTodasTransacoes(0);
+            $this->render('admin/financeiro/contas/depositos', $this->dados);
+        }else {
             $this->render('admin/financeiro/contas', $this->dados);
         }
     }

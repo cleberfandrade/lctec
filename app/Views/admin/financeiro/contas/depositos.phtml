@@ -41,7 +41,7 @@ $qtdCL = (is_array($classificacoes) ? count($classificacoes) : 0);
                     </div>
 
                     <div class="container col-10 px-2 py-2 mx-auto row">
-                        <form class="p-4 p-md-6 border text-uppercase rounded-3 " action="<?= DIRPAGE ?>transacoes/cadastrar" method="POST">
+                        <form class="p-4 p-md-6 border text-uppercase rounded-3 " action="<?= DIRPAGE ?>contas/depositar" method="POST">
                             <div class="row">    
                                 <div class="col-4 form-floating mb-3">
                                     <div class="form-floating">
@@ -60,7 +60,7 @@ $qtdCL = (is_array($classificacoes) ? count($classificacoes) : 0);
                                 <div class="col-4 form-floating mb-3">
                                     
                                     <div class="form-floating">
-                                        <input type="date" class="form-control form-control-lg" name="TRS_DATA" placeholder="" value="<?= isset($_POST['TRS_DATA']) ? $_POST['TRS_DATA'] : ''; ?>">
+                                        <input type="date" class="form-control form-control-lg" name="TRS_DATA" placeholder="" value="<?= isset($_POST['TRS_DATA']) ? $_POST['TRS_DATA'] : date('Y-m-d'); ?>">
                                         <label class="px-3" for="2">DATA</label>
                                     </div> 
                                 </div> 
