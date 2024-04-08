@@ -86,6 +86,8 @@ class contas extends View
                     $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
                     $ok = true;
                     $this->dados['transacoes_conta'] = $this->Transacoes->setCodEmpresa($_SESSION['EMP_COD'])->setCodConta($this->dados['conta']['CTA_COD'])->listarTodasTransacoesConta(0);
+                    $this->dados['transacoes_conta_entradas'] = $this->Transacoes->setCodEmpresa($_SESSION['EMP_COD'])->setCodConta($this->dados['conta']['CTA_COD'])->setTipo(1)->listarTodasTransacoesContaPorTipo(0);
+                    $this->dados['transacoes_conta_saidas'] = $this->Transacoes->setCodEmpresa($_SESSION['EMP_COD'])->setCodConta($this->dados['conta']['CTA_COD'])->setTipo(2)->listarTodasTransacoesContaPorTipo(0);
                 }
                
             }else{

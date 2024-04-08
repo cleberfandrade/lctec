@@ -59,11 +59,33 @@ class Transacoes extends Model
         $this->codProduto = $codProduto;
         return $this;
     }
+    public function listar($ver = 0)
+    {
+        $parametros = "T INNER JOIN tb_empresas E ON T.EMP_COD=E.EMP_COD WHERE T.EMP_COD={$this->codEmpresa} AND T.TRS_COD={$this->codigo}";
+        $campos = "*";
+        $resultado = $this->Model->exibir($parametros, $campos, $ver, $id = false);
+        if ($resultado) {
+            return $resultado[0];
+        } else {
+            return false;
+        }
+    }
     public function listarTodasTransacoes($ver = 0)
     {
-        $parametros = "T INNER JOIN tb_empresas E ON E.EMP_COD=T.EMP_COD WHERE T.EMP_COD={$this->codEmpresa} ORDER BY T.TRS_COD DESC";
+        $parametros = "T INNER JOIN tb_empresas E ON E.EMP_COD=T.EMP_COD WHERE T.EMP_COD={$this->codEmpresa} ORDER BY T.TRS_DT_CADASTRO DESC";
         $campos = "*";
-        $resultado = $this->Model->exibir($parametros, $campos, $ver = 0, $id = false);
+        $resultado = $this->Model->exibir($parametros, $campos, $ver, $id = false);
+        if ($resultado) {
+            return $resultado;
+        } else {
+            return false;
+        }
+    }
+    public function listarTodasTransacoesContaPorTipo($ver = 0)
+    {
+        $parametros = "T INNER JOIN tb_empresas E ON E.EMP_COD=T.EMP_COD INNER JOIN tb_contas C ON C.CTA_COD=T.CTA_COD WHERE T.CTA_COD={$this->codConta} AND T.EMP_COD={$this->codEmpresa} AND T.TRS_TIPO={$this->tipo} ORDER BY T.TRS_DT_CADASTRO DESC";
+        $campos = "SUM(T.TRS_VALOR_TOTAL) AS TOTAL,*";
+        $resultado = $this->Model->exibir($parametros, $campos, $ver, $id = false);
         if ($resultado) {
             return $resultado;
         } else {
@@ -74,9 +96,9 @@ class Transacoes extends Model
     {
         $parametros = "T INNER JOIN tb_empresas E ON E.EMP_COD=T.EMP_COD INNER JOIN tb_contas C ON C.CTA_COD=T.CTA_COD WHERE T.CTA_COD={$this->codConta} AND T.EMP_COD={$this->codEmpresa} ";
         $campos = "*";
-        $resultado = $this->Model->exibir($parametros, $campos, $ver = 0, $id = false);
+        $resultado = $this->Model->exibir($parametros, $campos, $ver, $id = false);
         if ($resultado) {
-            return $resultado[0];
+            return $resultado;
         } else {
             return false;
         }
@@ -89,7 +111,7 @@ class Transacoes extends Model
             $parametros = "M INNER JOIN tb_empresas E ON E.EMP_COD=M.EMP_COD INNER JOIN tb_estoques ES ON ES.EST_COD=M.EST_COD WHERE M.EMP_COD={$this->codEmpresa} AND M.MOV_TIPO={$this->tipo} ORDER BY M.MOV_COD DESC";
         }
         $campos = "*";
-        $resultado = $this->Model->exibir($parametros, $campos, $ver = 0, $id = false);
+        $resultado = $this->Model->exibir($parametros, $campos, $ver, $id = false);
         if ($resultado) {
             return $resultado;
         } else {

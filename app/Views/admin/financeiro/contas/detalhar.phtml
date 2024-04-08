@@ -4,6 +4,8 @@ use Libraries\Sessao;
 include_once 'app/Views/admin/inc/cabecalho.phtml'; 
 $qtd = (is_array($conta) ? count($conta) : 0);
 $qtdT = (is_array($transacoes_conta) ? count($transacoes_conta): 0);
+$qtdTE = (is_array($transacoes_conta_entradas) ? count($transacoes_conta_entradas): 0);
+$qtdTS = (is_array($transacoes_conta_saidas) ? count($transacoes_conta_saidas): 0);
 ?>
 <body class="">
     <div class="d-flex" id="wrapper">
