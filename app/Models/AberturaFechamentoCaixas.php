@@ -100,7 +100,7 @@ class AberturaFechamentoCaixas extends Model
     }
     public function checarAFCaixa($ver = 0)
     {
-        $parametros = "AB INNER JOIN tb_empresas E ON AB.EMP_COD=E.EMP_COD INNER JOIN tb_caixas C ON AB.CXA_COD=C.CXA_COD WHERE AB.EMP_COD={$this->codEmpresa} AND AB.CXA_COD={$this->codCaixa} ORDER BY AB.ABF_DATA DESC LIMIT 1";
+        $parametros = "AB INNER JOIN tb_empresas E ON AB.EMP_COD=E.EMP_COD INNER JOIN tb_caixas C ON AB.CXA_COD=C.CXA_COD WHERE AB.EMP_COD={$this->codEmpresa} AND AB.CXA_COD={$this->codCaixa} ORDER BY AB.AFC_DT_ABERTURA DESC LIMIT 1";
         $campos = "*";
         $resultado = $this->Model->exibir($parametros, $campos, $ver, $id = false);
         if ($resultado) {
@@ -120,7 +120,7 @@ class AberturaFechamentoCaixas extends Model
     }
     public function alterar(array $dados, $ver = 0)
     {
-        $parametros = " WHERE EMP_COD={$this->codEmpresa} CXA_COD={$this->codCaixa} AND ABF_COD=";
+        $parametros = " WHERE EMP_COD={$this->codEmpresa} CXA_COD={$this->codCaixa} AND AFC_COD=";
         $this->Model->setParametros($parametros);
         $this->Model->setCodigo($this->codigo);
         $ok = false;
