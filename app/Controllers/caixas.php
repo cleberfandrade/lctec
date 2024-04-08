@@ -390,7 +390,7 @@ class caixas extends View
                             $db = array(
                                 'EMP_COD'=> $dados['EMP_COD'],
                                 'CXA_COD'=> $dados['CXA_COD'],
-                                'MVC_COD'=> '',
+                                'FLX_COD'=> '',
                                 'USU_COD_ABERTURA' => $dados['USU_COD_CAIXA'],
                                 'USU_COD_FECHAMENTO' => '',
                                 'AFC_DT_CADASTRO'=> date('Y-m-d H:i:s'),
@@ -413,7 +413,7 @@ class caixas extends View
 
                             
                             $db = array(
-                                'MVC_COD'=> '',
+                                'FLX_COD'=> '',
                                 'USU_COD_FECHAMENTO' => $dados['USU_COD_CAIXA'],
                                 'AFC_DT_ATUALIZACAO'=> date('Y-m-d H:i:s'),
                                 'AFC_DT_FECHAMENTO'=> $dados['AFC_DATA'],

@@ -45,30 +45,27 @@ if ($qtdAF !=0) {
                 </section>
             </header>
             <?php include_once 'app/Views/admin/inc/alertas.phtml'; ?> 
-            <section class="bg-light  text-dark  py-2">
-                <div class="card text-white mx-auto bg-10 m-1 py-3" style="max-width: 35rem;">
+            <section class="bg-light text-dark  py-2">
+                <div class="card text-dark mx-auto <?= $modulo[0]['MOD_COR'] ?> m-1 py-3" style="max-width: 35rem;">
                         <div class="card-header">
                             <div class="row">
                                 <div class="col-10 fs-5 align-middle">
                                     <i class="bi bi-box"></i> SALDO <?= ($caixa['CXA_SALDO'] != '0')? "R$ ".number_format($caixa['CXA_SALDO'],2,',','.')  : 'R$ 0,00'; ?>
                                 </div>  
                                 <div class="col-1 mr-1">
-                                    <a type="button" class="btn btn-outline-warning btn-sm d-print-none" href="<?= DIRPAGE.'caixas/alteracao/'.$caixa['EMP_COD'].'/'.$caixa['CXA_COD']; ?>" title="Alterar Caixa"><i class="fa fa-edit"></i></a>
+                                    <a type="button" class="btn btn-warning btn-sm d-print-none" href="<?= DIRPAGE.'caixas/alteracao/'.$caixa['EMP_COD'].'/'.$caixa['CXA_COD']; ?>" title="Alterar Caixa"><i class="fa fa-edit"></i></a>
                                 </div>
                             </div>  
                         </div>
-                        <div class="card-body">
+                        <div class="card-body ">
                             <a href="<?= DIRPAGE.'caixas/detalhar/'.$caixa['EMP_COD'].'/'.$caixa['CXA_COD']; ?>" title="Acessar Caixa" class="col-auto link-light text-decoration-none">
-                                <div class="row">
+                                <div class="row text-dark">
                                     <div class="col-12">
                                         <h5 class="card-title">Descrição: <?= $caixa['CXA_DESCRICAO']; ?></h5>
                                         <p class="card-text">Empresa/Negócio: <?= $caixa['EMP_NOME_FANTASIA']; ?></p>
                                     </div>
-                                    <div class="col-12 mx-auto text-center">
-                                        <h2 class="card-title">
-                                            
-                                        </h2>
-                                        <p class="card-text ">ACESSAR</p>
+                                    <div class="col-12 mx-auto text-center"> 
+                                        <p class="card-text my-4"><< FLUXO DE CAIXA >></p>
                                     </div>
                                 </div>
                             </a>  
@@ -102,7 +99,7 @@ if ($qtdAF !=0) {
                                     </div>
                                     <div class="col-6 mb-2">
                                         <label class="form-label">DATA</label>
-                                        <div class="form-floating">
+                                        <div class="">
                                             <input type="date" name="AFC_DATA" class="form-control form-control-lg" value="<?= date('Y-m-d') ?>">
                                         </div>
                                     </div>
