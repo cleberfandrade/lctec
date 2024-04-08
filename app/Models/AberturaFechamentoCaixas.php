@@ -29,7 +29,7 @@ COLLATE='utf8_general_ci'
 */
 class AberturaFechamentoCaixas extends Model
 { 
-    private $tabela = 'tb_ab_caixas';
+    private $tabela = 'tb_af_caixas';
     private $Model = '';
     private $codigo,$codEmpresa,$codCaixa,$descricao,$tipo,$data;
 
@@ -65,7 +65,7 @@ class AberturaFechamentoCaixas extends Model
     }
     public function checarStatusCaixa($ver = 0)
     {
-        $parametros = "AF INNER JOIN tb_empresas E ON AF.EMP_COD=E.EMP_COD INNER JOIN tb_caixas C ON AF.CXA_COD=C.CXA_COD WHERE AF.EMP_COD={$this->codEmpresa} AND AF.CXA_COD={$this->codCaixa} AND AF.ABF_DATA='{$this->data}' DESC LIMIT 1";
+        $parametros = "AF INNER JOIN tb_empresas E ON AF.EMP_COD=E.EMP_COD INNER JOIN tb_caixas C ON AF.CXA_COD=C.CXA_COD WHERE AF.EMP_COD={$this->codEmpresa} AND AF.CXA_COD={$this->codCaixa} AND AF.AFC_DT_ABERTURA='{$this->data}' DESC LIMIT 1";
         $campos = "*";
         $resultado = $this->Model->exibir($parametros, $campos, $ver, $id = false);
         if ($resultado) {
@@ -78,7 +78,7 @@ class AberturaFechamentoCaixas extends Model
     }
     public function listar($ver = 0)
     {
-        $parametros = "AF INNER JOIN tb_empresas E ON AF.EMP_COD=E.EMP_COD INNER JOIN tb_caixas C ON AF.CXA_COD=C.CXA_COD WHERE AF.EMP_COD={$this->codEmpresa} AND AF.CXA_COD={$this->codCaixa} AND AF.ABF_COD={$this->codigo}";
+        $parametros = "AF INNER JOIN tb_empresas E ON AF.EMP_COD=E.EMP_COD INNER JOIN tb_caixas C ON AF.CXA_COD=C.CXA_COD WHERE AF.EMP_COD={$this->codEmpresa} AND AF.CXA_COD={$this->codCaixa} AND AF.AFC_COD={$this->codigo}";
         $campos = "*";
         $resultado = $this->Model->exibir($parametros, $campos, $ver, $id = false);
         if ($resultado) {
@@ -89,7 +89,7 @@ class AberturaFechamentoCaixas extends Model
     }
     public function listarTodos($ver = 0)
     {
-        $parametros = "AB INNER JOIN tb_empresas E ON AB.EMP_COD=E.EMP_COD INNER JOIN tb_caixas C ON AB.CXA_COD=C.CXA_COD WHERE AB.EMP_COD={$this->codEmpresa} ORDER BY AB.ABF_DATA DESC";
+        $parametros = "AB INNER JOIN tb_empresas E ON AB.EMP_COD=E.EMP_COD INNER JOIN tb_caixas C ON AB.CXA_COD=C.CXA_COD WHERE AB.EMP_COD={$this->codEmpresa} ORDER BY AB.AFC_DT_ABERTURA DESC";
         $campos = "*";
         $resultado = $this->Model->exibir($parametros, $campos, $ver, $id = false);
         if ($resultado) {
