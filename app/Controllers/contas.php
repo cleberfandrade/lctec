@@ -51,7 +51,8 @@ class contas extends View
         }
 
         $this->link[0] = ['link'=> 'admin','nome' => 'PAINEL ADMINISTRATIVO'];
-        $this->link[1] = ['link'=> 'financeiro','nome' => 'MÓDULO DE FINANÇAS >>'];
+        $this->link[1] = ['link'=> 'financeiro','nome' => 'MÓDULO FINANCEIRO >>'];
+        $this->link[2] = ['link'=> 'financeiro/contas','nome' => 'GERENCIAR CONTAS'];
     }
     public function index()
     {
@@ -62,7 +63,7 @@ class contas extends View
     public function contas()
     {
         $this->dados['title'] .= ' GERENCIAR CONTAS';   
-        $this->link[2] = ['link'=> 'financeiro/contas','nome' => 'GERENCIAR CONTAS'];
+       
         $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
         $this->render('admin/financeiro/contas/listar', $this->dados);
     }

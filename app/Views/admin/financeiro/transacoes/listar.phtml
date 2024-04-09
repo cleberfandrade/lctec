@@ -5,6 +5,7 @@ include_once 'app/Views/admin/inc/cabecalho.phtml';
 $qtd = (is_array($transacoes) ? count($transacoes) : 0);
 $qtdFP = (is_array($formas_pagamentos) ? count($formas_pagamentos) : 0);
 $qtdC = (is_array($categorias) ? count($categorias) : 0);
+$qtdCl = (is_array($classificacoes) ? count($classificacoes) : 0);
 ?>
 <body class="">
     <div class="d-flex" id="wrapper">
@@ -59,7 +60,17 @@ $qtdC = (is_array($categorias) ? count($categorias) : 0);
                                 <td class="text-center align-middle"><?= $transacoes[$i]['TRS_DESCRICAO']; ?></td>
                                 <td class="text-center align-middle"><?= $data->format('d/m/Y'); ?></td>
                                 <td class="text-center align-middle"><?= $transacoes[$i]['TRS_TIPO']; ?></td>
-                                <td class="text-center align-middle"><?= $transacoes[$i]['TRS_CLASSIFICACAO']; ?></td>
+                                <td class="text-center align-middle">
+                                    <?php 
+                                    if($transacoes[$i]['CLA_COD'] != 0 or $transacoes[$i]['CLA_COD'] != '') {
+                                        for ($c = 0; $c < $qtdCL; $c++) { 
+                                            if ($classificacoes[$c]['CLA_COD'] == $transacoes[$i]['CLA_COD']) { ?>
+                                            <?= $classificacoes[$c]['CLA_DESCRICAO']; ?>   
+                                        <?php } } ?> 
+                                    <?php }else { ?>
+                                        À DEFINIR
+                                    <?php } ?> 
+                                </td>
                                 <td class="text-center align-middle">
                                 <?php 
                                     if($transacoes[$i]['CAT_COD'] != 0 or $transacoes[$i]['CAT_COD'] != '') {
