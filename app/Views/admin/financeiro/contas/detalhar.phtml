@@ -48,13 +48,13 @@ for ($i=0; $i < $qtdTS; $i++) { $somaS += $transacoes_conta_saidas[$i]['TRS_VALO
                         <div class="card col bg-success m-1">
                             <div class="card-body text-white">
                                 <h5 class="card-title">ENTRADAS <i class="bi bi-arrow-down-square"></i></h5>
-                                <p class="card-text "><h2> <i class="bi bi-plus-square"></i> R$ <?= $somaE ?></h2></p>
+                                <p class="card-text "><h2> <i class="bi bi-plus-square"></i> R$ <?= number_format($somaE,2,',','.') ?></h2></p>
                             </div>
                         </div>
                         <div class="card col bg-danger m-1">
                             <div class="card-body text-white">
                                 <h5 class="card-title">SAÍDAS <i class="bi bi-arrow-up-square"></i></h5>
-                                <p class="card-text"><h2> <i class="bi bi-dash-square"></i> R$ <?= $somaS ?></h2></p>
+                                <p class="card-text"><h2> <i class="bi bi-dash-square"></i> R$ <?= number_format($somaS,2,',','.') ?> ?></h2></p>
                             </div>
                         </div>
                         <div class="card col m-1">
