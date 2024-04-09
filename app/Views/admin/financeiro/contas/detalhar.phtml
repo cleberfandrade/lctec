@@ -6,7 +6,9 @@ $qtd = (is_array($conta) ? count($conta) : 0);
 $qtdT = (is_array($transacoes_conta) ? count($transacoes_conta): 0);
 $qtdTE = (is_array($transacoes_conta_entradas) ? count($transacoes_conta_entradas): 0);
 $qtdTS = (is_array($transacoes_conta_saidas) ? count($transacoes_conta_saidas): 0);
-
+$somaE = $somaS = 0;
+for ($i=0; $i < $qtdTE; $i++) { $somaE += $transacoes_conta_entradas[$i]['TRS_VALOR_TOTAL'];}
+for ($i=0; $i < $qtdTS; $i++) { $somaS += $transacoes_conta_saidas[$i]['TRS_VALOR_TOTAL'];}
 //dump($transacoes_conta_entradas);
 ?>
 <body class="">
@@ -46,13 +48,13 @@ $qtdTS = (is_array($transacoes_conta_saidas) ? count($transacoes_conta_saidas): 
                         <div class="card col bg-success m-1">
                             <div class="card-body text-white">
                                 <h5 class="card-title">ENTRADAS <i class="bi bi-arrow-down-square"></i></h5>
-                                <p class="card-text "><h2> <i class="bi bi-plus-square"></i> R$ <?= $conta['CTA_SALDO'] ?></h2></p>
+                                <p class="card-text "><h2> <i class="bi bi-plus-square"></i> R$ <?= $somaE ?></h2></p>
                             </div>
                         </div>
                         <div class="card col bg-danger m-1">
                             <div class="card-body text-white">
                                 <h5 class="card-title">SAÍDAS <i class="bi bi-arrow-up-square"></i></h5>
-                                <p class="card-text"><h2> <i class="bi bi-dash-square"></i> R$ <?= $conta['CTA_SALDO'] ?></h2></p>
+                                <p class="card-text"><h2> <i class="bi bi-dash-square"></i> R$ <?= $somaS ?></h2></p>
                             </div>
                         </div>
                         <div class="card col m-1">
