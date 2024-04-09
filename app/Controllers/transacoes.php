@@ -56,7 +56,7 @@ class transacoes extends View
 
         $this->link[0] = ['link'=> 'admin','nome' => 'PAINEL ADMINISTRATIVO'];
         $this->link[1] = ['link'=> 'financeiro','nome' => 'MÓDULO FINANCEIRO'];
-        $this->link[2] = ['link'=> 'transacoes','nome' => 'GERENCIAR MOVIMENTAÇÕES'];
+        $this->link[2] = ['link'=> 'transacoes','nome' => 'GERENCIAR TRANSAÇÕES'];
     }
     public function index()
     {
@@ -67,7 +67,7 @@ class transacoes extends View
     public function cadastro()
     {
         $this->dados['title'] .= ' CADASTRAR TRANSAÇÃO DA EMPRESA/NEGÓCIO';   
-        $this->link[3] = ['link'=> 'movimentacoes/cadastro','nome' => 'CADASTRO DE MOVIMENTAÇÕES'];
+        $this->link[3] = ['link'=> 'movimentacoes/cadastro','nome' => 'CADASTRO DE TRANSAÇÕES'];
         $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
         $this->render('admin/financeiro/movimentacoes/cadastrar', $this->dados);
     }
