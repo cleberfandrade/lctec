@@ -93,7 +93,7 @@ $qtdCL = (is_array($classificacoes) ? count($classificacoes) : 0);
                                         À DEFINIR
                                     <?php } ?> 
                                 </td>
-                                <?= ($transacoes[$i]['TRS_TIPO'] == 1)? '<td class="text-center align-middle"><span class="text-primary">ENTRADA</span></td><td></td>' : '<td></td><td class="text-center align-middle"><span class="text-danger">SAÍDA</span></td>'; ?>
+                                <?= ($transacoes[$i]['TRS_TIPO'] == 1)? '<td class="text-center align-middle"><span class="text-primary">ENTRADA</span></td>' : '<td class="text-center align-middle"><span class="text-danger">SAÍDA</span></td>'; ?>
                                 <?= ($transacoes[$i]['TRS_TIPO'] == 1)? '<td class="text-center align-middle"><span class="text-primary">'.number_format($transacoes[$i]['TRS_VALOR_TOTAL'],2,',','.').'</td><td></td>' : '<td></td><td class="text-center align-middle"><span class="text-danger">'.number_format($transacoes[$i]['TRS_VALOR_TOTAL'],2,',','.').'</span></td>'; ?>
                                 <td class="text-center align-middle"><?= ($transacoes[$i]['TRS_STATUS'] == 1)? 'ATIVO' : 'DESATIVADO'; ?></td>
                                 <?php if($_SESSION['USU_NIVEL'] >= 8){ ?>
