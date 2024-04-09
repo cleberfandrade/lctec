@@ -93,7 +93,7 @@ $qtdCl = (is_array($classificacoes) ? count($classificacoes) : 0);
                                         À DEFINIR
                                     <?php } ?> 
                                 </td>
-                                <td class="text-center align-middle"><?= number_format($transacoes[$i]['PGT_VALOR'],2,',','.'); ?></td>
+                                <td class="text-center align-middle"><?= number_format($transacoes[$i]['TRS_VALOR_TOTAL'],2,',','.'); ?></td>
                                 <td class="text-center align-middle"><?= ($transacoes[$i]['TRS_STATUS'] == 1)? 'ATIVO' : 'DESATIVADO'; ?></td>
                                 <td class="text-center align-middle">
 
