@@ -41,12 +41,12 @@ $qtdCL = (is_array($classificacoes) ? count($classificacoes) : 0);
                             <th class="text-dark">Conta</th>
                             <th class="text-dark">Descrição</th>
                             <th class="text-dark">Data</th>
-                            <th class="text-dark">ENTRADA</th>
-                            <th class="text-dark">SAÍDA</th>
                             <th class="text-dark">Classificação</th>
                             <th class="text-dark">Categoria</th>
                             <th class="text-dark">Forma de Pgto</th>
-                            <th class="text-dark">Valor</th>
+                            <th class="text-dark">TIPO</th>
+                            <th class="text-dark">ENTRADA</th>
+                            <th class="text-dark">SAÍDA</th>
                             <th class="text-dark">Status</th>
                             <th class="text-dark">Obs</th>
                             <?php if($_SESSION['USU_NIVEL'] >= 8){ ?><th class="text-dark">Ações</th><?php } ?>
@@ -60,8 +60,6 @@ $qtdCL = (is_array($classificacoes) ? count($classificacoes) : 0);
                                 <td class="text-center align-middle"><?= $transacoes[$i]['CTA_DESCRICAO']; ?></td>
                                 <td class="text-center align-middle"><?= $transacoes[$i]['TRS_DESCRICAO']; ?></td>
                                 <td class="text-center align-middle"><?= $data->format('d/m/Y'); ?></td>
-                                <?= ($transacoes[$i]['TRS_TIPO'] == 1)? '<td class="text-center align-middle"><span class="text-primary">ENTRADA</span></td><td></td>' : '<td></td><td class="text-center align-middle"><span class="text-danger">SAÍDA</span></td>'; ?>
-                                <td class="text-center align-middle"><?= $transacoes[$i]['TRS_TIPO']; ?></td>
                                 <td class="text-center align-middle">
                                     <?php 
                                     if($transacoes[$i]['CLA_COD'] != 0 or $transacoes[$i]['CLA_COD'] != '') {
@@ -95,11 +93,9 @@ $qtdCL = (is_array($classificacoes) ? count($classificacoes) : 0);
                                         À DEFINIR
                                     <?php } ?> 
                                 </td>
-                                <td class="text-center align-middle"><?= number_format($transacoes[$i]['TRS_VALOR_TOTAL'],2,',','.'); ?></td>
+                                <?= ($transacoes[$i]['TRS_TIPO'] == 1)? '<td class="text-center align-middle"><span class="text-primary">ENTRADA</span></td><td></td>' : '<td></td><td class="text-center align-middle"><span class="text-danger">SAÍDA</span></td>'; ?>
+                                <?= ($transacoes[$i]['TRS_TIPO'] == 1)? '<td class="text-center align-middle"><span class="text-primary">'.number_format($transacoes[$i]['TRS_VALOR_TOTAL'],2,',','.').'</td><td></td>' : '<td></td><td class="text-center align-middle"><span class="text-danger">'.number_format($transacoes[$i]['TRS_VALOR_TOTAL'],2,',','.').'</span></td>'; ?>
                                 <td class="text-center align-middle"><?= ($transacoes[$i]['TRS_STATUS'] == 1)? 'ATIVO' : 'DESATIVADO'; ?></td>
-                                <td class="text-center align-middle">
-
-                                </td>
                                 <?php if($_SESSION['USU_NIVEL'] >= 8){ ?>
                                 <td class="text-center align-middle">
                                 </td>
