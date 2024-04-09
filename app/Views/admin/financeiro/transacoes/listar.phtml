@@ -86,8 +86,8 @@ $qtdCl = (is_array($classificacoes) ? count($classificacoes) : 0);
                                 <?php 
                                     if($transacoes[$i]['FPG_COD'] != 0 or $transacoes[$i]['FPG_COD'] != '') {
                                         for ($c = 0; $c < $qtdFP; $c++) { 
-                                            if ($formas_pgto[$c]['FPG_COD'] == $transacoes[$i]['FPG_COD']) { ?>
-                                            <?= $formas_pgto[$c]['FPG_DESCRICAO']; ?>   
+                                            if ($formas_pagamentos[$c]['FPG_COD'] == $transacoes[$i]['FPG_COD']) { ?>
+                                            <?= $formas_pagamentos[$c]['FPG_DESCRICAO']; ?>   
                                         <?php } } ?> 
                                     <?php }else { ?>
                                         À DEFINIR
