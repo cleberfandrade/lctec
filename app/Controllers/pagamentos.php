@@ -5,6 +5,7 @@ use App\Models\FormasPagamentos;
 use App\Models\Lancamentos;
 use App\Models\ModulosEmpresa;
 use App\Models\Movimentacoes;
+use App\Models\PagamentosRecebimentos;
 use App\Models\Usuarios;
 use App\Models\UsuariosEmpresa;
 
@@ -16,7 +17,7 @@ use Libraries\Url;
 class pagamentos extends View
 {
     private $dados = [];
-    private $link,$Check,$Usuarios,$UsuariosEmpresa,$Lancamentos,$Contas,$Movimentacoes, $FormasPagamentos, $ModulosEmpresa;
+    private $link,$Check,$Usuarios,$UsuariosEmpresa,$Lancamentos,$Contas,$Movimentacoes, $FormasPagamentos, $ModulosEmpresa,$PagamentosRecebimentos;
     public function __construct()
     {
         Sessao::naoLogado();
@@ -29,10 +30,15 @@ class pagamentos extends View
         $this->Usuarios = new Usuarios;
         $this->UsuariosEmpresa = new UsuariosEmpresa;
         $this->ModulosEmpresa = new ModulosEmpresa;
-        
+        $this->PagamentosRecebimentos = new PagamentosRecebimentos;
+
         $this->dados['empresa'] = $this->UsuariosEmpresa->setCodEmpresa($_SESSION['EMP_COD'])->setCodUsuario($_SESSION['USU_COD'])->listar(0);
         $this->dados['usuario'] = $this->Usuarios->setCodUsuario($_SESSION['USU_COD'])->listar(0);
         $this->dados['lancamentos'] = $this->Lancamentos->setCodEmpresa($_SESSION['EMP_COD'])->listarTodos(0);
+
+        $this->dados['pagamentos'] = $this->PagamentosRecebimentos->setCodEmpresa($_SESSION['EMP_COD'])->setTipo(1)->listarTodosTipo(0);
+
+        $this->dados['formas_pagamentos'] = $this->FormasPagamentos->setCodEmpresa($_SESSION['EMP_COD'])->listarTodasAtivas(0);
         $this->dados['modulo'] = $this->ModulosEmpresa->setCodEmpresa($_SESSION['EMP_COD'])->setCodigo(3)->listarModuloEmpresa(0);
 
         $this->link[0] = ['link'=> 'admin','nome' => 'PAINEL ADMINISTRATIVO'];
@@ -76,8 +82,9 @@ class pagamentos extends View
         }
 
         $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
+        $this->dados['lancamentos_pagar'] = $this->Lancamentos->setCodEmpresa($_SESSION['EMP_COD'])->setTipo(1)->listarTodosTipo(0);
         if ($ok) {
-            $this->dados['lancamentos_pagar'] = $this->Lancamentos->setCodEmpresa($_SESSION['EMP_COD'])->setTipo(1)->listarTodosTipo(0);
+           
             $this->render('admin/financeiro/pagamentos/pagar', $this->dados);
         }else {
             $this->render('admin/financeiro/pagamentos/pagar', $this->dados);
