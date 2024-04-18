@@ -134,7 +134,6 @@ $qtdF = (is_array($formas_pagamentos) ? count($formas_pagamentos) : 0);
                                             <option value="<?= $i ?>" <?= (isset($_POST['FPG_COD']) &&  $_POST['FPG_COD']  == $i)? 'selected' : '' ?>><?= ($formas_pagamentos[$i]['FPG_TIPO'] == 1)? 'À VISTA' : 'À PRAZO'; ?> - <?= $formas_pagamentos[$i]['FPG_DESCRICAO'] ?></option>
                                         <?php } } ?>
                                         </select>
-                                        
                                     </div>
                                     <div class="col-12 mb-3">
                                         <label class="form-label" for="2">DESCRIÇÃO</label>  
@@ -147,13 +146,9 @@ $qtdF = (is_array($formas_pagamentos) ? count($formas_pagamentos) : 0);
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-12 mx-auto mb-3">
-                                    
-                                </div>
                             </div>
                             <div class="modal-footer">
                                 <input type="hidden" id="LAN_STATUS" name="LAN_STATUS" value="" />
-                                
                                 <input type="hidden" id="LAN_COD" name="LAN_COD" value="" />
                                 <input type="hidden" id="EMP_COD" name="EMP_COD" value="<?= $empresa['EMP_COD'] ?>" />
                                 <input type="hidden" id="USU_COD" name="USU_COD" value="<?= $_SESSION['USU_COD'] ?>" />

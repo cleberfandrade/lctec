@@ -71,7 +71,22 @@ class pagamentos extends View
             
                 if ($this->dados['lancamento'] != 0) {
 
-
+                    $db = array(
+                        'EMP_COD' => $_SESSION['EMP_COD'],
+                        'USU_COD' => $_SESSION['USU_COD'],
+                        'CTA_COD' => $dados['CTA_COD'],
+                        'LAN_COD' => $dados['LAN_COD'],
+                        'FPG_COD' => $dados['FPG_COD'],
+                        'PAG_DT_CADASTRO'=> date('Y-m-d H:i:s'),
+                        'PAG_DT_ATUALIZACAO'=> date('0000-00-00 00:00:00'), 
+                        'PAG_DT_PAGAMENTO' => $dados['PAG_DT_PAGAMENTO'],
+                        'PAG_TIPO' => 2,
+                        'PAG_TOKEN' => $this->Check->token(10,'',true),
+                        'PAG_VALOR' => $dados['PAG_VALOR'],
+                        'PAG_OBSERVACAO' => $dados['PAG_OBSERVACAO'],
+                        'PAG_STATUS'=> 1
+                    );
+                    //$this->PagamentosRecebimentos
                     $ok = true;
                 }
             }else{
