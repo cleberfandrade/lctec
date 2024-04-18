@@ -3,6 +3,7 @@ namespace App\Controllers;
 
 use App\Models\FormasPagamentos;
 use App\Models\Lancamentos;
+use App\Models\ModulosEmpresa;
 use App\Models\Movimentacoes;
 use App\Models\Usuarios;
 use App\Models\UsuariosEmpresa;
@@ -15,7 +16,7 @@ use Libraries\Url;
 class pagamentos extends View
 {
     private $dados = [];
-    private $link,$Check,$Usuarios,$UsuariosEmpresa,$Lancamentos,$Contas,$Movimentacoes, $FormasPagamentos;
+    private $link,$Check,$Usuarios,$UsuariosEmpresa,$Lancamentos,$Contas,$Movimentacoes, $FormasPagamentos, $ModulosEmpresa;
     public function __construct()
     {
         Sessao::naoLogado();
@@ -27,10 +28,12 @@ class pagamentos extends View
         $this->Movimentacoes = new Movimentacoes;
         $this->Usuarios = new Usuarios;
         $this->UsuariosEmpresa = new UsuariosEmpresa;
+        $this->ModulosEmpresa = new ModulosEmpresa;
         
         $this->dados['empresa'] = $this->UsuariosEmpresa->setCodEmpresa($_SESSION['EMP_COD'])->setCodUsuario($_SESSION['USU_COD'])->listar(0);
         $this->dados['usuario'] = $this->Usuarios->setCodUsuario($_SESSION['USU_COD'])->listar(0);
         $this->dados['lancamentos'] = $this->Lancamentos->setCodEmpresa($_SESSION['EMP_COD'])->listarTodos(0);
+        $this->dados['modulo'] = $this->ModulosEmpresa->setCodEmpresa($_SESSION['EMP_COD'])->setCodigo(3)->listarModuloEmpresa(0);
 
         $this->link[0] = ['link'=> 'admin','nome' => 'PAINEL ADMINISTRATIVO'];
         $this->link[1] = ['link'=> 'financeiro','nome' => 'MÓDULO FINANCEIRO'];
@@ -49,6 +52,38 @@ class pagamentos extends View
         $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
         $this->render('admin/financeiro/pagamentos/pagar', $this->dados);
     }
+    public function pagar_lançamento()
+    {
+        $this->dados['title'] .= ' GERENCIAR PAGAMENTOS';   
+        $dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);
+        $ok = false;
+        if (isset($_POST) && isset($dados['CADASTRAR_PAGAMENTO'])) {
+            unset($dados['CADASTRAR_PAGAMENTO']);
+            if($this->dados['empresa']['USU_COD'] == $dados['USU_COD'] && $this->dados['empresa']['EMP_COD'] == $dados['EMP_COD']){
+               
+                $this->dados['lancamento'] = $this->Lancamentos->setCodEmpresa($_SESSION['EMP_COD'])->setCodigo($dados['LAN_COD'])->listar(0);
+            
+                if ($this->dados['lancamento'] != 0) {
+
+
+                    $ok = true;
+                }
+            }else{
+                Sessao::alert('ERRO',' PAG12 - Acesso inválido(s)!','alert alert-danger');
+            }
+        }else{
+            Sessao::alert('ERRO',' PAG11- Dados inválido(s)!','alert alert-danger');
+        }
+
+        $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
+        if ($ok) {
+            $this->dados['lancamentos_pagar'] = $this->Lancamentos->setCodEmpresa($_SESSION['EMP_COD'])->setTipo(1)->listarTodosTipo(0);
+            $this->render('admin/financeiro/pagamentos/pagar', $this->dados);
+        }else {
+            $this->render('admin/financeiro/pagamentos/pagar', $this->dados);
+        }
+    }
+    
     public function receber()
     {
         $this->dados['title'] .= ' GERENCIAR PAGAMENTOS';   

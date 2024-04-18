@@ -70,7 +70,7 @@ $qtdLP = (is_array($lancamentos_pagar) ? count($lancamentos_pagar) : 0);
                             <td class="text-center align-middle"><?= $data->format('d/m/Y'); ?></td>
                             <td class="text-center align-middle"><?= number_format($lancamentos_pagar[$i]['LAN_VALOR'],2,',','.'); ?></td>
                             <td class="text-center align-middle">
-                                <button type="button" class="btn btn-success btn-sm d-print-none" data-bs-toggle='modal'  data-bs-target="#status" data-codigo="<?= $lancamentos_pagar[$i]['LAN_COD']; ?>" data-nome="<?= $lancamentos_pagar[$i]['LAN_DESCRICAO']; ?>" data-status="<?= $lancamentos_pagar[$i]['LAN_STATUS']; ?>" title="Deseja Pagar?" ><i class="fa fa-check"></i></button>
+                                <button type="button" class="btn btn-success btn-sm d-print-none" data-bs-toggle='modal'  data-bs-target="#pagar" data-codigo="<?= $lancamentos_pagar[$i]['LAN_COD']; ?>" data-valor="<?= $lancamentos_pagar[$i]['LAN_VALOR']; ?>" data-parcela="<?= $lancamentos_pagar[$i]['LAN_PARCELA']; ?>" data-nome="<?= $lancamentos_pagar[$i]['LAN_DESCRICAO']; ?>" data-vencimento="<?= $lancamentos_pagar[$i]['LAN_DT_VENCIMENTO']; ?>" data-status="<?= $lancamentos_pagar[$i]['LAN_STATUS']; ?>" title="Deseja Pagar?" ><i class="fa fa-check"></i></button>
                             </td>
                             <?php if($_SESSION['USU_NIVEL'] >= 8){ ?>
                             <td class="text-center align-middle d-print-none">
@@ -92,6 +92,114 @@ $qtdLP = (is_array($lancamentos_pagar) ? count($lancamentos_pagar) : 0);
                 </div>
             </section>
             <?php include_once 'app/Views/admin/inc/rodape.phtml';?>
+            <div class="modal fade" id="pagar"  tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false"  aria-labelledby="pagar" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">PAGAR LANÇAMENTO</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <form action="<?= DIRPAGE ?>pagamentos/pagar_lançamento" method="post">
+                            <div class="modal-body">
+                                <h5 class="modal-title text-center mb-3">CONFIRMAR PAGAMENTO</h5>
+                                <div class="col-12 row mx-auto mb-3">
+                                    <div class="col-6 mb-3">
+                                        <label class="form-label" for="2">VALOR A PAGAR</label>  
+                                        <div class="input-group">    
+                                            <span class="input-group-text">R$</span>  
+                                            <input type="text" class="form-control form-control-lg real" id="LAN_VALOR" name="LAN_VALOR" value="">
+                                        </div>
+                                    </div>
+                                    <div class="col-6 mb-2">
+                                        <label class="form-label">PARCELA?</label>
+                                        <div class="">
+                                            <input type="text" class="form-control form-control-lg" id="LAN_PARCELA" name="LAN_PARCELA" value="">
+                                        </div>
+                                    </div>
+                                    <div class="col-6 mb-2">
+                                        <label class="form-label">DATA DO PAGAMENTO</label>
+                                        <div class="">
+                                            <input type="date" class="form-control form-control-lg" name="LAN_DATA" value="<?= date('Y-m-d') ?>">
+                                        </div>
+                                    </div>
+                                    <div class="col-6 mb-3">
+                                        <label class="form-label" for="2">DATA DE VENCIMENTO</label>  
+                                        <input type="text" class="form-control form-control-lg" disabled id="LAN_DT_VENCIMENTO" name="LAN_DT_VENCIMENTO" value="">
+                                    </div>
+                                    <div class="col-12 mb-3">
+                                        <label class="form-label" for="2">DESCRIÇÃO</label>  
+                                        <input type="text" class="form-control form-control-lg" disabled id="LAN_DESCRICAO" name="LAN_DESCRICAO" value="">
+                                    </div>
+                                    <div class="col-12 mb-3">
+                                        <label class="form-label" for="1">OBSERVAÇÃO</label>
+                                        <div class="form-floating mb-3">
+                                            <textarea class="form-control maiusculo" id="LAN_OBSERVACAO" name="LAN_OBSERVACAO"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 mx-auto mb-3">
+                                    
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <input type="hidden" id="LAN_STATUS" name="LAN_STATUS" value="" />
+                                <input type="hidden" id="LAN_COD" name="LAN_COD" value="" />
+                                <input type="hidden" id="EMP_COD" name="EMP_COD" value="<?= $empresa['EMP_COD'] ?>" />
+                                <input type="hidden" id="USU_COD" name="USU_COD" value="<?= $_SESSION['USU_COD'] ?>" />
+                                <button type="button" class="btn btn-dark" data-bs-dismiss="modal">CANCELAR</button>
+                                <button type="button" id="sts" class="btn <?= $modulo[0]['MOD_COR'] ?> text-white"><i class="bi bi-box-arrow-right"></i> PAGAR</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <script type="text/javascript">
+        $(document).ready(function() {
+            $('#pagar').on('show.bs.modal', function(event) {
+                var button = null;
+                var button = $(event.relatedTarget); // Button that triggered the modal
+                var codigo = null;
+                var codigo = button.data('codigo'); // Extract info from data-* attributes
+                var nome = button.data('nome');
+                var nome = button.data('vencimento');
+                var nome = button.data('valor');
+                var nome = button.data('descricao');
+                var status = button.data('status');
+                var modal = $(this);
+                modal.find('#LAN_COD').val(codigo);
+                modal.find('#LAN_STATUS').val(status);
+                modal.find('#sts').val(codigo);
+                modal.find('#LAN_DESCRICAO').html(nome);
+
+                if (status === 1) {
+                    modal.find('#sts').html('<i class="fa fa-ban"></i> CONFIRMAR');
+                    modal.find('#title').html('Deseja desativar o lançamento?');
+                }else{
+                    modal.find('#sts').html('<i class="fa fa-circle-check"></i> CONFIRMAR');
+                    modal.find('#title').html('Deseja ativar o lançamento?');
+                }
+            });
+        });
+        $("#sts").click(function(){
+            var LAN_COD = $('#sts').val();
+            var EMP_COD = $('#EMP_COD').val();
+            var LAN_STATUS = $('#LAN_STATUS').val();
+            setTimeout(function () {
+                    $('#status').modal('hide');
+            }, 100);
+            $.post('<?= DIRPAGE; ?>lancamentos/status', {LAN_COD: LAN_COD,STATUS_LANCAMENTO: true,EMP_COD: EMP_COD,LAN_STATUS: LAN_STATUS,cache: false}, function(retorno) {
+                var resposta = JSON.parse(retorno);
+                if (resposta['COD'] !== 'ERRO') {
+                    $('#resposta').addClass('alert alert-success');
+                }else{
+                    $('#resposta').addClass('alert alert-warning');
+                }
+                $('#resposta').html(resposta['MENSAGEM']);
+                setTimeout( () => { window.location.href="<?= DIRPAGE ?>lancamentos"}, 100);
+            });
+
+        });
+        </script>
         </div>
     </div>
     </body>
