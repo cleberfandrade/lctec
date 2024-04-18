@@ -161,9 +161,9 @@ $qtdLP = (is_array($lancamentos_pagar) ? count($lancamentos_pagar) : 0);
                 var codigo = null;
                 var codigo = button.data('codigo'); // Extract info from data-* attributes
                 var nome = button.data('nome');
-                var nome = button.data('vencimento');
-                var nome = button.data('valor');
-                var nome = button.data('descricao');
+                var vencimento = button.data('vencimento');
+                var valor = button.data('valor');
+                var parcela = button.data('parcela');
                 var status = button.data('status');
                 var modal = $(this);
                 modal.find('#LAN_COD').val(codigo);
