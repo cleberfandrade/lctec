@@ -9,7 +9,7 @@ $qtdCL = (is_array($classificacoes) ? count($classificacoes) : 0);
 $qtdC = (is_array($contas) ? count($contas) : 0);
 //$qtdR = (is_array($contas_receber) ? count($contas_receber) : 0);
 //dump($qtdL);
-$qtdPg = (isset($_POST['LAN_QTD']) && $_POST['LAN_QTD'] != 10) ? $_POST['LAN_QTD'] : 10;
+$qtdPg = (isset($dados['LAN_QTD']) && $dados['LAN_QTD'] != 10) ? $dados['LAN_QTD'] : 10;
 $qtdP = ceil($qtdL/$qtdPg);
 ?>
 <body class="">
@@ -63,7 +63,8 @@ $qtdP = ceil($qtdL/$qtdPg);
                                 <input type="radio" class="btn-check" name="LAN_TIPO" id="option2" value="1" <?= (isset($_POST['LAN_TIPO']) &&  $_POST['LAN_TIPO']  == 1)? 'checked' : '' ?>/>
                                 <label class="btn col" for="option2">A PAGAR</label></input>
                                 <input type="radio" class="btn-check" name="LAN_TIPO" id="option3" value="2" <?= (isset($_POST['LAN_TIPO']) &&  $_POST['LAN_TIPO']  == 2)? 'checked' : '' ?>/>
-                                <label class="btn col" for="option3">A RECEBER</label>     </input>                           
+                                <label class="btn col" for="option3">A RECEBER</label></input> 
+                                                         
                             </div>
                             <div class="col-5 mx-auto">
                                 <input type="radio" class="btn-check" name="LAN_RESULTADOS" id="op6" value="2" <?= (!isset($_POST['LAN_RESULTADOS']) or  $_POST['LAN_RESULTADOS']  == 2)? 'checked' : '' ?>>
@@ -73,11 +74,17 @@ $qtdP = ceil($qtdL/$qtdPg);
                                 <input type="radio" class="btn-check" name="LAN_RESULTADOS" id="op8" value="0" <?= (isset($_POST['LAN_RESULTADOS']) &&  $_POST['LAN_RESULTADOS']  == 0)? 'checked' : '' ?>/>
                                 <label class="btn col" for="op8">NÃO PARTICIPA</label></input>                           
                             </div>
-                            <!--<div class="col-2 row mx-auto ">
-                                <div class="form-check form-switch">
+                            <div class="col-4 row mx-auto ">
+                                <input type="radio" class="btn-check" name="LAN_STATUS" id="option4" value="0" <?= (!isset($_POST['LAN_STATUS']) or  $_POST['LAN_STATUS']  == 0)? 'checked' : '' ?>>
+                                <label class="btn col" for="option4">TODOS</label></input>
+                                <input type="radio" class="btn-check col-6 row" name="LAN_STATUS" id="option5" value="3" <?= (isset($_POST['LAN_STATUS']) &&  $_POST['LAN_STATUS']  == 3)? 'checked' : '' ?>/>
+                                <label class="btn col" for="option5">PAGO</label></input>    
+                                <input type="radio" class="btn-check col-6 row" name="LAN_STATUS" id="option6" value="4" <?= (isset($_POST['LAN_STATUS']) &&  $_POST['LAN_STATUS']  == 4)? 'checked' : '' ?>/>
+                                <label class="btn col" for="option6">RECEBIDO</label></input> 
+                                <!--<div class="form-check form-switch">
                                     <input class="form-check-input" type="checkbox" name="LAN_RESULTADOS" title="PARTICIPA DOS RESULTADOS" role="switch" id="flexSwitchCheckChecked" <?php  // (isset($_POST['LAN_RESULTADOS']) && $_POST['LAN_RESULTADOS'] == 'on')? 'checked': ''?>>
-                                </div>
-                            </div>-->
+                                </div>-->
+                            </div>
                            
                             
                         </div>
@@ -187,7 +194,7 @@ $qtdP = ceil($qtdL/$qtdPg);
                                 <button type="button" class="btn btn-dark btn-sm d-print-none" data-bs-toggle='modal'  data-bs-target="#obs" title="" data-codigo="<?= $lancamentos[$i]['LAN_COD']; ?>" data-obs="<?= $lancamentos[$i]['LAN_OBSERVACAO']; ?>" title="Visualizar?" ><i class="fa fa-eye"></i></button>
                                 <?php } ?> 
                             </td>
-                            <td class="text-center align-middle"><?= ($lancamentos[$i]['LAN_STATUS'] == 1)? 'ATIVO' : 'DESATIVADO'; ?></td>
+                            <td class="text-center align-middle"><?= ($lancamentos[$i]['LAN_STATUS'] == 1)? 'ATIVO' : (($lancamentos[$i]['LAN_STATUS'] == 0) ? 'DESATIVADO' : (($lancamentos[$i]['LAN_STATUS'] == 3)? '<b class="text-dark">PAGO</b>' : '<b>RECEBIDO</b>' )); ?></td>
                             <?php if($_SESSION['USU_NIVEL'] >= 8){ ?>
                             <td class="text-center align-middle d-print-none">
                                 <?php if($lancamentos[$i]['LAN_STATUS'] == 0){ ?>

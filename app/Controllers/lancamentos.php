@@ -69,7 +69,7 @@ class lancamentos extends View
        
         if (isset($_POST) && isset($dados['filtrar'])) {
 
-            $this->dados['LAN_PAGINA'] = (isset($dados['LAN_PAGINA']) && $dados['LAN_PAGINA'] != '') ? $dados['LAN_PAGINA'] : 1;
+            $dados['LAN_PAGINA'] = $this->dados['LAN_PAGINA'] = (isset($dados['LAN_PAGINA']) && $dados['LAN_PAGINA'] != '') ? $dados['LAN_PAGINA'] : 1;
 
             if (isset($dados['LAN_DT_INICIAL']) && isset($dados['LAN_DT_FINAL'])) {
                 if (strtotime($dados['LAN_DT_FINAL']) > strtotime($dados['LAN_DT_INICIAL'])) {
