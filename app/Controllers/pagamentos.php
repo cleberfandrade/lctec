@@ -91,7 +91,7 @@ class pagamentos extends View
                         'PAG_OBSERVACAO' => $dados['PAG_OBSERVACAO'],
                         'PAG_STATUS'=> 1
                     );
-
+                    
                     if ($dados['PAG_TOTAL']) {
                         //PAGAMENTO FOI EFETUADO TOTALMENTE
                         //RESGISTRANDO PAGAMENTO
@@ -100,7 +100,10 @@ class pagamentos extends View
                             
                             //ATUALIZANDO O STATUS DO LANÇAMENTO
                             $this->Lancamentos->setCodEmpresa($_SESSION['EMP_COD'])->setCodigo($dados['LAN_COD']);
+                            $novo = 0;
+                            ($dados['PAG_VALOR'] != $this->dados['lancamento']['LAN_VALOR'])? $novo = $dados['PAG_VALOR'] : $novo = $this->dados['lancamento']['LAN_VALOR'];
                             $dados_lancamentos = array(
+                                'LAN_VALOR' => $novo,
                                 'LAN_DT_ATUALIZACAO'=> date('Y-m-d H:i:s'),
                                 'LAN_STATUS'=> 3
                             );
@@ -125,7 +128,7 @@ class pagamentos extends View
                                         'TRS_TOKEN' => $token,          
                                         'TRS_STATUS'=> 1
                                     );
-
+                                    dump($db_transacao);
                                     if($this->Transacoes->cadastrar($db_transacao,0)){
                                         $saldo = 0;
                                         $saldo = ($this->dados['conta']['CTA_SALDO'] - $dados['PAG_VALOR']);

@@ -129,7 +129,7 @@ $qtdF = (is_array($formas_pagamentos) ? count($formas_pagamentos) : 0);
                                         <label class="form-label text-center">FORMA DE PAGAMENTO</label>
                                         <select id="FPG_COD" class="form-select form-select-lg" name="FPG_COD"> 
                                         <?php for ($i=0; $i < $qtdF; $i++) { if ($formas_pagamentos[$i]['FPG_STATUS'] == 1) { ?>
-                                            <option value="<?= $i ?>" <?= (isset($_POST['FPG_COD']) &&  $_POST['FPG_COD']  == $i)? 'selected' : '' ?>><?= ($formas_pagamentos[$i]['FPG_TIPO'] == 1)? 'À VISTA' : 'À PRAZO'; ?> - <?= $formas_pagamentos[$i]['FPG_DESCRICAO'] ?></option>
+                                            <option value="<?= $formas_pagamentos[$i]['FPG_COD'] ?>" <?= (isset($_POST['FPG_COD']) &&  $_POST['FPG_COD']  == $i)? 'selected' : '' ?>><?= ($formas_pagamentos[$i]['FPG_TIPO'] == 1)? 'À VISTA' : 'À PRAZO'; ?> - <?= $formas_pagamentos[$i]['FPG_DESCRICAO'] ?></option>
                                         <?php } } ?>
                                         </select>
                                     </div>
