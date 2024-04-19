@@ -46,7 +46,7 @@ class financeiro extends View
         }
         
         $this->link[0] = ['link'=> 'admin','nome' => 'PAINEL ADMINISTRATIVO'];
-        $this->link[1] = ['link'=> 'financeiro','nome' => 'MÓDULO DE FINANÇAS >>'];
+        $this->link[1] = ['link'=> 'financeiro','nome' => 'MÓDULO FINANCEIRO >>'];
     }
     public function index()
     {
