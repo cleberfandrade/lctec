@@ -272,6 +272,7 @@ class lancamentos extends View
         $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
         if ($ok) {
             $this->dados['lancamentos'] = $this->Lancamentos->setCodEmpresa($_SESSION['EMP_COD'])->listarTodos(0);
+            $this->dados['lan_todos'] = $this->Lancamentos->setCodEmpresa($_SESSION['EMP_COD'])->listarTodos(0);
             $this->render('admin/financeiro/lancamentos/listar', $this->dados);
         }else {
             $this->dados['lancamento'] = $this->Lancamentos->setCodEmpresa($dados['EMP_COD'])->setCodigo($dados['LAN_COD'])->listar(0);
