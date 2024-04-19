@@ -219,6 +219,7 @@ class lancamentos extends View
             $this->render('admin/financeiro/lancamentos/alterar', $this->dados);
         }else{
             $this->dados['lancamentos'] = $this->Lancamentos->setCodEmpresa($_SESSION['EMP_COD'])->listarTodos(0);
+            $this->dados['lan_todos'] = $this->Lancamentos->setCodEmpresa($_SESSION['EMP_COD'])->listarTodos(0);
             $this->render('admin/financeiro/lancamentos/listar', $this->dados);
         }
     }
