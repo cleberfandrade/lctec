@@ -2,6 +2,7 @@
 use Libraries\Sessao;
 
 include_once 'app/Views/admin/inc/cabecalho.phtml'; 
+
 ?>
 <body class="">
     <div class="d-flex" id="wrapper">
@@ -45,10 +46,10 @@ include_once 'app/Views/admin/inc/cabecalho.phtml';
                                     <input type="text" name="CTA_BANCO" class="form-control maiusculo" value="<?= isset($_POST['CTA_BANCO']) ? $_POST['CTA_BANCO'] : (isset($conta['CTA_BANCO']) ? $conta['CTA_BANCO'] : '') ?>">
                                 </div>
                                 <div class="col-4 mb-3">
-                                    <label class="px-3" for="2">SALDO INICIAL(ATUAL)</label>  
+                                    <label class="px-3" for="2">SALDO ATUAL</label>  
                                     <div class="input-group">    
                                         <span class="input-group-text">R$</span>  
-                                        <input type="text" class="form-control form-control-lg real" id="" name="CTA_SALDO" value="<?= isset($_POST['CTA_SALDO']) ? $_POST['CTA_SALDO'] : (isset($conta['CTA_SALDO'])? $conta[$i]['CTA_SALDO'] : '0.00'); ?>">
+                                        <input type="text" class="form-control form-control-lg real" id="" name="CTA_SALDO" value="<?= isset($_POST['CTA_SALDO']) ? $_POST['CTA_SALDO'] : (isset($conta['CTA_SALDO'])? $conta['CTA_SALDO'] : '0.00'); ?>">
                                     </div>
                                 </div>
                                 <div class="col-10 mb-3">

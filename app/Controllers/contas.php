@@ -85,10 +85,12 @@ class contas extends View
                     //$this->dados['CTA_COD'] = $dados[3];
                     $this->link[3] = ['link'=> 'financeiro/detalhar_contas/'.$_SESSION['EMP_COD'].'/'.$dados[3],'nome' => 'DETALHAR CONTA >> '.$this->dados['conta']['CTA_DESCRICAO']];
                     $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
-                    $ok = true;
+                    
                     $this->dados['transacoes_conta'] = $this->Transacoes->setCodEmpresa($_SESSION['EMP_COD'])->setCodConta($this->dados['conta']['CTA_COD'])->listarTodasTransacoesConta(0);
                     $this->dados['transacoes_conta_entradas'] = $this->Transacoes->setCodEmpresa($_SESSION['EMP_COD'])->setCodConta($this->dados['conta']['CTA_COD'])->setTipo(1)->listarTodasTransacoesContaPorTipo(0);
                     $this->dados['transacoes_conta_saidas'] = $this->Transacoes->setCodEmpresa($_SESSION['EMP_COD'])->setCodConta($this->dados['conta']['CTA_COD'])->setTipo(2)->listarTodasTransacoesContaPorTipo(0);
+                    
+                    $ok = true;
                 }
                
             }else{
@@ -201,9 +203,10 @@ class contas extends View
                     if($this->Transacoes->cadastrar($dados,0)){
     
                         $this->Contas->setCodEmpresa($dados['EMP_COD'])->setCodigo($dados['CTA_COD']);
-
+                        $saldo = 0;
+                        $saldo = ($this->dados['conta']['CTA_SALDO'] - $dados['TRS_VALOR_TOTAL']);
                         $db = array(
-                            'CTA_SALDO'=> $dados['TRS_VALOR_TOTAL'],
+                            'CTA_SALDO'=> $saldo,
                             'CTA_DT_ATUALIZACAO'=> date('Y-m-d H:i:s')
                         );
                     
@@ -400,7 +403,7 @@ class contas extends View
                 ($dados['CTA_STATUS'] == 1)? $dados['CTA_STATUS'] = 0 : $dados['CTA_STATUS'] = 1;
                 
                 $db = array(
-                    'COL_DT_ATUALIZACAO'=> date('Y-m-d H:i:s'),
+                    'CTA_DT_ATUALIZACAO'=> date('Y-m-d H:i:s'),
                     'CTA_STATUS' => $dados['CTA_STATUS']
                 );
 

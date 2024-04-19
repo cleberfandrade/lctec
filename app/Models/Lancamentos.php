@@ -7,7 +7,7 @@ class Lancamentos extends Model
 { 
     private $tabela = 'tb_lancamentos';
     private $Model = '';
-    private $codigo, $descricao, $tipo, $codEmpresa, $codVenda, $codFornecedor, $dataVencimento;
+    private $codigo, $descricao, $tipo, $codEmpresa, $codVenda, $codFornecedor, $dataVencimento,$status;
 
     public function __construct()
     {
@@ -27,6 +27,11 @@ class Lancamentos extends Model
     public function setTipo($tipo)
     {
         $this->tipo = $tipo;
+        return $this;
+    }
+    public function setStatus($status)
+    {
+        $this->status = $status;
         return $this;
     }
     public function setCodEmpresa($codEmpresa)
@@ -97,7 +102,7 @@ class Lancamentos extends Model
     }
     public function listarTodosTipo($ver = 0)
     {
-        $parametros = "L INNER JOIN tb_empresas E ON E.EMP_COD=L.EMP_COD WHERE L.EMP_COD={$this->codEmpresa} AND L.LAN_TIPO='{$this->tipo}' ORDER BY L.LAN_DT_VENCIMENTO DESC";
+        $parametros = "L INNER JOIN tb_empresas E ON E.EMP_COD=L.EMP_COD WHERE L.EMP_COD={$this->codEmpresa} AND L.LAN_TIPO='{$this->tipo}' AND L.LAN_STATUS='{$this->status}' ORDER BY L.LAN_DT_VENCIMENTO DESC";
         $campos = "*";
         $resultado = $this->Model->exibir($parametros, $campos, $ver, $id = false);
         if ($resultado) {

@@ -42,7 +42,7 @@ $qtdCL = (is_array($classificacoes) ? count($classificacoes) : 0);
                             <th class="text-dark">Descrição</th>
                             <th class="text-dark">Data</th>
                             <th class="text-dark">Classificação</th>
-                            <th class="text-dark">Categoria</th>
+                           
                             <th class="text-dark">Forma de Pgto</th>
                             <th class="text-dark">TIPO</th>
                             <th class="text-dark">ENTRADA</th>
@@ -71,17 +71,7 @@ $qtdCL = (is_array($classificacoes) ? count($classificacoes) : 0);
                                         À DEFINIR
                                     <?php } ?> 
                                 </td>
-                                <td class="text-center align-middle">
-                                <?php 
-                                    if($transacoes[$i]['CAT_COD'] != 0 or $transacoes[$i]['CAT_COD'] != '') {
-                                        for ($c = 0; $c < $qtdC; $c++) { 
-                                            if ($categorias[$c]['CAT_COD'] == $transacoes[$i]['CAT_COD']) { ?>
-                                            <?= $categorias[$c]['CAT_DESCRICAO']; ?>   
-                                        <?php } } ?> 
-                                    <?php }else { ?>
-                                        À DEFINIR
-                                    <?php } ?> 
-                                </td>
+                                
                                 <td class="text-center align-middle">
                                 <?php 
                                     if($transacoes[$i]['FPG_COD'] != 0 or $transacoes[$i]['FPG_COD'] != '') {
@@ -96,8 +86,11 @@ $qtdCL = (is_array($classificacoes) ? count($classificacoes) : 0);
                                 <?= ($transacoes[$i]['TRS_TIPO'] == 1)? '<td class="text-center align-middle"><span class="text-primary">ENTRADA</span></td>' : '<td class="text-center align-middle"><span class="text-danger">SAÍDA</span></td>'; ?>
                                 <?= ($transacoes[$i]['TRS_TIPO'] == 1)? '<td class="text-center align-middle"><span class="text-primary">'.number_format($transacoes[$i]['TRS_VALOR_TOTAL'],2,',','.').'</td><td></td>' : '<td></td><td class="text-center align-middle"><span class="text-danger">'.number_format($transacoes[$i]['TRS_VALOR_TOTAL'],2,',','.').'</span></td>'; ?>
                                 <td class="text-center align-middle"><?= ($transacoes[$i]['TRS_STATUS'] == 1)? 'ATIVO' : 'DESATIVADO'; ?></td>
+                                <td class="text-center align-middle">
+                                </td>
                                 <?php if($_SESSION['USU_NIVEL'] >= 8){ ?>
                                 <td class="text-center align-middle">
+                                    <button type="button" class="btn btn-danger btn-sm d-print-none" data-bs-toggle='modal' data-bs-target="#deletar" title="Deletar" data-codigo="<?= $transacoes[$i]['TRS_COD']; ?>" data-nome="<?= $transacoes[$i]['TRS_DESCRICAO']; ?>"  data-status="<?= $transacoes[$i]['TRS_STATUS']; ?>"><i class="fa fa-trash"></i></button>
                                 </td>
                                 <?php } ?>
                             </tr>
@@ -110,6 +103,26 @@ $qtdCL = (is_array($classificacoes) ? count($classificacoes) : 0);
                 </div>
             </section>
             <?php include_once 'app/Views/admin/inc/rodape.phtml';?>
+            <div class="modal" id="deletar" tabindex="-1" role="dialog" data-bs-backdrop="true" aria-labelledby="deletar" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div id="title2" class="modal-header text-center text-uppercase">
+                            
+                        </div>
+                        <div class="modal-body text-center">
+                            <p class="text-center text-uppercase mx-auto">Excluir registro?</p>
+                            <span id="LAN_DESCRICAO2" class="mt-3 text-center h5"></span>
+                        </div>
+                        <div class="modal-footer">
+                            <input type="hidden" id="TRS_STATUS" name="TRS_STATUS" value="" />
+                            <input type="hidden" id="TRS_COD" name="TRS_COD" value="" />
+                            <input type="hidden" id="EMP_COD" name="EMP_COD" value="<?= $empresa['EMP_COD'] ?>" />
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">CANCELAR</button>
+                            <button id="sts2" type="button" class="btn btn-danger" value=""></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </body>
