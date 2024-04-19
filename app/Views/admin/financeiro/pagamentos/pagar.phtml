@@ -127,7 +127,7 @@ $qtdF = (is_array($formas_pagamentos) ? count($formas_pagamentos) : 0);
                                     </div>
                                     <div id="FPG" class="col-9 mx-auto text-center mb-3">
                                         <label class="form-label text-center">FORMA DE PAGAMENTO</label>
-                                        <select  class="form-select form-select-lg" name="FPG_COD"> 
+                                        <select id="FPG_COD" class="form-select form-select-lg" name="FPG_COD"> 
                                         <?php for ($i=0; $i < $qtdF; $i++) { if ($formas_pagamentos[$i]['FPG_STATUS'] == 1) { ?>
                                             <option value="<?= $i ?>" <?= (isset($_POST['FPG_COD']) &&  $_POST['FPG_COD']  == $i)? 'selected' : '' ?>><?= ($formas_pagamentos[$i]['FPG_TIPO'] == 1)? 'À VISTA' : 'À PRAZO'; ?> - <?= $formas_pagamentos[$i]['FPG_DESCRICAO'] ?></option>
                                         <?php } } ?>
@@ -197,6 +197,7 @@ $qtdF = (is_array($formas_pagamentos) ? count($formas_pagamentos) : 0);
             var EMP_COD = $('#EMP_COD').val();
             var USU_COD = $('#USU_COD').val();
             var CTA_COD = $('#CTA_COD').val();
+            var FPG_COD = $('#FPG_COD').val();
             var PAG_VALOR = $('#PAG_VALOR').val();
             var PAG_DT_PAGAMENTO = $('#PAG_DT_PAGAMENTO').val();
             var PAG_OBSERVACAO = $('#PAG_OBSERVACAO').val();
@@ -204,7 +205,7 @@ $qtdF = (is_array($formas_pagamentos) ? count($formas_pagamentos) : 0);
             setTimeout(function () {
                     $('#pagar').modal('hide');
             }, 100);
-            $.post('<?= DIRPAGE; ?>pagamentos/pagar_lançamento', {LAN_COD: LAN_COD,EMP_COD: EMP_COD,USU_COD: USU_COD,CTA_COD:CTA_COD,PAG_VALOR: PAG_VALOR,PAG_DT_PAGAMENTO: PAG_DT_PAGAMENTO,PAG_OBSERVACAO: PAG_OBSERVACAO,CADASTRAR_PAGAMENTO: true, PAG_STATUS: PAG_STATUS,cache: false}, function(retorno) {
+            $.post('<?= DIRPAGE; ?>pagamentos/pagar_lançamento', {LAN_COD: LAN_COD,EMP_COD: EMP_COD,USU_COD: USU_COD,CTA_COD:CTA_COD,FPG_COD:FPG_COD,PAG_VALOR: PAG_VALOR,PAG_DT_PAGAMENTO: PAG_DT_PAGAMENTO,PAG_OBSERVACAO: PAG_OBSERVACAO,CADASTRAR_PAGAMENTO: true, PAG_STATUS: PAG_STATUS,cache: false}, function(retorno) {
                 var resposta = JSON.parse(retorno);
                 if (resposta['COD'] !== 'ERRO') {
                     $('#resposta').addClass('alert alert-success');
