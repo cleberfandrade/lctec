@@ -153,7 +153,7 @@ class pagamentos extends View
                         }
                     } else {
                        //PAGAMENTO FOI EFETUADO PARCIALMENTE
-
+                       Sessao::alert('ERRO',' ERRO: LAN33- Erro ao registrar atualização no lançamento, entre em contato com o suporte!','fs-4 alert alert-danger');
 
                     }
                 }
