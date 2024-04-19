@@ -43,6 +43,7 @@ $qtd = (is_array($formas_pagamentos) ? count($formas_pagamentos) : 0);
                         <table class="table table-striped table-bordered">
                             <thead class="text-center text-uppercase">
                                 <th class="text-dark">#</th>
+                                <th class="text-dark">Coódigo</th>
                                 <th class="text-dark">Tipo</th>
                                 <th class="text-dark">Descrição</th>
                                 <th class="text-dark">Prazo</th>
@@ -55,6 +56,7 @@ $qtd = (is_array($formas_pagamentos) ? count($formas_pagamentos) : 0);
                                     for ($i= 0; $i < $qtd; $i++) { ?>
                                     <tr class="<?= ($formas_pagamentos[$i]['FPG_STATUS'] == 0 && $_SESSION['USU_NIVEL'] >= 8)? 'bg-secondary' : ''; ?>">
                                         <td class="text-center align-middle"><?= $b; ?></td>
+                                        <td class="text-center align-middle"><?= $formas_pagamentos[$i]['FPG_COD'] ?></td>
                                         <td class="text-center align-middle"><?= ($formas_pagamentos[$i]['FPG_TIPO'] == 1)? 'À VISTA' : 'À PRAZO'; ?></td>
                                         <td class="text-center align-middle"><?= $formas_pagamentos[$i]['FPG_DESCRICAO']; ?></td>
                                         <td class="text-center align-middle"><?= $formas_pagamentos[$i]['FPG_PRAZO']; ?></td>
