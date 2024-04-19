@@ -70,7 +70,7 @@ class pagamentos extends View
                 $this->dados['lancamento'] = $this->Lancamentos->setCodEmpresa($_SESSION['EMP_COD'])->setCodigo($dados['LAN_COD'])->listar(0);
             
                 if ($this->dados['lancamento'] != 0) {
-
+                    ($dados['PAG_TOTAL'] == "on")? $dados['PAG_TOTAL'] = 1: $dados['PAG_TOTAL'] = 0;
                     $db = array(
                         'EMP_COD' => $_SESSION['EMP_COD'],
                         'USU_COD' => $_SESSION['USU_COD'],
@@ -80,12 +80,14 @@ class pagamentos extends View
                         'PAG_DT_CADASTRO'=> date('Y-m-d H:i:s'),
                         'PAG_DT_ATUALIZACAO'=> date('0000-00-00 00:00:00'), 
                         'PAG_DT_PAGAMENTO' => $dados['PAG_DT_PAGAMENTO'],
+                        'PAG_TOTAL'=> $dados['PAG_TOTAL'],
                         'PAG_TIPO' => 2,
                         'PAG_TOKEN' => $this->Check->token(10,'',true),
                         'PAG_VALOR' => $dados['PAG_VALOR'],
                         'PAG_OBSERVACAO' => $dados['PAG_OBSERVACAO'],
                         'PAG_STATUS'=> 1
                     );
+                    dump($dados);
                     //$this->PagamentosRecebimentos
                     $ok = true;
                 }
