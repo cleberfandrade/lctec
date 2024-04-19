@@ -45,6 +45,7 @@ class lancamentos extends View
         $this->dados['classificacoes'] = $this->Classificacoes->setCodEmpresa($_SESSION['EMP_COD'])->setTipo(6)->listarTodosPorTipo(0);
         $this->dados['fornecedores'] = $this->Fornecedores->setCodEmpresa($_SESSION['EMP_COD'])->listarTodos(0);
         $this->dados['clientes'] = $this->Clientes->setCodEmpresa($_SESSION['EMP_COD'])->listarTodos(0);
+        $this->dados['lan_todos'] = $this->Lancamentos->setCodEmpresa($_SESSION['EMP_COD'])->listarTodos(0);
         $this->dados['modulo'] = $this->ModulosEmpresa->setCodEmpresa($_SESSION['EMP_COD'])->setCodigo(3)->listarModuloEmpresa(0);
         
         if ($this->dados['modulo'] == 0) {
@@ -184,6 +185,7 @@ class lancamentos extends View
         }
         if ($ok) {
             $this->dados['lancamentos'] = $this->Lancamentos->setCodEmpresa($_SESSION['EMP_COD'])->listarTodos(0);
+            $this->dados['lan_todos'] = $this->Lancamentos->setCodEmpresa($_SESSION['EMP_COD'])->listarTodos(0);
             $this->render('admin/financeiro/lancamentos/listar', $this->dados);
         }else {
             $this->render('admin/financeiro/lancamentos/cadastrar', $this->dados);
