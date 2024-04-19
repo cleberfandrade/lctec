@@ -128,7 +128,7 @@ class pagamentos extends View
                                         'TRS_TOKEN' => $token,          
                                         'TRS_STATUS'=> 1
                                     );
-                                    dump($db_transacao);
+                                    //dump($db_transacao);
                                     if($this->Transacoes->cadastrar($db_transacao,0)){
                                         $saldo = 0;
                                         $saldo = ($this->dados['conta']['CTA_SALDO'] - $dados['PAG_VALOR']);
