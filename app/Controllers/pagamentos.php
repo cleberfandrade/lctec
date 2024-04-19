@@ -74,6 +74,7 @@ class pagamentos extends View
             
                 if ($this->dados['lancamento'] != 0) {
                     ($dados['PAG_TOTAL'] == "on")? $dados['PAG_TOTAL'] = 1: $dados['PAG_TOTAL'] = 0;
+                    $token = $this->Check->token(10,'',true);
                     $db = array(
                         'EMP_COD' => $_SESSION['EMP_COD'],
                         'USU_COD' => $_SESSION['USU_COD'],
@@ -85,7 +86,7 @@ class pagamentos extends View
                         'PAG_DT_PAGAMENTO' => $dados['PAG_DT_PAGAMENTO'],
                         'PAG_TOTAL'=> $dados['PAG_TOTAL'],
                         'PAG_TIPO' => 2,
-                        'PAG_TOKEN' => $this->Check->token(10,'',true),
+                        'PAG_TOKEN' => $token,
                         'PAG_VALOR' => $dados['PAG_VALOR'],
                         'PAG_OBSERVACAO' => $dados['PAG_OBSERVACAO'],
                         'PAG_STATUS'=> 1
@@ -121,7 +122,7 @@ class pagamentos extends View
                                         'TRS_DESCRICAO'=> 'PAGAMENTO: '.$this->dados['lancamento']['LAN_DESCRICAO'],
                                         'TRS_DT_CADASTRO'=> date('Y-m-d H:i:s'),
                                         'TRS_DT_ATUALIZACAO'=> date('0000-00-00 00:00:00'),   
-                                        'TRS_TOKEN' => $this->Check->token(10,'',true),          
+                                        'TRS_TOKEN' => $token,          
                                         'TRS_STATUS'=> 1
                                     );
 
