@@ -73,7 +73,7 @@ class pagamentos extends View
                 $this->dados['lancamento'] = $this->Lancamentos->setCodEmpresa($_SESSION['EMP_COD'])->setCodigo($dados['LAN_COD'])->listar(0);
             
                 if ($this->dados['lancamento'] != 0) {
-                    ($dados['PAG_TOTAL'] == "on")? $dados['PAG_TOTAL'] = 1: $dados['PAG_TOTAL'] = 0;
+                    (isset($dados['PAG_TOTAL']) && $dados['PAG_TOTAL'] == "on")? $dados['PAG_TOTAL'] = 1: $dados['PAG_TOTAL'] = 0;
                     $token = $this->Check->token(10,'',true);
                     $db = array(
                         'EMP_COD' => $_SESSION['EMP_COD'],
@@ -92,7 +92,7 @@ class pagamentos extends View
                         'PAG_STATUS'=> 1
                     );
                     
-                    if ($dados['PAG_TOTAL']) {
+                    if ($dados['PAG_TOTAL'] == 1) {
                         //PAGAMENTO FOI EFETUADO TOTALMENTE
                         //RESGISTRANDO PAGAMENTO
                         $idPagamento = $this->PagamentosRecebimentos->cadastrar($db,0);
@@ -107,6 +107,8 @@ class pagamentos extends View
                                 'LAN_DT_ATUALIZACAO'=> date('Y-m-d H:i:s'),
                                 'LAN_STATUS'=> 3
                             );
+                            $desconto = $acrescimo = 0;
+                            ($dados['PAG_VALOR'] > $this->dados['lancamento']['LAN_VALOR'])? $acrescimo = ($dados['PAG_VALOR']-$this->dados['lancamento']['LAN_VALOR']) : $desconto = ($this->dados['lancamento']['LAN_VALOR']-$dados['PAG_VALOR']); 
                             if($this->Lancamentos->alterar($dados_lancamentos,0)){
                                 $ok = true;
                                 //ATUALIZANDO O SALDO EM CONTA DA EMPRESA
@@ -120,6 +122,8 @@ class pagamentos extends View
                                         'CLA_COD' => 0,
                                         'FPG_COD' => $dados['FPG_COD'],
                                         'TRS_TIPO' => 2,
+                                        'TRS_DESCONTO' => $desconto,
+                                        'TRS_ACRESCIMO' => $acrescimo,
                                         'TRS_VALOR_TOTAL' => $dados['PAG_VALOR'],
                                         'TRS_DATA' => $dados['PAG_DT_PAGAMENTO'],
                                         'TRS_DESCRICAO'=> 'PAGAMENTO: '.$this->dados['lancamento']['LAN_DESCRICAO'],
@@ -157,7 +161,102 @@ class pagamentos extends View
                         }
                     } else {
                        //PAGAMENTO FOI EFETUADO PARCIALMENTE
-                       Sessao::alert('ERRO',' ERRO: LAN33- Erro ao registrar atualização no lançamento, entre em contato com o suporte!','fs-4 alert alert-danger');
+
+                       //REGISTRAR SOBRA DO PAGAMENTO PARA O PROXIMO MÊS SE EXISTIR SOLICITAÇÃO
+                       (isset($dados['PROXIMO_MES']) && $dados['PROXIMO_MES'] == "on")? $dados['PROXIMO_MES'] = 1: $dados['PROXIMO_MES'] = 0;
+
+                       if ($dados['PROXIMO_MES'] == 1) {
+                            $saldo_lancamento = 0;
+                           ($dados['PAG_VALOR'] < $this->dados['lancamento']['LAN_VALOR'])? $saldo_lancamento = ($this->dados['lancamento']['LAN_VALOR']-$dados['PAG_VALOR']) : $saldo_lancamento = $this->dados['lancamento']['LAN_VALOR']; 
+                            $novo_vencimento = date('Y-m-d', strtotime($this->dados['lancamento']['LAN_DT_VENCIMENTO']. ' + 30 days')); 
+                            $db_lancamento = array(
+                                'EMP_COD' => $_SESSION['EMP_COD'],
+                                'USU_COD' => $_SESSION['USU_COD'],
+                                'CTA_COD' => $dados['CTA_COD'],
+                                'CAT_COD' => 0,
+                                'CLA_COD' => 0,
+                                'CLI_COD' => 0,
+                                'FOR_COD' => 0,
+                                'LAN_DT_CADASTRO'=> date('Y-m-d H:i:s'),
+                                'LAN_DT_ATUALIZACAO'=> date('0000-00-00 00:00:00'), 
+                                'LAN_DT_VENCIMENTO'=> $novo_vencimento, 
+                                'LAN_TIPO' => 1,
+                                'LAN_DESCRICAO' => 'SALDO RESTANTE: '.$this->dados['lancamento']['LAN_DESCRICAO'],
+                                'LAN_OBSERVACAO' => '',
+                                'LAN_RESULTADOS' => 1,
+                                'LAN_VALOR' => $saldo_lancamento,
+                                'LAN_PARCELA'=> 1,      
+                                'LAN_STATUS'=> 1
+                            );
+                            $this->Lancamentos->cadastrar($db_lancamento,0);
+                            
+                            $idPagamento = $this->PagamentosRecebimentos->cadastrar($db,0);
+                            if(isset($idPagamento) && !empty($idPagamento)){
+                                
+                                //ATUALIZANDO O STATUS DO LANÇAMENTO
+                                $this->Lancamentos->setCodEmpresa($_SESSION['EMP_COD'])->setCodigo($dados['LAN_COD']);
+                                $novo = 0;
+                                ($dados['PAG_VALOR'] != $this->dados['lancamento']['LAN_VALOR'])? $novo = $dados['PAG_VALOR'] : $novo = $this->dados['lancamento']['LAN_VALOR'];
+                                $dados_lancamentos = array(
+                                    'LAN_VALOR' => $novo,
+                                    'LAN_DT_ATUALIZACAO'=> date('Y-m-d H:i:s'),
+                                    'LAN_STATUS'=> 3
+                                );
+                                $desconto = $acrescimo = 0;
+                                ($dados['PAG_VALOR'] > $this->dados['lancamento']['LAN_VALOR'])? $acrescimo = ($dados['PAG_VALOR']-$this->dados['lancamento']['LAN_VALOR']) : $desconto = ($this->dados['lancamento']['LAN_VALOR']-$dados['PAG_VALOR']); 
+                                if($this->Lancamentos->alterar($dados_lancamentos,0)){
+                                    $ok = true;
+                                    //ATUALIZANDO O SALDO EM CONTA DA EMPRESA
+                                    Sessao::alert('OK','Pagamento registrado com sucesso!','fs-4 alert alert-success');
+                                    $this->dados['conta'] = $this->Contas->setCodEmpresa($dados['EMP_COD'])->setCodigo($dados['CTA_COD'])->listar(0);
+                                    if ($this->dados['conta'] != 0) {
+                                        $db_transacao = array(
+                                            'EMP_COD' => $_SESSION['EMP_COD'],
+                                            'USU_COD' => $_SESSION['USU_COD'],
+                                            'CTA_COD' => $dados['CTA_COD'],
+                                            'CLA_COD' => 0,
+                                            'FPG_COD' => $dados['FPG_COD'],
+                                            'TRS_TIPO' => 2,
+                                            'TRS_DESCONTO' => $desconto,
+                                            'TRS_ACRESCIMO' => $acrescimo,
+                                            'TRS_VALOR_TOTAL' => $dados['PAG_VALOR'],
+                                            'TRS_DATA' => $dados['PAG_DT_PAGAMENTO'],
+                                            'TRS_DESCRICAO'=> 'PAGAMENTO: '.$this->dados['lancamento']['LAN_DESCRICAO'],
+                                            'TRS_DT_CADASTRO'=> date('Y-m-d H:i:s'),
+                                            'TRS_DT_ATUALIZACAO'=> date('0000-00-00 00:00:00'),   
+                                            'TRS_TOKEN' => $token,          
+                                            'TRS_STATUS'=> 1
+                                        );
+                                        //dump($db_transacao);
+                                        if($this->Transacoes->cadastrar($db_transacao,0)){
+                                            $saldo = 0;
+                                            $saldo = ($this->dados['conta']['CTA_SALDO'] - $dados['PAG_VALOR']);
+                                            $db_conta = array(
+                                                'CTA_SALDO' => $saldo,
+                                                'CTA_DT_ATUALIZACAO'=> date('Y-m-d H:i:s')
+                                            );
+                                        
+                                            if($this->Contas->alterar($db_conta,0)){
+                                                $ok = true;
+                                                Sessao::alert('OK','Cadastro efetuado com sucesso!','fs-4 alert alert-success');
+                                            }else{
+                                                Sessao::alert('ERRO',' ERRO: CTA24 - Erro ao alterar conta, entre em contato com o suporte!','fs-4 alert alert-danger');
+                                            }
+                                        }else{
+                                            Sessao::alert('ERRO',' CTA3 - Erro ao cadastrar nova transação, entre em contato com o suporte!','fs-4 alert alert-danger');
+                                        }
+                                    }
+        
+                                }else{
+                                    Sessao::alert('ERRO',' ERRO: LAN33- Erro ao registrar atualização no lançamento, entre em contato com o suporte!','fs-4 alert alert-danger');
+                                }
+                            }else {
+                                Sessao::alert('ERRO',' PAG12 - Errro ao registrar seu pagamento, entre em contato com o suporte!','fs-4 alert alert-danger');
+                            }
+                       }else{
+                            //dump($dados);
+                            Sessao::alert('ERRO',' PAG12 - Erro ao registrar saldo restante do pagamento, contate o suporte','fs-4 alert alert-danger');
+                       }
 
                     }
                 }

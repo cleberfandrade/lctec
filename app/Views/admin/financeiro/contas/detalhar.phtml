@@ -25,7 +25,7 @@ for ($i=0; $i < $qtdTS; $i++) { $somaS += $transacoes_conta_saidas[$i]['TRS_VALO
                             <div class="my-1 px-4 mx-auto">
                                 <a class="text-decoration-none" href="<?= DIRPAGE; ?>financeiro">
                                 <h5 class="fs-2 fw-bolder text-uppercase text-white mb-2">
-                                <?= $modulo[0]['MOD_ICON'] ?> Conta <span class="text-dark"> <?= $conta['CTA_TIPO'] ?></span></h5></a>
+                                <?= $modulo[0]['MOD_ICON'] ?> Conta: <span class="text-dark"> <?= $conta['CTA_TIPO'] ?>, <?= $conta['CTA_DESCRICAO'] ?></span></h5></a>
                             </div>
                         </div>
                         <?php include_once 'app/Views/admin/inc/saudacao.phtml'; ?>

@@ -94,7 +94,7 @@ $qtdF = (is_array($formas_pagamentos) ? count($formas_pagamentos) : 0);
             </section>
             <?php include_once 'app/Views/admin/inc/rodape.phtml';?>
             <div class="modal fade" id="pagar"  tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false"  aria-labelledby="pagar" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-dialog modal-lg modal-dialog-centered">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title">PAGAR LANÇAMENTO</h5>
@@ -104,16 +104,30 @@ $qtdF = (is_array($formas_pagamentos) ? count($formas_pagamentos) : 0);
                             <div class="modal-body">
                                 <h5 class="modal-title text-center mb-3">CONFIRMAR PAGAMENTO</h5>
                                 <div class="col-12 row mx-auto mb-3">
+                                    
                                     <div class="col-6 mb-3">
                                         <label class="form-label" for="2">VALOR A PAGAR</label>  
                                         <div class="input-group">    
                                             <span class="input-group-text">R$</span>  
-                                            <input type="text" class="form-control form-control-lg real" id="PAG_VALOR" name="PAG_VALOR" value="">
+                                            <input type="text" class="form-control form-control-lg real" disabled id="LAN_VALOR" value="">
                                         </div>
                                     </div>
-                                    <div class="col-6 form-check form-control-lg mx-auto align-middle form-switch mt-4 mb-1">
-                                        <input class="form-check-input " type="checkbox" role="switch" name="PAG_TOTAL" id="flexSwitchCheckChecked" checked>
-                                        <label class="form-check-label" for="flexSwitchCheckChecked">PAG. TOTAL?</label>
+                                    <div class="col-6 mb-3">
+                                        <label class="form-label" for="2">VALOR PAGO</label>  
+                                        <div class="input-group">    
+                                            <span class="input-group-text">R$</span>  
+                                            <input type="text" class="form-control form-control-lg real"  id="PAG_VALOR" name="PAG_VALOR" value="">
+                                        </div>
+                                    </div>
+                                    <div class="col-12 row mx-auto mb-3">
+                                        <div class="col-6 form-check form-control-lg mx-auto align-middle form-switch mt-4 mb-1">
+                                            <input class="form-check-input mx-auto" type="checkbox" role="switch" name="PAG_TOTAL" id="flexSwitchCheckChecked" checked>
+                                            <label class="form-check-label" for="flexSwitchCheckChecked"> PAGO VALOR TOTAL?</label>
+                                        </div>
+                                        <div class="col-6 form-check form-control-lg mx-auto align-middle form-switch mt-4 mb-1">
+                                            <input class="form-check-input mx-auto" type="checkbox" role="switch" name="PROXIMO_MES" id="flexSwitchCheckChecked">
+                                            <label class="form-check-label" for="flexSwitchCheckChecked"> SALDO P/PROXÍMO MÊS?</label>
+                                        </div>
                                     </div>
                                     <div class="col-6 mb-3 text-center">
                                         <label class="form-label" for="2">DATA DE VENCIMENTO</label>  
@@ -143,9 +157,9 @@ $qtdF = (is_array($formas_pagamentos) ? count($formas_pagamentos) : 0);
                                         <label class="form-label" for="2">DESCRIÇÃO</label>  
                                         <input type="text" class="form-control form-control-lg" disabled id="LAN_DESCRICAO" value="">
                                     </div>
-                                    <div class="col-12 mb-3">
+                                    <div class="col-12 mb-2">
                                         <label class="form-label" for="1">OBSERVAÇÃO</label>
-                                        <div class="form-floating mb-3">
+                                        <div class="form-floating">
                                             <textarea class="form-control maiusculo" name="PAG_OBSERVACAO"></textarea>
                                         </div>
                                     </div>
@@ -184,7 +198,7 @@ $qtdF = (is_array($formas_pagamentos) ? count($formas_pagamentos) : 0);
 
                 const novaData = new Date(vencimento);
                 modal.find('#LAN_DT_VENCIMENTO').val(novaData.toLocaleDateString('pt-BR'));
-
+                modal.find('#LAN_VALOR').val(valor);
                 modal.find('#PAG_VALOR').val(valor);
                 modal.find('#LAN_PARCELA').val(parcela);
                 modal.find('#PAG_STATUS').val(status);
