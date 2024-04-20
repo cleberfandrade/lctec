@@ -104,6 +104,31 @@ class lctec extends View
         }
         
     }
+    public function usuarios()
+    {
+       
+        if(Sessao::naoLogadoSistema())
+        {
+            $this->dados['title'] .= ' CADASTRO DE USUÁRIOS DA EMPRESA';
+            $this->dados['empresas'] = $this->Empresas->listarTodos();
+            $dados = filter_input_array(INPUT_GET, FILTER_SANITIZE_URL);
+            $dados = explode("/",$dados['url']);
+            
+            if (isset($dados[1]) && $dados[1] == 'usuarios' && isset($dados[2])) {
+                
+                $this->dados['usuarios'] = $this->UsuariosEmpresa->setCodEmpresa($dados[2])->setStatus(1)->listarUsuariosEmpresa(0);
+                //dump($this->dados['usuarios']);
+            }else {
+                $this->dados['usuarios'] = [];
+                
+            }
+            
+           
+
+            $this->render('admin/lctec/usuarios/listar', $this->dados);
+        }
+        
+    }
     public function modulos()
     {
         if(Sessao::naoLogadoSistema()){

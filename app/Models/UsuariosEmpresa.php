@@ -9,7 +9,7 @@ class UsuariosEmpresa extends Model
 {
     private $tabela = 'tb_usuarios_empresa';
     private $Model = '';
-    private $email, $codigo,$codUsuario,$codEmpresa,$status,$Usuarios;
+    private $email, $codigo,$codUsuario,$codEmpresa,$status,$Usuarios,$senha;
     public function __construct()
     {
         $this->Usuarios = new Usuarios;

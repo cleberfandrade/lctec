@@ -110,7 +110,7 @@ class Usuarios extends Model
             return false;
         }
     }
-    private static function checarSenhaAcesso($senhaUsuario, $senhaDB)
+    public static function checarSenhaAcesso($senhaUsuario, $senhaDB)
     {
         if (password_verify($senhaUsuario, $senhaDB)) {
             return true;
