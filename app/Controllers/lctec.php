@@ -116,7 +116,7 @@ class lctec extends View
             
             if (isset($dados[1]) && $dados[1] == 'usuarios' && isset($dados[2])) {
                 
-                $this->dados['usuarios'] = $this->UsuariosEmpresa->setCodEmpresa($dados[2])->setStatus(1)->listarUsuariosEmpresa(0);
+                $this->dados['usuarios'] = $this->UsuariosEmpresa->setCodEmpresa($dados[2])->listarTodosUsuariosEmpresa(0);
                 //dump($this->dados['usuarios']);
             }else {
                 $this->dados['usuarios'] = [];

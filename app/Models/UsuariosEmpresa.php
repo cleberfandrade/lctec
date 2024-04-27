@@ -82,6 +82,20 @@ class UsuariosEmpresa extends Model
             return false;
         }
     }
+    public function listarTodosUsuariosEmpresa($ver = 0)
+    {
+        $parametros = " UMP INNER JOIN tb_usuarios USU ON UMP.USU_COD=USU.USU_COD 
+                            INNER JOIN tb_empresas EMP ON UMP.EMP_COD=EMP.EMP_COD 
+                            INNER JOIN tb_enderecos EN ON EMP.EMP_COD=EN.EMP_COD 
+                            WHERE UMP.EMP_COD='{$this->codEmpresa}' ORDER BY USU.USU_NOME ASC";
+        $campos = "*";
+        $resultado = $this->Model->exibir($parametros, $campos, $ver, $id = false);
+        if ($resultado) {
+            return $resultado;
+        } else {
+            return false;
+        }
+    }
     public function listarTodasEmpresasUsuario($ver = 0)
     {
         $parametros = " UMP INNER JOIN tb_usuarios USU ON UMP.USU_COD=USU.USU_COD 
