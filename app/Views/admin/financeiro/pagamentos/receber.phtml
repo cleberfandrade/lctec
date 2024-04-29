@@ -38,12 +38,12 @@ $qtdLR = (is_array($lancamentos_receber) ? count($lancamentos_receber) : 0);
                             <button class="btn btn-outline-secondary" type="button" id="button-addon2">BUSCAR</button>
                         </div>
                     </div>
-                    <?= $qtdLP ?> RESULTADOS
+                    <?= $qtdLR ?> RESULTADOS
                 </section>
                 <div class="container mx-auto col-12 row">
                 
                 <?php
-                    if($qtdLP != 0) { ?>
+                    if($qtdLR != 0) { ?>
                     <table class="table table-striped table-bordered">
                         <thead class="text-center text-uppercase">
                             <th class="text-dark">#</th>
@@ -58,7 +58,7 @@ $qtdLR = (is_array($lancamentos_receber) ? count($lancamentos_receber) : 0);
                         <tbody>
                         <?php
                          $b = 1;
-                         for ($i= 0; $i < $qtdLP; $i++) { 
+                         for ($i= 0; $i < $qtdLR; $i++) { 
                              $data = new DateTime($lancamentos_pagar[$i]['LAN_DT_VENCIMENTO']);
                         ?>
                          <tr class="<?= ($lancamentos_pagar[$i]['LAN_STATUS'] == 0 && $_SESSION['USU_NIVEL'] >= 8)? 'bg-secondary' : ''; ?>">

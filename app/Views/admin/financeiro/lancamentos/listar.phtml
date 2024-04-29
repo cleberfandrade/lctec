@@ -147,7 +147,7 @@ $qtdP = ceil($qtdL/$qtdPg);
                             for ($i= 0; $i < $qtd; $i++) { 
                                 $data = new DateTime($lancamentos[$i]['LAN_DT_VENCIMENTO']);
                                 $hoje = date('Y-m-d');
-                                $titulo = "title='Lançamento,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,, Vencido'";
+                                $titulo = "title='Lançamento Vencido'";
                                 (strtotime($lancamentos[$i]['LAN_DT_VENCIMENTO']) < strtotime($hoje))? (($lancamentos[$i]['LAN_STATUS'] <= 2) ? $vencido = 'bg-danger': $vencido = $titulo = '') : $vencido = $titulo = '';
                             ?>
                             <tr class="<?= ($lancamentos[$i]['LAN_STATUS'] == 0 && $_SESSION['USU_NIVEL'] >= 8)? 'bg-secondary' : ''; ?> " <?= $titulo ?>>
