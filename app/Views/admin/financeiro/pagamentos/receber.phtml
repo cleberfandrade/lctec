@@ -31,10 +31,205 @@ $qtdLR = (is_array($lancamentos_receber) ? count($lancamentos_receber) : 0);
             </header>
             <?php include_once 'app/Views/admin/inc/alertas.phtml'; ?>  
             <section class="bg-light text-dark row py-2">
+                <section class="container col-12 mx-auto p-1 text-center fs-4 d-print-none">
+                    <div class="container mx-auto col-8 row">
+                        <div class="container input-group mb-3 mx-auto col-6">
+                            <input type="text" id="pesquisar" class="form-control form-control-lg col-6" placeholder="Descrição do lançamento">
+                            <button class="btn btn-outline-secondary" type="button" id="button-addon2">BUSCAR</button>
+                        </div>
+                    </div>
+                    <?= $qtdLP ?> RESULTADOS
+                </section>
                 <div class="container mx-auto col-12 row">
+                
+                <?php
+                    if($qtdLP != 0) { ?>
+                    <table class="table table-striped table-bordered">
+                        <thead class="text-center text-uppercase">
+                            <th class="text-dark">#</th>
+                            <th class="text-dark" title="Participa dos resultados da empresa">R</th>
+                            <th class="text-dark">Descrição</th>
+                            <th class="text-dark">Parcela</th>
+                            <th class="text-dark">Data Venc.</th>
+                            <th class="text-dark">Valor</th>
+                            <th class="text-dark ">Pagar</th>
+                            <?php if($_SESSION['USU_NIVEL'] >= 8){ ?><th class="text-dark d-print-none">Ações</th><?php } ?>
+                        </thead>
+                        <tbody>
+                        <?php
+                         $b = 1;
+                         for ($i= 0; $i < $qtdLP; $i++) { 
+                             $data = new DateTime($lancamentos_pagar[$i]['LAN_DT_VENCIMENTO']);
+                        ?>
+                         <tr class="<?= ($lancamentos_pagar[$i]['LAN_STATUS'] == 0 && $_SESSION['USU_NIVEL'] >= 8)? 'bg-secondary' : ''; ?>">
+                            <td class="text-center align-middle"><?= $b; ?></td>
+                            <td class="text-center align-middle <?= ($lancamentos_pagar[$i]['LAN_RESULTADOS'] == 1)? 'bg-success text-white': ''; ?>"><?= ($lancamentos_pagar[$i]['LAN_RESULTADOS'] == 1)? '$': ''; ?></td>
+                            <td class="text-center align-middle"><?= $lancamentos_pagar[$i]['LAN_DESCRICAO']; ?></td>
+                            <td class="text-center align-middle"><?= $lancamentos_pagar[$i]['LAN_PARCELA']; ?></td>
+                            <td class="text-center align-middle"><?= $data->format('d/m/Y'); ?></td>
+                            <td class="text-center align-middle"><?= number_format($lancamentos_pagar[$i]['LAN_VALOR'],2,',','.'); ?></td>
+                            <td class="text-center align-middle">
+                                <button type="button" class="btn btn-success btn-sm d-print-none" data-bs-toggle='modal'  data-bs-target="#pagar" data-codigo="<?= $lancamentos_pagar[$i]['LAN_COD']; ?>" data-conta="<?= $lancamentos_pagar[$i]['CTA_COD']; ?>" data-valor="<?= $lancamentos_pagar[$i]['LAN_VALOR']; ?>" data-parcela="<?= $lancamentos_pagar[$i]['LAN_PARCELA']; ?>" data-nome="<?= $lancamentos_pagar[$i]['LAN_DESCRICAO']; ?>" data-vencimento="<?= $lancamentos_pagar[$i]['LAN_DT_VENCIMENTO']; ?>" data-status="<?= $lancamentos_pagar[$i]['LAN_STATUS']; ?>" title="Deseja Pagar?" ><i class="fa fa-check"></i></button>
+                            </td>
+                            <?php if($_SESSION['USU_NIVEL'] >= 8){ ?>
+                            <td class="text-center align-middle d-print-none">
+                                <?php if($lancamentos_pagar[$i]['LAN_STATUS'] == 0){ ?>
+                                <button type="button" class="btn btn-success btn-sm d-print-none" data-bs-toggle='modal' data-bs-target="#status" data-codigo="<?= $lancamentos_pagar[$i]['LAN_COD']; ?>" data-conta="<?= $lancamentos_pagar[$i]['CTA_COD']; ?>" data-nome="<?= $lancamentos_pagar[$i]['CLI_NOME']; ?>" data-status="<?= $lancamentos_pagar[$i]['LAN_STATUS']; ?>" title="Deseja ativar?" ><i class="fa fa-ban"></i></button>
+                                <?php }else { ?>
+                                <a type="button" class="btn btn-warning btn-sm d-print-none" href="<?= DIRPAGE.'lancamentos/alteracao/'.$lancamentos_pagar[$i]['EMP_COD'].'/'.$lancamentos_pagar[$i]['LAN_COD']; ?>" title="Alterar lancamento"><i class="fa fa-edit"></i></a>
+                                <?php } ?>
+                            </td>
+                            <?php } ?>
+                        </tr>
+                        <?php $b++; } ?>
+                        </tbody>
+                    </table>
+                    
+                    <?php }else { ?>
+                        <h4 class="text-center text-warning fs-4">EMPRESA SEM NENHUM LANÇAMENTO CADASTRADO</h4>
+                    <?php } ?>
                 </div>
             </section>
             <?php include_once 'app/Views/admin/inc/rodape.phtml';?>
+            <div class="modal fade" id="pagar"  tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false"  aria-labelledby="pagar" aria-hidden="true">
+                <div class="modal-dialog modal-lg modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">PAGAR LANÇAMENTO</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <form action="<?= DIRPAGE ?>pagamentos/pagar_lançamento" method="post">
+                            <div class="modal-body">
+                                <h5 class="modal-title text-center mb-3">CONFIRMAR PAGAMENTO</h5>
+                                <div class="col-12 row mx-auto mb-3">
+                                    
+                                    <div class="col-6 mb-3">
+                                        <label class="form-label" for="2">VALOR A PAGAR</label>  
+                                        <div class="input-group">    
+                                            <span class="input-group-text">R$</span>  
+                                            <input type="text" class="form-control form-control-lg real" disabled id="LAN_VALOR" value="">
+                                        </div>
+                                    </div>
+                                    <div class="col-6 mb-3">
+                                        <label class="form-label" for="2">VALOR PAGO</label>  
+                                        <div class="input-group">    
+                                            <span class="input-group-text">R$</span>  
+                                            <input type="text" class="form-control form-control-lg real"  id="PAG_VALOR" name="PAG_VALOR" value="">
+                                        </div>
+                                    </div>
+                                    <div class="col-12 row mx-auto mb-3">
+                                        <div class="col-6 form-check form-control-lg mx-auto align-middle form-switch mt-4 mb-1">
+                                            <input class="form-check-input mx-auto" type="checkbox" role="switch" name="PAG_TOTAL" id="flexSwitchCheckChecked" checked>
+                                            <label class="form-check-label" for="flexSwitchCheckChecked"> PAGO VALOR TOTAL?</label>
+                                        </div>
+                                        <div class="col-6 form-check form-control-lg mx-auto align-middle form-switch mt-4 mb-1">
+                                            <input class="form-check-input mx-auto" type="checkbox" role="switch" name="PROXIMO_MES" id="flexSwitchCheckChecked">
+                                            <label class="form-check-label" for="flexSwitchCheckChecked"> SALDO P/PROXÍMO MÊS?</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-6 mb-3 text-center">
+                                        <label class="form-label" for="2">DATA DE VENCIMENTO</label>  
+                                        <input type="text" class="form-control form-control-lg text-center" disabled id="LAN_DT_VENCIMENTO" value="">
+                                    </div>
+                                    <div class="col-6 mb-2 text-center">
+                                        <label class="form-label">DATA DO PAGAMENTO</label>
+                                        <div class="">
+                                            <input type="date" class="form-control form-control-lg" name="PAG_DT_PAGAMENTO" value="<?= date('Y-m-d') ?>">
+                                        </div>
+                                    </div>
+                                    <div id="FPG" class="col-9 mx-auto text-center mb-3">
+                                        <label class="form-label text-center">FORMA DE PAGAMENTO</label>
+                                        <select id="FPG_COD" class="form-select form-select-lg" name="FPG_COD"> 
+                                        <?php for ($i=0; $i < $qtdF; $i++) { if ($formas_pagamentos[$i]['FPG_STATUS'] == 1) { ?>
+                                            <option value="<?= $formas_pagamentos[$i]['FPG_COD'] ?>" <?= (isset($_POST['FPG_COD']) &&  $_POST['FPG_COD']  == $i)? 'selected' : '' ?>><?= ($formas_pagamentos[$i]['FPG_TIPO'] == 1)? 'À VISTA' : 'À PRAZO'; ?> - <?= $formas_pagamentos[$i]['FPG_DESCRICAO'] ?></option>
+                                        <?php } } ?>
+                                        </select>
+                                    </div>
+                                    <div class="col-3 mb-2 text-center">
+                                        <label class="form-label text-center">PARCELA</label>
+                                        <div class="">
+                                            <input type="text" class="form-control form-control-lg text-center" disabled id="LAN_PARCELA" value="">
+                                        </div>
+                                    </div>
+                                    <div class="col-12 mb-3">
+                                        <label class="form-label" for="2">DESCRIÇÃO</label>  
+                                        <input type="text" class="form-control form-control-lg" disabled id="LAN_DESCRICAO" value="">
+                                    </div>
+                                    <div class="col-12 mb-2">
+                                        <label class="form-label" for="1">OBSERVAÇÃO</label>
+                                        <div class="form-floating">
+                                            <textarea class="form-control maiusculo" name="PAG_OBSERVACAO"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <input type="hidden" id="PAG_STATUS" name="PAG_STATUS" value="" />
+                                <input type="hidden" id="LAN_COD" name="LAN_COD" value="" />
+                                <input type="hidden" id="CTA_COD" name="CTA_COD" value="" />
+                                <input type="hidden" id="EMP_COD" name="EMP_COD" value="<?= $empresa['EMP_COD'] ?>" />
+                                <input type="hidden" id="USU_COD" name="USU_COD" value="<?= $_SESSION['USU_COD'] ?>" />
+                                <button type="button" class="btn btn-dark" data-bs-dismiss="modal">CANCELAR</button>
+                                <button type="submit" id="sts" name="CADASTRAR_PAGAMENTO" class="btn <?= $modulo[0]['MOD_COR'] ?> text-white"><i class="bi bi-box-arrow-right"></i> PAGAR</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <script type="text/javascript">
+                $(document).ready(function() {
+                    $('#pagar').on('show.bs.modal', function(event) {
+                        var button = null;
+                        var button = $(event.relatedTarget); // Button that triggered the modal
+                        var codigo = null;
+                        var codigo = button.data('codigo'); // Extract info from data-* attributes
+                        var conta = button.data('conta');
+                        var nome = button.data('nome');
+                        var vencimento = button.data('vencimento');
+                        var valor = button.data('valor');
+                        var parcela = button.data('parcela');
+                        var status = button.data('status');
+
+                        var modal = $(this);
+                        modal.find('#LAN_COD').val(codigo);
+                        modal.find('#CTA_COD').val(conta);
+
+                        const novaData = new Date(vencimento);
+                        modal.find('#LAN_DT_VENCIMENTO').val(novaData.toLocaleDateString('pt-BR'));
+                        modal.find('#LAN_VALOR').val(valor);
+                        modal.find('#PAG_VALOR').val(valor);
+                        modal.find('#LAN_PARCELA').val(parcela);
+                        modal.find('#PAG_STATUS').val(status);
+                        modal.find('#sts').val(codigo);
+                        modal.find('#LAN_DESCRICAO').val(nome);
+                    });
+                });
+                $("#sts2").click(function(){
+                    var LAN_COD = $('#sts').val();
+                    var EMP_COD = $('#EMP_COD').val();
+                    var USU_COD = $('#USU_COD').val();
+                    var CTA_COD = $('#CTA_COD').val();
+                    var FPG_COD = $('#FPG_COD').val();
+                    var PAG_VALOR = $('#PAG_VALOR').val();
+                    var PAG_DT_PAGAMENTO = $('#PAG_DT_PAGAMENTO').val();
+                    var PAG_OBSERVACAO = $('#PAG_OBSERVACAO').val();
+                    var PAG_STATUS = $('#PAG_STATUS').val();
+                    setTimeout(function () {
+                            $('#pagar').modal('hide');
+                    }, 100);
+                    $.post('<?= DIRPAGE; ?>pagamentos/pagar_lançamento', {LAN_COD: LAN_COD,EMP_COD: EMP_COD,USU_COD: USU_COD,CTA_COD:CTA_COD,FPG_COD:FPG_COD,PAG_VALOR: PAG_VALOR,PAG_DT_PAGAMENTO: PAG_DT_PAGAMENTO,PAG_OBSERVACAO: PAG_OBSERVACAO,CADASTRAR_PAGAMENTO: true, PAG_STATUS: PAG_STATUS,cache: false}, function(retorno) {
+                        var resposta = JSON.parse(retorno);
+                        if (resposta['COD'] !== 'ERRO') {
+                            $('#resposta').addClass('alert alert-success');
+                        }else{
+                            $('#resposta').addClass('alert alert-warning');
+                        }
+                        $('#resposta').html(resposta['MENSAGEM']);
+                        setTimeout( () => { window.location.href="<?= DIRPAGE ?>lancamentos/pagar"}, 200);
+                    });
+
+                });
+            </script>
         </div>
     </div>
     </body>
