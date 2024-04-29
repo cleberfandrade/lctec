@@ -288,5 +288,29 @@ class pagamentos extends View
         $this->dados['title'] .= ' GERENCIAR RECEBIMENTOS';   
         $dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);
         $ok = false;
+        if (isset($_POST) && isset($dados['CADASTRAR_RECEBIMENTO'])) {
+            unset($dados['CADASTRAR_RECEBIMENTO']);
+            if($this->dados['empresa']['USU_COD'] == $dados['USU_COD'] && $this->dados['empresa']['EMP_COD'] == $dados['EMP_COD']){
+               
+                $this->dados['lancamento'] = $this->Lancamentos->setCodEmpresa($_SESSION['EMP_COD'])->setCodigo($dados['LAN_COD'])->listar(0);
+            
+            
+            }else{
+                Sessao::alert('ERRO',' PAG12 - Acesso inválido(s)!','fs-4 alert alert-danger');
+            }
+
+
+        }else{
+            Sessao::alert('ERRO',' PAG11- Dados inválido(s)!','fs-4 alert alert-danger');
+        }
+
+        $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
+        $this->dados['lancamentos_receber'] = $this->Lancamentos->setCodEmpresa($_SESSION['EMP_COD'])->setTipo(2)->setStatus(1)->listarTodosTipo(0);
+        if ($ok) {
+           
+            $this->render('admin/financeiro/pagamentos/receber', $this->dados);
+        }else {
+            $this->render('admin/financeiro/pagamentos/receber', $this->dados);
+        }
     }
 }
