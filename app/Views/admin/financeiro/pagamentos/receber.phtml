@@ -95,23 +95,23 @@ $qtdLR = (is_array($lancamentos_receber) ? count($lancamentos_receber) : 0);
                 <div class="modal-dialog modal-lg modal-dialog-centered">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title">PAGAR LANÇAMENTO</h5>
+                            <h5 class="modal-title">RECEBER LANÇAMENTO</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                        <form action="<?= DIRPAGE ?>pagamentos/pagar_lançamento" method="post">
+                        <form action="<?= DIRPAGE ?>pagamentos/receber_lançamento" method="post">
                             <div class="modal-body">
-                                <h5 class="modal-title text-center mb-3">CONFIRMAR PAGAMENTO</h5>
+                                <h5 class="modal-title text-center mb-3">CONFIRMAR RECEBIMENTO</h5>
                                 <div class="col-12 row mx-auto mb-3">
                                     
                                     <div class="col-6 mb-3">
-                                        <label class="form-label" for="2">VALOR A PAGAR</label>  
+                                        <label class="form-label" for="2">VALOR A RECEBER</label>  
                                         <div class="input-group">    
                                             <span class="input-group-text">R$</span>  
                                             <input type="text" class="form-control form-control-lg real" disabled id="LAN_VALOR" value="">
                                         </div>
                                     </div>
                                     <div class="col-6 mb-3">
-                                        <label class="form-label" for="2">VALOR PAGO</label>  
+                                        <label class="form-label" for="2">VALOR RECEBIDO</label>  
                                         <div class="input-group">    
                                             <span class="input-group-text">R$</span>  
                                             <input type="text" class="form-control form-control-lg real"  id="PAG_VALOR" name="PAG_VALOR" value="">
@@ -120,7 +120,7 @@ $qtdLR = (is_array($lancamentos_receber) ? count($lancamentos_receber) : 0);
                                     <div class="col-12 row mx-auto mb-3">
                                         <div class="col-6 form-check form-control-lg mx-auto align-middle form-switch mt-4 mb-1">
                                             <input class="form-check-input mx-auto" type="checkbox" role="switch" name="PAG_TOTAL" id="flexSwitchCheckChecked" checked>
-                                            <label class="form-check-label" for="flexSwitchCheckChecked"> PAGO VALOR TOTAL?</label>
+                                            <label class="form-check-label" for="flexSwitchCheckChecked"> RECEBIDO VALOR TOTAL?</label>
                                         </div>
                                         <div class="col-6 form-check form-control-lg mx-auto align-middle form-switch mt-4 mb-1">
                                             <input class="form-check-input mx-auto" type="checkbox" role="switch" name="PROXIMO_MES" id="flexSwitchCheckChecked">
@@ -132,7 +132,7 @@ $qtdLR = (is_array($lancamentos_receber) ? count($lancamentos_receber) : 0);
                                         <input type="text" class="form-control form-control-lg text-center" disabled id="LAN_DT_VENCIMENTO" value="">
                                     </div>
                                     <div class="col-6 mb-2 text-center">
-                                        <label class="form-label">DATA DO PAGAMENTO</label>
+                                        <label class="form-label">DATA DO RECEBIMENTO</label>
                                         <div class="">
                                             <input type="date" class="form-control form-control-lg" name="PAG_DT_PAGAMENTO" value="<?= date('Y-m-d') ?>">
                                         </div>
