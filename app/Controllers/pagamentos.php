@@ -275,13 +275,18 @@ class pagamentos extends View
         }else {
             $this->render('admin/financeiro/pagamentos/pagar', $this->dados);
         }
-    }
-    
+    } 
     public function receber()
     {
         $this->dados['title'] .= ' GERENCIAR PAGAMENTOS';   
-        $this->dados['lancamentos_receber'] = $this->Lancamentos->setCodEmpresa($_SESSION['EMP_COD'])->setTipo(2)->setStatus(2)->listarTodosTipo();
+        $this->dados['lancamentos_receber'] = $this->Lancamentos->setCodEmpresa($_SESSION['EMP_COD'])->setTipo(2)->setStatus(1)->listarTodosTipo();
         $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
         $this->render('admin/financeiro/pagamentos/receber', $this->dados);
+    }
+    public function receber_lançamento()
+    {
+        $this->dados['title'] .= ' GERENCIAR RECEBIMENTOS';   
+        $dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);
+        $ok = false;
     }
 }

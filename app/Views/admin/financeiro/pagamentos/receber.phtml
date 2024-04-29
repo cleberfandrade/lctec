@@ -59,24 +59,24 @@ $qtdLR = (is_array($lancamentos_receber) ? count($lancamentos_receber) : 0);
                         <?php
                          $b = 1;
                          for ($i= 0; $i < $qtdLR; $i++) { 
-                             $data = new DateTime($lancamentos_pagar[$i]['LAN_DT_VENCIMENTO']);
+                             $data = new DateTime($lancamentos_receber[$i]['LAN_DT_VENCIMENTO']);
                         ?>
-                         <tr class="<?= ($lancamentos_pagar[$i]['LAN_STATUS'] == 0 && $_SESSION['USU_NIVEL'] >= 8)? 'bg-secondary' : ''; ?>">
+                         <tr class="<?= ($lancamentos_receber[$i]['LAN_STATUS'] == 0 && $_SESSION['USU_NIVEL'] >= 8)? 'bg-secondary' : ''; ?>">
                             <td class="text-center align-middle"><?= $b; ?></td>
-                            <td class="text-center align-middle <?= ($lancamentos_pagar[$i]['LAN_RESULTADOS'] == 1)? 'bg-success text-white': ''; ?>"><?= ($lancamentos_pagar[$i]['LAN_RESULTADOS'] == 1)? '$': ''; ?></td>
-                            <td class="text-center align-middle"><?= $lancamentos_pagar[$i]['LAN_DESCRICAO']; ?></td>
-                            <td class="text-center align-middle"><?= $lancamentos_pagar[$i]['LAN_PARCELA']; ?></td>
+                            <td class="text-center align-middle <?= ($lancamentos_receber[$i]['LAN_RESULTADOS'] == 1)? 'bg-success text-white': ''; ?>"><?= ($lancamentos_receber[$i]['LAN_RESULTADOS'] == 1)? '$': ''; ?></td>
+                            <td class="text-center align-middle"><?= $lancamentos_receber[$i]['LAN_DESCRICAO']; ?></td>
+                            <td class="text-center align-middle"><?= $lancamentos_receber[$i]['LAN_PARCELA']; ?></td>
                             <td class="text-center align-middle"><?= $data->format('d/m/Y'); ?></td>
-                            <td class="text-center align-middle"><?= number_format($lancamentos_pagar[$i]['LAN_VALOR'],2,',','.'); ?></td>
+                            <td class="text-center align-middle"><?= number_format($lancamentos_receber[$i]['LAN_VALOR'],2,',','.'); ?></td>
                             <td class="text-center align-middle">
-                                <button type="button" class="btn btn-success btn-sm d-print-none" data-bs-toggle='modal'  data-bs-target="#pagar" data-codigo="<?= $lancamentos_pagar[$i]['LAN_COD']; ?>" data-conta="<?= $lancamentos_pagar[$i]['CTA_COD']; ?>" data-valor="<?= $lancamentos_pagar[$i]['LAN_VALOR']; ?>" data-parcela="<?= $lancamentos_pagar[$i]['LAN_PARCELA']; ?>" data-nome="<?= $lancamentos_pagar[$i]['LAN_DESCRICAO']; ?>" data-vencimento="<?= $lancamentos_pagar[$i]['LAN_DT_VENCIMENTO']; ?>" data-status="<?= $lancamentos_pagar[$i]['LAN_STATUS']; ?>" title="Deseja Pagar?" ><i class="fa fa-check"></i></button>
+                                <button type="button" class="btn btn-success btn-sm d-print-none" data-bs-toggle='modal'  data-bs-target="#pagar" data-codigo="<?= $lancamentos_receber[$i]['LAN_COD']; ?>" data-conta="<?= $lancamentos_receber[$i]['CTA_COD']; ?>" data-valor="<?= $lancamentos_receber[$i]['LAN_VALOR']; ?>" data-parcela="<?= $lancamentos_receber[$i]['LAN_PARCELA']; ?>" data-nome="<?= $lancamentos_receber[$i]['LAN_DESCRICAO']; ?>" data-vencimento="<?= $lancamentos_receber[$i]['LAN_DT_VENCIMENTO']; ?>" data-status="<?= $lancamentos_receber[$i]['LAN_STATUS']; ?>" title="Deseja Pagar?" ><i class="fa fa-check"></i></button>
                             </td>
                             <?php if($_SESSION['USU_NIVEL'] >= 8){ ?>
                             <td class="text-center align-middle d-print-none">
-                                <?php if($lancamentos_pagar[$i]['LAN_STATUS'] == 0){ ?>
-                                <button type="button" class="btn btn-success btn-sm d-print-none" data-bs-toggle='modal' data-bs-target="#status" data-codigo="<?= $lancamentos_pagar[$i]['LAN_COD']; ?>" data-conta="<?= $lancamentos_pagar[$i]['CTA_COD']; ?>" data-nome="<?= $lancamentos_pagar[$i]['CLI_NOME']; ?>" data-status="<?= $lancamentos_pagar[$i]['LAN_STATUS']; ?>" title="Deseja ativar?" ><i class="fa fa-ban"></i></button>
+                                <?php if($lancamentos_receber[$i]['LAN_STATUS'] == 0){ ?>
+                                <button type="button" class="btn btn-success btn-sm d-print-none" data-bs-toggle='modal' data-bs-target="#status" data-codigo="<?= $lancamentos_receber[$i]['LAN_COD']; ?>" data-conta="<?= $lancamentos_receber[$i]['CTA_COD']; ?>" data-nome="<?= $lancamentos_receber[$i]['CLI_NOME']; ?>" data-status="<?= $lancamentos_receber[$i]['LAN_STATUS']; ?>" title="Deseja ativar?" ><i class="fa fa-ban"></i></button>
                                 <?php }else { ?>
-                                <a type="button" class="btn btn-warning btn-sm d-print-none" href="<?= DIRPAGE.'lancamentos/alteracao/'.$lancamentos_pagar[$i]['EMP_COD'].'/'.$lancamentos_pagar[$i]['LAN_COD']; ?>" title="Alterar lancamento"><i class="fa fa-edit"></i></a>
+                                <a type="button" class="btn btn-warning btn-sm d-print-none" href="<?= DIRPAGE.'lancamentos/alteracao/'.$lancamentos_receber[$i]['EMP_COD'].'/'.$lancamentos_receber[$i]['LAN_COD']; ?>" title="Alterar lancamento"><i class="fa fa-edit"></i></a>
                                 <?php } ?>
                             </td>
                             <?php } ?>
