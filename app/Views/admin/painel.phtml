@@ -94,7 +94,7 @@ setlocale(LC_MONETARY, 'pt_BR');
                             </div>
                             <?php } ?>
                             <span class="text-uppercase"><?= Util::mesLowercase(date('n',$m))?>/<?= date('Y') ?></span>
-                            <hr>
+                           
                             <div class="col-12 row text-center mx-auto mb-3">    
 
 
@@ -103,6 +103,7 @@ setlocale(LC_MONETARY, 'pt_BR');
                                 <div class="card-body card-widget-separator">
                                 <?php for ($b = 0; $b < $qtdME; $b++) { ?>
                                     <?php if ($modulos_empresa[$b]['MOD_NOME'] == 'ESTOQUE') { ?>
+                                    <hr>
                                     <div class="row gy-4 gy-sm-1">
                                         <div class="col-sm-6 col-lg-3">
                                             <div class="d-flex justify-content-between align-items-start card-widget-1 border-end pb-3 pb-sm-0">
@@ -162,6 +163,9 @@ setlocale(LC_MONETARY, 'pt_BR');
                                 <div class="row">
                                     <div class="col-sm-4">
                                         <div class="d-flex justify-content-between align-items-start card-widget-1 border-end pb-3 pb-sm-0">
+                                        <?php for ($b = 0; $b < $qtdME; $b++) { ?>
+                                            <?php if ($modulos_empresa[$b]['MOD_NOME'] == 'ESTOQUE') { ?>
+
                                             <div class="text-center">
                                                 <p class="mb-0 fs-5"><i class="fas fa-tag"></i> Últimos Produtos Vendidos</p>
                                                 <ul class="timeline fs-5">
@@ -176,6 +180,7 @@ setlocale(LC_MONETARY, 'pt_BR');
                                                     <?php }  ?>
                                                 </ul>
                                             </div>
+                                            <?php }}?>
                                             <span class="badge bg-label-secondary rounded p-2 me-sm-4">
                                                 <i class="bx bx-user bx-sm"></i>
                                             </span>
