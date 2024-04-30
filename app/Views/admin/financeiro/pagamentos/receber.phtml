@@ -232,8 +232,8 @@ $qtdLR = (is_array($lancamentos_receber) ? count($lancamentos_receber) : 0);
                 $("#pesquisar").keydown(function(){
                     var pesquisar = $('#pesquisar').val();
                     console.log(pesquisar);
+                    $('table tr:gt(0)').remove();
 
-                    
                 });
             </script>
         </div>
