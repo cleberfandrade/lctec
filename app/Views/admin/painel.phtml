@@ -101,7 +101,7 @@ setlocale(LC_MONETARY, 'pt_BR');
                             <div class="text-uppercase text-center mx-auto fs-4">
 
                                 <?= Util::mesLowercase(date('n',$m))?>/<?= date('Y') ?>
-                                
+
                             </div>
                            
                             <div class="col-12 row text-center mx-auto mb-3">    
@@ -167,8 +167,8 @@ setlocale(LC_MONETARY, 'pt_BR');
                                         <?php } } ?>
                                         <?php for ($b = 0; $b < $qtdME; $b++) { ?>
                                         <?php if ($modulos_empresa[$b]['MOD_NOME'] == 'FINANCEIRO') { ?>
-                                        <hr>
                                         <div class="row gy-4 gy-sm-1">
+                                            <div class="col-12 m-0 p-1 rounded <?= $modulos_empresa[$b]['MOD_COR'] ?>"></div>
                                             <div class="col-sm-6 col-lg-3">
                                                 <div class="d-flex justify-content-between align-items-start card-widget-1 border-end pb-3 pb-sm-0">
                                                     <div class="text-center mx-auto">
@@ -205,11 +205,13 @@ setlocale(LC_MONETARY, 'pt_BR');
                                                         for ($i=0; $i < $qtdLA; $i++) { 
                                                             if ($lancamentos[$i]['LAN_DT_VENCIMENTO'] < date('Y-m-d')) {
                                                                 $qtdVC++;
-                                                                $v+=$lancamentos[$i]['LAN_VALOR'];
+                                                                if ($lancamentos[$i]['LAN_STATUS']!= 3) {
+                                                                    $v+=$lancamentos[$i]['LAN_VALOR'];
+                                                                }
                                                             }
                                                         }
                                                         ?>
-                                                        <p class="mb-0 fs-4"><i class="bi bi-question-diamond-fill"></i> <?= $qtdVC ?> VENCIDOS</p>
+                                                        <p class="mb-0 fs-4"><i class="bi bi-hourglass-bottom"></i> <?= $qtdVC ?> VENCIDOS</p>
                                                         <h3 class="mb-1">
                                                             <?php //$v = 0; for ($i=0; $i < $qtdVH; $i++) { $v+=$vendas_hoje[$i]['VEN_VALOR_TOTAL'];} ?>
                                                             <?= ($v)? 'R$ '.number_format($v,2,',','.'): 'R$ 0.00' ?>
@@ -293,21 +295,6 @@ setlocale(LC_MONETARY, 'pt_BR');
                                     </div>
                                 </div>
                             </div>
-                            
-                               <!--<div class="col-3 mx-auto m-4 mx-auto ml-3 border-start">
-                                <div class="">
-                                    <div class="card mx-auto bg-light" style="max-width: 15rem;">
-                                        <div class="card-header"><i class="bi bi-question-square"></i> SUPORTE</div>
-                                        <div class="card-body">
-                                            <p class="card-text position-relative" style="max-height: 10rem;">
-                                            <p class="card-title small">Fale conosco</p>
-                                            <textarea class="form-control mb-4" name="SUP_TEXTO" id="SUP_TEXTO" width="100%;" rows="5rem;"></textarea>
-                                            <button type="button" class="mt-5 position-absolute btn btn-outline-secondary fixed-bottom">ENVIAR</button>
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div> -->
                         </div>
                     <?php } ?>
                 </section>
