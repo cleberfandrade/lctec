@@ -229,6 +229,7 @@ setlocale(LC_MONETARY, 'pt_BR');
                                     <div class="row">
                                         <div class="col-sm-4 mx-auto">
                                             <div class="d-flex justify-content-between align-items-start card-widget-1 border-end pb-3 pb-sm-0">
+                                            <span class="text-center text-uppercase  mx-auto fs-4"><?= Util::mesLowercase(date('n',$m))?>/<?= date('Y') ?></span>
                                             <?php for ($b = 0; $b < $qtdME; $b++) { ?>
                                                 <?php if ($modulos_empresa[$b]['MOD_NOME'] == 'ESTOQUE') { ?>
                                                 <div class="text-center">
