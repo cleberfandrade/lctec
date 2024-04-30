@@ -5,8 +5,10 @@ use App\Models\Avisos;
 use App\Models\Clientes;
 use App\Models\Empresas;
 use App\Models\Estoques;
+use App\Models\Lancamentos;
 use App\Models\ModulosEmpresa;
 use App\Models\Movimentacoes;
+use App\Models\PagamentosRecebimentos;
 use App\Models\Produtos;
 use App\Models\Tarefas;
 use Core\View;
@@ -20,7 +22,7 @@ use Libraries\Util;
 class admin extends View
 {
     private $dados = [];
-    private $link,$Util,$Check,$Empresa,$Usuarios,$Estoques,$UsuariosEmpresa,$ModulosEmpresa,$Clientes, $Tarefas,$Produtos,$Movimentacoes,$Avisos,$Vendas;
+    private $link,$Util,$Check,$Empresa,$Usuarios,$Estoques,$UsuariosEmpresa,$ModulosEmpresa,$Clientes, $Tarefas,$Produtos,$Movimentacoes,$Avisos,$Vendas,$PagamentosRecebimentos,$Lancamentos;
     public function __construct()
     {
         Sessao::naoLogado();
@@ -38,7 +40,8 @@ class admin extends View
         $this->Avisos = new Avisos;
         $this->Vendas = new Vendas;
         $this->Clientes = new Clientes;
-       
+        $this->Lancamentos = new Lancamentos;
+        $this->PagamentosRecebimentos = new PagamentosRecebimentos;
         /*
         $motivos = array(
             0 => '---',
@@ -77,7 +80,11 @@ class admin extends View
         $this->dados['tarefas'] = $this->Tarefas->setCodEmpresa($_SESSION['EMP_COD'])->listarTodos(0);
 
         $this->dados['avisos'] = $this->Avisos->setCodEmpresa($_SESSION['EMP_COD'])->listarTodos(0);
-        
+
+        $this->dados['lancamentos'] = $this->Lancamentos->setCodEmpresa($_SESSION['EMP_COD'])->listarTodos(0);
+        $this->dados['lancamentos_pagar'] = $this->Lancamentos->setCodEmpresa($_SESSION['EMP_COD'])->setTipo(1)->setStatus(1)->listarTodosTipo(0);
+        $this->dados['lancamentos_receber'] = $this->Lancamentos->setCodEmpresa($_SESSION['EMP_COD'])->setTipo(2)->setStatus(1)->listarTodosTipo();
+
         $this->link[0] = ['link'=> 'admin','nome' => 'PAINEL ADMINISTRATIVO'];
         $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
     }
