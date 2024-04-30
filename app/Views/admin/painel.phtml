@@ -204,8 +204,8 @@ setlocale(LC_MONETARY, 'pt_BR');
                                                         <?php $qtdVC = $v = 0;
                                                         for ($i=0; $i < $qtdLA; $i++) { 
                                                             if ($lancamentos[$i]['LAN_DT_VENCIMENTO'] < date('Y-m-d')) {
-                                                                $qtdVC++;
                                                                 if ($lancamentos[$i]['LAN_STATUS']!= 3) {
+                                                                    $qtdVC++;
                                                                     $v+=$lancamentos[$i]['LAN_VALOR'];
                                                                 }
                                                             }
