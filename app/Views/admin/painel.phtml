@@ -21,7 +21,6 @@ $qtdLA = (is_array($lancamentos) ? count($lancamentos) : 0);
 $qtdLP = (is_array($lancamentos_pagar) ? count($lancamentos_pagar) : 0);
 $qtdLR = (is_array($lancamentos_receber) ? count($lancamentos_receber) : 0);
 
-dump($lancamentos);
 !isset($m)? $m = $Util->getMesAtual():''; 
 
 setlocale(LC_MONETARY, 'pt_BR');
@@ -170,39 +169,31 @@ setlocale(LC_MONETARY, 'pt_BR');
                                     <div class="row gy-4 gy-sm-1">
                                         <div class="col-sm-6 col-lg-3">
                                             <div class="d-flex justify-content-between align-items-start card-widget-1 border-end pb-3 pb-sm-0">
-                                                <div class="text-center">
-                                                   
-                                                    <p class="mb-0 fs-4"><i class="bi bi-file-earmark-text"></i> LANÇAMENTOS</p>
+                                                <div class="text-center mx-auto">
+                                                    <p class="mb-0 fs-5"><i class="bi bi-file-earmark-text"></i> LANÇAMENTOS</p>
                                                     <h3 class="mb-1"><?= $qtdLA ?></h3>
                                                 </div>
-                                                <span class="badge bg-label-secondary rounded p-2 me-sm-4">
-                                                    <i class="bx bx-user bx-sm"></i>
-                                                </span>
+                                                
                                             </div>
                                             <hr class="d-none d-sm-block d-lg-none me-4">
                                         </div>
                                         <div class="col-sm-6 col-lg-3">
-                                            <div class="d-flex justify-content-between align-items-start card-widget-2 border-end pb-3 pb-sm-0">
-                                                <div class="text-center">
-                                                
-                                                <p class="mb-0 fs-4"><i class="bi bi-bag-check"></i> A PAGAR</p>
-                                                <h3 class="mb-1"><?= $qtdLP ?></h3>
+                                            <div class="d-flex justify-content-between align-items-start card-widget-1 border-end pb-3 pb-sm-0">
+                                                <div class="text-center mx-auto">
+                                                    <p class="mb-0 fs-5"><i class="bi bi-bag-check"></i> A PAGAR</p>
+                                                    <h3 class="mb-1"><?= $qtdLP ?></h3>
                                                 </div>
-                                                <span class="badge bg-label-secondary rounded p-2 me-lg-4">
-                                                <i class="bx bx-file bx-sm"></i>
-                                                </span>
+                                        
                                             </div>
                                             <hr class="d-none d-sm-block d-lg-none">
                                         </div>
                                         <div class="col-sm-6 col-lg-3">
                                             <div class="d-flex justify-content-between align-items-start border-end pb-3 pb-sm-0 card-widget-3">
-                                                <div class="text-center">
-                                                    <p class="mb-0 fs-4"><i class="fa-solid fa-cart-shopping"></i>  A RECEBER</p>
+                                                <div class="text-center mx-auto">
+                                                    <p class="mb-0 fs-5"><i class="fa-solid fa-cart-shopping"></i>  A RECEBER</p>
                                                     <h3 class="mb-1"><?= $qtdLR ?></h3>
                                                 </div>
-                                                <span class="badge bg-label-secondary rounded p-2 me-sm-4">
-                                                <i class="bx bx-check-double bx-sm"></i>
-                                                </span>
+
                                             </div>
                                         </div>
                                         <div class="col-sm-6 col-lg-3">

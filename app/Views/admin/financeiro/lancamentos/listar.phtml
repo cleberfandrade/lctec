@@ -127,7 +127,12 @@ $qtdP = ceil($qtdL/$qtdPg);
                     <?php if($qtd != 0) { ?>
                         <table class="table bg-light table-striped table-bordered">
                             <thead class="text-center text-uppercase">
-                                <th class="text-dark">#</th>
+                                <th scope="col" colspan="2" class="text-center">
+                                    <div class="form-check form-check-inline">
+                                        <label class="form-check-label" for="inlineCheckbox1"># </label>
+                                        <input type="checkbox" class="form-check-input" id="tudo" />
+                                    </div>
+                                </th>
                                 <th class="text-dark" title="Participa dos resultados da empresa">R</th>
                                 <th class="text-dark">Tipo</th>
                                 <th class="text-dark">Conta</th>
@@ -152,6 +157,11 @@ $qtdP = ceil($qtdL/$qtdPg);
                             ?>
                             <tr class="<?= ($lancamentos[$i]['LAN_STATUS'] == 0 && $_SESSION['USU_NIVEL'] >= 8)? 'bg-secondary' : ''; ?> " <?= $titulo ?>>
                                 <td class="text-center align-middle <?= $vencido ?>"><?= $b; ?></td>
+                                <td scope="">
+                                    <div class="form-check">
+                                        <input type="checkbox" class="selecao form-check-input" name="LAN_SELECIONADO[]" value="<?= $lancamentos[$i]['LAN_COD']; ?>" />
+                                    </div>
+                                </td>
                                 <td class="text-center align-middle <?= ($lancamentos[$i]['LAN_RESULTADOS'] == 1)? 'bg-success text-white': ''; ?>"><?= ($lancamentos[$i]['LAN_RESULTADOS'] == 1)? '$': ''; ?></td>
                                 <td class="text-center align-middle"><?= ($lancamentos[$i]['LAN_TIPO'] == 1)? 'A PAGAR': (($lancamentos[$i]['LAN_TIPO'] == 2) ? 'A RECEBER' : 'N.I.'); ?></td>
                                 <td class="text-center align-middle">
@@ -351,6 +361,20 @@ $qtdP = ceil($qtdL/$qtdPg);
         $('#filtrar').on('change', function(){
             $(this).closest('form').submit();
         });
+
+        $(document).ready(function() {
+        $('#tudo').click(function(event) { //on click
+            if (this.checked) { // check select status
+                $('.selecao').each(function() { //loop through each checkbox
+                    this.checked = true; //select all checkboxes with class "checkbox1"
+                });
+            } else {
+                $('.selecao').each(function() { //loop through each checkbox
+                    this.checked = false; //deselect all checkboxes with class "checkbox1"
+                });
+            }
+        });
+    });
     </script>
 </body>
 </html>
