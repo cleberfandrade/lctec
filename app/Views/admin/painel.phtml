@@ -102,7 +102,8 @@ setlocale(LC_MONETARY, 'pt_BR');
                                 <div class="col text-uppercase text-center mx-auto fs-4 "><?= Util::mesLowercase(date('n',$m))?>/<?= date('Y') ?> </div>
                                 <?php for ($b = 0; $b < $qtdME; $b++) { ?>
                                         <?php if ($modulos_empresa[$b]['MOD_NOME'] == 'FINANCEIRO') { ?>
-                                <form class="col-12 d-print-none" id="filtrar" name="filtrar" action="<?= DIRPAGE ?>admin" method="POST">
+                                <form class="col d-print-none" id="filtrar" action="<?= DIRPAGE ?>admin" method="POST">
+                                    <input type="hidden" name="filtrar">
                                     <div class="col mx-auto input-group">
                                         <input type="date" class="form-control" name="LAN_DT_INICIAL" value="<?= isset($_POST['LAN_DT_INICIAL']) ? $_POST['LAN_DT_INICIAL'] : date('Y-m-01'); ?>">
                                         <span class="input-group-text">Á</span>

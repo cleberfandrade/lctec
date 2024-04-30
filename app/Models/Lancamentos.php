@@ -68,9 +68,9 @@ class Lancamentos extends Model
         (isset($dados['DATA']) ?  $data = ' AND L.LAN_DT_VENCIMENTO BETWEEN "'.$dados['LAN_DT_INICIAL'].'" AND "'.$dados['LAN_DT_FINAL'].'"' : $data = ''); 
         
         (isset($dados['LAN_PAGINA']) && $dados['LAN_PAGINA'] != 0)? $pagina = $dados['LAN_PAGINA'] : $pagina = 1;
-        (isset($dados['LAN_QTD']) && $dados['LAN_QTD'] != 0 && $dados['LAN_QTD'] != 10)? $limit = $dados['LAN_QTD'] : $limit = 10;
+        (isset($dados['LAN_QTD']) && $dados['LAN_QTD'] != 0 && $dados['LAN_QTD'] != 10)? $limit = $dados['LAN_QTD'] : $limit = 100;
         (isset($dados['LAN_STATUS']) && $dados['LAN_STATUS'] != 0 && $dados['LAN_STATUS'] != '') ? $status = " AND L.LAN_STATUS=".$dados['LAN_STATUS'].""  : $status = '';
-        $qtd = $dados['LAN_QTD_TOTAL'];
+        $qtd = (isset($dados['LAN_QTD_TOTAL'])? $dados['LAN_QTD_TOTAL'] : 0);
 
         $offset = ($pagina - 1) * $limit;
         //$n_pagina = ceil($dados['LAN_QTD_TOTAL']/$limit);
