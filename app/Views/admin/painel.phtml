@@ -98,10 +98,13 @@ setlocale(LC_MONETARY, 'pt_BR');
                                 </div>
                             </div>
                             <?php } ?>
-                            <div class="text-uppercase text-center mx-auto fs-4">
-
-                                <?= Util::mesLowercase(date('n',$m))?>/<?= date('Y') ?>
-
+                            <div class="col-12 row mx-auto">
+                                <div class="col text-uppercase text-center mx-auto fs-4 "><?= Util::mesLowercase(date('n',$m))?>/<?= date('Y') ?> </div>
+                                <div class="col mx-auto input-group">
+                                    <input type="date" class="form-control" name="LAN_DT_INICIAL" value="<?= isset($_POST['LAN_DT_INICIAL']) ? $_POST['LAN_DT_INICIAL'] : date('Y-m-01'); ?>">
+                                    <span class="input-group-text">Á</span>
+                                    <input type="date" class="form-control" name="LAN_DT_FINAL" value="<?= isset($_POST['LAN_DT_FINAL']) ? $_POST['LAN_DT_FINAL'] : date('Y-m-t'); ?>">
+                                </div>
                             </div>
                            
                             <div class="col-12 row text-center mx-auto mb-3">    
