@@ -98,200 +98,200 @@ setlocale(LC_MONETARY, 'pt_BR');
                                 </div>
                             </div>
                             <?php } ?>
-                            <span class="text-uppercase"><?= Util::mesLowercase(date('n',$m))?>/<?= date('Y') ?></span>
+                            <div class="text-uppercase text-center mx-auto fs-4">
+
+                                <?= Util::mesLowercase(date('n',$m))?>/<?= date('Y') ?>
+                                
+                            </div>
                            
                             <div class="col-12 row text-center mx-auto mb-3">    
+                                <div class="">
 
-
-                            <div class="">
-
-                                <div class="card-body card-widget-separator">
-                                <?php for ($b = 0; $b < $qtdME; $b++) { ?>
-                                    <?php if ($modulos_empresa[$b]['MOD_NOME'] == 'ESTOQUE') { ?>
-                                    <hr>
-                                    <div class="row gy-4 gy-sm-1">
-                                        <div class="col-sm-6 col-lg-3">
-                                            <div class="d-flex justify-content-between align-items-start card-widget-1 border-end pb-3 pb-sm-0">
-                                                <div class="text-center">
-                                                   
-                                                    <p class="mb-0 fs-4"><i class="fas fa-user-tie"></i> Clientes</p>
-                                                    <h3 class="mb-1"><?= $qtdCL ?></h3>
+                                    <div class="card-body card-widget-separator">
+                                    <?php for ($b = 0; $b < $qtdME; $b++) { ?>
+                                        <?php if ($modulos_empresa[$b]['MOD_NOME'] == 'ESTOQUE') { ?>
+                                        <hr>
+                                        <div class="row gy-4 gy-sm-1">
+                                            <div class="col-sm-6 col-lg-3">
+                                                <div class="d-flex justify-content-between align-items-start card-widget-1 border-end pb-3 pb-sm-0">
+                                                    <div class="text-center">
+                                                    
+                                                        <p class="mb-0 fs-4"><i class="fas fa-user-tie"></i> Clientes</p>
+                                                        <h3 class="mb-1"><?= $qtdCL ?></h3>
+                                                    </div>
+                                                    <span class="badge bg-label-secondary rounded p-2 me-sm-4">
+                                                        <i class="bx bx-user bx-sm"></i>
+                                                    </span>
                                                 </div>
+                                                <hr class="d-none d-sm-block d-lg-none me-4">
+                                            </div>
+                                            <div class="col-sm-6 col-lg-3">
+                                                <div class="d-flex justify-content-between align-items-start card-widget-2 border-end pb-3 pb-sm-0">
+                                                    <div class="text-center">
+                                                    
+                                                    <p class="mb-0 fs-4"><i class="bi bi-bag-check"></i> Produtos</p>
+                                                    <h3 class="mb-1"><?= $qtdP ?></h3>
+                                                    </div>
+                                                    <span class="badge bg-label-secondary rounded p-2 me-lg-4">
+                                                    <i class="bx bx-file bx-sm"></i>
+                                                    </span>
+                                                </div>
+                                                <hr class="d-none d-sm-block d-lg-none">
+                                            </div>
+                                            <div class="col-sm-6 col-lg-3">
+                                                <div class="d-flex justify-content-between align-items-start border-end pb-3 pb-sm-0 card-widget-3">
+                                                    <div class="text-center">
+                                                        <p class="mb-0 fs-4"><i class="fa-solid fa-cart-shopping"></i>  Estoque</p>
+                                                        <h3 class="mb-1"><?= ($custo_produtos)? 'R$ '.number_format($custo_produtos,2,',','.'): 'R$ 0.00' ?></h3>
+                                                    </div>
+                                                    <span class="badge bg-label-secondary rounded p-2 me-sm-4">
+                                                    <i class="bx bx-check-double bx-sm"></i>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6 col-lg-3">
+                                                <div class="d-flex justify-content-between align-items-start">
+                                                    <div class="text-center">
+                                                        <p class="mb-0 fs-4"><i class="fa-solid fa-tag"></i> <?= $qtdVH ?> Vendas Hoje</p>
+                                                        <h3 class="mb-1">
+                                                            <?php $v = 0; for ($i=0; $i < $qtdVH; $i++) { $v+=$vendas_hoje[$i]['VEN_VALOR_TOTAL'];} ?>
+                                                            <?= ($v)? 'R$ '.number_format($v,2,',','.'): 'R$ 0.00' ?>
+                                                        </h3>
+                                                    </div>
+                                                    <span class="badge bg-label-secondary rounded p-2">
+                                                    <i class="bx bx-error-circle bx-sm"></i>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <?php } } ?>
+                                        <?php for ($b = 0; $b < $qtdME; $b++) { ?>
+                                        <?php if ($modulos_empresa[$b]['MOD_NOME'] == 'FINANCEIRO') { ?>
+                                        <hr>
+                                        <div class="row gy-4 gy-sm-1">
+                                            <div class="col-sm-6 col-lg-3">
+                                                <div class="d-flex justify-content-between align-items-start card-widget-1 border-end pb-3 pb-sm-0">
+                                                    <div class="text-center mx-auto">
+                                                        <p class="mb-0 fs-5"><i class="bi bi-list-columns"></i> LANÇAMENTOS</p>
+                                                        <h3 class="mb-1"><?= $qtdLA ?></h3>
+                                                    </div>
+                                                    
+                                                </div>
+                                                <hr class="d-none d-sm-block d-lg-none me-4">
+                                            </div>
+                                            <div class="col-sm-6 col-lg-3">
+                                                <div class="d-flex justify-content-between align-items-start card-widget-1 border-end pb-3 pb-sm-0">
+                                                    <div class="text-center mx-auto">
+                                                        <p class="mb-0 fs-5"><i class="bi bi-hourglass-top"></i> A PAGAR</p>
+                                                        <h3 class="mb-1"><?= $qtdLP ?></h3>
+                                                    </div>
+                                            
+                                                </div>
+                                                <hr class="d-none d-sm-block d-lg-none">
+                                            </div>
+                                            <div class="col-sm-6 col-lg-3">
+                                                <div class="d-flex justify-content-between align-items-start border-end pb-3 pb-sm-0 card-widget-3">
+                                                    <div class="text-center mx-auto">
+                                                        <p class="mb-0 fs-5"><i class="bi bi-hourglass-split"></i>  A RECEBER</p>
+                                                        <h3 class="mb-1"><?= $qtdLR ?></h3>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6 col-lg-3">
+                                                <div class="d-flex justify-content-between align-items-start">
+                                                    <div class="text-center">
+                                                        <?php $qtdVC = $v = 0;
+                                                        for ($i=0; $i < $qtdLA; $i++) { 
+                                                            if ($lancamentos[$i]['LAN_DT_VENCIMENTO'] < date('Y-m-d')) {
+                                                                $qtdVC++;
+                                                                $v+=$lancamentos[$i]['LAN_VALOR'];
+                                                            }
+                                                        }
+                                                        ?>
+                                                        <p class="mb-0 fs-4"><i class="bi bi-question-diamond-fill"></i> <?= $qtdVC ?> VENCIDOS</p>
+                                                        <h3 class="mb-1">
+                                                            <?php //$v = 0; for ($i=0; $i < $qtdVH; $i++) { $v+=$vendas_hoje[$i]['VEN_VALOR_TOTAL'];} ?>
+                                                            <?= ($v)? 'R$ '.number_format($v,2,',','.'): 'R$ 0.00' ?>
+                                                        </h3>
+                                                    </div>
+                                                    <span class="badge bg-label-secondary rounded p-2">
+                                                    <i class="bx bx-error-circle bx-sm"></i>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <?php } } ?>
+                                    </div>
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col-sm-4 mx-auto">
+                                            <div class="d-flex justify-content-between align-items-start card-widget-1 border-end pb-3 pb-sm-0">
+                                            <?php for ($b = 0; $b < $qtdME; $b++) { ?>
+                                                <?php if ($modulos_empresa[$b]['MOD_NOME'] == 'ESTOQUE') { ?>
+                                                <div class="text-center">
+                                                    <p class="mb-0 fs-5"><i class="fas fa-tag"></i> Últimos Produtos Vendidos</p>
+                                                    <ul class="timeline fs-5">
+                                                        <?php $b = 1; for ($i=0; $i < $qtdUV; $i++) {
+                                                            $data = new DateTime($ultimas_vendas[$i]['VEN_DT_CADASTRO']);
+                                                            ?>
+                                                            <li>
+                                                                <a target="_blank"  title="Detalhar Produto" href="<?= DIRPAGE.'produtos/detalhar/'.$ultimas_vendas[$i]['EMP_COD'].'/'.$ultimas_vendas[$i]['EST_COD'].'/'.$ultimas_vendas[$i]['PRO_COD']; ?>"></a>
+                                                                <p class="text-primary float-right fs-6 small"><?=  (date('Y-m-d') == $data->format('Y-m-d')) ? '<b>hoje às '. $data->format('H:i').'</b>' : ((date('Y-m-d', strtotime("-1 days")) == $data->format('Y-m-d')) ? 'ontem às '. $data->format('H:i') : $data->format('d/m/Y H:i')); ?></p>
+                                                                <p class="text-dark text-decoration-none small"><?= $ultimas_vendas[$i]['PRO_NOME'].' - '.'R$ '.number_format($ultimas_vendas[$i]['ITS_VALOR_TOTAL'],2,',','.'); ?></p>
+                                                            </li>
+                                                        <?php }  ?>
+                                                    </ul>
+                                                </div>
+                                                <?php }}?>
                                                 <span class="badge bg-label-secondary rounded p-2 me-sm-4">
                                                     <i class="bx bx-user bx-sm"></i>
                                                 </span>
                                             </div>
                                             <hr class="d-none d-sm-block d-lg-none me-4">
                                         </div>
-                                        <div class="col-sm-6 col-lg-3">
-                                            <div class="d-flex justify-content-between align-items-start card-widget-2 border-end pb-3 pb-sm-0">
-                                                <div class="text-center">
-                                                
-                                                <p class="mb-0 fs-4"><i class="bi bi-bag-check"></i> Produtos</p>
-                                                <h3 class="mb-1"><?= $qtdP ?></h3>
-                                                </div>
-                                                <span class="badge bg-label-secondary rounded p-2 me-lg-4">
-                                                <i class="bx bx-file bx-sm"></i>
-                                                </span>
-                                            </div>
-                                            <hr class="d-none d-sm-block d-lg-none">
-                                        </div>
-                                        <div class="col-sm-6 col-lg-3">
-                                            <div class="d-flex justify-content-between align-items-start border-end pb-3 pb-sm-0 card-widget-3">
-                                                <div class="text-center">
-                                                    <p class="mb-0 fs-4"><i class="fa-solid fa-cart-shopping"></i>  Estoque</p>
-                                                    <h3 class="mb-1"><?= ($custo_produtos)? 'R$ '.number_format($custo_produtos,2,',','.'): 'R$ 0.00' ?></h3>
-                                                </div>
-                                                <span class="badge bg-label-secondary rounded p-2 me-sm-4">
-                                                <i class="bx bx-check-double bx-sm"></i>
-                                                </span>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6 col-lg-3">
-                                            <div class="d-flex justify-content-between align-items-start">
-                                                <div class="text-center">
-                                                    <p class="mb-0 fs-4"><i class="fa-solid fa-tag"></i> <?= $qtdVH ?> Vendas Hoje</p>
-                                                    <h3 class="mb-1">
-                                                        <?php $v = 0; for ($i=0; $i < $qtdVH; $i++) { $v+=$vendas_hoje[$i]['VEN_VALOR_TOTAL'];} ?>
-                                                        <?= ($v)? 'R$ '.number_format($v,2,',','.'): 'R$ 0.00' ?>
-                                                    </h3>
-                                                </div>
-                                                <span class="badge bg-label-secondary rounded p-2">
-                                                <i class="bx bx-error-circle bx-sm"></i>
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <?php } } ?>
-                                    <?php for ($b = 0; $b < $qtdME; $b++) { ?>
-                                    <?php if ($modulos_empresa[$b]['MOD_NOME'] == 'FINANCEIRO') { ?>
-                                    <hr>
-                                    <div class="row gy-4 gy-sm-1">
-                                        <div class="col-sm-6 col-lg-3">
-                                            <div class="d-flex justify-content-between align-items-start card-widget-1 border-end pb-3 pb-sm-0">
-                                                <div class="text-center mx-auto">
-                                                    <p class="mb-0 fs-5"><i class="bi bi-list-columns"></i> LANÇAMENTOS</p>
-                                                    <h3 class="mb-1"><?= $qtdLA ?></h3>
-                                                </div>
-                                                
-                                            </div>
-                                            <hr class="d-none d-sm-block d-lg-none me-4">
-                                        </div>
-                                        <div class="col-sm-6 col-lg-3">
-                                            <div class="d-flex justify-content-between align-items-start card-widget-1 border-end pb-3 pb-sm-0">
-                                                <div class="text-center mx-auto">
-                                                    <p class="mb-0 fs-5"><i class="bi bi-hourglass-top"></i> A PAGAR</p>
-                                                    <h3 class="mb-1"><?= $qtdLP ?></h3>
-                                                </div>
-                                        
-                                            </div>
-                                            <hr class="d-none d-sm-block d-lg-none">
-                                        </div>
-                                        <div class="col-sm-6 col-lg-3">
-                                            <div class="d-flex justify-content-between align-items-start border-end pb-3 pb-sm-0 card-widget-3">
-                                                <div class="text-center mx-auto">
-                                                    <p class="mb-0 fs-5"><i class="bi bi-hourglass-split"></i>  A RECEBER</p>
-                                                    <h3 class="mb-1"><?= $qtdLR ?></h3>
-                                                </div>
-
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6 col-lg-3">
-                                            <div class="d-flex justify-content-between align-items-start">
-                                                <div class="text-center">
-                                                    <?php $qtdVC = $v = 0;
-                                                    for ($i=0; $i < $qtdLA; $i++) { 
-                                                        if ($lancamentos[$i]['LAN_DT_VENCIMENTO'] < date('Y-m-d')) {
-                                                            $qtdVC++;
-                                                            $v+=$lancamentos[$i]['LAN_VALOR'];
-                                                        }
-                                                    }
-                                                    ?>
-                                                    <p class="mb-0 fs-4"><i class="bi bi-question-diamond-fill"></i> <?= $qtdVC ?> VENCIDOS</p>
-                                                    <h3 class="mb-1">
-                                                        <?php //$v = 0; for ($i=0; $i < $qtdVH; $i++) { $v+=$vendas_hoje[$i]['VEN_VALOR_TOTAL'];} ?>
-                                                        <?= ($v)? 'R$ '.number_format($v,2,',','.'): 'R$ 0.00' ?>
-                                                    </h3>
-                                                </div>
-                                                <span class="badge bg-label-secondary rounded p-2">
-                                                <i class="bx bx-error-circle bx-sm"></i>
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <?php } } ?>
-                                </div>
-                                <hr>
-                                <div class="row">
-                                    <div class="col-sm-4 mx-auto">
-                                        <div class="d-flex justify-content-between align-items-start card-widget-1 border-end pb-3 pb-sm-0">
-                                        <?php for ($b = 0; $b < $qtdME; $b++) { ?>
-                                            <?php if ($modulos_empresa[$b]['MOD_NOME'] == 'ESTOQUE') { ?>
-                                            <div class="text-center">
-                                                <p class="mb-0 fs-5"><i class="fas fa-tag"></i> Últimos Produtos Vendidos</p>
-                                                <ul class="timeline fs-5">
-                                                    <?php $b = 1; for ($i=0; $i < $qtdUV; $i++) {
-                                                        $data = new DateTime($ultimas_vendas[$i]['VEN_DT_CADASTRO']);
-                                                        ?>
-                                                        <li>
-                                                            <a target="_blank"  title="Detalhar Produto" href="<?= DIRPAGE.'produtos/detalhar/'.$ultimas_vendas[$i]['EMP_COD'].'/'.$ultimas_vendas[$i]['EST_COD'].'/'.$ultimas_vendas[$i]['PRO_COD']; ?>"></a>
-                                                            <p class="text-primary float-right fs-6 small"><?=  (date('Y-m-d') == $data->format('Y-m-d')) ? '<b>hoje às '. $data->format('H:i').'</b>' : ((date('Y-m-d', strtotime("-1 days")) == $data->format('Y-m-d')) ? 'ontem às '. $data->format('H:i') : $data->format('d/m/Y H:i')); ?></p>
-                                                            <p class="text-dark text-decoration-none small"><?= $ultimas_vendas[$i]['PRO_NOME'].' - '.'R$ '.number_format($ultimas_vendas[$i]['ITS_VALOR_TOTAL'],2,',','.'); ?></p>
-                                                        </li>
-                                                    <?php }  ?>
-                                                </ul>
-                                            </div>
-                                            <?php }}?>
-                                            <span class="badge bg-label-secondary rounded p-2 me-sm-4">
-                                                <i class="bx bx-user bx-sm"></i>
-                                            </span>
-                                        </div>
-                                        <hr class="d-none d-sm-block d-lg-none me-4">
-                                    </div>
-                                    <div class="row col-sm-8 mx-auto">
-                                        <div class="row col-12 mt-2">
-                                            <?php if ($qtdME != 0) { 
-                                                for ($i=0; $i < $qtdME; $i++) { ?>
-                                                <?php if ($modulos_empresa[$i]['MOD_NOME'] == 'ESTOQUE') {
-                                                    if ($qtdE) { ?>
+                                        <div class="row col-sm-8 mx-auto">
+                                            <div class="row col-12 mt-2">
+                                                <?php if ($qtdME != 0) { 
+                                                    for ($i=0; $i < $qtdME; $i++) { ?>
+                                                    <?php if ($modulos_empresa[$i]['MOD_NOME'] == 'ESTOQUE') {
+                                                        if ($qtdE) { ?>
+                                                        <div class="col-12 col-sm-6 col-lg-6 mb-3">
+                                                            <div class="mx-auto rounded-2 <?= $modulos_empresa[$i]['MOD_COR']; ?>" >
+                                                                <a href="<?= DIRPAGE.$modulos_empresa[$i]['MOD_LINK']?>" class="link-light text-decoration-none">
+                                                                    <div class="card-header text-uppercase">Módulo <?= $modulos_empresa[$i]['MOD_NOME']; ?></div>
+                                                                    <div class="card-body">
+                                                                        <h5 class="card-title text-uppercase"><h1><?= $modulos_empresa[$i]['MOD_ICON']; ?></h1>  <?= $modulos_empresa[$i]['MOD_NOME']; ?></h5>
+                                                                        <!--<p class="card-text"><?//= $modulos_empresa[$i]['MOD_DESCRICAO']; ?></p>-->
+                                                                    </div>
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    <?php }
+                                                    }else { ?>
                                                     <div class="col-12 col-sm-6 col-lg-6 mb-3">
-                                                        <div class="mx-auto rounded-2 <?= $modulos_empresa[$i]['MOD_COR']; ?>" >
+                                                        <div class=" mx-auto rounded-2 <?= $modulos_empresa[$i]['MOD_COR']; ?>">
                                                             <a href="<?= DIRPAGE.$modulos_empresa[$i]['MOD_LINK']?>" class="link-light text-decoration-none">
                                                                 <div class="card-header text-uppercase">Módulo <?= $modulos_empresa[$i]['MOD_NOME']; ?></div>
                                                                 <div class="card-body">
                                                                     <h5 class="card-title text-uppercase"><h1><?= $modulos_empresa[$i]['MOD_ICON']; ?></h1>  <?= $modulos_empresa[$i]['MOD_NOME']; ?></h5>
-                                                                    <!--<p class="card-text"><?//= $modulos_empresa[$i]['MOD_DESCRICAO']; ?></p>-->
+                                                                    <!--<p class="card-text"><? //= $modulos_empresa[$i]['MOD_DESCRICAO']; ?></p>-->
                                                                 </div>
                                                             </a>
                                                         </div>
                                                     </div>
-                                                <?php }
-                                                }else { ?>
-                                                <div class="col-12 col-sm-6 col-lg-6 mb-3">
-                                                    <div class=" mx-auto rounded-2 <?= $modulos_empresa[$i]['MOD_COR']; ?>">
-                                                        <a href="<?= DIRPAGE.$modulos_empresa[$i]['MOD_LINK']?>" class="link-light text-decoration-none">
-                                                            <div class="card-header text-uppercase">Módulo <?= $modulos_empresa[$i]['MOD_NOME']; ?></div>
-                                                            <div class="card-body">
-                                                                <h5 class="card-title text-uppercase"><h1><?= $modulos_empresa[$i]['MOD_ICON']; ?></h1>  <?= $modulos_empresa[$i]['MOD_NOME']; ?></h5>
-                                                                <!--<p class="card-text"><? //= $modulos_empresa[$i]['MOD_DESCRICAO']; ?></p>-->
-                                                            </div>
-                                                        </a>
+                                                    <?php } } ?>
+                                                    
+                                                    <?php } ?>
+                                                    <div class="col-12 mx-auto text-center mt-3">
+                                                        <a type="button" href="<?= DIRPAGE ?>modulo_empresa" title="Libere novos módulos para a sua empresa/negócio" class="btn text-center mt-2  btn-secondary">ATIVAR/DESATIVAR MÓDULOS</a>
                                                     </div>
+                                                    <hr class="my-4 text-dark">
                                                 </div>
-                                                <?php } } ?>
-                                                
-                                                <?php } ?>
-                                                <div class="col-12 mx-auto text-center mt-3">
-                                                    <a type="button" href="<?= DIRPAGE ?>modulo_empresa" title="Libere novos módulos para a sua empresa/negócio" class="btn text-center mt-2  btn-secondary">ATIVAR/DESATIVAR MÓDULOS</a>
-                                                </div>
-                                                <hr class="my-4 text-dark">
-                                            </div>
-                                        </div> 
+                                            </div> 
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                               
-                                
                             </div>
                             
                                <!--<div class="col-3 mx-auto m-4 mx-auto ml-3 border-start">
