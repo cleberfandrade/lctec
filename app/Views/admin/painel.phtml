@@ -100,11 +100,16 @@ setlocale(LC_MONETARY, 'pt_BR');
                             <?php } ?>
                             <div class="col-12 row mx-auto">
                                 <div class="col text-uppercase text-center mx-auto fs-4 "><?= Util::mesLowercase(date('n',$m))?>/<?= date('Y') ?> </div>
-                                <div class="col mx-auto input-group">
-                                    <input type="date" class="form-control" name="LAN_DT_INICIAL" value="<?= isset($_POST['LAN_DT_INICIAL']) ? $_POST['LAN_DT_INICIAL'] : date('Y-m-01'); ?>">
-                                    <span class="input-group-text">Á</span>
-                                    <input type="date" class="form-control" name="LAN_DT_FINAL" value="<?= isset($_POST['LAN_DT_FINAL']) ? $_POST['LAN_DT_FINAL'] : date('Y-m-t'); ?>">
-                                </div>
+                                <?php for ($b = 0; $b < $qtdME; $b++) { ?>
+                                        <?php if ($modulos_empresa[$b]['MOD_NOME'] == 'FINANCEIRO') { ?>
+                                <form class="col-12 d-print-none" id="filtrar" name="filtrar" action="<?= DIRPAGE ?>admin" method="POST">
+                                    <div class="col mx-auto input-group">
+                                        <input type="date" class="form-control" name="LAN_DT_INICIAL" value="<?= isset($_POST['LAN_DT_INICIAL']) ? $_POST['LAN_DT_INICIAL'] : date('Y-m-01'); ?>">
+                                        <span class="input-group-text">Á</span>
+                                        <input type="date" class="form-control" name="LAN_DT_FINAL" value="<?= isset($_POST['LAN_DT_FINAL']) ? $_POST['LAN_DT_FINAL'] : date('Y-m-t'); ?>">
+                                    </div>
+                                </form>
+                                <?php } } ?>
                             </div>
                            
                             <div class="col-12 row text-center mx-auto mb-3">    
@@ -327,6 +332,10 @@ setlocale(LC_MONETARY, 'pt_BR');
                 var chart = new ApexCharts(document.querySelector("#chart"), options);
 
                 chart.render();
+
+                $('#filtrar').on('change', function(){
+                    $(this).closest('form').submit();
+                });
                     </script>
             </div>
         </div>

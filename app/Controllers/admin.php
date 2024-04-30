@@ -83,7 +83,7 @@ class admin extends View
 
         $this->dados['lancamentos'] = $this->Lancamentos->setCodEmpresa($_SESSION['EMP_COD'])->listarTodos(0);
         $this->dados['lancamentos_pagar'] = $this->Lancamentos->setCodEmpresa($_SESSION['EMP_COD'])->setTipo(1)->setStatus(1)->listarTodosTipo(0);
-        $this->dados['lancamentos_receber'] = $this->Lancamentos->setCodEmpresa($_SESSION['EMP_COD'])->setTipo(2)->setStatus(1)->listarTodosTipo();
+        $this->dados['lancamentos_receber'] = $this->Lancamentos->setCodEmpresa($_SESSION['EMP_COD'])->setTipo(2)->setStatus(1)->listarTodosTipo(0);
 
         $this->link[0] = ['link'=> 'admin','nome' => 'PAINEL ADMINISTRATIVO'];
         $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
@@ -91,6 +91,30 @@ class admin extends View
     public function index()
     {   
         Sessao::naoLogado();
+        $dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);
+        if (isset($_POST) && isset($dados['filtrar'])) {
+            if (isset($dados['LAN_DT_INICIAL']) && isset($dados['LAN_DT_FINAL'])) {
+                if (strtotime($dados['LAN_DT_FINAL']) > strtotime($dados['LAN_DT_INICIAL'])) {
+                    $dados['DATA'] = 1;
+                    $this->dados['lancamentos'] = $this->Lancamentos->setCodEmpresa($_SESSION['EMP_COD'])->listarFiltro($dados,0);
+                    $qtdLA = (is_array($this->dados['lancamentos']) ? count( $this->dados['lancamentos']) : 0);
+                    for ($i = 0; $i < $qtdLA; $i++) { 
+                        if ($this->dados['lancamentos'][$i]['LAN_TIPO'] == 1 && $this->dados['lancamentos'][$i]['LAN_STATUS'] == 1) {
+                            $this->dados['lancamentos_pagar'] = $this->dados['lancamentos'][$i];
+                        } else {
+                            $this->dados['lancamentos_receber'] = $this->dados['lancamentos'][$i];
+                        }
+                    }
+                } else {
+                    Sessao::alert('ERRO',' Datas inválidas!','alert alert-danger');
+                }
+            }
+        }else{
+            $this->dados['lancamentos'] = $this->Lancamentos->setCodEmpresa($_SESSION['EMP_COD'])->listarTodos(0);
+            $this->dados['lancamentos_pagar'] = $this->Lancamentos->setCodEmpresa($_SESSION['EMP_COD'])->setTipo(1)->setStatus(1)->listarTodosTipo(0);
+            $this->dados['lancamentos_receber'] = $this->Lancamentos->setCodEmpresa($_SESSION['EMP_COD'])->setTipo(2)->setStatus(1)->listarTodosTipo(0);
+        }
+        
         $this->render('admin/painel', $this->dados);
     }
     public function painel()
