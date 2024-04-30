@@ -34,7 +34,7 @@ $qtdLR = (is_array($lancamentos_receber) ? count($lancamentos_receber) : 0);
                 <section class="container col-12 mx-auto p-1 text-center fs-4 d-print-none">
                     <div class="container mx-auto col-8 row">
                         <div class="container input-group mb-3 mx-auto col-6">
-                            <input type="text" id="pesquisar" class="form-control form-control-lg col-6" placeholder="Descrição do lançamento">
+                            <input type="text" id="pesquisar" class="form-control form-control-lg col-6 maiusculo" placeholder="Descrição do lançamento">
                             <button class="btn btn-outline-secondary" type="button" id="button-addon2">BUSCAR</button>
                         </div>
                     </div>
@@ -52,7 +52,7 @@ $qtdLR = (is_array($lancamentos_receber) ? count($lancamentos_receber) : 0);
                             <th class="text-dark">Parcela</th>
                             <th class="text-dark">Data Venc.</th>
                             <th class="text-dark">Valor</th>
-                            <th class="text-dark ">Pagar</th>
+                            <th class="text-dark">Receber</th>
                             <?php if($_SESSION['USU_NIVEL'] >= 8){ ?><th class="text-dark d-print-none">Ações</th><?php } ?>
                         </thead>
                         <tbody>
@@ -69,7 +69,7 @@ $qtdLR = (is_array($lancamentos_receber) ? count($lancamentos_receber) : 0);
                             <td class="text-center align-middle"><?= $data->format('d/m/Y'); ?></td>
                             <td class="text-center align-middle"><?= number_format($lancamentos_receber[$i]['LAN_VALOR'],2,',','.'); ?></td>
                             <td class="text-center align-middle">
-                                <button type="button" class="btn btn-success btn-sm d-print-none" data-bs-toggle='modal'  data-bs-target="#pagar" data-codigo="<?= $lancamentos_receber[$i]['LAN_COD']; ?>" data-conta="<?= $lancamentos_receber[$i]['CTA_COD']; ?>" data-valor="<?= $lancamentos_receber[$i]['LAN_VALOR']; ?>" data-parcela="<?= $lancamentos_receber[$i]['LAN_PARCELA']; ?>" data-nome="<?= $lancamentos_receber[$i]['LAN_DESCRICAO']; ?>" data-vencimento="<?= $lancamentos_receber[$i]['LAN_DT_VENCIMENTO']; ?>" data-status="<?= $lancamentos_receber[$i]['LAN_STATUS']; ?>" title="Deseja Pagar?" ><i class="fa fa-check"></i></button>
+                                <button type="button" class="btn btn-success btn-sm d-print-none" data-bs-toggle='modal'  data-bs-target="#receber" data-codigo="<?= $lancamentos_receber[$i]['LAN_COD']; ?>" data-conta="<?= $lancamentos_receber[$i]['CTA_COD']; ?>" data-valor="<?= $lancamentos_receber[$i]['LAN_VALOR']; ?>" data-parcela="<?= $lancamentos_receber[$i]['LAN_PARCELA']; ?>" data-nome="<?= $lancamentos_receber[$i]['LAN_DESCRICAO']; ?>" data-vencimento="<?= $lancamentos_receber[$i]['LAN_DT_VENCIMENTO']; ?>" data-status="<?= $lancamentos_receber[$i]['LAN_STATUS']; ?>" title="Deseja Receber?" ><i class="fa fa-check"></i></button>
                             </td>
                             <?php if($_SESSION['USU_NIVEL'] >= 8){ ?>
                             <td class="text-center align-middle d-print-none">
@@ -91,7 +91,7 @@ $qtdLR = (is_array($lancamentos_receber) ? count($lancamentos_receber) : 0);
                 </div>
             </section>
             <?php include_once 'app/Views/admin/inc/rodape.phtml';?>
-            <div class="modal fade" id="pagar"  tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false"  aria-labelledby="pagar" aria-hidden="true">
+            <div class="modal fade" id="receber"  tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false"  aria-labelledby="receber" aria-hidden="true">
                 <div class="modal-dialog modal-lg modal-dialog-centered">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -170,7 +170,7 @@ $qtdLR = (is_array($lancamentos_receber) ? count($lancamentos_receber) : 0);
                                 <input type="hidden" id="EMP_COD" name="EMP_COD" value="<?= $empresa['EMP_COD'] ?>" />
                                 <input type="hidden" id="USU_COD" name="USU_COD" value="<?= $_SESSION['USU_COD'] ?>" />
                                 <button type="button" class="btn btn-dark" data-bs-dismiss="modal">CANCELAR</button>
-                                <button type="submit" id="sts" name="CADASTRAR_PAGAMENTO" class="btn <?= $modulo[0]['MOD_COR'] ?> text-white"><i class="bi bi-box-arrow-right"></i> PAGAR</button>
+                                <button type="submit" id="sts" name="CADASTRAR_RECEBIMENTO" class="btn <?= $modulo[0]['MOD_COR'] ?> text-white"><i class="bi bi-box-arrow-right"></i> RECEBER</button>
                             </div>
                         </form>
                     </div>
@@ -178,7 +178,7 @@ $qtdLR = (is_array($lancamentos_receber) ? count($lancamentos_receber) : 0);
             </div>
             <script type="text/javascript">
                 $(document).ready(function() {
-                    $('#pagar').on('show.bs.modal', function(event) {
+                    $('#receber').on('show.bs.modal', function(event) {
                         var button = null;
                         var button = $(event.relatedTarget); // Button that triggered the modal
                         var codigo = null;
@@ -215,9 +215,9 @@ $qtdLR = (is_array($lancamentos_receber) ? count($lancamentos_receber) : 0);
                     var PAG_OBSERVACAO = $('#PAG_OBSERVACAO').val();
                     var PAG_STATUS = $('#PAG_STATUS').val();
                     setTimeout(function () {
-                            $('#pagar').modal('hide');
+                            $('#receber').modal('hide');
                     }, 100);
-                    $.post('<?= DIRPAGE; ?>pagamentos/pagar_lançamento', {LAN_COD: LAN_COD,EMP_COD: EMP_COD,USU_COD: USU_COD,CTA_COD:CTA_COD,FPG_COD:FPG_COD,PAG_VALOR: PAG_VALOR,PAG_DT_PAGAMENTO: PAG_DT_PAGAMENTO,PAG_OBSERVACAO: PAG_OBSERVACAO,CADASTRAR_PAGAMENTO: true, PAG_STATUS: PAG_STATUS,cache: false}, function(retorno) {
+                    $.post('<?= DIRPAGE; ?>pagamentos/receber_lançamento', {LAN_COD: LAN_COD,EMP_COD: EMP_COD,USU_COD: USU_COD,CTA_COD:CTA_COD,FPG_COD:FPG_COD,PAG_VALOR: PAG_VALOR,PAG_DT_PAGAMENTO: PAG_DT_PAGAMENTO,PAG_OBSERVACAO: PAG_OBSERVACAO,CADASTRAR_PAGAMENTO: true, PAG_STATUS: PAG_STATUS,cache: false}, function(retorno) {
                         var resposta = JSON.parse(retorno);
                         if (resposta['COD'] !== 'ERRO') {
                             $('#resposta').addClass('alert alert-success');
@@ -225,9 +225,15 @@ $qtdLR = (is_array($lancamentos_receber) ? count($lancamentos_receber) : 0);
                             $('#resposta').addClass('alert alert-warning');
                         }
                         $('#resposta').html(resposta['MENSAGEM']);
-                        setTimeout( () => { window.location.href="<?= DIRPAGE ?>lancamentos/pagar"}, 200);
+                        setTimeout( () => { window.location.href="<?= DIRPAGE ?>lancamentos/receber"}, 200);
                     });
 
+                });
+                $("#pesquisar").keydown(function(){
+                    var pesquisar = $('#pesquisar').val();
+                    console.log(pesquisar);
+
+                    
                 });
             </script>
         </div>
