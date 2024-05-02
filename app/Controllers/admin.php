@@ -109,6 +109,7 @@ class admin extends View
                 if (strtotime($dados['LAN_DT_FINAL']) > strtotime($dados['LAN_DT_INICIAL'])) {
                     $dados['DATA'] = 1;
                     $db = array(
+                        'QTD' => 5,
                         'DATA_INICIAL' => $dados['LAN_DT_INICIAL'],
                         'DATA_FINAL' => $dados['LAN_DT_FINAL']
                     );

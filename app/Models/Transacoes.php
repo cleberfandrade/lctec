@@ -74,8 +74,8 @@ class Transacoes extends Model
     {
         (isset($dados['TIPO']) && $dados['TIPO'] != 0) ? $tipo = " AND T.TRS_TIPO=".$dados['TIPO'].""  : $tipo = '';
         (isset($dados['DATA_INICIAL']) && isset($dados['DATA_FINAL']) ?  $data = ' AND T.TRS_DATA BETWEEN "'.$dados['DATA_INICIAL'].'" AND "'.$dados['DATA_FINAL'].'"' : $data = ''); 
-
-        $parametros = "T INNER JOIN tb_empresas E ON E.EMP_COD=T.EMP_COD LEFT OUTER JOIN tb_contas C ON C.CTA_COD=T.CTA_COD WHERE T.EMP_COD={$this->codEmpresa} {$tipo} {$data} ORDER BY T.TRS_DT_CADASTRO DESC";
+        (isset($dados['QTD']) && $dados['QTD'] != 0)? $limit = $dados['QTD'] : $limit = 100;
+        $parametros = "T INNER JOIN tb_empresas E ON E.EMP_COD=T.EMP_COD LEFT OUTER JOIN tb_contas C ON C.CTA_COD=T.CTA_COD WHERE T.EMP_COD={$this->codEmpresa} {$tipo} {$data} ORDER BY T.TRS_DT_CADASTRO DESC LIMIT {$limit}";
         
         $campos = "*";
         $resultado = $this->Model->exibir($parametros, $campos, $ver, $id = false);
