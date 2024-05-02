@@ -278,7 +278,7 @@ class usuarios extends View
                         'END_DT_ATUALIZACAO' => date('Y-m-d H:i:s'),
                         'END_STATUS' => 1
                     );
-                    $db_endereco .= $dados_endereco;
+                    $db_endereco += $dados_endereco;
                     $endr = $this->Enderecos->setCodUsuario($codUsuario)->checarEnderecoUsuario();
                     if($endr){
                         $this->Enderecos->setCodigo($endr[0]['END_COD'])->setCodUsuario($dados['USU_COD']);
