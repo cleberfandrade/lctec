@@ -108,13 +108,20 @@ class admin extends View
                 
                 if (strtotime($dados['LAN_DT_FINAL']) > strtotime($dados['LAN_DT_INICIAL'])) {
                     $dados['DATA'] = 1;
+                    $db = array(
+                        'DATA_INICIAL' => $dados['LAN_DT_INICIAL'],
+                        'DATA_FINAL' => $dados['LAN_DT_FINAL']
+                    );
+                    $this->dados['transacoes'] = $this->Transacoes->setCodEmpresa($_SESSION['EMP_COD'])->filtrarTodasTransacoes($db,0);
                     $this->dados['lancamentos'] = $this->Lancamentos->setCodEmpresa($_SESSION['EMP_COD'])->listarFiltro($dados,0);
                     $qtdLA = (is_array($this->dados['lancamentos']) ? count( $this->dados['lancamentos']) : 0);
                     for ($i = 0; $i < $qtdLA; $i++) { 
-                        if ($this->dados['lancamentos'][$i]['LAN_TIPO'] == 1 && $this->dados['lancamentos'][$i]['LAN_STATUS'] == 1) {
-                            $this->dados['lancamentos_pagar'][] = $this->dados['lancamentos'][$i];
-                        } else {
-                            $this->dados['lancamentos_receber'][] = $this->dados['lancamentos'][$i];
+                        if ($this->dados['lancamentos'][$i]['LAN_STATUS'] == 1) {
+                            if ($this->dados['lancamentos'][$i]['LAN_TIPO'] == 2) {
+                                $this->dados['lancamentos_pagar'][] = $this->dados['lancamentos'][$i];
+                            } else {
+                                $this->dados['lancamentos_receber'][] = $this->dados['lancamentos'][$i];
+                            }
                         }
                     }
                 } else {

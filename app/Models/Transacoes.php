@@ -72,8 +72,11 @@ class Transacoes extends Model
     }
     public function filtrarTodasTransacoes(array $dados,$ver = 0)
     {
-        (isset($dados['LAN_TIPO']) && $dados['LAN_TIPO'] != 0) ? $tipo = " AND L.LAN_TIPO=".$dados['LAN_TIPO'].""  : $tipo = '';
-        $parametros = "T INNER JOIN tb_empresas E ON E.EMP_COD=T.EMP_COD LEFT OUTER JOIN tb_contas C ON C.CTA_COD=T.CTA_COD WHERE T.EMP_COD={$this->codEmpresa} ORDER BY T.TRS_DT_CADASTRO DESC";
+        (isset($dados['TIPO']) && $dados['TIPO'] != 0) ? $tipo = " AND T.TRS_TIPO=".$dados['TIPO'].""  : $tipo = '';
+        (isset($dados['DATA_INICIAL']) && isset($dados['DATA_FINAL']) ?  $data = ' AND T.TRS_DATA BETWEEN "'.$dados['DATA_INICIAL'].'" AND "'.$dados['DATA_FINAL'].'"' : $data = ''); 
+
+        $parametros = "T INNER JOIN tb_empresas E ON E.EMP_COD=T.EMP_COD LEFT OUTER JOIN tb_contas C ON C.CTA_COD=T.CTA_COD WHERE T.EMP_COD={$this->codEmpresa} {$tipo} {$data} ORDER BY T.TRS_DT_CADASTRO DESC";
+        
         $campos = "*";
         $resultado = $this->Model->exibir($parametros, $campos, $ver, $id = false);
         if ($resultado) {
