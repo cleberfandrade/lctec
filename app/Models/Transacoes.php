@@ -70,6 +70,18 @@ class Transacoes extends Model
             return false;
         }
     }
+    public function filtrarTodasTransacoes(array $dados,$ver = 0)
+    {
+        (isset($dados['LAN_TIPO']) && $dados['LAN_TIPO'] != 0) ? $tipo = " AND L.LAN_TIPO=".$dados['LAN_TIPO'].""  : $tipo = '';
+        $parametros = "T INNER JOIN tb_empresas E ON E.EMP_COD=T.EMP_COD LEFT OUTER JOIN tb_contas C ON C.CTA_COD=T.CTA_COD WHERE T.EMP_COD={$this->codEmpresa} ORDER BY T.TRS_DT_CADASTRO DESC";
+        $campos = "*";
+        $resultado = $this->Model->exibir($parametros, $campos, $ver, $id = false);
+        if ($resultado) {
+            return $resultado;
+        } else {
+            return false;
+        }
+    }
     public function listarTodasTransacoes($ver = 0)
     {
         $parametros = "T INNER JOIN tb_empresas E ON E.EMP_COD=T.EMP_COD LEFT OUTER JOIN tb_contas C ON C.CTA_COD=T.CTA_COD WHERE T.EMP_COD={$this->codEmpresa} ORDER BY T.TRS_DT_CADASTRO DESC";

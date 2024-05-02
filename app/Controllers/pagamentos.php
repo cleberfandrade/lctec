@@ -121,6 +121,7 @@ class pagamentos extends View
                                         'CTA_COD' => $dados['CTA_COD'],
                                         'CLA_COD' => 0,
                                         'FPG_COD' => $dados['FPG_COD'],
+                                        'PAG_COD' => $idPagamento,
                                         'TRS_TIPO' => 2,
                                         'TRS_DESCONTO' => $desconto,
                                         'TRS_ACRESCIMO' => $acrescimo,
@@ -216,6 +217,7 @@ class pagamentos extends View
                                             'CTA_COD' => $dados['CTA_COD'],
                                             'CLA_COD' => 0,
                                             'FPG_COD' => $dados['FPG_COD'],
+                                            'PAG_COD' => $idPagamento,
                                             'TRS_TIPO' => 2,
                                             'TRS_DESCONTO' => $desconto,
                                             'TRS_ACRESCIMO' => $acrescimo,
@@ -255,6 +257,8 @@ class pagamentos extends View
                             }
                        }else{
                             //dump($dados);
+
+
                             Sessao::alert('ERRO',' PAG12 - Erro ao registrar saldo restante do pagamento, contate o suporte','fs-4 alert alert-danger');
                        }
                     }
@@ -343,7 +347,8 @@ class pagamentos extends View
                                         'CTA_COD' => $dados['CTA_COD'],
                                         'CLA_COD' => 0,
                                         'FPG_COD' => $dados['FPG_COD'],
-                                        'TRS_TIPO' => 2,
+                                        'PAG_COD' => $idPagamento,
+                                        'TRS_TIPO' => 1,
                                         'TRS_DESCONTO' => $desconto,
                                         'TRS_ACRESCIMO' => $acrescimo,
                                         'TRS_VALOR_TOTAL' => $dados['PAG_VALOR'],
@@ -357,7 +362,7 @@ class pagamentos extends View
                                     //dump($db_transacao);
                                     if($this->Transacoes->cadastrar($db_transacao,0)){
                                         $saldo = 0;
-                                        $saldo = ($this->dados['conta']['CTA_SALDO'] - $dados['PAG_VALOR']);
+                                        $saldo = ($this->dados['conta']['CTA_SALDO'] + $dados['PAG_VALOR']);
                                         $db_conta = array(
                                             'CTA_SALDO' => $saldo,
                                             'CTA_DT_ATUALIZACAO'=> date('Y-m-d H:i:s')
@@ -438,6 +443,7 @@ class pagamentos extends View
                                             'CTA_COD' => $dados['CTA_COD'],
                                             'CLA_COD' => 0,
                                             'FPG_COD' => $dados['FPG_COD'],
+                                            'PAG_COD' => $idPagamento,
                                             'TRS_TIPO' => 1,
                                             'TRS_DESCONTO' => $desconto,
                                             'TRS_ACRESCIMO' => $acrescimo,

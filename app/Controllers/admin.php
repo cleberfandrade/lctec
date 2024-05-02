@@ -5,12 +5,14 @@ use App\Models\Avisos;
 use App\Models\Clientes;
 use App\Models\Empresas;
 use App\Models\Estoques;
+use App\Models\FormasPagamentos;
 use App\Models\Lancamentos;
 use App\Models\ModulosEmpresa;
 use App\Models\Movimentacoes;
 use App\Models\PagamentosRecebimentos;
 use App\Models\Produtos;
 use App\Models\Tarefas;
+use App\Models\Transacoes;
 use Core\View;
 use App\Models\Usuarios;
 use App\Models\UsuariosEmpresa;
@@ -22,7 +24,11 @@ use Libraries\Util;
 class admin extends View
 {
     private $dados = [];
-    private $link,$Util,$Check,$Empresa,$Usuarios,$Estoques,$UsuariosEmpresa,$ModulosEmpresa,$Clientes, $Tarefas,$Produtos,$Movimentacoes,$Avisos,$Vendas,$PagamentosRecebimentos,$Lancamentos;
+    private $link,$Util,$Check,$Empresa,$Usuarios,
+    $Estoques,$UsuariosEmpresa,$ModulosEmpresa,
+    $Clientes, $Tarefas,$Produtos,$Movimentacoes,
+    $Avisos,$Vendas,$PagamentosRecebimentos,
+    $Lancamentos,$Transacoes,$FormasPagamentos;
     public function __construct()
     {
         Sessao::naoLogado();
@@ -42,6 +48,8 @@ class admin extends View
         $this->Clientes = new Clientes;
         $this->Lancamentos = new Lancamentos;
         $this->PagamentosRecebimentos = new PagamentosRecebimentos;
+        $this->Transacoes = new Transacoes;
+        $this->FormasPagamentos = new FormasPagamentos;
         /*
         $motivos = array(
             0 => '---',
@@ -84,6 +92,8 @@ class admin extends View
         $this->dados['lancamentos'] = $this->Lancamentos->setCodEmpresa($_SESSION['EMP_COD'])->listarTodos(0);
         $this->dados['lancamentos_pagar'] = $this->Lancamentos->setCodEmpresa($_SESSION['EMP_COD'])->setTipo(1)->setStatus(1)->listarTodosTipo(0);
         $this->dados['lancamentos_receber'] = $this->Lancamentos->setCodEmpresa($_SESSION['EMP_COD'])->setTipo(2)->setStatus(1)->listarTodosTipo(0);
+        $this->dados['formas_pagamentos'] = $this->FormasPagamentos->setCodEmpresa($_SESSION['EMP_COD'])->listarTodas(0);
+        $this->dados['transacoes'] = $this->Transacoes->setCodEmpresa($_SESSION['EMP_COD'])->listarTodasTransacoes(0);
 
         $this->link[0] = ['link'=> 'admin','nome' => 'PAINEL ADMINISTRATIVO'];
         $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();

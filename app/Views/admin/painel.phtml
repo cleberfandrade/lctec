@@ -256,6 +256,24 @@ setlocale(LC_MONETARY, 'pt_BR');
                                                     </ul>
                                                 </div>
                                                 <?php }}?>
+                                                <?php for ($b = 0; $b < $qtdME; $b++) { ?>
+                                                <?php if ($modulos_empresa[$b]['MOD_NOME'] == 'FINANCEIRO') { ?>
+                                                    <div class="text-center">
+                                                    <p class="mb-0 fs-5"><i class="fas fa-tag"></i> Últimas transações</p>
+                                                    <ul class="timeline fs-5">
+                                                        <?php $b = 1; for ($i=0; $i < $qtdUV; $i++) {
+                                                            $data = new DateTime($ultimas_vendas[$i]['VEN_DT_CADASTRO']);
+                                                            ?>
+                                                            <li>
+                                                                <a target="_blank"  title="Detalhar Produto" href="<?= DIRPAGE.'produtos/detalhar/'.$ultimas_vendas[$i]['EMP_COD'].'/'.$ultimas_vendas[$i]['EST_COD'].'/'.$ultimas_vendas[$i]['PRO_COD']; ?>"></a>
+                                                                <p class="text-primary float-right fs-6 small"><?=  (date('Y-m-d') == $data->format('Y-m-d')) ? '<b>hoje às '. $data->format('H:i').'</b>' : ((date('Y-m-d', strtotime("-1 days")) == $data->format('Y-m-d')) ? 'ontem às '. $data->format('H:i') : $data->format('d/m/Y H:i')); ?></p>
+                                                                <p class="text-dark text-decoration-none small"><?= $ultimas_vendas[$i]['PRO_NOME'].' - '.'R$ '.number_format($ultimas_vendas[$i]['ITS_VALOR_TOTAL'],2,',','.'); ?></p>
+                                                            </li>
+                                                        <?php }  ?>
+                                                    </ul>
+                                                </div>
+
+                                                <?php }}?>
                                                 <span class="badge bg-label-secondary rounded p-2 me-sm-4">
                                                     <i class="bx bx-user bx-sm"></i>
                                                 </span>
