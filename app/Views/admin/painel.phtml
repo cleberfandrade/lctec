@@ -21,6 +21,8 @@ $qtdLA = (is_array($lancamentos) ? count($lancamentos) : 0);
 $qtdLP = (is_array($lancamentos_pagar) ? count($lancamentos_pagar) : 0);
 $qtdLR = (is_array($lancamentos_receber) ? count($lancamentos_receber) : 0);
 
+$qtdT = (is_array($transacoes)? count($transacoes) : 0);
+
 !isset($m)? $m = $Util->getMesAtual():''; 
 
 setlocale(LC_MONETARY, 'pt_BR');
@@ -261,13 +263,13 @@ setlocale(LC_MONETARY, 'pt_BR');
                                                     <div class="text-center">
                                                     <p class="mb-0 fs-5"><i class="fas fa-tag"></i> Últimas transações</p>
                                                     <ul class="timeline fs-5">
-                                                        <?php $b = 1; for ($i=0; $i < $qtdUV; $i++) {
-                                                            $data = new DateTime($ultimas_vendas[$i]['VEN_DT_CADASTRO']);
+                                                        <?php $b = 1; for ($i=0; $i < $qtdT; $i++) {
+                                                            $data = new DateTime($transacoes[$i]['TRS_DT_CADASTRO']);
                                                             ?>
                                                             <li>
-                                                                <a target="_blank"  title="Detalhar Produto" href="<?= DIRPAGE.'produtos/detalhar/'.$ultimas_vendas[$i]['EMP_COD'].'/'.$ultimas_vendas[$i]['EST_COD'].'/'.$ultimas_vendas[$i]['PRO_COD']; ?>"></a>
+                                                                <a target="_blank"  title="Detalhar Transação" href="<?= DIRPAGE.'transacoes/detalhar/'.$transacoes[$i]['EMP_COD'].'/'.$transacoes[$i]['TRS_COD'].'/'.$transacoes[$i]['PAG_COD']; ?>"></a>
                                                                 <p class="text-primary float-right fs-6 small"><?=  (date('Y-m-d') == $data->format('Y-m-d')) ? '<b>hoje às '. $data->format('H:i').'</b>' : ((date('Y-m-d', strtotime("-1 days")) == $data->format('Y-m-d')) ? 'ontem às '. $data->format('H:i') : $data->format('d/m/Y H:i')); ?></p>
-                                                                <p class="text-dark text-decoration-none small"><?= $ultimas_vendas[$i]['PRO_NOME'].' - '.'R$ '.number_format($ultimas_vendas[$i]['ITS_VALOR_TOTAL'],2,',','.'); ?></p>
+                                                                <p class="text-dark text-decoration-none small"><?= $transacoes[$i]['TRS_DESCRICAO'].' - '.'R$ '.number_format($transacoes[$i]['TRS_VALOR_TOTAL'],2,',','.'); ?></p>
                                                             </li>
                                                         <?php }  ?>
                                                     </ul>
