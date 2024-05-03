@@ -57,57 +57,29 @@ class Enderecos extends Model
     {
         $parametros = " WHERE END_COD='{$this->codigo}'";
         $campos = "*";
-        $resultado = $this->Model->exibir($parametros, $campos, $ver = 0, $id = false);
+        $resultado = $this->Model->exibir($parametros, $campos, $ver, $id = false);
         if ($resultado) {
             return $resultado[0];
         } else {
             return false;
         }
     }
-    public function checarEnderecoUsuario()
-    {
-        $parametros = " WHERE USU_COD='{$this->codUsuario}'";
-        $campos = "*";
-        $resultado = $this->Model->exibir($parametros, $campos, $ver = 0, $id = false);
-        if ($resultado) {
-            //Já existe
-            return $resultado;
-        } else {
-            //Nao existe
-            return false;
-        }
-    }
-    public function checarEnderecoCliente()
-    {
-        $parametros = " WHERE CLI_COD='{$this->codCliente}'";
-        $campos = "*";
-        $resultado = $this->Model->exibir($parametros, $campos, $ver = 0, $id = false);
-        if ($resultado) {
-            //Já existe
-            return $resultado;
-        } else {
-            //Nao existe
-            return false;
-        }
-    }
-    public function checarEnderecoFornecedor()
-    {
-        $parametros = "WHERE FOR_COD={$this->codFornecedor}";
-        $campos = "*";
-        $resultado = $this->Model->exibir($parametros, $campos, $ver = 0, $id = false);
-        if ($resultado) {
-            //Já existe
-            return $resultado;
-        } else {
-            //Nao existe
-            return false;
-        }
-    }
-    public function checarEnderecoEmpresa()
+    public function listarTodos($ver = 0)
     {
         $parametros = " WHERE EMP_COD={$this->codEmpresa}";
         $campos = "*";
-        $resultado = $this->Model->exibir($parametros, $campos, $ver = 0, $id = false);
+        $resultado = $this->Model->exibir($parametros, $campos, $ver, $id = false);
+        if ($resultado) {
+            return $resultado;
+        } else {
+            return false;
+        }
+    }
+    public function checarEnderecoUsuario($ver = 0)
+    {
+        $parametros = " WHERE USU_COD='{$this->codUsuario}'";
+        $campos = "*";
+        $resultado = $this->Model->exibir($parametros, $campos, $ver, $id = false);
         if ($resultado) {
             //Já existe
             return $resultado;
@@ -116,11 +88,50 @@ class Enderecos extends Model
             return false;
         }
     }
-    public function checarEnderecoColaborador()
+    public function checarEnderecoCliente($ver = 0)
+    {
+        $parametros = " WHERE CLI_COD='{$this->codCliente}'";
+        $campos = "*";
+        $resultado = $this->Model->exibir($parametros, $campos, $ver, $id = false);
+        if ($resultado) {
+            //Já existe
+            return $resultado;
+        } else {
+            //Nao existe
+            return false;
+        }
+    }
+    public function checarEnderecoFornecedor($ver = 0)
+    {
+        $parametros = "WHERE FOR_COD={$this->codFornecedor}";
+        $campos = "*";
+        $resultado = $this->Model->exibir($parametros, $campos, $ver, $id = false);
+        if ($resultado) {
+            //Já existe
+            return $resultado;
+        } else {
+            //Nao existe
+            return false;
+        }
+    }
+    public function checarEnderecoEmpresa($ver = 0)
+    {
+        $parametros = " WHERE EMP_COD={$this->codEmpresa}";
+        $campos = "*";
+        $resultado = $this->Model->exibir($parametros, $campos, $ver, $id = false);
+        if ($resultado) {
+            //Já existe
+            return $resultado;
+        } else {
+            //Nao existe
+            return false;
+        }
+    }
+    public function checarEnderecoColaborador($ver = 0)
     {
         $parametros = " WHERE COL_COD={$this->codColaborador}";
         $campos = "*";
-        $resultado = $this->Model->exibir($parametros, $campos, $ver = 0, $id = false);
+        $resultado = $this->Model->exibir($parametros, $campos, $ver, $id = false);
         if ($resultado) {
             //Já existe
             return $resultado;
