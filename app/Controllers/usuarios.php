@@ -293,10 +293,11 @@ class usuarios extends View
                         'END_STATUS' => 1
                     );
 
-                    $db_endereco .= $dados_endereco;
+                    $db_endereco += $dados_endereco;
                     $endr = $this->Enderecos->setCodUsuario($codUsuario)->checarEnderecoUsuario();
                     if($endr){
                         $this->Enderecos->setCodigo($endr[0]['END_COD'])->setCodUsuario($codUsuario);
+                        dump($db_endereco);
                         if ($this->Enderecos->alterar($db_endereco,0)) {
                             $ok = true;
                             Sessao::alert('OK','Cadastro alterado com sucesso!','fs-4 alert alert-success');
