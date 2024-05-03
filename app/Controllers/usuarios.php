@@ -251,16 +251,30 @@ class usuarios extends View
                     'USU_DT_ATUALIZACAO'=> date('Y-m-d H:i:s')             
                 );
 
-                if(!empty($dados['USU_RESET_SENHA']) && $dados['USU_RESET_SENHA'] == "SIM") {
+                if(isset($dados['USU_RESET_SENHA']) && !empty($dados['USU_RESET_SENHA']) && $dados['USU_RESET_SENHA'] == "SIM") {
                     $dados['USU_SENHA'] = $this->Check->codificarSenha('123456');
                 }  
+                if(!empty($dados['USU_SENHA']) && !empty($dados['USU_CONF_SENHA'])){
+                    if($dados['USU_SENHA'] == $dados['USU_CONF_SENHA']){
+                        $dados['USU_SENHA'] = $this->Check->codificarSenha($dados['USU_SENHA']);
+                        unset($dados['USU_CONF_SENHA']);
+                    }else{
+                        unset($dados['USU_SENHA']);
+                        unset($dados['USU_CONF_SENHA']);
+                    }
+                }else{
+                    unset($dados['USU_SENHA']);
+                    unset($dados['USU_CONF_SENHA']);
+                }
+
                 $dados_endereco = array(
-                    'END_LOGRADOURO' =>  $dados['END_LOGRADOURO'],
+                    'END_LOGRADOURO' => $dados['END_LOGRADOURO'],
                     'END_NUMERO' =>  $dados['END_NUMERO'],
                     'END_BAIRRO' =>  $dados['END_BAIRRO'],
                     'END_CIDADE' =>  $dados['END_CIDADE'],
                     'END_ESTADO' =>  $dados['END_ESTADO']
                 );
+                
                 unset($dados['END_LOGRADOURO']);
                 unset($dados['END_NUMERO']);
                 unset($dados['END_BAIRRO']);
