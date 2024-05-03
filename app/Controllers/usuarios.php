@@ -246,7 +246,7 @@ class usuarios extends View
             if($_SESSION['USU_COD'] == $dados['USU_COD'] && $_SESSION['EMP_COD'] == $dados['EMP_COD']){
 
                 $this->Usuarios->setCodigo($dados['USU_COD']);
-
+                
                 $dados += array(
                     'USU_DT_ATUALIZACAO'=> date('Y-m-d H:i:s')             
                 );
@@ -295,7 +295,7 @@ class usuarios extends View
                     $db_endereco += $dados_endereco;
                     $endr = $this->Enderecos->setCodUsuario($codUsuario)->checarEnderecoUsuario();
                     if($endr){
-                        $this->Enderecos->setCodigo($endr[0]['END_COD'])->setCodUsuario($dados['USU_COD']);
+                        $this->Enderecos->setCodigo($endr[0]['END_COD'])->setCodUsuario($codUsuario);
                         if ($this->Enderecos->alterar($db_endereco,0)) {
                             $ok = true;
                             Sessao::alert('OK','Cadastro alterado com sucesso!','fs-4 alert alert-success');
