@@ -12,7 +12,7 @@ use Core\View;
 use Libraries\Check;
 use Libraries\Sessao;
 
-class clientes extends View
+class enderecos extends View
 {
     private $dados = [];
     public $link,$Enderecos,$Usuarios,$Empresa,$UsuariosEmpresa,$Check,$Clientes,$Setores,$Classificacoes;
