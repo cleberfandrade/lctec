@@ -2,9 +2,9 @@
 namespace App\Controllers;
 
 use App\Models\Classificacoes;
-use App\Models\Clientes as ModelsCliente;
+use App\Models\Clientes;
 use App\Models\Empresas;
-use App\Models\Enderecos;
+use App\Models\Enderecos as ModelsEnderecos;
 use App\Models\Usuarios;
 use App\Models\UsuariosEmpresa;
 use App\Models\Setores;
@@ -20,9 +20,9 @@ class enderecos extends View
     {
         Sessao::naoLogado();
         $this->dados['title'] = 'MÓDULO | CADASTROS >>';
-        $this->Clientes= new ModelsCliente;
+        $this->Clientes= new Clientes;
         $this->Empresa = new Empresas;
-        $this->Enderecos = new Enderecos;
+        $this->Enderecos = new ModelsEnderecos;
         $this->Usuarios = new Usuarios;
         $this->UsuariosEmpresa = new UsuariosEmpresa;
         $this->Check = new Check;
