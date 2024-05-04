@@ -88,10 +88,11 @@ class admin extends View
         $this->dados['tarefas'] = $this->Tarefas->setCodEmpresa($_SESSION['EMP_COD'])->listarTodos(0);
 
         $this->dados['avisos'] = $this->Avisos->setCodEmpresa($_SESSION['EMP_COD'])->listarTodos(0);
-
-        $this->dados['lancamentos'] = $this->Lancamentos->setCodEmpresa($_SESSION['EMP_COD'])->listarTodos(0);
-        $this->dados['lancamentos_pagar'] = $this->Lancamentos->setCodEmpresa($_SESSION['EMP_COD'])->setTipo(1)->setStatus(1)->listarTodosTipo(0);
-        $this->dados['lancamentos_receber'] = $this->Lancamentos->setCodEmpresa($_SESSION['EMP_COD'])->setTipo(2)->setStatus(1)->listarTodosTipo(0);
+        $this->dados['lancamentos_pagar'] = [];
+        $this->dados['lancamentos_receber'] = [];
+        //$this->dados['lancamentos'] = $this->Lancamentos->setCodEmpresa($_SESSION['EMP_COD'])->listarTodos(0);
+       // $this->dados['lancamentos_pagar'] = $this->Lancamentos->setCodEmpresa($_SESSION['EMP_COD'])->setTipo(1)->setStatus(1)->listarTodosTipo(0);
+       // $this->dados['lancamentos_receber'] = $this->Lancamentos->setCodEmpresa($_SESSION['EMP_COD'])->setTipo(2)->setStatus(1)->listarTodosTipo(0);
         $this->dados['formas_pagamentos'] = $this->FormasPagamentos->setCodEmpresa($_SESSION['EMP_COD'])->listarTodas(0);
         $db = array('QTD' => 5);
         $this->dados['transacoes'] = $this->Transacoes->setCodEmpresa($_SESSION['EMP_COD'])->filtrarTodasTransacoes($db,0);
@@ -114,28 +115,49 @@ class admin extends View
                         'DATA_INICIAL' => $dados['LAN_DT_INICIAL'],
                         'DATA_FINAL' => $dados['LAN_DT_FINAL']
                     );
-                    $this->dados['transacoes'] = $this->Transacoes->setCodEmpresa($_SESSION['EMP_COD'])->filtrarTodasTransacoes($db,0);
-                    $this->dados['lancamentos'] = $this->Lancamentos->setCodEmpresa($_SESSION['EMP_COD'])->listarFiltro($dados,0);
-                    $qtdLA = (is_array($this->dados['lancamentos']) ? count( $this->dados['lancamentos']) : 0);
-                    for ($i = 0; $i < $qtdLA; $i++) { 
-                        if ($this->dados['lancamentos'][$i]['LAN_STATUS'] == 1) {
-                            if ($this->dados['lancamentos'][$i]['LAN_TIPO'] == 2) {
-                                $this->dados['lancamentos_pagar'][] = $this->dados['lancamentos'][$i];
-                            } else {
-                                $this->dados['lancamentos_receber'][] = $this->dados['lancamentos'][$i];
-                            }
-                        }
-                    }
+                    
                 } else {
                     Sessao::alert('ERRO',' Datas inválidas!','alert alert-danger');
                 }
+            }else {
+                $db = array(
+                    'QTD' => 5,
+                    'DATA_INICIAL' => date('Y-m-1'),
+                    'DATA_FINAL' => date('Y-m-t')
+                );
             }
         }else{
-            $this->dados['lancamentos'] = $this->Lancamentos->setCodEmpresa($_SESSION['EMP_COD'])->listarTodos(0);
-            $this->dados['lancamentos_pagar'] = $this->Lancamentos->setCodEmpresa($_SESSION['EMP_COD'])->setTipo(1)->setStatus(1)->listarTodosTipo(0);
-            $this->dados['lancamentos_receber'] = $this->Lancamentos->setCodEmpresa($_SESSION['EMP_COD'])->setTipo(2)->setStatus(1)->listarTodosTipo(0);
+            $db = array(
+                'QTD' => 5,
+                'DATA_INICIAL' => date('Y-m-1'),
+                'DATA_FINAL' => date('Y-m-t')
+            );
+            $dados = array(
+                'DATA' => 1,
+                'LAN_QTD' => 5,
+                'LAN_DT_INICIAL'=> date('Y-m-1'),
+                'LAN_DT_FINAL' => date('Y-m-t')
+            ); 
+            //$this->dados['lancamentos'] = $this->Lancamentos->setCodEmpresa($_SESSION['EMP_COD'])->listarTodos(0);
+            //$this->dados['lancamentos_pagar'] = $this->Lancamentos->setCodEmpresa($_SESSION['EMP_COD'])->setTipo(1)->setStatus(1)->listarTodosTipo(0);
+            //$this->dados['lancamentos_receber'] = $this->Lancamentos->setCodEmpresa($_SESSION['EMP_COD'])->setTipo(2)->setStatus(1)->listarTodosTipo(0);
         }
 
+        $this->dados['transacoes'] = $this->Transacoes->setCodEmpresa($_SESSION['EMP_COD'])->filtrarTodasTransacoes($db,0);
+        $this->dados['lancamentos'] = $this->Lancamentos->setCodEmpresa($_SESSION['EMP_COD'])->listarFiltro($dados,0);
+        
+        $qtdLA = (is_array($this->dados['lancamentos']) ? count( $this->dados['lancamentos']) : 0);
+        for ($i = 0; $i < $qtdLA; $i++) { 
+            if ($this->dados['lancamentos'][$i]['LAN_STATUS'] == 1) {
+                
+                if ($this->dados['lancamentos'][$i]['LAN_TIPO'] == 2) {
+                    $this->dados['lancamentos_pagar'][] = $this->dados['lancamentos'][$i];
+                } else {
+                    $this->dados['lancamentos_receber'][] = $this->dados['lancamentos'][$i];
+                }
+            }
+        }
+      
         $this->render('admin/painel', $this->dados);
     }
     public function painel()
