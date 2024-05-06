@@ -1,8 +1,17 @@
 <?php 
 use Libraries\Sessao;
+use Libraries\Util;
+$Util = new Util;
 
 include_once 'app/Views/admin/inc/cabecalho.phtml'; 
 $qtd = (is_array($contas) ? count($contas) : 0);
+$qtdLA = (is_array($lancamentos) ? count($lancamentos) : 0);
+$qtdLP = (is_array($lancamentos_pagar) ? count($lancamentos_pagar) : 0);
+$qtdLR = (is_array($lancamentos_receber) ? count($lancamentos_receber) : 0);
+
+$qtdT = (is_array($transacoes)? count($transacoes) : 0);
+
+!isset($m)? $m = $Util->getMesAtual():''; 
 ?>
 <body class="">
     <div class="d-flex" id="wrapper">
@@ -100,6 +109,84 @@ $qtd = (is_array($contas) ? count($contas) : 0);
                     <?php } ?>
                 </div>
             </section>
+            <section class="bg-light text-dark row  py-2">
+                <div class="container mx-auto col-11">
+                    <div class="card col-12 mx-auto text-center ">
+                        <h5 class="card-header">FINANCEIRO</h5>
+                        <div class="card-body  <?= $modulo[0]['MOD_COR'] ?> ">
+                            <h5 class="card-title">Gestão financeira da empresa</h5>
+                            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+            
+                        </div>
+                    </div>
+                    <div class="col-10 row mt-3 mb-3 mx-auto">
+                        <div class="col text-uppercase text-center mx-auto fs-4 "><?= Util::mesLowercase(date('n',$m))?>/<?= date('Y') ?> </div>
+                        <form class="col d-print-none" id="filtrar" action="<?= DIRPAGE ?>admin" method="POST">
+                            <input type="hidden" name="filtrar">
+                            <div class="col mx-auto input-group">
+                                <input type="date" class="form-control" name="LAN_DT_INICIAL" value="<?= isset($_POST['LAN_DT_INICIAL']) ? $_POST['LAN_DT_INICIAL'] : date('Y-m-01'); ?>">
+                                <span class="input-group-text">Á</span>
+                                <input type="date" class="form-control" name="LAN_DT_FINAL" value="<?= isset($_POST['LAN_DT_FINAL']) ? $_POST['LAN_DT_FINAL'] : date('Y-m-t'); ?>">
+                            </div>
+                        </form>
+                    </div>
+                    <div class="row gy-4 gy-sm-1 mb-3 ">
+                        <div class="col-12 m-0 p-1 rounded <?= $modulo[0]['MOD_COR'] ?>"></div>
+                            <div class="col-sm-6 col-lg-3 mt-3">
+                                <div class="d-flex justify-content-between align-items-start card-widget-1 border-end pb-3 pb-sm-0">
+                                    <div class="text-center mx-auto">
+                                        <p class="mb-0 fs-5"><i class="bi bi-list-columns"></i> LANÇAMENTOS</p>
+                                        <h3 class="mb-1"><?= $qtdLA ?></h3>
+                                    </div>
+                                    
+                                </div>
+                                <hr class="d-none d-sm-block d-lg-none me-4">
+                            </div>
+                            <div class="col-sm-6 col-lg-3 mt-3">
+                                <div class="d-flex justify-content-between align-items-start card-widget-1 border-end pb-3 pb-sm-0">
+                                    <div class="text-center mx-auto">
+                                        <p class="mb-0 fs-5"><i class="bi bi-hourglass-top"></i> A PAGAR</p>
+                                        <h3 class="mb-1"><?= $qtdLP ?></h3>
+                                    </div>
+                            
+                                </div>
+                                <hr class="d-none d-sm-block d-lg-none">
+                            </div>
+                            <div class="col-sm-6 col-lg-3 mt-3">
+                                <div class="d-flex justify-content-between align-items-start border-end pb-3 pb-sm-0 card-widget-3">
+                                    <div class="text-center mx-auto">
+                                        <p class="mb-0 fs-5"><i class="bi bi-hourglass-split"></i>  A RECEBER</p>
+                                        <h3 class="mb-1"><?= $qtdLR ?></h3>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-lg-3 mt-3">
+                                <div class="d-flex justify-content-between align-items-start">
+                                    <div class="text-center">
+                                        <?php $qtdVC = $v = 0;
+                                        for ($i=0; $i < $qtdLA; $i++) { 
+                                            if ($lancamentos[$i]['LAN_DT_VENCIMENTO'] < date('Y-m-d')) {
+                                                if ($lancamentos[$i]['LAN_STATUS']!= 3) {
+                                                    $qtdVC++;
+                                                    $v+=$lancamentos[$i]['LAN_VALOR'];
+                                                }
+                                            }
+                                        }
+                                        ?>
+                                        <p class="mb-0 fs-5"><i class="bi bi-hourglass-bottom"></i> <?= $qtdVC ?> VENCIDOS</p>
+                                        <h3 class="mb-1">
+                                            <?php //$v = 0; for ($i=0; $i < $qtdVH; $i++) { $v+=$vendas_hoje[$i]['VEN_VALOR_TOTAL'];} ?>
+                                            <?= ($v)? 'R$ '.number_format($v,2,',','.'): 'R$ 0.00' ?>
+                                        </h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <sele name="" id="" disabled="disabled"></select>
             <?php include_once 'app/Views/admin/inc/rodape.phtml';?>
         </div>
     </div>
