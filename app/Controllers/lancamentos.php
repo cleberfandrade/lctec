@@ -117,9 +117,9 @@ class lancamentos extends View
                 if(!$lan){
                     $total = 0;
                     
-                    if ($dados['LAN_PARCELA'] >=2) {
+                    if ($dados['LAN_PARCELA'] >= 2) {
     
-                        $dados['LAN_VALOR'] = str_replace(',', '.', str_replace('.', '', $dados['LAN_VALOR']));
+                        //$dados['LAN_VALOR'] = str_replace(',', '.', str_replace('.', '', $dados['LAN_VALOR']));
 
                         $vl_parcela = ($dados['LAN_VALOR']/$dados['LAN_PARCELA']);
                         $vl_parcela = number_format( $vl_parcela,2,'.','');
@@ -156,8 +156,8 @@ class lancamentos extends View
                             }
                         }
                     } else {
-                        $dados['LAN_VALOR'] = $this->Check->onlyNumbers($dados['LAN_VALOR']);
-                        $dados['LAN_VALOR'] = $this->Check->formatMoneyDb($dados['LAN_VALOR']);
+                       // $dados['LAN_VALOR'] = $this->Check->onlyNumbers($dados['LAN_VALOR']);
+                        //$dados['LAN_VALOR'] = $this->Check->formatMoneyDb($dados['LAN_VALOR']);
                         $dados += array(
                             'LAN_DT_CADASTRO'=> date('Y-m-d H:i:s'),
                             'LAN_DT_ATUALIZACAO'=> date('0000-00-00 00:00:00'),          
