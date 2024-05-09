@@ -59,8 +59,8 @@ class transacoes extends View
         $this->dados['classificacoes'] = $this->Classificacoes->setCodEmpresa($_SESSION['EMP_COD'])->listarTodos(0);
         $this->dados['categorias'] = $this->Categorias->setCodEmpresa($_SESSION['EMP_COD'])->setTipo(6)->listarTodosPorTipo(0);
         $this->dados['formas_pagamentos'] = $this->FormasPagamentos->setCodEmpresa($_SESSION['EMP_COD'])->listarTodas(0);
-        $this->dados['transacoes'] = $this->Transacoes->setCodEmpresa($_SESSION['EMP_COD'])->listarTodasTransacoes(0);
-
+        //$this->dados['transacoes'] = $this->Transacoes->setCodEmpresa($_SESSION['EMP_COD'])->listarTodasTransacoes(0);
+        $this->dados['transacoes'] = [];
         $this->link[0] = ['link'=> 'admin','nome' => 'PAINEL ADMINISTRATIVO'];
         $this->link[1] = ['link'=> 'financeiro','nome' => 'MÓDULO FINANCEIRO'];
         $this->link[2] = ['link'=> 'transacoes','nome' => 'GERENCIAR TRANSAÇÕES'];
