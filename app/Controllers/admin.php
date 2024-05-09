@@ -150,8 +150,11 @@ class admin extends View
         $qtdLA = (is_array($this->dados['lancamentos']) ? count( $this->dados['lancamentos']) : 0);
         for ($i = 0; $i < $qtdLA; $i++) { 
             if ($this->dados['lancamentos'][$i]['LAN_STATUS'] == 1) {
-                
-                if ($this->dados['lancamentos'][$i]['LAN_TIPO'] == 2) {
+                /*
+                *LAN_TIPO = 1 A PAGAR
+                *LAN_TIPO = 2 A RECEBER
+                */
+                if ($this->dados['lancamentos'][$i]['LAN_TIPO'] == 1) {
                     $this->dados['lancamentos_pagar'][] = $this->dados['lancamentos'][$i];
                 } else {
                     $this->dados['lancamentos_receber'][] = $this->dados['lancamentos'][$i];

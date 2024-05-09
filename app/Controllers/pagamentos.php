@@ -198,6 +198,12 @@ class pagamentos extends View
                                 $this->Lancamentos->setCodEmpresa($_SESSION['EMP_COD'])->setCodigo($dados['LAN_COD']);
                                 $novo = 0;
                                 ($dados['PAG_VALOR'] != $this->dados['lancamento']['LAN_VALOR'])? $novo = $dados['PAG_VALOR'] : $novo = $this->dados['lancamento']['LAN_VALOR'];
+                                /*
+                                *LAN_TIPO = 1 A PAGAR
+                                *LAN_TIPO = 2 A RECEBER
+                                *LAN_STATUS = 3 PAGO
+                                *LAN_STATUS = 4 RECEBIDO
+                                */
                                 $dados_lancamentos = array(
                                     'LAN_VALOR' => $novo,
                                     'LAN_DT_ATUALIZACAO'=> date('Y-m-d H:i:s'),
@@ -328,10 +334,16 @@ class pagamentos extends View
                             $this->Lancamentos->setCodEmpresa($_SESSION['EMP_COD'])->setCodigo($dados['LAN_COD']);
                             $novo = 0;
                             ($dados['PAG_VALOR'] != $this->dados['lancamento']['LAN_VALOR'])? $novo = $dados['PAG_VALOR'] : $novo = $this->dados['lancamento']['LAN_VALOR'];
+                           /*
+                            *LAN_TIPO = 1 A PAGAR
+                            *LAN_TIPO = 2 A RECEBER
+                            *LAN_STATUS = 3 PAGO
+                            *LAN_STATUS = 4 RECEBIDO
+                            */
                             $dados_lancamentos = array(
                                 'LAN_VALOR' => $novo,
                                 'LAN_DT_ATUALIZACAO'=> date('Y-m-d H:i:s'),
-                                'LAN_STATUS'=> 3
+                                'LAN_STATUS'=> 4
                             );
                             $desconto = $acrescimo = 0;
                             ($dados['PAG_VALOR'] > $this->dados['lancamento']['LAN_VALOR'])? $acrescimo = ($dados['PAG_VALOR']-$this->dados['lancamento']['LAN_VALOR']) : $desconto = ($this->dados['lancamento']['LAN_VALOR']-$dados['PAG_VALOR']); 
