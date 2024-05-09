@@ -69,6 +69,43 @@ class transacoes extends View
     {
         $this->dados['title'] .= ' GERENCIAR TRANSAÇÕES';   
         $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
+        $dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);
+        if (isset($_POST) && isset($dados['filtrar'])) {
+            if (isset($dados['LAN_DT_INICIAL']) && isset($dados['LAN_DT_FINAL'])) {
+                
+                if (strtotime($dados['LAN_DT_FINAL']) > strtotime($dados['LAN_DT_INICIAL'])) {
+                    $dados['DATA'] = 1;
+                    $db = array(
+                        'QTD' => 5,
+                        'DATA_INICIAL' => $dados['LAN_DT_INICIAL'],
+                        'DATA_FINAL' => $dados['LAN_DT_FINAL']
+                    );
+                    
+                } else {
+                    Sessao::alert('ERRO',' Datas inválidas!','alert alert-danger');
+                }
+            }else {
+                $db = array(
+                    'QTD' => 5,
+                    'DATA_INICIAL' => date('Y-m-1'),
+                    'DATA_FINAL' => date('Y-m-t')
+                );
+            }
+        }else{
+            $db = array(
+                'QTD' => 5,
+                'DATA_INICIAL' => date('Y-m-1'),
+                'DATA_FINAL' => date('Y-m-t')
+            );
+            $dados = array(
+                'DATA' => 1,
+                'LAN_QTD' => 5,
+                'LAN_DT_INICIAL'=> date('Y-m-1'),
+                'LAN_DT_FINAL' => date('Y-m-t')
+            ); 
+        }
+        $this->dados['transacoes'] = $this->Transacoes->setCodEmpresa($_SESSION['EMP_COD'])->filtrarTodasTransacoes($dados,0);
+
         $this->render('admin/financeiro/transacoes/listar', $this->dados);
     }
     public function cadastro()

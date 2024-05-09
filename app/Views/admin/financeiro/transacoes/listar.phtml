@@ -38,7 +38,7 @@ $qtdCL = (is_array($classificacoes) ? count($classificacoes) : 0);
             <section class="bg-light  text-dark row  py-2">
                 <div class="col-10 row mt-3 mb-3 mx-auto">
                     <div class="col text-uppercase text-center mx-auto fs-4 "><?= Util::mesLowercase(date('n',$m))?>/<?= date('Y') ?> </div>
-                    <form class="col d-print-none" id="filtrar" action="<?= DIRPAGE ?>admin" method="POST">
+                    <form class="col d-print-none" id="filtrar" action="<?= DIRPAGE ?>transacoes" method="POST">
                         <input type="hidden" name="filtrar">
                         <div class="col mx-auto input-group">
                             <input type="date" class="form-control" name="LAN_DT_INICIAL" value="<?= isset($_POST['LAN_DT_INICIAL']) ? $_POST['LAN_DT_INICIAL'] : date('Y-m-01'); ?>">
@@ -155,5 +155,10 @@ $qtdCL = (is_array($classificacoes) ? count($classificacoes) : 0);
             </div>
         </div>
     </div>
+    <script>
+         $('#filtrar').on('change', function(){
+            $(this).closest('form').submit();
+        });
+    </script>
 </body>
 </html>
