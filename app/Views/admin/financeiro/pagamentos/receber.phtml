@@ -1,6 +1,7 @@
 <?php 
 use Libraries\Sessao;
-
+use Libraries\Util;
+$Util = new Util;
 include_once 'app/Views/admin/inc/cabecalho.phtml'; 
 $qtd = (is_array($lancamentos) ? count($lancamentos) : 0);
 $qtdLR = (is_array($lancamentos_receber) ? count($lancamentos_receber) : 0);
