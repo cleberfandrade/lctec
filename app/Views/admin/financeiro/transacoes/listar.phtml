@@ -19,7 +19,7 @@ $qtdCL = (is_array($classificacoes) ? count($classificacoes) : 0);
                     <div class="row gx-3 align-items-center justify-content-center">
                         <div class="col-lg-9 col-xl-9 col-xxl-9">
                             <div class="my-1 px-4 mx-auto">
-                                <a class="text-decoration-none" href="<?= DIRPAGE; ?>financeiro">
+                                <a class="text-decoration-none" href="<?= DIRPAGE; ?>transacoes">
                                 <h5 class="fs-2 fw-bolder text-uppercase text-white mb-2">
                                     <i class="bi bi-coin"></i> Gerenciar  <span class="text-dark">Transações</span></h5></a>
                             </div>
@@ -54,7 +54,11 @@ $qtdCL = (is_array($classificacoes) ? count($classificacoes) : 0);
                         <tbody>
                         <?php
                             $b = 1;
-                            for ($i= 0; $i < $qtd; $i++) {  $data = new DateTime($transacoes[$i]['TRS_DT_CADASTRO']);?>
+                            $entrada = $saida = $saldo = 0;
+                            for ($i= 0; $i < $qtd; $i++) {  
+                                ($transacoes[$i]['TRS_TIPO'] == 1)? $entrada +=$transacoes[$i]['TRS_VALOR_TOTAL']: $saida +=$transacoes[$i]['TRS_VALOR_TOTAL'];
+                                $saldo = ($entrada-$saida);
+                                $data = new DateTime($transacoes[$i]['TRS_DT_CADASTRO']); ?>
                             <tr class="<?= ($transacoes[$i]['TRS_STATUS'] == 0 && $_SESSION['USU_NIVEL'] >= 8)? 'bg-secondary' : '';?>">
                                 <td class="text-center align-middle"><?= $b; ?></td>
                                 <td class="text-center align-middle"><?= $transacoes[$i]['CTA_DESCRICAO']; ?></td>
@@ -96,6 +100,18 @@ $qtdCL = (is_array($classificacoes) ? count($classificacoes) : 0);
                             </tr>
                         <?php $b++; } ?>
                         </tbody>
+                        <tfoot>
+                        <tr>
+                            <th colspan="4" class="text-center align-middle text-dark">ENTRADA</th>
+                            <th colspan="4" class="text-center align-middle text-dark">SAÍDA</th>
+                            <th colspan="4" class="text-center align-middle text-dark">TOTAL</th>
+                        </tr>
+                        <tr>
+                            <td colspan="4" class="text-center align-middle"><?= $entrada ?></td>
+                            <td colspan="4" class="text-center align-middle"><?= $saida ?></td>
+                            <td colspan="4" class="text-center align-middle"><?= $saldo ?></td>
+                        </tr>
+                        </tfoot>
                     </table>
                 <?php }else { ?>
                     <h4 class="text-center text-warning fs-4">EMPRESA SEM NENHUMA TRANSAÇÃO CADASTRADA</h4>
