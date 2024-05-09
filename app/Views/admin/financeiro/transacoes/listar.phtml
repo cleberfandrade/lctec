@@ -90,9 +90,10 @@ $qtdCL = (is_array($classificacoes) ? count($classificacoes) : 0);
                         <tbody>
                         <?php
                             $b = 1;
-                            $entrada = $saida = $saldo = 0;
+                            $entrada = $saida = $saldo = $te = $ts = 0;
                             for ($i= 0; $i < $qtd; $i++) {  
                                 ($transacoes[$i]['TRS_TIPO'] == 1)? $entrada +=$transacoes[$i]['TRS_VALOR_TOTAL']: $saida +=$transacoes[$i]['TRS_VALOR_TOTAL'];
+                                ($transacoes[$i]['TRS_TIPO'] == 1)? $te++ : $ts++;
                                 $saldo = ($entrada-$saida);
                                 $data = new DateTime($transacoes[$i]['TRS_DT_CADASTRO']); ?>
                             <tr class="<?= ($transacoes[$i]['TRS_STATUS'] == 0 && $_SESSION['USU_NIVEL'] >= 8)? 'bg-secondary' : '';?>">
@@ -143,9 +144,24 @@ $qtdCL = (is_array($classificacoes) ? count($classificacoes) : 0);
                             <th colspan="4" class="text-center align-middle text-dark">SALDO</th>
                         </tr>
                         <tr>
-                            <td colspan="4" class="text-center align-middle">R$ <?= number_format($entrada,2,',','.') ?></td>
-                            <td colspan="4" class="text-center align-middle">R$ <?= number_format($saida,2,',','.') ?></td>
-                            <td colspan="4" class="text-center align-middle">R$ <?= number_format($saldo,2,',','.') ?></td>
+                            <td colspan="2" class="text-center align-middle text-dark">QTD</td>
+                            <td colspan="2" class="text-center align-middle text-dark">TOTAL</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="text-center align-middle text-dark">QTD</td>
+                            <td colspan="2" class="text-center align-middle text-dark">TOTAL</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="text-center align-middle text-dark">QTD</td>
+                            <td colspan="2" class="text-center align-middle text-dark">TOTAL</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="text-center align-middle"><?= $te ?></td>
+                            <td colspan="2" class="text-center align-middle">R$ <?= number_format($entrada,2,',','.') ?></td>
+                            <td colspan="2" class="text-center align-middle"><?= $ts ?></td>
+                            <td colspan="2" class="text-center align-middle">R$ <?= number_format($saida,2,',','.') ?></td>
+                            <td colspan="2" class="text-center align-middle"><?= $qtd ?></td>
+                            <td colspan="2" class="text-center align-middle">R$ <?= number_format($saldo,2,',','.') ?></td>
                         </tr>
                         </tfoot>
                     </table>
