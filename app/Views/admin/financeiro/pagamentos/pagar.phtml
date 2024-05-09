@@ -171,7 +171,7 @@ $qtdF = (is_array($formas_pagamentos) ? count($formas_pagamentos) : 0);
                                 <input type="hidden" id="CTA_COD" name="CTA_COD" value="" />
                                 <input type="hidden" id="EMP_COD" name="EMP_COD" value="<?= $empresa['EMP_COD'] ?>" />
                                 <input type="hidden" id="USU_COD" name="USU_COD" value="<?= $_SESSION['USU_COD'] ?>" />
-                                <button type="button" class="btn btn-dark" data-bs-dismiss="modal">CANCELAR</button>
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">CANCELAR</button>
                                 <button type="submit" id="sts" name="CADASTRAR_PAGAMENTO" class="btn <?= $modulo[0]['MOD_COR'] ?> text-white"><i class="bi bi-box-arrow-right"></i> PAGAR</button>
                             </div>
                         </form>
