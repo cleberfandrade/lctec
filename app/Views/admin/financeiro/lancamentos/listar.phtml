@@ -9,6 +9,8 @@ $qtdCL = (is_array($classificacoes) ? count($classificacoes) : 0);
 $qtdC = (is_array($contas) ? count($contas) : 0);
 //$qtdR = (is_array($contas_receber) ? count($contas_receber) : 0);
 //dump($qtdL);
+//$qtdPg = (isset($dados['LAN_PAGINA']) && $dados['LAN_PAGINA'] != 10) ? $LAN_PAGINA = 1: 10;
+//$this->dados['LAN_PAGINA'] = 1;
 $qtdPg = (isset($dados['LAN_QTD']) && $dados['LAN_QTD'] != 10) ? $dados['LAN_QTD'] : 10;
 $qtdP = ceil($qtdL/$qtdPg);
 ?>

@@ -170,6 +170,7 @@ class lancamentos extends View
             
                     if($total){
                         $ok = true;
+                        $this->dados['LAN_PAGINA'] = 1;
                         Sessao::alert('OK','Cadastro efetuado com sucesso!','fs-4 alert alert-success');
                     }else{
                         Sessao::alert('ERRO',' LAN4- Erro ao cadastrar novo lançamento, entre em contato com o suporte!','fs-4 alert alert-danger');
@@ -259,6 +260,7 @@ class lancamentos extends View
                 );
                 if($this->Lancamentos->alterar($dados,0)){
                     $ok = true;
+                    $this->dados['LAN_PAGINA'] = 1;
                     Sessao::alert('OK','Cadastro alterado com sucesso!','fs-4 alert alert-success');
                 }else{
                     Sessao::alert('ERRO',' ERRO: LAN33- Erro ao alterar o categoria, entre em contato com o suporte!','fs-4 alert alert-danger');
