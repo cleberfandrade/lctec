@@ -36,16 +36,37 @@ $qtdCL = (is_array($classificacoes) ? count($classificacoes) : 0);
             <?php include_once 'app/Views/admin/inc/alertas.phtml'; ?>  
 
             <section class="bg-light  text-dark row  py-2">
-                <div class="col-10 row mt-3 mb-3 mx-auto">
+                <div class="col-10 row align-items-center align-middle mt-3 mb-3 mx-auto">
                     <div class="col text-uppercase text-center mx-auto fs-4 "><?= Util::mesLowercase(date('n',$m))?>/<?= date('Y') ?> </div>
-                    <form class="col d-print-none" id="filtrar" action="<?= DIRPAGE ?>transacoes" method="POST">
+                    <form class="col-2 d-print-none" id="filtrar" action="<?= DIRPAGE ?>transacoes" method="POST">
                         <input type="hidden" name="filtrar">
-                        <div class="col mx-auto input-group">
+                        <div class="col-4 mx-auto">
+                            <input type="radio" class="btn-check" name="LAN_TIPO" id="option1" value="0" <?= (!isset($_POST['LAN_TIPO']) or  $_POST['LAN_TIPO']  == 0)? 'checked' : '' ?>>
+                            <label class="btn col" for="option1">TODOS</label></input>
+                            <input type="radio" class="btn-check" name="LAN_TIPO" id="option2" value="1" <?= (isset($_POST['LAN_TIPO']) &&  $_POST['LAN_TIPO']  == 1)? 'checked' : '' ?>/>
+                            <label class="btn col" for="option2">A PAGAR</label></input>
+                            <input type="radio" class="btn-check" name="LAN_TIPO" id="option3" value="2" <?= (isset($_POST['LAN_TIPO']) &&  $_POST['LAN_TIPO']  == 2)? 'checked' : '' ?>/>
+                            <label class="btn col" for="option3">A RECEBER</label></input>                  
+                        </div>
+                        <div class="col-4 mx-auto input-group">
                             <input type="date" class="form-control" name="LAN_DT_INICIAL" value="<?= isset($_POST['LAN_DT_INICIAL']) ? $_POST['LAN_DT_INICIAL'] : date('Y-m-01'); ?>">
                             <span class="input-group-text">Á</span>
                             <input type="date" class="form-control" name="LAN_DT_FINAL" value="<?= isset($_POST['LAN_DT_FINAL']) ? $_POST['LAN_DT_FINAL'] : date('Y-m-t'); ?>">
                         </div>
                     </form>
+                </div>
+               
+                <div class="col-12 row mx-auto align-items-center align-middle mt-3">
+                    <div class="col-4 mx-auto">
+                        <button type='submit' name='btnPrint' class='btn btn-outline-dark text-center' onclick='window.print();'>
+                            <i class="bi bi-printer"></i>
+                        </button>
+                    </div>
+                    <div class="col-8 mx-auto">
+                        <?= $qtd ?> RESULTADOS
+                        <input type="hidden" class="form-control" name="EMP_COD" value="<?= isset($empresa['EMP_COD']) ? $empresa['EMP_COD'] : 0; ?>">
+                        <input type="hidden" class="form-control" name="filtrar" value="1">
+                    </div>
                 </div>
                 <div class="container mx-auto col-12 row">
                 <?php if($qtd != 0) { ?>
