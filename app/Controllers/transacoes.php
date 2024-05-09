@@ -71,14 +71,14 @@ class transacoes extends View
         $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
         $dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);
         if (isset($_POST) && isset($dados['filtrar'])) {
-            if (isset($dados['LAN_DT_INICIAL']) && isset($dados['LAN_DT_FINAL'])) {
+            if (isset($dados['DATA_INICIAL']) && isset($dados['DATA_FINAL'])) {
                 
-                if (strtotime($dados['LAN_DT_FINAL']) > strtotime($dados['LAN_DT_INICIAL'])) {
-                    $dados['DATA'] = 1;
+                if (strtotime($dados['DATA_FINAL']) > strtotime($dados['DATA_INICIAL'])) {
                     $db = array(
-                        'QTD' => 5,
-                        'DATA_INICIAL' => $dados['LAN_DT_INICIAL'],
-                        'DATA_FINAL' => $dados['LAN_DT_FINAL']
+                        'QTD' => 50,
+                        'TIPO' => $dados['TIPO'],
+                        'DATA_INICIAL' => $dados['DATA_INICIAL'],
+                        'DATA_FINAL' => $dados['DATA_FINAL']
                     );
                     
                 } else {
@@ -86,25 +86,21 @@ class transacoes extends View
                 }
             }else {
                 $db = array(
-                    'QTD' => 5,
+                    'QTD' => 50,
+                    'TIPO' => 0,
                     'DATA_INICIAL' => date('Y-m-1'),
                     'DATA_FINAL' => date('Y-m-t')
                 );
             }
         }else{
             $db = array(
-                'QTD' => 5,
+                'QTD' => 50,
+                'TIPO' => 0,
                 'DATA_INICIAL' => date('Y-m-1'),
                 'DATA_FINAL' => date('Y-m-t')
             );
-            $dados = array(
-                'DATA' => 1,
-                'LAN_QTD' => 5,
-                'LAN_DT_INICIAL'=> date('Y-m-1'),
-                'LAN_DT_FINAL' => date('Y-m-t')
-            ); 
         }
-        $this->dados['transacoes'] = $this->Transacoes->setCodEmpresa($_SESSION['EMP_COD'])->filtrarTodasTransacoes($dados,0);
+        $this->dados['transacoes'] = $this->Transacoes->setCodEmpresa($_SESSION['EMP_COD'])->filtrarTodasTransacoes($db,0);
 
         $this->render('admin/financeiro/transacoes/listar', $this->dados);
     }
