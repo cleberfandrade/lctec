@@ -75,7 +75,7 @@ class transacoes extends View
                 
                 if (strtotime($dados['DATA_FINAL']) > strtotime($dados['DATA_INICIAL'])) {
                     $db = array(
-                        'QTD' => 50,
+                        'QTD' => 100,
                         'TIPO' => $dados['TIPO'],
                         'DATA_INICIAL' => $dados['DATA_INICIAL'],
                         'DATA_FINAL' => $dados['DATA_FINAL']
@@ -86,7 +86,7 @@ class transacoes extends View
                 }
             }else {
                 $db = array(
-                    'QTD' => 50,
+                    'QTD' => 100,
                     'TIPO' => 0,
                     'DATA_INICIAL' => date('Y-m-1'),
                     'DATA_FINAL' => date('Y-m-t')
@@ -94,7 +94,7 @@ class transacoes extends View
             }
         }else{
             $db = array(
-                'QTD' => 50,
+                'QTD' => 100,
                 'TIPO' => 0,
                 'DATA_INICIAL' => date('Y-m-1'),
                 'DATA_FINAL' => date('Y-m-t')
