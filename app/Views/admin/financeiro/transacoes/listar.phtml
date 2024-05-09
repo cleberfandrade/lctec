@@ -37,16 +37,17 @@ $qtdCL = (is_array($classificacoes) ? count($classificacoes) : 0);
 
             <section class="bg-light  text-dark row  py-2">
                 <div class="col-12 row align-items-center align-middle mt-3 mb-3 mx-auto">
-                    <div class="col-2 text-uppercase text-center mx-auto fs-4 "><?= Util::mesLowercase(date('n',$m))?>/<?= date('Y') ?> </div>
-                    <form class="d-print-none" id="filtrar" action="<?= DIRPAGE ?>transacoes" method="POST">
+                    
+                    <form class="d-print-none row" id="filtrar" action="<?= DIRPAGE ?>transacoes" method="POST">
+                        <div class="col-4 text-uppercase text-center mx-auto fs-4 "><?= Util::mesLowercase(date('n',$m))?>/<?= date('Y') ?> </div>
                         <input type="hidden" name="filtrar">
                         <div class="col-4 mx-auto">
                             <input type="radio" class="btn-check" name="TIPO" id="option1" value="0" <?= (!isset($_POST['TIPO']) or  $_POST['TIPO']  == 0)? 'checked' : '' ?>>
                             <label class="btn col" for="option1">TODOS</label></input>
                             <input type="radio" class="btn-check" name="TIPO" id="option2" value="1" <?= (isset($_POST['TIPO']) &&  $_POST['TIPO']  == 1)? 'checked' : '' ?>/>
-                            <label class="btn col" for="option2">SAÍDA</label></input>
+                            <label class="btn col" for="option2">ENTRADA</label></input>
                             <input type="radio" class="btn-check" name="TIPO" id="option3" value="2" <?= (isset($_POST['TIPO']) &&  $_POST['TIPO']  == 2)? 'checked' : '' ?>/>
-                            <label class="btn col" for="option3">ENTRADA</label></input>                  
+                            <label class="btn col" for="option3">SAÍDA</label></input>                  
                         </div>
                         <div class="col-4 mx-auto input-group">
                             <input type="date" class="form-control" name="DATA_INICIAL" value="<?= isset($_POST['DATA_INICIAL']) ? $_POST['DATA_INICIAL'] : date('Y-m-01'); ?>">
