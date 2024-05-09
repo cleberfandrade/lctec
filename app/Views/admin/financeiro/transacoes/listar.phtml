@@ -36,9 +36,9 @@ $qtdCL = (is_array($classificacoes) ? count($classificacoes) : 0);
             <?php include_once 'app/Views/admin/inc/alertas.phtml'; ?>  
 
             <section class="bg-light  text-dark row  py-2">
-                <div class="col-10 row align-items-center align-middle mt-3 mb-3 mx-auto">
-                    <div class="col text-uppercase text-center mx-auto fs-4 "><?= Util::mesLowercase(date('n',$m))?>/<?= date('Y') ?> </div>
-                    <form class="col-2 d-print-none" id="filtrar" action="<?= DIRPAGE ?>transacoes" method="POST">
+                <div class="col-12 row align-items-center align-middle mt-3 mb-3 mx-auto">
+                    <div class="col-2 text-uppercase text-center mx-auto fs-4 "><?= Util::mesLowercase(date('n',$m))?>/<?= date('Y') ?> </div>
+                    <form class="col d-print-none" id="filtrar" action="<?= DIRPAGE ?>transacoes" method="POST">
                         <input type="hidden" name="filtrar">
                         <div class="col-4 mx-auto">
                             <input type="radio" class="btn-check" name="LAN_TIPO" id="option1" value="0" <?= (!isset($_POST['LAN_TIPO']) or  $_POST['LAN_TIPO']  == 0)? 'checked' : '' ?>>
