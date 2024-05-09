@@ -195,9 +195,10 @@ $qtdF = (is_array($formas_pagamentos) ? count($formas_pagamentos) : 0);
                 var modal = $(this);
                 modal.find('#LAN_COD').val(codigo);
                 modal.find('#CTA_COD').val(conta);
-
-                const novaData = new Date(vencimento);
-                modal.find('#LAN_DT_VENCIMENTO').val(novaData.toLocaleDateString('pt-BR'));
+                const novo = vencimento.split('-');
+                //const novaData = new Date(vencimento);
+                //modal.find('#LAN_DT_VENCIMENTO').val(novaData.toLocaleDateString('pt-BR'));
+                modal.find('#LAN_DT_VENCIMENTO').val(novo[2]+"/"+novo[1]+"/"+novo[0]);
                 modal.find('#LAN_VALOR').val(valor);
                 modal.find('#PAG_VALOR').val(valor);
                 modal.find('#LAN_PARCELA').val(parcela);
