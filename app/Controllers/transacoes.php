@@ -18,12 +18,15 @@ use App\Models\UsuariosEmpresa;
 use App\Models\Lancamentos;
 use App\Models\ModulosEmpresa;
 use App\Models\Movimentacoes as ModelsMovimentacoes;
+use App\Models\PagamentosRecebimentos;
 use App\Models\Transacoes as ModelsTransacoes;
 
 class transacoes extends View
 {
     private $dados = [];
-    private $link,$Financas,$Check,$Usuarios,$UsuariosEmpresa,$Lancamentos,$Categorias,$Contas,$Classificacoes,$Clientes,$Fornecedores, $Movimentacoes, $FormasPagamentos,$Transacoes,$ModulosEmpresa;
+    private $link,$Financas,$Check,$Usuarios,$UsuariosEmpresa,$Lancamentos,$Categorias,
+    $Contas,$Classificacoes,$Clientes,$Fornecedores, $Movimentacoes, $FormasPagamentos,
+    $Transacoes,$ModulosEmpresa,$PagamentosRecebimentos;
     public function __construct()
     {
         Sessao::naoLogado();
@@ -42,6 +45,7 @@ class transacoes extends View
         $this->FormasPagamentos = new FormasPagamentos;
         $this->Transacoes = new ModelsTransacoes;
         $this->ModulosEmpresa = new ModulosEmpresa; 
+        $this->PagamentosRecebimentos = new PagamentosRecebimentos;
 
         $this->dados['empresa'] = $this->UsuariosEmpresa->setCodEmpresa($_SESSION['EMP_COD'])->setCodUsuario($_SESSION['USU_COD'])->listar(0);
         $this->dados['usuario'] = $this->Usuarios->setCodUsuario($_SESSION['USU_COD'])->listar(0);
@@ -61,6 +65,7 @@ class transacoes extends View
         $this->dados['formas_pagamentos'] = $this->FormasPagamentos->setCodEmpresa($_SESSION['EMP_COD'])->listarTodas(0);
         //$this->dados['transacoes'] = $this->Transacoes->setCodEmpresa($_SESSION['EMP_COD'])->listarTodasTransacoes(0);
         $this->dados['transacoes'] = [];
+        $this->dados['pagamentos_recebimentos'] = [];
         $this->link[0] = ['link'=> 'admin','nome' => 'PAINEL ADMINISTRATIVO'];
         $this->link[1] = ['link'=> 'financeiro','nome' => 'MÓDULO FINANCEIRO'];
         $this->link[2] = ['link'=> 'transacoes','nome' => 'GERENCIAR TRANSAÇÕES'];
@@ -101,7 +106,7 @@ class transacoes extends View
             );
         }
         $this->dados['transacoes'] = $this->Transacoes->setCodEmpresa($_SESSION['EMP_COD'])->filtrarTodasTransacoes($db,0);
-
+        $this->dados['pagamentos_recebimentos'] = $this->PagamentosRecebimentos->setCodEmpresa($_SESSION['EMP_COD'])->filtrarTodosPagamentosRecebimentos($db,0);
         $this->render('admin/financeiro/transacoes/listar', $this->dados);
     }
     public function cadastro()

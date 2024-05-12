@@ -61,6 +61,21 @@ class PagamentosRecebimentos extends Model
             return false;
         }
     }
+    public function filtrarTodosPagamentosRecebimentos(array $dados,$ver = 0)
+    {
+        (isset($dados['TIPO']) && $dados['TIPO'] != 0) ? $tipo = " AND P.PAG_TIPO=".$dados['TIPO'].""  : $tipo = '';
+        (isset($dados['DATA_INICIAL']) && isset($dados['DATA_FINAL']) ?  $data = ' AND P.PAG_DT_PAGAMENTO BETWEEN "'.$dados['DATA_INICIAL'].'" AND "'.$dados['DATA_FINAL'].'"' : $data = ''); 
+        (isset($dados['QTD']) && $dados['QTD'] != 0)? $limit = $dados['QTD'] : $limit = 100;
+        $parametros = "P INNER JOIN tb_empresas E ON E.EMP_COD=P.EMP_COD LEFT OUTER JOIN tb_contas C ON C.CTA_COD=P.CTA_COD WHERE P.EMP_COD={$this->codEmpresa} {$tipo} {$data} ORDER BY P.PAG_DT_CADASTRO DESC LIMIT {$limit}";
+        
+        $campos = "*";
+        $resultado = $this->Model->exibir($parametros, $campos, $ver, $id = false);
+        if ($resultado) {
+            return $resultado;
+        } else {
+            return false;
+        }
+    }
     public function listarTodosTipo($ver = 0)
     {
         $parametros = "P INNER JOIN tb_empresas E ON E.EMP_COD=P.EMP_COD WHERE P.EMP_COD={$this->codEmpresa} AND P.PAG_TIPO='{$this->tipo}' ORDER BY P.PAG_DT_PAGAMENTO DESC";

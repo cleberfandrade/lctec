@@ -419,7 +419,7 @@ class pagamentos extends View
                                 'LAN_DT_CADASTRO'=> date('Y-m-d H:i:s'),
                                 'LAN_DT_ATUALIZACAO'=> date('0000-00-00 00:00:00'), 
                                 'LAN_DT_VENCIMENTO'=> $novo_vencimento, 
-                                'LAN_TIPO' => 1,
+                                'LAN_TIPO' => 2,
                                 'LAN_DESCRICAO' => 'SALDO RESTANTE: '.$this->dados['lancamento']['LAN_DESCRICAO'],
                                 'LAN_OBSERVACAO' => '',
                                 'LAN_RESULTADOS' => 1,
