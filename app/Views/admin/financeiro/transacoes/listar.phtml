@@ -35,23 +35,26 @@ $qtdCL = (is_array($classificacoes) ? count($classificacoes) : 0);
             </header>
             <?php include_once 'app/Views/admin/inc/alertas.phtml'; ?>  
 
-            <section class="bg-light  text-dark row  py-2">
-                <div class="col-12 row align-items-center align-middle mt-3 mb-3 mx-auto">
-                    
-                    <form class="d-print-none row col-12" id="filtrar" action="<?= DIRPAGE ?>transacoes" method="POST">
-                        <div class="col-4 text-uppercase text-center mx-auto fs-4 "><?= Util::mesLowercase(date('n',$m))?>/<?= date('Y') ?> </div>
-                        <div class="col-4 mx-auto">
-                            <input type="radio" class="btn-check" name="TIPO" id="option1" value="0" <?= (!isset($_POST['TIPO']) or  $_POST['TIPO']  == 0)? 'checked' : '' ?>>
-                            <label class="btn col" for="option1">TODOS</label></input>
-                            <input type="radio" class="btn-check" name="TIPO" id="option2" value="1" <?= (isset($_POST['TIPO']) &&  $_POST['TIPO']  == 1)? 'checked' : '' ?>/>
-                            <label class="btn col" for="option2">ENTRADA</label></input>
-                            <input type="radio" class="btn-check" name="TIPO" id="option3" value="2" <?= (isset($_POST['TIPO']) &&  $_POST['TIPO']  == 2)? 'checked' : '' ?>/>
-                            <label class="btn col" for="option3">SAÍDA</label></input>                  
-                        </div>
-                        <div class="col-4 mx-auto input-group">
-                            <input type="date" class="form-control" name="DATA_INICIAL" value="<?= isset($_POST['DATA_INICIAL']) ? $_POST['DATA_INICIAL'] : date('Y-m-01'); ?>">
-                            <span class="input-group-text">Á</span>
-                            <input type="date" class="form-control" name="DATA_FINAL" value="<?= isset($_POST['DATA_FINAL']) ? $_POST['DATA_FINAL'] : date('Y-m-t'); ?>">
+            <section class="bg-light text-dark py-3">
+                <div class="col-12 mx-auto mt-5">
+                    <form class="col-12 d-print-none mt-3" id="filtrar" action="<?= DIRPAGE ?>transacoes" method="POST">
+                        <div class="col-12 row mx-auto mt-5 align-items-center align-middle">
+                            <div class="col-4 text-uppercase text-center mx-auto fs-4 "><?= Util::mesLowercase(date('n',$m))?>/<?= date('Y') ?> </div>
+                            <div class="col-4 mx-auto">
+                                <input type="radio" class="btn-check" name="TIPO" id="option1" value="0" <?= (!isset($_POST['TIPO']) or  $_POST['TIPO']  == 0)? 'checked' : '' ?>>
+                                <label class="btn col" for="option1">TODOS</label></input>
+                                <input type="radio" class="btn-check" name="TIPO" id="option2" value="1" <?= (isset($_POST['TIPO']) &&  $_POST['TIPO']  == 1)? 'checked' : '' ?>/>
+                                <label class="btn col" for="option2">ENTRADA</label></input>
+                                <input type="radio" class="btn-check" name="TIPO" id="option3" value="2" <?= (isset($_POST['TIPO']) &&  $_POST['TIPO']  == 2)? 'checked' : '' ?>/>
+                                <label class="btn col" for="option3">SAÍDA</label></input>                  
+                            </div>
+                            <div class="col-4 mx-auto">
+                                <div class="input-group">
+                                    <input type="date" class="form-control" name="DATA_INICIAL" value="<?= isset($_POST['DATA_INICIAL']) ? $_POST['DATA_INICIAL'] : date('Y-m-01'); ?>">
+                                    <span class="input-group-text">Á</span>
+                                    <input type="date" class="form-control" name="DATA_FINAL" value="<?= isset($_POST['DATA_FINAL']) ? $_POST['DATA_FINAL'] : date('Y-m-t'); ?>">
+                                </div>
+                            </div>
                         </div>
                         <input type="hidden" name="filtrar">
                     </form>
@@ -69,7 +72,7 @@ $qtdCL = (is_array($classificacoes) ? count($classificacoes) : 0);
                         <input type="hidden" class="form-control" name="filtrar" value="1">
                     </div>
                 </div>
-                <div class="container mx-auto col-12 row">
+                <div class="mx-auto col-12 row">
                 <?php if($qtd != 0) { ?>
                     <table class="table table-striped table-bordered">
                         <thead class="text-center text-uppercase">
