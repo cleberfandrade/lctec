@@ -39,15 +39,14 @@ class producao extends View
 
         $this->dados['empresa'] = $this->UsuariosEmpresa->setCodEmpresa($_SESSION['EMP_COD'])->setCodUsuario($_SESSION['USU_COD'])->listar(0);
         $this->dados['usuario'] = $this->Usuarios->setCodUsuario($_SESSION['USU_COD'])->listar(0);
+        //MÓDULO PRODUÇÃO --- 07
+        $this->dados['modulos_empresa'] = $this->ModulosEmpresa->setCodEmpresa($_SESSION['EMP_COD'])->setCodModulo(7)->checarRegistroModuloEmpresa(0);
         
-        $this->dados['modulos_empresa'] = $this->ModulosEmpresa->setCodEmpresa($_SESSION['EMP_COD'])->setCodModulo(3)->checarRegistroModuloEmpresa(0);
-        dump($this->dados['modulos_empresa']);
-        exit;
         if ($this->dados['modulos_empresa'] == 0) {
             Sessao::alert('OK',' MÓDULO NÃO DISPONÍVEL!','alert alert-danger');
             Url::redirecionar('admin/painel');
         }else {
-            $this->dados['modulo'] = $this->ModulosEmpresa->setCodEmpresa($_SESSION['EMP_COD'])->setCodigo(3)->listarModuloEmpresa(0);
+            $this->dados['modulo'] = $this->ModulosEmpresa->setCodEmpresa($_SESSION['EMP_COD'])->setCodigo(7)->listarModuloEmpresa(0);
         }
 
 
