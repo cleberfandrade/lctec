@@ -1,11 +1,20 @@
 <?php 
 namespace App\Controllers;
 
+use App\Models\Categorias;
 use App\Models\Empresas;
 use App\Models\Financas;
 use App\Models\Usuarios;
 use App\Models\UsuariosEmpresa;
+use App\Models\ModulosEmpresa;
 use App\Models\Vendedores;
+use App\Models\Produtos;
+use App\Models\Fornecedores;
+use App\Models\Estoques;
+use App\Models\Classificacoes;
+use App\Models\Clientes;
+use App\Models\Colaboradores;
+use App\Models\Setores;
 use Core\View;
 use Libraries\Check;
 use Libraries\Sessao;
@@ -14,7 +23,7 @@ use Libraries\Url;
 class producao extends View
 {
     private $dados = [];
-    private $link,$Financas,$Check,$Usuarios,$UsuariosEmpresa,$ModulosEmpresa, $Categorias,$Colaboradores,$CargosSalarios,$FolhasPagamento,$Divulgacoes,$Desligamentos,$Horarios,$Promocoes,$Recrutamentos,$Treinamentos,$Beneficios;
+    private $link,$Financas,$Check,$Usuarios,$UsuariosEmpresa,$ModulosEmpresa, $Categorias,$Colaboradores,$Setores,$FolhasPagamento,$Produtos,$Desligamentos,$Horarios,$Promocoes,$Recrutamentos,$Treinamentos,$Beneficios;
     public function __construct()
     {
         Sessao::naoLogado();
@@ -25,6 +34,8 @@ class producao extends View
         $this->UsuariosEmpresa = new UsuariosEmpresa;
         $this->ModulosEmpresa = new ModulosEmpresa;
         $this->Categorias = new Categorias;
+        $this->Produtos = new Produtos;
+        $this->Setores = new Setores;
 
         $this->dados['empresa'] = $this->UsuariosEmpresa->setCodEmpresa($_SESSION['EMP_COD'])->setCodUsuario($_SESSION['USU_COD'])->listar(0);
         $this->dados['usuario'] = $this->Usuarios->setCodUsuario($_SESSION['USU_COD'])->listar(0);
