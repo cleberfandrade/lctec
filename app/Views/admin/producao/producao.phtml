@@ -1,7 +1,11 @@
 <?php 
 use Libraries\Sessao;
+use Libraries\Util;
+$Util = new Util;
 
 include_once 'app/Views/admin/inc/cabecalho.phtml'; 
+
+!isset($m)? $m = $Util->getMesAtual():''; 
 ?>
 <body class="">
     <div class="d-flex" id="wrapper">
@@ -9,7 +13,7 @@ include_once 'app/Views/admin/inc/cabecalho.phtml';
         <div id="page-content-wrapper">
         <!-- Top navigation-->
         <?php include_once 'app/Views/admin/inc/menu_topo.phtml'; ?>
-        <div class="container-fluid bg-light p-0">
+        <div class="container-fluid <?= $modulo[0]['MOD_COR'] ?> p-0">
             <header class="py-3">
                 <section class="container px-3">
                     <div class="row gx-5 align-items-center justify-content-center">
