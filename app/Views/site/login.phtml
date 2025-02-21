@@ -7,21 +7,22 @@ include_once 'inc/cabecalho.phtml';
     <main class="container-fluid row min-vh-100 d-flex justify-content-center align-items-center ">
             <!-- Header-->
         <header class="bg-dark py-0">
-            <section class="container px-2">
-                <div class="row align-items-center justify-content-center">
-                    <div class="col-lg-10 col-xl-10 col-xxl-12">
-                        <div class="my-3 text-center text-xl-start">
-                            <a class="text-decoration-none" href="<?= DIRPAGE; ?>login/index"><h3 class="fs-3 text-center fw-bolder text-uppercase text-white">Acesso <span class="text-success">Administrativo</span></h3></a>
-                        </div>
-                    </div>
-                </div>
-            </section>
-        </header>
-        <div class="container d-flex justify-content-center">
-            <div class="row align-items-center">
                 <div class="col-12 col-sm-12 col-md-5 col-lg-12 text-center text-lg-start text-white-50">
                     <?php include_once 'inc/logo.phtml'; ?>
                 </div>
+        </header>
+        <div class="container d-flex justify-content-center">
+            <div class="row align-items-center">
+                
+                <section class="container px-2">
+                    <div class="row align-items-center justify-content-center">
+                        <div class="col-lg-10 col-xl-10 col-xxl-12">
+                            <div class="my-3 text-center text-xl-start">
+                                <a class="text-decoration-none" href="<?= DIRPAGE; ?>login/index"><h3 class="fs-3 text-center fw-bolder text-uppercase text-white">Acesso <span class="text-success">Administrativo</span></h3></a>
+                            </div>
+                        </div>
+                    </div>
+                </section>
                 <div class="col-12 col-sm-12 col-md-7 col-lg-6 col-xl-6 col-xxl-5 mx-auto align-self-center">
                     <?= Sessao::alert('ERRO'); ?>
                     <form class="p-1 p-md-1 " action="<?= DIRPAGE ?>login/auth" method="POST">
