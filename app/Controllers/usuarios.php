@@ -238,14 +238,11 @@ class usuarios extends View
                             );
                             $this->UsuariosEmpresa->setCodEmpresa($codEmpresa)->setCodUsuario($codUsuario)->alterar($db_ump,0);
                         }
-                       
                     }
-                    unset($dados['SET_COD']);
                 }
-                dump($this->Usuarios);
-                if($this->Usuarios->alterar($dados,1)){
-                  
-                exit;
+                unset($dados['SET_COD']);
+                
+                if($this->Usuarios->alterar($dados,0)){
                     $ok = true;
                     Sessao::alert('OK','Cadastro alterado com sucesso!','fs-4 alert alert-success');
                 }else{
@@ -314,10 +311,9 @@ class usuarios extends View
                             );
                             $this->UsuariosEmpresa->setCodEmpresa($codEmpresa)->setCodUsuario($codUsuario)->alterar($db_ump,0);
                         }
-                        unset($dados['SET_COD']);
                     }
                 }
-
+                unset($dados['SET_COD']);
                 $dados_endereco = array(
                     'END_LOGRADOURO' => $dados['END_LOGRADOURO'],
                     'END_NUMERO' =>  $dados['END_NUMERO'],
