@@ -229,9 +229,10 @@ class usuarios extends View
                 unset($dados['USU_RESET_SENHA']);
                 if(isset($dados['SET_COD']) && !empty($dados['SET_COD'])){
 
-                    $ump =  $this->UsuariosEmpresa->setCodEmpresa($codEmpresa)->setCodUsuario($codUsuario)->checarUsuarioEmpresa(0);
+                    $ump = $this->UsuariosEmpresa->setCodEmpresa($codEmpresa)->setCodUsuario($codUsuario)->checarUsuarioEmpresa(0);
+                    dump($ump);
                     if(!$ump){
-                        dump("ok");
+                       
                         if($dados['SET_COD'] != $ump['SET_COD']){
                             dump("ok2");
                             $db_ump = array(
