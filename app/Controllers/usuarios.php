@@ -209,6 +209,7 @@ class usuarios extends View
         $dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);
         $codUsuario = $dados['USU_COD'];
         $codEmpresa = $dados['EMP_COD'];
+        dump($dados);
         if (isset($_POST) && isset($dados['ALTERAR_USUARIO'])) {
             unset($dados['ALTERAR_USUARIO']);
           
@@ -240,6 +241,8 @@ class usuarios extends View
                         unset($dados['SET_COD']);
                     }
                 }
+                dump($dados);
+                exit;
                 if($this->Usuarios->alterar($dados,0)){
                     $ok = true;
                     Sessao::alert('OK','Cadastro alterado com sucesso!','fs-4 alert alert-success');
