@@ -128,7 +128,6 @@ $qtdS = (is_array($setores) ? count($setores) : 0);
                             </div> 
                             <div class="row">
                                 <div class="col-4 text-center mb-3">
-                                    <label class="form-label">SETOR</label>
                                     <div class="form-floating mb-3">
                                         <select class="form-select text-uppercase mb-3 form-floating" name="SET_COD">
                                             <option value="0" <?= (isset($_POST['SET_COD']) &&  $_POST['SET_COD']  == "0")? 'selected' : '' ?>>---</option>
@@ -136,16 +135,17 @@ $qtdS = (is_array($setores) ? count($setores) : 0);
                                                 <option value="<?= $setores[$i]['SET_COD']; ?>" <?= (isset($_POST['SET_COD']) &&  $_POST['SET_COD']  == $setores[$i]['SET_COD'] )? 'selected' : '' ?>><?= $setores[$i]['SET_DESCRICAO'] ?></option>
                                             <?php } ?> 
                                         </select>
-                                        <label class="form-floating mb-3">SETOR DA CATEGORIA</label>
+                                        <label class="form-floating mb-3">SETOR DA FIXO</label>
                                     </div>
                                 </div>
                                 <div class="col-4 form-floating mb-3">
+                                    
                                     <input type="password" class="form-control" name="USU_SENHA" id="floating1" placeholder="Digite sua senha">
-                                    <label for="floating1">Senha</label>
+                                    <label for="floating1">SENHA:</label>
                                 </div>
                                 <div class="col-4 form-floating mb-3">
                                     <input type="password" class="form-control" name="USU_CONF_SENHA" id="floating2" placeholder="Confirme sua senha">
-                                    <label for="floating2">Confirme a Senha</label>
+                                    <label for="floating2">CONFIRME A SENHA:</label>
                                 </div>
                             </div>
                             <input type="hidden" class="form-control" name="EMP_COD" value="<?= isset($_SESSION['EMP_COD']) ? $_SESSION['EMP_COD'] : 0; ?>">
