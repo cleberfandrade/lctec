@@ -2,7 +2,7 @@
 use Libraries\Sessao;
 
 include_once 'app/Views/admin/inc/cabecalho.phtml'; 
-
+$qtdS = (is_array($setores) ? count($setores) : 0);
 ?>
 <body class="">
     <div class="d-flex" id="wrapper">
@@ -127,11 +127,23 @@ include_once 'app/Views/admin/inc/cabecalho.phtml';
                                 </div>
                             </div> 
                             <div class="row">
-                                <div class="col-6 form-floating mb-3">
+                                <div class="col-4 text-center mb-3">
+                                    <label class="form-label">SETOR</label>
+                                    <div class="form-floating mb-3">
+                                        <select class="form-select text-uppercase mb-3 form-floating" name="SET_COD">
+                                            <option value="0" <?= (isset($_POST['SET_COD']) &&  $_POST['SET_COD']  == "0")? 'selected' : '' ?>>---</option>
+                                            <?php for ($i= 0; $i < $qtdS; $i++) { ?> 
+                                                <option value="<?= $setores[$i]['SET_COD']; ?>" <?= (isset($_POST['SET_COD']) &&  $_POST['SET_COD']  == $setores[$i]['SET_COD'] )? 'selected' : '' ?>><?= $setores[$i]['SET_DESCRICAO'] ?></option>
+                                            <?php } ?> 
+                                        </select>
+                                        <label class="form-floating mb-3">SETOR DA CATEGORIA</label>
+                                    </div>
+                                </div>
+                                <div class="col-4 form-floating mb-3">
                                     <input type="password" class="form-control" name="USU_SENHA" id="floating1" placeholder="Digite sua senha">
                                     <label for="floating1">Senha</label>
                                 </div>
-                                <div class="col-6 form-floating mb-3">
+                                <div class="col-4 form-floating mb-3">
                                     <input type="password" class="form-control" name="USU_CONF_SENHA" id="floating2" placeholder="Confirme sua senha">
                                     <label for="floating2">Confirme a Senha</label>
                                 </div>

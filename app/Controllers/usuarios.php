@@ -6,6 +6,7 @@ use App\Models\Enderecos;
 use App\Models\Setores;
 use App\Models\Usuarios as ModelsUsuarios;
 use App\Models\UsuariosEmpresa;
+use App\Models\UsuariosSetores;
 use Core\View;
 use Libraries\Check;
 use Libraries\Sessao;
@@ -13,7 +14,7 @@ use Libraries\Sessao;
 class usuarios extends View
 {
     private $dados = [];
-    public $link,$Enderecos,$Usuarios,$Empresa,$UsuariosEmpresa,$Check, $Setores;
+    public $link,$Enderecos,$Usuarios,$Empresa,$UsuariosEmpresa,$Check, $Setores,$UsuariosSetores;
     public function __construct()
     {
         Sessao::naoLogado();
@@ -23,6 +24,7 @@ class usuarios extends View
         $this->Usuarios = new ModelsUsuarios;
         $this->UsuariosEmpresa = new UsuariosEmpresa;
         $this->Setores = new Setores;
+        $this->UsuariosSetores = new UsuariosSetores;
         $this->Check = new Check;
 
         if (isset($_SESSION['EMP_COD']) && $_SESSION['EMP_COD'] != 0) {
@@ -97,7 +99,7 @@ class usuarios extends View
                                 $db_ump = array(
                                     'USU_COD' => $id,
                                     'EMP_COD' => $dados['EMP_COD'],
-                                    
+                                    'SET_COD' => $dados['SET_COD'],
                                     'UMP_DT_CADASTRO' => date('Y-m-d H:i:s'),
                                     'UMP_STATUS' => 1
                                 );
@@ -105,11 +107,15 @@ class usuarios extends View
                                 $this->UsuariosEmpresa->cadastrar($db_ump,0);
                             }
 
-                            $this->Setores->setCodEmpresa($dados['EMP_COD'])->setCodUsuario($id)->checarUsuarioSetor(0);
+                            $this->UsuariosSetores->setCodEmpresa($dados['EMP_COD'])->setCodUsuario($id)->checarUsuarioSetor(0);
                             $db_ust = array(
+                                'EMP_COD' => $dados['EMP_COD'],
                                 'USU_COD' => $id,
-                                'SET_COD' => $dados['SET_COD']
+                                'SET_COD' => $dados['SET_COD'],
+                                'UST_DT_CADASTRO' => date('Y-m-d H:i:s')
+                                'UST_STATUS' => 1
                             );
+
 
 
                             $ok = true;

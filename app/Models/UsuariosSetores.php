@@ -3,7 +3,7 @@ namespace App\Models;
 
 use Core\Model;
 
-class SetoresUsuarios extends Model
+class UsuariosSetores extends Model
 { 
     private $tabela = 'tb_usuarios_setores';
     private $Model = '';

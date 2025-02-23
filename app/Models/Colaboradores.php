@@ -1,6 +1,7 @@
 <?php
 namespace App\Models;
 
+use App\Models\UsuariosSetores;
 use Core\Model;
 
 class Colaboradores extends Model
