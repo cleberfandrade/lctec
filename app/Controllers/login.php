@@ -55,7 +55,7 @@ class login extends View
                                 //Sessao::alert('OK',' Acesso efetuado com sucesso!','m-0 fs-4 alert alert-success');
                                 //Redirecionando o usuário para a página painel do sistema admin/painel
                                 if($user['USU_NIVEL'] >= 5 && $user['USU_NIVEL'] <= 10){
-                                    header("Location:".DIRPAGE."admin/painel");
+                                    header("Location:".DIRPAGE."admin/p2");
                                 }else {
                                     if($user['USU_NIVEL'] >= 11){
                                         header("Location:".DIRPAGE."lctec");

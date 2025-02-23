@@ -169,6 +169,11 @@ class admin extends View
         Sessao::naoLogado();
         $this->render('admin/painel', $this->dados);
     }
+    public function p2()
+    {   
+        Sessao::naoLogado();
+        $this->render('admin/p2', $this->dados);
+    }
     public function acesso()
     {
         $this->dados['title'] = 'ACESSO | LC-TEC';
