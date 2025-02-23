@@ -287,14 +287,15 @@ class usuarios extends View
 
                 if(isset($dados['SET_COD']) && !empty($dados['SET_COD'])){
 
-                    $ump =  $this->UsuariosEmpresa->setCodEmpresa($dados['EMP_COD'])->setCodUsuario($dados['USU_COD'])->checarUsuarioEmpresa(0);
+                    $ump =  $this->UsuariosEmpresa->setCodEmpresa($codEmpresa)->setCodUsuario($codUsuario)->checarUsuarioEmpresa(0);
                     if(!$ump){
-
-                        $db_ump = array(
-                            'SET_COD' => $dados['SET_COD']
-                        );
-                        $this->UsuariosEmpresa->setCodEmpresa($dados['EMP_COD'])->setCodUsuario($dados['USU_COD']);
-                        $this->UsuariosEmpresa->alterar($db_ump,0);
+                        
+                        if($dados['SET_COD'] != $ump['SET_COD']){
+                            $db_ump = array(
+                                'SET_COD' => $dados['SET_COD']
+                            );
+                            $this->UsuariosEmpresa->setCodEmpresa($codEmpresa)->setCodUsuario($codUsuario)->alterar($db_ump,0);
+                        }
                     }
                 }
 
