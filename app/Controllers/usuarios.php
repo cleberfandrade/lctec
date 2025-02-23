@@ -234,12 +234,12 @@ class usuarios extends View
                     if(!$ump){
                        
                         if($dados['SET_COD'] != $ump['SET_COD']){
-                            dump("ok2");
+                           
                             $db_ump = array(
                                 'SET_COD' => $dados['SET_COD']
                             );
                             if($this->UsuariosEmpresa->setCodEmpresa($codEmpresa)->setCodUsuario($codUsuario)->alterar($db_ump,0)){
-                                dump("o3");
+                              
                                 
                             }
                         }
