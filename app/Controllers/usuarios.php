@@ -112,7 +112,7 @@ class usuarios extends View
                                 'EMP_COD' => $dados['EMP_COD'],
                                 'USU_COD' => $id,
                                 'SET_COD' => $dados['SET_COD'],
-                                'UST_DT_CADASTRO' => date('Y-m-d H:i:s')
+                                'UST_DT_CADASTRO' => date('Y-m-d H:i:s'),
                                 'UST_STATUS' => 1
                             );
 
