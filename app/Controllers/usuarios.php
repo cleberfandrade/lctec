@@ -117,7 +117,6 @@ class usuarios extends View
                             );
 
 
-
                             $ok = true;
                             $endr = $this->Enderecos->setCodUsuario($id)->checarEnderecoUsuario();
 
