@@ -241,9 +241,9 @@ class usuarios extends View
                         unset($dados['SET_COD']);
                     }
                 }
-                
+                dump($this->Usuarios);
                 if($this->Usuarios->alterar($dados,1)){
-                    dump($dados);
+                  
                 exit;
                     $ok = true;
                     Sessao::alert('OK','Cadastro alterado com sucesso!','fs-4 alert alert-success');
