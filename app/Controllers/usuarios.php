@@ -214,7 +214,7 @@ class usuarios extends View
           
             if($_SESSION['USU_COD'] <> $dados['USU_COD'] && $_SESSION['EMP_COD'] == $dados['EMP_COD']){
 
-                $this->Usuarios->setCodigo($dados['USU_COD']);
+                $this->Usuarios->setCodigo($codUsuario);
 
                 $dados += array(
                     'USU_DT_ATUALIZACAO'=> date('Y-m-d H:i:s')             
@@ -226,7 +226,19 @@ class usuarios extends View
                 unset($dados['EMP_COD']);
                 unset($dados['USU_COD']);
                 unset($dados['USU_RESET_SENHA']);
+                if(isset($dados['SET_COD']) && !empty($dados['SET_COD'])){
 
+                    $ump =  $this->UsuariosEmpresa->setCodEmpresa($codEmpresa)->setCodUsuario($codUsuario)->checarUsuarioEmpresa(0);
+                    if(!$ump){
+                        
+                        if($dados['SET_COD'] != $ump['SET_COD']){
+                            $db_ump = array(
+                                'SET_COD' => $dados['SET_COD']
+                            );
+                            $this->UsuariosEmpresa->setCodEmpresa($codEmpresa)->setCodUsuario($codUsuario)->alterar($db_ump,0);
+                        }
+                    }
+                }
                 if($this->Usuarios->alterar($dados,0)){
                     $ok = true;
                     Sessao::alert('OK','Cadastro alterado com sucesso!','fs-4 alert alert-success');
@@ -263,7 +275,7 @@ class usuarios extends View
           
             if($_SESSION['USU_COD'] == $dados['USU_COD'] && $_SESSION['EMP_COD'] == $dados['EMP_COD']){
 
-                $this->Usuarios->setCodigo($dados['USU_COD']);
+                $this->Usuarios->setCodigo($codUsuario);
                 
                 $dados += array(
                     'USU_DT_ATUALIZACAO'=> date('Y-m-d H:i:s')             
