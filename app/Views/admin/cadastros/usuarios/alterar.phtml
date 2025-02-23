@@ -118,6 +118,22 @@ $qtdS = (is_array($setores) ? count($setores) : 0);
                         </form>
                     </div>
                 </section>
+                <section class="bg-light py-2">
+                    <div class="container col-10 px-2 py-2 mx-auto row">
+                        <table class="table table-striped table-bordered">
+                            <thead class="text-center text-uppercase">
+                                <th class="text-dark">#</th>
+                                <th class="text-dark">Nome</th>
+                                <th class="text-dark">Setor</th>
+                                <th class="text-dark">Status</th>
+                                <?php if($_SESSION['USU_NIVEL'] >= 8){ ?><th class="text-dark">Ações</th><?php } ?>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
             <?php include_once 'app/Views/admin/inc/rodape.phtml';?>
         </div>
     </div>
