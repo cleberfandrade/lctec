@@ -231,17 +231,21 @@ class usuarios extends View
 
                     $ump =  $this->UsuariosEmpresa->setCodEmpresa($codEmpresa)->setCodUsuario($codUsuario)->checarUsuarioEmpresa(0);
                     if(!$ump){
-                        
+                        dump("ok");
                         if($dados['SET_COD'] != $ump['SET_COD']){
+                            dump("ok2");
                             $db_ump = array(
                                 'SET_COD' => $dados['SET_COD']
                             );
-                            $this->UsuariosEmpresa->setCodEmpresa($codEmpresa)->setCodUsuario($codUsuario)->alterar($db_ump,0);
+                            if($this->UsuariosEmpresa->setCodEmpresa($codEmpresa)->setCodUsuario($codUsuario)->alterar($db_ump,0)){
+                                dump("o3");
+                                
+                            }
                         }
                     }
                 }
                 unset($dados['SET_COD']);
-                
+                exit;
                 if($this->Usuarios->alterar($dados,0)){
                     $ok = true;
                     Sessao::alert('OK','Cadastro alterado com sucesso!','fs-4 alert alert-success');
