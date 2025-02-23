@@ -107,6 +107,8 @@ class usuarios extends View
                                 $this->UsuariosEmpresa->cadastrar($db_ump,0);
                             }
 
+
+
                             //$this->UsuariosSetores->setCodEmpresa($dados['EMP_COD'])->setCodUsuario($id)->checarUsuarioSetor(0);
                             /*$db_ust = array(
                                 'EMP_COD' => $dados['EMP_COD'],
@@ -281,6 +283,19 @@ class usuarios extends View
                 }else{
                     unset($dados['USU_SENHA']);
                     unset($dados['USU_CONF_SENHA']);
+                }
+
+                if(isset($dados['SET_COD']) && !empty($dados['SET_COD'])){
+
+                    $ump =  $this->UsuariosEmpresa->setCodEmpresa($dados['EMP_COD'])->setCodUsuario($dados['USU_COD'])->checarUsuarioEmpresa(0);
+                    if(!$ump){
+
+                        $db_ump = array(
+                            'SET_COD' => $dados['SET_COD']
+                        );
+                        $this->UsuariosEmpresa->setCodEmpresa($dados['EMP_COD'])->setCodUsuario($dados['USU_COD']);
+                        $this->UsuariosEmpresa->alterar($db_ump,0);
+                    }
                 }
 
                 $dados_endereco = array(
