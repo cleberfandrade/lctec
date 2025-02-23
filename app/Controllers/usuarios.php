@@ -237,6 +237,7 @@ class usuarios extends View
                             );
                             $this->UsuariosEmpresa->setCodEmpresa($codEmpresa)->setCodUsuario($codUsuario)->alterar($db_ump,0);
                         }
+                        unset($dados['SET_COD']);
                     }
                 }
                 if($this->Usuarios->alterar($dados,0)){
@@ -308,6 +309,7 @@ class usuarios extends View
                             );
                             $this->UsuariosEmpresa->setCodEmpresa($codEmpresa)->setCodUsuario($codUsuario)->alterar($db_ump,0);
                         }
+                        unset($dados['SET_COD']);
                     }
                 }
 
