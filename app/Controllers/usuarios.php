@@ -107,14 +107,14 @@ class usuarios extends View
                                 $this->UsuariosEmpresa->cadastrar($db_ump,0);
                             }
 
-                            $this->UsuariosSetores->setCodEmpresa($dados['EMP_COD'])->setCodUsuario($id)->checarUsuarioSetor(0);
-                            $db_ust = array(
+                            //$this->UsuariosSetores->setCodEmpresa($dados['EMP_COD'])->setCodUsuario($id)->checarUsuarioSetor(0);
+                            /*$db_ust = array(
                                 'EMP_COD' => $dados['EMP_COD'],
                                 'USU_COD' => $id,
                                 'SET_COD' => $dados['SET_COD'],
                                 'UST_DT_CADASTRO' => date('Y-m-d H:i:s'),
                                 'UST_STATUS' => 1
-                            );
+                            );*/
 
 
                             $ok = true;
