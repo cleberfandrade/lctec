@@ -3,6 +3,7 @@ namespace App\Controllers;
 
 use App\Models\Empresas;
 use App\Models\Enderecos;
+use App\Models\Setores;
 use App\Models\Usuarios as ModelsUsuarios;
 use App\Models\UsuariosEmpresa;
 use Core\View;
@@ -12,7 +13,7 @@ use Libraries\Sessao;
 class usuarios extends View
 {
     private $dados = [];
-    public $link,$Enderecos,$Usuarios,$Empresa,$UsuariosEmpresa,$Check;
+    public $link,$Enderecos,$Usuarios,$Empresa,$UsuariosEmpresa,$Check, $Setores;
     public function __construct()
     {
         Sessao::naoLogado();
@@ -21,11 +22,14 @@ class usuarios extends View
         $this->Enderecos = new Enderecos;
         $this->Usuarios = new ModelsUsuarios;
         $this->UsuariosEmpresa = new UsuariosEmpresa;
+        $this->Setores = new Setores;
         $this->Check = new Check;
+
         if (isset($_SESSION['EMP_COD']) && $_SESSION['EMP_COD'] != 0) {
             $this->dados['empresa'] = $this->UsuariosEmpresa->setCodEmpresa($_SESSION['EMP_COD'])->setCodUsuario($_SESSION['USU_COD'])->listar(0);
             $this->dados['usuario'] = $this->Usuarios->setCodUsuario($_SESSION['USU_COD'])->listar(0);
             $this->dados['usuarios'] = $this->UsuariosEmpresa->setCodEmpresa($_SESSION['EMP_COD'])->listarTodos(0);
+            $this->dados['setores'] = $this->Setores->setCodEmpresa($_SESSION['EMP_COD'])->setTipo(7)->listarTodosPorTipo(0);
             $this->link[0] = ['link'=> 'admin','nome' => 'PAINEL ADMINISTRATIVO'];
             $this->link[1] = ['link'=> 'cadastros','nome' => 'MÓDULO DE CADASTROS'];
             $this->link[2] = ['link'=> 'usuarios','nome' => 'GERENCIAR USUÁRIOS'];
@@ -93,14 +97,21 @@ class usuarios extends View
                                 $db_ump = array(
                                     'USU_COD' => $id,
                                     'EMP_COD' => $dados['EMP_COD'],
+                                    
                                     'UMP_DT_CADASTRO' => date('Y-m-d H:i:s'),
                                     'UMP_STATUS' => 1
                                 );
 
                                 $this->UsuariosEmpresa->cadastrar($db_ump,0);
                             }
-                           
-                           
+
+                            $this->Setores->setCodEmpresa($dados['EMP_COD'])->setCodUsuario($id)->checarUsuarioSetor(0);
+                            $db_ust = array(
+                                'USU_COD' => $id,
+                                'SET_COD' => $dados['SET_COD']
+                            );
+
+
                             $ok = true;
                             $endr = $this->Enderecos->setCodUsuario($id)->checarEnderecoUsuario();
 

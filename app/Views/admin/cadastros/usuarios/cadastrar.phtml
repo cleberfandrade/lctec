@@ -2,7 +2,7 @@
 use Libraries\Sessao;
 
 include_once 'app/Views/admin/inc/cabecalho.phtml'; 
-
+$qtdS = (is_array($setores) ? count($setores) : 0);
 ?>
 <body class="">
     <div class="d-flex" id="wrapper">
@@ -54,7 +54,19 @@ include_once 'app/Views/admin/inc/cabecalho.phtml';
                             </div> 
                             <div class="row">
                                 <hr>
-                                <div class="col-5 text-center mb-3">
+                                <div class="col-4 text-center mb-3">
+                                    <label class="form-label">SETOR</label>
+                                    <div class="form-floating mb-3">
+                                        <select class="form-select text-uppercase mb-3 form-floating" name="SET_COD">
+                                            <option value="0" <?= (isset($_POST['SET_COD']) &&  $_POST['SET_COD']  == "0")? 'selected' : '' ?>>---</option>
+                                            <?php for ($i= 0; $i < $qtdS; $i++) { ?> 
+                                                <option value="<?= $setores[$i]['SET_COD']; ?>" <?= (isset($_POST['SET_COD']) &&  $_POST['SET_COD']  == $setores[$i]['SET_COD'] )? 'selected' : '' ?>><?= $setores[$i]['SET_DESCRICAO'] ?></option>
+                                            <?php } ?> 
+                                        </select>
+                                        <label class="form-floating mb-3">SETOR DA CATEGORIA</label>
+                                    </div>
+                                </div>
+                                <div class="col-4 text-center mb-3">
                                     <label for="inputPassword6" class="col-form-label">Seu Sexo</label>
                                     <div class="mx-auto text-center">   
                                         <div class="form-check form-check-inline">
@@ -71,7 +83,7 @@ include_once 'app/Views/admin/inc/cabecalho.phtml';
                                         </div>
                                     </div>
                                 </div> 
-                                <div class="col-7 text-center mb-3">
+                                <div class="col-4 text-center mb-3">
                                     <label for="inputPassword6" class="col-form-label">Email de Acesso</label>
                                     <div class="form-floating mb-3">
                                         <input type="email" class="form-control" id="email" name="USU_EMAIL" placeholder="Informe seu email nome@examplo.com" value="<?= isset($_POST['USU_EMAIL']) ? $_POST['USU_EMAIL'] : ''; ?>">

@@ -3,6 +3,7 @@ use Libraries\Sessao;
 
 include_once 'app/Views/admin/inc/cabecalho.phtml'; 
 $qtd = (is_array($usuario) ? count($usuario) : 0);
+$qtdS = (is_array($setores) ? count($setores) : 0);
 ?>
 <body class="">
     <div class="d-flex" id="wrapper">
@@ -78,7 +79,19 @@ $qtd = (is_array($usuario) ? count($usuario) : 0);
                                         <label for="email">Seu Email</label>
                                     </div>
                                 </div>
-                                <div class="col-6 text-center mb-3 row">
+                                <div class="col-4 text-center mb-3">
+                                    <label class="form-label">SETOR</label>
+                                    <div class="form-floating mb-3">
+                                        <select class="form-select text-uppercase mb-3 form-floating" name="SET_COD">
+                                            <option value="0" <?= (isset($_POST['SET_COD']) &&  $_POST['SET_COD']  == "0")? 'selected' : '' ?>>---</option>
+                                            <?php for ($i= 0; $i < $qtdS; $i++) { ?> 
+                                                <option value="<?= $setores[$i]['SET_COD']; ?>" <?= (isset($_POST['SET_COD']) &&  $_POST['SET_COD']  == $setores[$i]['SET_COD'] )? 'selected' : '' ?>><?= $setores[$i]['SET_DESCRICAO'] ?></option>
+                                            <?php } ?> 
+                                        </select>
+                                        <label class="form-floating mb-3">SETOR DA CATEGORIA</label>
+                                    </div>
+                                </div>
+                                <div class="col-4 text-center mb-3 row">
                                     <label for="inputPassword6" class="col-form-label">RESETAR SENHA DO USUÁRIO</label>
                                     <div class="mx-auto text-center">   
                                         <div class="form-check form-check-inline">
@@ -95,7 +108,7 @@ $qtd = (is_array($usuario) ? count($usuario) : 0);
                                         </div>
                                     </div>
                                 </div>
-                                <span class="col-6 text-center mb-3 fw-bold fs-5">EM CASO DE RESET,<br> A NOVA SENHA SERÁ: <b class="text-danger">123456</b><br> O USUÁRIO DEVERÁ ALTERÁ-LA</span>
+                                <span class="col-4 text-center mb-3 fw-bold fs-5">EM CASO DE RESET,<br> A NOVA SENHA SERÁ: <b class="text-danger">123456</b><br> O USUÁRIO DEVERÁ ALTERÁ-LA</span>
                                 <hr class="my-4 text-dark">
                                 <input type="hidden" class="form-control" name="EMP_COD" value="<?= isset($_SESSION['EMP_COD']) ? $_SESSION['EMP_COD'] : 0; ?>">
                                 <input type="hidden" class="form-control" name="USU_COD" value="<?= isset($usuario['USU_COD']) ? $usuario['USU_COD'] : 0; ?>">

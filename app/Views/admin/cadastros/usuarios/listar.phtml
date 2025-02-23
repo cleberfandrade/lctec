@@ -50,6 +50,7 @@ $qtd = (is_array($usuarios) ? count($usuarios) : 0);
                                     <th class="text-dark">#</th>
                                     <th class="text-dark">Nome</th>
                                     <th class="text-dark">Email</th>
+                                    <th class="text-dark">Setor</th>
                                     <th class="text-dark">Nível</th>
                                     <th class="text-dark">Status</th>
                                     <?php if($_SESSION['USU_NIVEL'] >= 8){ ?><th class="text-dark">Ações</th><?php } ?>
@@ -62,6 +63,7 @@ $qtd = (is_array($usuarios) ? count($usuarios) : 0);
                                         <td class="text-center align-middle"><?= $b; ?></td>
                                         <td class="text-center align-middle"><?= $usuarios[$i]['USU_NOME'].' '.$usuarios[$i]['USU_SOBRENOME']; ?></td>
                                         <td class="text-center align-middle"><?= $usuarios[$i]['USU_EMAIL']; ?></td>
+                                        <td class="text-center align-middle"><?= $usuarios[$i]['SET_COD']; ?></td>
                                         <td class="text-center align-middle"><?= $usuarios[$i]['USU_NIVEL']; ?></td>
                                         <td class="text-center align-middle"><?= ($usuarios[$i]['USU_STATUS'] == 1)? 'ATIVO' : 'DESATIVADO'; ?></td>
                                         <?php if($_SESSION['USU_NIVEL'] >= 8){ ?>
