@@ -75,10 +75,10 @@ $qtdS = (is_array($setores) ? count($setores) : 0);
                                         <?php if($_SESSION['USU_NIVEL'] >= 8){ ?>
                                         <td class="text-center align-middle">
                                             <?php if($usuarios[$i]['USU_STATUS'] == 0){ ?>
-                                                <button type="button" class="btn btn-success btn-sm d-print-none" data-bs-toggle='modal'  data-bs-target="#status" data-codigo="<?= $usuarios[$i]['USU_COD']; ?>" data-nome="<?= $usuarios[$i]['USU_NOME']; ?>" data-status="<?= $usuarios[$i]['USU_STATUS']; ?>" title="Deseja ativar?" ><i class="fa fa-ban"></i></button>
+                                                <button type="button" class="btn btn-success btn-sm d-print-none" data-bs-toggle='modal'  data-bs-target="#status" data-codigo="<?= $usuarios[$i]['USU_COD']; ?>" data-nome="<?= $usuarios[$i]['USU_NOME']; ?>" data-status_usuario="<?= $usuarios[$i]['USU_STATUS']; ?>" title="Deseja ativar?" ><i class="fa fa-ban"></i></button>
                                             <?php }else { ?>
                                                 <a type="button" class="btn btn-warning btn-sm d-print-none" href="<?= DIRPAGE.'usuarios/alteracao/'.$usuarios[$i]['EMP_COD'].'/'.$usuarios[$i]['USU_COD']; ?>" title="Alterar usuário"><i class="fa fa-edit"></i></a>
-                                                <button type="button" class="btn btn-danger btn-sm d-print-none" data-bs-toggle='modal'  data-bs-target="#status" data-codigo="<?= $usuarios[$i]['USU_COD']; ?>" data-nome="<?= $usuarios[$i]['USU_NOME']; ?>" data-status="<?= $usuarios[$i]['USU_STATUS']; ?>" title="Deseja desativar?" ><i class="fa fa-ban"></i></button>
+                                                <button type="button" class="btn btn-danger btn-sm d-print-none" data-bs-toggle='modal'  data-bs-target="#status" data-codigo="<?= $usuarios[$i]['USU_COD']; ?>" data-nome="<?= $usuarios[$i]['USU_NOME']; ?>" data-status_usuario="<?= $usuarios[$i]['USU_STATUS']; ?>" title="Deseja desativar?" ><i class="fa fa-ban"></i></button>
                                             <?php } ?>
                                         </td>
                                         <?php } ?>
@@ -125,11 +125,11 @@ $qtdS = (is_array($setores) ? count($setores) : 0);
                 var codigo = null;
                 var codigo = button.data('codigo'); // Extract info from data-* attributes
                 var nome = button.data('nome');
-                var status = button.data('status');
+                var status_usuario = button.data('status_usuario');
                 var modal = $(this);
                 modal.find('#USU_COD').val(codigo);
                 modal.find('#USU_NOME').html(nome);
-                modal.find('#USU_STATUS').html(status);
+                modal.find('#USU_STATUS').html(status_usuario);
                 modal.find('#sts').val(codigo);
                 
                 if (status === 1) {
@@ -157,7 +157,7 @@ $qtdS = (is_array($setores) ? count($setores) : 0);
                     $('#resposta').addClass('alert alert-warning');
                 }
                 $('#resposta').html(resposta['MENSAGEM']);
-                setTimeout( () => { window.location.href="<?= DIRPAGE ?>usuarios"}, 15000);
+                setTimeout( () => { window.location.href="<?= DIRPAGE ?>usuarios"}, 5000);
             });
 
         });
