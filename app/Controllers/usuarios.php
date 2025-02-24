@@ -304,12 +304,12 @@ class usuarios extends View
                 }
 
                 if(isset($dados['SET_COD']) && !empty($dados['SET_COD'])){
-                    dump('ok');
-                    exit;
+                   
                     $ump =  $this->UsuariosEmpresa->setCodEmpresa($codEmpresa)->setCodUsuario($codUsuario)->checarUsuarioEmpresa(0);
                     if(!$ump){
-                        
+                        dump('ok');
                         if($dados['SET_COD'] != $ump['SET_COD']){
+                            dump('ok2');
                             $db_ump = array(
                                 'SET_COD' => $dados['SET_COD']
                             );
@@ -318,7 +318,8 @@ class usuarios extends View
                         }
                     }
                 }
-              
+                
+                exit;
                 $dados_endereco = array(
                     'END_LOGRADOURO' => $dados['END_LOGRADOURO'],
                     'END_NUMERO' =>  $dados['END_NUMERO'],
