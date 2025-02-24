@@ -4,7 +4,7 @@ use Libraries\Sessao;
 include_once 'app/Views/admin/inc/cabecalho.phtml'; 
 $qtd = (is_array($usuario) ? count($usuario) : 0);
 $qtdS = (is_array($setores) ? count($setores) : 0);
-dump($usuario);
+
 ?>
 <body class="">
     <div class="d-flex" id="wrapper">
@@ -86,7 +86,7 @@ dump($usuario);
                                         <select class="form-select text-uppercase mb-3 form-floating" name="SET_COD">
                                             <option value="0" <?= (isset($_POST['SET_COD']) &&  $_POST['SET_COD']  == "0")? 'selected' : '' ?>>---</option>
                                             <?php for ($i= 0; $i < $qtdS; $i++) { ?> 
-                                                <option value="<?= $setores[$i]['SET_COD']; ?>" <?= (isset($_POST['SET_COD']) &&  $_POST['SET_COD']  == $setores[$i]['SET_COD'] )? 'selected' : ($setores[$i]['SET_COD'] == $usuarios_empresa['SET_COD'])? 'selected': '' ?>><?= $setores[$i]['SET_DESCRICAO'] ?></option>
+                                                <option value="<?= $setores[$i]['SET_COD']; ?>" <?= (isset($_POST['SET_COD']) &&  $_POST['SET_COD']  == $setores[$i]['SET_COD'] )? 'selected' : ($setores[$i]['SET_COD'] == $usuario['SET_COD'])? 'selected': '' ?>><?= $setores[$i]['SET_DESCRICAO'] ?></option>
                                             <?php } ?> 
                                         </select>
                                         <label class="form-floating mb-3">SETOR DA CATEGORIA</label>
@@ -130,6 +130,11 @@ dump($usuario);
                                 <?php if($_SESSION['USU_NIVEL'] >= 8){ ?><th class="text-dark">Ações</th><?php } ?>
                             </thead>
                             <tbody>
+                            <?php $b = 1; for ($i= 0; $i < $qtdS; $i++) { ?>
+                                <tr class="">
+                                    <td class="text-center align-middle"><?= $b; ?></td>
+                                </tr>
+                                <?php $b++; } ?> 
                             </tbody>
                         </table>
                     </div>
