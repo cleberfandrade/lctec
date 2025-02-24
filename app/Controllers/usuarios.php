@@ -244,7 +244,7 @@ class usuarios extends View
                         }
                     }
                 }
-                
+                unset($dados['SET_COD']);
                 if($this->Usuarios->alterar($dados,0)){
                     $ok = true;
                     Sessao::alert('OK','Cadastro alterado com sucesso!','fs-4 alert alert-success');
@@ -312,7 +312,8 @@ class usuarios extends View
                             $db_ump = array(
                                 'SET_COD' => $dados['SET_COD']
                             );
-                            $this->UsuariosEmpresa->setCodEmpresa($codEmpresa)->setCodUsuario($codUsuario)->alterar($db_ump,0);
+                            dump('ok');
+                            $this->UsuariosEmpresa->setCodEmpresa($codEmpresa)->setCodUsuario($codUsuario)->alterar($db_ump,1);
                         }
                     }
                 }
