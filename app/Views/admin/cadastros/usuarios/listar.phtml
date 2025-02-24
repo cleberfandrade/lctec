@@ -147,7 +147,7 @@ $qtdS = (is_array($setores) ? count($setores) : 0);
             var USU_STATUS = $('#USU_STATUS').val();
             setTimeout(function () {
                     $('#status').modal('hide');
-            }, 1000);
+            }, 5000);
             $.post('<?= DIRPAGE; ?>usuarios/status', {USU_COD: USU_COD,STATUS_USUARIO: true,EMP_COD: EMP_COD, USU_STATUS: USU_STATUS,cache: false}, function(retorno) {
                 var resposta = JSON.parse(retorno);
                 if (resposta['COD'] !== 'ERRO') {
@@ -156,7 +156,7 @@ $qtdS = (is_array($setores) ? count($setores) : 0);
                     $('#resposta').addClass('alert alert-warning');
                 }
                 $('#resposta').html(resposta['MENSAGEM']);
-                setTimeout( () => { window.location.href="<?= DIRPAGE ?>usuarios"}, 1000);
+                setTimeout( () => { window.location.href="<?= DIRPAGE ?>usuarios"}, 15000);
             });
 
         });
