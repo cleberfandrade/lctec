@@ -136,7 +136,7 @@ $qtdS = (is_array($setores) ? count($setores) : 0);
                                                 <option value="<?= $setores[$i]['SET_COD']; ?>" <?= (isset($_POST['SET_COD']) &&  $_POST['SET_COD']  == $setores[$i]['SET_COD'] )? 'selected' : ($setores[$i]['SET_COD'] == $usuarios_empresa['SET_COD'])? 'selected': '' ?>><?= $setores[$i]['SET_DESCRICAO'] ?></option>
                                             <?php } ?> 
                                         </select>
-                                        <label class="form-floating mb-3">SETOR DA FIXO</label>
+                                        <label class="form-floating mb-3">SETOR FIXO</label>
                                     </div>
                                 </div>
                                 <div class="col-4 form-floating mb-3">
