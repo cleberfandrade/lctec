@@ -130,7 +130,7 @@ $qtdS = (is_array($setores) ? count($setores) : 0);
                             <div class="row">
                                 <div class="col-4 text-center mb-3">
                                     <div class="form-floating mb-3">
-                                        <select class="form-select text-uppercase mb-3 form-floating" name="SET_COD">
+                                        <select class="form-select text-uppercase mb-3 form-floating" <?= ($_SESSION['USU_NIVEL'] >= 10 && $_SESSION['USU_NIVEL'] <= 30 ) ? '' : 'disabled'; ?>  name="SET_COD">
                                             <option value="0" <?= (isset($_POST['SET_COD']) &&  $_POST['SET_COD']  == "0")? 'selected' : '' ?>>---</option>
                                             <?php for ($i= 0; $i < $qtdS; $i++) { ?> 
                                                 <option value="<?= $setores[$i]['SET_COD']; ?>" <?= (isset($_POST['SET_COD']) &&  $_POST['SET_COD']  == $setores[$i]['SET_COD'] )? 'selected' : ($setores[$i]['SET_COD'] == $usuarios_empresa['SET_COD'])? 'selected': '' ?>><?= $setores[$i]['SET_DESCRICAO'] ?></option>
