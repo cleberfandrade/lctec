@@ -5,7 +5,7 @@ use Libraries\Sessao;
 include_once 'app/Views/admin/inc/cabecalho.phtml'; 
 
 $qtd = (is_array($usuarios) ? count($usuarios) : 0);
-
+$qtdS = (is_array($setores) ? count($setores) : 0);
 ?>
 <body>
     <div class="d-flex" id="wrapper">
@@ -63,7 +63,11 @@ $qtd = (is_array($usuarios) ? count($usuarios) : 0);
                                         <td class="text-center align-middle"><?= $b; ?></td>
                                         <td class="text-center align-middle"><?= $usuarios[$i]['USU_NOME'].' '.$usuarios[$i]['USU_SOBRENOME']; ?></td>
                                         <td class="text-center align-middle"><?= $usuarios[$i]['USU_EMAIL']; ?></td>
-                                        <td class="text-center align-middle"><?= $usuarios[$i]['SET_COD']; ?></td>
+                                        <td class="text-center align-middle">
+                                            <?php for ($i= 0; $i < $qtdS; $i++) { ?>    
+                                            <?= ($usuarios[$i]['SET_COD']== $setores[$i]['SET_COD'])? $setores[$i]['SET_DESCRICAO'] : 'N.I.'; ?>
+                                            <?php } ?> 
+                                        </td>
                                         <td class="text-center align-middle"><?= $usuarios[$i]['USU_NIVEL']; ?></td>
                                         <td class="text-center align-middle"><?= ($usuarios[$i]['USU_STATUS'] == 1)? 'ATIVO' : 'DESATIVADO'; ?></td>
                                         <?php if($_SESSION['USU_NIVEL'] >= 8){ ?>
