@@ -417,7 +417,7 @@ class usuarios extends View
                 $this->Usuarios->setCodigo($dados['USU_COD']);
 
                 ($dados['USU_STATUS'] == 1)? $dados['USU_STATUS'] = 0 : $dados['USU_STATUS'] = 1;
-                
+                dump($dados);
                 $db = array(
                     'USU_DT_ATUALIZACAO'=> date('Y-m-d H:i:s'),
                     'USU_STATUS' => $dados['USU_STATUS']
