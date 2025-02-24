@@ -45,7 +45,12 @@ $qtdCL = (is_array($classificacoes) ? count($classificacoes) : 0);
                                     <select class="form-select" name="PRO_TIPO">
                                         <option value="0" <?= (isset($_POST['PRO_TIPO']) &&  $_POST['PRO_TIPO']  == 0)? 'selected' : '' ?>>---</option>
                                         <option value="1" <?= (isset($_POST['PRO_TIPO']) &&  $_POST['PRO_TIPO']  == 1)? 'selected' : '' ?>>PRODUTO</option>
-                                        <option value="2" <?= (isset($_POST['PRO_TIPO']) &&  $_POST['PRO_TIPO']  == 2)? 'selected' : '' ?>>SERVIÇO</option>
+                                        <option value="2" <?= (isset($_POST['PRO_TIPO']) &&  $_POST['PRO_TIPO']  == 2)? 'selected' : '' ?>>PRODUTO INTERMEDIÁRIO</option>
+                                        <option value="3" <?= (isset($_POST['PRO_TIPO']) &&  $_POST['PRO_TIPO']  == 3)? 'selected' : '' ?>>INSUMO</option>
+                                        <option value="4" <?= (isset($_POST['PRO_TIPO']) &&  $_POST['PRO_TIPO']  == 4)? 'selected' : '' ?>>MATÉRIA-PRIMA</option>
+                                        <option value="5" <?= (isset($_POST['PRO_TIPO']) &&  $_POST['PRO_TIPO']  == 5)? 'selected' : '' ?>>SERVIÇO</option>
+                                        <option value="6" <?= (isset($_POST['PRO_TIPO']) &&  $_POST['PRO_TIPO']  == 6)? 'selected' : '' ?>>HORAS DE TRABALHO</option>
+                                        <option value="7" <?= (isset($_POST['PRO_TIPO']) &&  $_POST['PRO_TIPO']  == 7)? 'selected' : '' ?>>EQUIPAMENTOS</option>
                                     </select>
                                     <label class="form-label">TIPO</label>
                                 </div>
