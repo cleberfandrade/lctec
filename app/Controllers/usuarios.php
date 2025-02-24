@@ -242,6 +242,8 @@ class usuarios extends View
                                 
                             }
                         }
+                    }else {
+                        Sessao::alert('ERRO',' 4- Erro ao alterar o usuário da empresa, entre em contato com o suporte!','fs-4 alert alert-danger');
                     }
                 }
                 unset($dados['SET_COD']);
@@ -308,14 +310,14 @@ class usuarios extends View
                     $ump = $this->UsuariosEmpresa->setCodEmpresa($codEmpresa)->setCodUsuario($codUsuario)->checarUsuarioEmpresa(0);
                    
                     if(!empty($ump)){
-                        dump('ok');
+                     
                         if($dados['SET_COD'] <> $ump['SET_COD']){
-                            dump('ok2');
+                          
                             $db_ump = array(
                                 'SET_COD' => $dados['SET_COD']
                             );
                             
-                            $this->UsuariosEmpresa->setCodEmpresa($codEmpresa)->setCodUsuario($codUsuario)->alterar($db_ump,1);
+                            $this->UsuariosEmpresa->setCodEmpresa($codEmpresa)->setCodUsuario($codUsuario)->alterar($db_ump,0);
                         }
                     }else {
                         Sessao::alert('ERRO',' 4- Erro ao alterar o usuário da empresa, entre em contato com o suporte!','fs-4 alert alert-danger');
