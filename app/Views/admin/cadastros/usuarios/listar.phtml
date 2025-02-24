@@ -129,7 +129,7 @@ $qtdS = (is_array($setores) ? count($setores) : 0);
                 var modal = $(this);
                 modal.find('#USU_COD').val(codigo);
                 modal.find('#USU_NOME').html(nome);
-                modal.find('#USU_STATUS').html(status_usuario);
+                modal.find('#USU_STATUS').val(status_usuario);
                 modal.find('#sts').val(codigo);
                 
                 if (status === 1) {
@@ -145,10 +145,10 @@ $qtdS = (is_array($setores) ? count($setores) : 0);
             var USU_COD = $('#USU_COD').val();
             var EMP_COD = $('#EMP_COD').val();
             var USU_STATUS = $('#USU_STATUS').val();
-            console.log(USU_STATUS);
+            
             setTimeout(function () {
                     $('#status').modal('hide');
-            }, 5000);
+            }, 500);
             $.post('<?= DIRPAGE; ?>usuarios/status', {USU_COD: USU_COD,STATUS_USUARIO: true,EMP_COD: EMP_COD, USU_STATUS: USU_STATUS,cache: false}, function(retorno) {
                 var resposta = JSON.parse(retorno);
                 if (resposta['COD'] !== 'ERRO') {
