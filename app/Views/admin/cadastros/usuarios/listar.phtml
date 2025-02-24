@@ -45,8 +45,7 @@ $qtdS = (is_array($setores) ? count($setores) : 0);
                                     <a href="<?= DIRPAGE ?>usuarios/cadastro" class="btn btn-dark">NOVO CADASTRO</a>
                                 </div>
                             </div>
-                            <?php if ($qtd != 0) { dump($usuarios);
-exit;?>
+                            <?php if ($qtd != 0) { ?>
                             <table class="table table-striped table-bordered">
                                 <thead class="text-center text-uppercase">
                                     <th class="text-dark">#</th>
@@ -66,9 +65,10 @@ exit;?>
                                         <td class="text-center align-middle"><?= $usuarios[$i]['USU_NOME'].' '.$usuarios[$i]['USU_SOBRENOME']; ?></td>
                                         <td class="text-center align-middle"><?= $usuarios[$i]['USU_EMAIL']; ?></td>
                                         <td class="text-center align-middle">
-                                            <?php for ($i= 0; $i < $qtdS; $i++) { ?>    
-                                            <?= ($usuarios[$i]['SET_COD']== $setores[$i]['SET_COD'])? $setores[$i]['SET_DESCRICAO'] : 'N.I.'; ?>
-                                            <?php } ?> 
+                                            <?php for ($s= 0; $s < $qtdS; $s++) {    
+                                             if($usuarios[$i]['SET_COD'] == $setores[$s]['SET_COD']){
+                                                echo $setores[$i]['SET_DESCRICAO']; 
+                                             } ?> 
                                         </td>
                                         <td class="text-center align-middle"><?= $usuarios[$i]['USU_NIVEL']; ?></td>
                                         <td class="text-center align-middle"><?= ($usuarios[$i]['USU_STATUS'] == 1)? 'ATIVO' : 'DESATIVADO'; ?></td>
