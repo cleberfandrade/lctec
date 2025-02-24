@@ -39,199 +39,205 @@ $qtdCL = (is_array($classificacoes) ? count($classificacoes) : 0);
                         <a class="col-4 btn btn-sm text-uppercase btn-secondary" href="<?= DIRPAGE; ?>estoques"><i class="bi bi-arrow-left"></i> VOLTAR AOS ESTOQUES</a>
                     </div>
                     <div class="container col-10 px-2 py-2 mx-auto row">
-                            <ul class="nav nav-tabs">
+                            <ul class="nav nav-tabs" id="cadastro" role="tablist">
                                 <li class="nav-item">
-                                    <a class="nav-link active" aria-current="page" href="#">INFO</a>
+                                    <button class="nav-link active" id="INFO-tab" data-toggle="tab" data-target="#INFO" type="button" role="tab" aria-controls="INFO" aria-selected="true">INFO</button>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" aria-disabled="true">COMPOSIÇÃO</a>
+                                    <button class="nav-link" id="COMPOSICAO-tab" data-toggle="tab" data-target="#COMPOSICAO" type="button" role="tab" aria-controls="COMPOSICAO" aria-selected="false">COMPOSIÇÃO</button>
                                 </li>
                             </ul>
-                            <form class="p-4 p-md-6 border text-uppercase rounded-3 " action="<?= DIRPAGE ?>produtos/cadastrar" method="POST">
-                                <div class="row ">    
-                                    <div class="col-3 form-floating mb-2">
-                                        <select class="form-select" name="PRO_TIPO">
-                                            <option value="0" <?= (isset($_POST['PRO_TIPO']) &&  $_POST['PRO_TIPO']  == 0)? 'selected' : '' ?>>---</option>
-                                            <option value="1" <?= (isset($_POST['PRO_TIPO']) &&  $_POST['PRO_TIPO']  == 1)? 'selected' : '' ?>>PRODUTO</option>
-                                            <option value="2" <?= (isset($_POST['PRO_TIPO']) &&  $_POST['PRO_TIPO']  == 2)? 'selected' : '' ?>>PRODUTO INTERMEDIÁRIO</option>
-                                            <option value="3" <?= (isset($_POST['PRO_TIPO']) &&  $_POST['PRO_TIPO']  == 3)? 'selected' : '' ?>>INSUMO</option>
-                                            <option value="4" <?= (isset($_POST['PRO_TIPO']) &&  $_POST['PRO_TIPO']  == 4)? 'selected' : '' ?>>MATÉRIA-PRIMA</option>
-                                            <option value="5" <?= (isset($_POST['PRO_TIPO']) &&  $_POST['PRO_TIPO']  == 5)? 'selected' : '' ?>>SERVIÇO</option>
-                                            <option value="6" <?= (isset($_POST['PRO_TIPO']) &&  $_POST['PRO_TIPO']  == 6)? 'selected' : '' ?>>HORAS DE TRABALHO</option>
-                                            <option value="7" <?= (isset($_POST['PRO_TIPO']) &&  $_POST['PRO_TIPO']  == 7)? 'selected' : '' ?>>EQUIPAMENTOS</option>
-                                        </select>
-                                        <label class="form-label">TIPO</label>
-                                    </div>
-                                    <div class="col-3 form-floating mb-2">
-                                        <select class="form-select" name="PRO_UNIDADE">
-                                            <option value="0" <?= (isset($_POST['PRO_UNIDADE']) &&  $_POST['PRO_UNIDADE']  == 0)? 'selected' : '' ?>>---</option>
-                                            <option value="1" <?= (isset($_POST['PRO_UNIDADE']) &&  $_POST['PRO_UNIDADE']  == 1)? 'selected' : '' ?>>GRAMA(S)</option>
-                                            <option value="2" <?= (isset($_POST['PRO_UNIDADE']) &&  $_POST['PRO_UNIDADE']  == 2)? 'selected' : '' ?>>KILO(S)</option>
-                                            <option value="3" <?= (isset($_POST['PRO_UNIDADE']) &&  $_POST['PRO_UNIDADE']  == 3)? 'selected' : '' ?>>CENTÍMETRO(S)</option>
-                                            <option value="4" <?= (isset($_POST['PRO_UNIDADE']) &&  $_POST['PRO_UNIDADE']  == 4)? 'selected' : '' ?>>METRO(S)</option>
-                                            <option value="5" <?= (isset($_POST['PRO_UNIDADE']) &&  $_POST['PRO_UNIDADE']  == 5)? 'selected' : '' ?>>CENTÍMETRO(S)²</option>
-                                            <option value="6" <?= (isset($_POST['PRO_UNIDADE']) &&  $_POST['PRO_UNIDADE']  == 6)? 'selected' : '' ?>>METRO(S)²</option>
-                                            <option value="7" <?= (isset($_POST['PRO_UNIDADE']) &&  $_POST['PRO_UNIDADE']  == 7)? 'selected' : '' ?>>PEÇA</option>
-                                            <option value="8" <?= (isset($_POST['PRO_UNIDADE']) &&  $_POST['PRO_UNIDADE']  == 8)? 'selected' : '' ?>>UNIDADE</option>
-                                            <option value="9" <?= (isset($_POST['PRO_UNIDADE']) &&  $_POST['PRO_UNIDADE']  == 9)? 'selected' : '' ?>>LITRO(S)</option>
-                                            <option value="10" <?= (isset($_POST['PRO_UNIDADE']) &&  $_POST['PRO_UNIDADE']  == 10)? 'selected' : '' ?>>CAIXA(S)</option>
-                                            <option value="11" <?= (isset($_POST['PRO_UNIDADE']) &&  $_POST['PRO_UNIDADE']  == 11)? 'selected' : '' ?>>FARDO(S)</option>
-                                            <option value="12" <?= (isset($_POST['PRO_UNIDADE']) &&  $_POST['PRO_UNIDADE']  == 12)? 'selected' : '' ?>>DÚZIA(S)</option>
-                                            <option value="13" <?= (isset($_POST['PRO_UNIDADE']) &&  $_POST['PRO_UNIDADE']  == 13)? 'selected' : '' ?>>JOGO(S)</option>
-                                            <option value="14" <?= (isset($_POST['PRO_UNIDADE']) &&  $_POST['PRO_UNIDADE']  == 14)? 'selected' : '' ?>>CENTÍMETRO(S)³</option>
-                                            <option value="15" <?= (isset($_POST['PRO_UNIDADE']) &&  $_POST['PRO_UNIDADE']  == 15)? 'selected' : '' ?>>METRO(S)³</option>
-                                            <option value="16" <?= (isset($_POST['PRO_UNIDADE']) &&  $_POST['PRO_UNIDADE']  == 16)? 'selected' : '' ?>>LITRO(S)³</option>
-                                            <option value="17" <?= (isset($_POST['PRO_UNIDADE']) &&  $_POST['PRO_UNIDADE']  == 17)? 'selected' : '' ?>>CONJUNTO</option>
-                                            <option value="18" <?= (isset($_POST['PRO_UNIDADE']) &&  $_POST['PRO_UNIDADE']  == 18)? 'selected' : '' ?>>BARRA</option>
-                                            <option value="19" <?= (isset($_POST['PRO_UNIDADE']) &&  $_POST['PRO_UNIDADE']  == 19)? 'selected' : '' ?>>SERVIÇO</option>
-                                        </select>
-                                        <label class="form-label">UNIDADE DE MEDIDA</label>
-                                    </div>
-                                    <div class="col-6 form-floating mb-3">
-                                        <select class="form-select " name="FOR_COD">     
-                                            <option value="0" <?= (isset($_POST['FOR_COD']) &&  $_POST['FOR_COD']  == 0)? 'selected' : '' ?>>---</option>                     
-                                            <?php 
-                                            for ($i=0; $i < $qtdF; $i++) { ?>
-                                                <option value="<?= $fornecedores[$i]['FOR_COD'] ?>" <?= (isset($_POST['FOR_COD']) &&  $_POST['FOR_COD']  == $fornecedores[$i]['FOR_COD'])? 'selected' : '' ?>><?= $fornecedores[$i]['FOR_NOME_FANTASIA'] ?></option>
-                                            <?php } ?>
-                                        </select>
-                                        <label class="form-label">FORNECEDORES</label>
-                                    </div>
-                                    <hr>
-                                    <div class="col-8 form-floating mb-3">
-                                        <input type="text" class="form-control maiusculo" id="1" name="PRO_NOME" placeholder="Informe o nome do produto" value="<?= isset($_POST['PRO_NOME']) ? $_POST['PRO_NOME'] :''; ?>">
-                                        <label class="px-3" for="1">NOME DO PRODUTO</label>
-                                    </div>    
-                                    <div class="col-4 form-floating mb-3">
-                                        <input type="text" class="form-control maiusculo" id="1" name="PRO_GRUPO" placeholder="Informe o nome do produto" value="<?= isset($_POST['PRO_GRUPO']) ? $_POST['PRO_GRUPO'] :''; ?>">
-                                        <label class="px-3" for="1">GRUPO (opcional)</label>
-                                    </div>   
-                                    <div class="col-4 form-floating mb-3">
-                                        <input type="text" class="form-control maiusculo" id="2" name="PRO_CODIGO" placeholder="Informe seu nome" value="<?= isset($_POST['PRO_CODIGO']) ? $_POST['PRO_CODIGO'] : ''; ?>">
-                                        <label class="px-3" for="2">CÓDIGO (opcional)</label>
-                                    </div> 
-                                    <div class="col-4 form-floating mb-3">
-                                        <input type="text" class="form-control maiusculo" id="2" name="PRO_REFERENCIA" placeholder="Informe seu nome" value="<?= isset($_POST['PRO_REFERENCIA']) ? $_POST['PRO_REFERENCIA'] : ''; ?>">
-                                        <label class="px-3" for="2">REFERÊNCIA (opcional)</label>
-                                    </div> 
-                                    <div class="col-4 form-floating mb-3">
-                                        <input type="text" class="form-control maiusculo" id="2" name="PRO_IMPOSTO" placeholder="Informe seu nome" value="<?= isset($_POST['PRO_IMPOSTO']) ? $_POST['PRO_IMPOSTO'] : ''; ?>">
-                                        <label class="px-3" for="2">IMPOSTO (opcional)</label>
-                                    </div> 
-                                    <hr>
-                                    <div class="col-4 form-floating mb-3">
-                                        <input type="text" class="form-control maiusculo" id="2" name="PRO_QUANTIDADE" placeholder="0" value="<?= isset($_POST['PRO_QUANTIDADE']) ? $_POST['PRO_QUANTIDADE'] : ''; ?>">
-                                        <label class="px-3" for="2">QUANTIDADE</label>
-                                    </div> 
-                                    <div class="col-4 form-floating mb-3">
-                                        <input type="text" class="form-control maiusculo" id="MARGEM" name="PRO_QTD_MIN" placeholder="10" value="<?= isset($_POST['PRO_QTD_MIN']) ? $_POST['PRO_QTD_MIN'] : ''; ?>">
-                                        <label class="px-3" for="2">QUANTIDADE MÍNIMA (opcional)</label>
-                                    </div> 
-                                    <div class="col-4 form-floating mb-3">
-                                        <input type="text" class="form-control maiusculo" id="2" name="PRO_QTD_MAX" placeholder="100" value="<?= isset($_POST['PRO_QTD_MAX']) ? $_POST['PRO_QTD_MAX'] : ''; ?>">
-                                        <label class="px-3" for="2">QUANTIDADE MAXÍMA (opcional)</label>
-                                    </div> 
-                                    <hr>
-                                </div> 
-                                <div class="row">
-                                    <div class="col-4">
-                                        <div class="col-10 mb-3">
-                                            <label class="px-3" for="2">PREÇO CUSTO</label>  
-                                            <div class="input-group">    
-                                                <span class="input-group-text">R$</span>  
-                                                <input type="text" class="form-control form-control-lg real" id="PRO_PRECO_CUSTO" name="PRO_PRECO_CUSTO" placeholder="" value="<?= isset($_POST['PRO_PRECO_CUSTO']) ? $_POST['PRO_PRECO_CUSTO'] : ''; ?>">
-                                            </div>
-                                        </div> 
-                                        <div class="col-10 mb-3">
-                                            <label class="px-3" for="2">MARG. DE LUCRO % (opc)</label>
-                                            <div class="input-group">    
-                                                <input type="text" class="form-control form-control-lg" id="PRO_MARGEM" name="PRO_MARGEM" placeholder="" value="<?= isset($_POST['PRO_MARGEM']) ? $_POST['PRO_MARGEM'] : '5'; ?>">
-                                                <span class="input-group-text">%</span>
-                                            </div>
-                                        </div> 
-                                        <div class="col-10 mb-3">
-                                            <label class="px-3" for="2">DESC. MAX % (opc)</label>
-                                            <div class="input-group">
-                                                <input type="text" class="form-control form-control-lg" name="PRO_DESCONTO" placeholder="" value="<?= isset($_POST['PRO_DESCONTO']) ? $_POST['PRO_DESCONTO'] : ''; ?>">
-                                                <span class="input-group-text">%</span>
-                                            </div>
-                                        </div> 
-                                        <div class="col-10 mb-3">
-                                            <label class="px-5" for="2">PREÇO VENDA</label>
-                                            <div class="input-group">
-                                                <span class="input-group-text">R$</span>
-                                                <input type="text" class="form-control form-control-lg real2" id="PRO_PRECO_VENDA" name="PRO_PRECO_VENDA" placeholder="" value="<?= isset($_POST['PRO_PRECO_VENDA']) ? $_POST['PRO_PRECO_VENDA'] : ''; ?>">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-8 row mb-2">
-                                        <div class="col-6 form-floating mb-3">
-                                            <input type="text" class="form-control maiusculo" id="PRO_LOTE" name="PRO_LOTE" value="<?= isset($_POST['PRO_LOTE']) ? $_POST['PRO_LOTE'] : ''; ?>">
-                                            <label class="px-3" for="2">LOTE (opcional)</label>
-                                        </div> 
-                                        <div class="col-6 form-floating mb-3">
-                                            <input type="date" class="form-control maiusculo" id="PRO_PRAZO_VALIDADE" name="PRO_PRAZO_VALIDADE" value="<?= isset($_POST['PRO_PRAZO_VALIDADE']) ? $_POST['PRO_PRAZO_VALIDADE'] : ''; ?>">
-                                            <label class="px-3" for="2">PRAZO DE VALIDADE (opcional)</label>
-                                        </div>
-                                        <div class="col-12 form-floating mb-3">
-                                            <input type="text" class="form-control maiusculo" id="PRO_MARCA" name="PRO_MARCA" value="<?= isset($_POST['PRO_MARCA']) ? $_POST['PRO_MARCA'] : ''; ?>">
-                                            <label class="px-3" for="PRO_MARCA">MARCA (opcional)</label>
-                                        </div> 
-                                        <div class="col-6">
-                                            <div class=" mb-3">
-                                                <label class="px-5" for="2">CATEGORIA</label>
-                                                <div class="form-floating mb-3">
-                                                    <select class="form-select text-uppercase mb-3 form-floating" name="CAT_COD">
-                                                        <option value="0" <?= (isset($_POST['CAT_COD']) &&  $_POST['CAT_COD']  == "0")? 'selected' : '' ?>>---</option>
-                                                        <?php for ($i= 0; $i < $qtdC; $i++) { if ($categorias[$i]['CAT_STATUS'] == 1) {?> 
-                                                            <option value="<?= $categorias[$i]['CAT_COD']; ?>" <?= (isset($_POST['CAT_COD']) &&  $_POST['CAT_COD']  == $categorias[$i]['CAT_COD'] )? 'selected' : '' ?>><?= $categorias[$i]['CAT_DESCRICAO'] ?></option>
-                                                        <?php } } ?> 
-                                                    </select>
-                                                    <label class="form-floating mb-3">CATEGORIA (opcional)</label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-6">
-                                            <div class=" mb-3">
-                                                <label class="px-5" for="2">SETOR</label>
-                                                <div class="form-floating mb-3">
-                                                    <select class="form-select text-uppercase mb-3 form-floating" name="SET_COD">
-                                                        <option value="0" <?= (isset($_POST['SET_COD']) &&  $_POST['SET_COD']  == "0")? 'selected' : '' ?>>---</option>
-                                                        <?php for ($i= 0; $i < $qtdS; $i++) { if ($setores[$i]['SET_STATUS'] == 1) { ?> 
-                                                            <option value="<?= $setores[$i]['SET_COD']; ?>" <?= (isset($_POST['SET_COD']) &&  $_POST['SET_COD']  == $setores[$i]['SET_COD'] )? 'selected' : '' ?>><?= $setores[$i]['SET_DESCRICAO'] ?></option>
-                                                        <?php } } ?> 
-                                                    </select>
-                                                    <label class="form-floating mb-3">SETOR (opcional)</label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-12 mb-3">
-                                            <label class="form-label">CLASSIFICAÇÃO</label>
-                                            <div class="form-floating mb-3">
-                                                <select class="form-select text-uppercase mb-3 form-floating" name="CLA_COD">
-                                                    <option value="0" <?= (isset($_POST['CLA_COD']) &&  $_POST['CLA_COD']  == "0")? 'selected' : '' ?>>---</option>
-                                                    <?php for ($i= 0; $i < $qtdCL; $i++) { if ($classificacoes[$i]['CLA_STATUS'] == 1) { ?> 
-                                                        <option value="<?= $classificacoes[$i]['CLA_COD']; ?>" <?= (isset($_POST['CLA_COD']) &&  $_POST['CLA_COD']  == $classificacoes[$i]['CLA_COD'] )? 'selected' : '' ?>><?= $classificacoes[$i]['CLA_DESCRICAO'] ?></option>
-                                                    <?php } } ?> 
+                            <div class="tab-content" id="cadastro">
+                                <form class="p-4 p-md-6 border text-uppercase rounded-3 " action="<?= DIRPAGE ?>produtos/cadastrar" method="POST">
+                                    <div class="tab-pane fade show active" id="INFO" role="tabpanel" aria-labelledby="INFO-tab">
+                                        <div class="row ">    
+                                            <div class="col-3 form-floating mb-2">
+                                                <select class="form-select" name="PRO_TIPO">
+                                                    <option value="0" <?= (isset($_POST['PRO_TIPO']) &&  $_POST['PRO_TIPO']  == 0)? 'selected' : '' ?>>---</option>
+                                                    <option value="1" <?= (isset($_POST['PRO_TIPO']) &&  $_POST['PRO_TIPO']  == 1)? 'selected' : '' ?>>PRODUTO</option>
+                                                    <option value="2" <?= (isset($_POST['PRO_TIPO']) &&  $_POST['PRO_TIPO']  == 2)? 'selected' : '' ?>>PRODUTO INTERMEDIÁRIO</option>
+                                                    <option value="3" <?= (isset($_POST['PRO_TIPO']) &&  $_POST['PRO_TIPO']  == 3)? 'selected' : '' ?>>INSUMO</option>
+                                                    <option value="4" <?= (isset($_POST['PRO_TIPO']) &&  $_POST['PRO_TIPO']  == 4)? 'selected' : '' ?>>MATÉRIA-PRIMA</option>
+                                                    <option value="5" <?= (isset($_POST['PRO_TIPO']) &&  $_POST['PRO_TIPO']  == 5)? 'selected' : '' ?>>SERVIÇO</option>
+                                                    <option value="6" <?= (isset($_POST['PRO_TIPO']) &&  $_POST['PRO_TIPO']  == 6)? 'selected' : '' ?>>HORAS DE TRABALHO</option>
+                                                    <option value="7" <?= (isset($_POST['PRO_TIPO']) &&  $_POST['PRO_TIPO']  == 7)? 'selected' : '' ?>>EQUIPAMENTOS</option>
                                                 </select>
-                                                <label class="form-floating mb-3">CLASSIFICAÇÃO (opcional)</label>
+                                                <label class="form-label">TIPO</label>
                                             </div>
-                                        </div>
-                                        
+                                            <div class="col-3 form-floating mb-2">
+                                                <select class="form-select" name="PRO_UNIDADE">
+                                                    <option value="0" <?= (isset($_POST['PRO_UNIDADE']) &&  $_POST['PRO_UNIDADE']  == 0)? 'selected' : '' ?>>---</option>
+                                                    <option value="1" <?= (isset($_POST['PRO_UNIDADE']) &&  $_POST['PRO_UNIDADE']  == 1)? 'selected' : '' ?>>GRAMA(S)</option>
+                                                    <option value="2" <?= (isset($_POST['PRO_UNIDADE']) &&  $_POST['PRO_UNIDADE']  == 2)? 'selected' : '' ?>>KILO(S)</option>
+                                                    <option value="3" <?= (isset($_POST['PRO_UNIDADE']) &&  $_POST['PRO_UNIDADE']  == 3)? 'selected' : '' ?>>CENTÍMETRO(S)</option>
+                                                    <option value="4" <?= (isset($_POST['PRO_UNIDADE']) &&  $_POST['PRO_UNIDADE']  == 4)? 'selected' : '' ?>>METRO(S)</option>
+                                                    <option value="5" <?= (isset($_POST['PRO_UNIDADE']) &&  $_POST['PRO_UNIDADE']  == 5)? 'selected' : '' ?>>CENTÍMETRO(S)²</option>
+                                                    <option value="6" <?= (isset($_POST['PRO_UNIDADE']) &&  $_POST['PRO_UNIDADE']  == 6)? 'selected' : '' ?>>METRO(S)²</option>
+                                                    <option value="7" <?= (isset($_POST['PRO_UNIDADE']) &&  $_POST['PRO_UNIDADE']  == 7)? 'selected' : '' ?>>PEÇA</option>
+                                                    <option value="8" <?= (isset($_POST['PRO_UNIDADE']) &&  $_POST['PRO_UNIDADE']  == 8)? 'selected' : '' ?>>UNIDADE</option>
+                                                    <option value="9" <?= (isset($_POST['PRO_UNIDADE']) &&  $_POST['PRO_UNIDADE']  == 9)? 'selected' : '' ?>>LITRO(S)</option>
+                                                    <option value="10" <?= (isset($_POST['PRO_UNIDADE']) &&  $_POST['PRO_UNIDADE']  == 10)? 'selected' : '' ?>>CAIXA(S)</option>
+                                                    <option value="11" <?= (isset($_POST['PRO_UNIDADE']) &&  $_POST['PRO_UNIDADE']  == 11)? 'selected' : '' ?>>FARDO(S)</option>
+                                                    <option value="12" <?= (isset($_POST['PRO_UNIDADE']) &&  $_POST['PRO_UNIDADE']  == 12)? 'selected' : '' ?>>DÚZIA(S)</option>
+                                                    <option value="13" <?= (isset($_POST['PRO_UNIDADE']) &&  $_POST['PRO_UNIDADE']  == 13)? 'selected' : '' ?>>JOGO(S)</option>
+                                                    <option value="14" <?= (isset($_POST['PRO_UNIDADE']) &&  $_POST['PRO_UNIDADE']  == 14)? 'selected' : '' ?>>CENTÍMETRO(S)³</option>
+                                                    <option value="15" <?= (isset($_POST['PRO_UNIDADE']) &&  $_POST['PRO_UNIDADE']  == 15)? 'selected' : '' ?>>METRO(S)³</option>
+                                                    <option value="16" <?= (isset($_POST['PRO_UNIDADE']) &&  $_POST['PRO_UNIDADE']  == 16)? 'selected' : '' ?>>LITRO(S)³</option>
+                                                    <option value="17" <?= (isset($_POST['PRO_UNIDADE']) &&  $_POST['PRO_UNIDADE']  == 17)? 'selected' : '' ?>>CONJUNTO</option>
+                                                    <option value="18" <?= (isset($_POST['PRO_UNIDADE']) &&  $_POST['PRO_UNIDADE']  == 18)? 'selected' : '' ?>>BARRA</option>
+                                                    <option value="19" <?= (isset($_POST['PRO_UNIDADE']) &&  $_POST['PRO_UNIDADE']  == 19)? 'selected' : '' ?>>SERVIÇO</option>
+                                                </select>
+                                                <label class="form-label">UNIDADE DE MEDIDA</label>
+                                            </div>
+                                            <div class="col-6 form-floating mb-3">
+                                                <select class="form-select " name="FOR_COD">     
+                                                    <option value="0" <?= (isset($_POST['FOR_COD']) &&  $_POST['FOR_COD']  == 0)? 'selected' : '' ?>>---</option>                     
+                                                    <?php 
+                                                    for ($i=0; $i < $qtdF; $i++) { ?>
+                                                        <option value="<?= $fornecedores[$i]['FOR_COD'] ?>" <?= (isset($_POST['FOR_COD']) &&  $_POST['FOR_COD']  == $fornecedores[$i]['FOR_COD'])? 'selected' : '' ?>><?= $fornecedores[$i]['FOR_NOME_FANTASIA'] ?></option>
+                                                    <?php } ?>
+                                                </select>
+                                                <label class="form-label">FORNECEDORES</label>
+                                            </div>
+                                            <hr>
+                                            <div class="col-8 form-floating mb-3">
+                                                <input type="text" class="form-control maiusculo" id="1" name="PRO_NOME" placeholder="Informe o nome do produto" value="<?= isset($_POST['PRO_NOME']) ? $_POST['PRO_NOME'] :''; ?>">
+                                                <label class="px-3" for="1">NOME DO PRODUTO</label>
+                                            </div>    
+                                            <div class="col-4 form-floating mb-3">
+                                                <input type="text" class="form-control maiusculo" id="1" name="PRO_GRUPO" placeholder="Informe o nome do produto" value="<?= isset($_POST['PRO_GRUPO']) ? $_POST['PRO_GRUPO'] :''; ?>">
+                                                <label class="px-3" for="1">GRUPO (opcional)</label>
+                                            </div>   
+                                            <div class="col-4 form-floating mb-3">
+                                                <input type="text" class="form-control maiusculo" id="2" name="PRO_CODIGO" placeholder="Informe seu nome" value="<?= isset($_POST['PRO_CODIGO']) ? $_POST['PRO_CODIGO'] : ''; ?>">
+                                                <label class="px-3" for="2">CÓDIGO (opcional)</label>
+                                            </div> 
+                                            <div class="col-4 form-floating mb-3">
+                                                <input type="text" class="form-control maiusculo" id="2" name="PRO_REFERENCIA" placeholder="Informe seu nome" value="<?= isset($_POST['PRO_REFERENCIA']) ? $_POST['PRO_REFERENCIA'] : ''; ?>">
+                                                <label class="px-3" for="2">REFERÊNCIA (opcional)</label>
+                                            </div> 
+                                            <div class="col-4 form-floating mb-3">
+                                                <input type="text" class="form-control maiusculo" id="2" name="PRO_IMPOSTO" placeholder="Informe seu nome" value="<?= isset($_POST['PRO_IMPOSTO']) ? $_POST['PRO_IMPOSTO'] : ''; ?>">
+                                                <label class="px-3" for="2">IMPOSTO (opcional)</label>
+                                            </div> 
+                                            <hr>
+                                            <div class="col-4 form-floating mb-3">
+                                                <input type="text" class="form-control maiusculo" id="2" name="PRO_QUANTIDADE" placeholder="0" value="<?= isset($_POST['PRO_QUANTIDADE']) ? $_POST['PRO_QUANTIDADE'] : ''; ?>">
+                                                <label class="px-3" for="2">QUANTIDADE</label>
+                                            </div> 
+                                            <div class="col-4 form-floating mb-3">
+                                                <input type="text" class="form-control maiusculo" id="MARGEM" name="PRO_QTD_MIN" placeholder="10" value="<?= isset($_POST['PRO_QTD_MIN']) ? $_POST['PRO_QTD_MIN'] : ''; ?>">
+                                                <label class="px-3" for="2">QUANTIDADE MÍNIMA (opcional)</label>
+                                            </div> 
+                                            <div class="col-4 form-floating mb-3">
+                                                <input type="text" class="form-control maiusculo" id="2" name="PRO_QTD_MAX" placeholder="100" value="<?= isset($_POST['PRO_QTD_MAX']) ? $_POST['PRO_QTD_MAX'] : ''; ?>">
+                                                <label class="px-3" for="2">QUANTIDADE MAXÍMA (opcional)</label>
+                                            </div> 
+                                            <hr>
+                                        </div> 
+                                        <div class="row">
+                                            <div class="col-4">
+                                                <div class="col-10 mb-3">
+                                                    <label class="px-3" for="2">PREÇO CUSTO</label>  
+                                                    <div class="input-group">    
+                                                        <span class="input-group-text">R$</span>  
+                                                        <input type="text" class="form-control form-control-lg real" id="PRO_PRECO_CUSTO" name="PRO_PRECO_CUSTO" placeholder="" value="<?= isset($_POST['PRO_PRECO_CUSTO']) ? $_POST['PRO_PRECO_CUSTO'] : ''; ?>">
+                                                    </div>
+                                                </div> 
+                                                <div class="col-10 mb-3">
+                                                    <label class="px-3" for="2">MARG. DE LUCRO % (opc)</label>
+                                                    <div class="input-group">    
+                                                        <input type="text" class="form-control form-control-lg" id="PRO_MARGEM" name="PRO_MARGEM" placeholder="" value="<?= isset($_POST['PRO_MARGEM']) ? $_POST['PRO_MARGEM'] : '5'; ?>">
+                                                        <span class="input-group-text">%</span>
+                                                    </div>
+                                                </div> 
+                                                <div class="col-10 mb-3">
+                                                    <label class="px-3" for="2">DESC. MAX % (opc)</label>
+                                                    <div class="input-group">
+                                                        <input type="text" class="form-control form-control-lg" name="PRO_DESCONTO" placeholder="" value="<?= isset($_POST['PRO_DESCONTO']) ? $_POST['PRO_DESCONTO'] : ''; ?>">
+                                                        <span class="input-group-text">%</span>
+                                                    </div>
+                                                </div> 
+                                                <div class="col-10 mb-3">
+                                                    <label class="px-5" for="2">PREÇO VENDA</label>
+                                                    <div class="input-group">
+                                                        <span class="input-group-text">R$</span>
+                                                        <input type="text" class="form-control form-control-lg real2" id="PRO_PRECO_VENDA" name="PRO_PRECO_VENDA" placeholder="" value="<?= isset($_POST['PRO_PRECO_VENDA']) ? $_POST['PRO_PRECO_VENDA'] : ''; ?>">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-8 row mb-2">
+                                                <div class="col-6 form-floating mb-3">
+                                                    <input type="text" class="form-control maiusculo" id="PRO_LOTE" name="PRO_LOTE" value="<?= isset($_POST['PRO_LOTE']) ? $_POST['PRO_LOTE'] : ''; ?>">
+                                                    <label class="px-3" for="2">LOTE (opcional)</label>
+                                                </div> 
+                                                <div class="col-6 form-floating mb-3">
+                                                    <input type="date" class="form-control maiusculo" id="PRO_PRAZO_VALIDADE" name="PRO_PRAZO_VALIDADE" value="<?= isset($_POST['PRO_PRAZO_VALIDADE']) ? $_POST['PRO_PRAZO_VALIDADE'] : ''; ?>">
+                                                    <label class="px-3" for="2">PRAZO DE VALIDADE (opcional)</label>
+                                                </div>
+                                                <div class="col-12 form-floating mb-3">
+                                                    <input type="text" class="form-control maiusculo" id="PRO_MARCA" name="PRO_MARCA" value="<?= isset($_POST['PRO_MARCA']) ? $_POST['PRO_MARCA'] : ''; ?>">
+                                                    <label class="px-3" for="PRO_MARCA">MARCA (opcional)</label>
+                                                </div> 
+                                                <div class="col-6">
+                                                    <div class=" mb-3">
+                                                        <label class="px-5" for="2">CATEGORIA</label>
+                                                        <div class="form-floating mb-3">
+                                                            <select class="form-select text-uppercase mb-3 form-floating" name="CAT_COD">
+                                                                <option value="0" <?= (isset($_POST['CAT_COD']) &&  $_POST['CAT_COD']  == "0")? 'selected' : '' ?>>---</option>
+                                                                <?php for ($i= 0; $i < $qtdC; $i++) { if ($categorias[$i]['CAT_STATUS'] == 1) {?> 
+                                                                    <option value="<?= $categorias[$i]['CAT_COD']; ?>" <?= (isset($_POST['CAT_COD']) &&  $_POST['CAT_COD']  == $categorias[$i]['CAT_COD'] )? 'selected' : '' ?>><?= $categorias[$i]['CAT_DESCRICAO'] ?></option>
+                                                                <?php } } ?> 
+                                                            </select>
+                                                            <label class="form-floating mb-3">CATEGORIA (opcional)</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-6">
+                                                    <div class=" mb-3">
+                                                        <label class="px-5" for="2">SETOR</label>
+                                                        <div class="form-floating mb-3">
+                                                            <select class="form-select text-uppercase mb-3 form-floating" name="SET_COD">
+                                                                <option value="0" <?= (isset($_POST['SET_COD']) &&  $_POST['SET_COD']  == "0")? 'selected' : '' ?>>---</option>
+                                                                <?php for ($i= 0; $i < $qtdS; $i++) { if ($setores[$i]['SET_STATUS'] == 1) { ?> 
+                                                                    <option value="<?= $setores[$i]['SET_COD']; ?>" <?= (isset($_POST['SET_COD']) &&  $_POST['SET_COD']  == $setores[$i]['SET_COD'] )? 'selected' : '' ?>><?= $setores[$i]['SET_DESCRICAO'] ?></option>
+                                                                <?php } } ?> 
+                                                            </select>
+                                                            <label class="form-floating mb-3">SETOR (opcional)</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-12 mb-3">
+                                                    <label class="form-label">CLASSIFICAÇÃO</label>
+                                                    <div class="form-floating mb-3">
+                                                        <select class="form-select text-uppercase mb-3 form-floating" name="CLA_COD">
+                                                            <option value="0" <?= (isset($_POST['CLA_COD']) &&  $_POST['CLA_COD']  == "0")? 'selected' : '' ?>>---</option>
+                                                            <?php for ($i= 0; $i < $qtdCL; $i++) { if ($classificacoes[$i]['CLA_STATUS'] == 1) { ?> 
+                                                                <option value="<?= $classificacoes[$i]['CLA_COD']; ?>" <?= (isset($_POST['CLA_COD']) &&  $_POST['CLA_COD']  == $classificacoes[$i]['CLA_COD'] )? 'selected' : '' ?>><?= $classificacoes[$i]['CLA_DESCRICAO'] ?></option>
+                                                            <?php } } ?> 
+                                                        </select>
+                                                        <label class="form-floating mb-3">CLASSIFICAÇÃO (opcional)</label>
+                                                    </div>
+                                                </div>
+                                                
+                                            </div>
+                                            <div class="col-12 mb-3 " style="height:80px">
+                                                <label for="address2" class="form-label">DESCRIÇÃO</label>
+                                                <textarea type="text" class="form-control  maiusculo" name="PRO_DESCRICAO"><?= isset($_POST['PRO_DESCRICAO'])? $_POST['PRO_DESCRICAO']  : '' ?></textarea>
+                                            </div>
+                                            <hr class="my-4 text-dark">
+                                            <input type="hidden" class="form-control" name="EST_COD" value="<?= isset($estoque['EST_COD']) ? $estoque['EST_COD'] : 0; ?>">
+                                            <input type="hidden" class="form-control" name="EMP_COD" value="<?= isset($estoque['EMP_COD']) ? $estoque['EMP_COD'] : 0; ?>">
+                                            <input type="hidden" class="form-control" name="USU_COD" value="<?= isset($_SESSION['USU_COD']) ? $_SESSION['USU_COD'] : 0; ?>">
+                                            <a class="col-4 btn btn-lg text-uppercase btn-secondary" href="<?= DIRPAGE; ?>estoques/produtos/<?= $estoque['EMP_COD']?>/<?= $estoque['EST_COD']?>"><i class="bi bi-ban"></i> Cancelar</a>
+                                            <button class="col-8 btn btn-lg text-uppercase btn-success" name="CADASTRAR_NOVO_PRODUTO" type="submit"><i class="fa fa-save"></i> Cadastrar</button>
+                                            <hr class="my-4 text-dark">
+                                        </div> 
                                     </div>
-                                    <div class="col-12 mb-3 " style="height:80px">
-                                        <label for="address2" class="form-label">DESCRIÇÃO</label>
-                                        <textarea type="text" class="form-control  maiusculo" name="PRO_DESCRICAO"><?= isset($_POST['PRO_DESCRICAO'])? $_POST['PRO_DESCRICAO']  : '' ?></textarea>
+                                    <div class="tab-pane fade" id="COMPOSICAO" role="tabpanel" aria-labelledby="COMPOSICAO-tab">
                                     </div>
-                                    <hr class="my-4 text-dark">
-                                    <input type="hidden" class="form-control" name="EST_COD" value="<?= isset($estoque['EST_COD']) ? $estoque['EST_COD'] : 0; ?>">
-                                    <input type="hidden" class="form-control" name="EMP_COD" value="<?= isset($estoque['EMP_COD']) ? $estoque['EMP_COD'] : 0; ?>">
-                                    <input type="hidden" class="form-control" name="USU_COD" value="<?= isset($_SESSION['USU_COD']) ? $_SESSION['USU_COD'] : 0; ?>">
-                                    <a class="col-4 btn btn-lg text-uppercase btn-secondary" href="<?= DIRPAGE; ?>estoques/produtos/<?= $estoque['EMP_COD']?>/<?= $estoque['EST_COD']?>"><i class="bi bi-ban"></i> Cancelar</a>
-                                    <button class="col-8 btn btn-lg text-uppercase btn-success" name="CADASTRAR_NOVO_PRODUTO" type="submit"><i class="fa fa-save"></i> Cadastrar</button>
-                                    <hr class="my-4 text-dark">
-                                </div> 
-                            </form>
+                                </form>
+                            </div>
                     </div>
                 </section>
             <?php include_once 'app/Views/admin/inc/rodape.phtml';?>
