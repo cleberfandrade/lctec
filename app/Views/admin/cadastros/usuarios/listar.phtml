@@ -68,7 +68,7 @@ $qtdS = (is_array($setores) ? count($setores) : 0);
                                             <?php for ($s= 0; $s < $qtdS; $s++) {    
                                              if($usuarios[$i]['SET_COD'] == $setores[$s]['SET_COD']){
                                                 echo $setores[$i]['SET_DESCRICAO']; 
-                                             } ?> 
+                                             } } ?> 
                                         </td>
                                         <td class="text-center align-middle"><?= $usuarios[$i]['USU_NIVEL']; ?></td>
                                         <td class="text-center align-middle"><?= ($usuarios[$i]['USU_STATUS'] == 1)? 'ATIVO' : 'DESATIVADO'; ?></td>
