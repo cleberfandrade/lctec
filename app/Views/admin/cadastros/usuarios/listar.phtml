@@ -131,7 +131,7 @@ $qtdS = (is_array($setores) ? count($setores) : 0);
                 modal.find('#USU_NOME').html(nome);
                 modal.find('#USU_STATUS').html(status_usuario);
                 modal.find('#sts').val(codigo);
-                console.log(status_usuario);
+                
                 if (status === 1) {
                     modal.find('#sts').html('<i class="fa fa-ban"></i> CONFIRMAR');
                     modal.find('#title').html('Deseja desativar o Usuário(a)?');
@@ -145,7 +145,7 @@ $qtdS = (is_array($setores) ? count($setores) : 0);
             var USU_COD = $('#USU_COD').val();
             var EMP_COD = $('#EMP_COD').val();
             var USU_STATUS = $('#USU_STATUS').val();
-            
+            console.log(USU_STATUS);
             setTimeout(function () {
                     $('#status').modal('hide');
             }, 5000);
