@@ -48,8 +48,6 @@ class producao extends View
         }else {
             $this->dados['modulo'] = $this->ModulosEmpresa->setCodEmpresa($_SESSION['EMP_COD'])->setCodigo(7)->listarModuloEmpresa(0);
         }
-
-
         $this->link[0] = ['link'=> 'admin','nome' => 'PAINEL ADMINISTRATIVO'];
         $this->link[1] = ['link'=> 'producao','nome' => 'MÓDULO DE PRODUÇÃO >>'];
     }
@@ -58,5 +56,11 @@ class producao extends View
         $this->dados['title'] .= ' GERENCIAR PRODUÇÃO';   
         $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
         $this->render('admin/producao/producao', $this->dados);
+    }
+    public function insumos()
+    {
+        $this->dados['title'] .= ' GERENCIAR PRODUÇÃO';   
+        $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
+        $this->render('admin/producao/insumos/listar', $this->dados);
     }
 }
