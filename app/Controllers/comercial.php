@@ -2,7 +2,7 @@
 namespace App\Controllers;
 
 use App\Models\Classificacoes;
-use App\Models\Clientes as ModelsCliente;
+use App\Models\Clientes;
 use App\Models\Empresas;
 use App\Models\Enderecos;
 use App\Models\Usuarios;
