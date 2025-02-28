@@ -11358,8 +11358,6 @@ body.sb-sidenav-toggled #wrapper #sidebar-wrapper {
 .bg-13{
   background-color:#DCE619;
 }
-
-
 .bg-14{
   background-color:#242E4C;
 }
@@ -11369,7 +11367,34 @@ body.sb-sidenav-toggled #wrapper #sidebar-wrapper {
 .bg-16{
   background-color:#DCE619;
 }
+.bg-17{
+  background-color:#E9C46A;
+}
+.bg-18{
+  background-color:#F4A261;
+}
+.bg-19{
+  background-color:#264253;
+}
+.bg-20{
+  background-color:#4D8076;
+}
+.bg-21{
+  background-color:#C34A36;
+}
 
+.bg-22{
+  background-color:#1D3557;
+}
+.bg-23{
+  background-color:#CEEC97;
+}
+.bg-24{
+  background-color:#94B505;
+}
+.bg-25{
+  background-color:#225D2E;
+}
 
 ul.timeline {
   list-style-type: none;
