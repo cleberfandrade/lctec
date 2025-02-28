@@ -6,8 +6,8 @@
     <div class="list-group list-group-flush text-uppercase mb-4" >
         
         <a class="list-group-item list-group-item-action list-group-item-dark p-3 px-3" title="Painel Administrativo" href="<?= DIRPAGE?>admin"><i class="bi bi-house"></i>  PAINEL ADM</a>
-        <?php if ($_SESSION['USU_NIVEL'] >=20) { ?>
-        <a class="list-group-item list-group-item-action list-group-item-dark p-3 px-3" title="Painel Gerencial" href="<?= DIRPAGE?>lctec"><i class="bi bi-house"></i>  PAINEL LC/<span class="text-success">TEC</span></a>
+        <?php if ($_SESSION['USU_NIVEL'] >=30) { ?>
+        <a class="list-group-item list-group-item-action list-group-item-dark p-3 px-3" title="Painel Gerencial" href="<?= DIRPAGE?>lctec"><i class="bi bi-house"></i>  PAINEL <span class="text-success">DESENVOLVIMENTO</span></a>
         <a class="list-group-item list-group-item-action list-group-item-dark p-3 px-3" title="Empresas/Negócios" href="<?= DIRPAGE?>lctec/empresas"><i class="bi bi-plus-square"></i> EMPRESAS</a>
         <a class="list-group-item list-group-item-action list-group-item-dark p-3 px-3" title="Equipes" href="<?= DIRPAGE?>lctec/equipes"><i class="bi bi-cash-coin"></i> ADMINISTRATIVO</a>
         <a class="list-group-item list-group-item-action list-group-item-dark p-3 px-3" title="Cadastros" href="<?= DIRPAGE?>lctec/cadastros"><i class="bi bi-cash-coin"></i> CADASTROS</a>
