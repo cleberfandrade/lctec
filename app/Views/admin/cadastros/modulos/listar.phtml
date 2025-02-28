@@ -49,7 +49,7 @@ $ModulosEmpresa = new ModulosEmpresa;
                                     <p class="card-text"><?= $modulos_empresa[$i]['MOD_DESCRICAO']; ?></p>
                                 </div>  
                             
-                                <div class="card-footer text-center">
+                                <div class="card-footer text-center text-white">
                                     <?php if($modulos_empresa[$i]['MOD_NOME'] != 'CADASTROS'){ ?>
                                     <a type="button" href="<?= DIRPAGE ?>modulo_empresa/alterar/<?= $modulos_empresa[$i]['EMP_COD']?>/<?= $modulos_empresa[$i]['MOD_COD']?>/<?= $modulos_empresa[$i]['MLE_STATUS'] ?>" class="btn btn-<?= $modulos_empresa[$i]['MOD_COR']; ?> link-light text-decoration-none">
                                         <?php if ($modulos_empresa[$i]['MLE_STATUS'] == 1 ) { ?>
