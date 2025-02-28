@@ -20,7 +20,7 @@ class comercial extends View
     {
         Sessao::naoLogado();
         $this->dados['title'] = 'MÓDULO | COMERCIAL >>';
-        $this->Clientes= new ModelsCliente;
+        $this->Clientes= new Clientes;
         $this->Empresa = new Empresas;
         $this->Enderecos = new Enderecos;
         $this->Usuarios = new Usuarios;
