@@ -39,7 +39,7 @@ $ModulosEmpresa = new ModulosEmpresa;
                     <h5 class="fw-bolder text-center text-uppercase text-dark"><i class="bi bi-ban-square"></i> Módulos Ativos</h5>
                     <?php if ($qtdME != 0) { 
                         for ($i=0; $i < $qtdME; $i++) { ?>
-                        <div class="col-12 col-sm-4 col-md-6 rounded-2 text-center mb-2">
+                        <div class="col-12 col-sm-4 col-md-6 rounded-2 text-center mb-2 text-white">
                             <div class="card  mx-auto <?= $modulos_empresa[$i]['MOD_COR']; ?> py-1">
                                 <div class="card-header">
                                     <?= $modulos_empresa[$i]['MOD_ICON']; ?> <?= $modulos_empresa[$i]['MOD_NOME']; ?> 
