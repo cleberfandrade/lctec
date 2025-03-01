@@ -179,4 +179,17 @@ class UsuariosEmpresa extends Model
             return false;
         }
     }
+    public function excluir($ver = 0)
+    {
+        $parametros = "WHERE USU_COD='{$this->codUsuario}' AND EMP_COD=";
+        $this->Model->setParametros($parametros);
+        $this->Model->setCodigo($this->codigo);
+        $ok = false;
+        $ok = $this->Model->deletar($ver);
+        if ($ok) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

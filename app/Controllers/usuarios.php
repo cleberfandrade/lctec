@@ -482,5 +482,47 @@ class usuarios extends View
     }
     public function excluir()
     {
+        $ok = false;      
+        //Recupera os dados enviados
+        $dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);
+        if (isset($_POST) && isset($dados['EXCLUIR_USUARIO'])) {
+            unset($dados['EXCLUIR_USUARIO']);
+    
+            $this->dados['empresa'] = $this->UsuariosEmpresa->setCodEmpresa($_SESSION['EMP_COD'])->setCodUsuario($_SESSION['USU_COD'])->listar(0);
+            $this->dados['usuario'] = $this->Usuarios->setCodUsuario($dados['USU_COD'])->listar(0);
+            if($this->dados['usuario'] != 0){
+                /*
+                $endr = $this->Enderecos->setCodUsuario($dados['USU_COD'])->checarEnderecoUsuario();
+                if(isset($endr) && $endr != 0){
+                    $this->Enderecos->setCodEmpresa($_SESSION['EMP_COD'])->setCodigo($endr[0]['END_COD'])->excluir(0);
+                }
+               
+                if(!$this->Usuarios->excluir(0)){
+                    $ok = true;
+                    $respota = array(
+                        'COD'=>'OK',
+                        'MENSAGEM' => 'Exclusão efetuada com sucesso!'
+                    );
+                }else{
+                    $respota = array(
+                        'COD'=>'ERRO',
+                        'MENSAGEM'=> 'ERRO 5- Erro ao excluir seu usuário, entre em contato com o suporte!'
+                    );
+                }
+                */
+            }else{
+                $respota = array(
+                    'COD'=>'ERRO',
+                    'MENSAGEM'=> 'ERRO 2- Dados inválido(s)!'
+                );
+            }
+        }else{
+            $respota = array(
+                'COD'=>'ERRO',
+                'MENSAGEM'=> 'ERRO 1- Acesso inválido!'
+            );
+        }
+        echo json_encode($respota);
+        
     }
 }
