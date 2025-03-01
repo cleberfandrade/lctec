@@ -309,8 +309,7 @@ class usuarios extends View
                 if(isset($dados['SET_COD']) && !empty($dados['SET_COD'])){
                    
                     $ump = $this->UsuariosEmpresa->setCodEmpresa($codEmpresa)->setCodUsuario($codUsuario)->checarUsuarioEmpresa(0);
-                    dump('ok');
-                    exit;
+                   
                     if(!empty($ump)){
                      
                         if($dados['SET_COD'] <> $ump['SET_COD']){
@@ -325,8 +324,7 @@ class usuarios extends View
                         Sessao::alert('ERRO',' 4- Erro ao alterar o usuário da empresa, entre em contato com o suporte!','fs-4 alert alert-danger');
                     }
                 }
-                
-                exit;
+
                 $dados_endereco = array(
                     'END_LOGRADOURO' => $dados['END_LOGRADOURO'],
                     'END_NUMERO' =>  $dados['END_NUMERO'],
