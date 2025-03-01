@@ -138,7 +138,7 @@ class fornecedores extends View
                 $this->dados['fornecedor'] = $this->Fornecedores->setCodEmpresa($dados[2])->setCodigo($dados[3])->listar(0);
                 
                 $id = $this->Enderecos->setCodFornecedor($dados[3])->checarEnderecoFornecedor(0);
-                
+                dump($id );
                 unset($id[0]['FOR_COD']);
                 $this->dados['fornecedor'] += $id[0];
                 if ($this->dados['fornecedor'] != 0) {
@@ -147,7 +147,7 @@ class fornecedores extends View
                     //Fornecedor sem endereço cadastrado
                     $ok = true;
                 }
-                dump($this->dados['fornecedor']);
+              
                 exit;
             }else{
                 Sessao::alert('ERRO',' ERRO: EMP22 - Acesso inválido(s)!','alert alert-danger');
