@@ -398,8 +398,10 @@ class usuarios extends View
         $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
 
         if($ok){
+            $this->link[1] = ['link'=> 'cadastros','nome' => 'MÓDULO DE CADASTROS'];
+            $this->link[2] = ['link'=> 'usuarios','nome' => 'GERENCIAR USUÁRIOS'];
             $this->dados['usuarios'] = $this->UsuariosEmpresa->setCodEmpresa($_SESSION['EMP_COD'])->setCodUsuario($_SESSION['USU_COD'])->listarTodos(0);
-            $this->render('admin/usuarios/meus_dados', $this->dados);
+            $this->render('admin/cadastros/usuarios/meus_dados', $this->dados);
         }else{
             $this->dados['usuario'] = $this->UsuariosEmpresa->setCodEmpresa($_SESSION['EMP_COD'])->setCodigo($codUsuario)->listar(0);
             $this->render('admin/cadastros/usuarios/listar', $this->dados);
