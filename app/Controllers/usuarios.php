@@ -395,15 +395,18 @@ class usuarios extends View
         }else {
             Sessao::alert('ERRO',' 1- Dados inválido(s)!','fs-4 alert alert-danger');   
         }
-        $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
+
+        $this->link[1] = ['link'=> 'cadastros','nome' => 'MÓDULO DE CADASTROS'];
+        $this->link[2] = ['link'=> 'usuarios','nome' => 'GERENCIAR USUÁRIOS'];
 
         if($ok){
-            $this->link[1] = ['link'=> 'cadastros','nome' => 'MÓDULO DE CADASTROS'];
-            $this->link[2] = ['link'=> 'usuarios','nome' => 'GERENCIAR USUÁRIOS'];
+            $this->link[3] = ['link'=> 'cadastros/meus_dados','nome' => 'ALTERAR MEUS DADOS DE USUÁRIO'];
             $this->dados['usuarios'] = $this->UsuariosEmpresa->setCodEmpresa($_SESSION['EMP_COD'])->setCodUsuario($_SESSION['USU_COD'])->listarTodos(0);
+            $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
             $this->render('admin/cadastros/usuarios/meus_dados', $this->dados);
         }else{
             $this->dados['usuario'] = $this->UsuariosEmpresa->setCodEmpresa($_SESSION['EMP_COD'])->setCodigo($codUsuario)->listar(0);
+            $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
             $this->render('admin/cadastros/usuarios/listar', $this->dados);
         }
     }
