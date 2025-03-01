@@ -52,10 +52,10 @@ setlocale(LC_MONETARY, 'pt_BR');
                                 <div class="col-8 row my-1 px-4 mx-auto">
                                     <!--<img src="<? //= DIRIMG ?>lctec2.png" class="col-4 img-fluid" style="width: 125px; height: auto;" alt="..."> -->
                                     <div class="col-8">
-                                        <a class="text-decoration-none" href="<?= DIRPAGE; ?>admin/painel">
-                                            <h5 class="fs-3 fw-bolder text-uppercase text-white mb-1">
+                                        <a class="text-decoration-none text-white" href="<?= DIRPAGE; ?>admin/painel">
+                                            <p class="fs-3 fw-bolder text-uppercase  mb-1">
                                                 <i class="bi bi-house"></i> <span class="frase"></span> <span class=""><?= $usuario['USU_NOME'] ?></span>
-                                            </h5>
+                                            </p>
                                         </a>
                                         <a class="text-decoration-none mt-3 h5 py-3" href="<?= DIRPAGE; ?>empresas" title="Acesse sua empresa"><span class="text-white"><b><?= ($_SESSION['EMP_COD'] != 0)? $empresa['EMP_NOME_FANTASIA'] : 'LC/<span class="text-success">TEC</span>'?></b></span></a>
                                     </div>
