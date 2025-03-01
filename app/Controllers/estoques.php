@@ -82,6 +82,7 @@ class estoques extends View
     }
     public function index()
     {
+        dump($this->dados['modulo']);
         $this->dados['title'] .= 'ACESSAR';
         $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb($this->dados['modulo'][0]['MOD_COR_TEXTO']);
         $this->render('admin/estoques/estoques', $this->dados);
