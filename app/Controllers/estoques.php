@@ -67,15 +67,23 @@ class estoques extends View
         $this->dados['clientes'] = $this->Clientes->setCodEmpresa($_SESSION['EMP_COD'])->listarTodosAtivos(0);
         $this->dados['modulo'] = $this->ModulosEmpresa->setCodEmpresa($_SESSION['EMP_COD'])->setCodigo(2)->listarModuloEmpresa(0);
         $this->dados['movimentacoes'] = $this->Movimentacoes->setCodEmpresa($_SESSION['EMP_COD'])->listarTodas(0); 
+        $this->dados['modulos_empresa'] = $this->ModulosEmpresa->setCodEmpresa($_SESSION['EMP_COD'])->setCodModulo(2)->checarRegistroModuloEmpresa(0);
 
         $this->link[0] = ['link'=> 'admin','nome' => 'PAINEL ADMINISTRATIVO'];
         $this->link[1] = ['link'=> 'estoques','nome' => 'MÓDULO DE ESTOQUES'];
         $this->link[2] = ['link'=> 'cadastros/estoques','nome' => 'GERENCIAR ESTOQUES'];
+
+        if ($this->dados['modulos_empresa'] == 0) {
+            Sessao::alert('OK',' MÓDULO NÃO DISPONÍVEL!','alert alert-danger');
+            Url::redirecionar('admin/painel');
+        }else {
+            $this->dados['modulo'] = $this->ModulosEmpresa->setCodEmpresa($_SESSION['EMP_COD'])->setCodigo(2)->listarModuloEmpresa(0);
+        }
     }
     public function index()
     {
         $this->dados['title'] .= 'ACESSAR';
-        $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
+        $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb($this->dados['modulo'][0]['MOD_COR_TEXTO']);
         $this->render('admin/estoques/estoques', $this->dados);
     }
     public function cadastro()
