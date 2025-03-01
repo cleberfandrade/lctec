@@ -209,8 +209,7 @@ class usuarios extends View
         $dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);
         $codUsuario = $dados['USU_COD'];
         $codEmpresa = $dados['EMP_COD'];
-       dump('ok');
-       exit;
+       
         if (isset($_POST) && isset($dados['ALTERAR_USUARIO'])) {
             unset($dados['ALTERAR_USUARIO']);
           
@@ -279,6 +278,8 @@ class usuarios extends View
         $dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);
         $codUsuario = $dados['USU_COD'];
         $codEmpresa = $dados['EMP_COD'];
+        dump('ok');
+        exit;
         if (isset($_POST) && isset($dados['ALTERAR_USUARIO'])) {
             unset($dados['ALTERAR_USUARIO']);
           
