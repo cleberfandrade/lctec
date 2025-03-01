@@ -147,7 +147,8 @@ class fornecedores extends View
                     //Fornecedor sem endereço cadastrado
                     $ok = true;
                 }
-               
+                dump($this->dados['fornecedor']);
+                exit;
             }else{
                 Sessao::alert('ERRO',' ERRO: EMP22 - Acesso inválido(s)!','alert alert-danger');
             }
