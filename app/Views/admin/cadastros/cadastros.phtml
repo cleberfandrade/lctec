@@ -9,8 +9,8 @@ include_once 'app/Views/admin/inc/cabecalho.phtml';
         <div id="page-content-wrapper">
         <!-- Top navigation-->
         <?php include_once 'app/Views/admin/inc/menu_topo.phtml'; ?>
-        <div class="container-fluid <?= $modulo[0]['MOD_COR'] ?> p-0">
-            <header class="py-3 bg-1">
+        <div class="container-fluid p-0">
+            <header class="py-2 <?= $modulo[0]['MOD_COR_TEXTO'] ?> <?= $modulo[0]['MOD_COR'] ?>">
                 <section class="container px-3">
                     <div class="row gx-5 align-items-center justify-content-center">
                         <div class="col-lg-9 col-xl-9 col-xxl-9">
