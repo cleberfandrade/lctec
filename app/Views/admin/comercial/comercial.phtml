@@ -17,7 +17,7 @@ include_once 'app/Views/admin/inc/cabecalho.phtml';
                         <div class="row gx-3 align-items-center justify-content-center">
                             <div class="col-lg-9 col-xl-9 col-xxl-9">
                                 <div class="my-1 px-4 mx-auto">
-                                    <a class="text-decoration-none" href="<?= DIRPAGE; ?>comercial">
+                                    <a class="text-decoration-none <?= $modulo[0]['MOD_COR_TEXTO'] ?>" href="<?= DIRPAGE; ?>comercial">
                                     <h5 class="fs-2 fw-bolder text-uppercase"><?= $modulo[0]['MOD_ICON'] ?> Gerenciar <span class="">Vendas</span></h5></a>
                                 </div>
                             </div>
