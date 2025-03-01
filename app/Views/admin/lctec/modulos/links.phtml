@@ -65,7 +65,23 @@ $qtdEmpresas = (is_array($empresas) ? count($empresas) : 0);
                 </section>
                 <?php include_once 'app/Views/admin/inc/alertas.phtml'; ?>  
                 <section class="container row mx-auto col-12 py-2 mb-5">
-
+                <table class="table table-striped table-bordered">
+                        <thead class="text-center text-uppercase">
+                            <th class="text-dark">#</th>     
+                            <th class="text-dark">CÓDIGO</th>      
+                            <th class="text-dark">MÓDULOS</th>
+                        </thead>
+                        <tbody>
+                            <?php $d = 1;for ($a = 0; $a < $qtd; $a++) { ?>
+                                <tr class="mx-auto text-center">
+                                    <td class="text-center align-middle"><?= $d; ?></td>
+                                    <td class="text-center align-middle"><?= $modulos[$a]['MOD_COD']; ?></td>
+                                    <td class="text-center align-middle"><?= $modulos[$a]['MOD_NOME']; ?></td>
+                                </tr>
+                            <?php $d++; } ?>                                 
+                           
+                        </tbody>
+                    </table>
                     <table class="table table-striped table-bordered">
                         <thead class="text-center text-uppercase">
                             <th class="text-dark">#</th>       
