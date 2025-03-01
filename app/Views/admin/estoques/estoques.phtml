@@ -35,7 +35,7 @@ $qtdE = (is_array($empresa) ? count($empresa) : 0);
             <?php include_once 'app/Views/admin/inc/alertas.phtml'; ?>
             <section class="container bg-light mx-auto py-2 mb-5">
                 <div class="col-12 row">
-                    <div class="col-4 <?= $modulo[0]['MOD_COR'] ?> text-center">
+                    <div class="col-4 <?= $modulo[0]['MOD_COR_TEXTO'].' '.$modulo[0]['MOD_COR'] ?> text-center">
                         <div class="card-body">
                             <h5 class="card-title">MOVIMENTAÇÃO DE ESTOQUES</h5>
                             <p class="card-text">Cadastre/Altere as suas entradas e saídas de produtos</p>
@@ -49,7 +49,7 @@ $qtdE = (is_array($empresa) ? count($empresa) : 0);
                             <a href="<?= DIRPAGE ?>movimentacoes/listar" class="btn btn-dark">ACESSAR</a>
                         </div>
                     </div>
-                    <div class="col-4 <?= $modulo[0]['MOD_COR'] ?> text-center">
+                    <div class="col-4 <?= $modulo[0]['MOD_COR_TEXTO'].' '.$modulo[0]['MOD_COR'] ?> text-center">
                         <div class="card-body">
                             <h5 class="card-title">ESTOQUE ATUAL</h5>
                             <p class="card-text">Verifique o estoque atual dos seus produtos</p>
