@@ -73,7 +73,7 @@ class cadastros extends View
         $Check = new Check;
         $Usuarios->setCodUsuario($_SESSION['USU_COD']);
         $this->dados['usuario'] = $Usuarios->listar(0);
-        $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
+        $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb($this->dados['modulo'][0]['MOD_COR_TEXTO']);
         $this->render('admin/cadastros/cadastros', $this->dados);
     }
     public function limite_acesso()

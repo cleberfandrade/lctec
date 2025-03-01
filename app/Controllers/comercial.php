@@ -52,7 +52,7 @@ class comercial extends View
     public function index()
     {
         $this->dados['title'] .= ' COMERCIAL';
-        $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb("text-white");
+        $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb($this->dados['modulo'][0]['MOD_COR_TEXTO']);
         $this->render('admin/comercial/comercial', $this->dados);
     }
     public function vendas()
