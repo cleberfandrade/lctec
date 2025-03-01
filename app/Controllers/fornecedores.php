@@ -136,9 +136,9 @@ class fornecedores extends View
             if($this->dados['empresa']['USU_COD'] == $_SESSION['USU_COD'] && $this->dados['empresa']['EMP_COD'] == $dados[2]){
                
                 $this->dados['fornecedor'] = $this->Fornecedores->setCodEmpresa($dados[2])->setCodigo($dados[3])->listar(0);
-        
+                dump($dados);
                 $id = $this->Enderecos->setCodFornecedor($dados[3])->checarEnderecoFornecedor(0);
-                dump($id);
+                
                 exit;
                 unset($id[0]['FOR_COD']);
                 $this->dados['fornecedor'] += $id[0];
