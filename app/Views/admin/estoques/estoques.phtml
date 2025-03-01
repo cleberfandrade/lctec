@@ -9,13 +9,13 @@ include_once 'app/Views/admin/inc/cabecalho.phtml';
 $qtd = (is_array($estoques) ? count($estoques) : 0);
 $qtdE = (is_array($empresa) ? count($empresa) : 0);
 ?>
-<body class="">
+<body class="bg-light">
     <div class="d-flex" id="wrapper">
         <?php include_once 'app/Views/admin/inc/menu_lateral.phtml'; ?>
         <div id="page-content-wrapper">
         <!-- Top navigation-->
         <?php include_once 'app/Views/admin/inc/menu_topo.phtml'; ?>
-        <div class="container-fluid bg-light p-0">
+        <div class="container-fluid  p-0">
             <header class="py-2 <?= $modulo[0]['MOD_COR_TEXTO'] ?> <?= $modulo[0]['MOD_COR'] ?>">
                 <section class="container px-1">
                     <div class="row gx-3 align-items-center justify-content-center">
