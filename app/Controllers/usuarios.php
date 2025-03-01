@@ -480,4 +480,7 @@ class usuarios extends View
             $this->render('admin/cadastros/usuarios', $this->dados);
         }
     }
+    public function excluir()
+    {
+    }
 }

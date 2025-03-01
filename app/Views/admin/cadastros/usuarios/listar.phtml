@@ -76,6 +76,7 @@ $qtdS = (is_array($setores) ? count($setores) : 0);
                                         <td class="text-center align-middle">
                                             <?php if($usuarios[$i]['USU_STATUS'] == 0){ ?>
                                                 <button type="button" class="btn btn-success btn-sm d-print-none" data-bs-toggle='modal'  data-bs-target="#status" data-codigo="<?= $usuarios[$i]['USU_COD']; ?>" data-nome="<?= $usuarios[$i]['USU_NOME']; ?>" data-statususuario="<?= $usuarios[$i]['USU_STATUS']; ?>" title="Deseja ativar?" ><i class="fa fa-check"></i></button>
+                                                <button type="button" class="btn btn-danger btn-sm d-print-none" data-bs-toggle='modal' data-bs-target="#deletar" title="Deletar" data-codigo="<?= $usuarios[$i]['USU_COD']; ?>" data-nome="<?= $usuarios[$i]['USU_NOME']; ?>"  data-status="<?= $usuarios[$i]['USU_STATUS']; ?>"><i class="fa fa-trash"></i></button>
                                             <?php }else { ?>
                                                 <a type="button" class="btn btn-warning btn-sm d-print-none" href="<?= DIRPAGE.'usuarios/alteracao/'.$usuarios[$i]['EMP_COD'].'/'.$usuarios[$i]['USU_COD']; ?>" title="Alterar usuário"><i class="fa fa-edit"></i></a>
                                                 <button type="button" class="btn btn-danger btn-sm d-print-none" data-bs-toggle='modal'  data-bs-target="#status" data-codigo="<?= $usuarios[$i]['USU_COD']; ?>" data-nome="<?= $usuarios[$i]['USU_NOME']; ?>" data-statususuario="<?= $usuarios[$i]['USU_STATUS']; ?>" title="Deseja desativar?" ><i class="fa fa-ban"></i></button>
@@ -113,6 +114,26 @@ $qtdS = (is_array($setores) ? count($setores) : 0);
                     <input type="hidden" id="EMP_COD" name="EMP_COD" value="<?= $empresa['EMP_COD'] ?>" />
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">CANCELAR</button>
                     <button id="sts" type="button" class="btn btn-dark" value=""><i class="fa fa-ban"></i> CONFIRMAR</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal" id="deletar" tabindex="-1" role="dialog" data-bs-backdrop="true" aria-labelledby="deletar" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div id="title2" class="modal-header text-center text-uppercase">
+                    
+                </div>
+                <div class="modal-body text-center">
+                    <p class="text-center text-uppercase mx-auto">Excluir registro?</p>
+                    <span id="USU_NOME2" class="mt-3 text-center h5"></span>
+                </div>
+                <div class="modal-footer">
+                    <input type="hidden" id="USU_STATUS2" name="USU_STATUS" value="" />
+                    <input type="hidden" id="USU_COD2" name="USU_COD" value="" />
+                    <input type="hidden" id="EMP_COD" name="EMP_COD" value="<?= $empresa['EMP_COD'] ?>" />
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">CANCELAR</button>
+                    <button id="sts2" type="button" class="btn btn-danger" value=""></button>
                 </div>
             </div>
         </div>
@@ -158,6 +179,50 @@ $qtdS = (is_array($setores) ? count($setores) : 0);
                 }
                 $('#resposta').html(resposta['MENSAGEM']);
                 setTimeout( () => { window.location.href="<?= DIRPAGE ?>usuarios"}, 5000);
+            });
+
+        });
+        $(document).ready(function() {
+            $('#deletar').on('show.bs.modal', function(event) {
+                var button = null;
+                var button = $(event.relatedTarget); // Button that triggered the modal
+                var codigo = null;
+                var codigo = button.data('codigo'); // Extract info from data-* attributes
+                var nome = button.data('nome');
+                var status = button.data('status');
+                var modal = $(this);
+                modal.find('#USU_COD2').val(codigo);
+                modal.find('#USU_STATUS2').val(status);
+                modal.find('#sts2').val(codigo);
+                modal.find('#USU_NOME2').html(nome);
+
+                if (status === 0) {
+                    modal.find('#sts2').html('<i class="fa fa-ban"></i> CONFIRMAR');
+                    modal.find('#title2').html('Deseja excluir Usuário?');
+                }
+            });
+        });
+        $("#sts2").click(function(){
+            var EMP_COD = $('#EMP_COD').val();
+            var USU_COD = $('#sts2').val();
+            var USU_STATUS = $('#USU_STATUS2').val();
+            setTimeout(function () {
+                    $('#deletar').modal('hide');
+            }, 100);
+            $.post('<?= DIRPAGE; ?>usuarios/excluir', {
+                EXCLUIR_USUARIO: true,
+                EMP_COD:EMP_COD,
+                USU_COD:USU_COD, 
+                USU_STATUS: USU_STATUS
+            }, function(retorno) {
+                var resposta = JSON.parse(retorno);
+                if (resposta['COD'] !== 'ERRO') {
+                    $('#resposta2').addClass('alert alert-success');
+                }else{
+                    $('#resposta2').addClass('alert alert-warning');
+                }
+                $('#resposta2').html(resposta['MENSAGEM']);
+                setTimeout( () => { window.location.href="<?= DIRPAGE ?>usuarios"}, 2000);
             });
 
         });
