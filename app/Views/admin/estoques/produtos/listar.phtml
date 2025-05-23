@@ -67,7 +67,40 @@ $qtdCL = (is_array($classificacoes) ? count($classificacoes) : 0);
                         <?php
                             $b = 1;
                             for ($i= 0; $i < $qtd; $i++) { ?>
-                            <tr class="<?= ($produtos[$i]['PRO_STATUS'] == 0 or $_SESSION['USU_NIVEL'] >= 10)? 'bg-secondary' : '';?>">
+                              <?php if($produtos[$i]['PRO_STATUS'] == 0 && $_SESSION['USU_NIVEL'] >= 10){ ?>
+                                <tr class="bg-secondary">
+                                    <td class="text-center align-middle"><?= $b; ?>
+                                        <a type="button" class="btn btn-outline-secondary btn-sm d-print-none" href="<?= DIRPAGE.'produtos/detalhar/'.$produtos[$i]['EMP_COD'].'/'.$produtos[$i]['EST_COD'].'/'.$produtos[$i]['PRO_COD']; ?>" title="Detalhar produto"><i class="bi bi-eye"></i></a>
+                                    </td>
+                                    <td class="text-center align-middle"><?= $produtos[$i]['EST_DESCRICAO']; ?></td>
+                                    <td class="text-center align-middle"><?= ($produtos[$i]['PRO_TIPO'] == 1)? 'PRODUTO': (($produtos[$i]['PRO_TIPO'] == 2) ? 'SERVIÇO' : 'N.I.'); ?></td>
+                                    <td class="text-center align-middle"><?= $produtos[$i]['PRO_CODIGO']; ?></td>
+                                    <td class="text-center align-middle"><?= $produtos[$i]['PRO_REFERENCIA']; ?></td>
+                                    <td class="text-center align-middle">
+                                    <?php 
+                                        if($produtos[$i]['CAT_COD'] != 0 or $produtos[$i]['CAT_COD'] != '') {
+                                            for ($c = 0; $c < $qtdC; $c++) { 
+                                                if ($categorias[$c]['CAT_COD'] == $produtos[$i]['CAT_COD']) { ?>
+                                                <?= $categorias[$c]['CAT_DESCRICAO']; ?>   
+                                            <?php } } ?> 
+                                        <?php }else { ?>
+                                            À DEFINIR
+                                        <?php } ?> 
+                                    </td>
+                                    <td class="text-center align-middle"><?= $produtos[$i]['PRO_NOME']; ?></td>
+                                    <td class="text-center align-middle"><?= $produtos[$i]['PRO_QUANTIDADE']; ?></td>
+                                    <!--<td class="text-center align-middle"><?php //= number_format($produtos[$i]['PRO_PRECO_UNITARIO'],2,',','.'); ?></td>
+                                    <td class="text-center align-middle"><?php //= number_format($produtos[$i]['PRO_PRECO_VENDA'],2,',','.'); ?></td>-->
+                                    <td class="text-center align-middle">R$ <?= $produtos[$i]['PRO_PRECO_CUSTO']; ?></td>
+                                    <td class="text-center align-middle">R$ <?= $produtos[$i]['PRO_PRECO_VENDA']; ?></td>
+                                    <td class="text-center align-middle"><?= ($produtos[$i]['PRO_STATUS'] == 1)? 'ATIVO' : 'DESATIVADO'; ?></td>
+                                    <td class="text-center align-middle">
+                                        <a type="button" class="btn btn-warning btn-sm d-print-none" href="<?= DIRPAGE.'produtos/alteracao/'.$produtos[$i]['EMP_COD'].'/'.$produtos[$i]['EST_COD'].'/'.$produtos[$i]['PRO_COD']; ?>" title="Alterar produto"><i class="fa fa-edit"></i></a>
+                                        <button type="button" class="btn btn-danger btn-sm d-print-none" data-bs-toggle='modal'  data-bs-target="#status" title="" data-codigo="<?= $produtos[$i]['PRO_COD']; ?>" data-nome="<?= $produtos[$i]['PRO_NOME']; ?>" data-estoque="<?= $produtos[$i]['EST_COD']; ?>"  data-status="<?= $produtos[$i]['PRO_STATUS']; ?>" title="Deseja excluir?" ><i class="fa fa-trash"></i></button>
+                                    </td>
+                                </tr>
+                            <?php }else{ ?>
+                                <tr class="">
                                 <td class="text-center align-middle"><?= $b; ?>
                                     <a type="button" class="btn btn-outline-secondary btn-sm d-print-none" href="<?= DIRPAGE.'produtos/detalhar/'.$produtos[$i]['EMP_COD'].'/'.$produtos[$i]['EST_COD'].'/'.$produtos[$i]['PRO_COD']; ?>" title="Detalhar produto"><i class="bi bi-eye"></i></a>
                                 </td>
@@ -100,6 +133,7 @@ $qtdCL = (is_array($classificacoes) ? count($classificacoes) : 0);
                                      <?php } ?>
                                 </td>
                             </tr>
+                        <?php } ?>                   
                         <?php $b++; } ?>
                         </tbody>
                     </table>
