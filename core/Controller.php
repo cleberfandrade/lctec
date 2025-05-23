@@ -13,7 +13,7 @@ class Controller
     public function __construct()
     {
         $this->url = filter_input(INPUT_GET, 'url', FILTER_DEFAULT);
-        $this->rota = explode('/', $this->url ?? '');
+        $this->rota = explode('/', (string)$this->url);
         
         if (isset($this->rota[0]) && !empty($this->rota[0])) {
             $this->controller = $this->rota[0];
