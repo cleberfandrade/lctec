@@ -147,7 +147,7 @@ class cadastros extends View
         $this->link[2] = ['link'=> 'cadastros/estoques','nome' => 'GERENCIAR ESTOQUES'];
         $this->link[3] = ['link'=> 'cadastros/estoques/cadastrar','nome' => 'CRIAR NOVO ESTOQUE'];
         
-        $this->dados['setores'] = $this->Setores->setCodEmpresa($_SESSION['EMP_COD'])->setTipo(4)->listarTodosPorTipo(4); 
+        $this->dados['setores'] = $this->Setores->setCodEmpresa($_SESSION['EMP_COD'])->setTipo(4)->listarTodosPorTipo(0); 
         $this->dados['classificacoes'] = $this->Classificacoes->setCodEmpresa($_SESSION['EMP_COD'])->setTipo(4)->listarTodosPorTipo(0);
         
         $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
