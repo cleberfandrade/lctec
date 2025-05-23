@@ -22,7 +22,7 @@ $qtdE = (is_array($empresa) ? count($empresa) : 0);
                         <div class="col-lg-9 col-xl-9 col-xxl-9">
                             <div class="my-1 px-4 mx-auto">
                                 <a class="text-decoration-none text-white" href="<?= DIRPAGE; ?>estoques">
-                                <h5 class="fs-2 fw-bolder text-uppercase"><?= $modulo[0]['MOD_ICON'] ?> Gerenciar <span class="">Estoques</span></h5></a>
+                                <h5 class="fs-2 fw-bolder text-uppercase"><?= $modulo[0]['MOD_ICON'] ?> Gerenciar <span class=""><?= $modulo[0]['MOD_NOME'] ?></span></h5></a>
                             </div>
                         </div>
                         <?php include_once 'app/Views/admin/inc/saudacao.phtml'; ?>
