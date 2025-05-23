@@ -98,7 +98,7 @@ $contagem = 1;
                     <hr class="my-4 text-dark">
                     <h5 class="card-title text-center"><i class="bi bi-box2-fill"></i> MOVIMENTAÇÃO DO PRODUTO</h5>
                     <div class="container col-12 px-1 mx-auto row">
-                        <form class="p-4 p-md-6 border text-uppercase rounded-3" action="<?= DIRPAGE ?>movimentacoes/<?= ($_SESSION['USU_NIVEL'] >= 1)? 'registrar': 'cadastrar'; ?>" method="POST">
+                        <form class="p-4 p-md-6 border text-uppercase rounded-3" action="<?= DIRPAGE ?>movimentacoes/<?= ($_SESSION['USU_NIVEL'] >= 11)? 'registrar': 'cadastrar'; ?>" method="POST">
                             <div class="col-12 mx-auto <?= $modulo[0]['MOD_COR'] ?> text-center">
                                 <div class="card-body">
                                     <h5 class="card-title">SELECIONE O ESTOQUE</h5>
@@ -170,7 +170,7 @@ $contagem = 1;
                                     <?= Sessao::alert('ERRO'); ?>
                                 </section>
                                 <div class="col-12 mx-auto row mb-2">
-                                <?php if($_SESSION['USU_NIVEL'] >= 10){ ?>
+                                <?php if($_SESSION['USU_NIVEL'] >= 11){ ?>
                                     <div id="CLI" class="col-5 mx-auto form-floating mb-3">
                                         <div class="input-group input-group-lg">
                                             <div class="form-floating">
