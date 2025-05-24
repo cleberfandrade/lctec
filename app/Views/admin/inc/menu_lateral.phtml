@@ -11,9 +11,82 @@ $ModulosEmpresa = new ModulosEmpresa;
 $mk = $ModulosEmpresa->setCodEmpresa($_SESSION['EMP_COD'])->listar(0);
 $qtdMK = (is_array($mk) ? count($mk) : 0);
 ?>
+<style>
+    /* Estilos base para o corpo da página */
+body {
+  font-family: Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  margin: 0;
+  background-color: #f0f0f0;
+}
+
+/* Container do calendário com estilo moderno */
+.calendario {
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  background-color: white;
+  width: 340px;
+}
+
+/* Cabeçalho do calendário com mês e ano */
+.calendario-header {
+  background-color: #4a90e2;
+  color: white;
+  text-align: center;
+  padding: 10px;
+  font-weight: bold;
+}
+
+/* Estilização da tabela */
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+/* Estilo dos cabeçalhos dos dias */
+th {
+  background-color: #f4f4f4;
+  padding: 10px;
+  text-transform: uppercase;
+  font-size: 0.8em;
+  color: #666;
+}
+
+/* Estilo das células de dias */
+td {
+  text-align: center;
+  padding: 10px;
+  border: 1px solid #e0e0e0;
+  transition: background-color 0.3s ease;
+}
+
+/* Efeito de hover nos dias */
+td:hover {
+  background-color: #e6f2ff;
+  cursor: pointer;
+}
+
+/* Destaque para o dia atual */
+.dia-atual {
+  background-color: #4a90e2;
+  color: white;
+  font-weight: bold;
+  border-radius: 50%;
+}
+
+/* Dias de fim de semana com cor diferente */
+.fim-de-semana {
+  color: #888;
+}
+</style>
 <div class="bg-dark position-relative d-print-none" id="sidebar-wrapper" style="font-size: 1rem;">
     <div class="sidebar-heading fw-bold fs-3 text-center text-white" title="" style="width: auto; height: auto;">LC<span class="fs-3 text-small">/</span><span class="text-success">TEC</span></div>
-<div class="mt-3"></div>
+    <div class="mt-3"></div>
     <div class="d-flex align-items-start">
         <div class="list-group list-group-flush text-uppercase" >
             <?= $qtdAvisos >= 1 ? '<div class="py-2 bg-warning col-12">
@@ -21,7 +94,7 @@ $qtdMK = (is_array($mk) ? count($mk) : 0);
                     <div role="alert" aria-live="assertive" aria-atomic="true"><i class="bi bi-bell piscar text-warning"></i></div>
                 </div>
             </div>' : ''?>
-            <a class="list-group-item list-group-item-action list-group-item-dark p-3 px-3" title="Painel Administrativo" href="<?= DIRPAGE?>admin<?= ($_SESSION['USU_NIVEL'] >= 2)? '' :'/painel'; ?>"><i class="bi bi-house"></i>  PAINEL ADM</a>
+            <a class="list-group-item list-group-item-action list-group-item-dark p-3 px-3" title="Painel Administrativo" href="<?= DIRPAGE?>admin<?= ($_SESSION['USU_NIVEL'] >= 5)? '' :'/painel'; ?>"><i class="bi bi-house"></i>  PAINEL ADM</a>
             <?php if (isset($_SESSION['EMP_COD']) && $_SESSION['EMP_COD'] != 0) { ?>
                 <?php if(isset($_SESSION['USU_NIVEL']) && $_SESSION['USU_NIVEL'] >= 30){ ?>
                     <a class="list-group-item list-group-item-action list-group-item-dark p-3 px-3" title="Painel Gerencial" href="<?= DIRPAGE?>lctec"><i class="bi bi-house"></i>  PAINEL <span class="text-success">DESENVOLVIMENTO</span></a>
@@ -36,6 +109,29 @@ $qtdMK = (is_array($mk) ? count($mk) : 0);
         </div>
    
     </div>
+    <div class="calendario">
+      <!-- Cabeçalho dinâmico com mês e ano -->
+      <div class="calendario-header" id="mes-ano">
+        Carregando...
+      </div>
+        
+      <table>
+        <thead>
+          <tr>
+            <th>Dom</th>
+            <th>Seg</th>
+            <th>Ter</th>
+            <th>Qua</th>
+            <th>Qui</th>
+            <th>Sex</th>
+            <th>Sáb</th>
+          </tr>
+        </thead>
+        <tbody id="dias-calendario">
+          <!-- Os dias serão gerados dinamicamente via JavaScript -->
+        </tbody>
+      </table>
+    </div>
     <hr>
     <div class="position-absolute bottom-0 mb-0 py-0 start-0">
         <div class="list-group list-group-flush text-uppercase py-0" >
@@ -43,3 +139,75 @@ $qtdMK = (is_array($mk) ? count($mk) : 0);
         </div>
     </div>
 </div>
+<script type="text/javascript">
+    // Função para obter o nome do mês em português
+function getNomeMes(mes) {
+  const meses = [
+    'Janeiro', 'Fevereiro', 'Março', 'Abril', 
+    'Maio', 'Junho', 'Julho', 'Agosto', 
+    'Setembro', 'Outubro', 'Novembro', 'Dezembro'
+  ];
+  return meses[mes];
+}
+
+// Função principal para renderizar o calendário
+function renderCalendario() {
+  const dataAtual = new Date();
+  const mesAtual = dataAtual.getMonth();
+  const anoAtual = dataAtual.getFullYear();
+  const diaAtual = dataAtual.getDate();
+
+  // Atualiza o cabeçalho com mês e ano
+  const headerElement = document.getElementById('mes-ano');
+  headerElement.textContent = `${getNomeMes(mesAtual)} ${anoAtual}`;
+
+  // Primeiro dia do mês e quantidade de dias no mês
+  const primeiroDiaDoMes = new Date(anoAtual, mesAtual, 1).getDay();
+  const ultimoDiaDoMes = new Date(anoAtual, mesAtual + 1, 0).getDate();
+
+  const tbody = document.getElementById('dias-calendario');
+  tbody.innerHTML = ''; // Limpa conteúdo anterior
+
+  let linha = document.createElement('tr');
+  let diaContador = 1;
+
+  // Adiciona células vazias antes do primeiro dia do mês
+  for (let i = 0; i < primeiroDiaDoMes; i++) {
+    const celulaVazia = document.createElement('td');
+    linha.appendChild(celulaVazia);
+  }
+
+  // Renderiza os dias do mês
+  while (diaContador <= ultimoDiaDoMes) {
+    if (linha.children.length === 7) {
+      tbody.appendChild(linha);
+      linha = document.createElement('tr');
+    }
+
+    const coluna = document.createElement('td');
+    coluna.textContent = diaContador;
+
+    // Marca o dia atual
+    if (diaContador === diaAtual && mesAtual === dataAtual.getMonth()) {
+      coluna.classList.add('dia-atual');
+    }
+
+    // Marca fins de semana
+    const diaSemana = new Date(anoAtual, mesAtual, diaContador).getDay();
+    if (diaSemana === 0 || diaSemana === 6) {
+      coluna.classList.add('fim-de-semana');
+    }
+
+    linha.appendChild(coluna);
+    diaContador++;
+  }
+
+  // Adiciona a última linha se necessário
+  if (linha.children.length > 0) {
+    tbody.appendChild(linha);
+  }
+}
+
+// Renderiza o calendário quando a página carregar
+document.addEventListener('DOMContentLoaded', renderCalendario);
+</script>
