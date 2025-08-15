@@ -66,7 +66,7 @@ $qtdCL = (is_array($classificacoes) ? count($classificacoes) : 0);
                                     for ($i= 0; $i < $qtd; $i++) { ?>
                                     <tr class="<?= ($colaboradores[$i]['COL_STATUS'] == 0 && $_SESSION['USU_NIVEL'] >= 8)? 'bg-secondary' : '';?>">
                                         <td class="text-center align-middle"><?= $b; ?></td>
-                                        <td class="text-center align-middle"><?= $colaboradores[$i]['COL_NOME'].' '.$colaboradores[$i]['USU_SOBRENOME']; ?></td>
+                                        <td class="text-center align-middle"><?= $colaboradores[$i]['COL_NOME'].' '.$colaboradores[$i]['COL_SOBRENOME']; ?></td>
                                         <td class="text-center align-middle"><?= $colaboradores[$i]['COL_EMAIL']; ?></td>
                                         <td class="text-center align-middle"><?= $colaboradores[$i]['COL_TEL_1']; ?></td>
                                         <td class="text-center align-middle"><?= $colaboradores[$i]['COL_NIVEL']; ?></td>
@@ -74,10 +74,10 @@ $qtdCL = (is_array($classificacoes) ? count($classificacoes) : 0);
                                         <td class="text-center align-middle">
                                         <?php 
                                             if($colaboradores[$i]['SET_COD'] != 0 or $colaboradores[$i]['SET_COD'] != '') {
-                                                for ($c = 0; $c < $qtdCS; $c++) { 
-                                                    if ($setores[$c]['SET_COD'] == $colaboradores[$i]['SET_COD']) { ?>
-                                                    <?= $setores[$c]['SET_DESCRICAO']; ?>   
-                                                <?php } } ?> 
+                                                for ($s = 0; $s < $qtdS; $s++) { 
+                                                    if($setores[$s]['SET_COD'] == $colaboradores[$i]['SET_COD']) { ?>
+                                                    <?= $setores[$s]['SET_DESCRICAO']; ?>   
+                                                <?php }} ?> 
                                             <?php }else { ?>
                                                 À DEFINIR (op)
                                             <?php } ?> 

@@ -6,7 +6,7 @@ use Core\Model;
 class Categorias extends Model
 { 
     private $tabela = 'tb_categorias';
-    private $Model = '';
+    private $Model;
     private $codigo,$codEmpresa,$descricao,$tipo;
 
     public function __construct()

@@ -198,7 +198,6 @@ class financeiro extends View
     {
         $this->dados['title'] .= 'GERENCIAR CAIXA EMPRESA/NEGÓCIO'; 
 
-
         $this->render('admin/financeiro/caixa/status', $this->dados);
     }
     public function movimentacao()
