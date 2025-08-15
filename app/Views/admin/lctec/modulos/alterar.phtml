@@ -42,7 +42,7 @@ $qtdME = (is_array($modulos) ? count($modulos) : 0);
                     <div class="container col-10 px-2 py-2 mx-auto row">
                         <form class="p-4 p-md-6 border text-uppercase rounded-3 " action="<?= DIRPAGE ?>modulos/alterar" method="POST">
                             <div class="row ">    
-                                <div class="col-8 form-floating mb-3">
+                                <div class="col-5 form-floating mb-3">
                                     <input type="text" class="form-control maiusculo" id="1" name="MOD_NOME" placeholder="Informe o nome do módulo" value="<?= isset($_POST['MOD_NOME']) ? $_POST['MOD_NOME'] : (isset($modulo['MOD_NOME'])? $modulo['MOD_NOME'] : '') ; ?>">
                                     <label class="px-3" for="1">NOME DO MÓDULO</label>
                                 </div>    
@@ -50,13 +50,17 @@ $qtdME = (is_array($modulos) ? count($modulos) : 0);
                                     <textarea type="text" class="form-control" name="MOD_ICON"><?= isset($_POST['MOD_ICON']) ? $_POST['MOD_ICON'] : (isset($modulo['MOD_ICON'])? $modulo['MOD_ICON'] : '') ; ?></textarea>
                                     <label class="px-3" for="1">ICONE (opcional)</label>
                                 </div>  
+                                <div class="col-3 form-floating mb-3">
+                                    <input type="text" class="form-control" id="2" name="MOD_COR" value="<?= isset($_POST['MOD_COR']) ? $_POST['MOD_COR'] : (isset($modulo['MOD_COR'])? $modulo['MOD_COR'] : '') ; ?>">
+                                    <label class="px-3" for="2">COR</label>
+                                </div>
                                 <div class="col-8 form-floating mb-3">
                                     <input type="text" class="form-control" id="2" name="MOD_LINK" value="<?= isset($_POST['MOD_LINK']) ? $_POST['MOD_LINK'] : (isset($modulo['MOD_LINK'])? $modulo['MOD_LINK'] : '') ; ?>">
                                     <label class="px-3" for="2">LINK</label>
                                 </div>
                                 <div class="col-4 form-floating mb-3">
-                                    <input type="text" class="form-control" id="2" name="MOD_COR" value="<?= isset($_POST['MOD_COR']) ? $_POST['MOD_COR'] : (isset($modulo['MOD_COR'])? $modulo['MOD_COR'] : '') ; ?>">
-                                    <label class="px-3" for="2">COR</label>
+                                    <input type="text" class="form-control" id="2" name="MOD_COR_TEXTO" value="<?= isset($_POST['MOD_COR_TEXTO']) ? $_POST['MOD_COR_TEXTO'] : (isset($modulo['MOD_COR_TEXTO'])? $modulo['MOD_COR_TEXTO'] : '') ; ?>">
+                                    <label class="px-3" for="2">COR DO TEXTO</label>
                                 </div>
                                 <div class="col-12 mb-3" style="height:100px">
                                     <label for="address2" class="form-label">DESCRIÇÃO</label>

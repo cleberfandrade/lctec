@@ -1,0 +1,205 @@
+<?php 
+use Libraries\Sessao;
+use Libraries\Url;
+use Libraries\Util;
+$Util = new Util;
+include_once 'inc/cabecalho.phtml'; 
+$qtdE = (is_array($estoques) ? count($estoques) : 0);
+$qtdME = (is_array($modulos_empresa) ? count($modulos_empresa) : 0);
+$qtdU = (is_array($usuarios) ? count($usuarios) : 0);
+$qtdUV = (is_array($ultimas_vendas)? count($ultimas_vendas) : 0);
+$qtdP = (is_array($produtos) ? count($produtos) : 0);
+$qtdV = (is_array($vendas)? count($vendas) : 0 );
+$qtdVH = (is_array($vendas_hoje)? count($vendas_hoje) : 0 );
+$qtdCP = (is_array($custo_produtos)? count($custo_produtos) : 0 );
+
+$qtdCL = (is_array($clientes)? count($clientes) : 0 );
+
+$qtdMV = (is_array($movimentacoes) ? count($movimentacoes) : 0);
+
+$qtdLA = (is_array($lancamentos) ? count($lancamentos) : 0);
+$qtdLP = (is_array($lancamentos_pagar) ? count($lancamentos_pagar) : 0);
+$qtdLR = (is_array($lancamentos_receber) ? count($lancamentos_receber) : 0);
+
+$qtdT = (is_array($transacoes)? count($transacoes) : 0);
+
+!isset($m)? $m = $Util->getMesAtual():''; 
+
+setlocale(LC_MONETARY, 'pt_BR');
+
+?>
+<link rel="stylesheet" type="text/css" href="https://pixinvent.com/stack-responsive-bootstrap-4-admin-template/app-assets/fonts/simple-line-icons/style.min.css">
+<body>
+    <style>
+        #chart {
+  max-width: 650px;
+  margin: 35px auto;
+}
+        </style>
+    <div class="d-flex" id="wrapper" style="font-family: WF Visual Sans Text,sans-serif;">
+        <?php include_once 'inc/menu_lateral.phtml'; ?>
+        <div id="page-content-wrapper">
+            <!-- Top navigation 
+            #50DD98
+        -->
+            <?php include_once 'inc/menu_topo.phtml'; ?>
+            <div class="container-fluid bg-light p-0">
+                <header class="py-3" style="background-color: #40bf7b;">
+                    <section class="container px-3">
+                        <div class="row gx-5">
+                            <div class="row col-lg-9 col-xl-9 col-xxl-9">
+                                <div class="col-8 row my-1 px-4 mx-auto">
+                                    <img src="<?= DIRIMG ?>lctec2.png" class="col-4 img-fluid" style="width: 125px; height: auto;" alt="..."> 
+                                    <div class="col-8">
+                                        <a class="text-decoration-none" href="<?= DIRPAGE; ?>admin/painel">
+                                            <h5 class="fs-3 fw-bolder text-uppercase text-dark mb-1">
+                                                <i class="bi bi-house"></i> Olá <span class="text-white"><?= $usuario['USU_NOME'] ?></span>
+                                            </h5>
+                                        </a>
+                                        <a class="text-decoration-none mt-3 h5 py-3" href="<?= DIRPAGE; ?>empresas" title="Acesse sua empresa"><span class="text-success"><?= ($_SESSION['EMP_COD'] != 0)? $empresa['EMP_NOME_FANTASIA'] : 'LC/<span class="text-success">TEC</span>'?></span></a>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                            <?php include_once 'app/Views/admin/inc/saudacao.phtml'; ?>   
+                        </div>
+                    </section>
+                     
+                </header>
+                <?php include_once 'app/Views/admin/inc/alertas.phtml'; ?>
+                <section class="container row mx-auto col-12 py-2 mb-5">
+                    <?php if (isset($_SESSION['EMP_COD']) && $_SESSION['EMP_COD'] == 0) { ?>
+                        <div class="row mx-auto m-4 ">
+                            <div class="container col-12">
+                                <div class="p-4 text-center text-white  bg-success rounded-3">
+                                    <h1 class="text-emphasis opacity-75 mt-4">CADASTRE A SUA EMPRESA</h1>
+                                    <p class="lead fw-bold opacity-75 mt-3 text-uppercase">
+                                    Para utilizar o sitema LC/<span class="text-dark">TEC</span> <br> é necessário que você cadastre o sua <b class="text-dark">empresa/negócio</b><p class="text-uppercase mt-5"> crie e utilize ao máximo dos recursos disponíveis</p></p>
+                                    <a href="<?= DIRPAGE ?>empresas/cadastro" class="col-auto btn btn-success text-uppercase">Clique aqui</a>
+                                </div>
+                            </div>
+                            <!--<div class="col-4 text-center text-lg-start opacity-50">
+                                <h1 class="display-5 text-center fw-bolder text-uppercase text-3 mb-2">LC-<span class="text-success">TEC</span></h1>
+                                <p class="col-lg lead text-center fs-6">DESENVOLVENDO SOLUÇÕES <br/>PARA O SEU NEGÓCIO</p>
+                            </div>-->
+                        </div>
+                    <?php }else { ?>
+                        <div class="row col-12 mx-auto m-1">
+        
+                            <div class="col-12 row mx-auto">
+                                <div class="col text-uppercase text-center mx-auto fs-4 "><?= Util::mesLowercase(date('n',$m))?>/<?= date('Y') ?> </div>
+                            </div>
+                            <div class="col-12 row text-center mx-auto mb-3">    
+                                <div class="">
+                                    <div class="card-body card-widget-separator">
+                                    <?php for ($b = 0; $b < $qtdME; $b++) { ?>
+                                        <?php if ($modulos_empresa[$b]['MOD_NOME'] == 'ESTOQUE') { ?>
+                                        <div class="row gy-4 gy-sm-1">
+                                        <div class="col-12 m-0 p-1 rounded <?= $modulos_empresa[$b]['MOD_COR'] ?>"></div>
+                                            <div class="col-sm-6 col-lg-3 mt-3">
+                                                <div class="d-flex justify-content-between align-items-start card-widget-1 border-end pb-3 pb-sm-0">
+                                                    <div class="text-center mx-auto">
+                                                        <p class="mb-0 fs-4"><i class="fas fa-user-tie"></i> Usuários</p>
+                                                        <h3 class="mb-1"><?= $qtdCL ?></h3>
+                                                    </div>
+                                                </div>
+                                                <hr class="d-none d-sm-block d-lg-none me-4">
+                                            </div>
+                                            <div class="col-sm-6 col-lg-3 mt-3">
+                                                <div class="d-flex justify-content-between align-items-start card-widget-2 border-end pb-3 pb-sm-0">
+                                                    <div class="text-center mx-auto">
+                                                        <p class="mb-0 fs-4"><i class="bi bi-bag-check"></i> Produtos</p>
+                                                        <h3 class="mb-1"><?= $qtdP ?></h3>
+                                                    </div>
+                                                </div>
+                                                <hr class="d-none d-sm-block d-lg-none">
+                                            </div>
+                                            
+                                            
+                                        </div>
+                                        <?php break; } } ?>
+                                    </div>
+                                    <hr>
+                                    <div class="row">
+                                        
+                                        <div class="row col-sm-12 mx-auto">
+                                            <div class="row col-12 mt-2">
+                                                <?php if ($qtdME != 0) { 
+                                                    for ($i=0; $i < $qtdME; $i++) { ?>
+                                                    <?php if ($modulos_empresa[$i]['MOD_NOME'] == 'ESTOQUE') {
+                                                        if ($qtdE) { ?>
+                                                        <div class="col-12 col-sm-6 col-lg-4 mb-3">
+                                                            <div class="mx-auto rounded-2 <?= $modulos_empresa[$i]['MOD_COR']; ?>" >
+                                                                <a href="<?= DIRPAGE.$modulos_empresa[$i]['MOD_LINK']?>" class="link-light text-decoration-none">
+                                                                    <div class="card-header text-uppercase">Módulo <?= $modulos_empresa[$i]['MOD_NOME']; ?></div>
+                                                                    <div class="card-body">
+                                                                        <h5 class="card-title text-uppercase"><h1><?= $modulos_empresa[$i]['MOD_ICON']; ?></h1>  <?= $modulos_empresa[$i]['MOD_NOME']; ?></h5>
+                                                                        <!--<p class="card-text"><?//= $modulos_empresa[$i]['MOD_DESCRICAO']; ?></p>-->
+                                                                    </div>
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    <?php }
+                                                    }else { ?>
+                                                    <div class="col-12 col-sm-6 col-lg-4 mb-3">
+                                                        <div class=" mx-auto rounded-2 <?= $modulos_empresa[$i]['MOD_COR']; ?>">
+                                                            <a href="<?= DIRPAGE.$modulos_empresa[$i]['MOD_LINK']?>" class="link-light text-decoration-none">
+                                                                <div class="card-header text-uppercase">Módulo <?= $modulos_empresa[$i]['MOD_NOME']; ?></div>
+                                                                <div class="card-body">
+                                                                    <h5 class="card-title text-uppercase"><h1><?= $modulos_empresa[$i]['MOD_ICON']; ?></h1>  <?= $modulos_empresa[$i]['MOD_NOME']; ?></h5>
+                                                                    <!--<p class="card-text"><? //= $modulos_empresa[$i]['MOD_DESCRICAO']; ?></p>-->
+                                                                </div>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                    <?php } } ?>
+                                                    
+                                                    <?php } ?>
+                                                    <div class="col-12 mx-auto text-center mt-3">
+                                                        <a type="button" href="<?= DIRPAGE ?>modulo_empresa" title="Libere novos módulos para a sua empresa/negócio" class="btn text-center mt-2  btn-secondary">ATIVAR/DESATIVAR MÓDULOS</a>
+                                                    </div>
+                                                    <hr class="my-4 text-dark">
+                                                </div>
+                                            </div> 
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    <?php } ?>
+                </section>
+                <?php include_once 'inc/rodape.phtml';?>
+                <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+                <script>
+                    var options = {
+                chart: {
+                    type: 'area'
+                },
+                colors: ['#50DD98','#d4526e'],
+                series: [
+                    {
+                        name: 'Receita',
+                        data: [300.00,500.00,150.00]
+                    },
+                    {
+                        name: 'Despesas',
+                        data: [150.00,75.00,100.00]
+                    }
+                ],
+                xaxis: {
+                    categories: ['JAN','FEV','MAR']
+                    }
+                }
+                var chart = new ApexCharts(document.querySelector("#chart"), options);
+
+                chart.render();
+
+                $('#filtrar').on('change', function(){
+                    $(this).closest('form').submit();
+                });
+                    </script>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

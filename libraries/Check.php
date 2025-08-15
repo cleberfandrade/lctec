@@ -30,25 +30,25 @@
             return false;
         }
     }
-    public function breadcrumb()
+    public function breadcrumb($textcolor = "text-dark")
     {
         $link = self::getLink();
     
         $qtd = (is_array($link) ? count($link) : 0);
        
-        $printar = '<nav aria-label="breadcrumb mx-auto align-middle"><ol class="breadcrumb align-middle">';
+        $printar = '<nav aria-label="breadcrumb mx-auto align-middle '.$textcolor.'"><ol class="breadcrumb align-middle">';
         for ($i=0; $i < $qtd; $i++) { 
             $printar .=' <li class="breadcrumb-item ';
             if ($i+1 < $qtd) {
                 $ac = '';
                 $ar ='';
                 $lk = 'href="'.DIRPAGE.$link[$i]['link'].'"';
-                $printar.=''.$ac.'"'.$ar.'><a class=" btn-sm align-middle text-decoration-none text-dark" '.$lk.' title="VOLTAR À '.$link[$i]['nome'].'">'.$link[$i]['nome'].'</a></li>';
+                $printar.=''.$ac.'"'.$ar.'><a class=" btn-sm align-middle text-decoration-none '.$textcolor.'" '.$lk.' title="VOLTAR À '.$link[$i]['nome'].'">'.$link[$i]['nome'].'</a></li>';
             } else {
                 $ac = 'active';
                 $ar ='aria-current="page"';
                 $lk = '';
-                $printar.=''.$ac.'"'.$ar.'><b class="text-dark fw-bold" title="VOCÊ ESTÁ AQUI">'.$link[$i]['nome'].'</b></li>';
+                $printar.=''.$ac.'"'.$ar.'><b class="'.$textcolor.' fw-bold" title="VOCÊ ESTÁ AQUI">'.$link[$i]['nome'].'</b></li>';
             }
             
             // <li class="breadcrumb-item active" aria-current="page">$dados</li>

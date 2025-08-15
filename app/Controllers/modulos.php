@@ -63,6 +63,14 @@ class modulos extends View
         $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
         $this->render('admin/lctec/modulos/listar', $this->dados);
     }
+    public function links()
+    {
+        Sessao::naoLogadoSistema();
+        $this->dados['title'] .= ' LINKS DOS MÓDULOS';
+        $this->link[2] = ['link'=> 'modulos/links','nome' => 'CADASTRAR LINKS DOS MÓDULOS'];
+        $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
+        $this->render('admin/lctec/modulos/links', $this->dados);
+    }
     public function cadastro():void
     {
         Sessao::naoLogadoSistema();

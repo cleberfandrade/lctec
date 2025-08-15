@@ -67,7 +67,7 @@ class financeiro extends View
     {
         Sessao::naoLogado();
         $this->dados['title'] .= ' GERENCIAR CONTAS';   
-        $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
+        $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb($this->dados['modulo'][0]['MOD_COR_TEXTO']);
         $dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);
         if (isset($_POST) && isset($dados['filtrar'])) {
            

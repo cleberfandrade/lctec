@@ -1,7 +1,7 @@
-<div class="col-lg-3 col-xl-3 col-xxl-3 text-dark border-start">
-        <h5 class="text-uppercase"><span class="frase"></span> <?= $usuario['USU_NOME'] ?></h5>
+<div class="col-lg-3 col-xl-3 col-xxl-3 <?= $modulo[0]['MOD_COR_LINK'] ?> border-start">
+        <h5 class="text-uppercase"> <? //= $usuario['USU_NOME'] ?></h5>
         <span class=""></span>
         <h6><b>HOJE:</b> <?= date("d/m/Y");?>
         <?php include_once 'app/Views/admin/inc/hora.phtml'; ?>       </h6>       
-        <a type="button" title="Contate o suporte" href="<?= DIRPAGE ?>suporte" class="mt-1 btn btn-outline-dark text-uppercase">Solicitar ajuda!</a>                  
+        <!--<a type="button" title="Contate o suporte" href="<? //= DIRPAGE ?>suporte" class="mt-1 btn btn-outline-dark text-uppercase">Solicitar ajuda!</a>-->                  
 </div>

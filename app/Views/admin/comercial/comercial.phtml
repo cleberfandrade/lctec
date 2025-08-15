@@ -1,0 +1,39 @@
+<?php 
+use Libraries\Sessao;
+use Libraries\Url;
+use Libraries\Util;
+$Util = new Util;
+include_once 'app/Views/admin/inc/cabecalho.phtml'; 
+?>
+    <body class="bg-light">
+        <div class="d-flex" id="wrapper">
+            <?php include_once 'app/Views/admin/inc/menu_lateral.phtml'; ?>
+            <div id="page-content-wrapper">
+            <!-- Top navigation-->
+            <?php include_once 'app/Views/admin/inc/menu_topo.phtml'; ?>
+            <div class="container-fluid p-0">
+                <header class="py-2 <?= $modulo[0]['MOD_COR_TEXTO'].' '.$modulo[0]['MOD_COR'] ?>">
+                    <section class="container px-1">
+                        <div class="row gx-3 align-items-center justify-content-center">
+                            <div class="col-lg-9 col-xl-9 col-xxl-9">
+                                <div class="my-1 px-4 mx-auto">
+                                    <a class="text-decoration-none <?= $modulo[0]['MOD_COR_TEXTO'] ?>" href="<?= DIRPAGE; ?>comercial">
+                                    <h5 class="fs-2 fw-bolder text-uppercase"><?= $modulo[0]['MOD_ICON'] ?> Gerenciar <span class="">Vendas</span></h5></a>
+                                </div>
+                            </div>
+                            <?php include_once 'app/Views/admin/inc/saudacao.phtml'; ?>   
+                        </div>
+                    </section>
+                    <section class="container col-12 mx-auto px-5">
+                        <?= $breadcrumb ?>
+                    </section>
+                </header>
+                <?php include_once 'app/Views/admin/inc/alertas.phtml'; ?>  
+                <section class="container-fluid col-12 bg-light mx-auto py-2 mb-5">
+
+                </section>
+            </div>
+            <?php include_once 'app/Views/admin/inc/rodape.phtml';?>
+        </div>
+    </body>
+</html>

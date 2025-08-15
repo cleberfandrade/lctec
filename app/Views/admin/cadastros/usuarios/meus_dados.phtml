@@ -2,6 +2,7 @@
 use Libraries\Sessao;
 
 include_once 'app/Views/admin/inc/cabecalho.phtml'; 
+$qtdS = (is_array($setores) ? count($setores) : 0);
 
 ?>
 <body class="">
@@ -127,13 +128,25 @@ include_once 'app/Views/admin/inc/cabecalho.phtml';
                                 </div>
                             </div> 
                             <div class="row">
-                                <div class="col-6 form-floating mb-3">
-                                    <input type="password" class="form-control" name="USU_SENHA" id="floating1" placeholder="Digite sua senha">
-                                    <label for="floating1">Senha</label>
+                                <div class="col-4 text-center mb-3">
+                                    <div class="form-floating mb-3">
+                                        <select class="form-select text-uppercase mb-3 form-floating" <?= ($_SESSION['USU_NIVEL'] >= 10 && $_SESSION['USU_NIVEL'] <= 30 ) ? '' : 'disabled'; ?>  name="SET_COD">
+                                            <option value="0" <?= (isset($_POST['SET_COD']) &&  $_POST['SET_COD']  == "0")? 'selected' : '' ?>>---</option>
+                                            <?php for ($i= 0; $i < $qtdS; $i++) { ?> 
+                                                <option value="<?= $setores[$i]['SET_COD']; ?>" <?= (isset($_POST['SET_COD']) &&  $_POST['SET_COD']  == $setores[$i]['SET_COD'] )? 'selected' : ($setores[$i]['SET_COD'] == $usuarios_empresa['SET_COD'])? 'selected': '' ?>><?= $setores[$i]['SET_DESCRICAO'] ?></option>
+                                            <?php } ?> 
+                                        </select>
+                                        <label class="form-floating mb-3">SETOR FIXO</label>
+                                    </div>
                                 </div>
-                                <div class="col-6 form-floating mb-3">
+                                <div class="col-4 form-floating mb-3">
+                                    
+                                    <input type="password" class="form-control" name="USU_SENHA" id="floating1" placeholder="Digite sua senha">
+                                    <label for="floating1">SENHA:</label>
+                                </div>
+                                <div class="col-4 form-floating mb-3">
                                     <input type="password" class="form-control" name="USU_CONF_SENHA" id="floating2" placeholder="Confirme sua senha">
-                                    <label for="floating2">Confirme a Senha</label>
+                                    <label for="floating2">CONFIRME A SENHA:</label>
                                 </div>
                             </div>
                             <input type="hidden" class="form-control" name="EMP_COD" value="<?= isset($_SESSION['EMP_COD']) ? $_SESSION['EMP_COD'] : 0; ?>">
@@ -143,7 +156,20 @@ include_once 'app/Views/admin/inc/cabecalho.phtml';
                         </form>
                     </div>
                 </section>
-            
+                <section class="bg-light py-2">
+                    <div class="container col-10 px-2 py-2 mx-auto row">
+                        <table class="table table-striped table-bordered">
+                            <thead class="text-center text-uppercase">
+                                <th class="text-dark">#</th>
+                                <th class="text-dark">Setores</th>
+                                <th class="text-dark">Status</th>
+                                <?php if($_SESSION['USU_NIVEL'] >= 8){ ?><th class="text-dark">Ações</th><?php } ?>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
             </div>
             <?php include_once 'app/Views/admin/inc/rodape.phtml';?>
         </div>

@@ -72,7 +72,7 @@ $qtd = (is_array($fornecedores) ? count($fornecedores) : 0);
                                             <?php if($fornecedores[$i]['FOR_STATUS'] == 0){ ?>
                                                 <button type="button" class="btn btn-success btn-sm d-print-none" data-bs-toggle='modal'  data-bs-target="#status" data-codigo="<?= $fornecedores[$i]['FOR_COD']; ?>" data-nome="<?= $fornecedores[$i]['FOR_NOME_FANTASIA']; ?>"  data-status="<?= $fornecedores[$i]['FOR_STATUS']; ?>" title="Deseja ativar?" ><i class="fa fa-ban"></i></button>
                                             <?php }else { ?>
-                                            <a type="button" class="btn btn-warning btn-sm d-print-none" href="<?= DIRPAGE.'fornecedores/alteracao/'.$fornecedores[$i]['EMP_COD'].'/'.$fornecedores[$i]['USU_COD']; ?>" title="Alterar fornecedores"><i class="fa fa-edit"></i></a>
+                                            <a type="button" class="btn btn-warning btn-sm d-print-none" href="<?= DIRPAGE.'fornecedores/alteracao/'.$fornecedores[$i]['EMP_COD'].'/'.$fornecedores[$i]['FOR_COD']; ?>" title="Alterar fornecedores"><i class="fa fa-edit"></i></a>
                                             <button type="button" class="btn btn-danger btn-sm d-print-none" data-bs-toggle='modal'  data-bs-target="#status" data-codigo="<?= $fornecedores[$i]['FOR_COD']; ?>" data-nome="<?= $fornecedores[$i]['FOR_NOME_FANTASIA']; ?>"  data-status="<?= $fornecedores[$i]['FOR_STATUS']; ?>" title="Deseja desativar?" ><i class="fa fa-ban"></i></button>
                                             <?php } ?>
                                         </td>

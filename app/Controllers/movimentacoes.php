@@ -357,7 +357,12 @@ class movimentacoes extends View
                             }else {
                                 $ordem = 1;
                             }
-                            
+                            if(empty($dados['CXA_COD'])){
+                                $dados['CXA_COD'] = 0;
+                            }
+                            if(empty($dados['CXA_COD'])){
+                                $dados['FPG_COD'] = 0;
+                            }
                             $dados_venda = array(
                                 'EMP_COD' => $_SESSION['EMP_COD'],
                                 'USU_COD' => $_SESSION['USU_COD'],

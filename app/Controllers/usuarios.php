@@ -3,8 +3,10 @@ namespace App\Controllers;
 
 use App\Models\Empresas;
 use App\Models\Enderecos;
+use App\Models\Setores;
 use App\Models\Usuarios as ModelsUsuarios;
 use App\Models\UsuariosEmpresa;
+use App\Models\UsuariosSetores;
 use Core\View;
 use Libraries\Check;
 use Libraries\Sessao;
@@ -12,7 +14,7 @@ use Libraries\Sessao;
 class usuarios extends View
 {
     private $dados = [];
-    public $link,$Enderecos,$Usuarios,$Empresa,$UsuariosEmpresa,$Check;
+    public $link,$Enderecos,$Usuarios,$Empresa,$UsuariosEmpresa,$Check, $Setores,$UsuariosSetores;
     public function __construct()
     {
         Sessao::naoLogado();
@@ -21,11 +23,15 @@ class usuarios extends View
         $this->Enderecos = new Enderecos;
         $this->Usuarios = new ModelsUsuarios;
         $this->UsuariosEmpresa = new UsuariosEmpresa;
+        $this->Setores = new Setores;
+        $this->UsuariosSetores = new UsuariosSetores;
         $this->Check = new Check;
+
         if (isset($_SESSION['EMP_COD']) && $_SESSION['EMP_COD'] != 0) {
             $this->dados['empresa'] = $this->UsuariosEmpresa->setCodEmpresa($_SESSION['EMP_COD'])->setCodUsuario($_SESSION['USU_COD'])->listar(0);
             $this->dados['usuario'] = $this->Usuarios->setCodUsuario($_SESSION['USU_COD'])->listar(0);
             $this->dados['usuarios'] = $this->UsuariosEmpresa->setCodEmpresa($_SESSION['EMP_COD'])->listarTodos(0);
+            $this->dados['setores'] = $this->Setores->setCodEmpresa($_SESSION['EMP_COD'])->setTipo(7)->listarTodosPorTipo(0);
             $this->link[0] = ['link'=> 'admin','nome' => 'PAINEL ADMINISTRATIVO'];
             $this->link[1] = ['link'=> 'cadastros','nome' => 'MÓDULO DE CADASTROS'];
             $this->link[2] = ['link'=> 'usuarios','nome' => 'GERENCIAR USUÁRIOS'];
@@ -93,14 +99,26 @@ class usuarios extends View
                                 $db_ump = array(
                                     'USU_COD' => $id,
                                     'EMP_COD' => $dados['EMP_COD'],
+                                    'SET_COD' => $dados['SET_COD'],
                                     'UMP_DT_CADASTRO' => date('Y-m-d H:i:s'),
                                     'UMP_STATUS' => 1
                                 );
 
                                 $this->UsuariosEmpresa->cadastrar($db_ump,0);
                             }
-                           
-                           
+
+
+
+                            //$this->UsuariosSetores->setCodEmpresa($dados['EMP_COD'])->setCodUsuario($id)->checarUsuarioSetor(0);
+                            /*$db_ust = array(
+                                'EMP_COD' => $dados['EMP_COD'],
+                                'USU_COD' => $id,
+                                'SET_COD' => $dados['SET_COD'],
+                                'UST_DT_CADASTRO' => date('Y-m-d H:i:s'),
+                                'UST_STATUS' => 1
+                            );*/
+
+
                             $ok = true;
                             $endr = $this->Enderecos->setCodUsuario($id)->checarEnderecoUsuario();
 
@@ -191,12 +209,13 @@ class usuarios extends View
         $dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);
         $codUsuario = $dados['USU_COD'];
         $codEmpresa = $dados['EMP_COD'];
+       
         if (isset($_POST) && isset($dados['ALTERAR_USUARIO'])) {
             unset($dados['ALTERAR_USUARIO']);
           
             if($_SESSION['USU_COD'] <> $dados['USU_COD'] && $_SESSION['EMP_COD'] == $dados['EMP_COD']){
 
-                $this->Usuarios->setCodigo($dados['USU_COD']);
+                $this->Usuarios->setCodigo($codUsuario);
 
                 $dados += array(
                     'USU_DT_ATUALIZACAO'=> date('Y-m-d H:i:s')             
@@ -208,7 +227,26 @@ class usuarios extends View
                 unset($dados['EMP_COD']);
                 unset($dados['USU_COD']);
                 unset($dados['USU_RESET_SENHA']);
+                if(isset($dados['SET_COD']) && !empty($dados['SET_COD'])){
 
+                    $ump = $this->UsuariosEmpresa->setCodEmpresa($codEmpresa)->setCodUsuario($codUsuario)->checarUsuarioEmpresa(0);
+                 
+                    if(!empty($ump)){
+                       
+                        if($dados['SET_COD'] <> $ump['SET_COD']){
+                           
+                            $db_ump = array(
+                                'SET_COD' => $dados['SET_COD']
+                            );
+                            if($this->UsuariosEmpresa->setCodEmpresa($codEmpresa)->setCodUsuario($codUsuario)->alterar($db_ump,0)){
+                                
+                            }
+                        }
+                    }else {
+                        Sessao::alert('ERRO',' 4- Erro ao alterar o usuário da empresa, entre em contato com o suporte!','fs-4 alert alert-danger');
+                    }
+                }
+                unset($dados['SET_COD']);
                 if($this->Usuarios->alterar($dados,0)){
                     $ok = true;
                     Sessao::alert('OK','Cadastro alterado com sucesso!','fs-4 alert alert-success');
@@ -240,12 +278,13 @@ class usuarios extends View
         $dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);
         $codUsuario = $dados['USU_COD'];
         $codEmpresa = $dados['EMP_COD'];
+        
         if (isset($_POST) && isset($dados['ALTERAR_USUARIO'])) {
             unset($dados['ALTERAR_USUARIO']);
           
             if($_SESSION['USU_COD'] == $dados['USU_COD'] && $_SESSION['EMP_COD'] == $dados['EMP_COD']){
 
-                $this->Usuarios->setCodigo($dados['USU_COD']);
+                $this->Usuarios->setCodigo($codUsuario);
                 
                 $dados += array(
                     'USU_DT_ATUALIZACAO'=> date('Y-m-d H:i:s')             
@@ -266,6 +305,25 @@ class usuarios extends View
                     unset($dados['USU_SENHA']);
                     unset($dados['USU_CONF_SENHA']);
                 }
+                
+                if(isset($dados['SET_COD']) && !empty($dados['SET_COD'])){
+                   
+                    $ump = $this->UsuariosEmpresa->setCodEmpresa($codEmpresa)->setCodUsuario($codUsuario)->checarUsuarioEmpresa(0);
+                   
+                    if(!empty($ump)){
+                     
+                        if($dados['SET_COD'] <> $ump['SET_COD']){
+                          
+                            $db_ump = array(
+                                'SET_COD' => $dados['SET_COD']
+                            );
+                            
+                            $this->UsuariosEmpresa->setCodEmpresa($codEmpresa)->setCodUsuario($codUsuario)->alterar($db_ump,0);
+                        }
+                    }else {
+                        Sessao::alert('ERRO',' 4- Erro ao alterar o usuário da empresa, entre em contato com o suporte!','fs-4 alert alert-danger');
+                    }
+                }
 
                 $dados_endereco = array(
                     'END_LOGRADOURO' => $dados['END_LOGRADOURO'],
@@ -283,6 +341,7 @@ class usuarios extends View
 
                 unset($dados['EMP_COD']);
                 unset($dados['USU_COD']);
+                unset($dados['SET_COD']);
                 unset($dados['USU_RESET_SENHA']);
 
                 if($this->Usuarios->alterar($dados,0)){
@@ -336,14 +395,19 @@ class usuarios extends View
         }else {
             Sessao::alert('ERRO',' 1- Dados inválido(s)!','fs-4 alert alert-danger');   
         }
-        $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
+
+        $this->link[1] = ['link'=> 'cadastros','nome' => 'MÓDULO DE CADASTROS'];
+        $this->link[2] = ['link'=> 'usuarios','nome' => 'GERENCIAR USUÁRIOS'];
 
         if($ok){
+            $this->link[3] = ['link'=> 'cadastros/meus_dados','nome' => 'ALTERAR MEUS DADOS DE USUÁRIO'];
             $this->dados['usuarios'] = $this->UsuariosEmpresa->setCodEmpresa($_SESSION['EMP_COD'])->setCodUsuario($_SESSION['USU_COD'])->listarTodos(0);
-            $this->render('admin/cadastros/usuarios/listar', $this->dados);
+            $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
+            $this->render('admin/cadastros/usuarios/meus_dados', $this->dados);
         }else{
             $this->dados['usuario'] = $this->UsuariosEmpresa->setCodEmpresa($_SESSION['EMP_COD'])->setCodigo($codUsuario)->listar(0);
-            $this->render('admin/cadastros/usuarios/meus_dados', $this->dados);
+            $this->dados['breadcrumb'] = $this->Check->setLink($this->link)->breadcrumb();
+            $this->render('admin/cadastros/usuarios/listar', $this->dados);
         }
     }
     public function status()
@@ -356,9 +420,9 @@ class usuarios extends View
                 
                 unset($dados['STATUS_USUARIO']);
                 $this->Usuarios->setCodigo($dados['USU_COD']);
-
+               // dump($dados['USU_STATUS']);
                 ($dados['USU_STATUS'] == 1)? $dados['USU_STATUS'] = 0 : $dados['USU_STATUS'] = 1;
-                
+                //dump($dados['USU_STATUS']);
                 $db = array(
                     'USU_DT_ATUALIZACAO'=> date('Y-m-d H:i:s'),
                     'USU_STATUS' => $dados['USU_STATUS']
@@ -415,5 +479,50 @@ class usuarios extends View
             Sessao::alert('ERRO',' 2- Acesso inválido!','fs-4 alert alert-danger');
             $this->render('admin/cadastros/usuarios', $this->dados);
         }
+    }
+    public function excluir()
+    {
+        $ok = false;      
+        //Recupera os dados enviados
+        $dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);
+        if (isset($_POST) && isset($dados['EXCLUIR_USUARIO'])) {
+            unset($dados['EXCLUIR_USUARIO']);
+    
+            $this->dados['empresa'] = $this->UsuariosEmpresa->setCodEmpresa($_SESSION['EMP_COD'])->setCodUsuario($_SESSION['USU_COD'])->listar(0);
+            $this->dados['usuario'] = $this->Usuarios->setCodUsuario($dados['USU_COD'])->listar(0);
+            if($this->dados['usuario'] != 0){
+                /*
+                $endr = $this->Enderecos->setCodUsuario($dados['USU_COD'])->checarEnderecoUsuario();
+                if(isset($endr) && $endr != 0){
+                    $this->Enderecos->setCodEmpresa($_SESSION['EMP_COD'])->setCodigo($endr[0]['END_COD'])->excluir(0);
+                }
+               
+                if(!$this->Usuarios->excluir(0)){
+                    $ok = true;
+                    $respota = array(
+                        'COD'=>'OK',
+                        'MENSAGEM' => 'Exclusão efetuada com sucesso!'
+                    );
+                }else{
+                    $respota = array(
+                        'COD'=>'ERRO',
+                        'MENSAGEM'=> 'ERRO 5- Erro ao excluir seu usuário, entre em contato com o suporte!'
+                    );
+                }
+                */
+            }else{
+                $respota = array(
+                    'COD'=>'ERRO',
+                    'MENSAGEM'=> 'ERRO 2- Dados inválido(s)!'
+                );
+            }
+        }else{
+            $respota = array(
+                'COD'=>'ERRO',
+                'MENSAGEM'=> 'ERRO 1- Acesso inválido!'
+            );
+        }
+        echo json_encode($respota);
+        
     }
 }
