@@ -108,7 +108,7 @@ $contagem = 1;
                                             <option value="0" <?= (isset($_POST['EST_COD']) &&  $_POST['EST_COD']  == 0)? 'selected' : '' ?>>---</option>                  
                                         <?php } ?>
                                         <?php 
-                                            for ($i=0; $i < $qtdEstoque; $i++) { if ($estoques[$i]['EST_STATUS'] == 1) { ?>
+                                            for ($i=0; $i <= $qtdEstoque; $i++) { if ($estoques[$i]['EST_STATUS'] == 1) { ?>
                                                 <option value="<?= $estoques[$i]['EST_COD'] ?>" <?= (isset($_POST['EST_COD']) &&  $_POST['EST_COD']  == $estoques[$i]['EST_COD'])? 'selected' : '' ?>><?= $estoques[$i]['EST_DESCRICAO'] ?></option>
                                         <?php } } ?>
                                         </select>
