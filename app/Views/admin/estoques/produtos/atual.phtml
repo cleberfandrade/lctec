@@ -96,7 +96,7 @@ $qtdC = (is_array($categorias) ? count($categorias) : 0);
                                  <!--<td class="text-center align-middle">R$ <?php //= $produtos[$i]['PRO_PRECO_UNITARIO']; ?></td>
                                 <td class="text-center align-middle">R$ <?php //= $produtos[$i]['PRO_PRECO_VENDA']; ?></td>-->
                                 <td class="text-center align-middle">
-                                    <?php if($_SESSION['USU_NIVEL'] == 3){?>
+                                    <?php if($_SESSION['USU_NIVEL'] >= 3){?>
                                         <a type="button" class="btn btn-warning btn-sm d-print-none" href="<?= DIRPAGE.'produtos/alteracao/'.$produtos[$i]['EMP_COD'].'/'.$produtos[$i]['EST_COD'].'/'.$produtos[$i]['PRO_COD']; ?>" title="Alterar produto"><i class="fa fa-edit"></i></a>
                                     <?php }?>
                                     <a type="button" class="btn btn-outline-secondary btn-sm d-print-none" href="<?= DIRPAGE.'produtos/detalhar/'.$produtos[$i]['EMP_COD'].'/'.$produtos[$i]['EST_COD'].'/'.$produtos[$i]['PRO_COD']; ?>" title="Detalhar produto"><i class="bi bi-eye"></i></a>
