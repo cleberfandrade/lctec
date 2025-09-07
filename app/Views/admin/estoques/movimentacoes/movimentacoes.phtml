@@ -10,7 +10,7 @@ $qtdM = (is_array($movimentacoes) ? count($movimentacoes) : 0);
 $qtdF = (is_array($formas_pagamentos) ? count($formas_pagamentos) : 0);
 $qtdCA = (is_array($caixas) ? count($caixas) : 0);
 $qtdEstoque = 0;
-for ($i=0; $i < $qtd; $i++) { if ($estoques[$i]['EST_STATUS'] == 1) {$qtdEstoque++; }}
+for ($i=0; $i <= $qtd; $i++) { if ($estoques[$i]['EST_STATUS'] == 1) {$qtdEstoque++; }}
 $qtdClientes = (is_array($clientes) ? count($clientes) : 0);
 
 $motivos_entrada = array(
